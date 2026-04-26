@@ -1,6 +1,6 @@
 # Cross-edition entity identity (adopting Impresso + open NIL question)
 
-**Status:** finalized decisions in this doc. Open NIL-clustering question lives in [#1](https://github.com/dsmedia/pruzhany-schema/issues/1).
+**Status:** finalized decisions in this doc. Open questions live in [#1](https://github.com/dsmedia/pruzhany-schema/issues/1) (NIL clustering) and [#3](https://github.com/dsmedia/pruzhany-schema/issues/3) (type-taxonomy extensions).
 
 **Date:** 2026-04-25
 
@@ -43,10 +43,12 @@ For Pruzhany, only public figures (rabbis with Wikidata entries, politicians of 
 Mention IDs are pipe/colon-separated tuples:
 
 ```
-{ci_id}:{lOffset}:{rOffset}:{type}:{ner_model}|{nel_model}
+{ci_id}:{lOffset}:{rOffset}:{type}:{ner_model}[|{nel_model}]
 ```
 
-Example:
+The `|{nel_model}` half is optional and omitted when a single model performs both NER and NEL. For Pruzhany's current pipeline (Gemini doing both), the example below has no pipe; when separate NER and NEL models are used, the pipe-and-NEL-model is appended.
+
+Example (single-model, Pruzhany today):
 
 ```
 pruzhany-1938-12-16-a-i5763:120:148:pers.ind:gemini-3-flash-preview
@@ -85,18 +87,50 @@ For the full upstream schema and Pruzhany-specific adoption rationale (with conc
 
 ---
 
-## Open question: NIL clustering across editions
+## Current schema state and migration scope
+
+The Impresso adoption above is a **target**. The current Zod schemas in this repo (`zod/`) predate this decision and diverge from the target in named ways. **This PR adds no schema type changes** — only the design intent and the open-question issues. Each migration below is a separate PR, with the contract test confirming Zod ↔ Pydantic parity at every step.
+
+| Concern | Current schema | Impresso target | Migration action |
+|---|---|---|---|
+| Location Wikidata field | `wikidata_id: z.string().optional()` (`zod/enrichment.schema.ts` line 134) | `wkd_id: string` (required; `"NIL"` literal for unlinkable) | Rename + tighten in a future PR |
+| Person Wikidata field | absent (only generic `external_references`) | `wkd_id: string` (required; `"NIL"`) | Add in a future PR |
+| Event Wikidata field | absent (only generic `external_references`) | `wkd_id: string` (required; `"NIL"`) | Add in a future PR |
+| Person components | `name`, `occupation` (no `title`) | `name`, `title`, `function` | Add `title`; rename `occupation` → `function` |
+| Type taxonomy | Flat enum (`town`, `shtetl`, `ghetto`, `camp`, `massacre_site`, …) | Dotted hierarchy (`loc.adm.town`, `loc.fac`, …) **plus** Pruzhany subtypes (see #3) | Migrate after #3 resolves |
+| Mention IDs | absent (entities carry no per-mention identity yet) | `{ci_id}:{lOffset}:{rOffset}:{type}:{ner_model}[\|{nel_model}]` | Add in a future PR (tied to NEL pipeline work in `pruzhany-press#13`) |
+
+Migration follows an **additive-first** pattern: new optional fields land before any tightening to required, so the two consumers (`pruzhany-svelte`, `pruzhany-press`) can adopt at their own cadence.
+
+---
+
+## Open questions
+
+Two design questions remain open. Both block parts of the migration above.
+
+### NIL clustering across editions — [#1](https://github.com/dsmedia/pruzhany-schema/issues/1)
 
 The decisions above cover Wikidata-linkable entities cleanly. But for Pruzhany, **most residents are NIL** — they will never have a Wikidata entry. Impresso emits `wkd_id: "NIL"` and stops there.
 
-This is the residual novel design question for Pruzhany, tracked as a live discussion in **[#1](https://github.com/dsmedia/pruzhany-schema/issues/1)**:
+Sub-questions tracked in #1:
 
 - Cluster mechanism — separate `cluster_id` field, local QID-equivalents (e.g., `PRU-Q123`), or lazy surface-form fingerprinting?
 - Minimum NIL assertions to make a person stably referenceable.
 - Human-review surface for ambiguous NIL matches.
 - Frontend UX intent as a design constraint (see below).
 
-This doc will be updated when those decisions land — the issue is the working space; this doc captures the conclusions.
+### Pruzhany type-taxonomy extensions — [#3](https://github.com/dsmedia/pruzhany-schema/issues/3)
+
+Adopting Impresso's general taxonomy doesn't address the Pruzhany-specific types currently in `LocationTypeSchema`: `shtetl`, `ghetto`, `camp`, `massacre_site`, `deportation_point`, `forest`. These are domain-meaningful for Holocaust-era Yiddish content and shouldn't collapse into Impresso's coarser equivalents.
+
+Sub-questions tracked in #3:
+
+- Subtype under Impresso (`loc.fac.ghetto`, `loc.adm.town.shtetl`, …)?
+- Parallel `pruzhany_type` field alongside Impresso `type`?
+- Use Impresso's `comp.qualifier` escape hatch?
+- Petition Impresso/HIPE to extend upstream?
+
+This doc will be updated when both questions land — the issues are the working space; this doc captures the conclusions.
 
 ---
 
@@ -128,7 +162,8 @@ Schema changes follow contract-first discipline:
 ## References
 
 - **Pipeline tracking:** [`pruzhany-press#13`](https://github.com/dsmedia/pruzhany-press/issues/13) — entity-resolution algorithm + eval set.
-- **Open NIL-clustering decisions:** [`#1`](https://github.com/dsmedia/pruzhany-schema/issues/1) in this repo.
+- **Open: NIL clustering:** [`#1`](https://github.com/dsmedia/pruzhany-schema/issues/1) in this repo.
+- **Open: type-taxonomy extensions:** [`#3`](https://github.com/dsmedia/pruzhany-schema/issues/3) in this repo.
 - **Upstream Impresso reference:** [`docs/impresso/05-entities-and-ner.md`](https://github.com/dsmedia/pruzhany-svelte/blob/master/docs/impresso/05-entities-and-ner.md) in `pruzhany-svelte`.
 - **Impresso ↔ Pruzhany crosswalk:** [`docs/impresso/12-crosswalk-to-pruzhany.md`](https://github.com/dsmedia/pruzhany-svelte/blob/master/docs/impresso/12-crosswalk-to-pruzhany.md) in `pruzhany-svelte`.
 - **Historical framing:** [`docs/plans/2026-04-17-data-model-review-prompt.md`](https://github.com/dsmedia/pruzhany-svelte/blob/master/docs/plans/2026-04-17-data-model-review-prompt.md) §4–5 in `pruzhany-svelte` — the original questions this doc answers.
