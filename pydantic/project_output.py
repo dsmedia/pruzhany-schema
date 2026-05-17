@@ -22,9 +22,16 @@ class ExternalReference(BaseModel):
     """Reference to external database or resource."""
 
     source: str = Field(description="Source name (e.g., 'yad_vashem', 'jri_poland')")
-    url: str | None = Field(default=None, description="URL to the record")
+    url: str | None = Field(default=None, description="URL to the record (may be null for negative-evidence citations)")
     record_id: str | None = Field(default=None, description="Record identifier")
     notes: str | None = Field(default=None, description="Additional notes")
+    verified: bool | None = Field(
+        default=None,
+        description="True if a human has reviewed and confirmed this citation",
+    )
+
+
+EnrichmentSource = Literal["flash", "deep_research"]
 
 
 # =============================================================================
@@ -208,6 +215,24 @@ class AdditionalDetail(BaseModel):
     value: str = Field(description="Detail value")
 
 
+class BiographicalNarrative(BaseModel):
+    """Long-form provenanced narrative produced by Flash / Deep Research pipelines."""
+
+    source: EnrichmentSource = Field(description="Producing pipeline")
+    markdown: str = Field(description="Markdown-formatted narrative text")
+
+
+class ProposedRelationship(BaseModel):
+    """Unconfirmed relationship hypothesis awaiting human review."""
+
+    type: str = Field(description="Relationship type (e.g., 'sibling_of', 'cousin')")
+    person_id_hint: str = Field(
+        description="Free-form hint identifying the target person (id guess + context)"
+    )
+    evidence: str = Field(description="Evidence justifying the proposed link")
+    source: EnrichmentSource = Field(description="Producing pipeline")
+
+
 class EnrichedPerson(BaseModel):
     """A person with all enrichment data."""
 
@@ -247,6 +272,14 @@ class EnrichedPerson(BaseModel):
     )
     additional_details: list[AdditionalDetail] | None = Field(
         default=None, description="Additional biographical details"
+    )
+    biographical_narratives: list[BiographicalNarrative] | None = Field(
+        default=None,
+        description="Long-form sourced narratives from Flash / Deep Research enrichment",
+    )
+    proposed_relationships: list[ProposedRelationship] | None = Field(
+        default=None,
+        description="Unconfirmed relationship hypotheses awaiting human review",
     )
 
 

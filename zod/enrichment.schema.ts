@@ -32,6 +32,25 @@ export const AdditionalDetailSchema = z.object({
 });
 export type AdditionalDetail = z.infer<typeof AdditionalDetailSchema>;
 
+// Provenanced source for narratives and proposed relationships
+const EnrichmentSourceSchema = z.enum(['flash', 'deep_research']);
+
+// Long-form biographical narrative produced by Flash / Deep Research pipelines
+export const BiographicalNarrativeSchema = z.object({
+	source: EnrichmentSourceSchema,
+	markdown: z.string(),
+});
+export type BiographicalNarrative = z.infer<typeof BiographicalNarrativeSchema>;
+
+// Unconfirmed relationship hypothesis awaiting human review
+export const ProposedRelationshipSchema = z.object({
+	type: z.string(),
+	person_id_hint: z.string(),
+	evidence: z.string(),
+	source: EnrichmentSourceSchema,
+});
+export type ProposedRelationship = z.infer<typeof ProposedRelationshipSchema>;
+
 // Enriched Person
 export const EnrichedPersonSchema = z.object({
 	id: z.string(),
@@ -55,6 +74,8 @@ export const EnrichedPersonSchema = z.object({
 	relationships: z.array(RelationshipSchema),
 	external_references: z.array(ExternalReferenceSchema),
 	additional_details: z.array(AdditionalDetailSchema).optional(),
+	biographical_narratives: z.array(BiographicalNarrativeSchema).optional(),
+	proposed_relationships: z.array(ProposedRelationshipSchema).optional(),
 });
 export type EnrichedPerson = z.infer<typeof EnrichedPersonSchema>;
 

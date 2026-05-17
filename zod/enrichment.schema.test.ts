@@ -7,6 +7,7 @@ import {
 	EnrichmentDataSchema,
 	LocationTypeSchema,
 } from './enrichment.schema';
+import { ExternalReferenceSchema } from './shared.schema';
 
 describe('Enrichment Schemas', () => {
 	describe('EnrichedPersonSchema', () => {
@@ -52,6 +53,77 @@ describe('Enrichment Schemas', () => {
 				external_references: [],
 			};
 			expect(() => EnrichedPersonSchema.parse(person)).toThrow();
+		});
+
+		it('accepts person with biographical_narratives and proposed_relationships', () => {
+			const person = {
+				id: 'person-aaron-yurevitch',
+				name: 'Aron Judewicz',
+				aliases: [],
+				gender: 'male',
+				holocaust_fate: 'perished',
+				unit_ids: ['cu-1'],
+				relationships: [],
+				external_references: [],
+				biographical_narratives: [
+					{
+						source: 'deep_research',
+						markdown: '**Aron Judewicz** was deeply embedded in the smuggling networks…',
+					},
+					{ source: 'flash', markdown: 'Yizkor plaque notes his role as gabbai.' },
+				],
+				proposed_relationships: [
+					{
+						type: 'sibling_of',
+						person_id_hint: 'Salomon Judewicz (brother, perished Auschwitz 1943)',
+						evidence: 'Both named as resident brothers in 1939 deportation list.',
+						source: 'deep_research',
+					},
+				],
+			};
+			expect(() => EnrichedPersonSchema.parse(person)).not.toThrow();
+		});
+
+		it('rejects biographical_narratives entry with invalid source', () => {
+			const person = {
+				id: 'person-1',
+				name: 'Test',
+				aliases: [],
+				gender: 'unknown',
+				holocaust_fate: 'unknown',
+				unit_ids: [],
+				relationships: [],
+				external_references: [],
+				biographical_narratives: [{ source: 'gpt', markdown: '...' }], // invalid source
+			};
+			expect(() => EnrichedPersonSchema.parse(person)).toThrow();
+		});
+	});
+
+	describe('ExternalReferenceSchema', () => {
+		it('accepts url: null for negative-evidence citations', () => {
+			const ref = {
+				source: 'yad-vashem',
+				url: null,
+				notes: 'Negative evidence: no record found under any spelling',
+				verified: false,
+			};
+			expect(() => ExternalReferenceSchema.parse(ref)).not.toThrow();
+		});
+
+		it('accepts verified: true', () => {
+			const ref = {
+				source: 'jri-poland',
+				url: 'https://example.com/record/123',
+				record_id: 'JRI-12345',
+				verified: true,
+			};
+			expect(() => ExternalReferenceSchema.parse(ref)).not.toThrow();
+		});
+
+		it('accepts omitted verified and url (backward compat)', () => {
+			const ref = { source: 'Yad Vashem' };
+			expect(() => ExternalReferenceSchema.parse(ref)).not.toThrow();
 		});
 	});
 
