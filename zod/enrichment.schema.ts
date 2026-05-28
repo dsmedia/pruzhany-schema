@@ -259,7 +259,7 @@ export const EnrichmentDataSchema = z.object({
 	organizations: z.array(EnrichedOrganizationSchema).optional(),
 	topics: z.array(TopicSchema),
 	sections: z.array(SectionSchema).optional(),
-});
+}).passthrough();
 export type EnrichmentData = z.infer<typeof EnrichmentDataSchema>;
 
 // Article enrichment context (derived, not from JSON)
