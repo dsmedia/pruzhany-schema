@@ -192,6 +192,25 @@ export const EnrichedEventSchema = z.object({
 });
 export type EnrichedEvent = z.infer<typeof EnrichedEventSchema>;
 
+// Organization member (nested in Organization)
+const OrganizationMemberSchema = z.object({
+	person_id: z.string(),
+	role: z.string(),
+});
+
+// Enriched Organization (institution, society, congregation)
+export const EnrichedOrganizationSchema = z.object({
+	id: z.string(),
+	name: z.string(),
+	yiddish_name: z.string().optional(),
+	type: z.string(),
+	description: z.string(),
+	unit_ids: z.array(z.string()),
+	members: z.array(OrganizationMemberSchema).optional(),
+	external_references: z.array(ExternalReferenceSchema).optional(),
+});
+export type EnrichedOrganization = z.infer<typeof EnrichedOrganizationSchema>;
+
 // Section hierarchy schemas (for sidebar grouping)
 
 // Leaf node — owns articles directly
@@ -237,6 +256,7 @@ export const EnrichmentDataSchema = z.object({
 	people: z.array(EnrichedPersonSchema),
 	locations: z.array(EnrichedLocationSchema),
 	events: z.array(EnrichedEventSchema),
+	organizations: z.array(EnrichedOrganizationSchema).optional(),
 	topics: z.array(TopicSchema),
 	sections: z.array(SectionSchema).optional(),
 });

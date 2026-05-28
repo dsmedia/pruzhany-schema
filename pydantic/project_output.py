@@ -8,14 +8,22 @@ The pipeline converts LLM output schemas to these for final JSON output.
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 # =============================================================================
 # Shared Types (from shared.schema.ts)
 # =============================================================================
 
-HolocaustFate = Literal["perished", "survived", "unknown"]
+HolocaustFate = Literal[
+    "unknown",
+    "perished",
+    "likely_perished",
+    "survived",
+    "likely_survived",
+    "died_before",
+    "not_applicable",
+]
 
 
 class ExternalReference(BaseModel):
@@ -236,6 +244,8 @@ class ProposedRelationship(BaseModel):
 class EnrichedPerson(BaseModel):
     """A person with all enrichment data."""
 
+    model_config = ConfigDict(extra="forbid")
+
     id: str = Field(description="Person ID like 'person-rachel-pomerantz'")
     name: str = Field(description="Canonical English name")
     yiddish_name: str | None = Field(default=None, description="Name in Yiddish script")
@@ -346,6 +356,8 @@ class HolocaustSite(BaseModel):
 class EnrichedLocation(BaseModel):
     """A location with all enrichment data."""
 
+    model_config = ConfigDict(extra="forbid")
+
     id: str = Field(description="Location ID like 'location-pruzhany'")
     name: str = Field(description="Canonical English name")
     yiddish_name: str | None = Field(default=None, description="Yiddish name")
@@ -416,6 +428,8 @@ EnrichedEventType = Literal[
 class EnrichedEvent(BaseModel):
     """An event with enrichment data."""
 
+    model_config = ConfigDict(extra="forbid")
+
     id: str = Field(description="Event ID")
     name: str = Field(description="Event name")
     type: EnrichedEventType = Field(description="Event type")
@@ -441,6 +455,39 @@ class Topic(BaseModel):
     name: str = Field(description="Topic name")
     description: str | None = Field(default=None, description="Topic description")
     unit_ids: list[str] = Field(description="Content unit IDs in this topic")
+
+
+# =============================================================================
+# Enrichment: Organizations (from edition-bundle.schema.ts)
+# =============================================================================
+
+
+class OrganizationMember(BaseModel):
+    """A person's membership in an organization."""
+
+    person_id: str = Field(description="Person ID")
+    role: str = Field(description="Role within the organization")
+
+
+class EnrichedOrganization(BaseModel):
+    """An organization (institution, society, congregation) with enrichment data."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(description="Organization ID like 'org-district-hospital'")
+    name: str = Field(description="Canonical English name")
+    yiddish_name: str | None = Field(default=None, description="Yiddish name")
+    type: str = Field(description="Organization type (e.g., 'healthcare', 'school')")
+    description: str = Field(description="Description of the organization")
+    unit_ids: list[str] = Field(
+        default_factory=list, description="Content unit IDs where mentioned"
+    )
+    members: list[OrganizationMember] | None = Field(
+        default=None, description="Known members and their roles"
+    )
+    external_references: list[ExternalReference] | None = Field(
+        default=None, description="External database references"
+    )
 
 
 # =============================================================================
@@ -491,7 +538,14 @@ class Section(BaseModel):
 
 
 class EnrichmentData(BaseModel):
-    """Top-level enrichment data JSON file."""
+    """Top-level enrichment data JSON file.
+
+    Lossless wrapper: preserves unknown top-level keys (e.g. the self-describing
+    ``holocaustFateTypes`` / ``relationshipTypes`` / ``externalSourceTypes`` taxonomy
+    blocks the live JSON carries but the contract does not yet model).
+    """
+
+    model_config = ConfigDict(extra="allow")
 
     version: str = Field(default="1.0.0", description="Schema version")
     edition_date: str = Field(description="Edition date in ISO format")
@@ -499,6 +553,9 @@ class EnrichmentData(BaseModel):
     people: list[EnrichedPerson] = Field(description="All enriched people")
     locations: list[EnrichedLocation] = Field(description="All enriched locations")
     events: list[EnrichedEvent] = Field(description="All enriched events")
+    organizations: list[EnrichedOrganization] = Field(
+        default_factory=list, description="All enriched organizations"
+    )
     topics: list[Topic] = Field(default_factory=list, description="All topics")
     sections: list[Section] | None = Field(
         default=None, description="Section hierarchy for sidebar"

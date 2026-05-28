@@ -3,6 +3,7 @@ import {
 	EnrichedPersonSchema,
 	EnrichedLocationSchema,
 	EnrichedEventSchema,
+	EnrichedOrganizationSchema,
 	TopicSchema,
 	EnrichmentDataSchema,
 	LocationTypeSchema,
@@ -127,6 +128,43 @@ describe('Enrichment Schemas', () => {
 		});
 	});
 
+	describe('EnrichedOrganizationSchema', () => {
+		it('accepts minimal org matching live enrichment JSON shape', () => {
+			const org = {
+				id: 'org-district-hospital',
+				name: 'District Hospital in Pruzhany',
+				type: 'healthcare',
+				description: 'District hospital where the Judewicz baby was born.',
+				unit_ids: ['cu-5763'],
+			};
+			expect(() => EnrichedOrganizationSchema.parse(org)).not.toThrow();
+		});
+
+		it('accepts org with members and external_references', () => {
+			const org = {
+				id: 'org-orphanage',
+				name: 'Pruzhany Orphanage',
+				yiddish_name: 'פרוזשענער יתום־הויז',
+				type: 'welfare',
+				description: 'Community orphanage.',
+				unit_ids: ['cu-1', 'cu-2'],
+				members: [{ person_id: 'person-1', role: 'director' }],
+				external_references: [{ source: 'yad_vashem', url: 'https://example.com' }],
+			};
+			expect(() => EnrichedOrganizationSchema.parse(org)).not.toThrow();
+		});
+
+		it('rejects org missing required description', () => {
+			const org = {
+				id: 'org-1',
+				name: 'Test Org',
+				type: 'school',
+				unit_ids: [],
+			};
+			expect(() => EnrichedOrganizationSchema.parse(org)).toThrow();
+		});
+	});
+
 	describe('LocationTypeSchema', () => {
 		it('includes address and landmark', () => {
 			const options = LocationTypeSchema.options;
@@ -153,6 +191,28 @@ describe('Enrichment Schemas', () => {
 				people: [],
 				locations: [],
 				events: [],
+				topics: [],
+			};
+			expect(() => EnrichmentDataSchema.parse(data)).not.toThrow();
+		});
+
+		it('accepts enrichment data with a top-level organizations array', () => {
+			const data = {
+				version: '1.0',
+				edition_date: '1938-12-16',
+				last_updated: '2026-01-20',
+				people: [],
+				locations: [],
+				events: [],
+				organizations: [
+					{
+						id: 'org-district-hospital',
+						name: 'District Hospital in Pruzhany',
+						type: 'healthcare',
+						description: 'District hospital.',
+						unit_ids: ['cu-5763'],
+					},
+				],
 				topics: [],
 			};
 			expect(() => EnrichmentDataSchema.parse(data)).not.toThrow();
