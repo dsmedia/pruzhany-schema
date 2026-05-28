@@ -32,6 +32,25 @@ export const AdditionalDetailSchema = z.object({
 });
 export type AdditionalDetail = z.infer<typeof AdditionalDetailSchema>;
 
+// Provenanced source for narratives and proposed relationships
+const EnrichmentSourceSchema = z.enum(['flash', 'deep_research']);
+
+// Long-form biographical narrative produced by Flash / Deep Research pipelines
+export const BiographicalNarrativeSchema = z.object({
+	source: EnrichmentSourceSchema,
+	markdown: z.string(),
+});
+export type BiographicalNarrative = z.infer<typeof BiographicalNarrativeSchema>;
+
+// Unconfirmed relationship hypothesis awaiting human review
+export const ProposedRelationshipSchema = z.object({
+	type: z.string(),
+	person_id_hint: z.string(),
+	evidence: z.string(),
+	source: EnrichmentSourceSchema,
+});
+export type ProposedRelationship = z.infer<typeof ProposedRelationshipSchema>;
+
 // Enriched Person
 export const EnrichedPersonSchema = z.object({
 	id: z.string(),
@@ -55,6 +74,8 @@ export const EnrichedPersonSchema = z.object({
 	relationships: z.array(RelationshipSchema),
 	external_references: z.array(ExternalReferenceSchema),
 	additional_details: z.array(AdditionalDetailSchema).optional(),
+	biographical_narratives: z.array(BiographicalNarrativeSchema).optional(),
+	proposed_relationships: z.array(ProposedRelationshipSchema).optional(),
 });
 export type EnrichedPerson = z.infer<typeof EnrichedPersonSchema>;
 
@@ -171,6 +192,25 @@ export const EnrichedEventSchema = z.object({
 });
 export type EnrichedEvent = z.infer<typeof EnrichedEventSchema>;
 
+// Organization member (nested in Organization)
+const OrganizationMemberSchema = z.object({
+	person_id: z.string(),
+	role: z.string(),
+});
+
+// Enriched Organization (institution, society, congregation)
+export const EnrichedOrganizationSchema = z.object({
+	id: z.string(),
+	name: z.string(),
+	yiddish_name: z.string().optional(),
+	type: z.string(),
+	description: z.string(),
+	unit_ids: z.array(z.string()),
+	members: z.array(OrganizationMemberSchema).optional(),
+	external_references: z.array(ExternalReferenceSchema).optional(),
+});
+export type EnrichedOrganization = z.infer<typeof EnrichedOrganizationSchema>;
+
 // Section hierarchy schemas (for sidebar grouping)
 
 // Leaf node — owns articles directly
@@ -216,9 +256,10 @@ export const EnrichmentDataSchema = z.object({
 	people: z.array(EnrichedPersonSchema),
 	locations: z.array(EnrichedLocationSchema),
 	events: z.array(EnrichedEventSchema),
+	organizations: z.array(EnrichedOrganizationSchema).optional(),
 	topics: z.array(TopicSchema),
 	sections: z.array(SectionSchema).optional(),
-});
+}).passthrough();
 export type EnrichmentData = z.infer<typeof EnrichmentDataSchema>;
 
 // Article enrichment context (derived, not from JSON)

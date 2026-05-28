@@ -21,9 +21,10 @@ export type ContentType = z.infer<typeof ContentTypeSchema>;
 
 export const ExternalReferenceSchema = z.object({
 	source: z.string(),
-	url: z.string().optional(),
+	url: z.string().nullable().optional(),
 	record_id: z.string().optional(),
 	notes: z.string().optional(),
+	verified: z.boolean().optional(),
 });
 export type ExternalReference = z.infer<typeof ExternalReferenceSchema>;
 
