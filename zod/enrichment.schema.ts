@@ -249,17 +249,19 @@ export const SectionSchema = z.object({
 export type Section = z.infer<typeof SectionSchema>;
 
 // Top-level enrichment data
-export const EnrichmentDataSchema = z.object({
-	version: z.string(),
-	edition_date: z.string(),
-	last_updated: z.string(),
-	people: z.array(EnrichedPersonSchema),
-	locations: z.array(EnrichedLocationSchema),
-	events: z.array(EnrichedEventSchema),
-	organizations: z.array(EnrichedOrganizationSchema).optional(),
-	topics: z.array(TopicSchema),
-	sections: z.array(SectionSchema).optional(),
-}).passthrough();
+export const EnrichmentDataSchema = z
+	.object({
+		version: z.string(),
+		edition_date: z.string(),
+		last_updated: z.string(),
+		people: z.array(EnrichedPersonSchema),
+		locations: z.array(EnrichedLocationSchema),
+		events: z.array(EnrichedEventSchema),
+		organizations: z.array(EnrichedOrganizationSchema).optional(),
+		topics: z.array(TopicSchema),
+		sections: z.array(SectionSchema).optional(),
+	})
+	.passthrough();
 export type EnrichmentData = z.infer<typeof EnrichmentDataSchema>;
 
 // Article enrichment context (derived, not from JSON)
