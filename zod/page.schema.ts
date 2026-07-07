@@ -13,7 +13,9 @@ export const BlockSchema = z.object({
 	bbox: z.tuple([z.number(), z.number(), z.number(), z.number()]), // [x, y, w, h]
 	transcription: z.string(),
 	confidence: z.number().optional(),
-	image_crop: z.string().optional(),
+	// Producer (Pydantic Block.image_crop: str | None) emits null for blocks
+	// without a crop — accept both null and absent.
+	image_crop: z.string().nullable().optional(),
 	unit_id: z.string().nullable(), // FK to content unit
 });
 
