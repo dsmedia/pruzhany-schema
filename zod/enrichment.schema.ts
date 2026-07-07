@@ -4,23 +4,23 @@ import { HolocaustFateSchema, ExternalReferenceSchema } from './shared.schema';
 // Partisan activity (nested in Person)
 const PartisanActivitySchema = z.object({
 	unit: z.string(),
-	rank: z.string().optional(),
-	alias: z.string().optional(),
-	activities: z.string().optional(),
+	rank: z.string().nullish(),
+	alias: z.string().nullish(),
+	activities: z.string().nullish(),
 });
 
 // Relationship (nested in Person)
 const RelationshipSchema = z.object({
 	person_id: z.string(),
 	type: z.string(),
-	evidence: z.string().optional(),
+	evidence: z.string().nullish(),
 });
 
 // Topic
 export const TopicSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	description: z.string().optional(),
+	description: z.string().nullish(),
 	unit_ids: z.array(z.string()),
 });
 export type Topic = z.infer<typeof TopicSchema>;
@@ -55,27 +55,27 @@ export type ProposedRelationship = z.infer<typeof ProposedRelationshipSchema>;
 export const EnrichedPersonSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	yiddish_name: z.string().optional(),
+	yiddish_name: z.string().nullish(),
 	aliases: z.array(z.string()),
 	gender: z.enum(['male', 'female', 'unknown']),
-	birth_year: z.number().optional(),
-	birth_date: z.string().optional(),
-	death_year: z.number().optional(),
-	death_date: z.string().optional(),
-	birth_location: z.string().optional(),
-	residence_at_publication: z.string().optional(),
+	birth_year: z.number().nullish(),
+	birth_date: z.string().nullish(),
+	death_year: z.number().nullish(),
+	death_date: z.string().nullish(),
+	birth_location: z.string().nullish(),
+	residence_at_publication: z.string().nullish(),
 	holocaust_fate: HolocaustFateSchema,
-	holocaust_fate_notes: z.string().optional(),
-	headshot_path: z.string().optional(),
-	occupation: z.string().optional(),
-	partisan_activity: PartisanActivitySchema.optional(),
-	ghetto_role: z.string().optional(),
+	holocaust_fate_notes: z.string().nullish(),
+	headshot_path: z.string().nullish(),
+	occupation: z.string().nullish(),
+	partisan_activity: PartisanActivitySchema.nullish(),
+	ghetto_role: z.string().nullish(),
 	unit_ids: z.array(z.string()),
 	relationships: z.array(RelationshipSchema),
 	external_references: z.array(ExternalReferenceSchema),
-	additional_details: z.array(AdditionalDetailSchema).optional(),
-	biographical_narratives: z.array(BiographicalNarrativeSchema).optional(),
-	proposed_relationships: z.array(ProposedRelationshipSchema).optional(),
+	additional_details: z.array(AdditionalDetailSchema).nullish(),
+	biographical_narratives: z.array(BiographicalNarrativeSchema).nullish(),
+	proposed_relationships: z.array(ProposedRelationshipSchema).nullish(),
 });
 export type EnrichedPerson = z.infer<typeof EnrichedPersonSchema>;
 
@@ -101,36 +101,36 @@ export type LocationType = z.infer<typeof LocationTypeSchema>;
 
 // Localized names for multi-language support
 export const LocalizedNamesSchema = z.object({
-	en: z.string().optional(),
-	yi: z.string().optional(),
-	pl: z.string().optional(),
-	ru: z.string().optional(),
-	be: z.string().optional(),
-	he: z.string().optional(),
-	de: z.string().optional(),
-	uk: z.string().optional(),
+	en: z.string().nullish(),
+	yi: z.string().nullish(),
+	pl: z.string().nullish(),
+	ru: z.string().nullish(),
+	be: z.string().nullish(),
+	he: z.string().nullish(),
+	de: z.string().nullish(),
+	uk: z.string().nullish(),
 });
 export type LocalizedNames = z.infer<typeof LocalizedNamesSchema>;
 
 // Historical administrative context (for time-varying containment)
 export const HistoricalContextSchema = z.object({
 	period: z.string(),
-	label: z.string().optional(),
-	parent_id: z.string().optional(),
-	admin_name: z.string().optional(),
-	sovereignty: z.string().optional(),
-	notes: z.string().optional(),
+	label: z.string().nullish(),
+	parent_id: z.string().nullish(),
+	admin_name: z.string().nullish(),
+	sovereignty: z.string().nullish(),
+	notes: z.string().nullish(),
 });
 export type HistoricalContext = z.infer<typeof HistoricalContextSchema>;
 
 // Holocaust site metadata
 export const HolocaustSiteSchema = z.object({
-	site_type: z.string().optional(),
-	date_established: z.string().optional(),
-	date_liquidated: z.string().optional(),
-	estimated_victims: z.number().optional(),
-	key_events: z.array(z.string()).optional(),
-	sources: z.array(z.string()).optional(),
+	site_type: z.string().nullish(),
+	date_established: z.string().nullish(),
+	date_liquidated: z.string().nullish(),
+	estimated_victims: z.number().nullish(),
+	key_events: z.array(z.string()).nullish(),
+	sources: z.array(z.string()).nullish(),
 });
 export type HolocaustSite = z.infer<typeof HolocaustSiteSchema>;
 
@@ -138,24 +138,24 @@ export type HolocaustSite = z.infer<typeof HolocaustSiteSchema>;
 export const EnrichedLocationSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	yiddish_name: z.string().optional(),
+	yiddish_name: z.string().nullish(),
 	aliases: z.array(z.string()),
 	type: LocationTypeSchema,
-	coordinates: z.tuple([z.number(), z.number()]).optional(),
-	country: z.string().optional(),
-	country_historical: z.string().optional(),
-	region: z.string().optional(),
-	region_historical: z.string().optional(),
-	holocaust_history: z.string().optional(),
+	coordinates: z.tuple([z.number(), z.number()]).nullish(),
+	country: z.string().nullish(),
+	country_historical: z.string().nullish(),
+	region: z.string().nullish(),
+	region_historical: z.string().nullish(),
+	holocaust_history: z.string().nullish(),
 	unit_ids: z.array(z.string()),
 	external_references: z.array(ExternalReferenceSchema),
 	// New hierarchy and enrichment fields
-	names: LocalizedNamesSchema.optional(),
-	parent_id: z.string().optional(),
-	wikidata_id: z.string().optional(),
-	geonames_id: z.string().optional(),
-	historical_contexts: z.array(HistoricalContextSchema).optional(),
-	holocaust_site: HolocaustSiteSchema.optional(),
+	names: LocalizedNamesSchema.nullish(),
+	parent_id: z.string().nullish(),
+	wikidata_id: z.string().nullish(),
+	geonames_id: z.string().nullish(),
+	historical_contexts: z.array(HistoricalContextSchema).nullish(),
+	holocaust_site: HolocaustSiteSchema.nullish(),
 });
 export type EnrichedLocation = z.infer<typeof EnrichedLocationSchema>;
 
@@ -182,13 +182,13 @@ export const EnrichedEventSchema = z.object({
 	id: z.string(),
 	name: z.string(),
 	type: EventTypeSchema,
-	date: z.string().optional(),
-	date_notes: z.string().optional(),
-	location: z.string().optional(),
+	date: z.string().nullish(),
+	date_notes: z.string().nullish(),
+	location: z.string().nullish(),
 	description: z.string(),
 	participants: z.array(ParticipantSchema),
 	unit_ids: z.array(z.string()),
-	external_references: z.array(ExternalReferenceSchema).optional(),
+	external_references: z.array(ExternalReferenceSchema).nullish(),
 });
 export type EnrichedEvent = z.infer<typeof EnrichedEventSchema>;
 
@@ -202,12 +202,12 @@ const OrganizationMemberSchema = z.object({
 export const EnrichedOrganizationSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	yiddish_name: z.string().optional(),
+	yiddish_name: z.string().nullish(),
 	type: z.string(),
 	description: z.string(),
 	unit_ids: z.array(z.string()),
-	members: z.array(OrganizationMemberSchema).optional(),
-	external_references: z.array(ExternalReferenceSchema).optional(),
+	members: z.array(OrganizationMemberSchema).nullish(),
+	external_references: z.array(ExternalReferenceSchema).nullish(),
 });
 export type EnrichedOrganization = z.infer<typeof EnrichedOrganizationSchema>;
 
@@ -217,9 +217,9 @@ export type EnrichedOrganization = z.infer<typeof EnrichedOrganizationSchema>;
 export const SectionItemSchema = z.object({
 	id: z.string(),
 	label: z.string(),
-	icon: z.string().optional(),
-	event_id: z.string().optional(),
-	topic_id: z.string().optional(),
+	icon: z.string().nullish(),
+	event_id: z.string().nullish(),
+	topic_id: z.string().nullish(),
 	unit_ids: z.array(z.string()),
 });
 export type SectionItem = z.infer<typeof SectionItemSchema>;
@@ -228,12 +228,12 @@ export type SectionItem = z.infer<typeof SectionItemSchema>;
 export const SectionCategorySchema = z.object({
 	id: z.string(),
 	label: z.string(),
-	icon: z.string().optional(),
-	topic_id: z.string().optional(),
-	event_ids: z.array(z.string()).optional(),
+	icon: z.string().nullish(),
+	topic_id: z.string().nullish(),
+	event_ids: z.array(z.string()).nullish(),
 	unit_ids: z.array(z.string()),
-	primary_unit_ids: z.array(z.string()).optional(),
-	items: z.array(SectionItemSchema).optional(),
+	primary_unit_ids: z.array(z.string()).nullish(),
+	items: z.array(SectionItemSchema).nullish(),
 });
 export type SectionCategory = z.infer<typeof SectionCategorySchema>;
 
@@ -241,9 +241,9 @@ export type SectionCategory = z.infer<typeof SectionCategorySchema>;
 export const SectionSchema = z.object({
 	id: z.string(),
 	label: z.string(),
-	icon: z.string().optional(),
-	color: z.string().optional(),
-	defaultOpen: z.boolean().optional(),
+	icon: z.string().nullish(),
+	color: z.string().nullish(),
+	defaultOpen: z.boolean().nullish(),
 	categories: z.array(SectionCategorySchema),
 });
 export type Section = z.infer<typeof SectionSchema>;
@@ -257,9 +257,9 @@ export const EnrichmentDataSchema = z
 		people: z.array(EnrichedPersonSchema),
 		locations: z.array(EnrichedLocationSchema),
 		events: z.array(EnrichedEventSchema),
-		organizations: z.array(EnrichedOrganizationSchema).optional(),
+		organizations: z.array(EnrichedOrganizationSchema).nullish(),
 		topics: z.array(TopicSchema),
-		sections: z.array(SectionSchema).optional(),
+		sections: z.array(SectionSchema).nullish(),
 	})
 	.passthrough();
 export type EnrichmentData = z.infer<typeof EnrichmentDataSchema>;
