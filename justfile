@@ -17,7 +17,7 @@ scan:
 
 # Run the zod/*.test.ts suite via the pruzhany-svelte sibling checkout's vitest.
 test-zod:
-    cd ../pruzhany-svelte && npx vitest run src/lib/schemas
+    cd ../pruzhany-svelte && bunx vitest run src/lib/schemas
 
 # Run the Zod<->Pydantic drift gate via the pruzhany-press sibling checkout.
 test-contract:
