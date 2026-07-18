@@ -203,6 +203,9 @@ class PartisanActivity(BaseModel):
     """Partisan activity details for a person."""
 
     unit: str = Field(description="Partisan unit name")
+    alternate_unit: str | None = Field(
+        default=None, description="Alternative/related unit name"
+    )
     rank: str | None = Field(default=None, description="Rank if known")
     alias: str | None = Field(default=None, description="Nom de guerre")
     activities: str | None = Field(default=None, description="Known activities")

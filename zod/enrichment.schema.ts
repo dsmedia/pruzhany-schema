@@ -4,6 +4,7 @@ import { HolocaustFateSchema, ExternalReferenceSchema } from './shared.schema';
 // Partisan activity (nested in Person)
 const PartisanActivitySchema = z.object({
 	unit: z.string(),
+	alternate_unit: z.string().nullish(),
 	rank: z.string().nullish(),
 	alias: z.string().nullish(),
 	activities: z.string().nullish(),

@@ -176,6 +176,7 @@ export const EditionEventSchema = z.object({
 
 const PartisanActivitySchema = z.object({
 	unit: z.string(),
+	alternate_unit: z.string().optional(),
 	rank: z.string().optional(),
 	alias: z.string().optional(),
 	activities: z.string().optional(),
