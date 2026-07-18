@@ -183,11 +183,15 @@ export const EnrichedEventSchema = z.object({
 	name: z.string(),
 	type: EventTypeSchema,
 	date: z.string().nullish(),
+	date_hebrew: z.string().nullish(),
 	date_notes: z.string().nullish(),
 	location: z.string().nullish(),
 	description: z.string(),
 	participants: z.array(ParticipantSchema),
 	unit_ids: z.array(z.string()),
+	// Editorial role of each related unit (keyed by unit id, e.g.
+	// "primary_announcement" | "congratulation" | "mention" | "advertisement")
+	unit_roles: z.record(z.string(), z.string()).nullish(),
 	external_references: z.array(ExternalReferenceSchema).nullish(),
 });
 export type EnrichedEvent = z.infer<typeof EnrichedEventSchema>;

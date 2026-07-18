@@ -195,6 +195,20 @@ const AdditionalDetailSchema = z.object({
 	value: z.string(),
 });
 
+const EnrichmentSourceSchema = z.enum(['flash', 'deep_research']);
+
+const BiographicalNarrativeSchema = z.object({
+	source: EnrichmentSourceSchema,
+	markdown: z.string(),
+});
+
+const ProposedRelationshipSchema = z.object({
+	type: z.string(),
+	person_id_hint: z.string(),
+	evidence: z.string(),
+	source: EnrichmentSourceSchema,
+});
+
 export const EditionPersonSchema = z.object({
 	id: z.string(),
 	name: z.string(),
@@ -224,6 +238,8 @@ export const EditionPersonSchema = z.object({
 	ghetto_role: z.string().optional(),
 	headshot_path: z.string().optional(),
 	additional_details: z.array(AdditionalDetailSchema).optional(),
+	biographical_narratives: z.array(BiographicalNarrativeSchema).optional(),
+	proposed_relationships: z.array(ProposedRelationshipSchema).optional(),
 	external_references: z.array(ExternalReferenceSchema),
 });
 

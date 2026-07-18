@@ -434,6 +434,7 @@ class EnrichedEvent(BaseModel):
     name: str = Field(description="Event name")
     type: EnrichedEventType = Field(description="Event type")
     date: str | None = Field(default=None, description="Date if known")
+    date_hebrew: str | None = Field(default=None, description="Hebrew calendar date")
     date_notes: str | None = Field(default=None, description="Date notes")
     location: str | None = Field(default=None, description="Location reference")
     description: str = Field(description="Event description")
@@ -442,6 +443,13 @@ class EnrichedEvent(BaseModel):
     )
     unit_ids: list[str] = Field(
         default_factory=list, description="Related content unit IDs"
+    )
+    unit_roles: dict[str, str] | None = Field(
+        default=None,
+        description=(
+            "Editorial role of each related unit, keyed by unit id "
+            '(e.g. "primary_announcement" | "congratulation" | "mention" | "advertisement")'
+        ),
     )
     external_references: list[ExternalReference] | None = Field(
         default=None, description="External references"
