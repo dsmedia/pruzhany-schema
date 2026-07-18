@@ -9,11 +9,11 @@ default:
 
 # One-time setup per clone: install and register the gitleaks pre-commit hook.
 pre-commit-install:
-    uv tool install pre-commit && pre-commit install
+    uv tool install pre-commit && uvx pre-commit install
 
 # Run the pre-commit hooks (gitleaks) against the whole repo.
 scan:
-    pre-commit run --all-files
+    uvx pre-commit run --all-files
 
 # Run the zod/*.test.ts suite via the pruzhany-svelte sibling checkout's vitest.
 test-zod:
