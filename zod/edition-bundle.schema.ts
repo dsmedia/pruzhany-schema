@@ -21,16 +21,13 @@
 
 import { z } from 'zod/v4';
 import { ContentUnitTypeSchema } from './content-unit.schema';
+import { ExternalReferenceSchema } from './shared.schema';
 
 // ── Shared Primitives ─────────────────────────────────────────────
 
 const IsoDateString = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
-export const ExternalReferenceSchema = z.object({
-	source: z.string(),
-	url: z.string().optional(),
-	notes: z.string().optional(),
-});
+export { ExternalReferenceSchema };
 
 export const HolocaustFateSchema = z.enum([
 	'unknown',
