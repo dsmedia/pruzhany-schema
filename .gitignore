@@ -22,3 +22,10 @@ Thumbs.db
 # Env
 .env
 .env.local
+
+# Claude Code local state — a worktree is a full checkout; committing one puts
+# the repo inside itself. pruzhany-svelte has carried these rules since before
+# worktrees were used here; this brings the repo in line with it.
+.claude/worktrees/
+.claude/projects/
+.claude/scheduled_tasks.lock
