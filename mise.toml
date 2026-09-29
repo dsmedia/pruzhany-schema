@@ -1,8 +1,8 @@
-# pruzhany-schema has no build/test of its own (see CLAUDE.md "Testing") — its
-# two trees are exercised by the consumer repos. Versions below match those
-# consumers (pruzhany-svelte's bun pin, pruzhany-press's python floor) so a
-# clone of this repo alone stays compatible with both.
+# Tool versions for bin/verify (the one verify entry point; CI installs the
+# same versions in .github/workflows/ci.yml). bun and python match the consumer
+# repos (pruzhany-svelte's bun pin, pruzhany-press's python floor).
 [tools]
 bun = "1.3.11"
 python = "3.11"
 just = "1.56.0"
+gitleaks = "8.24.3"

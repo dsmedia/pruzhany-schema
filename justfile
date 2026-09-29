@@ -1,24 +1,31 @@
-# pruzhany-schema command runner. This repo is a pure contract layer with no
-# build or test of its own (CLAUDE.md "Testing") — the two delegating recipes
-# below run this repo's tests from its sibling consumer checkouts, exactly as
-# CLAUDE.md documents. `pre-commit-install`/`scan` wrap the one thing that is
-# genuinely local: the gitleaks secret scan (.pre-commit-config.yaml).
+# pruzhany-schema command runner. The one verify entry point is bin/verify
+# (CI runs it verbatim); the recipes below delegate to it. `test-contract` is
+# the one check bin/verify cannot run: it needs the private pruzhany-press
+# sibling checkout (see the header of bin/verify).
+
+press_dir := env_var_or_default("PRUZHANY_PRESS_DIR", justfile_directory() / ".." / "pruzhany-press")
 
 default:
     @just --list
+
+# Everything CI runs: gitleaks scan, zod tests + typecheck, pydantic load check.
+verify *steps:
+    bin/verify {{steps}}
 
 # One-time setup per clone: install and register the gitleaks pre-commit hook.
 pre-commit-install:
     uv tool install pre-commit && uvx pre-commit install
 
-# Run the pre-commit hooks (gitleaks) against the whole repo.
+# gitleaks over the full history (bin/verify step `scan`).
 scan:
-    uvx pre-commit run --all-files
+    bin/verify scan
 
-# Run the zod/*.test.ts suite via the pruzhany-svelte sibling checkout's vitest.
+# The zod/*.test.ts suite and a strict typecheck, standalone (bin/verify step `zod`).
 test-zod:
-    cd ../pruzhany-svelte && bunx vitest run src/lib/schemas
+    bin/verify zod
 
-# Run the Zod<->Pydantic drift gate via the pruzhany-press sibling checkout.
+# Zod<->Pydantic drift gate, run from the pruzhany-press checkout (the sibling
+# by default; set PRUZHANY_PRESS_DIR from a worktree) against THIS checkout
+# rather than press's submodule pin. Not in CI: pruzhany-press is private.
 test-contract:
-    cd ../pruzhany-press && uv run --group dev python -m pytest tests/contract/
+    cd "{{press_dir}}" && PRUZHANY_SCHEMA_ROOT="{{justfile_directory()}}" uv run --group dev python -m pytest tests/contract/

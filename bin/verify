@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+# bin/verify — the one verify entry point for pruzhany-schema. CI runs it
+# verbatim (.github/workflows/ci.yml); run it locally before pushing.
+#
+#   bin/verify            run every step below
+#   bin/verify <step>...  run only the named steps (scan, zod, pydantic)
+#
+# Steps (all self-contained: nothing outside this checkout is read):
+#   scan      gitleaks over the full git history, secrets redacted.
+#   zod       bun install --frozen-lockfile (package.json pins the same zod,
+#             vitest and typescript versions as pruzhany-svelte's bun.lock),
+#             then the zod/*.test.ts suite under vitest and a strict tsc
+#             typecheck of zod/.
+#   pydantic  loads the pydantic/ package (under a non-shadowing name) with
+#             the pydantic version pruzhany-press's uv.lock resolves, and
+#             generates the JSON Schema of every model it defines.
+#
+# NOT run here, because it needs a sibling checkout of a private consumer repo
+# that this public repo's CI cannot clone:
+#   the Zod<->Pydantic drift gate, which lives in pruzhany-press/tests/contract/
+#   and runs in pruzhany-press's CI against the pinned submodule. Before pushing
+#   a contract change, run it locally against this checkout: `just test-contract`.
+#
+# Tools: bash, git, bun, uv, gitleaks (versions pinned in mise.toml; CI
+# installs the same ones).
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+# Keep these in step with pruzhany-press's uv.lock.
+PYDANTIC_VERSION="2.12.5"
+PYTHON_VERSION="3.11"
+
+step_scan() {
+	gitleaks git . --redact --exit-code 1 --no-banner
+}
+
+step_zod() {
+	bun install --frozen-lockfile
+	# --dir keeps vitest from collecting tests inside .claude/worktrees/.
+	bun x vitest run --dir zod
+	bun x tsc --noEmit --strict --target es2022 --module esnext \
+		--moduleResolution bundler --skipLibCheck zod/*.ts
+	echo "tsc: zod/ typechecks"
+}
+
+step_pydantic() {
+	uv run --no-project --python "$PYTHON_VERSION" \
+		--with "pydantic==$PYDANTIC_VERSION" python -P - <<'PY'
+"""Load pydantic/ and build every model's JSON Schema.
+
+The tree is a package literally named `pydantic`, which would shadow the
+library if the repo root were on sys.path (hence `python -P`), so it is
+loaded under another name, the same way pruzhany-press's contract gate does.
+"""
+
+import importlib.util
+import inspect
+import sys
+from pathlib import Path
+
+from pydantic import BaseModel
+
+PKG = "pruzhany_schema_pydantic"
+root = Path("pydantic")
+spec = importlib.util.spec_from_file_location(
+    PKG, root / "__init__.py", submodule_search_locations=[str(root)]
+)
+package = importlib.util.module_from_spec(spec)
+sys.modules[PKG] = package
+spec.loader.exec_module(package)
+
+count = 0
+for path in sorted(root.glob("*.py")):
+    if path.name == "__init__.py":
+        continue
+    module = importlib.import_module(f"{PKG}.{path.stem}")
+    for _, obj in inspect.getmembers(module, inspect.isclass):
+        if issubclass(obj, BaseModel) and obj.__module__ == module.__name__:
+            obj.model_json_schema()
+            count += 1
+if count == 0:
+    sys.exit("pydantic: no models found")
+print(f"pydantic: {count} models load and emit JSON Schema")
+PY
+}
+
+ALL_STEPS=(scan zod pydantic)
+steps=("$@")
+[ ${#steps[@]} -eq 0 ] && steps=("${ALL_STEPS[@]}")
+
+for step in "${steps[@]}"; do
+	case "$step" in
+	scan | zod | pydantic) ;;
+	*)
+		echo "bin/verify: unknown step '$step' (expected: ${ALL_STEPS[*]})" >&2
+		exit 2
+		;;
+	esac
+done
+
+for step in "${steps[@]}"; do
+	echo "==> $step"
+	"step_$step"
+done
+echo "==> verify passed: ${steps[*]}"
