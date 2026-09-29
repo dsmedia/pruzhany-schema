@@ -19,7 +19,7 @@ Zod and Pydantic models are kept in lock-step. When you change a type on one sid
 
 ## Verify
 
-`bin/verify` is the one verify entry point, and CI runs it verbatim: a gitleaks history scan, the `zod/*.test.ts` suite plus a strict typecheck (toolchain pinned in `package.json`/`bun.lock` to pruzhany-svelte's versions), and a load-and-emit-JSON-Schema check of every Pydantic model. The Zod↔Pydantic drift gate lives in the private pruzhany-press repo; run it against this checkout with `just test-contract`.
+`bin/verify` is the one verify entry point, and CI runs it verbatim (`gitleaks.yml` runs its `scan` step, `ci.yml` the rest): a gitleaks history scan, the `zod/*.test.ts` suite plus a strict typecheck (toolchain pinned in `package.json`/`bun.lock` to pruzhany-svelte's versions), and a load-and-emit-JSON-Schema check of every Pydantic model. The Zod↔Pydantic drift gate lives in the private pruzhany-press repo; run it against this checkout with `just test-contract`.
 
 ## License
 

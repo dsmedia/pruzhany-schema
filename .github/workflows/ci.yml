@@ -1,9 +1,10 @@
 name: ci
 
-# Runs the repo's one verify entry point, bin/verify, verbatim. The steps
+# Runs the repo's one verify entry point, bin/verify, verbatim. Its `scan`
+# step runs in gitleaks.yml, which keeps a wider trigger (every push to every
+# branch); this workflow runs the other steps, so the two together run exactly
+# `bin/verify` and the history is scanned once per push, not twice. The steps
 # before it only install the tools it needs, at the versions mise.toml pins.
-# gitleaks.yml stays a separate workflow so every push to any branch is still
-# scanned; bin/verify repeats that scan so a local run matches CI exactly.
 on:
   push:
     branches: [main]
@@ -22,9 +23,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-        with:
-          # bin/verify's gitleaks step scans the full history.
-          fetch-depth: 0
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -34,11 +32,4 @@ jobs:
         with:
           version: "0.11.13"
 
-      - name: Install gitleaks 8.24.3
-        run: |
-          curl -sL -o "$RUNNER_TEMP/gitleaks.tar.gz" https://github.com/gitleaks/gitleaks/releases/download/v8.24.3/gitleaks_8.24.3_linux_x64.tar.gz
-          echo "9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c  $RUNNER_TEMP/gitleaks.tar.gz" | sha256sum -c -
-          tar xzf "$RUNNER_TEMP/gitleaks.tar.gz" -C "$RUNNER_TEMP" gitleaks
-          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
-
-      - run: bin/verify
+      - run: bin/verify zod pydantic

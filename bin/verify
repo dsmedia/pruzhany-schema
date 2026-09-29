@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# bin/verify — the one verify entry point for pruzhany-schema. CI runs it
-# verbatim (.github/workflows/ci.yml); run it locally before pushing.
+# bin/verify — the one verify entry point for pruzhany-schema; run it locally
+# before pushing. CI runs it verbatim, split across two workflows so the
+# history is scanned once: gitleaks.yml runs `bin/verify scan` (every push to
+# every branch) and ci.yml runs `bin/verify zod pydantic`.
 #
 #   bin/verify            run every step below
 #   bin/verify <step>...  run only the named steps (scan, zod, pydantic)
