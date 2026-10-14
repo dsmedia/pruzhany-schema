@@ -111,12 +111,13 @@ describe('Enrichment Schemas', () => {
 			external_references: [],
 		});
 
-		it("keeps a relationship's related name, gender and who vouched for it", () => {
+		it("keeps a relationship's related name, gender, fate and who vouched for it", () => {
 			const relationship = {
 				person_id: 'person-2',
 				type: 'child_of',
 				name: 'Test Parent',
 				gender: 'male',
+				holocaust_fate: 'died_before',
 				confirmed: { by: 'a family member', on: '2026-10-14' },
 			};
 			const parsed = EnrichedPersonSchema.parse(withRelationship(relationship));
@@ -139,6 +140,11 @@ describe('Enrichment Schemas', () => {
 
 		it('rejects a relationship whose related gender is invalid', () => {
 			const relationship = { person_id: 'person-2', type: 'spouse', gender: 'other' };
+			expect(() => EnrichedPersonSchema.parse(withRelationship(relationship))).toThrow();
+		});
+
+		it('rejects a relationship whose related fate is invalid', () => {
+			const relationship = { person_id: 'person-2', type: 'spouse', holocaust_fate: 'dead' };
 			expect(() => EnrichedPersonSchema.parse(withRelationship(relationship))).toThrow();
 		});
 	});
