@@ -99,6 +99,46 @@ describe('Enrichment Schemas', () => {
 			};
 			expect(() => EnrichedPersonSchema.parse(person)).toThrow();
 		});
+
+		const withRelationship = (relationship: Record<string, unknown>) => ({
+			id: 'person-1',
+			name: 'Test',
+			aliases: [],
+			gender: 'female',
+			holocaust_fate: 'unknown',
+			unit_ids: [],
+			relationships: [relationship],
+			external_references: [],
+		});
+
+		it("keeps a relationship's related name, gender and who vouched for it", () => {
+			const relationship = {
+				person_id: 'person-2',
+				type: 'child_of',
+				name: 'Test Parent',
+				gender: 'male',
+				confirmed: { by: 'a family member', on: '2026-10-14' },
+			};
+			const parsed = EnrichedPersonSchema.parse(withRelationship(relationship));
+			expect(parsed.relationships[0]).toEqual(relationship);
+		});
+
+		it('accepts a relationship without them (backward compat)', () => {
+			const parsed = EnrichedPersonSchema.parse(
+				withRelationship({ person_id: 'person-2', type: 'spouse', evidence: null })
+			);
+			expect(parsed.relationships[0].confirmed).toBeUndefined();
+		});
+
+		it('rejects a confirmation without its day', () => {
+			const relationship = { person_id: 'person-2', type: 'spouse', confirmed: { by: 'x' } };
+			expect(() => EnrichedPersonSchema.parse(withRelationship(relationship))).toThrow();
+		});
+
+		it('rejects a relationship whose related gender is invalid', () => {
+			const relationship = { person_id: 'person-2', type: 'spouse', gender: 'other' };
+			expect(() => EnrichedPersonSchema.parse(withRelationship(relationship))).toThrow();
+		});
 	});
 
 	describe('ExternalReferenceSchema', () => {

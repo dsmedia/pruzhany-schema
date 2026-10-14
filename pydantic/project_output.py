@@ -211,12 +211,34 @@ class PartisanActivity(BaseModel):
     activities: str | None = Field(default=None, description="Known activities")
 
 
+class RelationshipConfirmation(BaseModel):
+    """Who vouched for a relationship, and on which day.
+
+    Only a relationship someone has vouched for is published: the site's privacy
+    projection drops every other one as unreviewed.
+    """
+
+    by: str = Field(description="Who vouched for the relationship")
+    on: str = Field(description="The day they did, as an ISO date")
+
+
 class PersonRelationship(BaseModel):
     """Relationship between two people."""
 
     person_id: str = Field(description="ID of related person")
     type: str = Field(description="Relationship type (spouse, parent_of, etc.)")
     evidence: str | None = Field(default=None, description="Evidence from text")
+    name: str | None = Field(
+        default=None,
+        description="The related person's name, for an edition that does not print them",
+    )
+    gender: Gender | None = Field(
+        default=None,
+        description="The related person's gender, for an edition that does not print them",
+    )
+    confirmed: RelationshipConfirmation | None = Field(
+        default=None, description="Who vouched for the relationship, and when"
+    )
 
 
 class AdditionalDetail(BaseModel):
