@@ -190,7 +190,7 @@ const RelationshipSchema = z.object({
 	name: z.string().optional(),
 	gender: z.enum(['male', 'female', 'unknown']).optional(),
 	// Who vouched for the relationship, and on which day (ISO date).
-	confirmed: z.object({ by: z.string(), on: z.string() }).optional(),
+	confirmed: z.object({ by: z.string(), on: IsoDateString }).optional(),
 });
 
 const AdditionalDetailSchema = z.object({

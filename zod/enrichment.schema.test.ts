@@ -130,9 +130,11 @@ describe('Enrichment Schemas', () => {
 			expect(parsed.relationships[0].confirmed).toBeUndefined();
 		});
 
-		it('rejects a confirmation without its day', () => {
-			const relationship = { person_id: 'person-2', type: 'spouse', confirmed: { by: 'x' } };
-			expect(() => EnrichedPersonSchema.parse(withRelationship(relationship))).toThrow();
+		it('rejects a confirmation without its day, or with a day that is no ISO date', () => {
+			for (const confirmed of [{ by: 'x' }, { by: 'x', on: 'today' }, { by: 'x', on: '' }]) {
+				const relationship = { person_id: 'person-2', type: 'spouse', confirmed };
+				expect(() => EnrichedPersonSchema.parse(withRelationship(relationship))).toThrow();
+			}
 		});
 
 		it('rejects a relationship whose related gender is invalid', () => {

@@ -13,9 +13,11 @@ const PartisanActivitySchema = z.object({
 // Who vouched for a relationship, and on which day (ISO date). Only a
 // relationship someone has vouched for is published: the site's privacy
 // projection drops every other one as unreviewed.
+const IsoDateString = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+
 const RelationshipConfirmationSchema = z.object({
 	by: z.string(),
-	on: z.string(),
+	on: IsoDateString,
 });
 
 // Relationship (nested in Person). `name` and `gender` are the related

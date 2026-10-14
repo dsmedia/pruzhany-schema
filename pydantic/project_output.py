@@ -219,7 +219,9 @@ class RelationshipConfirmation(BaseModel):
     """
 
     by: str = Field(description="Who vouched for the relationship")
-    on: str = Field(description="The day they did, as an ISO date")
+    on: str = Field(
+        pattern=r"^\d{4}-\d{2}-\d{2}$", description="The day they did, as an ISO date"
+    )
 
 
 class PersonRelationship(BaseModel):
