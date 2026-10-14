@@ -238,6 +238,13 @@ class PersonRelationship(BaseModel):
         default=None,
         description="The related person's gender, for an edition that does not print them",
     )
+    holocaust_fate: HolocaustFate | None = Field(
+        default=None,
+        description=(
+            "The related person's fate, for an edition that does not print them; "
+            "what the site's living-person presumption reads of a relative no edition prints"
+        ),
+    )
     confirmed: RelationshipConfirmation | None = Field(
         default=None, description="Who vouched for the relationship, and when"
     )

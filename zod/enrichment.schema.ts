@@ -20,15 +20,17 @@ const RelationshipConfirmationSchema = z.object({
 	on: IsoDateString,
 });
 
-// Relationship (nested in Person). `name` and `gender` are the related
-// person's, kept with the relationship so that it can be shown in an edition
-// that does not print that person.
+// Relationship (nested in Person). `name`, `gender` and `holocaust_fate` are
+// the related person's, kept with the relationship so that it can be shown in
+// an edition that does not print that person; the fate is what the site's
+// living-person presumption reads of a relative no edition prints.
 const RelationshipSchema = z.object({
 	person_id: z.string(),
 	type: z.string(),
 	evidence: z.string().nullish(),
 	name: z.string().nullish(),
 	gender: z.enum(['male', 'female', 'unknown']).nullish(),
+	holocaust_fate: HolocaustFateSchema.nullish(),
 	confirmed: RelationshipConfirmationSchema.nullish(),
 });
 
