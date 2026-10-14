@@ -186,6 +186,11 @@ const RelationshipSchema = z.object({
 	person_id: z.string(),
 	type: z.string(),
 	evidence: z.string().optional(),
+	// The related person's name and gender, for an edition that does not print them.
+	name: z.string().optional(),
+	gender: z.enum(['male', 'female', 'unknown']).optional(),
+	// Who vouched for the relationship, and on which day (ISO date).
+	confirmed: z.object({ by: z.string(), on: IsoDateString }).optional(),
 });
 
 const AdditionalDetailSchema = z.object({

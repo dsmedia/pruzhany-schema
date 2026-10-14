@@ -10,11 +10,26 @@ const PartisanActivitySchema = z.object({
 	activities: z.string().nullish(),
 });
 
-// Relationship (nested in Person)
+// Who vouched for a relationship, and on which day (ISO date). Only a
+// relationship someone has vouched for is published: the site's privacy
+// projection drops every other one as unreviewed.
+const IsoDateString = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+
+const RelationshipConfirmationSchema = z.object({
+	by: z.string(),
+	on: IsoDateString,
+});
+
+// Relationship (nested in Person). `name` and `gender` are the related
+// person's, kept with the relationship so that it can be shown in an edition
+// that does not print that person.
 const RelationshipSchema = z.object({
 	person_id: z.string(),
 	type: z.string(),
 	evidence: z.string().nullish(),
+	name: z.string().nullish(),
+	gender: z.enum(['male', 'female', 'unknown']).nullish(),
+	confirmed: RelationshipConfirmationSchema.nullish(),
 });
 
 // Topic
