@@ -248,6 +248,13 @@ class PersonRelationship(BaseModel):
     confirmed: RelationshipConfirmation | None = Field(
         default=None, description="Who vouched for the relationship, and when"
     )
+    shown: RelationshipConfirmation | None = Field(
+        default=None,
+        description=(
+            "Who said the related person may be shown though they may be living, and when; "
+            "without it a relative no source has dead and no edition prints is never shown"
+        ),
+    )
 
 
 class AdditionalDetail(BaseModel):
