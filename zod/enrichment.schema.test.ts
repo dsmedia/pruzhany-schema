@@ -124,11 +124,33 @@ describe('Enrichment Schemas', () => {
 			expect(parsed.relationships[0]).toEqual(relationship);
 		});
 
+		it('keeps who said the related person may be shown, and when', () => {
+			const relationship = {
+				person_id: 'person-2',
+				type: 'great_grandchild_of',
+				name: 'Test Descendant',
+				gender: 'male',
+				holocaust_fate: 'not_applicable',
+				confirmed: { by: 'a family member', on: '2026-10-16' },
+				shown: { by: 'a family member', on: '2026-10-16' },
+			};
+			const parsed = EnrichedPersonSchema.parse(withRelationship(relationship));
+			expect(parsed.relationships[0]).toEqual(relationship);
+		});
+
+		it('rejects a word to show without its day, or with a day that is no ISO date', () => {
+			for (const shown of [{ by: 'x' }, { by: 'x', on: 'today' }, { on: '2026-10-16' }]) {
+				const relationship = { person_id: 'person-2', type: 'spouse', shown };
+				expect(() => EnrichedPersonSchema.parse(withRelationship(relationship))).toThrow();
+			}
+		});
+
 		it('accepts a relationship without them (backward compat)', () => {
 			const parsed = EnrichedPersonSchema.parse(
 				withRelationship({ person_id: 'person-2', type: 'spouse', evidence: null })
 			);
 			expect(parsed.relationships[0].confirmed).toBeUndefined();
+			expect(parsed.relationships[0].shown).toBeUndefined();
 		});
 
 		it('rejects a confirmation without its day, or with a day that is no ISO date', () => {

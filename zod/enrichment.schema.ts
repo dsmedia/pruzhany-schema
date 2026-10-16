@@ -23,7 +23,10 @@ const RelationshipConfirmationSchema = z.object({
 // Relationship (nested in Person). `name`, `gender` and `holocaust_fate` are
 // the related person's, kept with the relationship so that it can be shown in
 // an edition that does not print that person; the fate is what the site's
-// living-person presumption reads of a relative no edition prints.
+// living-person presumption reads of a relative no edition prints. `shown` is
+// who said the related person may be shown though they may be living, and on
+// which day: without it, a relative no source has dead and no edition prints
+// is presumed living and never shown.
 const RelationshipSchema = z.object({
 	person_id: z.string(),
 	type: z.string(),
@@ -32,6 +35,7 @@ const RelationshipSchema = z.object({
 	gender: z.enum(['male', 'female', 'unknown']).nullish(),
 	holocaust_fate: HolocaustFateSchema.nullish(),
 	confirmed: RelationshipConfirmationSchema.nullish(),
+	shown: RelationshipConfirmationSchema.nullish(),
 });
 
 // Topic
