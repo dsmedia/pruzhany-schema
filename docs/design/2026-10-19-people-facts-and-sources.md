@@ -1,4 +1,4 @@
-# People, their facts and their sources: a proposal
+# People, places, organisations and events, with their facts and sources: a proposal
 
 **Status:** proposal; no schema type changes yet.
 **Date:** 2026-10-19
@@ -307,6 +307,84 @@ The research trail stays in the pipeline's OKF person files and is not published
 records turned down, and the leads ("YV PoT: none filed — gap"). The schema carries the conclusions and what
 they cite. A rejected fact or a `distinct_from` entry is the trail's only footprint, kept so the same mistake
 is not made twice.
+
+## Places, organisations, events and topics
+
+The same pattern applies to every kind of thing the paper names. It was measured the same way: across the 238
+enrichment files of `pruzhany-svelte` at `35cccf9`.
+
+### What the data shows
+
+| | records in the files | distinct ids | ids whose copies differ | joined to a shared list |
+|---|---|---|---|---|
+| places | 9,308 | 2,048 | 593 | 6 with a GeoNames id, 6 with Wikidata |
+| organisations | 8,801 | 2,713 | 757 | none |
+| events | 1,618 | 1,618 | — | none |
+| topics | 5 | 5 | — | none |
+
+- **One thing under many ids.** 225 place ids end in `-2`, `-3` and so on (`location-krakow` and
+  `location-krakow-2`; `location-usa` and `location-united-states`). One school, Yavneh, is spread over about
+  a dozen organisation ids (`org-tarbut-school-yavne`, `org-tarbut-school-yavneh`, `org-hebrew-folk-school-yavneh`,
+  `org-hebrew-public-school-yavneh`, …). Another forty-odd ids are its committees, for the parents and for its
+  poor pupils, which are bodies of the school and say so nowhere.
+- **Events are not joined across editions.** An engagement announced on 2 February and greeted again on
+  9 February 1934 is two events (`event-19340202-engagement-of-esther-cherchevski-…` and
+  `event-19340209-engagement-of-esther-cherechevsky-…`), spelled two ways. There are two event systems besides:
+  the enrichment `events` and the `life-events` file. Each has its own ids and its own participants.
+- **Places have no time.** Pruzhany is Prużana, Pruzhene, פרוזשענע and Пружаны, in Poland's Polesie
+  voivodeship in 1939, the USSR's in 1940 and the Bezirk Bialystok in 1942. Its streets were renamed (the
+  "3rd of May street" is held under two ids). `parent_id` is a single parent with no date.
+- **Organisations have only a name, a type and a description.** They have no place, no dates, no parent body
+  and no officers. The officers are in the paper ("the board of the Small Traders' Association"), and the
+  people work already reads them: the fan-out's `other` facts include "Member of the five-person Bund
+  committee after the Kultur-Lige was reorganized in 1934".
+
+### The same model, kind by kind
+
+Each kind gets one record for the whole paper, mentions with a role in each edition, names with a kind and a
+time, facts with citations, and ids in the shared lists. Each maps to RiC-O:
+
+- **Place** (`rico:Place`): `names` with language, script and the years each name was used. `part_of` with
+  dates (the town in the voivodeship, the street in the town, the ghetto in the town). `type` from the
+  vocabulary. Coordinates. Ids in shared lists: **GeoNames** for modern places, **Wikidata**, **EHRI's
+  camps and ghettos** for those, and JewishGen's town list for the communities. The `dsmedia/arolsen` catalogue
+  already loads EHRI's camps and ghettos and USHMM's town-to-region gazetteer, whose name variants (e.g.
+  "Pruzhany" finds the ghetto EHRI labels "Prużana") can propose these links. A street or an address is a
+  place of the town's own local list, with its old and new names.
+- **Organisation** (`rico:CorporateBody`): names, `type`, `part_of` with dates (a parents' committee of the
+  Yavneh school; the school in the Tarbut network; a branch of the Bund or of TOZ), place, years active.
+  Ids: Wikidata for national bodies (Tarbut, the Bund, Keren Hayesod, the JNF, TOZ, ORT, Hitachdut). People's
+  offices and memberships are *person facts* (`type: office` or `membership`) that point at the organisation,
+  so the organisation's page lists its officers by year without holding them itself.
+- **Event** (`rico:Event`): one record for the event, however many editions announce, greet or mourn it.
+  `type` from the vocabulary, a date (Hebrew as printed and Gregorian), a place, `participants` with the same
+  roles as mentions (the deceased, the couple, the mourners, the signers). The two event systems become one:
+  `life-events` is the family events among them. A person's `marriage` or `death` fact cites its event. Events
+  of the wider world (Kristallnacht, the outbreak of war) carry a Wikidata id.
+- **Topic**: a term of **EHRI's thesaurus** (the controlled vocabulary of terms its portal and editions use)
+  wherever one fits, and our own term where none does, so that the paper's subjects are searchable with the
+  same words as the archives'.
+
+### How they are joined
+
+Joining is the people's problem again (issue #1, NIL clustering), but most of it is cheaper:
+
+- **By code first.** Names folded (spelling, script, the `-2` suffix), then matched against the shared lists:
+  GeoNames, EHRI and the arolsen gazetteer for places; Wikidata for national bodies and world events. An event
+  is joined across editions when its type and principal people agree. This needs no model, and is checked
+  the way the people's records are, against the printed words.
+- **A fan-out only for what code cannot settle.** A judge and a checker, as for people, over the residue: the
+  committees of one school, two towns of one name, an organisation renamed. The fan-out's
+  `other_metadata` already corrects a piece's places, organisations and events, and becomes the input here.
+- **The vocabulary and the harvest are shared.** Place types, organisation types, event types and mention
+  roles are in the same vocabulary file. A judge's `proposed_type` for any of them goes through the same
+  harvest after each round.
+
+### On the site
+
+The four stages of the rollout apply unchanged. A place page with its map, its names over time and the
+pieces that name it; an organisation page with its officers by year; an event page gathering every greeting
+and notice of one wedding; all three come at stage 4, with the person page.
 
 ## Working with the fan-out: information with no home yet
 
