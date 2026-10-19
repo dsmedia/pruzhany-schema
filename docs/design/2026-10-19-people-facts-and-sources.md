@@ -308,6 +308,68 @@ records turned down, and the leads ("YV PoT: none filed — gap"). The schema ca
 they cite. A rejected fact or a `distinct_from` entry is the trail's only footprint, kept so the same mistake
 is not made twice.
 
+## Working with the fan-out: information with no home yet
+
+### How often it happens
+
+It is common. The fan-out's judges (`pruzhany-steps`, `.scratch/people-fanout/judged/`, 152 batches,
+844 people written) state each fact a source gives in `fate.facts`. Their `fact_kind` is one of ten, and
+**312 of the 771 facts are `other`**. Of the rest, `parent_name` has 112 and `birth_year_or_age` 69. The
+`other` facts are of three different sorts:
+
+- **About the person, with no field yet:** "Moshe and Leibl in Argentina; Kalman in Israel", "Resident in
+  Tel Aviv before the war", "Born in Telechany", "Wife's maiden surname Zolotnitzki", "Member of the
+  five-person Bund committee after the Kultur-Lige was reorganized in 1934", "Meir Motil and Lipe Zakheim
+  headed the Jewish ghetto police", "Murdered at Auschwitz … no death date stated".
+- **About the source, not the person:** "Second testimony: fourth child-table row has age 8 and no name",
+  "Maiden name indexed Lobental, but the original submitter declaration explicitly identifies the victim as
+  Weinsztok".
+- **Already in another field:** "Female", "Gender: Female".
+
+The rest goes into `why`, one paragraph per person with a median of 1,283 characters. The examples in this
+proposal (emigration, office held, a death place without a date) all came from there.
+
+New kinds will keep appearing as the work reaches later editions, new sources (oral histories, ghetto
+records) and new sorts of people (rabbis, writers, office holders). The schema must take them in without
+being redesigned every round.
+
+### Three homes, so nothing is lost
+
+1. **A fact about the person** with a type from the list, or `type: "other"` with a short `proposed_type`
+   (`"emigration"`, `"office"`, `"ghetto_police"`). It is checked, cited and kept like any other fact. It is
+   simply not yet given a field of its own on the site.
+2. **A note about a source** goes on the `Citation` (`Citation.note`): how a record reads, an indexing error,
+   a missing row. It belongs with the source and travels with every fact that cites it.
+3. **Research notes** stay in the pipeline's trail and OKF person files: searches made, records turned down,
+   leads. They are never written into the schema.
+
+### The list of types is a file, and it grows between rounds
+
+- **One vocabulary file** in this repo lists the fact types, name kinds, mention roles and relationship types.
+  Each entry has a label, a one-line definition, its RiC-O counterpart and the version that added it. Zod,
+  Pydantic, the pipeline's `check.py` and the judges' instructions are all generated from it. A judge
+  always sees the current list, and a check never refuses a type the schema accepts.
+- **After each round, a harvest** (code, free) counts the `proposed_type`s across the round's answers and
+  groups the near-duplicates. A label that recurs, say in five or more people across two or more batches, is
+  proposed for the list. It goes in when a session or the owner agrees, as a minor version, with its RiC-O
+  counterpart.
+- **Re-typing old facts** is a pass over the kept answers. Facts whose `proposed_type` maps directly are
+  re-typed by code. The rest are re-typed by a cheap model reading only the fact's own words, never the whole
+  person again. A fact is never lost on the way: until it is re-typed it stays `other`, cited, and shown on
+  the person's page as a plain line with its source.
+- **Only additions.** A type is never renamed or removed. A type that turns out to be wrong is deprecated with
+  a mapping to its replacement, so old answers stay valid. Each answer records the vocabulary version it was
+  written under.
+
+### What changes for the fan-out
+
+- `fate.facts` becomes `facts` (a person's facts, not only the fate's), in the shape of `Fact`. `fact_kind`
+  is the vocabulary's type. `paper_unit` and `paper_words` become a `Citation` to the paper.
+- `why` stays as the human-readable paragraph, but `check.py` warns when it states a dated or placed event
+  (a year, a town, a country) that no fact carries. That is how the paragraph is kept from becoming the
+  overflow again.
+- `other_metadata` (corrections to a piece) is unchanged. It is about pieces, not people.
+
 ## Privacy
 
 The site's projection (`src/lib/privacy/projection.ts` in `pruzhany-svelte`) works field by field today. With
