@@ -339,6 +339,13 @@ enrichment files of `pruzhany-svelte` at `35cccf9`.
   people work already reads them: the fan-out's `other` facts include "Member of the five-person Bund
   committee after the Kultur-Lige was reorganized in 1934".
 
+How far the tagging reaches: all 233 machine-written editions have places and organisations, and 229 have
+events. They were tagged by the model that writes each piece's English (`pruzhany-steps`' `write_english`).
+About half their pieces name a place (51%), 42% an organisation and 48% an event; 80% name a person. The
+five hand-made editions have the places and events, but only one of them has any organisations (3% of their
+pieces). Every tag is on the piece as a whole. None says where in the text the name stands, or in what
+role.
+
 ### The same model, kind by kind
 
 Each kind gets one record for the whole paper, mentions with a role in each edition, names with a kind and a
