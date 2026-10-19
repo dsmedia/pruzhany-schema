@@ -114,3 +114,17 @@ export {
 	type EditionTopic,
 	type ReferenceData,
 } from './edition-bundle.schema';
+
+// Word level: every printed word's box and its place in its unit's text
+export {
+	WordSchema,
+	WordLineSchema,
+	WordBlockSchema,
+	WordPageSchema,
+	WordsDataSchema,
+	type Word,
+	type WordLine,
+	type WordBlock,
+	type WordPage,
+	type WordsData,
+} from './words.schema';

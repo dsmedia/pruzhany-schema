@@ -81,6 +81,62 @@ class PagesData(BaseModel):
 
 
 # =============================================================================
+# Layer 1, word level (from words.schema.ts)
+# =============================================================================
+
+
+class Word(BaseModel):
+    """One printed word: its box, its text and its place in its unit's full_text."""
+
+    bbox: tuple[int, int, int, int] = Field(
+        description="[x, y, width, height] in absolute pixels"
+    )
+    transcription: str = Field(min_length=1, description="The word as printed")
+    start: int | None = Field(
+        default=None,
+        ge=0,
+        description="Start in the unit's full_text, in UTF-16 code units",
+    )
+    length: int | None = Field(
+        default=None, ge=0, description="Length in the unit's full_text, in UTF-16 code units"
+    )
+    hyphenated: bool | None = Field(
+        default=None, description="The first half of a word broken over two lines"
+    )
+
+
+class WordLine(BaseModel):
+    """One printed line and its words, in reading order."""
+
+    bbox: tuple[int, int, int, int] = Field(
+        description="[x, y, width, height] in absolute pixels"
+    )
+    words: list[Word] = Field(description="The line's words in reading order")
+
+
+class WordBlock(BaseModel):
+    """The words of one block of the pages file, line by line."""
+
+    block_id: str = Field(description="Foreign key to a block of the pages file")
+    unit_id: str | None = Field(description="That block's unit_id")
+    lines: list[WordLine] = Field(description="The block's lines in reading order")
+
+
+class WordPage(BaseModel):
+    """The words of one page, block by block in the pages file's order."""
+
+    page_id: str = Field(description="Foreign key to a page of the pages file")
+    blocks: list[WordBlock] = Field(description="The page's blocks")
+
+
+class WordsData(BaseModel):
+    """Top-level wrapper for the optional words JSON file of an edition."""
+
+    edition_date: str = Field(description="Edition date in ISO format")
+    pages: list[WordPage] = Field(description="Every page of the edition")
+
+
+# =============================================================================
 # Layer 2: Content Units (from content-unit.schema.ts)
 # =============================================================================
 

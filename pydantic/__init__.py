@@ -27,6 +27,11 @@ from .project_output import (
     Page,
     PagesData,
     Topic,
+    Word,
+    WordBlock,
+    WordLine,
+    WordPage,
+    WordsData,
 )
 
 __all__ = [
@@ -56,4 +61,9 @@ __all__ = [
     "Page",
     "PagesData",
     "Topic",
+    "Word",
+    "WordBlock",
+    "WordLine",
+    "WordPage",
+    "WordsData",
 ]
