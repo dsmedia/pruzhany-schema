@@ -32,4 +32,4 @@ jobs:
         with:
           version: '0.11.13'
 
-      - run: bin/verify zod pydantic
+      - run: bin/verify zod pydantic pilot

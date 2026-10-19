@@ -1,0 +1,264 @@
+{
+  "repository": "dsmedia/pruzhany-svelte",
+  "revision": "35cccf97b326c149e7b1d547b842b2537cbce66f",
+  "selection": "Printed newspaper text and existing display labels only. No biographies, fates, archive matches or research notes copied.",
+  "editions": [
+    {
+      "date": "1934-02-02",
+      "enrichment_blob": "15dbd5c6067a0eb0d888c29b7fbd0ebb4c31161b",
+      "content_units_blob": "2d3cef784c70d0340051ae6753a45e3a4dc88615",
+      "people": [
+        {
+          "id": "person-esther-goldenberg",
+          "display_name": "Esther Goldenberg (née Cherechevsky)"
+        },
+        {
+          "id": "person-yaakov-goldenberg",
+          "display_name": "Yaakov Goldenberg"
+        },
+        {
+          "id": "person-menachem-yehuda-goldman-19340202",
+          "display_name": "Menachem-Yehuda Goldman"
+        },
+        {
+          "id": "person-itke-langer",
+          "display_name": "Itke Langer"
+        },
+        {
+          "id": "person-sarah-epstein",
+          "display_name": "Sarah Epstein (née Rendel)"
+        },
+        {
+          "id": "person-mordechai-epstein",
+          "display_name": "Mordechai Epstein"
+        }
+      ],
+      "units": [
+        {
+          "id": "cu-1934-02-02-i0107",
+          "text": "לאירושי בתנו אסתר עם מר יעקב גאלדנברג מברכים במזל־טוב ההורים ואהיות והסבא, הגיס ואחות (הרטפרד אמעריקע), ומאחלים שפע ברכות.",
+          "translation": "Esther Cherechevsky – Yaakov Goldenberg, engaged on 11 Shevat 1934.\n\nOn the engagement of our daughter Esther to Mr. Yaakov Goldenberg, mazel tov from her parents and sisters and grandfather, brother-in-law and sister (Hartford, America), who wish abundant blessings.",
+          "person_ids": [
+            "person-esther-goldenberg",
+            "person-yaakov-goldenberg"
+          ]
+        },
+        {
+          "id": "cu-1934-02-02-i0108",
+          "text": "ברכת מזל טוב לבבית ורב ברכות הננו מאחלים לרגלי האירושים של בננו ואחנו יעקב עם בחירת לבו את מרת אסתר צרצבסקית שפע ברכות אמה ואחיות ואח בלינוב, אחות וגיס בבריסק, אח'ת וגיס עם משפחתם (בבשינגטן־אח בלימא פערו, אח בארץ ישראל",
+          "translation": "Heartfelt mazel tov and many blessings we wish on the engagement of our son and brother Yaakov to the chosen one of his heart, Miss Esther Cherechevsky. Abundant blessings.\nHis mother and sisters and brother in Linovo, sister and brother-in-law in Brest, sister and brother-in-law with their family (in Washington), brother in Lima, Peru, brother in the Land of Israel.",
+          "person_ids": [
+            "person-esther-goldenberg",
+            "person-yaakov-goldenberg"
+          ]
+        },
+        {
+          "id": "cu-1934-02-02-i0109",
+          "text": "למשפחת צ'רצ'בסקית לאירושי בתם אסתר עם מר גולדנברג אנו מאחלים להם רב ברכות. משפחת פרלשטיין.",
+          "translation": "To the Cherechevsky family, on the engagement of their daughter Esther to Mr. Goldenberg, we wish many blessings.\nThe Perlstein family.",
+          "person_ids": [
+            "person-esther-goldenberg",
+            "person-yaakov-goldenberg"
+          ]
+        },
+        {
+          "id": "cu-1934-02-02-i0408",
+          "text": "מנחם־יהודה גולדמן לחג אירוסיך את בחירת לבך מרת איטקה לנגר קבל נא את ברכותינו הלבביות. קן בית\"ר במלץ. דער פאמיליע לאנגער (אין ברעזע) צו די תנאים פון אייער טאכטער איטקע מיט ה' מנחם י. גאלדמאן דער יונגער פאר א גליקלעכע צוקונפט די עלטערן פיל נחת.\n\nווינטשט פאמיליע גאלדשטיין מאלטש.",
+          "translation": "Menachem-Yehuda Goldman, on the celebration of your engagement to your chosen one, Miss Itke Langer, please accept our heartfelt blessings. Betar branch, Maltsch.\n\nTo the Langer family (in Bereza) on the engagement of your daughter Itke to Mr. Menachem Y. Goldman: to the young couple a happy future, to the parents much joy.\n\nWish the Goldstein family, Maltsch.",
+          "person_ids": [
+            "person-itke-langer",
+            "person-menachem-yehuda-goldman-19340202"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "event-19340202-engagement-of-esther-cherchevski-and-yaakov-goldenberg",
+          "type": "engagement",
+          "name": "Engagement of Esther Cherechevsky and Yaakov Goldenberg",
+          "person_ids": [
+            "person-esther-goldenberg",
+            "person-yaakov-goldenberg"
+          ],
+          "unit_ids": [
+            "cu-1934-02-02-i0107",
+            "cu-1934-02-02-i0108",
+            "cu-1934-02-02-i0109"
+          ]
+        },
+        {
+          "id": "event-19340202-engagement-of-menachem-yehuda-goldman-and-itke-langer",
+          "type": "engagement",
+          "name": "Engagement of Menachem-Yehuda Goldman and Itke Langer",
+          "person_ids": [
+            "person-menachem-yehuda-goldman-19340202",
+            "person-itke-langer"
+          ],
+          "unit_ids": [
+            "cu-1934-02-02-i0408"
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1934-02-09",
+      "enrichment_blob": "e2303a58e060996ba3d0f00634a89b01de0f0bce",
+      "content_units_blob": "794209d7656a0e50f099adbb45ac4e9b37ceb872",
+      "people": [
+        {
+          "id": "person-itke-langer",
+          "display_name": "Itke Langer"
+        },
+        {
+          "id": "person-menachem-yehuda-goldman-19340209",
+          "display_name": "Menachem-Yehuda Goldman"
+        },
+        {
+          "id": "person-sarah-epstein",
+          "display_name": "Sarah Epstein (née Rendel)"
+        },
+        {
+          "id": "person-mordechai-epstein",
+          "display_name": "Mordechai Epstein"
+        },
+        {
+          "id": "person-esther-goldenberg",
+          "display_name": "Esther Goldenberg (née Cherechevsky)"
+        },
+        {
+          "id": "person-yaakov-goldenberg",
+          "display_name": "Yaakov Goldenberg"
+        }
+      ],
+      "units": [
+        {
+          "id": "cu-1934-02-09-i0108",
+          "text": "דער פאמיליע לאנגער צו די תנאים פון זייער טאכטער\n\nאיטקע מיט ה' מנחם־יהודה גאלדמאן. ווינטשן מיר זיי א הארציקן מז\"ט — די עלטערן פיל נחת און גליק. שרה, בן־ציון ראווניצקי און פאמיליע, איטקע אוריעוויטש.",
+          "translation": "To the Langer family on the engagement of their daughter Itke to Mr. Menachem-Yehuda Goldman. We wish them a heartfelt mazel tov, and the parents much joy and happiness.\nSarah, Ben-Zion Ravnitsky and family, Itke Urievich.",
+          "person_ids": [
+            "person-itke-langer",
+            "person-menachem-yehuda-goldman-19340209"
+          ]
+        },
+        {
+          "id": "cu-1934-02-09-i0115",
+          "text": "אונזערע בעסטע ווונטשן פרל אסתר טשערעטשעווסקי (לינעווע) צו אירע תנאים מיט ה' יעקב גאלדנבערג. יאנאוויטש, בלאך און פאמיליעס.",
+          "translation": "Our best wishes to Miss Esther Cherechevsky (Linova) on her engagement to Mr. Yaakov Goldenberg.\nYanovich, Bloch and families.",
+          "person_ids": [
+            "person-esther-goldenberg",
+            "person-yaakov-goldenberg"
+          ]
+        },
+        {
+          "id": "cu-1934-02-09-i0116",
+          "text": "צו די תנאים פון אסתר טשערעטשעווסקי מיט ה' יעקב גאלדענבערג ווינטשן מיר פיל גליק און א גליקלעכע צוקונפט. פאמיליע לערנלייט (לינעווע).",
+          "translation": "On the engagement of Esther Cherechevsky to Mr. Yaakov Goldenberg we wish much happiness and a happy future.\nThe Lernleit family (Linova).",
+          "person_ids": [
+            "person-esther-goldenberg",
+            "person-yaakov-goldenberg"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "event-19340209-engagement-of-itke-langer-and-menachem-yehuda-goldman",
+          "type": "engagement",
+          "name": "Engagement of Itke Langer and Menachem-Yehuda Goldman",
+          "person_ids": [
+            "person-itke-langer",
+            "person-menachem-yehuda-goldman-19340209"
+          ],
+          "unit_ids": [
+            "cu-1934-02-09-i0108"
+          ]
+        },
+        {
+          "id": "event-19340209-engagement-of-esther-cherechevsky-and-yaakov-goldenberg",
+          "type": "engagement",
+          "name": "Engagement of Esther Cherechevsky and Yaakov Goldenberg",
+          "person_ids": [
+            "person-esther-goldenberg",
+            "person-yaakov-goldenberg"
+          ],
+          "unit_ids": [
+            "cu-1934-02-09-i0115",
+            "cu-1934-02-09-i0116"
+          ]
+        }
+      ]
+    },
+    {
+      "date": "1938-12-16",
+      "enrichment_blob": "09511859331af156d361dfa7d4abc53bc4d61a07",
+      "content_units_blob": "71d7af2e203b5f574f30b8c2d2e5f841c5beef3d",
+      "people": [
+        {
+          "id": "person-chaim-shor",
+          "display_name": "Chaim Shor"
+        },
+        {
+          "id": "person-leah-goldberg",
+          "display_name": "Leah Goldberg (née Judewicz)"
+        },
+        {
+          "id": "person-mordechai-epstein",
+          "display_name": "Mordechai Epstein"
+        },
+        {
+          "id": "person-moshe-judewicz",
+          "display_name": "Moshe Judewicz"
+        },
+        {
+          "id": "person-rachel-pomerantz",
+          "display_name": "Rachel Shor (née Pomeraniec)"
+        },
+        {
+          "id": "person-rivtche-judewicz",
+          "display_name": "Rivka Kaplan-Judewicz"
+        },
+        {
+          "id": "person-sarah-epstein",
+          "display_name": "Sarah Epstein (née Rendel)"
+        },
+        {
+          "id": "person-velvel-goldberg",
+          "display_name": "Velvel Goldberg"
+        }
+      ],
+      "units": [
+        {
+          "id": "cu-13701",
+          "text": "ריוועטשע און משה! צום געבורט פון אייער\nטעכטערל — אונזער הארציקן מזל טוב\nלאה, וועלוול גאלדבערג.",
+          "translation": "Rivtche and Moshe! On the birth of your little daughter — our hearty Mazel Tov.\n\n~ Leah, Velvel Goldberg.",
+          "person_ids": [
+            "person-leah-goldberg",
+            "person-moshe-judewicz",
+            "person-rivtche-judewicz",
+            "person-velvel-goldberg"
+          ]
+        },
+        {
+          "id": "cu-13704",
+          "text": "דעם ה׳ דוד פאמעראנץ צו דער חתונה\nפון זיין טאכטער רחל מיט ה׳ חיים שור\nאונזערע בעסטע גליק ווינטשן און פיל נחת\nשלמה פארעצקי און פרוי.",
+          "translation": "To Mr. David Pomerantz on the wedding of his daughter Rachel to Mr. Chaim Shor, our best wishes for happiness and much joy.\n\n~ Shlomo Paretzky and wife.",
+          "person_ids": [
+            "person-chaim-shor",
+            "person-rachel-pomerantz"
+          ]
+        },
+        {
+          "id": "cu-5751",
+          "text": "די  פֿאמיליעס קאפּלאן יודעוויטשׁ\nצום געבורט פֿון זייער טאכֿטער און אייניקל\nאונזער הארציקן מזל טוב און א גרינגע דערציונג\nשרה, מרדכי עפשטיין און קינדער.",
+          "translation": "The Kaplan and Judewicz families, on the birth of their daughter and granddaughter, our heartfelt Mazel Tov and [wishes for] an easy upbringing.\n\n~ Sarah, Mordechai Epstein and children.",
+          "person_ids": [
+            "person-mordechai-epstein",
+            "person-moshe-judewicz",
+            "person-rivtche-judewicz",
+            "person-sarah-epstein"
+          ]
+        }
+      ],
+      "events": []
+    }
+  ]
+}
