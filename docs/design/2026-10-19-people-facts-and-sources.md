@@ -376,6 +376,33 @@ The site's projection (`src/lib/privacy/projection.ts` in `pruzhany-svelte`) wor
 facts it can work fact by fact: publish an accepted fact whose citations are all on allowed hosts, about a
 person not presumed living. `Source.host` gives the leak checks their list of hosts.
 
+## How it reaches the live site today, and what changes
+
+Today a person travels like this:
+
+1. **`pruzhany-steps`**: the fan-out's judged answers become the register (`corrections/people/*.toml`,
+   written by `.scratch/people-fanout/write_register.py`). The owner's family register is kept by hand.
+2. **`lay_people`** (and `write_site`, which calls it on every write) writes each register person into every
+   edition's `enrichment` and `content-units` in a checkout of the site. It checks each file against
+   `schemas/site/*.schema.json`, a copy of this repo's Zod shapes made with `z.toJSONSchema`.
+3. **`pruzhany-svelte`**: a pull request carries the changed `static/data/` files, recorded in
+   `MANUAL_OVERLAYS.md`. CI validates them against this repo's schemas, through the submodule. On merge to
+   `master` the site deploys, and the privacy projection decides which fields are served.
+
+The design keeps that road and changes what travels on it, in this order. Each stage can be deployed alone:
+
+| stage | `pruzhany-schema` | `pruzhany-steps` | `pruzhany-svelte` | what a visitor sees |
+|---|---|---|---|---|
+| 1 | the vocabulary file and the new optional fields (`facts`, `names`, `fate`, `citations`, `mentions[].role`, the source registry), Zod and Pydantic | copies the new JSON Schema and the vocabulary into `schemas/site/`, by commit | bumps the submodule; the projection still drops the new fields | nothing changes |
+| 2 | — | the register gains `facts`, `names`, `fate` and `distinct_from` from the judged answers, which already hold most of them. `lay_people` writes the new fields **and** the old ones derived from them; the fan-out's answer format and `check.py` follow the vocabulary | a data pull request as today | nothing changes; the files now carry the evidence |
+| 3 | — | — | the projection publishes accepted facts whose citations are on allowed hosts; the person view shows a fate's source and its confidence, and a fact list; leak tests for the new fields | "probable" shown as such, with its record; dated facts (emigration, offices) |
+| 4 | a corpus-wide `people` file and the edition bundle's people as a projection of it | `write_site` writes `people/` once and mentions per edition | loads people once; a page per person across editions (`/people/[id]`) | following a person through the paper |
+
+The vocabulary reaches `pruzhany-steps` as a copy by commit, as the site's shapes already do: steps never
+imports another checkout. A new type harvested after a round therefore goes through three steps: a
+schema PR, the copy in steps, then the submodule bump on the site. Until all three are done, the fact stays
+`other` with its `proposed_type`, which every stage already accepts.
+
 ## Migration (additive first, as the earlier design says)
 
 1. Add `Source`, `Citation`, `Fact`, `Name`, `Fate` and `Mention` as optional fields beside the current ones.
