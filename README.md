@@ -25,6 +25,9 @@ Zod and Pydantic models are kept in lock-step. When you change a type on one sid
 
 TBD.
 
+The [2026-04-25 cross-edition design](docs/design/2026-04-25-cross-edition-entities.md) records the identity conventions.
+The [2026-10-19 people, facts and sources proposal](docs/design/2026-10-19-people-facts-and-sources.md) includes the decisions and changes of 20 October.
+
 ## Issue 14 pilot
 
 The [sourced-entities pilot](pilots/sourced-entities/README.md) is an isolated,
