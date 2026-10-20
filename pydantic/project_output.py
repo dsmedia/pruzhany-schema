@@ -8,7 +8,9 @@ The pipeline converts LLM output schemas to these for final JSON output.
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+from .sourced_entities import Fact, Fate, Mention, Name, Source
 
 
 # =============================================================================
@@ -332,6 +334,16 @@ class EnrichedPerson(BaseModel):
         default=None,
         description="Unconfirmed relationship hypotheses awaiting human review",
     )
+    facts: list[Fact] | None = None
+    names: list[Name] | None = None
+    fate: Fate | None = None
+
+    @model_validator(mode="after")
+    def own_fate_facts(self):
+        own = {f.id for f in self.facts or []}
+        if self.fate and any(id not in own for id in self.fate.rests_on):
+            raise ValueError("fate must rest on own facts")
+        return self
 
 
 # =============================================================================
@@ -609,3 +621,19 @@ class EnrichmentData(BaseModel):
     sections: list[Section] | None = Field(
         default=None, description="Section hierarchy for sidebar"
     )
+    sources: list[Source] | None = None
+    mentions: list[Mention] | None = None
+    vocabulary_version: str | None = None
+
+    @model_validator(mode="after")
+    def source_and_mention_references(self):
+        sources = {s.id for s in self.sources or []}
+        people = {p.id for p in self.people}
+        for p in self.people:
+            citations = [c for f in p.facts or [] for c in f.citations]
+            citations += [c for n in p.names or [] for c in n.citations or []]
+            if any(c.source_id not in sources for c in citations):
+                raise ValueError('unknown citation source')
+        if any(m.person_id not in people for m in self.mentions or []):
+            raise ValueError('unknown mention person')
+        return self

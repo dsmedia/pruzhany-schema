@@ -1,10 +1,15 @@
 """Generate the pilot's two language enums from its one versioned vocabulary."""
 import argparse
+import importlib.util
 import json
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
+_spec = importlib.util.spec_from_file_location("vocabulary_generate", ROOT / "vocabulary/generate.py")
+_generate = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_generate)
+format_ts = _generate.format_ts  # one formatter for every generated TypeScript file
 
 
 def generated():
@@ -24,7 +29,7 @@ def generated():
         ts += f"export const {name[0].lower() + name[1:]}Values = {json.dumps(values)} as const;\n"
         py += f"{name} = Literal[{', '.join(repr(v) for v in values)}]\n"
     return {
-        ROOT / "zod/sourced-entities-pilot.vocabulary.ts": ts,
+        ROOT / "zod/sourced-entities-pilot.vocabulary.ts": format_ts(ts, "sourced-entities-pilot.vocabulary.ts"),
         ROOT / "pydantic/sourced_entities_pilot_vocabulary.py": py,
     }
 

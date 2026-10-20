@@ -1,0 +1,563 @@
+{
+  "commit": "5d42d2505661bdfb04b3634b27c7b9e73392fe07",
+  "license_and_attribution": [
+    "EHRI-ERIC",
+    "Herminio García-González (Kazerne Dossin)",
+    "Mike Bryant (NIOD)",
+    "https://creativecommons.org/licenses/by/4.0/"
+  ],
+  "namespace": "http://lod.ehri-project-test.eu/ontology#",
+  "ontology_metadata": {
+    "http://lod.ehri-project-test.eu/ontology": {
+      "http://creativecommons.org/ns#license": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "http://purl.org/dc/elements/1.1/creator": [
+        "Herminio García-González (Kazerne Dossin)",
+        "Mike Bryant (NIOD)"
+      ],
+      "http://purl.org/dc/elements/1.1/title": [
+        "EHRI Ontology"
+      ],
+      "http://purl.org/dc/terms/abstract": [
+        "This ontology defines the data model used by the EHRI Knowledge Graph for the representation of the information hosted in the EHRI Portal. It does so by extending RiC-O v1.0.2 and reusing some of the schema.org concepts."
+      ],
+      "http://purl.org/dc/terms/description": [
+        "The EHRI Ontology extends some of the RiC-O types and adds additional properties to represent data present in the EHRI Portal. Whenever a class is extended with new properties, a subclass bounded to the ehri prefix is created in order to maintain the original RiC-O axioms. In some cases, classes are specialised via subclassing in order to contribute additional meaning to the superclass."
+      ],
+      "http://purl.org/dc/terms/publisher": [
+        "EHRI-ERIC"
+      ],
+      "http://purl.org/vocab/vann/preferredNamespacePrefix": [
+        "ehri"
+      ],
+      "http://purl.org/vocab/vann/preferredNamespaceUri": [
+        "http://lod.ehri-project-test.eu/ontology#"
+      ],
+      "http://schema.org/codeRepository": [
+        "https://github.com/EHRI/ehri-kg-ontology"
+      ],
+      "http://schema.org/funder": [
+        "https://oscars-project.eu/"
+      ],
+      "http://schema.org/funding": [
+        "https://oscars-project.eu/projects/ehri-kg-european-holocaust-research-infrastructure-knowledge-graph"
+      ],
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+        "http://www.w3.org/2002/07/owl#Ontology"
+      ],
+      "http://www.w3.org/2002/07/owl#imports": [
+        "https://www.ica.org/standards/RiC/ontology/1.0.2"
+      ],
+      "http://www.w3.org/2002/07/owl#priorVersion": [
+        "http://lod.ehri-project-test.eu/ontology/0.1.0"
+      ],
+      "http://www.w3.org/2002/07/owl#versionIRI": [
+        "http://lod.ehri-project-test.eu/ontology/0.1.1"
+      ],
+      "http://www.w3.org/2002/07/owl#versionInfo": [
+        "0.1.1"
+      ],
+      "http://xmlns.com/foaf/0.1/logo": [
+        "https://ehri-kg.ehri-project.eu/images/ehri-logo.svg"
+      ]
+    }
+  },
+  "path": "ontology/ehri.owl",
+  "read_on": "2026-10-20",
+  "repo": "EHRI/ehri-kg-ontology",
+  "sha256": "a916194c93c6393a623c38cd51a469fc8a0348801cb3807dd62819a8301b99b3",
+  "terms": [
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#AcquisitionType",
+      "kind": "class",
+      "label": [
+        "Acquisition type"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#ActivityType"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#Agent",
+      "kind": "class",
+      "label": [
+        "Agent"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#Agent"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#AlternateAgentName",
+      "kind": "class",
+      "label": [
+        "Alternative forms of the agent's name"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#AgentName"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#City",
+      "kind": "class",
+      "label": [
+        "City"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#Place"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#CorporateBody",
+      "kind": "class",
+      "label": [
+        "Corporate body"
+      ],
+      "superclasses": [
+        "http://lod.ehri-project-test.eu/ontology#Group",
+        "https://www.ica.org/standards/RiC/ontology#CorporateBody"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#Country",
+      "kind": "class",
+      "label": [
+        "Country"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#Place"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#Family",
+      "kind": "class",
+      "label": [
+        "Family"
+      ],
+      "superclasses": [
+        "http://lod.ehri-project-test.eu/ontology#Group",
+        "https://www.ica.org/standards/RiC/ontology#Family"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#FunctionType",
+      "kind": "class",
+      "label": [
+        "Function type"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#ActivityType"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#Group",
+      "kind": "class",
+      "label": [
+        "Group"
+      ],
+      "superclasses": [
+        "http://lod.ehri-project-test.eu/ontology#Agent",
+        "https://www.ica.org/standards/RiC/ontology#Group"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#Institution",
+      "kind": "class",
+      "label": [
+        "Institution"
+      ],
+      "superclasses": [
+        "http://lod.ehri-project-test.eu/ontology#CorporateBody",
+        "http://schema.org/ArchiveOrganization"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#InstitutionAddress",
+      "kind": "class",
+      "label": [
+        "Institution's address"
+      ],
+      "superclasses": [
+        "http://schema.org/PostalAddress",
+        "https://www.ica.org/standards/RiC/ontology#PhysicalLocation"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#MaterialScript",
+      "kind": "class",
+      "label": [
+        "Script of materials"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#Concept"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#ParallelAgentName",
+      "kind": "class",
+      "label": [
+        "Parallel forms of the agent's name"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#AgentName"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#Person",
+      "kind": "class",
+      "label": [
+        "Person"
+      ],
+      "superclasses": [
+        "http://lod.ehri-project-test.eu/ontology#Agent",
+        "https://www.ica.org/standards/RiC/ontology#Person"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#RecordResource",
+      "kind": "class",
+      "label": [
+        "Record resource"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#RecordResource"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#RecordSet",
+      "kind": "class",
+      "label": [
+        "Record set"
+      ],
+      "superclasses": [
+        "http://lod.ehri-project-test.eu/ontology#RecordResource",
+        "https://www.ica.org/standards/RiC/ontology#RecordSet"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#Region",
+      "kind": "class",
+      "label": [
+        "Region"
+      ],
+      "superclasses": [
+        "https://www.ica.org/standards/RiC/ontology#Place"
+      ],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#accessibility",
+      "kind": "datatype property",
+      "label": [
+        "accessibility"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#administrativeStructure",
+      "kind": "datatype property",
+      "label": [
+        "administrative structure"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#appraisal",
+      "kind": "datatype property",
+      "label": [
+        "appraisal"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#archivalHistory",
+      "kind": "datatype property",
+      "label": [
+        "archival history"
+      ],
+      "superclasses": [],
+      "superproperties": [
+        "https://www.ica.org/standards/RiC/ontology#history"
+      ]
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#archivalSituation",
+      "kind": "datatype property",
+      "label": [
+        "archival situation"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#archivistNote",
+      "kind": "datatype property",
+      "label": [
+        "archivist note"
+      ],
+      "superclasses": [],
+      "superproperties": [
+        "http://lod.ehri-project-test.eu/ontology#notes"
+      ]
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#buildings",
+      "kind": "datatype property",
+      "label": [
+        "building(s)"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#conditionsOfAccess",
+      "kind": "datatype property",
+      "label": [
+        "conditions of access"
+      ],
+      "superclasses": [],
+      "superproperties": [
+        "https://www.ica.org/standards/RiC/ontology#conditionsOfAccess"
+      ]
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#contactPerson",
+      "kind": "datatype property",
+      "label": [
+        "contact person"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#findingAids",
+      "kind": "datatype property",
+      "label": [
+        "finding aids"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#generalContext",
+      "kind": "datatype property",
+      "label": [
+        "general context"
+      ],
+      "superclasses": [],
+      "superproperties": [
+        "https://www.ica.org/standards/RiC/ontology#generalDescription"
+      ]
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#hasCopy",
+      "kind": "object property",
+      "label": [
+        "has copy"
+      ],
+      "superclasses": [],
+      "superproperties": [
+        "https://www.ica.org/standards/RiC/ontology#hasCopy",
+        "https://www.ica.org/standards/RiC/ontology#isRelatedTo"
+      ]
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#hasOrHadScript",
+      "kind": "object property",
+      "label": [
+        "has or had script"
+      ],
+      "superclasses": [],
+      "superproperties": [
+        "https://www.ica.org/standards/RiC/ontology#isRelatedTo"
+      ]
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#isCopyOf",
+      "kind": "object property",
+      "label": [
+        "is copy of"
+      ],
+      "superclasses": [],
+      "superproperties": [
+        "https://www.ica.org/standards/RiC/ontology#isCopyOf",
+        "https://www.ica.org/standards/RiC/ontology#isRelatedTo"
+      ]
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#isOrWasScriptOf",
+      "kind": "object property",
+      "label": [
+        "is or was the script of"
+      ],
+      "superclasses": [],
+      "superproperties": [
+        "https://www.ica.org/standards/RiC/ontology#isRelatedTo"
+      ]
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#locationOfCopies",
+      "kind": "datatype property",
+      "label": [
+        "existence and location of copies"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#locationOfOriginals",
+      "kind": "datatype property",
+      "label": [
+        "existence and location of originals"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#notes",
+      "kind": "datatype property",
+      "label": [
+        "note(s)"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#otherFindingAids",
+      "kind": "datatype property",
+      "label": [
+        "other finding aids"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#physicalCharacterisiticsAndTechnicalRequirements",
+      "kind": "datatype property",
+      "label": [
+        "physical characteristics and technical requirements"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#publicAreas",
+      "kind": "datatype property",
+      "label": [
+        "public areas"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#publicationNote",
+      "kind": "datatype property",
+      "label": [
+        "publication note"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#recordsManagementAndCollectingPolicies",
+      "kind": "datatype property",
+      "label": [
+        "records management and collecting policies"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#relatedMaterial",
+      "kind": "datatype property",
+      "label": [
+        "related units of description"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#reproductionServices",
+      "kind": "datatype property",
+      "label": [
+        "reproduction services"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#researchExtensive",
+      "kind": "datatype property",
+      "label": [
+        "research by EHRI (extensive)"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#researchServices",
+      "kind": "datatype property",
+      "label": [
+        "research services"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#researchSummary",
+      "kind": "datatype property",
+      "label": [
+        "research by EHRI (summary)"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#separatedMaterial",
+      "kind": "datatype property",
+      "label": [
+        "separated units of description"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#sources",
+      "kind": "datatype property",
+      "label": [
+        "sources"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    },
+    {
+      "iri": "http://lod.ehri-project-test.eu/ontology#structureOrGenealogy",
+      "kind": "datatype property",
+      "label": [
+        "internal structure"
+      ],
+      "superclasses": [],
+      "superproperties": []
+    }
+  ]
+}

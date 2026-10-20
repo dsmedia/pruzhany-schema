@@ -57,3 +57,7 @@ __all__ = [
     "PagesData",
     "Topic",
 ]
+
+from .sourced_entities import SourcedDate, Review, Attribution, Source, Citation, Fact, Name, Fate, Mention, legacyHolocaustFate
+
+__all__ += ["SourcedDate", "Review", "Attribution", "Source", "Citation", "Fact", "Name", "Fate", "Mention", "legacyHolocaustFate"]

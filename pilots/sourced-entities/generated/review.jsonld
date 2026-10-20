@@ -1,5 +1,6 @@
 {
   "@context": {
+    "ehri": "http://lod.ehri-project-test.eu/ontology#",
     "rico": "https://www.ica.org/standards/RiC/ontology#",
     "pc": "https://example.org/pruzhany-pilot/issue-14/vocab#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
@@ -118,7 +119,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Esther Goldenberg (née Cherechevsky)",
       "pc:presumedLiving": false
     },
@@ -184,7 +188,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Yaakov Goldenberg",
       "pc:presumedLiving": false
     },
@@ -280,7 +287,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Menachem-Yehuda Goldman",
       "pc:presumedLiving": false
     },
@@ -322,7 +332,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Itke Langer",
       "pc:presumedLiving": false
     },
@@ -364,7 +377,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-sarah-epstein",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Sarah Epstein (née Rendel)",
       "pc:presumedLiving": false
     },
@@ -388,7 +404,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-mordechai-epstein",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Mordechai Epstein",
       "pc:presumedLiving": false
     },
@@ -412,7 +431,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Chaim Shor",
       "pc:presumedLiving": false
     },
@@ -436,7 +458,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-leah-goldberg",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Leah Goldberg (née Judewicz)",
       "pc:presumedLiving": false
     },
@@ -460,7 +485,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-moshe-judewicz",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Moshe Judewicz",
       "pc:presumedLiving": false
     },
@@ -484,7 +512,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Rachel Shor (née Pomeraniec)",
       "pc:presumedLiving": false
     },
@@ -508,7 +539,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-rivtche-judewicz",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Rivka Kaplan-Judewicz",
       "pc:presumedLiving": false
     },
@@ -532,7 +566,10 @@
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-velvel-goldberg",
-      "@type": "rico:Person",
+      "@type": [
+        "rico:Person",
+        "ehri:Person"
+      ],
       "rdfs:label": "Velvel Goldberg",
       "pc:presumedLiving": false
     },

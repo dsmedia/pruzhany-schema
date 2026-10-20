@@ -1,0 +1,18 @@
+# Stay close to EHRI and RiC-O
+
+The owner's word of 20 October 2026: 'It's important to me we stick close to EHRI on the schema and to RiC. So we need to embed it.'
+
+- Prefer an EHRI class where EHRI has one; otherwise use a RiC-O term present in EHRI's RiC-O version; otherwise declare a local term in a profile and give a reason.
+- Read the ontology through `standards/` before mapping; never map from memory.
+- Read and add a new EHRI or RiC-O version as a new `standards/` file only at the owner's word, then re-check every mapping. Never edit a pinned list in place.
+- An owner-approved vocabulary addition names its mapping. Run the alignment check for every mapping change.
+
+# Working here
+
+This repo shares schemas between the Pruzhany Digital Archive's SvelteKit frontend and Python extraction pipeline. Keep the two language contracts in step; the sourced-entities pilot is isolated from production models. See README.md for layout and consumer contract checks.
+
+- **No test under `zod/` may need anything but bun.** pruzhany-svelte runs every `*.test.ts` under `zod/` through its `src/lib/schemas` symlink, with bun only (#15). Pilot and cross-language tests live beside their pilot and are run by `bin/verify`.
+- **New vocabulary types are approved by the owner, in batches** (#16): each proposed type with two or three real examples and its mapping. Until then a fact stays `other` with its `proposed_type`. A released type is never removed or renamed.
+- **A change here is checked against its consumers before it merges**: pruzhany-svelte (`bun run test:run`, `bun run check`, `bun run validate:data` with its submodule pointed at the branch) and pruzhany-press (`just test-contract`, which needs `bun install` in its `tests/contract/` first, or it only skips).
+
+`bin/verify` is the single verification entry point, including the standards alignment gate. Its header describes the steps, pinned toolchain and private consumer drift gate.

@@ -1,6 +1,6 @@
 # Sourced entities pilot for issue 14
 
-**Start with [the generated review](generated/review.md).** This is an executable companion to [issue #14](https://github.com/dsmedia/pruzhany-schema/issues/14), isolated from the production schemas and both consumers. It retains RiC-O 1.1 as the interoperability target, consistent with EHRI ontology 0.2.0.
+**Start with [the generated review](generated/review.md).** This is an executable companion to [issue #14](https://github.com/dsmedia/pruzhany-schema/issues/14), isolated from the production schemas and both consumers. It follows EHRI ontology 0.1.1 and its RiC-O 1.0.2 base. RiC-O 1.0.2 and 1.1 are both checked; the pilot’s terms exist in both.
 
 The preview groups **12 people, two cross-edition engagements, 22 mentions, six assertions and one relationship**, from ten newspaper excerpts in the editions of 1934-02-02, 1934-02-09 and 1938-12-16. The unjoined observations contain 13 person IDs and four event IDs. Two event joins and one person join are explicit, reversible review proposals.
 
@@ -17,7 +17,7 @@ The preview groups **12 people, two cross-edition engagements, 22 mentions, six 
 Use the existing toolchain (`bun`, `uv`, Python 3.11); dependencies are pinned by the verification commands.
 
 ```sh
-bin/verify zod pydantic pilot
+bin/verify zod pydantic pilot standards
 
 # Rebuild the deterministic, committed artifacts.
 uv run --no-project --python 3.11 --with pydantic==2.12.5 \

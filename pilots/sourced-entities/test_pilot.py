@@ -5,7 +5,7 @@ import json
 import unittest
 from pathlib import Path
 from rdflib import Graph, Namespace, RDF, URIRef
-from build import HERE, BASE, PC, RICO, Pilot, artifacts, edition_views, make_pilot, public_projection, residence_at, rico_export, living_presumption, report
+from build import HERE, BASE, PC, RICO, EHRI, Pilot, artifacts, edition_views, make_pilot, public_projection, residence_at, rico_export, living_presumption, report
 from contract_cases import synthetic, fact, cases
 
 
@@ -103,6 +103,21 @@ class PilotTests(unittest.TestCase):
         self.assertFalse(list(graph.triples((None, rico.isOrWasParticipantIn, None))))
         self.assertEqual(len(list(graph.subjects(RDF.type, RDF.Statement))), 7)  # six facts, one relationship
         self.assertEqual(len(list(graph.subjects(RDF.type, rico.Person))), 12)
+        self.assertEqual(set(graph.subjects(RDF.type, rico.Person)),
+                         set(graph.subjects(RDF.type, Namespace(EHRI).Person)))
+
+    def test_ehri_people_and_fictional_place_kinds(self):
+        data = synthetic()
+        data["places"] = [{"id": "fictional-" + kind, "label": "Fictional " + kind, "kind": kind}
+                          for kind in ("city", "region", "country")]
+        graph = self.rdf(data)
+        ehri = Namespace(EHRI)
+        self.assertIn((URIRef(BASE + "test-person-a"), RDF.type, ehri.Person), graph)
+        for kind in ("city", "region", "country"):
+            subject = URIRef(BASE + "fictional-" + kind)
+            self.assertIn((subject, RDF.type, ehri[kind.title()]), graph)
+            self.assertIn((subject, RDF.type, Namespace(RICO).Place), graph)
+        self.assertTrue(list(graph.subjects(RDF.type, Namespace(RICO).AgentName)))
 
     def test_reviewed_claim_can_export_as_sourced_rico_relation(self):
         data = synthetic()
