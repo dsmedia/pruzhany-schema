@@ -1,3 +1,10 @@
+import {
+	FactSchema,
+	NameSchema,
+	FateSchema,
+	SourceSchema,
+	MentionSchema,
+} from './sourced-entities.schema';
 import { z } from 'zod/v4';
 import { HolocaustFateSchema, ExternalReferenceSchema } from './shared.schema';
 
@@ -74,31 +81,40 @@ export const ProposedRelationshipSchema = z.object({
 export type ProposedRelationship = z.infer<typeof ProposedRelationshipSchema>;
 
 // Enriched Person
-export const EnrichedPersonSchema = z.object({
-	id: z.string(),
-	name: z.string(),
-	yiddish_name: z.string().nullish(),
-	aliases: z.array(z.string()),
-	gender: z.enum(['male', 'female', 'unknown']),
-	birth_year: z.number().nullish(),
-	birth_date: z.string().nullish(),
-	death_year: z.number().nullish(),
-	death_date: z.string().nullish(),
-	birth_location: z.string().nullish(),
-	residence_at_publication: z.string().nullish(),
-	holocaust_fate: HolocaustFateSchema,
-	holocaust_fate_notes: z.string().nullish(),
-	headshot_path: z.string().nullish(),
-	occupation: z.string().nullish(),
-	partisan_activity: PartisanActivitySchema.nullish(),
-	ghetto_role: z.string().nullish(),
-	unit_ids: z.array(z.string()),
-	relationships: z.array(RelationshipSchema),
-	external_references: z.array(ExternalReferenceSchema),
-	additional_details: z.array(AdditionalDetailSchema).nullish(),
-	biographical_narratives: z.array(BiographicalNarrativeSchema).nullish(),
-	proposed_relationships: z.array(ProposedRelationshipSchema).nullish(),
-});
+export const EnrichedPersonSchema = z
+	.object({
+		id: z.string(),
+		name: z.string(),
+		yiddish_name: z.string().nullish(),
+		aliases: z.array(z.string()),
+		gender: z.enum(['male', 'female', 'unknown']),
+		birth_year: z.number().nullish(),
+		birth_date: z.string().nullish(),
+		death_year: z.number().nullish(),
+		death_date: z.string().nullish(),
+		birth_location: z.string().nullish(),
+		residence_at_publication: z.string().nullish(),
+		holocaust_fate: HolocaustFateSchema,
+		holocaust_fate_notes: z.string().nullish(),
+		headshot_path: z.string().nullish(),
+		occupation: z.string().nullish(),
+		partisan_activity: PartisanActivitySchema.nullish(),
+		ghetto_role: z.string().nullish(),
+		unit_ids: z.array(z.string()),
+		relationships: z.array(RelationshipSchema),
+		external_references: z.array(ExternalReferenceSchema),
+		additional_details: z.array(AdditionalDetailSchema).nullish(),
+		biographical_narratives: z.array(BiographicalNarrativeSchema).nullish(),
+		proposed_relationships: z.array(ProposedRelationshipSchema).nullish(),
+		facts: z.array(FactSchema).nullish(),
+		names: z.array(NameSchema).nullish(),
+		fate: FateSchema.nullish(),
+	})
+	.superRefine((v, ctx) => {
+		const own = new Set((v.facts ?? []).map((f) => f.id));
+		if (v.fate?.rests_on.some((id) => !own.has(id)))
+			ctx.addIssue({ code: 'custom', message: 'fate must rest on own facts' });
+	});
 export type EnrichedPerson = z.infer<typeof EnrichedPersonSchema>;
 
 // Location type enum
@@ -286,8 +302,25 @@ export const EnrichmentDataSchema = z
 		organizations: z.array(EnrichedOrganizationSchema).nullish(),
 		topics: z.array(TopicSchema),
 		sections: z.array(SectionSchema).nullish(),
+		sources: z.array(SourceSchema).nullish(),
+		mentions: z.array(MentionSchema).nullish(),
+		vocabulary_version: z.string().nullish(),
 	})
-	.passthrough();
+	.passthrough()
+	.superRefine((v, ctx) => {
+		const sources = new Set((v.sources ?? []).map((s) => s.id));
+		const people = new Set(v.people.map((p) => p.id));
+		for (const p of v.people) {
+			const citations = [
+				...(p.facts ?? []).flatMap((f) => f.citations),
+				...(p.names ?? []).flatMap((n) => n.citations ?? []),
+			];
+			if (citations.some((c) => !sources.has(c.source_id)))
+				ctx.addIssue({ code: 'custom', message: 'unknown citation source' });
+		}
+		if (v.mentions?.some((m) => !people.has(m.person_id)))
+			ctx.addIssue({ code: 'custom', message: 'unknown mention person' });
+	});
 export type EnrichmentData = z.infer<typeof EnrichmentDataSchema>;
 
 // Article enrichment context (derived, not from JSON)

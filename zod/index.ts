@@ -114,3 +114,5 @@ export {
 	type EditionTopic,
 	type ReferenceData,
 } from './edition-bundle.schema';
+
+export * from './sourced-entities.schema';

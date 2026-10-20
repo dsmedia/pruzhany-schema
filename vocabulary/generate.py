@@ -1,9 +1,23 @@
 """Generate standalone production vocabulary contracts; no package exports yet."""
 import argparse
 import json
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def format_ts(text, name='generated.ts'):
+    """Format TypeScript exactly as pruzhany-svelte's `prettier --check src/` expects.
+
+    The site checks the format of every file under its `src/`, which includes this repo's
+    `zod/` through a symlink; the version (package.json) and options (.prettierrc) are its own.
+    """
+    prettier = ROOT / 'node_modules/.bin/prettier'
+    if not prettier.exists():
+        raise SystemExit('prettier is not installed: run `bun install --frozen-lockfile` first')
+    return subprocess.run([str(prettier), '--config', str(ROOT / '.prettierrc'), '--stdin-filepath', name],
+                          input=text, capture_output=True, text=True, check=True, cwd=ROOT).stdout
 
 
 def generated(root=ROOT):
@@ -18,7 +32,7 @@ def generated(root=ROOT):
         ts += f'export const {name}Schema = z.enum({json.dumps(values, ensure_ascii=False)});\n'
         ts += f'export type {name} = z.infer<typeof {name}Schema>;\n'
         py += f'{name} = Literal[{", ".join(repr(v) for v in values)}]\n'
-    outputs = {root / 'zod/sourced-entities.vocabulary.ts': ts,
+    outputs = {root / 'zod/sourced-entities.vocabulary.ts': format_ts(ts, 'sourced-entities.vocabulary.ts'),
                root / 'pydantic/sourced_entities_vocabulary.py': py}
     if vocabulary['status'] == 'released':
         outputs[root / 'vocabulary/released' / (vocabulary['version'] + '.json')] = (

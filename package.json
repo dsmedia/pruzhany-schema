@@ -2,9 +2,10 @@
 	"name": "pruzhany-schema-verify",
 	"private": true,
 	"type": "module",
-	"description": "Dev-only toolchain so bin/verify can run the zod/ tests and typecheck standalone. Versions match pruzhany-svelte's bun.lock; this repo is never published.",
+	"description": "Dev-only toolchain so bin/verify can run the zod/ tests, typecheck and format check standalone. Versions match pruzhany-svelte's bun.lock; this repo is never published.",
 	"devDependencies": {
 		"@types/node": "22.19.0",
+		"prettier": "3.8.0",
 		"typescript": "5.9.3",
 		"vitest": "4.1.9",
 		"zod": "4.3.5"
