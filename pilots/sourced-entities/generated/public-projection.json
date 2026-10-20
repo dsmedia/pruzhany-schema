@@ -1,0 +1,105 @@
+{
+  "people": [
+    {
+      "id": "person-esther-goldenberg",
+      "printed_names": [
+        "אסתר",
+        "אסתר טשערעטשעווסקי",
+        "אסתר צרצבסקית"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-yaakov-goldenberg",
+      "printed_names": [
+        "גולדנברג",
+        "יעקב",
+        "יעקב גאלדנבערג",
+        "יעקב גאלדנברג",
+        "יעקב גאלדענבערג"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-menachem-yehuda-goldman-19340202",
+      "printed_names": [
+        "מנחם־יהודה גולדמן"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-menachem-yehuda-goldman-19340209",
+      "printed_names": [
+        "מנחם־יהודה גאלדמאן"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-itke-langer",
+      "printed_names": [
+        "איטקה לנגר",
+        "איטקע"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-sarah-epstein",
+      "printed_names": [
+        "שרה"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-mordechai-epstein",
+      "printed_names": [
+        "מרדכי עפשטיין"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-chaim-shor",
+      "printed_names": [
+        "חיים שור"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-leah-goldberg",
+      "printed_names": [
+        "לאה"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-moshe-judewicz",
+      "printed_names": [
+        "משה"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-rachel-pomerantz",
+      "printed_names": [
+        "רחל"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-rivtche-judewicz",
+      "printed_names": [
+        "ריוועטשע"
+      ],
+      "spouse_ids": []
+    },
+    {
+      "id": "person-velvel-goldberg",
+      "printed_names": [
+        "וועלוול גאלדבערג"
+      ],
+      "spouse_ids": []
+    }
+  ],
+  "facts": [],
+  "relationships": [],
+  "citations": []
+}

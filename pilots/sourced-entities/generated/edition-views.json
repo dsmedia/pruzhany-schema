@@ -1,0 +1,396 @@
+{
+  "1934-02-02": {
+    "people": [
+      {
+        "id": "person-esther-goldenberg",
+        "name": "Esther Goldenberg (née Cherechevsky)",
+        "unit_ids": [
+          "cu-1934-02-02-i0107",
+          "cu-1934-02-02-i0108",
+          "cu-1934-02-02-i0109"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-yaakov-goldenberg",
+        "name": "Yaakov Goldenberg",
+        "unit_ids": [
+          "cu-1934-02-02-i0107",
+          "cu-1934-02-02-i0108",
+          "cu-1934-02-02-i0109"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-menachem-yehuda-goldman-19340202",
+        "name": "Menachem-Yehuda Goldman",
+        "unit_ids": [
+          "cu-1934-02-02-i0408"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-itke-langer",
+        "name": "Itke Langer",
+        "unit_ids": [
+          "cu-1934-02-02-i0408"
+        ],
+        "residence_at_publication": null
+      }
+    ],
+    "mentions": [
+      {
+        "id": "mention-cu-1934-02-02-i0107-1",
+        "entity_id": "person-esther-goldenberg",
+        "original_entity_id": "person-esther-goldenberg",
+        "citation_id": "citation-cu-1934-02-02-i0107",
+        "printed_name": "אסתר",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "9ce3ee0d8c02ed6ac4cf1f772003665ad7b139580b82d8c9e91e3f1059f6d48c"
+      },
+      {
+        "id": "mention-cu-1934-02-02-i0107-2",
+        "entity_id": "person-yaakov-goldenberg",
+        "original_entity_id": "person-yaakov-goldenberg",
+        "citation_id": "citation-cu-1934-02-02-i0107",
+        "printed_name": "יעקב גאלדנברג",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "9ce3ee0d8c02ed6ac4cf1f772003665ad7b139580b82d8c9e91e3f1059f6d48c"
+      },
+      {
+        "id": "mention-cu-1934-02-02-i0108-1",
+        "entity_id": "person-esther-goldenberg",
+        "original_entity_id": "person-esther-goldenberg",
+        "citation_id": "citation-cu-1934-02-02-i0108",
+        "printed_name": "אסתר צרצבסקית",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "97cfb7c8b6685d6b57fd3184fc976f840201f51e51cf02af6967f465ea3456ff"
+      },
+      {
+        "id": "mention-cu-1934-02-02-i0108-2",
+        "entity_id": "person-yaakov-goldenberg",
+        "original_entity_id": "person-yaakov-goldenberg",
+        "citation_id": "citation-cu-1934-02-02-i0108",
+        "printed_name": "יעקב",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "97cfb7c8b6685d6b57fd3184fc976f840201f51e51cf02af6967f465ea3456ff"
+      },
+      {
+        "id": "mention-cu-1934-02-02-i0109-1",
+        "entity_id": "person-esther-goldenberg",
+        "original_entity_id": "person-esther-goldenberg",
+        "citation_id": "citation-cu-1934-02-02-i0109",
+        "printed_name": "אסתר",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "b4cedc63cc0388dc92c7d7d534a25324476a545377ccc2018659e6ac6567bef0"
+      },
+      {
+        "id": "mention-cu-1934-02-02-i0109-2",
+        "entity_id": "person-yaakov-goldenberg",
+        "original_entity_id": "person-yaakov-goldenberg",
+        "citation_id": "citation-cu-1934-02-02-i0109",
+        "printed_name": "גולדנברג",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "b4cedc63cc0388dc92c7d7d534a25324476a545377ccc2018659e6ac6567bef0"
+      },
+      {
+        "id": "mention-cu-1934-02-02-i0408-1",
+        "entity_id": "person-menachem-yehuda-goldman-19340202",
+        "original_entity_id": "person-menachem-yehuda-goldman-19340202",
+        "citation_id": "citation-cu-1934-02-02-i0408",
+        "printed_name": "מנחם־יהודה גולדמן",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "fa32121a6db32e9222da06e4fb759d53467cafe6d3c2f63e1b53cbf52ee33b17"
+      },
+      {
+        "id": "mention-cu-1934-02-02-i0408-2",
+        "entity_id": "person-itke-langer",
+        "original_entity_id": "person-itke-langer",
+        "citation_id": "citation-cu-1934-02-02-i0408",
+        "printed_name": "איטקה לנגר",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "fa32121a6db32e9222da06e4fb759d53467cafe6d3c2f63e1b53cbf52ee33b17"
+      }
+    ]
+  },
+  "1934-02-09": {
+    "people": [
+      {
+        "id": "person-esther-goldenberg",
+        "name": "Esther Goldenberg (née Cherechevsky)",
+        "unit_ids": [
+          "cu-1934-02-09-i0115",
+          "cu-1934-02-09-i0116"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-yaakov-goldenberg",
+        "name": "Yaakov Goldenberg",
+        "unit_ids": [
+          "cu-1934-02-09-i0115",
+          "cu-1934-02-09-i0116"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-menachem-yehuda-goldman-19340202",
+        "name": "Menachem-Yehuda Goldman",
+        "unit_ids": [
+          "cu-1934-02-09-i0108"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-itke-langer",
+        "name": "Itke Langer",
+        "unit_ids": [
+          "cu-1934-02-09-i0108"
+        ],
+        "residence_at_publication": null
+      }
+    ],
+    "mentions": [
+      {
+        "id": "mention-cu-1934-02-09-i0108-1",
+        "entity_id": "person-menachem-yehuda-goldman-19340202",
+        "original_entity_id": "person-menachem-yehuda-goldman-19340209",
+        "citation_id": "citation-cu-1934-02-09-i0108",
+        "printed_name": "מנחם־יהודה גאלדמאן",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "b3ae6d585ddba82eca90250170aa1ee74ba5960747d88a98dfa99f19a92d6129"
+      },
+      {
+        "id": "mention-cu-1934-02-09-i0108-2",
+        "entity_id": "person-itke-langer",
+        "original_entity_id": "person-itke-langer",
+        "citation_id": "citation-cu-1934-02-09-i0108",
+        "printed_name": "איטקע",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "b3ae6d585ddba82eca90250170aa1ee74ba5960747d88a98dfa99f19a92d6129"
+      },
+      {
+        "id": "mention-cu-1934-02-09-i0115-1",
+        "entity_id": "person-esther-goldenberg",
+        "original_entity_id": "person-esther-goldenberg",
+        "citation_id": "citation-cu-1934-02-09-i0115",
+        "printed_name": "אסתר טשערעטשעווסקי",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "a472c4fea26eedd2bbc70adf75932646434c288c2081a065a52205f72755f95b"
+      },
+      {
+        "id": "mention-cu-1934-02-09-i0115-2",
+        "entity_id": "person-yaakov-goldenberg",
+        "original_entity_id": "person-yaakov-goldenberg",
+        "citation_id": "citation-cu-1934-02-09-i0115",
+        "printed_name": "יעקב גאלדנבערג",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "a472c4fea26eedd2bbc70adf75932646434c288c2081a065a52205f72755f95b"
+      },
+      {
+        "id": "mention-cu-1934-02-09-i0116-1",
+        "entity_id": "person-esther-goldenberg",
+        "original_entity_id": "person-esther-goldenberg",
+        "citation_id": "citation-cu-1934-02-09-i0116",
+        "printed_name": "אסתר טשערעטשעווסקי",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "9cc93fc558da3caad0dfe9ba556a420b36b7138ce785b652d126d9520cfd0f70"
+      },
+      {
+        "id": "mention-cu-1934-02-09-i0116-2",
+        "entity_id": "person-yaakov-goldenberg",
+        "original_entity_id": "person-yaakov-goldenberg",
+        "citation_id": "citation-cu-1934-02-09-i0116",
+        "printed_name": "יעקב גאלדענבערג",
+        "roles": [
+          "betrothed"
+        ],
+        "text_sha256": "9cc93fc558da3caad0dfe9ba556a420b36b7138ce785b652d126d9520cfd0f70"
+      }
+    ]
+  },
+  "1938-12-16": {
+    "people": [
+      {
+        "id": "person-sarah-epstein",
+        "name": "Sarah Epstein (née Rendel)",
+        "unit_ids": [
+          "cu-5751"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-mordechai-epstein",
+        "name": "Mordechai Epstein",
+        "unit_ids": [
+          "cu-5751"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-chaim-shor",
+        "name": "Chaim Shor",
+        "unit_ids": [
+          "cu-13704"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-leah-goldberg",
+        "name": "Leah Goldberg (née Judewicz)",
+        "unit_ids": [
+          "cu-13701"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-moshe-judewicz",
+        "name": "Moshe Judewicz",
+        "unit_ids": [
+          "cu-13701"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-rachel-pomerantz",
+        "name": "Rachel Shor (née Pomeraniec)",
+        "unit_ids": [
+          "cu-13704"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-rivtche-judewicz",
+        "name": "Rivka Kaplan-Judewicz",
+        "unit_ids": [
+          "cu-13701"
+        ],
+        "residence_at_publication": null
+      },
+      {
+        "id": "person-velvel-goldberg",
+        "name": "Velvel Goldberg",
+        "unit_ids": [
+          "cu-13701"
+        ],
+        "residence_at_publication": null
+      }
+    ],
+    "mentions": [
+      {
+        "id": "mention-cu-13701-1",
+        "entity_id": "person-moshe-judewicz",
+        "original_entity_id": "person-moshe-judewicz",
+        "citation_id": "citation-cu-13701",
+        "printed_name": "משה",
+        "roles": [
+          "parent"
+        ],
+        "text_sha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc"
+      },
+      {
+        "id": "mention-cu-13701-2",
+        "entity_id": "person-rivtche-judewicz",
+        "original_entity_id": "person-rivtche-judewicz",
+        "citation_id": "citation-cu-13701",
+        "printed_name": "ריוועטשע",
+        "roles": [
+          "parent"
+        ],
+        "text_sha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc"
+      },
+      {
+        "id": "mention-cu-13701-3",
+        "entity_id": "person-leah-goldberg",
+        "original_entity_id": "person-leah-goldberg",
+        "citation_id": "citation-cu-13701",
+        "printed_name": "לאה",
+        "roles": [
+          "signer"
+        ],
+        "text_sha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc"
+      },
+      {
+        "id": "mention-cu-13701-4",
+        "entity_id": "person-velvel-goldberg",
+        "original_entity_id": "person-velvel-goldberg",
+        "citation_id": "citation-cu-13701",
+        "printed_name": "וועלוול גאלדבערג",
+        "roles": [
+          "signer"
+        ],
+        "text_sha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc"
+      },
+      {
+        "id": "mention-cu-13704-1",
+        "entity_id": "person-rachel-pomerantz",
+        "original_entity_id": "person-rachel-pomerantz",
+        "citation_id": "citation-cu-13704",
+        "printed_name": "רחל",
+        "roles": [
+          "honoree"
+        ],
+        "text_sha256": "7c54f2b712add04edde80bbec63fd3846f6427b462cdc43717773f316044a4c8"
+      },
+      {
+        "id": "mention-cu-13704-2",
+        "entity_id": "person-chaim-shor",
+        "original_entity_id": "person-chaim-shor",
+        "citation_id": "citation-cu-13704",
+        "printed_name": "חיים שור",
+        "roles": [
+          "honoree"
+        ],
+        "text_sha256": "7c54f2b712add04edde80bbec63fd3846f6427b462cdc43717773f316044a4c8"
+      },
+      {
+        "id": "mention-cu-5751-1",
+        "entity_id": "person-sarah-epstein",
+        "original_entity_id": "person-sarah-epstein",
+        "citation_id": "citation-cu-5751",
+        "printed_name": "שרה",
+        "roles": [
+          "signer"
+        ],
+        "text_sha256": "efbc683b109f4d49202feca4b8bf928b80aff8b0f3de92849118a5a467f1f1f0"
+      },
+      {
+        "id": "mention-cu-5751-2",
+        "entity_id": "person-mordechai-epstein",
+        "original_entity_id": "person-mordechai-epstein",
+        "citation_id": "citation-cu-5751",
+        "printed_name": "מרדכי עפשטיין",
+        "roles": [
+          "signer"
+        ],
+        "text_sha256": "efbc683b109f4d49202feca4b8bf928b80aff8b0f3de92849118a5a467f1f1f0"
+      }
+    ]
+  }
+}

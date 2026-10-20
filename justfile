@@ -8,7 +8,7 @@ press_dir := env_var_or_default("PRUZHANY_PRESS_DIR", justfile_directory() / "..
 default:
     @just --list
 
-# Everything CI runs: gitleaks scan, zod tests + typecheck, pydantic load check.
+# Everything CI runs: gitleaks, zod tests/typecheck, pydantic and isolated pilot.
 verify *steps:
     bin/verify {{steps}}
 

@@ -1,0 +1,1268 @@
+{
+  "@context": {
+    "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "pc": "https://example.org/pruzhany-pilot/issue-14/vocab#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-02",
+      "@type": "rico:RecordSet",
+      "rdfs:label": "Pruzhaner Shtime, 1934-02-02",
+      "pc:workId": "paper-pruzhaner-shtime"
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-09",
+      "@type": "rico:RecordSet",
+      "rdfs:label": "Pruzhaner Shtime, 1934-02-09",
+      "pc:workId": "paper-pruzhaner-shtime"
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1938-12-16",
+      "@type": "rico:RecordSet",
+      "rdfs:label": "Pruzhaner Shtime, 1938-12-16",
+      "pc:workId": "paper-pruzhaner-shtime"
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-1934-02-02-i0107",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-02"
+      },
+      "pc:quote": "לאירושי בתנו אסתר עם מר יעקב גאלדנברג מברכים במזל־טוב ההורים ואהיות והסבא, הגיס ואחות (הרטפרד אמעריקע), ומאחלים שפע ברכות."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0108",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-1934-02-02-i0108",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-02"
+      },
+      "pc:quote": "ברכת מזל טוב לבבית ורב ברכות הננו מאחלים לרגלי האירושים של בננו ואחנו יעקב עם בחירת לבו את מרת אסתר צרצבסקית שפע ברכות אמה ואחיות ואח בלינוב, אחות וגיס בבריסק, אח'ת וגיס עם משפחתם (בבשינגטן־אח בלימא פערו, אח בארץ ישראל"
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0109",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-1934-02-02-i0109",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-02"
+      },
+      "pc:quote": "למשפחת צ'רצ'בסקית לאירושי בתם אסתר עם מר גולדנברג אנו מאחלים להם רב ברכות. משפחת פרלשטיין."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-1934-02-02-i0408",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-02"
+      },
+      "pc:quote": "מנחם־יהודה גולדמן לחג אירוסיך את בחירת לבך מרת איטקה לנגר קבל נא את ברכותינו הלבביות. קן בית\"ר במלץ. דער פאמיליע לאנגער (אין ברעזע) צו די תנאים פון אייער טאכטער איטקע מיט ה' מנחם י. גאלדמאן דער יונגער פאר א גליקלעכע צוקונפט די עלטערן פיל נחת.\n\nווינטשט פאמיליע גאלדשטיין מאלטש."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-1934-02-09-i0108",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-09"
+      },
+      "pc:quote": "דער פאמיליע לאנגער צו די תנאים פון זייער טאכטער\n\nאיטקע מיט ה' מנחם־יהודה גאלדמאן. ווינטשן מיר זיי א הארציקן מז\"ט — די עלטערן פיל נחת און גליק. שרה, בן־ציון ראווניצקי און פאמיליע, איטקע אוריעוויטש."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-1934-02-09-i0115",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-09"
+      },
+      "pc:quote": "אונזערע בעסטע ווונטשן פרל אסתר טשערעטשעווסקי (לינעווע) צו אירע תנאים מיט ה' יעקב גאלדנבערג. יאנאוויטש, בלאך און פאמיליעס."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0116",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-1934-02-09-i0116",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1934-02-09"
+      },
+      "pc:quote": "צו די תנאים פון אסתר טשערעטשעווסקי מיט ה' יעקב גאלדענבערג ווינטשן מיר פיל גליק און א גליקלעכע צוקונפט. פאמיליע לערנלייט (לינעווע)."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-13701",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1938-12-16"
+      },
+      "pc:quote": "ריוועטשע און משה! צום געבורט פון אייער\nטעכטערל — אונזער הארציקן מזל טוב\nלאה, וועלוול גאלדבערג."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13704",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-13704",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1938-12-16"
+      },
+      "pc:quote": "דעם ה׳ דוד פאמעראנץ צו דער חתונה\nפון זיין טאכטער רחל מיט ה׳ חיים שור\nאונזערע בעסטע גליק ווינטשן און פיל נחת\nשלמה פארעצקי און פרוי."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-5751",
+      "@type": "rico:Record",
+      "dcterms:bibliographicCitation": "cu-5751",
+      "dcterms:source": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/source-paper-1938-12-16"
+      },
+      "pc:quote": "די  פֿאמיליעס קאפּלאן יודעוויטשׁ\nצום געבורט פֿון זייער טאכֿטער און אייניקל\nאונזער הארציקן מזל טוב און א גרינגע דערציונג\nשרה, מרדכי עפשטיין און קינדער."
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg",
+      "@type": "rico:Person",
+      "rdfs:label": "Esther Goldenberg (née Cherechevsky)",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "אסתר",
+        "@language": "he"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0109"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg-name-2",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "אסתר צרצבסקית",
+        "@language": "he"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0108"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg-name-3",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "אסתר טשערעטשעווסקי",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0116"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg",
+      "@type": "rico:Person",
+      "rdfs:label": "Yaakov Goldenberg",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "יעקב גאלדנברג",
+        "@language": "he"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg-name-2",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "יעקב",
+        "@language": "he"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0108"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg-name-3",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "גולדנברג",
+        "@language": "he"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0109"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg-name-4",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "יעקב גאלדנבערג",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg-name-5",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "יעקב גאלדענבערג",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0116"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202",
+      "@type": "rico:Person",
+      "rdfs:label": "Menachem-Yehuda Goldman",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "מנחם־יהודה גולדמן",
+        "@language": "he"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202-name-2",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "מנחם־יהודה גאלדמאן",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer",
+      "@type": "rico:Person",
+      "rdfs:label": "Itke Langer",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "איטקה לנגר",
+        "@language": "he"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer-name-2",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "איטקע",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-sarah-epstein",
+      "@type": "rico:Person",
+      "rdfs:label": "Sarah Epstein (née Rendel)",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-sarah-epstein-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "שרה",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-sarah-epstein"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-5751"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-mordechai-epstein",
+      "@type": "rico:Person",
+      "rdfs:label": "Mordechai Epstein",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-mordechai-epstein-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "מרדכי עפשטיין",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-mordechai-epstein"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-5751"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor",
+      "@type": "rico:Person",
+      "rdfs:label": "Chaim Shor",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "חיים שור",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13704"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-leah-goldberg",
+      "@type": "rico:Person",
+      "rdfs:label": "Leah Goldberg (née Judewicz)",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-leah-goldberg-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "לאה",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-leah-goldberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-moshe-judewicz",
+      "@type": "rico:Person",
+      "rdfs:label": "Moshe Judewicz",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-moshe-judewicz-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "משה",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-moshe-judewicz"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz",
+      "@type": "rico:Person",
+      "rdfs:label": "Rachel Shor (née Pomeraniec)",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "רחל",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13704"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-rivtche-judewicz",
+      "@type": "rico:Person",
+      "rdfs:label": "Rivka Kaplan-Judewicz",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-rivtche-judewicz-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "ריוועטשע",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-rivtche-judewicz"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-velvel-goldberg",
+      "@type": "rico:Person",
+      "rdfs:label": "Velvel Goldberg",
+      "pc:presumedLiving": false
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/person-velvel-goldberg-name-1",
+      "@type": "rico:AgentName",
+      "rico:name": {
+        "@value": "וועלוול גאלדבערג",
+        "@language": "yi"
+      },
+      "pc:recordedFor": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-velvel-goldberg"
+      },
+      "pc:nameKind": "printed",
+      "pc:script": "Hebr",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/event-engagement-esther-yaakov-1934",
+      "@type": "rico:Event",
+      "rdfs:label": "Engagement of Esther Cherechevsky and Yaakov Goldenberg",
+      "pc:eventType": "engagement",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0108"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0109"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0116"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/event-engagement-itke-menachem-1934",
+      "@type": "rico:Event",
+      "rdfs:label": "Engagement of Menachem-Yehuda Goldman and Itke Langer",
+      "pc:eventType": "engagement",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-02-i0107-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "pc:originalEntityId": "person-esther-goldenberg",
+      "pc:printedName": "אסתר",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "9ce3ee0d8c02ed6ac4cf1f772003665ad7b139580b82d8c9e91e3f1059f6d48c",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-02-i0107-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:originalEntityId": "person-yaakov-goldenberg",
+      "pc:printedName": "יעקב גאלדנברג",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "9ce3ee0d8c02ed6ac4cf1f772003665ad7b139580b82d8c9e91e3f1059f6d48c",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-02-i0108-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "pc:originalEntityId": "person-esther-goldenberg",
+      "pc:printedName": "אסתר צרצבסקית",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "97cfb7c8b6685d6b57fd3184fc976f840201f51e51cf02af6967f465ea3456ff",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0108"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-02-i0108-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:originalEntityId": "person-yaakov-goldenberg",
+      "pc:printedName": "יעקב",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "97cfb7c8b6685d6b57fd3184fc976f840201f51e51cf02af6967f465ea3456ff",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0108"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-02-i0109-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "pc:originalEntityId": "person-esther-goldenberg",
+      "pc:printedName": "אסתר",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "b4cedc63cc0388dc92c7d7d534a25324476a545377ccc2018659e6ac6567bef0",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0109"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-02-i0109-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:originalEntityId": "person-yaakov-goldenberg",
+      "pc:printedName": "גולדנברג",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "b4cedc63cc0388dc92c7d7d534a25324476a545377ccc2018659e6ac6567bef0",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0109"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-02-i0408-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202"
+      },
+      "pc:originalEntityId": "person-menachem-yehuda-goldman-19340202",
+      "pc:printedName": "מנחם־יהודה גולדמן",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "fa32121a6db32e9222da06e4fb759d53467cafe6d3c2f63e1b53cbf52ee33b17",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-02-i0408-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer"
+      },
+      "pc:originalEntityId": "person-itke-langer",
+      "pc:printedName": "איטקה לנגר",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "fa32121a6db32e9222da06e4fb759d53467cafe6d3c2f63e1b53cbf52ee33b17",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-09-i0108-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202"
+      },
+      "pc:originalEntityId": "person-menachem-yehuda-goldman-19340209",
+      "pc:printedName": "מנחם־יהודה גאלדמאן",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "b3ae6d585ddba82eca90250170aa1ee74ba5960747d88a98dfa99f19a92d6129",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-09-i0108-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer"
+      },
+      "pc:originalEntityId": "person-itke-langer",
+      "pc:printedName": "איטקע",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "b3ae6d585ddba82eca90250170aa1ee74ba5960747d88a98dfa99f19a92d6129",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-09-i0115-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "pc:originalEntityId": "person-esther-goldenberg",
+      "pc:printedName": "אסתר טשערעטשעווסקי",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "a472c4fea26eedd2bbc70adf75932646434c288c2081a065a52205f72755f95b",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-09-i0115-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:originalEntityId": "person-yaakov-goldenberg",
+      "pc:printedName": "יעקב גאלדנבערג",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "a472c4fea26eedd2bbc70adf75932646434c288c2081a065a52205f72755f95b",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-09-i0116-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "pc:originalEntityId": "person-esther-goldenberg",
+      "pc:printedName": "אסתר טשערעטשעווסקי",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "9cc93fc558da3caad0dfe9ba556a420b36b7138ce785b652d126d9520cfd0f70",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0116"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-1934-02-09-i0116-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "pc:originalEntityId": "person-yaakov-goldenberg",
+      "pc:printedName": "יעקב גאלדענבערג",
+      "pc:roles": [
+        "betrothed"
+      ],
+      "pc:textSha256": "9cc93fc558da3caad0dfe9ba556a420b36b7138ce785b652d126d9520cfd0f70",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0116"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-13701-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-moshe-judewicz"
+      },
+      "pc:originalEntityId": "person-moshe-judewicz",
+      "pc:printedName": "משה",
+      "pc:roles": [
+        "parent"
+      ],
+      "pc:textSha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-13701-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-rivtche-judewicz"
+      },
+      "pc:originalEntityId": "person-rivtche-judewicz",
+      "pc:printedName": "ריוועטשע",
+      "pc:roles": [
+        "parent"
+      ],
+      "pc:textSha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-13701-3",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-leah-goldberg"
+      },
+      "pc:originalEntityId": "person-leah-goldberg",
+      "pc:printedName": "לאה",
+      "pc:roles": [
+        "signer"
+      ],
+      "pc:textSha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-13701-4",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-velvel-goldberg"
+      },
+      "pc:originalEntityId": "person-velvel-goldberg",
+      "pc:printedName": "וועלוול גאלדבערג",
+      "pc:roles": [
+        "signer"
+      ],
+      "pc:textSha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-13704-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz"
+      },
+      "pc:originalEntityId": "person-rachel-pomerantz",
+      "pc:printedName": "רחל",
+      "pc:roles": [
+        "honoree"
+      ],
+      "pc:textSha256": "7c54f2b712add04edde80bbec63fd3846f6427b462cdc43717773f316044a4c8",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13704"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-13704-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor"
+      },
+      "pc:originalEntityId": "person-chaim-shor",
+      "pc:printedName": "חיים שור",
+      "pc:roles": [
+        "honoree"
+      ],
+      "pc:textSha256": "7c54f2b712add04edde80bbec63fd3846f6427b462cdc43717773f316044a4c8",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13704"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-5751-1",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-sarah-epstein"
+      },
+      "pc:originalEntityId": "person-sarah-epstein",
+      "pc:printedName": "שרה",
+      "pc:roles": [
+        "signer"
+      ],
+      "pc:textSha256": "efbc683b109f4d49202feca4b8bf928b80aff8b0f3de92849118a5a467f1f1f0",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-5751"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/mention-cu-5751-2",
+      "@type": "pc:Mention",
+      "pc:entity": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-mordechai-epstein"
+      },
+      "pc:originalEntityId": "person-mordechai-epstein",
+      "pc:printedName": "מרדכי עפשטיין",
+      "pc:roles": [
+        "signer"
+      ],
+      "pc:textSha256": "efbc683b109f4d49202feca4b8bf928b80aff8b0f3de92849118a5a467f1f1f0",
+      "prov:wasDerivedFrom": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-5751"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/fact-event-engagement-esther-yaakov-1934-person-esther-goldenberg",
+      "@type": [
+        "rdf:Statement",
+        "pc:Claim"
+      ],
+      "rdf:subject": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg"
+      },
+      "rdf:predicate": {
+        "@id": "https://www.ica.org/standards/RiC/ontology#isOrWasParticipantIn"
+      },
+      "rdf:object": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/event-engagement-esther-yaakov-1934"
+      },
+      "pc:status": "accepted",
+      "pc:reviewState": "pending",
+      "pc:evidenceConfidence": "confirmed",
+      "pc:identityConfidence": "probable",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0108"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0109"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0116"
+        }
+      ],
+      "pc:payload": {
+        "@value": {
+          "type": "event_participation",
+          "value": "betrothed",
+          "event_id": "event-engagement-esther-yaakov-1934"
+        },
+        "@type": "@json"
+      },
+      "pc:role": "betrothed"
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/fact-event-engagement-esther-yaakov-1934-person-yaakov-goldenberg",
+      "@type": [
+        "rdf:Statement",
+        "pc:Claim"
+      ],
+      "rdf:subject": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg"
+      },
+      "rdf:predicate": {
+        "@id": "https://www.ica.org/standards/RiC/ontology#isOrWasParticipantIn"
+      },
+      "rdf:object": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/event-engagement-esther-yaakov-1934"
+      },
+      "pc:status": "accepted",
+      "pc:reviewState": "pending",
+      "pc:evidenceConfidence": "confirmed",
+      "pc:identityConfidence": "probable",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0108"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0109"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0116"
+        }
+      ],
+      "pc:payload": {
+        "@value": {
+          "type": "event_participation",
+          "value": "betrothed",
+          "event_id": "event-engagement-esther-yaakov-1934"
+        },
+        "@type": "@json"
+      },
+      "pc:role": "betrothed"
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/fact-event-engagement-itke-menachem-1934-person-itke-langer",
+      "@type": [
+        "rdf:Statement",
+        "pc:Claim"
+      ],
+      "rdf:subject": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer"
+      },
+      "rdf:predicate": {
+        "@id": "https://www.ica.org/standards/RiC/ontology#isOrWasParticipantIn"
+      },
+      "rdf:object": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/event-engagement-itke-menachem-1934"
+      },
+      "pc:status": "accepted",
+      "pc:reviewState": "pending",
+      "pc:evidenceConfidence": "confirmed",
+      "pc:identityConfidence": "probable",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+        }
+      ],
+      "pc:payload": {
+        "@value": {
+          "type": "event_participation",
+          "value": "betrothed",
+          "event_id": "event-engagement-itke-menachem-1934"
+        },
+        "@type": "@json"
+      },
+      "pc:role": "betrothed"
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/fact-event-engagement-itke-menachem-1934-person-menachem-yehuda-goldman-19340202",
+      "@type": [
+        "rdf:Statement",
+        "pc:Claim"
+      ],
+      "rdf:subject": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202"
+      },
+      "rdf:predicate": {
+        "@id": "https://www.ica.org/standards/RiC/ontology#isOrWasParticipantIn"
+      },
+      "rdf:object": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/event-engagement-itke-menachem-1934"
+      },
+      "pc:status": "accepted",
+      "pc:reviewState": "pending",
+      "pc:evidenceConfidence": "confirmed",
+      "pc:identityConfidence": "probable",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+        }
+      ],
+      "pc:payload": {
+        "@value": {
+          "type": "event_participation",
+          "value": "betrothed",
+          "event_id": "event-engagement-itke-menachem-1934"
+        },
+        "@type": "@json"
+      },
+      "pc:role": "betrothed"
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/fact-parenthood-person-moshe-judewicz",
+      "@type": [
+        "rdf:Statement",
+        "pc:Claim"
+      ],
+      "rdf:subject": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-moshe-judewicz"
+      },
+      "rdf:predicate": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/vocab#parenthood"
+      },
+      "rdf:object": {
+        "@value": "Congratulated on the birth of an unnamed daughter; no birth date inferred."
+      },
+      "pc:status": "accepted",
+      "pc:reviewState": "pending",
+      "pc:evidenceConfidence": "confirmed",
+      "pc:identityConfidence": "probable",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+        }
+      ],
+      "pc:payload": {
+        "@value": {
+          "type": "parenthood",
+          "value": "Congratulated on the birth of an unnamed daughter; no birth date inferred."
+        },
+        "@type": "@json"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/fact-parenthood-person-rivtche-judewicz",
+      "@type": [
+        "rdf:Statement",
+        "pc:Claim"
+      ],
+      "rdf:subject": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-rivtche-judewicz"
+      },
+      "rdf:predicate": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/vocab#parenthood"
+      },
+      "rdf:object": {
+        "@value": "Congratulated on the birth of an unnamed daughter; no birth date inferred."
+      },
+      "pc:status": "accepted",
+      "pc:reviewState": "pending",
+      "pc:evidenceConfidence": "confirmed",
+      "pc:identityConfidence": "probable",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13701"
+        }
+      ],
+      "pc:payload": {
+        "@value": {
+          "type": "parenthood",
+          "value": "Congratulated on the birth of an unnamed daughter; no birth date inferred."
+        },
+        "@type": "@json"
+      }
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/relationship-rachel-chaim",
+      "@type": [
+        "rdf:Statement",
+        "pc:Claim"
+      ],
+      "rdf:subject": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz"
+      },
+      "rdf:predicate": {
+        "@id": "https://www.ica.org/standards/RiC/ontology#hasOrHadSpouse"
+      },
+      "rdf:object": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor"
+      },
+      "pc:status": "accepted",
+      "pc:reviewState": "pending",
+      "pc:evidenceConfidence": "confirmed",
+      "pc:identityConfidence": "probable",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13704"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/join-event-esther-yaakov",
+      "@type": "pc:IdentityProposal",
+      "pc:originalIds": [
+        "event-19340202-engagement-of-esther-cherchevski-and-yaakov-goldenberg",
+        "event-19340209-engagement-of-esther-cherechevsky-and-yaakov-goldenberg"
+      ],
+      "pc:target": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/event-engagement-esther-yaakov-1934"
+      },
+      "pc:appliedInPreview": true,
+      "pc:reviewState": "pending",
+      "pc:reason": "Same named couple, explicit engagement wording and adjacent issues. Proposed grouping for review; dates are not inferred from publication dates.",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0107"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0115"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/join-event-itke-menachem",
+      "@type": "pc:IdentityProposal",
+      "pc:originalIds": [
+        "event-19340202-engagement-of-menachem-yehuda-goldman-and-itke-langer",
+        "event-19340209-engagement-of-itke-langer-and-menachem-yehuda-goldman"
+      ],
+      "pc:target": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/event-engagement-itke-menachem-1934"
+      },
+      "pc:appliedInPreview": true,
+      "pc:reviewState": "pending",
+      "pc:reason": "Same named couple, explicit engagement wording and adjacent issues. Proposed grouping for review; dates are not inferred from publication dates.",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/pruzhany-pilot/issue-14/join-person-menachem",
+      "@type": "pc:IdentityProposal",
+      "pc:originalIds": [
+        "person-menachem-yehuda-goldman-19340202",
+        "person-menachem-yehuda-goldman-19340209"
+      ],
+      "pc:target": {
+        "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202"
+      },
+      "pc:appliedInPreview": true,
+      "pc:reviewState": "pending",
+      "pc:reason": "Full given name and surname variants, same betrothed Itke Langer and adjacent issues. Keep both original IDs and excerpts; no destructive merge.",
+      "prov:wasDerivedFrom": [
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-02-i0408"
+        },
+        {
+          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-1934-02-09-i0108"
+        }
+      ]
+    }
+  ]
+}

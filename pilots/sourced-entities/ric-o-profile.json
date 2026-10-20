@@ -1,0 +1,447 @@
+{
+  "version": "RiC-O 1.1",
+  "source": "https://github.com/ICA-EGAD/RiC-O/blob/06912e1e20343f2e88e51f1b55fa232cb30b6b5b/ontology/current-version/RiC-O_1-1.rdf",
+  "sha256": "cf9afc4c01142161d0ee7282dd1c07f361073d12f1f6f4569115707f169b31e9",
+  "checked_on": "2026-10-19",
+  "ehri_version": "0.2.0",
+  "ehri_source": "https://github.com/EHRI/ehri-kg-ontology/blob/5d42d2505661bdfb04b3634b27c7b9e73392fe07/ontology/ehri.owl",
+  "ehri_sha256": "a916194c93c6393a623c38cd51a469fc8a0348801cb3807dd62819a8301b99b3",
+  "terms": {
+    "Thing": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#Thing",
+      "element": "Class",
+      "label": [
+        "Thing"
+      ],
+      "comment": [
+        "Any idea, material thing, or event within the realm of human\n         experience."
+      ]
+    },
+    "Person": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#Person",
+      "element": "Class",
+      "label": [
+        "Person"
+      ],
+      "comment": [
+        "An individual human being."
+      ]
+    },
+    "Place": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#Place",
+      "element": "Class",
+      "label": [
+        "Place"
+      ],
+      "comment": [
+        "Bounded, named geographic area or region."
+      ]
+    },
+    "Event": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#Event",
+      "element": "Class",
+      "label": [
+        "Event"
+      ],
+      "comment": [
+        "Something that happens or occurs in time and space."
+      ]
+    },
+    "RecordResource": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#RecordResource",
+      "element": "Class",
+      "label": [
+        "Record Resource"
+      ],
+      "comment": [
+        "Information produced or acquired and retained by an Agent in the\n         course of life or work activity."
+      ]
+    },
+    "Record": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#Record",
+      "element": "Class",
+      "label": [
+        "Record"
+      ],
+      "comment": [
+        "Discrete information content formed and inscribed, at least once,\n         by any method on any carrier in any persistent, recoverable form by an Agent in the course\n         of life or work activity."
+      ]
+    },
+    "RecordSet": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#RecordSet",
+      "element": "Class",
+      "label": [
+        "Record Set"
+      ],
+      "comment": [
+        "One or more records that are grouped together by an Agent based on\n         the records sharing one or more attributes or relations."
+      ]
+    },
+    "AgentName": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#AgentName",
+      "element": "Class",
+      "label": [
+        "Agent Name"
+      ],
+      "comment": [
+        "A label, title or term designating an Agent in order to make it\n         distinguishable from other similar entities."
+      ]
+    },
+    "OccupationType": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#OccupationType",
+      "element": "Class",
+      "label": [
+        "Occupation Type"
+      ],
+      "comment": [
+        "Categorization of a profession, trade, or craft pursued by a\n         Person in fulfilment of an Activity."
+      ]
+    },
+    "Relation": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#Relation",
+      "element": "Class",
+      "label": [
+        "Relation"
+      ],
+      "comment": [
+        "The top level relation class. It connects at least two Things. An\n         instance of a Relation may have some datatype and object properties: a general description\n         (datatype property) like any Thing; a certainty (for 'certain', 'quite probable',\n         'uncertain','unknown'); a date (use either the date datatype property or the Date class and\n         isAssociatedWithDate object property); a state (relationState); a location (use the Place\n         class and isAssociatedWithPlace object property); a source of information that can be used\n         as an evidence for it (use either source datatype property or hasSource object property).\n         This Relation is the most generic one; it is not oriented."
+      ]
+    },
+    "AgentToAgentRelation": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#AgentToAgentRelation",
+      "element": "Class",
+      "label": [
+        "Agent Relation"
+      ],
+      "comment": [
+        "Connects at least two Agents. This Relation is a generic, not\n         oriented one."
+      ]
+    },
+    "FamilyRelation": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#FamilyRelation",
+      "element": "Class",
+      "label": [
+        "Family Relation"
+      ],
+      "comment": [
+        "Connects at least two Persons, when they have some family link,\n         i.e. belong to the same family. This Relation is a generic, not oriented\n         one."
+      ]
+    },
+    "hasOrHadAgentName": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasOrHadAgentName",
+      "element": "ObjectProperty",
+      "label": [
+        "has or had agent name"
+      ],
+      "comment": [
+        "Connects an Agent and (one of) its present or past Agent\n         Name."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Agent"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#AgentName"
+      ]
+    },
+    "hasOrHadName": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasOrHadName",
+      "element": "ObjectProperty",
+      "label": [
+        "has or had name"
+      ],
+      "comment": [
+        "Connects a Thing to one of its past or present\n         Names."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Thing"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Name"
+      ]
+    },
+    "hasOrHadParticipant": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasOrHadParticipant",
+      "element": "ObjectProperty",
+      "label": [
+        "has or had participant"
+      ],
+      "comment": [
+        "Connects an Event to a Thing that is or was actively or passively\n         involved in it."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Event"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Thing"
+      ]
+    },
+    "hasOrHadLocation": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasOrHadLocation",
+      "element": "ObjectProperty",
+      "label": [
+        "has or had location"
+      ],
+      "comment": [
+        "Inverse of 'is or was location of' object property."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Thing"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Place"
+      ]
+    },
+    "hasOrHadSpouse": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasOrHadSpouse",
+      "element": "ObjectProperty",
+      "label": [
+        "has or had spouse"
+      ],
+      "comment": [
+        "Connects two Persons who are or were married. This relation is\n         symmetric."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Person"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Person"
+      ]
+    },
+    "hasOrHadOccupationOfType": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasOrHadOccupationOfType",
+      "element": "ObjectProperty",
+      "label": [
+        "has or had occupation of type"
+      ],
+      "comment": [
+        "Connects a Person to an Occupation Type that categorized or\n         categorizes his/her occupation (profession, trade or craft)."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Person"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#OccupationType"
+      ]
+    },
+    "hasBirthDate": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasBirthDate",
+      "element": "ObjectProperty",
+      "label": [
+        "has birth date"
+      ],
+      "comment": [
+        "Inverse of 'is birth date of' object property."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Person"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Date"
+      ]
+    },
+    "hasDeathDate": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasDeathDate",
+      "element": "ObjectProperty",
+      "label": [
+        "has death date"
+      ],
+      "comment": [
+        "Inverse of 'is death date of' object property."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Person"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Date"
+      ]
+    },
+    "date": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#date",
+      "element": "DatatypeProperty",
+      "label": [
+        "date"
+      ],
+      "comment": [
+        "Chronological information associated with an entity that\n         contributes to its identification and contextualization."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Thing"
+      ],
+      "range": [
+        "http://www.w3.org/2000/01/rdf-schema#Literal"
+      ]
+    },
+    "name": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#name",
+      "element": "DatatypeProperty",
+      "label": [
+        "name"
+      ],
+      "comment": [
+        "A label, title or term designating an entity in order to make it\n         distinguishable from other similar entities."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Thing"
+      ],
+      "range": [
+        "http://www.w3.org/2000/01/rdf-schema#Literal"
+      ]
+    },
+    "relationHasSource": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#relationHasSource",
+      "element": "ObjectProperty",
+      "label": [
+        "relation has source"
+      ],
+      "comment": [
+        "Connects an n-ary Relation to a Thing that is its\n         source."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Relation"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Thing"
+      ]
+    },
+    "relationCertainty": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#relationCertainty",
+      "element": "DatatypeProperty",
+      "label": [
+        "relation certainty"
+      ],
+      "comment": [
+        "Qualifies the level of certitude of the accuracy of a\n         Relation."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Relation"
+      ],
+      "range": [
+        "http://www.w3.org/2000/01/rdf-schema#Literal"
+      ]
+    },
+    "relationState": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#relationState",
+      "element": "DatatypeProperty",
+      "label": [
+        "relation state"
+      ],
+      "comment": [
+        "Used to qualify the state of a Relation (e. g. present, past,\n         ongoing, unknown)."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Relation"
+      ],
+      "range": [
+        "http://www.w3.org/2000/01/rdf-schema#Literal"
+      ]
+    },
+    "evidences": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#evidences",
+      "element": "ObjectProperty",
+      "label": [
+        "evidences"
+      ],
+      "comment": [
+        "Connects a Record Resource to a Relation, when the first is used\n         for proving the existence of the second one, or for describing it."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#RecordResource"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Relation"
+      ]
+    },
+    "Date": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#Date",
+      "element": "Class",
+      "label": [
+        "Date"
+      ],
+      "comment": [
+        "Chronological information associated with an entity that\n         contributes to its identification and contextualization."
+      ]
+    },
+    "expressedDate": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#expressedDate",
+      "element": "DatatypeProperty",
+      "label": [
+        "expressed date"
+      ],
+      "comment": [
+        "Natural language expression of a date. This property is a\n         specialization of the name property. In order that the precise meaning of the date can be\n         understood, information such as the calendar used or other specific context should be\n         included."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Date"
+      ],
+      "range": [
+        "http://www.w3.org/2000/01/rdf-schema#Literal"
+      ]
+    },
+    "relationConnects": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#relationConnects",
+      "element": "ObjectProperty",
+      "label": [
+        "relation connects"
+      ],
+      "comment": [
+        "Connects an n-ary Relation to any of the Things\n         involved."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Relation"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Thing"
+      ]
+    },
+    "isOrWasParticipantIn": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#isOrWasParticipantIn",
+      "element": "ObjectProperty",
+      "label": [
+        "is or was participant in"
+      ],
+      "comment": [
+        "Inverse of 'has or had participant' object\n         property."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Thing"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Event"
+      ]
+    },
+    "hasBirthPlace": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasBirthPlace",
+      "element": "ObjectProperty",
+      "label": [
+        "has birth place"
+      ],
+      "comment": [
+        "Inverse of 'is birth place of' object property."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Person"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Place"
+      ]
+    },
+    "hasDeathPlace": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#hasDeathPlace",
+      "element": "ObjectProperty",
+      "label": [
+        "has death place"
+      ],
+      "comment": [
+        "Inverse of 'is death place of' object property."
+      ],
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Person"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#Place"
+      ]
+    }
+  },
+  "attribution": "RiC-O labels and definitions: International Council on Archives Expert Group on Archival Description (ICA EGAD), Copyright 2019-, International Council on Archives (ICA). Extracted unchanged from the cited ontology; application mappings are separate.",
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}

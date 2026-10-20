@@ -1,0 +1,889 @@
+{
+  "version": "0.1.0",
+  "vocabulary_version": "0.1.0",
+  "as_of_year": 2026,
+  "source_revision": "35cccf97b326c149e7b1d547b842b2537cbce66f",
+  "sources": [
+    {
+      "id": "source-paper-1934-02-02",
+      "kind": "newspaper",
+      "title": "Pruzhaner Shtime, 1934-02-02",
+      "work_id": "paper-pruzhaner-shtime"
+    },
+    {
+      "id": "source-paper-1934-02-09",
+      "kind": "newspaper",
+      "title": "Pruzhaner Shtime, 1934-02-09",
+      "work_id": "paper-pruzhaner-shtime"
+    },
+    {
+      "id": "source-paper-1938-12-16",
+      "kind": "newspaper",
+      "title": "Pruzhaner Shtime, 1938-12-16",
+      "work_id": "paper-pruzhaner-shtime"
+    }
+  ],
+  "citations": [
+    {
+      "id": "citation-cu-1934-02-02-i0107",
+      "source_id": "source-paper-1934-02-02",
+      "edition_date": "1934-02-02",
+      "unit_id": "cu-1934-02-02-i0107",
+      "locator": "cu-1934-02-02-i0107",
+      "quote": "לאירושי בתנו אסתר עם מר יעקב גאלדנברג מברכים במזל־טוב ההורים ואהיות והסבא, הגיס ואחות (הרטפרד אמעריקע), ומאחלים שפע ברכות."
+    },
+    {
+      "id": "citation-cu-1934-02-02-i0108",
+      "source_id": "source-paper-1934-02-02",
+      "edition_date": "1934-02-02",
+      "unit_id": "cu-1934-02-02-i0108",
+      "locator": "cu-1934-02-02-i0108",
+      "quote": "ברכת מזל טוב לבבית ורב ברכות הננו מאחלים לרגלי האירושים של בננו ואחנו יעקב עם בחירת לבו את מרת אסתר צרצבסקית שפע ברכות אמה ואחיות ואח בלינוב, אחות וגיס בבריסק, אח'ת וגיס עם משפחתם (בבשינגטן־אח בלימא פערו, אח בארץ ישראל"
+    },
+    {
+      "id": "citation-cu-1934-02-02-i0109",
+      "source_id": "source-paper-1934-02-02",
+      "edition_date": "1934-02-02",
+      "unit_id": "cu-1934-02-02-i0109",
+      "locator": "cu-1934-02-02-i0109",
+      "quote": "למשפחת צ'רצ'בסקית לאירושי בתם אסתר עם מר גולדנברג אנו מאחלים להם רב ברכות. משפחת פרלשטיין."
+    },
+    {
+      "id": "citation-cu-1934-02-02-i0408",
+      "source_id": "source-paper-1934-02-02",
+      "edition_date": "1934-02-02",
+      "unit_id": "cu-1934-02-02-i0408",
+      "locator": "cu-1934-02-02-i0408",
+      "quote": "מנחם־יהודה גולדמן לחג אירוסיך את בחירת לבך מרת איטקה לנגר קבל נא את ברכותינו הלבביות. קן בית\"ר במלץ. דער פאמיליע לאנגער (אין ברעזע) צו די תנאים פון אייער טאכטער איטקע מיט ה' מנחם י. גאלדמאן דער יונגער פאר א גליקלעכע צוקונפט די עלטערן פיל נחת.\n\nווינטשט פאמיליע גאלדשטיין מאלטש."
+    },
+    {
+      "id": "citation-cu-1934-02-09-i0108",
+      "source_id": "source-paper-1934-02-09",
+      "edition_date": "1934-02-09",
+      "unit_id": "cu-1934-02-09-i0108",
+      "locator": "cu-1934-02-09-i0108",
+      "quote": "דער פאמיליע לאנגער צו די תנאים פון זייער טאכטער\n\nאיטקע מיט ה' מנחם־יהודה גאלדמאן. ווינטשן מיר זיי א הארציקן מז\"ט — די עלטערן פיל נחת און גליק. שרה, בן־ציון ראווניצקי און פאמיליע, איטקע אוריעוויטש."
+    },
+    {
+      "id": "citation-cu-1934-02-09-i0115",
+      "source_id": "source-paper-1934-02-09",
+      "edition_date": "1934-02-09",
+      "unit_id": "cu-1934-02-09-i0115",
+      "locator": "cu-1934-02-09-i0115",
+      "quote": "אונזערע בעסטע ווונטשן פרל אסתר טשערעטשעווסקי (לינעווע) צו אירע תנאים מיט ה' יעקב גאלדנבערג. יאנאוויטש, בלאך און פאמיליעס."
+    },
+    {
+      "id": "citation-cu-1934-02-09-i0116",
+      "source_id": "source-paper-1934-02-09",
+      "edition_date": "1934-02-09",
+      "unit_id": "cu-1934-02-09-i0116",
+      "locator": "cu-1934-02-09-i0116",
+      "quote": "צו די תנאים פון אסתר טשערעטשעווסקי מיט ה' יעקב גאלדענבערג ווינטשן מיר פיל גליק און א גליקלעכע צוקונפט. פאמיליע לערנלייט (לינעווע)."
+    },
+    {
+      "id": "citation-cu-13701",
+      "source_id": "source-paper-1938-12-16",
+      "edition_date": "1938-12-16",
+      "unit_id": "cu-13701",
+      "locator": "cu-13701",
+      "quote": "ריוועטשע און משה! צום געבורט פון אייער\nטעכטערל — אונזער הארציקן מזל טוב\nלאה, וועלוול גאלדבערג."
+    },
+    {
+      "id": "citation-cu-13704",
+      "source_id": "source-paper-1938-12-16",
+      "edition_date": "1938-12-16",
+      "unit_id": "cu-13704",
+      "locator": "cu-13704",
+      "quote": "דעם ה׳ דוד פאמעראנץ צו דער חתונה\nפון זיין טאכטער רחל מיט ה׳ חיים שור\nאונזערע בעסטע גליק ווינטשן און פיל נחת\nשלמה פארעצקי און פרוי."
+    },
+    {
+      "id": "citation-cu-5751",
+      "source_id": "source-paper-1938-12-16",
+      "edition_date": "1938-12-16",
+      "unit_id": "cu-5751",
+      "locator": "cu-5751",
+      "quote": "די  פֿאמיליעס קאפּלאן יודעוויטשׁ\nצום געבורט פֿון זייער טאכֿטער און אייניקל\nאונזער הארציקן מזל טוב און א גרינגע דערציונג\nשרה, מרדכי עפשטיין און קינדער."
+    }
+  ],
+  "people": [
+    {
+      "id": "person-esther-goldenberg",
+      "display_name": "Esther Goldenberg (née Cherechevsky)",
+      "original_ids": [
+        "person-esther-goldenberg"
+      ],
+      "names": [
+        {
+          "value": "אסתר",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "he",
+          "citation_ids": [
+            "citation-cu-1934-02-02-i0107",
+            "citation-cu-1934-02-02-i0109"
+          ]
+        },
+        {
+          "value": "אסתר צרצבסקית",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "he",
+          "citation_ids": [
+            "citation-cu-1934-02-02-i0108"
+          ]
+        },
+        {
+          "value": "אסתר טשערעטשעווסקי",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-1934-02-09-i0115",
+            "citation-cu-1934-02-09-i0116"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-yaakov-goldenberg",
+      "display_name": "Yaakov Goldenberg",
+      "original_ids": [
+        "person-yaakov-goldenberg"
+      ],
+      "names": [
+        {
+          "value": "יעקב גאלדנברג",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "he",
+          "citation_ids": [
+            "citation-cu-1934-02-02-i0107"
+          ]
+        },
+        {
+          "value": "יעקב",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "he",
+          "citation_ids": [
+            "citation-cu-1934-02-02-i0108"
+          ]
+        },
+        {
+          "value": "גולדנברג",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "he",
+          "citation_ids": [
+            "citation-cu-1934-02-02-i0109"
+          ]
+        },
+        {
+          "value": "יעקב גאלדנבערג",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-1934-02-09-i0115"
+          ]
+        },
+        {
+          "value": "יעקב גאלדענבערג",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-1934-02-09-i0116"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-menachem-yehuda-goldman-19340202",
+      "display_name": "Menachem-Yehuda Goldman",
+      "original_ids": [
+        "person-menachem-yehuda-goldman-19340202",
+        "person-menachem-yehuda-goldman-19340209"
+      ],
+      "names": [
+        {
+          "value": "מנחם־יהודה גולדמן",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "he",
+          "citation_ids": [
+            "citation-cu-1934-02-02-i0408"
+          ]
+        },
+        {
+          "value": "מנחם־יהודה גאלדמאן",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-1934-02-09-i0108"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-itke-langer",
+      "display_name": "Itke Langer",
+      "original_ids": [
+        "person-itke-langer"
+      ],
+      "names": [
+        {
+          "value": "איטקה לנגר",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "he",
+          "citation_ids": [
+            "citation-cu-1934-02-02-i0408"
+          ]
+        },
+        {
+          "value": "איטקע",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-1934-02-09-i0108"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-sarah-epstein",
+      "display_name": "Sarah Epstein (née Rendel)",
+      "original_ids": [
+        "person-sarah-epstein"
+      ],
+      "names": [
+        {
+          "value": "שרה",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-5751"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-mordechai-epstein",
+      "display_name": "Mordechai Epstein",
+      "original_ids": [
+        "person-mordechai-epstein"
+      ],
+      "names": [
+        {
+          "value": "מרדכי עפשטיין",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-5751"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-chaim-shor",
+      "display_name": "Chaim Shor",
+      "original_ids": [
+        "person-chaim-shor"
+      ],
+      "names": [
+        {
+          "value": "חיים שור",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-13704"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-leah-goldberg",
+      "display_name": "Leah Goldberg (née Judewicz)",
+      "original_ids": [
+        "person-leah-goldberg"
+      ],
+      "names": [
+        {
+          "value": "לאה",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-13701"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-moshe-judewicz",
+      "display_name": "Moshe Judewicz",
+      "original_ids": [
+        "person-moshe-judewicz"
+      ],
+      "names": [
+        {
+          "value": "משה",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-13701"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-rachel-pomerantz",
+      "display_name": "Rachel Shor (née Pomeraniec)",
+      "original_ids": [
+        "person-rachel-pomerantz"
+      ],
+      "names": [
+        {
+          "value": "רחל",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-13704"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-rivtche-judewicz",
+      "display_name": "Rivka Kaplan-Judewicz",
+      "original_ids": [
+        "person-rivtche-judewicz"
+      ],
+      "names": [
+        {
+          "value": "ריוועטשע",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-13701"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    },
+    {
+      "id": "person-velvel-goldberg",
+      "display_name": "Velvel Goldberg",
+      "original_ids": [
+        "person-velvel-goldberg"
+      ],
+      "names": [
+        {
+          "value": "וועלוול גאלדבערג",
+          "kind": "printed",
+          "script": "Hebr",
+          "lang": "yi",
+          "citation_ids": [
+            "citation-cu-13701"
+          ]
+        }
+      ],
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
+    }
+  ],
+  "places": [],
+  "mentions": [
+    {
+      "id": "mention-cu-1934-02-02-i0107-1",
+      "entity_id": "person-esther-goldenberg",
+      "original_entity_id": "person-esther-goldenberg",
+      "citation_id": "citation-cu-1934-02-02-i0107",
+      "printed_name": "אסתר",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "9ce3ee0d8c02ed6ac4cf1f772003665ad7b139580b82d8c9e91e3f1059f6d48c"
+    },
+    {
+      "id": "mention-cu-1934-02-02-i0107-2",
+      "entity_id": "person-yaakov-goldenberg",
+      "original_entity_id": "person-yaakov-goldenberg",
+      "citation_id": "citation-cu-1934-02-02-i0107",
+      "printed_name": "יעקב גאלדנברג",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "9ce3ee0d8c02ed6ac4cf1f772003665ad7b139580b82d8c9e91e3f1059f6d48c"
+    },
+    {
+      "id": "mention-cu-1934-02-02-i0108-1",
+      "entity_id": "person-esther-goldenberg",
+      "original_entity_id": "person-esther-goldenberg",
+      "citation_id": "citation-cu-1934-02-02-i0108",
+      "printed_name": "אסתר צרצבסקית",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "97cfb7c8b6685d6b57fd3184fc976f840201f51e51cf02af6967f465ea3456ff"
+    },
+    {
+      "id": "mention-cu-1934-02-02-i0108-2",
+      "entity_id": "person-yaakov-goldenberg",
+      "original_entity_id": "person-yaakov-goldenberg",
+      "citation_id": "citation-cu-1934-02-02-i0108",
+      "printed_name": "יעקב",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "97cfb7c8b6685d6b57fd3184fc976f840201f51e51cf02af6967f465ea3456ff"
+    },
+    {
+      "id": "mention-cu-1934-02-02-i0109-1",
+      "entity_id": "person-esther-goldenberg",
+      "original_entity_id": "person-esther-goldenberg",
+      "citation_id": "citation-cu-1934-02-02-i0109",
+      "printed_name": "אסתר",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "b4cedc63cc0388dc92c7d7d534a25324476a545377ccc2018659e6ac6567bef0"
+    },
+    {
+      "id": "mention-cu-1934-02-02-i0109-2",
+      "entity_id": "person-yaakov-goldenberg",
+      "original_entity_id": "person-yaakov-goldenberg",
+      "citation_id": "citation-cu-1934-02-02-i0109",
+      "printed_name": "גולדנברג",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "b4cedc63cc0388dc92c7d7d534a25324476a545377ccc2018659e6ac6567bef0"
+    },
+    {
+      "id": "mention-cu-1934-02-02-i0408-1",
+      "entity_id": "person-menachem-yehuda-goldman-19340202",
+      "original_entity_id": "person-menachem-yehuda-goldman-19340202",
+      "citation_id": "citation-cu-1934-02-02-i0408",
+      "printed_name": "מנחם־יהודה גולדמן",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "fa32121a6db32e9222da06e4fb759d53467cafe6d3c2f63e1b53cbf52ee33b17"
+    },
+    {
+      "id": "mention-cu-1934-02-02-i0408-2",
+      "entity_id": "person-itke-langer",
+      "original_entity_id": "person-itke-langer",
+      "citation_id": "citation-cu-1934-02-02-i0408",
+      "printed_name": "איטקה לנגר",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "fa32121a6db32e9222da06e4fb759d53467cafe6d3c2f63e1b53cbf52ee33b17"
+    },
+    {
+      "id": "mention-cu-1934-02-09-i0108-1",
+      "entity_id": "person-menachem-yehuda-goldman-19340202",
+      "original_entity_id": "person-menachem-yehuda-goldman-19340209",
+      "citation_id": "citation-cu-1934-02-09-i0108",
+      "printed_name": "מנחם־יהודה גאלדמאן",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "b3ae6d585ddba82eca90250170aa1ee74ba5960747d88a98dfa99f19a92d6129"
+    },
+    {
+      "id": "mention-cu-1934-02-09-i0108-2",
+      "entity_id": "person-itke-langer",
+      "original_entity_id": "person-itke-langer",
+      "citation_id": "citation-cu-1934-02-09-i0108",
+      "printed_name": "איטקע",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "b3ae6d585ddba82eca90250170aa1ee74ba5960747d88a98dfa99f19a92d6129"
+    },
+    {
+      "id": "mention-cu-1934-02-09-i0115-1",
+      "entity_id": "person-esther-goldenberg",
+      "original_entity_id": "person-esther-goldenberg",
+      "citation_id": "citation-cu-1934-02-09-i0115",
+      "printed_name": "אסתר טשערעטשעווסקי",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "a472c4fea26eedd2bbc70adf75932646434c288c2081a065a52205f72755f95b"
+    },
+    {
+      "id": "mention-cu-1934-02-09-i0115-2",
+      "entity_id": "person-yaakov-goldenberg",
+      "original_entity_id": "person-yaakov-goldenberg",
+      "citation_id": "citation-cu-1934-02-09-i0115",
+      "printed_name": "יעקב גאלדנבערג",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "a472c4fea26eedd2bbc70adf75932646434c288c2081a065a52205f72755f95b"
+    },
+    {
+      "id": "mention-cu-1934-02-09-i0116-1",
+      "entity_id": "person-esther-goldenberg",
+      "original_entity_id": "person-esther-goldenberg",
+      "citation_id": "citation-cu-1934-02-09-i0116",
+      "printed_name": "אסתר טשערעטשעווסקי",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "9cc93fc558da3caad0dfe9ba556a420b36b7138ce785b652d126d9520cfd0f70"
+    },
+    {
+      "id": "mention-cu-1934-02-09-i0116-2",
+      "entity_id": "person-yaakov-goldenberg",
+      "original_entity_id": "person-yaakov-goldenberg",
+      "citation_id": "citation-cu-1934-02-09-i0116",
+      "printed_name": "יעקב גאלדענבערג",
+      "roles": [
+        "betrothed"
+      ],
+      "text_sha256": "9cc93fc558da3caad0dfe9ba556a420b36b7138ce785b652d126d9520cfd0f70"
+    },
+    {
+      "id": "mention-cu-13701-1",
+      "entity_id": "person-moshe-judewicz",
+      "original_entity_id": "person-moshe-judewicz",
+      "citation_id": "citation-cu-13701",
+      "printed_name": "משה",
+      "roles": [
+        "parent"
+      ],
+      "text_sha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc"
+    },
+    {
+      "id": "mention-cu-13701-2",
+      "entity_id": "person-rivtche-judewicz",
+      "original_entity_id": "person-rivtche-judewicz",
+      "citation_id": "citation-cu-13701",
+      "printed_name": "ריוועטשע",
+      "roles": [
+        "parent"
+      ],
+      "text_sha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc"
+    },
+    {
+      "id": "mention-cu-13701-3",
+      "entity_id": "person-leah-goldberg",
+      "original_entity_id": "person-leah-goldberg",
+      "citation_id": "citation-cu-13701",
+      "printed_name": "לאה",
+      "roles": [
+        "signer"
+      ],
+      "text_sha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc"
+    },
+    {
+      "id": "mention-cu-13701-4",
+      "entity_id": "person-velvel-goldberg",
+      "original_entity_id": "person-velvel-goldberg",
+      "citation_id": "citation-cu-13701",
+      "printed_name": "וועלוול גאלדבערג",
+      "roles": [
+        "signer"
+      ],
+      "text_sha256": "b475f15325ef2fa4a4aa92524c77e5bd009fb53b787656e5db2f5ac6b74ff4cc"
+    },
+    {
+      "id": "mention-cu-13704-1",
+      "entity_id": "person-rachel-pomerantz",
+      "original_entity_id": "person-rachel-pomerantz",
+      "citation_id": "citation-cu-13704",
+      "printed_name": "רחל",
+      "roles": [
+        "honoree"
+      ],
+      "text_sha256": "7c54f2b712add04edde80bbec63fd3846f6427b462cdc43717773f316044a4c8"
+    },
+    {
+      "id": "mention-cu-13704-2",
+      "entity_id": "person-chaim-shor",
+      "original_entity_id": "person-chaim-shor",
+      "citation_id": "citation-cu-13704",
+      "printed_name": "חיים שור",
+      "roles": [
+        "honoree"
+      ],
+      "text_sha256": "7c54f2b712add04edde80bbec63fd3846f6427b462cdc43717773f316044a4c8"
+    },
+    {
+      "id": "mention-cu-5751-1",
+      "entity_id": "person-sarah-epstein",
+      "original_entity_id": "person-sarah-epstein",
+      "citation_id": "citation-cu-5751",
+      "printed_name": "שרה",
+      "roles": [
+        "signer"
+      ],
+      "text_sha256": "efbc683b109f4d49202feca4b8bf928b80aff8b0f3de92849118a5a467f1f1f0"
+    },
+    {
+      "id": "mention-cu-5751-2",
+      "entity_id": "person-mordechai-epstein",
+      "original_entity_id": "person-mordechai-epstein",
+      "citation_id": "citation-cu-5751",
+      "printed_name": "מרדכי עפשטיין",
+      "roles": [
+        "signer"
+      ],
+      "text_sha256": "efbc683b109f4d49202feca4b8bf928b80aff8b0f3de92849118a5a467f1f1f0"
+    }
+  ],
+  "facts": [
+    {
+      "id": "fact-event-engagement-esther-yaakov-1934-person-esther-goldenberg",
+      "subject_id": "person-esther-goldenberg",
+      "type": "event_participation",
+      "value": "betrothed",
+      "event_id": "event-engagement-esther-yaakov-1934",
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0107",
+        "citation-cu-1934-02-02-i0108",
+        "citation-cu-1934-02-02-i0109",
+        "citation-cu-1934-02-09-i0115",
+        "citation-cu-1934-02-09-i0116"
+      ],
+      "evidence_confidence": "confirmed",
+      "identity_confidence": "probable",
+      "status": "accepted",
+      "review": {
+        "state": "pending"
+      },
+      "attributed_to": "pilot:transcript-review:2026-10-19"
+    },
+    {
+      "id": "fact-event-engagement-esther-yaakov-1934-person-yaakov-goldenberg",
+      "subject_id": "person-yaakov-goldenberg",
+      "type": "event_participation",
+      "value": "betrothed",
+      "event_id": "event-engagement-esther-yaakov-1934",
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0107",
+        "citation-cu-1934-02-02-i0108",
+        "citation-cu-1934-02-02-i0109",
+        "citation-cu-1934-02-09-i0115",
+        "citation-cu-1934-02-09-i0116"
+      ],
+      "evidence_confidence": "confirmed",
+      "identity_confidence": "probable",
+      "status": "accepted",
+      "review": {
+        "state": "pending"
+      },
+      "attributed_to": "pilot:transcript-review:2026-10-19"
+    },
+    {
+      "id": "fact-event-engagement-itke-menachem-1934-person-itke-langer",
+      "subject_id": "person-itke-langer",
+      "type": "event_participation",
+      "value": "betrothed",
+      "event_id": "event-engagement-itke-menachem-1934",
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0408",
+        "citation-cu-1934-02-09-i0108"
+      ],
+      "evidence_confidence": "confirmed",
+      "identity_confidence": "probable",
+      "status": "accepted",
+      "review": {
+        "state": "pending"
+      },
+      "attributed_to": "pilot:transcript-review:2026-10-19"
+    },
+    {
+      "id": "fact-event-engagement-itke-menachem-1934-person-menachem-yehuda-goldman-19340202",
+      "subject_id": "person-menachem-yehuda-goldman-19340202",
+      "type": "event_participation",
+      "value": "betrothed",
+      "event_id": "event-engagement-itke-menachem-1934",
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0408",
+        "citation-cu-1934-02-09-i0108"
+      ],
+      "evidence_confidence": "confirmed",
+      "identity_confidence": "probable",
+      "status": "accepted",
+      "review": {
+        "state": "pending"
+      },
+      "attributed_to": "pilot:transcript-review:2026-10-19"
+    },
+    {
+      "id": "fact-parenthood-person-moshe-judewicz",
+      "subject_id": "person-moshe-judewicz",
+      "type": "parenthood",
+      "value": "Congratulated on the birth of an unnamed daughter; no birth date inferred.",
+      "citation_ids": [
+        "citation-cu-13701"
+      ],
+      "evidence_confidence": "confirmed",
+      "identity_confidence": "probable",
+      "status": "accepted",
+      "review": {
+        "state": "pending"
+      },
+      "attributed_to": "pilot:transcript-review:2026-10-19"
+    },
+    {
+      "id": "fact-parenthood-person-rivtche-judewicz",
+      "subject_id": "person-rivtche-judewicz",
+      "type": "parenthood",
+      "value": "Congratulated on the birth of an unnamed daughter; no birth date inferred.",
+      "citation_ids": [
+        "citation-cu-13701"
+      ],
+      "evidence_confidence": "confirmed",
+      "identity_confidence": "probable",
+      "status": "accepted",
+      "review": {
+        "state": "pending"
+      },
+      "attributed_to": "pilot:transcript-review:2026-10-19"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "relationship-rachel-chaim",
+      "from_id": "person-rachel-pomerantz",
+      "to_id": "person-chaim-shor",
+      "type": "spouse",
+      "citation_ids": [
+        "citation-cu-13704"
+      ],
+      "evidence_confidence": "confirmed",
+      "identity_confidence": "probable",
+      "status": "accepted",
+      "review": {
+        "state": "pending"
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "event-engagement-esther-yaakov-1934",
+      "type": "engagement",
+      "name": "Engagement of Esther Cherechevsky and Yaakov Goldenberg",
+      "original_ids": [
+        "event-19340202-engagement-of-esther-cherchevski-and-yaakov-goldenberg",
+        "event-19340209-engagement-of-esther-cherechevsky-and-yaakov-goldenberg"
+      ],
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0107",
+        "citation-cu-1934-02-02-i0108",
+        "citation-cu-1934-02-02-i0109",
+        "citation-cu-1934-02-09-i0115",
+        "citation-cu-1934-02-09-i0116"
+      ]
+    },
+    {
+      "id": "event-engagement-itke-menachem-1934",
+      "type": "engagement",
+      "name": "Engagement of Menachem-Yehuda Goldman and Itke Langer",
+      "original_ids": [
+        "event-19340202-engagement-of-menachem-yehuda-goldman-and-itke-langer",
+        "event-19340209-engagement-of-itke-langer-and-menachem-yehuda-goldman"
+      ],
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0408",
+        "citation-cu-1934-02-09-i0108"
+      ]
+    }
+  ],
+  "identity_decisions": [
+    {
+      "id": "join-event-esther-yaakov",
+      "kind": "event",
+      "original_ids": [
+        "event-19340202-engagement-of-esther-cherchevski-and-yaakov-goldenberg",
+        "event-19340209-engagement-of-esther-cherechevsky-and-yaakov-goldenberg"
+      ],
+      "target_id": "event-engagement-esther-yaakov-1934",
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0107",
+        "citation-cu-1934-02-09-i0115"
+      ],
+      "confidence": "probable",
+      "review": {
+        "state": "pending"
+      },
+      "applied_in_preview": true,
+      "reason": "Same named couple, explicit engagement wording and adjacent issues. Proposed grouping for review; dates are not inferred from publication dates."
+    },
+    {
+      "id": "join-event-itke-menachem",
+      "kind": "event",
+      "original_ids": [
+        "event-19340202-engagement-of-menachem-yehuda-goldman-and-itke-langer",
+        "event-19340209-engagement-of-itke-langer-and-menachem-yehuda-goldman"
+      ],
+      "target_id": "event-engagement-itke-menachem-1934",
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0408",
+        "citation-cu-1934-02-09-i0108"
+      ],
+      "confidence": "probable",
+      "review": {
+        "state": "pending"
+      },
+      "applied_in_preview": true,
+      "reason": "Same named couple, explicit engagement wording and adjacent issues. Proposed grouping for review; dates are not inferred from publication dates."
+    },
+    {
+      "id": "join-person-menachem",
+      "kind": "person",
+      "original_ids": [
+        "person-menachem-yehuda-goldman-19340202",
+        "person-menachem-yehuda-goldman-19340209"
+      ],
+      "target_id": "person-menachem-yehuda-goldman-19340202",
+      "citation_ids": [
+        "citation-cu-1934-02-02-i0408",
+        "citation-cu-1934-02-09-i0108"
+      ],
+      "confidence": "probable",
+      "review": {
+        "state": "pending"
+      },
+      "applied_in_preview": true,
+      "reason": "Full given name and surname variants, same betrothed Itke Langer and adjacent issues. Keep both original IDs and excerpts; no destructive merge."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+@prefix pc: <https://example.org/pruzhany-pilot/issue-14/vocab#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+<https://example.org/pruzhany-pilot/issue-14/profile> a owl:Ontology ;
+  owl:versionInfo "0.1.0 experimental application profile for RiC-O 1.1" ;
+  rdfs:comment "Local review and assertion terms alongside RiC-O. No automatic equivalence or production identity assertions." .
+
+pc:Claim a rdfs:Class ; rdfs:subClassOf rdf:Statement ;
+  rdfs:comment "An assertion reified as an RDF statement; this does not assert the underlying triple." .
+
+pc:Mention a rdfs:Class ; rdfs:subClassOf prov:Entity ;
+  rdfs:comment "A source-bound occurrence of a printed name with an explicit role." .
+
+pc:FateConclusion a rdfs:Class ; rdfs:subClassOf prov:Entity ;
+  rdfs:comment "A reviewed or pending conclusion resting on cited assertions." .
+
+pc:IdentityProposal a rdfs:Class ; rdfs:subClassOf prov:Entity ;
+  rdfs:comment "A reversible proposed grouping of source entity identities." .
+
+pc:workId a rdf:Property ; rdfs:label "workId" .
+pc:quote a rdf:Property ; rdfs:label "quote" .
+pc:presumedLiving a rdf:Property ; rdfs:label "presumedLiving" .
+pc:recordedFor a rdf:Property ; rdfs:label "recordedFor" .
+pc:nameKind a rdf:Property ; rdfs:label "nameKind" .
+pc:script a rdf:Property ; rdfs:label "script" .
+pc:eventType a rdf:Property ; rdfs:label "eventType" .
+pc:entity a rdf:Property ; rdfs:label "entity" .
+pc:originalEntityId a rdf:Property ; rdfs:label "originalEntityId" .
+pc:printedName a rdf:Property ; rdfs:label "printedName" .
+pc:roles a rdf:Property ; rdfs:label "roles" .
+pc:textSha256 a rdf:Property ; rdfs:label "textSha256" .
+pc:status a rdf:Property ; rdfs:label "status" .
+pc:reviewState a rdf:Property ; rdfs:label "reviewState" .
+pc:evidenceConfidence a rdf:Property ; rdfs:label "evidenceConfidence" .
+pc:identityConfidence a rdf:Property ; rdfs:label "identityConfidence" .
+pc:normalizedDate a rdf:Property ; rdfs:label "normalizedDate" .
+pc:payload a rdf:Property ; rdfs:label "payload" .
+pc:date a rdf:Property ; rdfs:label "date" .
+pc:role a rdf:Property ; rdfs:label "role" .
+pc:person a rdf:Property ; rdfs:label "person" .
+pc:outcome a rdf:Property ; rdfs:label "outcome" .
+pc:confidence a rdf:Property ; rdfs:label "confidence" .
+pc:originalIds a rdf:Property ; rdfs:label "originalIds" .
+pc:target a rdf:Property ; rdfs:label "target" .
+pc:appliedInPreview a rdf:Property ; rdfs:label "appliedInPreview" .
+pc:reason a rdf:Property ; rdfs:label "reason" .
+pc:survival a rdf:Property ; rdfs:label "survival" .
+pc:parenthood a rdf:Property ; rdfs:label "parenthood" .
+pc:other a rdf:Property ; rdfs:label "other" .
+pc:birth a rdf:Property ; rdfs:label "birth" .
+pc:death a rdf:Property ; rdfs:label "death" .
+pc:parent_child a rdf:Property ; rdfs:label "parent_child" .
+pc:sibling a rdf:Property ; rdfs:label "sibling" .

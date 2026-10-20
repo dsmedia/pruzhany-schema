@@ -2,10 +2,10 @@
 # bin/verify — the one verify entry point for pruzhany-schema; run it locally
 # before pushing. CI runs it verbatim, split across two workflows so the
 # history is scanned once: gitleaks.yml runs `bin/verify scan` (every push to
-# every branch) and ci.yml runs `bin/verify zod pydantic`.
+# every branch) and ci.yml runs `bin/verify zod pydantic pilot`.
 #
 #   bin/verify            run every step below
-#   bin/verify <step>...  run only the named steps (scan, zod, pydantic)
+#   bin/verify <step>...  run only the named steps (scan, zod, pydantic, pilot)
 #
 # Steps (all self-contained: nothing outside this checkout is read):
 #   scan      gitleaks over the full git history, secrets redacted.
@@ -16,6 +16,9 @@
 #   pydantic  loads the pydantic/ package (under a non-shadowing name) with
 #             the pydantic version pruzhany-press's uv.lock resolves, and
 #             generates the JSON Schema of every model it defines.
+#   pilot     checks generated vocabulary/artifacts and exercises the isolated
+#             issue-14 pilot, including parsed RDF and privacy/reversal cases,
+#             the isolated TS parity test under bun and a non-UTF-8 locale check.
 #
 # NOT run here, because it needs a sibling checkout of a private consumer repo
 # that this public repo's CI cannot clone:
@@ -87,13 +90,36 @@ print(f"pydantic: {count} models load and emit JSON Schema")
 PY
 }
 
-ALL_STEPS=(scan zod pydantic)
+step_pilot() {
+	uv run --no-project --python "$PYTHON_VERSION" \
+		--with "pydantic==$PYDANTIC_VERSION" --with "rdflib==7.1.4" \
+		python -P pilots/sourced-entities/generate_vocabulary.py --check
+	uv run --no-project --python "$PYTHON_VERSION" \
+		--with "pydantic==$PYDANTIC_VERSION" --with "rdflib==7.1.4" \
+		python -P pilots/sourced-entities/build.py --check
+	uv run --no-project --python "$PYTHON_VERSION" \
+		--with "pydantic==$PYDANTIC_VERSION" --with "rdflib==7.1.4" \
+		python -P -m unittest discover -s pilots/sourced-entities -p 'test_*.py'
+	local fixtures
+	fixtures=$(mktemp)
+	trap 'rm -f "$fixtures"' RETURN
+	PYTHONIOENCODING=cp1252 PYTHONUTF8=0 LANG=C LC_ALL=C \
+		uv run --no-project --python "$PYTHON_VERSION" --with "pydantic==$PYDANTIC_VERSION" \
+		python -P pilots/sourced-entities/build.py --check
+	PYTHONIOENCODING=cp1252 PYTHONUTF8=0 LANG=C LC_ALL=C \
+		uv run --no-project --python "$PYTHON_VERSION" --with "pydantic==$PYDANTIC_VERSION" \
+		python -P pilots/sourced-entities/contract_cases.py > "$fixtures"
+	bun install --frozen-lockfile
+	PILOT_CONTRACT_FIXTURES="$fixtures" bun x vitest run --dir pilots/sourced-entities
+}
+
+ALL_STEPS=(scan zod pydantic pilot)
 steps=("$@")
 [ ${#steps[@]} -eq 0 ] && steps=("${ALL_STEPS[@]}")
 
 for step in "${steps[@]}"; do
 	case "$step" in
-	scan | zod | pydantic) ;;
+	scan | zod | pydantic | pilot) ;;
 	*)
 		echo "bin/verify: unknown step '$step' (expected: ${ALL_STEPS[*]})" >&2
 		exit 2
