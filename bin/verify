@@ -17,7 +17,8 @@
 #             the pydantic version pruzhany-press's uv.lock resolves, and
 #             generates the JSON Schema of every model it defines.
 #   pilot     checks generated vocabulary/artifacts and exercises the isolated
-#             issue-14 pilot, including parsed RDF and privacy/reversal cases.
+#             issue-14 pilot, including parsed RDF and privacy/reversal cases,
+#             the isolated TS parity test under bun and a non-UTF-8 locale check.
 #
 # NOT run here, because it needs a sibling checkout of a private consumer repo
 # that this public repo's CI cannot clone:
@@ -99,6 +100,17 @@ step_pilot() {
 	uv run --no-project --python "$PYTHON_VERSION" \
 		--with "pydantic==$PYDANTIC_VERSION" --with "rdflib==7.1.4" \
 		python -P -m unittest discover -s pilots/sourced-entities -p 'test_*.py'
+	local fixtures
+	fixtures=$(mktemp)
+	trap 'rm -f "$fixtures"' RETURN
+	PYTHONIOENCODING=cp1252 PYTHONUTF8=0 LANG=C LC_ALL=C \
+		uv run --no-project --python "$PYTHON_VERSION" --with "pydantic==$PYDANTIC_VERSION" \
+		python -P pilots/sourced-entities/build.py --check
+	PYTHONIOENCODING=cp1252 PYTHONUTF8=0 LANG=C LC_ALL=C \
+		uv run --no-project --python "$PYTHON_VERSION" --with "pydantic==$PYDANTIC_VERSION" \
+		python -P pilots/sourced-entities/contract_cases.py > "$fixtures"
+	bun install --frozen-lockfile
+	PILOT_CONTRACT_FIXTURES="$fixtures" bun x vitest run --dir pilots/sourced-entities
 }
 
 ALL_STEPS=(scan zod pydantic pilot)

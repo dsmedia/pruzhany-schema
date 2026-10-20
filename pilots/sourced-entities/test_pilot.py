@@ -5,14 +5,14 @@ import json
 import unittest
 from pathlib import Path
 from rdflib import Graph, Namespace, RDF, URIRef
-from build import HERE, BASE, PC, RICO, Pilot, artifacts, edition_views, make_pilot, public_projection, residence_at, rico_export
+from build import HERE, BASE, PC, RICO, Pilot, artifacts, edition_views, make_pilot, public_projection, residence_at, rico_export, living_presumption, report
 from contract_cases import synthetic, fact, cases
 
 
 class PilotTests(unittest.TestCase):
     def test_real_scope_and_evidence(self):
         data = make_pilot()
-        self.assertEqual((len(data["people"]), len(data["events"]), len(data["mentions"]), len(data["facts"])), (12, 2, 22, 8))
+        self.assertEqual((len(data["people"]), len(data["events"]), len(data["mentions"]), len(data["facts"])), (12, 2, 22, 6))
         self.assertTrue(all(not p.get("fate") for p in data["people"]))
         self.assertTrue(all(f["citation_ids"] and f["review"]["state"] == "pending" for f in data["facts"]))
         self.assertEqual(set(edition_views(data)), {"1934-02-02", "1934-02-09", "1938-12-16"})
@@ -45,7 +45,7 @@ class PilotTests(unittest.TestCase):
 
     def test_real_preview_publishes_only_printed_names(self):
         public = public_projection(make_pilot())
-        self.assertEqual(len(public["people"]), 12)
+        self.assertEqual(len(public["people"]), 13)
         self.assertEqual([public["facts"], public["relationships"], public["citations"]], [[], [], []])
         self.assertNotIn("née", json.dumps(public))
 
@@ -101,12 +101,16 @@ class PilotTests(unittest.TestCase):
         self.assertFalse(list(graph.triples((None, rico.relationState, None))))
         self.assertFalse(list(graph.triples((None, rico.hasOrHadSpouse, None))))
         self.assertFalse(list(graph.triples((None, rico.isOrWasParticipantIn, None))))
-        self.assertEqual(len(list(graph.subjects(RDF.type, RDF.Statement))), 9)  # eight facts, one relationship
+        self.assertEqual(len(list(graph.subjects(RDF.type, RDF.Statement))), 7)  # six facts, one relationship
         self.assertEqual(len(list(graph.subjects(RDF.type, rico.Person))), 12)
 
     def test_reviewed_claim_can_export_as_sourced_rico_relation(self):
         data = synthetic()
-        data["facts"] = [fact("marriage", related_person_id="test-person-b")]
+        claim = fact()
+        for key in ("subject_id", "value", "attributed_to"):
+            claim.pop(key)
+        claim.update(type="spouse", from_id="test-person-a", to_id="test-person-b")
+        data["relationships"] = [claim]
         graph = self.rdf(data)
         rico = Namespace(RICO)
         self.assertIn((URIRef(BASE + "test-person-a"), rico.hasOrHadSpouse, URIRef(BASE + "test-person-b")), graph)
@@ -133,7 +137,7 @@ class PilotTests(unittest.TestCase):
         self.assertFalse(public_projection(data)["facts"])
 
     def test_only_real_rico_terms_are_used(self):
-        profile = json.loads((HERE / "ric-o-profile.json").read_text())
+        profile = json.loads((HERE / "ric-o-profile.json").read_text(encoding="utf-8"))
         known = {v["iri"] for v in profile["terms"].values()}
         data = synthetic()
         data["facts"] = [fact("birth", date={"start": "1938", "precision": "year"})]
@@ -143,15 +147,143 @@ class PilotTests(unittest.TestCase):
         self.assertIn("present, past", profile["terms"]["relationState"]["comment"][0])
 
     def test_local_extensions_are_declared(self):
-        profile = Graph().parse(HERE / "profile.ttl", format="turtle")
+        profile = Graph().parse(data=(HERE / "profile.ttl").read_text(encoding="utf-8"), format="turtle")
         graph = self.rdf(make_pilot())
         local = {x for triple in graph for x in triple if isinstance(x, URIRef) and str(x).startswith(PC)}
         for term in local:
             self.assertTrue(list(profile.triples((term, RDF.type, None))), term)
 
+    def test_presumption_branches(self):
+        for evidence, reason in [({"death": True}, "death-evidenced"),
+                                 ({"fate": "perished"}, "death-evidenced"),
+                                 ({"fate": "died_before"}, "death-evidenced"),
+                                 ({"birth_year": 1916}, "born-110-years-ago"),
+                                 ({"printed_years": [2020, 1941]}, "printed-in-old-source"),
+                                 ({"shown": {"by": "Fictional Voucher", "on": "2026-10-19"}}, "shown-at-word")]:
+            self.assertEqual(living_presumption(**evidence), (False, reason))
+        self.assertEqual(living_presumption(birth_year=1917, printed_years=[1942], shown={"by": " ", "on": "2026-10-19"}), (True, "unknown"))
+        data = synthetic()
+        data["people"][0]["presumed_living"], data["people"][0]["presumption_reason"] = living_presumption()
+        self.assertNotIn("test-person-a", {p["id"] for p in public_projection(data)["people"]})
+        self.assertTrue(all(not p["presumed_living"] and p["presumption_reason"] == "printed-in-old-source" for p in make_pilot()["people"]))
+
+    def test_vouch_requires_name_and_iso_day(self):
+        for shown in [{"by": " ", "on": "2026-10-19"}, {"by": "Fictional Voucher"},
+                      {"by": "Fictional Voucher", "on": "2026-02-30"},
+                      {"by": "Fictional Voucher", "on": "20261019"},
+                      {"by": "Fictional Voucher", "on": "2026-10-19T00:00:00"}]:
+            self.assertEqual(living_presumption(shown=shown), (True, "unknown"), shown)
+
+    def test_public_presumption_does_not_follow_pending_preview_join(self):
+        data = synthetic()
+        a, b = data["people"]
+        a["original_ids"].append(b["id"])
+        a["names"] += b["names"]
+        a.update(presumed_living=False, presumption_reason="printed-in-old-source")
+        data["people"] = [a]
+        data["citations"][0].update(edition_date="1938-12-16")
+        data["mentions"] = [{"id": "test-mention", "entity_id": a["id"],
+                             "original_entity_id": a["id"], "citation_id": "test-citation",
+                             "printed_name": "Test Person A", "roles": ["named"],
+                             "text_sha256": hashlib.sha256(data["citations"][0]["quote"].encode()).hexdigest()}]
+        data["identity_decisions"] = [{"id": "test-join", "kind": "person", "original_ids": a["original_ids"][:],
+                                       "target_id": a["id"], "citation_ids": ["test-citation", "test-citation"],
+                                       "confidence": "probable", "review": {"state": "pending"},
+                                       "applied_in_preview": True, "reason": "Fictional test proposal"}]
+        Pilot.model_validate(data)
+        public = public_projection(data)["people"]
+        self.assertEqual(public, [{"id": a["id"], "printed_names": ["Test Person A"], "spouse_ids": []}])
+        data["identity_decisions"][0]["review"] = {"state": "approved", "by": "fictional reviewer", "on": "2026-10-19"}
+        self.assertEqual(public_projection(data)["people"], public)
+        # No mention evidence means neither original inherits the preview verdict
+        # or attempts a lookup of the absent preview key for person B.
+        data["identity_decisions"][0]["review"] = {"state": "pending"}
+        data["mentions"] = []
+        self.assertEqual(public_projection(data)["people"], [])
+        data["identity_decisions"][0]["review"] = {"state": "approved", "by": "fictional reviewer", "on": "2026-10-19"}
+        self.assertEqual(public_projection(data)["people"], [])
+
+    def test_no_mention_names_are_person_local_and_printed(self):
+        data = synthetic()
+        data["people"][0]["names"].append({**data["people"][0]["names"][0], "value": "Fictional later label", "kind": "later"})
+        data["citations"][0]["edition_date"] = "1938-12-16"
+        data["mentions"] = [{"original_entity_id": "test-person-b", "citation_id": "test-citation", "printed_name": "Test Person B"}]
+        public = public_projection(data)["people"]
+        self.assertEqual([p["printed_names"] for p in public], [["Test Person A"], ["Test Person B"]])
+
+    def test_report_uses_current_counts_year_and_reasons(self):
+        data = make_pilot()
+        data["as_of_year"] = 2030
+        data["people"][0].update(presumed_living=True, presumption_reason="unknown")
+        text = report(data)
+        self.assertIn("Presumption as of 2030:", text)
+        self.assertIn("11 **printed-in-old-source**, 1 **unknown**", text)
+        self.assertIn("contains 13 person records", text)
+        data["identity_decisions"][-1]["review"] = {"state": "approved", "by": "fictional reviewer", "on": "2026-10-19"}
+        self.assertIn("contains 12 person records", report(data))
+        reversed_data = make_pilot(reverse=[d["id"] for d in data["identity_decisions"]])
+        self.assertIn("13 **printed-in-old-source**", report(reversed_data))
+        self.assertIn("contains 13 person records", report(reversed_data))
+
+    def test_public_join_approval_and_reversal(self):
+        data = make_pilot()
+        prefix = "person-menachem-yehuda-goldman-"
+        people = [p for p in public_projection(data)["people"] if p["id"].startswith(prefix)]
+        self.assertEqual(len(people), 2)
+        self.assertTrue(all(len(p["printed_names"]) == 1 for p in people))
+        decision = data["identity_decisions"][-1]
+        decision["review"] = {"state": "approved", "by": "fictional reviewer", "on": "2026-10-19"}
+        people = [p for p in public_projection(data)["people"] if p["id"].startswith(prefix)]
+        self.assertEqual([p["id"] for p in people], [decision["target_id"]])
+        self.assertEqual(len(people[0]["printed_names"]), 2)
+        reversed_data = make_pilot(reverse=[d["id"] for d in data["identity_decisions"]])
+        self.assertEqual({p["id"] for p in public_projection(reversed_data)["people"]}, {m["original_entity_id"] for m in data["mentions"]})
+
+    def test_names_keep_language_and_script(self):
+        from unittest.mock import patch
+        from build import ANNOTATIONS
+        annotations = copy.deepcopy(ANNOTATIONS)
+        original, printed, role, _, script = annotations["cu-1934-02-02-i0109"][0]
+        annotations["cu-1934-02-02-i0109"][0] = (original, printed, role, "yi", script)
+        with patch("build.ANNOTATIONS", annotations):
+            data = make_pilot()
+        names = next(p for p in data["people"] if p["id"] == original)["names"]
+        self.assertEqual({n["lang"] for n in names if n["value"] == printed}, {"he", "yi"})
+
+    def test_public_references_use_public_people(self):
+        data = synthetic()
+        data["facts"] = [fact("parenthood", related_person_id="test-person-b")]
+        public = public_projection(data)
+        ids = {p["id"] for p in public["people"]}
+        self.assertTrue(all(f["subject_id"] in ids and f["related_person_id"] in ids for f in public["facts"]))
+
+    def test_reviews_are_independent(self):
+        data = make_pilot()
+        data["facts"][0]["review"]["state"] = "approved"
+        self.assertTrue(all(f["review"]["state"] == "pending" for f in data["facts"][1:] + data["relationships"] + data["identity_decisions"]))
+
+    def test_one_marriage_decision(self):
+        data = synthetic()
+        relationship = {"id": "test-marriage", "from_id": "test-person-a", "to_id": "test-person-b", "type": "spouse", "citation_ids": ["test-citation"], "evidence_confidence": "confirmed", "identity_confidence": "confirmed", "status": "accepted", "review": {"state": "pending"}}
+        data["relationships"] = [relationship]
+        self.assertTrue(all(not p["spouse_ids"] for p in public_projection(data)["people"]))
+        relationship["review"] = {"state": "approved", "by": "fictional reviewer", "on": "2026-10-19"}
+        self.assertEqual([p["spouse_ids"] for p in public_projection(data)["people"]], [["test-person-b"], ["test-person-a"]])
+        graph = self.rdf(data)
+        self.assertEqual(len(list(graph.triples((None, URIRef(RICO + "hasOrHadSpouse"), None)))), 1)
+        self.assertEqual(len(list(graph.subjects(RDF.predicate, URIRef(RICO + "hasOrHadSpouse")))), 1)
+
+    def test_annotation_languages(self):
+        data = make_pilot()
+        names = [n for p in data["people"] for n in p["names"] if "citation-cu-1934-02-02-i0408" in n["citation_ids"]]
+        self.assertEqual([n["lang"] for n in names], ["he", "he"])
+        graph = self.rdf(data)
+        for name in names:
+            self.assertTrue(any(str(value) == name["value"] and value.language == "he" for value in graph.objects(None, URIRef(RICO + "name"))))
+
     def test_reproducible_outputs(self):
         for name, text in artifacts(make_pilot()).items():
-            self.assertEqual((HERE / "generated" / name).read_text(), text, name)
+            self.assertEqual((HERE / "generated" / name).read_text(encoding="utf-8"), text, name)
 
 
 if __name__ == "__main__":

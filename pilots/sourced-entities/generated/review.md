@@ -2,7 +2,7 @@
 
 > Review preview. Identity joins below are proposals, not approved changes to the archive.
 
-12 people · 2 events · 22 mentions · 8 facts · 10 newspaper excerpts.
+12 people · 2 events · 22 mentions · 6 facts · 1 relationships · 10 newspaper excerpts.
 
 Frozen source: `dsmedia/pruzhany-svelte@35cccf97b326c149e7b1d547b842b2537cbce66f`. Labels are carried forward; printed names and claims cite the selected transcripts. Scans and external archive matches have not been adjudicated in this pilot.
 
@@ -68,10 +68,11 @@ Proposed target: `person-menachem-yehuda-goldman-19340202`.
 | Menachem-Yehuda Goldman | event_participation: betrothed | confirmed | probable | [cu-1934-02-02-i0408](#citation-cu-1934-02-02-i0408), [cu-1934-02-09-i0108](#citation-cu-1934-02-09-i0108) |
 | Moshe Judewicz | parenthood: Congratulated on the birth of an unnamed daughter; no birth date inferred. | confirmed | probable | [cu-13701](#citation-cu-13701) |
 | Rivka Kaplan-Judewicz | parenthood: Congratulated on the birth of an unnamed daughter; no birth date inferred. | confirmed | probable | [cu-13701](#citation-cu-13701) |
-| Rachel Shor (née Pomeraniec) | marriage: Chaim Shor | confirmed | probable | [cu-13704](#citation-cu-13704) |
-| Chaim Shor | marriage: Rachel Shor (née Pomeraniec) | confirmed | probable | [cu-13704](#citation-cu-13704) |
+| Rachel Shor (née Pomeraniec) | spouse: Chaim Shor | confirmed | probable | [cu-13704](#citation-cu-13704) |
 
-All assertions have editorial review **pending**. The real-person public projection therefore contains printed names only, with no new facts or relationships.
+Presumption as of 2026: 12 **printed-in-old-source**. The public view contains 13 person records after approved joins and privacy filtering.
+
+Editorial review: 7 **pending**. Public claims require approval and privacy clearance.
 
 ## Deliberately unresolved
 
@@ -79,7 +80,7 @@ All assertions have editorial review **pending**. The real-person public project
 - Engagements do not generate marriage facts. Unnamed newborns do not receive invented names, genders or birth dates.
 - Residence, occupation, fate, maiden names and external identity links are not inferred from display labels or previous prose. Temporal residence, disputed dates and fate evidence are exercised only in clearly synthetic tests.
 - No offset or bounding box is invented. Mention IDs are stored independently of text; a SHA-256 anchor detects transcript changes. Repeated same-name occurrences need additional occurrence selectors before production migration.
-- The RiC-O export reifies unapproved claims and retains local review/identity extensions. It emits no `owl:sameAs` and no unqualified historical claim triples for this pending dataset.
+- The RiC-O export reifies unapproved claims and retains local review/identity extensions. It emits no `owl:sameAs`; only approved claims with confirmed identity and no pending identity joins can become unqualified historical triples.
 
 ## Newspaper excerpts
 

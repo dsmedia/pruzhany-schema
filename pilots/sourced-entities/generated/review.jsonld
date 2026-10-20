@@ -120,7 +120,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg",
       "@type": "rico:Person",
       "rdfs:label": "Esther Goldenberg (née Cherechevsky)",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-esther-goldenberg-name-1",
@@ -186,7 +186,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg",
       "@type": "rico:Person",
       "rdfs:label": "Yaakov Goldenberg",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-yaakov-goldenberg-name-1",
@@ -282,14 +282,14 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202",
       "@type": "rico:Person",
       "rdfs:label": "Menachem-Yehuda Goldman",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202-name-1",
       "@type": "rico:AgentName",
       "rico:name": {
         "@value": "מנחם־יהודה גולדמן",
-        "@language": "yi"
+        "@language": "he"
       },
       "pc:recordedFor": {
         "@id": "https://example.org/pruzhany-pilot/issue-14/person-menachem-yehuda-goldman-19340202"
@@ -324,14 +324,14 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer",
       "@type": "rico:Person",
       "rdfs:label": "Itke Langer",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer-name-1",
       "@type": "rico:AgentName",
       "rico:name": {
         "@value": "איטקה לנגר",
-        "@language": "yi"
+        "@language": "he"
       },
       "pc:recordedFor": {
         "@id": "https://example.org/pruzhany-pilot/issue-14/person-itke-langer"
@@ -366,7 +366,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-sarah-epstein",
       "@type": "rico:Person",
       "rdfs:label": "Sarah Epstein (née Rendel)",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-sarah-epstein-name-1",
@@ -390,7 +390,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-mordechai-epstein",
       "@type": "rico:Person",
       "rdfs:label": "Mordechai Epstein",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-mordechai-epstein-name-1",
@@ -414,7 +414,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor",
       "@type": "rico:Person",
       "rdfs:label": "Chaim Shor",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor-name-1",
@@ -438,7 +438,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-leah-goldberg",
       "@type": "rico:Person",
       "rdfs:label": "Leah Goldberg (née Judewicz)",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-leah-goldberg-name-1",
@@ -462,7 +462,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-moshe-judewicz",
       "@type": "rico:Person",
       "rdfs:label": "Moshe Judewicz",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-moshe-judewicz-name-1",
@@ -486,7 +486,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz",
       "@type": "rico:Person",
       "rdfs:label": "Rachel Shor (née Pomeraniec)",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz-name-1",
@@ -510,7 +510,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-rivtche-judewicz",
       "@type": "rico:Person",
       "rdfs:label": "Rivka Kaplan-Judewicz",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-rivtche-judewicz-name-1",
@@ -534,7 +534,7 @@
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-velvel-goldberg",
       "@type": "rico:Person",
       "rdfs:label": "Velvel Goldberg",
-      "pc:presumedLiving": true
+      "pc:presumedLiving": false
     },
     {
       "@id": "https://example.org/pruzhany-pilot/issue-14/person-velvel-goldberg-name-1",
@@ -1169,70 +1169,6 @@
         "@value": {
           "type": "parenthood",
           "value": "Congratulated on the birth of an unnamed daughter; no birth date inferred."
-        },
-        "@type": "@json"
-      }
-    },
-    {
-      "@id": "https://example.org/pruzhany-pilot/issue-14/fact-marriage-person-rachel-pomerantz",
-      "@type": [
-        "rdf:Statement",
-        "pc:Claim"
-      ],
-      "rdf:subject": {
-        "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz"
-      },
-      "rdf:predicate": {
-        "@id": "https://www.ica.org/standards/RiC/ontology#hasOrHadSpouse"
-      },
-      "rdf:object": {
-        "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor"
-      },
-      "pc:status": "accepted",
-      "pc:reviewState": "pending",
-      "pc:evidenceConfidence": "confirmed",
-      "pc:identityConfidence": "probable",
-      "prov:wasDerivedFrom": [
-        {
-          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13704"
-        }
-      ],
-      "pc:payload": {
-        "@value": {
-          "type": "marriage",
-          "related_person_id": "person-chaim-shor"
-        },
-        "@type": "@json"
-      }
-    },
-    {
-      "@id": "https://example.org/pruzhany-pilot/issue-14/fact-marriage-person-chaim-shor",
-      "@type": [
-        "rdf:Statement",
-        "pc:Claim"
-      ],
-      "rdf:subject": {
-        "@id": "https://example.org/pruzhany-pilot/issue-14/person-chaim-shor"
-      },
-      "rdf:predicate": {
-        "@id": "https://www.ica.org/standards/RiC/ontology#hasOrHadSpouse"
-      },
-      "rdf:object": {
-        "@id": "https://example.org/pruzhany-pilot/issue-14/person-rachel-pomerantz"
-      },
-      "pc:status": "accepted",
-      "pc:reviewState": "pending",
-      "pc:evidenceConfidence": "confirmed",
-      "pc:identityConfidence": "probable",
-      "prov:wasDerivedFrom": [
-        {
-          "@id": "https://example.org/pruzhany-pilot/issue-14/citation-cu-13704"
-        }
-      ],
-      "pc:payload": {
-        "@value": {
-          "type": "marriage",
-          "related_person_id": "person-rachel-pomerantz"
         },
         "@type": "@json"
       }

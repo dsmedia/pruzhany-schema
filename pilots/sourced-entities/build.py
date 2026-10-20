@@ -1,6 +1,5 @@
 """Build the isolated, deterministic issue-14 review pilot. No network or site writes."""
 import argparse
-import copy
 import hashlib
 import importlib.util
 import json
@@ -18,48 +17,80 @@ if PACKAGE not in sys.modules:
     package = importlib.util.module_from_spec(spec)
     sys.modules[PACKAGE] = package
     spec.loader.exec_module(package)
-from pruzhany_schema_pydantic.sourced_entities_pilot import Pilot
+from pruzhany_schema_pydantic.sourced_entities_pilot import Pilot, lower_date, upper_date
 
 RICO = "https://www.ica.org/standards/RiC/ontology#"
 BASE = "https://example.org/pruzhany-pilot/issue-14/"
 PC = BASE + "vocab#"
-PENDING = {"state": "pending"}
+AS_OF_YEAR = 2026
+
+
+def pending_review():
+    return {"state": "pending"}
+
+
+def pending_identity_targets(data):
+    return {d["target_id"] for d in data["identity_decisions"]
+            if d["applied_in_preview"] and d["review"]["state"] != "approved"}
+
+
+def living_presumption(*, death=False, fate=None, birth_year=None, printed_years=(), shown=None, as_of_year=AS_OF_YEAR):
+    """Copy of pruzhany-svelte/src/lib/privacy/presumption.ts's rule.
+
+    Evidence is aggregated across editions before calling; a named, dated voucher may
+    permit display. The fixed as-of year keeps the pilot reproducible.
+    """
+    if death or fate in ("perished", "died_before"):
+        return False, "death-evidenced"
+    if birth_year is not None and birth_year <= as_of_year - 110:
+        return False, "born-110-years-ago"
+    if any(year <= as_of_year - 85 for year in printed_years):
+        return False, "printed-in-old-source"
+    if shown and isinstance(shown.get("by"), str) and shown["by"].strip():
+        from datetime import date
+        try:
+            on = shown.get("on")
+            if isinstance(on, str) and date.fromisoformat(on).isoformat() == on:
+                return False, "shown-at-word"
+        except ValueError:
+            pass
+    return True, "unknown"
 
 # Explicit annotations of the frozen newspaper excerpts. No name-based joining.
 # A first name stays a first name; a surname is not invented from the registry label.
 ANNOTATIONS = {
     "cu-1934-02-02-i0107": [
-        ("person-esther-goldenberg", "אסתר", "betrothed"),
-        ("person-yaakov-goldenberg", "יעקב גאלדנברג", "betrothed")],
+        ("person-esther-goldenberg", "אסתר", "betrothed", "he", "Hebr"),
+        ("person-yaakov-goldenberg", "יעקב גאלדנברג", "betrothed", "he", "Hebr")],
     "cu-1934-02-02-i0108": [
-        ("person-esther-goldenberg", "אסתר צרצבסקית", "betrothed"),
-        ("person-yaakov-goldenberg", "יעקב", "betrothed")],
+        ("person-esther-goldenberg", "אסתר צרצבסקית", "betrothed", "he", "Hebr"),
+        ("person-yaakov-goldenberg", "יעקב", "betrothed", "he", "Hebr")],
     "cu-1934-02-02-i0109": [
-        ("person-esther-goldenberg", "אסתר", "betrothed"),
-        ("person-yaakov-goldenberg", "גולדנברג", "betrothed")],
+        ("person-esther-goldenberg", "אסתר", "betrothed", "he", "Hebr"),
+        ("person-yaakov-goldenberg", "גולדנברג", "betrothed", "he", "Hebr")],
     "cu-1934-02-02-i0408": [
-        ("person-menachem-yehuda-goldman-19340202", "מנחם־יהודה גולדמן", "betrothed"),
-        ("person-itke-langer", "איטקה לנגר", "betrothed")],
+        ("person-menachem-yehuda-goldman-19340202", "מנחם־יהודה גולדמן", "betrothed", "he", "Hebr"),
+        ("person-itke-langer", "איטקה לנגר", "betrothed", "he", "Hebr")],
     "cu-1934-02-09-i0108": [
-        ("person-menachem-yehuda-goldman-19340209", "מנחם־יהודה גאלדמאן", "betrothed"),
-        ("person-itke-langer", "איטקע", "betrothed")],
+        ("person-menachem-yehuda-goldman-19340209", "מנחם־יהודה גאלדמאן", "betrothed", "yi", "Hebr"),
+        ("person-itke-langer", "איטקע", "betrothed", "yi", "Hebr")],
     "cu-1934-02-09-i0115": [
-        ("person-esther-goldenberg", "אסתר טשערעטשעווסקי", "betrothed"),
-        ("person-yaakov-goldenberg", "יעקב גאלדנבערג", "betrothed")],
+        ("person-esther-goldenberg", "אסתר טשערעטשעווסקי", "betrothed", "yi", "Hebr"),
+        ("person-yaakov-goldenberg", "יעקב גאלדנבערג", "betrothed", "yi", "Hebr")],
     "cu-1934-02-09-i0116": [
-        ("person-esther-goldenberg", "אסתר טשערעטשעווסקי", "betrothed"),
-        ("person-yaakov-goldenberg", "יעקב גאלדענבערג", "betrothed")],
+        ("person-esther-goldenberg", "אסתר טשערעטשעווסקי", "betrothed", "yi", "Hebr"),
+        ("person-yaakov-goldenberg", "יעקב גאלדענבערג", "betrothed", "yi", "Hebr")],
     "cu-13701": [
-        ("person-moshe-judewicz", "משה", "parent"),
-        ("person-rivtche-judewicz", "ריוועטשע", "parent"),
-        ("person-leah-goldberg", "לאה", "signer"),
-        ("person-velvel-goldberg", "וועלוול גאלדבערג", "signer")],
+        ("person-moshe-judewicz", "משה", "parent", "yi", "Hebr"),
+        ("person-rivtche-judewicz", "ריוועטשע", "parent", "yi", "Hebr"),
+        ("person-leah-goldberg", "לאה", "signer", "yi", "Hebr"),
+        ("person-velvel-goldberg", "וועלוול גאלדבערג", "signer", "yi", "Hebr")],
     "cu-5751": [
-        ("person-sarah-epstein", "שרה", "signer"),
-        ("person-mordechai-epstein", "מרדכי עפשטיין", "signer")],
+        ("person-sarah-epstein", "שרה", "signer", "yi", "Hebr"),
+        ("person-mordechai-epstein", "מרדכי עפשטיין", "signer", "yi", "Hebr")],
     "cu-13704": [
-        ("person-rachel-pomerantz", "רחל", "honoree"),
-        ("person-chaim-shor", "חיים שור", "honoree")],
+        ("person-rachel-pomerantz", "רחל", "honoree", "yi", "Hebr"),
+        ("person-chaim-shor", "חיים שור", "honoree", "yi", "Hebr")],
 }
 
 
@@ -78,7 +109,7 @@ def identity_decisions(snapshot):
         decisions.append({
             "id": "join-event-" + name, "kind": "event", "original_ids": [e["id"] for e in group],
             "target_id": target, "citation_ids": [citation_id(e["unit_ids"][0]) for e in group],
-            "confidence": "probable", "review": PENDING, "applied_in_preview": True,
+            "confidence": "probable", "review": pending_review(), "applied_in_preview": True,
             "reason": "Same named couple, explicit engagement wording and adjacent issues. Proposed grouping for review; dates are not inferred from publication dates.",
         })
     decisions.append({
@@ -86,15 +117,15 @@ def identity_decisions(snapshot):
         "original_ids": ["person-menachem-yehuda-goldman-19340202", "person-menachem-yehuda-goldman-19340209"],
         "target_id": "person-menachem-yehuda-goldman-19340202",
         "citation_ids": [citation_id("cu-1934-02-02-i0408"), citation_id("cu-1934-02-09-i0108")],
-        "confidence": "probable", "review": PENDING, "applied_in_preview": True,
+        "confidence": "probable", "review": pending_review(), "applied_in_preview": True,
         "reason": "Full given name and surname variants, same betrothed Itke Langer and adjacent issues. Keep both original IDs and excerpts; no destructive merge.",
     })
     return decisions
 
 
 def make_pilot(snapshot=None, reverse=()):
-    snapshot = snapshot or json.loads((HERE / "input/newspaper-extracts.json").read_text())
-    decisions = copy.deepcopy(identity_decisions(snapshot))
+    snapshot = snapshot or json.loads((HERE / "input/newspaper-extracts.json").read_text(encoding="utf-8"))
+    decisions = identity_decisions(snapshot)
     unknown = set(reverse) - {d["id"] for d in decisions}
     if unknown:
         raise ValueError(f"unknown identity decisions: {sorted(unknown)}")
@@ -120,7 +151,7 @@ def make_pilot(snapshot=None, reverse=()):
         for unit in edition["units"]:
             cid = citation_id(unit["id"])
             citations.append({"id": cid, "source_id": source, "edition_date": edition["date"], "unit_id": unit["id"], "locator": unit["id"], "quote": unit["text"]})
-            for index, (original, printed, role) in enumerate(ANNOTATIONS[unit["id"]]):
+            for index, (original, printed, role, lang, script) in enumerate(ANNOTATIONS[unit["id"]]):
                 ident = target("person", original)
                 mentions.append({
                     "id": f"mention-{unit['id']}-{index + 1}", "entity_id": ident,
@@ -128,11 +159,11 @@ def make_pilot(snapshot=None, reverse=()):
                     "roles": [role], "text_sha256": hashlib.sha256(unit["text"].encode()).hexdigest(),
                 })
                 names = people[ident]["names"]
-                name = next((n for n in names if n["value"] == printed), None)
+                name = next((n for n in names if (n["value"], n["lang"], n["script"]) == (printed, lang, script)), None)
                 if name:
                     name["citation_ids"].append(cid)
                 else:
-                    names.append({"value": printed, "kind": "printed", "script": "Hebr", "lang": "he" if unit["id"] in ["cu-1934-02-02-i0107", "cu-1934-02-02-i0108", "cu-1934-02-02-i0109"] else "yi", "citation_ids": [cid]})
+                    names.append({"value": printed, "kind": "printed", "script": script, "lang": lang, "citation_ids": [cid]})
         for old in edition["events"]:
             ident = target("event", old["id"])
             event = events.setdefault(ident, {"id": ident, "type": "engagement", "name": old["name"], "original_ids": [], "citation_ids": []})
@@ -144,7 +175,7 @@ def make_pilot(snapshot=None, reverse=()):
     def add_fact(ident, subject, kind, cited, **payload):
         facts.append({"id": ident, "subject_id": subject, "type": kind, **payload,
                       "citation_ids": cited, "evidence_confidence": "confirmed", "identity_confidence": "probable",
-                      "status": "accepted", "review": PENDING, "attributed_to": "pilot:transcript-review:2026-10-19"})
+                      "status": "accepted", "review": pending_review(), "attributed_to": "pilot:transcript-review:2026-10-19"})
 
     for event in events.values():
         for person in sorted({m["entity_id"] for m in mentions if m["citation_id"] in event["citation_ids"]}):
@@ -152,16 +183,18 @@ def make_pilot(snapshot=None, reverse=()):
             add_fact(f"fact-{event['id']}-{person}", person, "event_participation", cited, event_id=event["id"], value="betrothed")
     for person in ["person-moshe-judewicz", "person-rivtche-judewicz"]:
         add_fact("fact-parenthood-" + person, person, "parenthood", [citation_id("cu-13701")], value="Congratulated on the birth of an unnamed daughter; no birth date inferred.")
-    for person, other in [("person-rachel-pomerantz", "person-chaim-shor"), ("person-chaim-shor", "person-rachel-pomerantz")]:
-        add_fact("fact-marriage-" + person, person, "marriage", [citation_id("cu-13704")], related_person_id=other)
     relationships = [{
         "id": "relationship-rachel-chaim", "from_id": "person-rachel-pomerantz", "to_id": "person-chaim-shor", "type": "spouse",
-        "citation_ids": [citation_id("cu-13704")], "evidence_confidence": "confirmed", "identity_confidence": "probable", "status": "accepted", "review": PENDING,
+        "citation_ids": [citation_id("cu-13704")], "evidence_confidence": "confirmed", "identity_confidence": "probable", "status": "accepted", "review": pending_review(),
     }]
-    data = {"version": "0.1.0", "vocabulary_version": "0.1.0", "source_revision": snapshot["revision"],
+    data = {"version": "0.1.0", "vocabulary_version": "0.1.0", "source_revision": snapshot["revision"], "as_of_year": AS_OF_YEAR,
             "sources": sources, "citations": citations, "people": list(people.values()), "places": [],
             "mentions": mentions, "facts": facts, "relationships": relationships,
             "events": list(events.values()), "identity_decisions": decisions}
+    for person in data["people"]:
+        years = [int(c["edition_date"][:4]) for c in citations
+                 if any(m["entity_id"] == person["id"] and m["citation_id"] == c["id"] for m in mentions)]
+        person["presumed_living"], person["presumption_reason"] = living_presumption(printed_years=years)
     return Pilot.model_validate(data).model_dump(exclude_none=True)
 
 
@@ -171,21 +204,12 @@ def approved(claim):
 
 def residence_at(data, person_id, when):
     """Legacy scalar only when one approved, date-applicable residence is unambiguous."""
-    from calendar import monthrange
-
-    def bound(text, upper=False):
-        if len(text) == 4:
-            return text + ("-12-31" if upper else "-01-01")
-        if len(text) == 7:
-            return text + (f"-{monthrange(int(text[:4]), int(text[5:]))[1]:02}" if upper else "-01")
-        return text
-
     found = set()
     for fact in data["facts"]:
         if fact["subject_id"] != person_id or fact["type"] != "residence" or not approved(fact):
             continue
         date = fact["date"]
-        if bound(date["start"]) <= when <= bound(date.get("end") or date["start"], True):
+        if lower_date(date["start"]) <= when <= upper_date(date.get("end") or date["start"]):
             found.add(fact["place_id"])
     if len(found) > 1:
         raise ValueError(f"conflicting residences of {person_id} at {when}: {sorted(found)}")
@@ -194,15 +218,14 @@ def residence_at(data, person_id, when):
 
 def public_projection(data):
     """Conservative demo only. Never writes to or replaces the site's privacy projection."""
-    people = {p["id"]: p for p in data["people"]}
     citations = {c["id"]: c for c in data["citations"]}
     sources = {s["id"]: s for s in data["sources"]}
     # Trusted configuration, never supplied by a research answer or Source.host.
     allowed = {"collections.yadvashem.org", "collections.arolsen-archives.org", "archive.org", "jewishgen.org"}
-    pending_targets = {d["target_id"] for d in data["identity_decisions"] if d["applied_in_preview"] and d["review"]["state"] != "approved"}
+    pending_targets = pending_identity_targets(data)
 
     def cleared(claim, person_ids):
-        if not approved(claim) or any(people[p]["presumed_living"] or p in pending_targets for p in person_ids) or claim.get("event_id") in pending_targets:
+        if not approved(claim) or any(p in pending_targets for p in person_ids) or claim.get("event_id") in pending_targets:
             return False
         for ident in claim["citation_ids"]:
             citation = citations[ident]
@@ -219,9 +242,41 @@ def public_projection(data):
 
     facts = [f for f in data["facts"] if cleared(f, [f["subject_id"]] + ([f["related_person_id"]] if f.get("related_person_id") else []))]
     relationships = [r for r in data["relationships"] if cleared(r, [r["from_id"], r["to_id"]])]
+    bindings = {old: d["target_id"] for d in data["identity_decisions"]
+                if d["kind"] == "person" and d["applied_in_preview"] and d["review"]["state"] == "approved"
+                for old in d["original_ids"]}
+    candidates = {}
+    cleared_nonprint = set()
+    for person in data["people"]:
+        person_mentions = [m for m in data["mentions"] if m["original_entity_id"] in person["original_ids"]]
+        for original in person["original_ids"]:
+            ident = bindings.get(original, original)
+            names, years = candidates.setdefault(ident, (set(), set()))
+            mentions = [m for m in person_mentions if m["original_entity_id"] == original]
+            names.update(m["printed_name"] for m in mentions)
+            years.update(int(citations[m["citation_id"]]["edition_date"][:4]) for m in mentions
+                         if citations[m["citation_id"]].get("edition_date"))
+            if not person_mentions:
+                names.update(n["value"] for n in person["names"] if n["kind"] == "printed")
+            # A non-print verdict belongs to this record only if its originals
+            # are still together. Never copy a preview verdict across a pending join.
+            if {bindings.get(old, old) for old in person["original_ids"]} == {ident}:
+                if not person["presumed_living"] and person["presumption_reason"] not in ("unknown", "printed-in-old-source"):
+                    cleared_nonprint.add(ident)
+    published = {ident: names for ident, (names, years) in candidates.items()
+                 if ident in cleared_nonprint or not living_presumption(printed_years=years, as_of_year=data["as_of_year"])[0]}
+    # Claims must refer only to people that passed this same public-ID verdict.
+    facts = [f for f in facts if f["subject_id"] in published and
+             (not f.get("related_person_id") or f["related_person_id"] in published)]
+    relationships = [r for r in relationships if r["from_id"] in published and r["to_id"] in published]
     used = {cid for claim in [*facts, *relationships] for cid in claim["citation_ids"]}
+    spouse_ids = {ident: [] for ident in published}
+    for relationship in relationships:
+        if relationship["type"] == "spouse":
+            spouse_ids[relationship["from_id"]].append(relationship["to_id"])
+            spouse_ids[relationship["to_id"]].append(relationship["from_id"])
     return {
-        "people": [{"id": p["id"], "printed_names": sorted({n["value"] for n in p["names"]})} for p in data["people"]],
+        "people": [{"id": ident, "printed_names": sorted(names), "spouse_ids": spouse_ids[ident]} for ident, names in published.items()],
         "facts": [{k: v for k, v in f.items() if k not in ("review", "attributed_to")} for f in facts],
         "relationships": [{k: v for k, v in r.items() if k != "review"} for r in relationships],
         "citations": [{k: c[k] for k in ("id", "source_id", "locator", "url") if k in c} for c in data["citations"] if c["id"] in used],
@@ -256,7 +311,7 @@ def rico_export(data):
         graph.append({**ref(m["id"]), "@type": "pc:Mention", "pc:entity": ref(m["entity_id"]), "pc:originalEntityId": m["original_entity_id"],
                       "pc:printedName": m["printed_name"], "pc:roles": m["roles"], "pc:textSha256": m["text_sha256"], "prov:wasDerivedFrom": ref(m["citation_id"])})
 
-    pending_targets = {d["target_id"] for d in data["identity_decisions"] if d["applied_in_preview"] and d["review"]["state"] != "approved"}
+    pending_targets = pending_identity_targets(data)
 
     def statement(claim, subject, predicate, obj):
         node = {**ref(claim["id"]), "@type": ["rdf:Statement", "pc:Claim"],
@@ -281,7 +336,7 @@ def rico_export(data):
 
     for f in data["facts"]:
         kind = f["type"]
-        predicate = RICO + {"residence": "hasOrHadLocation", "occupation": "hasOrHadOccupationOfType", "birth": "hasBirthDate", "death": "hasDeathDate", "marriage": "hasOrHadSpouse", "event_participation": "isOrWasParticipantIn"}.get(kind, "")
+        predicate = RICO + {"residence": "hasOrHadLocation", "occupation": "hasOrHadOccupationOfType", "birth": "hasBirthDate", "death": "hasDeathDate", "event_participation": "isOrWasParticipantIn"}.get(kind, "")
         if predicate == RICO:
             predicate = PC + kind
         if kind == "residence":
@@ -292,8 +347,6 @@ def rico_export(data):
         elif kind == "occupation":
             obj = ref(f["id"] + "-occupation")
             graph.append({**obj, "@type": "rico:OccupationType", "rdfs:label": f["value"]})
-        elif kind == "marriage":
-            obj = ref(f["related_person_id"])
         elif kind == "event_participation":
             obj = ref(f["event_id"])
         else:
@@ -335,9 +388,12 @@ def edition_views(data):
 
 
 def report(data):
+    from collections import Counter
+    reasons = Counter(p["presumption_reason"] for p in data["people"])
+    reviews = Counter(c["review"]["state"] for c in data["facts"] + data["relationships"])
     citations = {c["id"]: c for c in data["citations"]}
     lines = ["# Issue 14: sourced entities pilot", "", "> Review preview. Identity joins below are proposals, not approved changes to the archive.", "",
-             f"{len(data['people'])} people · {len(data['events'])} events · {len(data['mentions'])} mentions · {len(data['facts'])} facts · {len(data['citations'])} newspaper excerpts.", "",
+             f"{len(data['people'])} people · {len(data['events'])} events · {len(data['mentions'])} mentions · {len(data['facts'])} facts · {len(data['relationships'])} relationships · {len(data['citations'])} newspaper excerpts.", "",
              "Frozen source: `dsmedia/pruzhany-svelte@" + data["source_revision"] + "`. Labels are carried forward; printed names and claims cite the selected transcripts. Scans and external archive matches have not been adjudicated in this pilot.", "",
              "## People and their roles", "", "| Person | Editions | Roles | Evidence |", "|---|---|---|---|"]
     for person in data["people"]:
@@ -354,13 +410,15 @@ def report(data):
     for f in data["facts"]:
         value = f.get("value") or names.get(f.get("related_person_id"), "")
         lines.append(f"| {names[f['subject_id']]} | {f['type']}: {value} | {f['evidence_confidence']} | {f['identity_confidence']} | " + ", ".join(f"[{c.removeprefix('citation-')}](#{c})" for c in f["citation_ids"]) + " |")
-    lines += ["", "All assertions have editorial review **pending**. The real-person public projection therefore contains printed names only, with no new facts or relationships.", "",
+    for relationship in data["relationships"]:
+        lines.append(f"| {names[relationship['from_id']]} | spouse: {names[relationship['to_id']]} | {relationship['evidence_confidence']} | {relationship['identity_confidence']} | " + ", ".join(f"[{c.removeprefix('citation-')}](#{c})" for c in relationship["citation_ids"]) + " |")
+    lines += ["", f"Presumption as of {data['as_of_year']}: " + ", ".join(f"{count} **{reason}**" for reason, count in sorted(reasons.items())) + f". The public view contains {len(public_projection(data)['people'])} person records after approved joins and privacy filtering.", "", "Editorial review: " + ", ".join(f"{count} **{state}**" for state, count in sorted(reviews.items())) + ". Public claims require approval and privacy clearance.", "",
               "## Deliberately unresolved", "",
               "- The engagement date `1934-01-27` in the existing event record is not carried into a fact: these selected printed excerpts do not establish it. The English translation supplies a date that its selected source text does not contain.",
               "- Engagements do not generate marriage facts. Unnamed newborns do not receive invented names, genders or birth dates.",
               "- Residence, occupation, fate, maiden names and external identity links are not inferred from display labels or previous prose. Temporal residence, disputed dates and fate evidence are exercised only in clearly synthetic tests.",
               "- No offset or bounding box is invented. Mention IDs are stored independently of text; a SHA-256 anchor detects transcript changes. Repeated same-name occurrences need additional occurrence selectors before production migration.",
-              "- The RiC-O export reifies unapproved claims and retains local review/identity extensions. It emits no `owl:sameAs` and no unqualified historical claim triples for this pending dataset.", "", "## Newspaper excerpts", ""]
+              "- The RiC-O export reifies unapproved claims and retains local review/identity extensions. It emits no `owl:sameAs`; only approved claims with confirmed identity and no pending identity joins can become unqualified historical triples.", "", "## Newspaper excerpts", ""]
     for c in data["citations"]:
         lines += [f"### {c['id']}", "", f"{c['edition_date']} · `{c['unit_id']}`", "", *[("> " + line) if line else ">" for line in c["quote"].splitlines()], ""]
     return "\n".join(lines).rstrip() + "\n"
@@ -383,11 +441,11 @@ def main():
     for filename, content in outputs.items():
         path = args.output / filename
         if args.check:
-            if not path.exists() or path.read_text() != content:
+            if not path.exists() or path.read_text(encoding="utf-8") != content:
                 raise SystemExit(f"stale generated output: {path}")
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content)
+            path.write_text(content, encoding="utf-8", newline="\n")
     print(f"pilot: {len(outputs)} reproducible artifacts {'checked' if args.check else 'written'}")
 
 

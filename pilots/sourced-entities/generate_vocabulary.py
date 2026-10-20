@@ -8,7 +8,7 @@ ROOT = HERE.parents[1]
 
 
 def generated():
-    vocabulary = json.loads((HERE / "vocabulary.json").read_text())
+    vocabulary = json.loads((HERE / "vocabulary.json").read_text(encoding="utf-8"))
     groups = {
         "FactType": list(vocabulary["fact_types"]),
         "MentionRole": vocabulary["mention_roles"],
@@ -35,10 +35,10 @@ def main():
     args = parser.parse_args()
     for path, content in generated().items():
         if args.check:
-            if not path.exists() or path.read_text() != content:
+            if not path.exists() or path.read_text(encoding="utf-8") != content:
                 raise SystemExit(f"stale generated vocabulary: {path.relative_to(ROOT)}")
         else:
-            path.write_text(content)
+            path.write_text(content, encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

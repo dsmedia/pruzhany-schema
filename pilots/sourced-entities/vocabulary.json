@@ -7,7 +7,6 @@
     "residence": {"definition": "Residence at a specified time; never an undated global home.", "rico": "hasOrHadLocation"},
     "occupation": {"definition": "An occupation, optionally bounded in time.", "rico": "hasOrHadOccupationOfType"},
     "parenthood": {"definition": "Parenthood, including an unnamed child; no gender inferred.", "rico": null},
-    "marriage": {"definition": "A marriage assertion naming the other person; engagement is insufficient.", "rico": "hasOrHadSpouse"},
     "event_participation": {"definition": "Participation in an event, with an explicit role.", "rico": "isOrWasParticipantIn"},
     "other": {"definition": "A sourced assertion awaiting a reviewed vocabulary term.", "rico": null}
   },

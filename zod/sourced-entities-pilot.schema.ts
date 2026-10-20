@@ -8,6 +8,7 @@ import {
 
 const confidence = z.enum(['confirmed', 'probable', 'possible']);
 const status = z.enum(['accepted', 'disputed', 'rejected']);
+const lowerDate = (value: string) => value + ({ 4: '-01-01', 7: '-01', 10: '' }[value.length] ?? '');
 const upperDate = (value: string) => value.length === 4 ? `${value}-12-31` : value.length === 7
 	? `${value}-${new Date(Date.UTC(Number(value.slice(0, 4)), Number(value.slice(5)), 0)).getUTCDate().toString().padStart(2, '0')}` : value;
 const refs = z.array(z.string()).min(1);
@@ -44,7 +45,7 @@ export const PilotDateSchema = z.strictObject({
 	}
 	if (v.precision !== 'range' && (v.start.length !== lengths[v.precision] || v.end))
 		ctx.addIssue({ code: 'custom', message: 'date precision does not match value' });
-	if (v.precision === 'range' && (!v.end || v.start > v.end))
+	if (v.precision === 'range' && (!v.end || lowerDate(v.start) > upperDate(v.end)))
 		ctx.addIssue({ code: 'custom', message: 'range needs ordered start and end' });
 	if (v.printed_calendar && !v.printed)
 		ctx.addIssue({ code: 'custom', message: 'printed calendar needs printed date' });
@@ -70,7 +71,11 @@ export const PilotFateSchema = z.strictObject({
 export const PilotPersonSchema = z.strictObject({
 	id: z.string(), display_name: z.string(), original_ids: refs,
 	names: z.array(PilotNameSchema).min(1), presumed_living: z.boolean().default(true),
+	presumption_reason: z.enum(['death-evidenced', 'born-110-years-ago', 'printed-in-old-source', 'shown-at-word', 'unknown']).default('unknown'),
 	fate: PilotFateSchema.nullish(),
+}).superRefine((v, ctx) => {
+	if (v.presumed_living !== (v.presumption_reason === 'unknown'))
+		ctx.addIssue({ code: 'custom', message: 'presumed living exactly when presumption reason is unknown' });
 });
 export const PilotPlaceSchema = z.strictObject({ id: z.string(), label: z.string() });
 export const PilotMentionSchema = z.strictObject({
@@ -91,7 +96,6 @@ export const PilotFactSchema = z.strictObject({
 	if (v.type === 'survival' && !v.date) bad('survival needs a time at which alive');
 	if (['birth', 'death'].includes(v.type) && !(v.date || v.place_id || v.value)) bad('birth/death assertion needs a payload');
 	if (v.type === 'parenthood' && !(v.value || v.related_person_id)) bad('parenthood needs a child or description');
-	if (v.type === 'marriage' && !v.related_person_id) bad('marriage requires the other person');
 	if (v.type === 'event_participation' && !(v.event_id && v.value)) bad('event participation requires event and role');
 	if (v.type === 'other' && !(v.value && v.proposed_type)) bad('other requires a value and proposed type');
 });
@@ -112,7 +116,7 @@ export const PilotIdentityDecisionSchema = z.strictObject({
 
 export const SourcedEntitiesPilotSchema = z.strictObject({
 	version: z.literal('0.1.0'), vocabulary_version: z.literal(vocabularyVersion),
-	source_revision: z.string(), sources: z.array(PilotSourceSchema), citations: z.array(PilotCitationSchema),
+	as_of_year: z.number().int(), source_revision: z.string(), sources: z.array(PilotSourceSchema), citations: z.array(PilotCitationSchema),
 	people: z.array(PilotPersonSchema), places: z.array(PilotPlaceSchema), mentions: z.array(PilotMentionSchema),
 	facts: z.array(PilotFactSchema), relationships: z.array(PilotRelationshipSchema),
 	events: z.array(PilotEventSchema), identity_decisions: z.array(PilotIdentityDecisionSchema),

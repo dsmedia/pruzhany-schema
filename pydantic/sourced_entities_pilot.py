@@ -13,6 +13,10 @@ class Strict(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
 
 
+def lower_date(value):
+    return value + {4: "-01-01", 7: "-01", 10: ""}[len(value)]
+
+
 def upper_date(value):
     from calendar import monthrange
     if len(value) == 4:
@@ -54,7 +58,7 @@ class DateValue(Strict):
         length = {"year": 4, "month": 7, "day": 10}
         if self.precision in length and (len(self.start) != length[self.precision] or self.end):
             raise ValueError("date precision does not match value")
-        if self.precision == "range" and (not self.end or self.start > self.end):
+        if self.precision == "range" and (not self.end or lower_date(self.start) > upper_date(self.end)):
             raise ValueError("range needs ordered start and end")
         if self.printed_calendar and not self.printed:
             raise ValueError("printed calendar needs printed date")
@@ -100,7 +104,14 @@ class Person(Strict):
     original_ids: list[str] = Field(min_length=1)
     names: list[Name] = Field(min_length=1)
     presumed_living: bool = True
+    presumption_reason: Literal["death-evidenced", "born-110-years-ago", "printed-in-old-source", "shown-at-word", "unknown"] = "unknown"
     fate: Fate | None = None
+
+    @model_validator(mode="after")
+    def presumption(self):
+        if self.presumed_living != (self.presumption_reason == "unknown"):
+            raise ValueError("presumed living exactly when presumption reason is unknown")
+        return self
 
 
 class Place(Strict):
@@ -148,8 +159,6 @@ class Fact(Strict):
             raise ValueError("birth/death assertion needs a payload")
         if self.type == "parenthood" and not (self.value or self.related_person_id):
             raise ValueError("parenthood needs a child or description")
-        if self.type == "marriage" and not self.related_person_id:
-            raise ValueError("marriage requires the other person")
         if self.type == "event_participation" and not (self.event_id and self.value):
             raise ValueError("event participation requires event and role")
         if self.type == "other" and not (self.value and self.proposed_type):
@@ -192,6 +201,7 @@ class IdentityDecision(Strict):
 class Pilot(Strict):
     version: Literal["0.1.0"]
     vocabulary_version: Literal[VOCABULARY_VERSION]
+    as_of_year: int
     source_revision: str
     sources: list[Source]
     citations: list[Citation]

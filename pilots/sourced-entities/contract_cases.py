@@ -13,10 +13,10 @@ from pruzhany_schema_pydantic.sourced_entities_pilot import DateValue, Fact, Rev
 def synthetic():
     """Entirely fictional data: never add test biographies to the real-person pilot."""
     return {
-        "version": "0.1.0", "vocabulary_version": "0.1.0", "source_revision": "test-only",
+        "version": "0.1.0", "vocabulary_version": "0.1.0", "source_revision": "test-only", "as_of_year": 2026,
         "sources": [{"id": "test-source", "kind": "book", "title": "FICTIONAL TEST SOURCE", "work_id": "test-work"}],
         "citations": [{"id": "test-citation", "source_id": "test-source", "locator": "fictional p. 1", "quote": "Test Person A and Test Person B are fictional characters.", "url": "https://archive.org/details/fictional-test-only"}],
-        "people": [{"id": "test-person-" + x, "display_name": "Test Person " + x.upper(), "original_ids": ["test-person-" + x], "names": [{"value": "Test Person " + x.upper(), "kind": "printed", "script": "Latn", "lang": "en", "citation_ids": ["test-citation"]}], "presumed_living": False} for x in ("a", "b")],
+        "people": [{"id": "test-person-" + x, "display_name": "Test Person " + x.upper(), "original_ids": ["test-person-" + x], "names": [{"value": "Test Person " + x.upper(), "kind": "printed", "script": "Latn", "lang": "en", "citation_ids": ["test-citation"]}], "presumed_living": False, "presumption_reason": "death-evidenced"} for x in ("a", "b")],
         "places": [{"id": "test-place-a", "label": "Fictional Place A"}, {"id": "test-place-b", "label": "Fictional Place B"}],
         "mentions": [], "facts": [], "events": [], "relationships": [], "identity_decisions": [],
     }
@@ -35,6 +35,10 @@ def cases():
         mutate(data)
         result.append({"name": name, "model": "Pilot", "valid": False, "value": data})
 
+    changed("missing as-of year", lambda d: d.pop("as_of_year"))
+    changed("living with old-source reason", lambda d: d["people"][0].update(presumed_living=True, presumption_reason="printed-in-old-source"))
+    changed("deceased with unknown reason", lambda d: d["people"][0].update(presumed_living=False, presumption_reason="unknown"))
+    changed("invalid presumption reason", lambda d: d["people"][0].update(presumption_reason="invented"))
     changed("dangling source", lambda d: d["citations"][0].update(source_id="missing"))
     changed("dangling name citation", lambda d: d["people"][0]["names"][0].update(citation_ids=["missing"]))
     changed("dangling fact subject", lambda d: d["facts"][0].update(subject_id="missing"))
@@ -54,7 +58,16 @@ def cases():
     changed("emigration is not a fate", lambda d: d["people"][0].update(fate={"outcome": "left_before", "confidence": "possible", "rests_on": [], "review": {"state": "pending"}}))
     changed("boolean string is not a boolean", lambda d: d["people"][0].update(presumed_living="false"))
 
+    for reason in ["death-evidenced", "born-110-years-ago", "printed-in-old-source", "shown-at-word", "unknown"]:
+        data = synthetic()
+        data["people"][0].update(presumption_reason=reason, presumed_living=reason == "unknown")
+        result.append({"name": "presumption " + reason, "model": "Pilot", "valid": True, "value": data})
+
     for name, valid, value in [
+        ("mixed precision overlap", True, {"start": "1939-05", "end": "1939", "precision": "range"}),
+        ("mixed precision reversed", False, {"start": "1940", "end": "1939-12", "precision": "range"}),
+        ("leap month", True, {"start": "1940-02", "end": "1940-02-29", "precision": "range"}),
+        ("non leap day", False, {"start": "1939-02-29", "precision": "day"}),
         ("year date", True, {"start": "1938", "precision": "year"}),
         ("Hebrew printed date", True, {"start": "1938-12-16", "precision": "day", "printed": "כ״ג כסלו תרצ״ט", "printed_calendar": "hebrew", "inferred": True}),
         ("range", True, {"start": "1937-01-01", "end": "1939-12-31", "precision": "range"}),
@@ -95,6 +108,7 @@ def cases():
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8")
     models = {"Pilot": Pilot, "DateValue": DateValue, "Fact": Fact, "Review": Review}
     output = cases()
     for case in output:

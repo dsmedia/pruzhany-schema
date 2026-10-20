@@ -1,6 +1,7 @@
 {
   "version": "0.1.0",
   "vocabulary_version": "0.1.0",
+  "as_of_year": 2026,
   "source_revision": "35cccf97b326c149e7b1d547b842b2537cbce66f",
   "sources": [
     {
@@ -142,7 +143,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-yaakov-goldenberg",
@@ -197,7 +199,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-menachem-yehuda-goldman-19340202",
@@ -211,7 +214,7 @@
           "value": "מנחם־יהודה גולדמן",
           "kind": "printed",
           "script": "Hebr",
-          "lang": "yi",
+          "lang": "he",
           "citation_ids": [
             "citation-cu-1934-02-02-i0408"
           ]
@@ -226,7 +229,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-itke-langer",
@@ -239,7 +243,7 @@
           "value": "איטקה לנגר",
           "kind": "printed",
           "script": "Hebr",
-          "lang": "yi",
+          "lang": "he",
           "citation_ids": [
             "citation-cu-1934-02-02-i0408"
           ]
@@ -254,7 +258,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-sarah-epstein",
@@ -273,7 +278,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-mordechai-epstein",
@@ -292,7 +298,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-chaim-shor",
@@ -311,7 +318,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-leah-goldberg",
@@ -330,7 +338,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-moshe-judewicz",
@@ -349,7 +358,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-rachel-pomerantz",
@@ -368,7 +378,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-rivtche-judewicz",
@@ -387,7 +398,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     },
     {
       "id": "person-velvel-goldberg",
@@ -406,7 +418,8 @@
           ]
         }
       ],
-      "presumed_living": true
+      "presumed_living": false,
+      "presumption_reason": "printed-in-old-source"
     }
   ],
   "places": [],
@@ -756,38 +769,6 @@
       "value": "Congratulated on the birth of an unnamed daughter; no birth date inferred.",
       "citation_ids": [
         "citation-cu-13701"
-      ],
-      "evidence_confidence": "confirmed",
-      "identity_confidence": "probable",
-      "status": "accepted",
-      "review": {
-        "state": "pending"
-      },
-      "attributed_to": "pilot:transcript-review:2026-10-19"
-    },
-    {
-      "id": "fact-marriage-person-rachel-pomerantz",
-      "subject_id": "person-rachel-pomerantz",
-      "type": "marriage",
-      "related_person_id": "person-chaim-shor",
-      "citation_ids": [
-        "citation-cu-13704"
-      ],
-      "evidence_confidence": "confirmed",
-      "identity_confidence": "probable",
-      "status": "accepted",
-      "review": {
-        "state": "pending"
-      },
-      "attributed_to": "pilot:transcript-review:2026-10-19"
-    },
-    {
-      "id": "fact-marriage-person-chaim-shor",
-      "subject_id": "person-chaim-shor",
-      "type": "marriage",
-      "related_person_id": "person-rachel-pomerantz",
-      "citation_ids": [
-        "citation-cu-13704"
       ],
       "evidence_confidence": "confirmed",
       "identity_confidence": "probable",

@@ -2,7 +2,7 @@
 
 **Start with [the generated review](generated/review.md).** This is an executable companion to [issue #14](https://github.com/dsmedia/pruzhany-schema/issues/14), isolated from the production schemas and both consumers. It retains RiC-O 1.1 as the interoperability target, consistent with EHRI ontology 0.2.0.
 
-The preview groups **12 people, two cross-edition engagements, 22 mentions, eight assertions and one relationship**, from ten newspaper excerpts in the editions of 1934-02-02, 1934-02-09 and 1938-12-16. The unjoined observations contain 13 person IDs and four event IDs. Two event joins and one person join are explicit, reversible review proposals.
+The preview groups **12 people, two cross-edition engagements, 22 mentions, six assertions and one relationship**, from ten newspaper excerpts in the editions of 1934-02-02, 1934-02-09 and 1938-12-16. The unjoined observations contain 13 person IDs and four event IDs. Two event joins and one person join are explicit, reversible review proposals.
 
 ## What to review
 
@@ -53,7 +53,7 @@ These fixture inputs and annotations are the pilot's authoring source; the gener
 
 ## Validation and limits
 
-`bin/verify pilot` checks generated enums/artifacts and the Python behavioral/RDF tests. The Zod suite runs the same accepted/rejected contract examples through both languages, including the complete real fixture. This is behavioral parity, not a claim that the two emitted JSON Schemas are byte-identical. Existing production schema tests and typechecking still run.
+`bin/verify pilot` checks generated enums/artifacts, Python behavioral/RDF tests, non-UTF-8 locale portability, and the isolated TypeScript test. It generates parity fixtures with the centrally pinned Python toolchain. The pilot Zod suite runs the same accepted/rejected contract examples through both languages, including the complete real fixture. This is behavioral parity, not a claim that the two emitted JSON Schemas are byte-identical. Existing production schema tests and typechecking still run.
 
 The pilot preserves the selected newspaper transcripts, not independently checked scan readings. Existing identity labels are carried forward, not newly certified. The source contains an engagement date added in English but absent from the selected printed excerpt; the preview deliberately does not promote it to a date fact. There are no real-person fate determinations or external identity matches in this PR. Those require separately reviewed evidence.
 
@@ -64,3 +64,11 @@ Partial dates and printed Hebrew dates are retained without claiming a calendar 
 Stored mention IDs survive regrouping. A whole-excerpt hash detects changed text. Exact offsets, repeated-occurrence selectors and image regions are intentionally not invented. Sources must eventually be connected to verified scans or stable archival locators before the full positional model is adopted.
 
 This PR is a reviewable vertical slice, not stage 1 or stage 2 of the full rollout. It does not migrate all 238 editions, alter existing production models, or replace the existing site privacy projection. Places, organisations and comprehensive authority reconciliation remain follow-on work.
+
+The source snapshot stays frozen for provenance. Each hand annotation in `build.py` carries its own language and script: the Hebrew opening names in mixed-language `cu-1934-02-02-i0408` are Hebrew; the other February 2 engagement notices are Hebrew and the remaining annotations are Yiddish. Name deduplication includes language and script.
+
+The deterministic privacy presumption copies `pruzhany-svelte/src/lib/privacy/presumption.ts` into `living_presumption`, using recorded `as_of_year: 2026`. Death evidence, birth at least 110 years ago, printing at least 85 years ago, or a named voucher with a valid ISO day permits display, in that order; otherwise the person is held back. Evidence is aggregated across editions per person ID; public verdicts use the original mention bindings and only approved joins, independently of preview grouping. All real pilot people have reason `printed-in-old-source`; this is a display presumption, not a fate assertion.
+
+The preview has 12 people, 2 events, 22 mentions, 6 facts and 1 relationship. The public projection has 13 records: original live site IDs and their own printed names, applying only approved joins. Pending joins remain visible in the reviewer preview. Marriage is stored only as `relationship-rachel-chaim`; both person-facing spouse lists derive from its single approval decision.
+
+Removing `marriage` from vocabulary 0.1.0 is permitted because it has never been released; from the first release onward, issue #14 requires additions only, deprecation with a mapping, and no removals.
