@@ -19,7 +19,7 @@ def check(root):
         iri = term if term.startswith(("http:", "https:")) else {"rico": RICO, "ehri": EHRI}[prefix] + term.removeprefix(prefix + ":")
         if iri not in known[prefix]:
             errors.append(f"{path.relative_to(root)}: unapproved {prefix} term {term}")
-    paths = set(root.glob("pilots/**/profile.ttl")) | set(root.glob("pilots/**/build.py")) | set(root.glob("pilots/**/review.jsonld"))
+    paths = set(root.glob("vocabulary/profile.ttl")) | set(root.glob("pilots/**/profile.ttl")) | set(root.glob("pilots/**/build.py")) | set(root.glob("pilots/**/review.jsonld"))
     for path in sorted(paths):
         text = path.read_text(encoding="utf-8")
         for prefix, namespace in (("rico", RICO), ("ehri", EHRI)):
@@ -49,6 +49,9 @@ def check(root):
         declarations = profile.read_text(encoding="utf-8") if profile.exists() else ""
         def walk(value, location):
             if isinstance(value, dict):
+                if "mapping" in value:
+                    walk(value["mapping"], location + ".mapping")
+                    return
                 # Entries have a definition or an explicit mapping key; container metadata is skipped.
                 if any(k in value for k in ("definition", "rico", "ehri", "local")) or (location != "root" and not any(isinstance(v, (dict, list)) for v in value.values())):
                     mapped = False
@@ -58,6 +61,13 @@ def check(root):
                             terms = value[prefix] if isinstance(value[prefix], list) else [value[prefix]]
                             for term in terms:
                                 validate(prefix, term, path)
+                    if value.get("via"):
+                        validate("rico", value["via"], path)
+                        # A qualification path must name a Relation class, not a property.
+                        terms = json.loads((standards / "rico-1.0.2.json").read_text(encoding="utf-8"))["terms"]
+                        via = value["via"].removeprefix("rico:")
+                        if not any(t["iri"] == RICO + via and t["kind"] == "class" and via.endswith("Relation") for t in terms):
+                            errors.append(f"{path.relative_to(root)}: via must be a RiC-O Relation class")
                     if not mapped:
                         local, reason = value.get("local"), value.get("reason")
                         if not isinstance(local, str) or not re.search(re.escape(local) + r'\s+a\s+', declarations):

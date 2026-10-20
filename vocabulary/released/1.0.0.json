@@ -1,0 +1,1517 @@
+{
+  "version": "1.0.0",
+  "status": "released",
+  "released_on": "2026-10-20",
+  "groups": {
+    "fact_types": [
+      {
+        "id": "birth",
+        "label": "Birth",
+        "definition": "A sourced birth date; a birth place uses rico:hasBirthPlace independently, including when no date is known.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasBirthDate"
+        }
+      },
+      {
+        "id": "death",
+        "label": "Death",
+        "definition": "A sourced death date; a death place uses rico:hasDeathPlace independently, including when no date is known.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasDeathDate"
+        }
+      },
+      {
+        "id": "residence",
+        "label": "Residence",
+        "definition": "Residence in a place at a specified time.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasOrHadLocation"
+        }
+      },
+      {
+        "id": "occupation",
+        "label": "Occupation",
+        "definition": "An occupation, optionally bounded in time.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasOrHadOccupationOfType"
+        }
+      },
+      {
+        "id": "office",
+        "label": "Office",
+        "definition": "Holding a Position at a time; person occupiesOrOccupied the position, qualified through PositionHoldingRelation.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "occupiesOrOccupied",
+          "via": "PositionHoldingRelation"
+        }
+      },
+      {
+        "id": "membership",
+        "label": "Membership",
+        "definition": "A person isOrWasMemberOf a group, inverse of group hasOrHadMember, qualified through MembershipRelation.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "isOrWasMemberOf",
+          "via": "MembershipRelation"
+        }
+      },
+      {
+        "id": "education",
+        "label": "Education",
+        "definition": "School attendance or education at a specified time.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_education",
+          "reason": "TeachingRelation identifies teaching rather than establishing school attendance; retain attendance without asserting a teacher relationship."
+        }
+      },
+      {
+        "id": "emigration",
+        "label": "Emigration",
+        "definition": "A dated departure to live elsewhere; establishes neither death nor survival.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_emigration",
+          "reason": "RiC-O MigrationRelation concerns instantiations, not migration of people."
+        }
+      },
+      {
+        "id": "survival",
+        "label": "Survival",
+        "definition": "Evidence that a person was alive at a specified time.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_survival",
+          "reason": "No dedicated pinned relation expresses evidence of being alive at a time."
+        }
+      },
+      {
+        "id": "parenthood",
+        "label": "Parenthood",
+        "definition": "Parenthood of an unnamed child without inventing a person node; claims naming a relative use kinship, and links between identified people use relationships.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_parenthood",
+          "reason": "Preserves an unnamed child without inventing a person node for a child relation."
+        }
+      },
+      {
+        "id": "ghetto_role",
+        "label": "Ghetto role",
+        "definition": "A sourced ghetto activity not expressible as membership or office; use membership or office whenever those fit.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_ghetto_role",
+          "reason": "No precise pinned counterpart for residual ghetto activities beyond membership or office."
+        }
+      },
+      {
+        "id": "partisan_service",
+        "label": "Partisan service",
+        "definition": "A sourced partisan activity beyond membership or office; use membership or office whenever those fit.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_partisan_service",
+          "reason": "No precise pinned counterpart for residual partisan activities beyond membership or office."
+        }
+      },
+      {
+        "id": "deportation",
+        "label": "Deportation",
+        "definition": "A sourced forced removal at a date and place; event participation may link its event.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_deportation",
+          "reason": "No dedicated pinned term captures forced removal of a person."
+        }
+      },
+      {
+        "id": "burial",
+        "label": "Burial",
+        "definition": "A sourced interment, optionally dated and placed; distinct from death.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_burial",
+          "reason": "No dedicated pinned term captures interment of a person."
+        }
+      },
+      {
+        "id": "commemoration",
+        "label": "Commemoration",
+        "definition": "A sourced act of remembrance; event participation may link its event.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_commemoration",
+          "reason": "No dedicated pinned term captures an act of remembrance of a person."
+        }
+      },
+      {
+        "id": "event_participation",
+        "label": "Event participation",
+        "definition": "Taking part in an event with an explicit mention role; weddings are events, not marriage facts.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "isOrWasParticipantIn"
+        }
+      },
+      {
+        "id": "other",
+        "label": "Other",
+        "definition": "An assertion awaiting an owner-approved type; requires a nonempty proposed_type.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fact_types_other",
+          "reason": "Retains an assertion pending owner approval of a specific type and mapping."
+        }
+      },
+      {
+        "id": "kinship",
+        "label": "Kinship",
+        "definition": "A source's statement that the person is related, in a stated way, to a named person who need not be identified",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        }
+      }
+    ],
+    "relationship_types": [
+      {
+        "id": "child_in_law",
+        "label": "Child-in-law",
+        "definition": "The subject is child in law of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "parent_in_law"
+      },
+      {
+        "id": "child_of",
+        "label": "Child of",
+        "definition": "The subject is child of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "isChildOf",
+          "via": "ChildRelation"
+        },
+        "inverse": "parent_of"
+      },
+      {
+        "id": "colleague",
+        "label": "Colleague",
+        "definition": "The subject is colleague of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "isAgentAssociatedWithAgent",
+          "via": "AgentToAgentRelation"
+        },
+        "inverse": "colleague"
+      },
+      {
+        "id": "cousin",
+        "label": "Cousin",
+        "definition": "The subject is cousin of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "cousin"
+      },
+      {
+        "id": "family_member",
+        "label": "Family member (unspecified)",
+        "definition": "The subject is family member of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "family_member"
+      },
+      {
+        "id": "friend",
+        "label": "Friend",
+        "definition": "The subject is friend of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "isAgentAssociatedWithAgent",
+          "via": "AgentToAgentRelation"
+        },
+        "inverse": "friend"
+      },
+      {
+        "id": "grandchild_of",
+        "label": "Grandchild of",
+        "definition": "The subject is grandchild of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "grandparent_of"
+      },
+      {
+        "id": "grandparent_of",
+        "label": "Grandparent of",
+        "definition": "The subject is grandparent of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "grandchild_of"
+      },
+      {
+        "id": "in_law",
+        "label": "In-law (Mechutan)",
+        "definition": "The subject is in law of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "in_law"
+      },
+      {
+        "id": "nephew_niece_of",
+        "label": "Nephew/Niece of",
+        "definition": "The subject is nephew niece of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "uncle_aunt_of"
+      },
+      {
+        "id": "parent_in_law",
+        "label": "Parent-in-law",
+        "definition": "The subject is parent in law of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "child_in_law"
+      },
+      {
+        "id": "parent_of",
+        "label": "Parent of",
+        "definition": "The subject is parent of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasChild",
+          "via": "ChildRelation"
+        },
+        "inverse": "child_of"
+      },
+      {
+        "id": "sibling",
+        "label": "Sibling",
+        "definition": "The subject is sibling of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasSibling",
+          "via": "SiblingRelation"
+        },
+        "inverse": "sibling"
+      },
+      {
+        "id": "sibling_in_law",
+        "label": "Sibling-in-law",
+        "definition": "The subject is sibling in law of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "sibling_in_law"
+      },
+      {
+        "id": "spouse",
+        "label": "Spouse",
+        "definition": "The subject is spouse of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasOrHadSpouse",
+          "via": "SpouseRelation"
+        },
+        "inverse": "spouse"
+      },
+      {
+        "id": "student_of",
+        "label": "Student of",
+        "definition": "The subject is student of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasOrHadTeacher",
+          "via": "TeachingRelation"
+        },
+        "inverse": "teacher_of"
+      },
+      {
+        "id": "teacher_of",
+        "label": "Teacher of",
+        "definition": "The subject is teacher of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasOrHadStudent",
+          "via": "TeachingRelation"
+        },
+        "inverse": "student_of"
+      },
+      {
+        "id": "uncle_aunt_of",
+        "label": "Uncle/Aunt of",
+        "definition": "The subject is uncle aunt of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "nephew_niece_of"
+      },
+      {
+        "id": "great_grandparent_of",
+        "label": "Great-grandparent of",
+        "definition": "The subject is great grandparent of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "great_grandchild_of"
+      },
+      {
+        "id": "great_grandchild_of",
+        "label": "Great-grandchild of",
+        "definition": "The subject is great grandchild of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "rico": "hasFamilyAssociationWith",
+          "via": "FamilyRelation"
+        },
+        "inverse": "great_grandparent_of"
+      }
+    ],
+    "name_kinds": [
+      {
+        "id": "printed",
+        "label": "Printed",
+        "definition": "A name exactly as printed in a source.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:name_kinds_printed",
+          "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "birth",
+        "label": "Birth",
+        "definition": "A name used at birth, including a maiden name.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:name_kinds_birth",
+          "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "married",
+        "label": "Married",
+        "definition": "A name used following marriage.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:name_kinds_married",
+          "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "later",
+        "label": "Later",
+        "definition": "A name used later in life, without assuming the reason for its adoption.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:name_kinds_later",
+          "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "nickname",
+        "label": "Nickname",
+        "definition": "A familiar or informal name.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:name_kinds_nickname",
+          "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "alias",
+        "label": "Alias",
+        "definition": "An alternative assumed name.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:name_kinds_alias",
+          "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "religious",
+        "label": "Religious",
+        "definition": "A name used in religious life.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:name_kinds_religious",
+          "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "spelling",
+        "label": "Spelling",
+        "definition": "An alternative spelling of a name, without asserting a different identity.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:name_kinds_spelling",
+          "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "mention_roles": [
+      {
+        "id": "subject",
+        "label": "Subject",
+        "definition": "The person whom the source passage concerns.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_subject",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "deceased",
+        "label": "Deceased",
+        "definition": "The person whose death the passage concerns; a mention role alone is not death evidence.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_deceased",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "honoree",
+        "label": "Honoree",
+        "definition": "The person being honored or congratulated.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_honoree",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "signer",
+        "label": "Signer",
+        "definition": "A person signing the item.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_signer",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "mourner",
+        "label": "Mourner",
+        "definition": "A person identified as mourning.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_mourner",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "advertiser",
+        "label": "Advertiser",
+        "definition": "A person placing or represented by an advertisement.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_advertiser",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "author",
+        "label": "Author",
+        "definition": "The author identified by a byline or attribution.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_author",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "office_holder",
+        "label": "Office holder",
+        "definition": "A person named in an official capacity; an office fact requires its own evidence.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_office_holder",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "donor",
+        "label": "Donor",
+        "definition": "A person identified as a donor.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_donor",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "named",
+        "label": "Named",
+        "definition": "A person named without a more specific established role.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_named",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "betrothed",
+        "label": "Betrothed",
+        "definition": "A person identified as engaged to marry.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_betrothed",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "parent",
+        "label": "Parent",
+        "definition": "A participant identified as a parent; a named parent-child link belongs in relationships.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:mention_roles_parent",
+          "reason": "Application-specific mention roles category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "source_kinds": [
+      {
+        "id": "archive_database",
+        "label": "Archive database",
+        "definition": "Archive database source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_archive_database",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "book",
+        "label": "Book",
+        "definition": "Book source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_book",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "memorial_book",
+        "label": "Memorial book",
+        "definition": "Memorial book source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_memorial_book",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "oral_history",
+        "label": "Oral history",
+        "definition": "Oral history source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_oral_history",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "memoir",
+        "label": "Memoir",
+        "definition": "Memoir source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_memoir",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "photograph",
+        "label": "Photograph",
+        "definition": "Photograph source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_photograph",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "press",
+        "label": "Press",
+        "definition": "Press source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_press",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "family_document",
+        "label": "Family document",
+        "definition": "Family document source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_family_document",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "web_page",
+        "label": "Web page",
+        "definition": "Web page source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_web_page",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "the_paper",
+        "label": "The paper",
+        "definition": "The paper source kinds category.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:source_kinds_the_paper",
+          "reason": "Application-specific source kinds category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "confidence": [
+      {
+        "id": "confirmed",
+        "label": "Confirmed",
+        "definition": "The cited evidence directly supports the assertion at the confirmed level; separate from identity confidence and editorial approval.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:confidence_confirmed",
+          "reason": "Application-specific confidence category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "probable",
+        "label": "Probable",
+        "definition": "The evidence supports the assertion with remaining uncertainty.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:confidence_probable",
+          "reason": "Application-specific confidence category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "possible",
+        "label": "Possible",
+        "definition": "The evidence permits the assertion but does not establish it as probable.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:confidence_possible",
+          "reason": "Application-specific confidence category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "claim_status": [
+      {
+        "id": "accepted",
+        "label": "Accepted",
+        "definition": "An assertion retained as accepted; this alone does not authorize publication.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:claim_status_accepted",
+          "reason": "Application-specific claim status category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "disputed",
+        "label": "Disputed",
+        "definition": "An assertion retained with an unresolved challenge.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:claim_status_disputed",
+          "reason": "Application-specific claim status category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "rejected",
+        "label": "Rejected",
+        "definition": "An assertion retained as rejected so it is not silently reintroduced.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:claim_status_rejected",
+          "reason": "Application-specific claim status category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "review_states": [
+      {
+        "id": "pending",
+        "label": "Pending",
+        "definition": "Awaiting human editorial approval.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:review_states_pending",
+          "reason": "Application-specific review states category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "approved",
+        "label": "Approved",
+        "definition": "Human editorial review has approved the item; publication remains subject to downstream privacy rules.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:review_states_approved",
+          "reason": "Application-specific review states category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "fate_outcomes": [
+      {
+        "id": "unknown",
+        "label": "Unknown",
+        "definition": "Compatibility value unknown: preserved unchanged from production fate outcomes.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fate_outcomes_unknown",
+          "reason": "Application-specific fate outcomes category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "perished",
+        "label": "Perished",
+        "definition": "Compatibility value perished: preserved unchanged from production fate outcomes. How sure the conclusion is lives in the fate's separate confidence; the site's legacy likely_* values are derived from outcome plus confidence.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fate_outcomes_perished",
+          "reason": "Application-specific fate outcomes category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "survived",
+        "label": "Survived",
+        "definition": "Compatibility value survived: preserved unchanged from production fate outcomes. How sure the conclusion is lives in the fate's separate confidence; the site's legacy likely_* values are derived from outcome plus confidence.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fate_outcomes_survived",
+          "reason": "Application-specific fate outcomes category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "died_before",
+        "label": "Died before",
+        "definition": "Compatibility value died_before: preserved unchanged from production fate outcomes.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fate_outcomes_died_before",
+          "reason": "Application-specific fate outcomes category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "not_applicable",
+        "label": "Not applicable",
+        "definition": "Compatibility value not_applicable: preserved unchanged from production fate outcomes.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:fate_outcomes_not_applicable",
+          "reason": "Application-specific fate outcomes category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "location_types": [
+      {
+        "id": "city",
+        "label": "City",
+        "definition": "Compatibility value city: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "ehri": "City"
+        }
+      },
+      {
+        "id": "town",
+        "label": "Town",
+        "definition": "Compatibility value town: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_town",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "village",
+        "label": "Village",
+        "definition": "Compatibility value village: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_village",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "shtetl",
+        "label": "Shtetl",
+        "definition": "Compatibility value shtetl: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_shtetl",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "street",
+        "label": "Street",
+        "definition": "Compatibility value street: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_street",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "address",
+        "label": "Address",
+        "definition": "Compatibility value address: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_address",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "landmark",
+        "label": "Landmark",
+        "definition": "Compatibility value landmark: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_landmark",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "country",
+        "label": "Country",
+        "definition": "Compatibility value country: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "ehri": "Country"
+        }
+      },
+      {
+        "id": "region",
+        "label": "Region",
+        "definition": "Compatibility value region: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "ehri": "Region"
+        }
+      },
+      {
+        "id": "district",
+        "label": "District",
+        "definition": "Compatibility value district: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_district",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "ghetto",
+        "label": "Ghetto",
+        "definition": "Compatibility value ghetto: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_ghetto",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "camp",
+        "label": "Camp",
+        "definition": "Compatibility value camp: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_camp",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "massacre_site",
+        "label": "Massacre site",
+        "definition": "Compatibility value massacre_site: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_massacre_site",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "deportation_point",
+        "label": "Deportation point",
+        "definition": "Compatibility value deportation_point: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_deportation_point",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "forest",
+        "label": "Forest",
+        "definition": "Compatibility value forest: preserved unchanged from production location types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:location_types_forest",
+          "reason": "Application-specific location types category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "event_types": [
+      {
+        "id": "engagement",
+        "label": "Engagement",
+        "definition": "An engagement event; participation uses event_participation with a mention role.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_engagement",
+          "reason": "Application-specific proposed event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "wedding",
+        "label": "Wedding",
+        "definition": "Compatibility value wedding: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_wedding",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "birth",
+        "label": "Birth",
+        "definition": "Compatibility value birth: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_birth",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "death",
+        "label": "Death",
+        "definition": "Compatibility value death: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_death",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "bar_mitzvah",
+        "label": "Bar mitzvah",
+        "definition": "Compatibility value bar_mitzvah: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_bar_mitzvah",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "celebration",
+        "label": "Celebration",
+        "definition": "Compatibility value celebration: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_celebration",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "community_event",
+        "label": "Community event",
+        "definition": "Compatibility value community_event: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_community_event",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "holocaust_event",
+        "label": "Holocaust event",
+        "definition": "Compatibility value holocaust_event: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_holocaust_event",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "other",
+        "label": "Other",
+        "definition": "Compatibility value other: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_other",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "content_unit_roles": [
+      {
+        "id": "primary_announcement",
+        "label": "Primary announcement",
+        "definition": "Compatibility value primary_announcement: preserved unchanged from production content unit roles.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:content_unit_roles_primary_announcement",
+          "reason": "Application-specific content unit roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "congratulation",
+        "label": "Congratulation",
+        "definition": "Compatibility value congratulation: preserved unchanged from production content unit roles.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:content_unit_roles_congratulation",
+          "reason": "Application-specific content unit roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "mention",
+        "label": "Mention",
+        "definition": "Compatibility value mention: preserved unchanged from production content unit roles.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:content_unit_roles_mention",
+          "reason": "Application-specific content unit roles category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "advertisement",
+        "label": "Advertisement",
+        "definition": "Compatibility value advertisement: preserved unchanged from production content unit roles.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:content_unit_roles_advertisement",
+          "reason": "Application-specific content unit roles category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "life_event_types": [
+      {
+        "id": "wedding",
+        "label": "Wedding",
+        "definition": "Compatibility value wedding: preserved unchanged from production life event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:life_event_types_wedding",
+          "reason": "Application-specific life event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "birth",
+        "label": "Birth",
+        "definition": "Compatibility value birth: preserved unchanged from production life event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:life_event_types_birth",
+          "reason": "Application-specific life event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "death",
+        "label": "Death",
+        "definition": "Compatibility value death: preserved unchanged from production life event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:life_event_types_death",
+          "reason": "Application-specific life event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "bar_mitzvah",
+        "label": "Bar mitzvah",
+        "definition": "Compatibility value bar_mitzvah: preserved unchanged from production life event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:life_event_types_bar_mitzvah",
+          "reason": "Application-specific life event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "celebration",
+        "label": "Celebration",
+        "definition": "Compatibility value celebration: preserved unchanged from production life event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:life_event_types_celebration",
+          "reason": "Application-specific life event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "community_event",
+        "label": "Community event",
+        "definition": "Compatibility value community_event: preserved unchanged from production life event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:life_event_types_community_event",
+          "reason": "Application-specific life event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "other",
+        "label": "Other",
+        "definition": "Compatibility value other: preserved unchanged from production life event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:life_event_types_other",
+          "reason": "Application-specific life event types category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "gender": [
+      {
+        "id": "male",
+        "label": "Male",
+        "definition": "Compatibility value male: preserved unchanged from production gender.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:gender_male",
+          "reason": "Application-specific gender category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "female",
+        "label": "Female",
+        "definition": "Compatibility value female: preserved unchanged from production gender.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:gender_female",
+          "reason": "Application-specific gender category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "unknown",
+        "label": "Unknown",
+        "definition": "Compatibility value unknown: preserved unchanged from production gender.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:gender_unknown",
+          "reason": "Application-specific gender category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "citation_remark_kinds": [
+      {
+        "id": "private_source_remark",
+        "label": "Private source remark",
+        "definition": "Private citation remark about the record giver; never published.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:citation_remark_kinds_private_source_remark",
+          "reason": "Source metadata is not a biographical fact and must remain private."
+        }
+      }
+    ],
+    "compatibility_event_types": [
+      {
+        "id": "wedding",
+        "label": "Wedding",
+        "definition": "Compatibility value wedding: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_wedding",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "birth",
+        "label": "Birth",
+        "definition": "Compatibility value birth: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_birth",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "death",
+        "label": "Death",
+        "definition": "Compatibility value death: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_death",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "bar_mitzvah",
+        "label": "Bar mitzvah",
+        "definition": "Compatibility value bar_mitzvah: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_bar_mitzvah",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "celebration",
+        "label": "Celebration",
+        "definition": "Compatibility value celebration: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_celebration",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "community_event",
+        "label": "Community event",
+        "definition": "Compatibility value community_event: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_community_event",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "holocaust_event",
+        "label": "Holocaust event",
+        "definition": "Compatibility value holocaust_event: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_holocaust_event",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "other",
+        "label": "Other",
+        "definition": "Compatibility value other: preserved unchanged from production event types.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:event_types_other",
+          "reason": "Application-specific event types category; no exact pinned ontology value is established."
+        }
+      }
+    ],
+    "external_source_types": [
+      {
+        "id": "arolsen_archives",
+        "label": "Arolsen Archives",
+        "definition": "International Center on Nazi Persecution. Contains records of Holocaust victims.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:external_source_types_arolsen_archives",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "name": "Arolsen Archives",
+        "description": "International Center on Nazi Persecution. Contains records of Holocaust victims.",
+        "baseUrl": "https://collections.arolsen-archives.org/"
+      },
+      {
+        "id": "familysearch",
+        "label": "FamilySearch",
+        "definition": "Genealogical records including Polish vital records.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:external_source_types_familysearch",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "name": "FamilySearch",
+        "description": "Genealogical records including Polish vital records.",
+        "baseUrl": "https://www.familysearch.org/"
+      },
+      {
+        "id": "findagrave",
+        "label": "Find a Grave",
+        "definition": "Cemetery and burial records.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:external_source_types_findagrave",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "name": "Find a Grave",
+        "description": "Cemetery and burial records.",
+        "baseUrl": "https://www.findagrave.com/"
+      },
+      {
+        "id": "geni",
+        "label": "Geni",
+        "definition": "Collaborative family tree platform.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:external_source_types_geni",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "name": "Geni",
+        "description": "Collaborative family tree platform.",
+        "baseUrl": "https://www.geni.com/"
+      },
+      {
+        "id": "jewishgen",
+        "label": "JewishGen",
+        "definition": "Jewish genealogical research. Contains Yizkor books, vital records, and community data.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:external_source_types_jewishgen",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "name": "JewishGen",
+        "description": "Jewish genealogical research. Contains Yizkor books, vital records, and community data.",
+        "baseUrl": "https://www.jewishgen.org/"
+      },
+      {
+        "id": "jri_poland",
+        "label": "JRI-Poland",
+        "definition": "Jewish Records Indexing - Poland. Contains indexed vital records.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:external_source_types_jri_poland",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "name": "JRI-Poland",
+        "description": "Jewish Records Indexing - Poland. Contains indexed vital records.",
+        "baseUrl": "https://jri-poland.org/"
+      },
+      {
+        "id": "wikipedia",
+        "label": "Wikipedia",
+        "definition": "General reference for locations and events.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:external_source_types_wikipedia",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "name": "Wikipedia",
+        "description": "General reference for locations and events.",
+        "baseUrl": "https://en.wikipedia.org/"
+      },
+      {
+        "id": "yad_vashem",
+        "label": "Yad Vashem",
+        "definition": "World Holocaust Remembrance Center. Contains Pages of Testimony and victim database.",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:external_source_types_yad_vashem",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "name": "Yad Vashem",
+        "description": "World Holocaust Remembrance Center. Contains Pages of Testimony and victim database.",
+        "baseUrl": "https://www.yadvashem.org/"
+      }
+    ],
+    "holocaust_fate_types": [
+      {
+        "id": "unknown",
+        "label": "Unknown",
+        "definition": "Fate during Holocaust is not known",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:holocaust_fate_types_unknown",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "description": "Fate during Holocaust is not known"
+      },
+      {
+        "id": "perished",
+        "label": "Perished",
+        "definition": "Confirmed killed during Holocaust",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:holocaust_fate_types_perished",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "description": "Confirmed killed during Holocaust"
+      },
+      {
+        "id": "likely_perished",
+        "label": "Likely Perished",
+        "definition": "Living in area that was later destroyed, presumed perished",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:holocaust_fate_types_likely_perished",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "description": "Living in area that was later destroyed, presumed perished"
+      },
+      {
+        "id": "survived",
+        "label": "Survived",
+        "definition": "Confirmed survived the Holocaust",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:holocaust_fate_types_survived",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "description": "Confirmed survived the Holocaust"
+      },
+      {
+        "id": "likely_survived",
+        "label": "Likely Survived",
+        "definition": "Living outside Nazi-occupied areas at time of publication",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:holocaust_fate_types_likely_survived",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "description": "Living outside Nazi-occupied areas at time of publication"
+      },
+      {
+        "id": "died_before",
+        "label": "Died Before",
+        "definition": "Died before the Holocaust began",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:holocaust_fate_types_died_before",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "description": "Died before the Holocaust began"
+      },
+      {
+        "id": "not_applicable",
+        "label": "Not Applicable",
+        "definition": "Non-Jewish individual",
+        "added_in": "1.0.0",
+        "mapping": {
+          "local": "pc:holocaust_fate_types_not_applicable",
+          "reason": "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established."
+        },
+        "description": "Non-Jewish individual"
+      }
+    ]
+  },
+  "approved_by": "the owner, in advance, as recommended (#16)"
+}

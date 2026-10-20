@@ -1,0 +1,104 @@
+{
+  "version": "1.0.0",
+  "mappings": [
+    {
+      "fact_kind": "parent_name",
+      "target": {
+        "group": "fact_types",
+        "id": "kinship"
+      },
+      "relationship_type": "child_of",
+      "requires": [
+        "relationship_type",
+        "related_name"
+      ],
+      "direction": "subject_to_named_relative"
+    },
+    {
+      "fact_kind": "spouse_name",
+      "target": {
+        "group": "fact_types",
+        "id": "kinship"
+      },
+      "relationship_type": "spouse",
+      "requires": [
+        "relationship_type",
+        "related_name"
+      ],
+      "direction": "subject_to_named_relative"
+    },
+    {
+      "fact_kind": "sibling_name",
+      "target": {
+        "group": "fact_types",
+        "id": "kinship"
+      },
+      "relationship_type": "sibling",
+      "requires": [
+        "relationship_type",
+        "related_name"
+      ],
+      "direction": "subject_to_named_relative"
+    },
+    {
+      "fact_kind": "child_name",
+      "target": {
+        "group": "fact_types",
+        "id": "kinship"
+      },
+      "relationship_type": "parent_of",
+      "requires": [
+        "relationship_type",
+        "related_name"
+      ],
+      "direction": "subject_to_named_relative"
+    },
+    {
+      "fact_kind": "giver_of_record",
+      "target": {
+        "group": "citation_remark_kinds",
+        "id": "private_source_remark"
+      },
+      "publish": false
+    },
+    {
+      "fact_kind": "birth_year_or_age",
+      "target": {
+        "group": "fact_types",
+        "id": "birth"
+      },
+      "inferred": true
+    },
+    {
+      "fact_kind": "street_or_address",
+      "target": {
+        "group": "fact_types",
+        "id": "residence"
+      }
+    },
+    {
+      "fact_kind": "schooling_or_pupil",
+      "target": {
+        "group": "fact_types",
+        "id": "education"
+      }
+    },
+    {
+      "fact_kind": "occupation",
+      "target": {
+        "group": "fact_types",
+        "id": "occupation"
+      }
+    },
+    {
+      "fact_kind": "other",
+      "target": {
+        "group": "fact_types",
+        "id": "other"
+      },
+      "requires": [
+        "proposed_type"
+      ]
+    }
+  ]
+}

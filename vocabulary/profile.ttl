@@ -1,0 +1,120 @@
+@prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<https://pruzhany.org/ns/sourced-entities> a owl:Ontology ;
+  owl:versionInfo "1.0.0 released" ;
+  rdfs:comment "Production application profile; local categories are not ontology equivalence assertions. Namespace is an identifier, not a claim of hosted content." .
+
+pc:fact_types_education a owl:NamedIndividual ; rdfs:label "education" ; rdfs:comment "TeachingRelation identifies teaching rather than establishing school attendance; retain attendance without asserting a teacher relationship." .
+pc:fact_types_emigration a owl:NamedIndividual ; rdfs:label "emigration" ; rdfs:comment "RiC-O MigrationRelation concerns instantiations, not migration of people." .
+pc:fact_types_survival a owl:NamedIndividual ; rdfs:label "survival" ; rdfs:comment "No dedicated pinned relation expresses evidence of being alive at a time." .
+pc:fact_types_parenthood a owl:NamedIndividual ; rdfs:label "parenthood" ; rdfs:comment "Preserves an unnamed child without inventing a person node for a child relation." .
+pc:fact_types_ghetto_role a owl:NamedIndividual ; rdfs:label "ghetto_role" ; rdfs:comment "No precise pinned counterpart for residual ghetto activities beyond membership or office." .
+pc:fact_types_partisan_service a owl:NamedIndividual ; rdfs:label "partisan_service" ; rdfs:comment "No precise pinned counterpart for residual partisan activities beyond membership or office." .
+pc:fact_types_deportation a owl:NamedIndividual ; rdfs:label "deportation" ; rdfs:comment "No dedicated pinned term captures forced removal of a person." .
+pc:fact_types_burial a owl:NamedIndividual ; rdfs:label "burial" ; rdfs:comment "No dedicated pinned term captures interment of a person." .
+pc:fact_types_commemoration a owl:NamedIndividual ; rdfs:label "commemoration" ; rdfs:comment "No dedicated pinned term captures an act of remembrance of a person." .
+pc:fact_types_other a owl:NamedIndividual ; rdfs:label "other" ; rdfs:comment "Retains an assertion pending owner approval of a specific type and mapping." .
+pc:name_kinds_printed a owl:NamedIndividual ; rdfs:label "printed" ; rdfs:comment "Application-specific name kinds category; no exact pinned ontology value is established." .
+pc:name_kinds_birth a owl:NamedIndividual ; rdfs:label "birth" ; rdfs:comment "Application-specific name kinds category; no exact pinned ontology value is established." .
+pc:name_kinds_married a owl:NamedIndividual ; rdfs:label "married" ; rdfs:comment "Application-specific name kinds category; no exact pinned ontology value is established." .
+pc:name_kinds_later a owl:NamedIndividual ; rdfs:label "later" ; rdfs:comment "Application-specific name kinds category; no exact pinned ontology value is established." .
+pc:name_kinds_nickname a owl:NamedIndividual ; rdfs:label "nickname" ; rdfs:comment "Application-specific name kinds category; no exact pinned ontology value is established." .
+pc:name_kinds_alias a owl:NamedIndividual ; rdfs:label "alias" ; rdfs:comment "Application-specific name kinds category; no exact pinned ontology value is established." .
+pc:name_kinds_religious a owl:NamedIndividual ; rdfs:label "religious" ; rdfs:comment "Application-specific name kinds category; no exact pinned ontology value is established." .
+pc:name_kinds_spelling a owl:NamedIndividual ; rdfs:label "spelling" ; rdfs:comment "Application-specific name kinds category; no exact pinned ontology value is established." .
+pc:mention_roles_subject a owl:NamedIndividual ; rdfs:label "subject" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_deceased a owl:NamedIndividual ; rdfs:label "deceased" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_honoree a owl:NamedIndividual ; rdfs:label "honoree" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_signer a owl:NamedIndividual ; rdfs:label "signer" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_mourner a owl:NamedIndividual ; rdfs:label "mourner" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_advertiser a owl:NamedIndividual ; rdfs:label "advertiser" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_author a owl:NamedIndividual ; rdfs:label "author" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_office_holder a owl:NamedIndividual ; rdfs:label "office_holder" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_donor a owl:NamedIndividual ; rdfs:label "donor" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_named a owl:NamedIndividual ; rdfs:label "named" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_betrothed a owl:NamedIndividual ; rdfs:label "betrothed" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:mention_roles_parent a owl:NamedIndividual ; rdfs:label "parent" ; rdfs:comment "Application-specific mention roles category; no exact pinned ontology value is established." .
+pc:source_kinds_archive_database a owl:NamedIndividual ; rdfs:label "archive_database" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_book a owl:NamedIndividual ; rdfs:label "book" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_memorial_book a owl:NamedIndividual ; rdfs:label "memorial_book" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_oral_history a owl:NamedIndividual ; rdfs:label "oral_history" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_memoir a owl:NamedIndividual ; rdfs:label "memoir" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_photograph a owl:NamedIndividual ; rdfs:label "photograph" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_press a owl:NamedIndividual ; rdfs:label "press" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_family_document a owl:NamedIndividual ; rdfs:label "family_document" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_web_page a owl:NamedIndividual ; rdfs:label "web_page" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:source_kinds_the_paper a owl:NamedIndividual ; rdfs:label "the_paper" ; rdfs:comment "Application-specific source kinds category; no exact pinned ontology value is established." .
+pc:confidence_confirmed a owl:NamedIndividual ; rdfs:label "confirmed" ; rdfs:comment "Application-specific confidence category; no exact pinned ontology value is established." .
+pc:confidence_probable a owl:NamedIndividual ; rdfs:label "probable" ; rdfs:comment "Application-specific confidence category; no exact pinned ontology value is established." .
+pc:confidence_possible a owl:NamedIndividual ; rdfs:label "possible" ; rdfs:comment "Application-specific confidence category; no exact pinned ontology value is established." .
+pc:claim_status_accepted a owl:NamedIndividual ; rdfs:label "accepted" ; rdfs:comment "Application-specific claim status category; no exact pinned ontology value is established." .
+pc:claim_status_disputed a owl:NamedIndividual ; rdfs:label "disputed" ; rdfs:comment "Application-specific claim status category; no exact pinned ontology value is established." .
+pc:claim_status_rejected a owl:NamedIndividual ; rdfs:label "rejected" ; rdfs:comment "Application-specific claim status category; no exact pinned ontology value is established." .
+pc:review_states_pending a owl:NamedIndividual ; rdfs:label "pending" ; rdfs:comment "Application-specific review states category; no exact pinned ontology value is established." .
+pc:review_states_approved a owl:NamedIndividual ; rdfs:label "approved" ; rdfs:comment "Application-specific review states category; no exact pinned ontology value is established." .
+pc:fate_outcomes_unknown a owl:NamedIndividual ; rdfs:label "unknown" ; rdfs:comment "Application-specific fate outcomes category; no exact pinned ontology value is established." .
+pc:fate_outcomes_perished a owl:NamedIndividual ; rdfs:label "perished" ; rdfs:comment "Application-specific fate outcomes category; no exact pinned ontology value is established." .
+pc:fate_outcomes_survived a owl:NamedIndividual ; rdfs:label "survived" ; rdfs:comment "Application-specific fate outcomes category; no exact pinned ontology value is established." .
+pc:fate_outcomes_died_before a owl:NamedIndividual ; rdfs:label "died_before" ; rdfs:comment "Application-specific fate outcomes category; no exact pinned ontology value is established." .
+pc:fate_outcomes_not_applicable a owl:NamedIndividual ; rdfs:label "not_applicable" ; rdfs:comment "Application-specific fate outcomes category; no exact pinned ontology value is established." .
+pc:location_types_town a owl:NamedIndividual ; rdfs:label "town" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_village a owl:NamedIndividual ; rdfs:label "village" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_shtetl a owl:NamedIndividual ; rdfs:label "shtetl" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_street a owl:NamedIndividual ; rdfs:label "street" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_address a owl:NamedIndividual ; rdfs:label "address" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_landmark a owl:NamedIndividual ; rdfs:label "landmark" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_district a owl:NamedIndividual ; rdfs:label "district" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_ghetto a owl:NamedIndividual ; rdfs:label "ghetto" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_camp a owl:NamedIndividual ; rdfs:label "camp" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_massacre_site a owl:NamedIndividual ; rdfs:label "massacre_site" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_deportation_point a owl:NamedIndividual ; rdfs:label "deportation_point" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:location_types_forest a owl:NamedIndividual ; rdfs:label "forest" ; rdfs:comment "Application-specific location types category; no exact pinned ontology value is established." .
+pc:event_types_engagement a owl:NamedIndividual ; rdfs:label "engagement" ; rdfs:comment "Application-specific proposed event types category; no exact pinned ontology value is established." .
+pc:event_types_wedding a owl:NamedIndividual ; rdfs:label "wedding" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_birth a owl:NamedIndividual ; rdfs:label "birth" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_death a owl:NamedIndividual ; rdfs:label "death" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_bar_mitzvah a owl:NamedIndividual ; rdfs:label "bar_mitzvah" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_celebration a owl:NamedIndividual ; rdfs:label "celebration" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_community_event a owl:NamedIndividual ; rdfs:label "community_event" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_holocaust_event a owl:NamedIndividual ; rdfs:label "holocaust_event" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_other a owl:NamedIndividual ; rdfs:label "other" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:content_unit_roles_primary_announcement a owl:NamedIndividual ; rdfs:label "primary_announcement" ; rdfs:comment "Application-specific content unit roles category; no exact pinned ontology value is established." .
+pc:content_unit_roles_congratulation a owl:NamedIndividual ; rdfs:label "congratulation" ; rdfs:comment "Application-specific content unit roles category; no exact pinned ontology value is established." .
+pc:content_unit_roles_mention a owl:NamedIndividual ; rdfs:label "mention" ; rdfs:comment "Application-specific content unit roles category; no exact pinned ontology value is established." .
+pc:content_unit_roles_advertisement a owl:NamedIndividual ; rdfs:label "advertisement" ; rdfs:comment "Application-specific content unit roles category; no exact pinned ontology value is established." .
+pc:life_event_types_wedding a owl:NamedIndividual ; rdfs:label "wedding" ; rdfs:comment "Application-specific life event types category; no exact pinned ontology value is established." .
+pc:life_event_types_birth a owl:NamedIndividual ; rdfs:label "birth" ; rdfs:comment "Application-specific life event types category; no exact pinned ontology value is established." .
+pc:life_event_types_death a owl:NamedIndividual ; rdfs:label "death" ; rdfs:comment "Application-specific life event types category; no exact pinned ontology value is established." .
+pc:life_event_types_bar_mitzvah a owl:NamedIndividual ; rdfs:label "bar_mitzvah" ; rdfs:comment "Application-specific life event types category; no exact pinned ontology value is established." .
+pc:life_event_types_celebration a owl:NamedIndividual ; rdfs:label "celebration" ; rdfs:comment "Application-specific life event types category; no exact pinned ontology value is established." .
+pc:life_event_types_community_event a owl:NamedIndividual ; rdfs:label "community_event" ; rdfs:comment "Application-specific life event types category; no exact pinned ontology value is established." .
+pc:life_event_types_other a owl:NamedIndividual ; rdfs:label "other" ; rdfs:comment "Application-specific life event types category; no exact pinned ontology value is established." .
+pc:gender_male a owl:NamedIndividual ; rdfs:label "male" ; rdfs:comment "Application-specific gender category; no exact pinned ontology value is established." .
+pc:gender_female a owl:NamedIndividual ; rdfs:label "female" ; rdfs:comment "Application-specific gender category; no exact pinned ontology value is established." .
+pc:gender_unknown a owl:NamedIndividual ; rdfs:label "unknown" ; rdfs:comment "Application-specific gender category; no exact pinned ontology value is established." .
+pc:citation_remark_kinds_private_source_remark a owl:NamedIndividual ; rdfs:label "private_source_remark" ; rdfs:comment "Source metadata is not a biographical fact and must remain private." .
+pc:event_types_wedding a owl:NamedIndividual ; rdfs:label "wedding" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_birth a owl:NamedIndividual ; rdfs:label "birth" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_death a owl:NamedIndividual ; rdfs:label "death" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_bar_mitzvah a owl:NamedIndividual ; rdfs:label "bar_mitzvah" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_celebration a owl:NamedIndividual ; rdfs:label "celebration" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_community_event a owl:NamedIndividual ; rdfs:label "community_event" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_holocaust_event a owl:NamedIndividual ; rdfs:label "holocaust_event" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:event_types_other a owl:NamedIndividual ; rdfs:label "other" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
+pc:external_source_types_arolsen_archives a owl:NamedIndividual ; rdfs:label "arolsen_archives" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:external_source_types_familysearch a owl:NamedIndividual ; rdfs:label "familysearch" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:external_source_types_findagrave a owl:NamedIndividual ; rdfs:label "findagrave" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:external_source_types_geni a owl:NamedIndividual ; rdfs:label "geni" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:external_source_types_jewishgen a owl:NamedIndividual ; rdfs:label "jewishgen" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:external_source_types_jri_poland a owl:NamedIndividual ; rdfs:label "jri_poland" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:external_source_types_wikipedia a owl:NamedIndividual ; rdfs:label "wikipedia" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:external_source_types_yad_vashem a owl:NamedIndividual ; rdfs:label "yad_vashem" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:holocaust_fate_types_died_before a owl:NamedIndividual ; rdfs:label "died_before" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:holocaust_fate_types_likely_perished a owl:NamedIndividual ; rdfs:label "likely_perished" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:holocaust_fate_types_likely_survived a owl:NamedIndividual ; rdfs:label "likely_survived" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:holocaust_fate_types_not_applicable a owl:NamedIndividual ; rdfs:label "not_applicable" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:holocaust_fate_types_perished a owl:NamedIndividual ; rdfs:label "perished" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:holocaust_fate_types_survived a owl:NamedIndividual ; rdfs:label "survived" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+pc:holocaust_fate_types_unknown a owl:NamedIndividual ; rdfs:label "unknown" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
