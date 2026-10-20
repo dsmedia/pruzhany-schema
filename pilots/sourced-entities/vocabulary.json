@@ -1,18 +1,67 @@
 {
   "version": "0.1.0",
   "fact_types": {
-    "birth": {"definition": "A source's assertion about a person's birth.", "rico": "hasBirthDate"},
-    "death": {"definition": "A source's assertion about a person's death.", "rico": "hasDeathDate"},
-    "survival": {"definition": "Evidence that a person was alive at a specified time.", "rico": null},
-    "residence": {"definition": "Residence at a specified time; never an undated global home.", "rico": "hasOrHadLocation"},
-    "occupation": {"definition": "An occupation, optionally bounded in time.", "rico": "hasOrHadOccupationOfType"},
-    "parenthood": {"definition": "Parenthood, including an unnamed child; no gender inferred.", "rico": null},
-    "event_participation": {"definition": "Participation in an event, with an explicit role.", "rico": "isOrWasParticipantIn"},
-    "other": {"definition": "A sourced assertion awaiting a reviewed vocabulary term.", "rico": null}
+    "birth": {
+      "definition": "A source's assertion about a person's birth.",
+      "rico": "hasBirthDate"
+    },
+    "death": {
+      "definition": "A source's assertion about a person's death.",
+      "rico": "hasDeathDate"
+    },
+    "survival": {
+      "definition": "Evidence that a person was alive at a specified time.",
+      "rico": null,
+      "local": "pc:survival",
+      "reason": "Evidence of being alive at a time is not a dedicated RiC-O relation."
+    },
+    "residence": {
+      "definition": "Residence at a specified time; never an undated global home.",
+      "rico": "hasOrHadLocation"
+    },
+    "occupation": {
+      "definition": "An occupation, optionally bounded in time.",
+      "rico": "hasOrHadOccupationOfType"
+    },
+    "parenthood": {
+      "definition": "Parenthood, including an unnamed child; no gender inferred.",
+      "rico": null,
+      "local": "pc:parenthood",
+      "reason": "Preserves an unnamed child without inventing a person node for a RiC-O child relation."
+    },
+    "event_participation": {
+      "definition": "Participation in an event, with an explicit role.",
+      "rico": "isOrWasParticipantIn"
+    },
+    "other": {
+      "definition": "A sourced assertion awaiting a reviewed vocabulary term.",
+      "rico": null,
+      "local": "pc:other",
+      "reason": "Retains a sourced assertion pending an owner-approved specific mapping."
+    }
   },
-  "mention_roles": ["betrothed", "parent", "signer", "honoree", "named"],
-  "relationship_types": ["spouse", "parent_child", "sibling"],
-  "name_kinds": ["printed", "spelling", "later"],
-  "event_types": ["engagement", "wedding", "birth", "death"],
-  "note": "This is a pilot vocabulary, not a replacement of existing production enums. Null mappings are explicit extensions, not asserted RiC-O equivalences."
+  "mention_roles": [
+    "betrothed",
+    "parent",
+    "signer",
+    "honoree",
+    "named"
+  ],
+  "relationship_types": [
+    "spouse",
+    "parent_child",
+    "sibling"
+  ],
+  "name_kinds": [
+    "printed",
+    "spelling",
+    "later"
+  ],
+  "event_types": [
+    "engagement",
+    "wedding",
+    "birth",
+    "death"
+  ],
+  "note": "This is a pilot vocabulary, not a replacement of existing production enums. Local mappings are declared and explained application extensions."
 }

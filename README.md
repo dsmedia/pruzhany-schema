@@ -29,6 +29,6 @@ TBD.
 
 The [sourced-entities pilot](pilots/sourced-entities/README.md) is an isolated,
 executable review of corpus-wide people, role-bearing mentions and sourced
-assertions aligned with RiC-O 1.1 / EHRI. Start with its
+assertions aligned with EHRI 0.1.1 / RiC-O 1.0.2; its terms are checked against both RiC-O 1.0.2 and 1.1. Start with its
 [generated review](pilots/sourced-entities/generated/review.md).
-Run it with `bin/verify zod pydantic pilot`. Existing production models are unchanged.
+Run it with `bin/verify zod pydantic pilot standards`. Existing production models are unchanged.

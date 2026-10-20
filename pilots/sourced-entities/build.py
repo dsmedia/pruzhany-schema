@@ -19,6 +19,7 @@ if PACKAGE not in sys.modules:
     spec.loader.exec_module(package)
 from pruzhany_schema_pydantic.sourced_entities_pilot import Pilot, lower_date, upper_date
 
+EHRI = "http://lod.ehri-project-test.eu/ontology#"
 RICO = "https://www.ica.org/standards/RiC/ontology#"
 BASE = "https://example.org/pruzhany-pilot/issue-14/"
 PC = BASE + "vocab#"
@@ -296,14 +297,14 @@ def rico_export(data):
             node["rdfs:seeAlso"] = {"@id": c["url"]}
         graph.append(node)
     for p in data["people"]:
-        graph.append({**ref(p["id"]), "@type": "rico:Person", "rdfs:label": p["display_name"], "pc:presumedLiving": p["presumed_living"]})
+        graph.append({**ref(p["id"]), "@type": ["rico:Person", "ehri:Person"], "rdfs:label": p["display_name"], "pc:presumedLiving": p["presumed_living"]})
         for index, name in enumerate(p["names"]):
             nid = f"{p['id']}-name-{index + 1}"
             graph.append({**ref(nid), "@type": "rico:AgentName", "rico:name": {"@value": name["value"], "@language": name["lang"]},
                           "pc:recordedFor": ref(p["id"]), "pc:nameKind": name["kind"], "pc:script": name["script"],
                           "prov:wasDerivedFrom": [ref(cid) for cid in name["citation_ids"]]})
     for p in data["places"]:
-        graph.append({**ref(p["id"]), "@type": "rico:Place", "rdfs:label": p["label"]})
+        graph.append({**ref(p["id"]), "@type": ["rico:Place"] + ([{"city": "ehri:City", "region": "ehri:Region", "country": "ehri:Country"}[p["kind"]]] if p.get("kind") in {"city", "region", "country"} else []), "rdfs:label": p["label"]})
     for event in data["events"]:
         graph.append({**ref(event["id"]), "@type": "rico:Event", "rdfs:label": event["name"], "pc:eventType": event["type"],
                       "prov:wasDerivedFrom": [ref(c) for c in event["citation_ids"]]})
@@ -373,7 +374,7 @@ def rico_export(data):
                       "pc:appliedInPreview": d["applied_in_preview"], "pc:reviewState": d["review"]["state"], "pc:reason": d["reason"],
                       "prov:wasDerivedFrom": [ref(cid) for cid in d["citation_ids"]]})
     # Explicit prefixes; no remote context, RDF store or network needed to read this.
-    return {"@context": {"rico": RICO, "pc": PC, "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdfs": "http://www.w3.org/2000/01/rdf-schema#", "prov": "http://www.w3.org/ns/prov#", "dcterms": "http://purl.org/dc/terms/"}, "@graph": graph}
+    return {"@context": {"ehri": EHRI, "rico": RICO, "pc": PC, "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdfs": "http://www.w3.org/2000/01/rdf-schema#", "prov": "http://www.w3.org/ns/prov#", "dcterms": "http://purl.org/dc/terms/"}, "@graph": graph}
 
 
 def edition_views(data):
