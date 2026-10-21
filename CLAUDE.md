@@ -16,3 +16,21 @@ This repo shares schemas between the Pruzhany Digital Archive's SvelteKit fronte
 - **A change here is checked against its consumers before it merges**: pruzhany-svelte (`bun run test:run`, `bun run check`, `bun run validate:data` with its submodule pointed at the branch) and pruzhany-press (`just test-contract`, which needs `bun install` in its `tests/contract/` first, or it only skips).
 
 `bin/verify` is the single verification entry point, including the standards alignment gate. Its header describes the steps, pinned toolchain and private consumer drift gate.
+
+## Agent skills
+
+The plugin `mattpocock-skills` was set up here on 21 October 2026. Where one of its
+skills and this file differ, this file holds.
+
+### Issue tracker
+
+GitHub Issues on `dsmedia/pruzhany-schema`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The plugin's five default labels, unchanged. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `GLOSSARY.md` and `docs/adr/` at the root, made when first needed. See
+`docs/agents/domain.md`.
