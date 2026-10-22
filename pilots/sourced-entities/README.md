@@ -1,6 +1,6 @@
 # Sourced entities pilot for issue 14
 
-**Start with [the generated review](generated/review.md).** This is an executable companion to [issue #14](https://github.com/dsmedia/pruzhany-schema/issues/14), isolated from the production schemas and both consumers. It follows EHRI ontology 0.1.1 and its RiC-O 1.0.2 base. RiC-O 1.0.2 and 1.1 are both checked; the pilot’s terms exist in both.
+**Start with [the generated review](generated/review.md).** This is an executable companion to [issue #14](https://github.com/dsmedia/pruzhany-schema/issues/14), isolated from the production schemas and both consumers. It follows EHRI ontology 0.2.0 and its RiC-O 1.1 base (the owner's word of 2026-10-22); the pilot’s terms also exist in RiC-O 1.0.2.
 
 The preview groups **12 people, two cross-edition engagements, 22 mentions, six assertions and one relationship**, from ten newspaper excerpts in the editions of 1934-02-02, 1934-02-09 and 1938-12-16. The unjoined observations contain 13 person IDs and four event IDs. Two event joins and one person join are explicit, reversible review proposals.
 

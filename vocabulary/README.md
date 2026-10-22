@@ -19,7 +19,7 @@ entry with `deprecated_in` and `replaced_by` pointing to an existing entry in it
 group; retain its original mapping. The owner approves additions in batches,
 with real examples reviewed privately. Every addition names its pinned EHRI or
 RiC-O term, or a local term declared and explained in `profile.ttl`. Prefer EHRI
-where applicable, then RiC-O terms shared by 1.0.2 and 1.1, then a local term with
+where applicable, then RiC-O 1.1 terms (the version EHRI 0.2.0 imports), then a local term with
 a reason. Mappings describe correspondence, not unconditional RDF assertions.
 Disputed and pending claims must not become unqualified historical triples.
 

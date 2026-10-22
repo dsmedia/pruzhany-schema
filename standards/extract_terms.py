@@ -6,7 +6,7 @@ from pathlib import Path
 from rdflib import Graph, URIRef, RDF, RDFS, OWL
 
 
-def extract(path, repo, commit, source_path):
+def extract(path, repo, commit, source_path, read_on):
     raw = path.read_bytes()
     graph = Graph().parse(data=raw, format="xml")
     ontologies = sorted(graph.subjects(RDF.type, OWL.Ontology), key=str)
@@ -32,7 +32,7 @@ def extract(path, repo, commit, source_path):
     attribution = sorted({str(v) for s, p, v in graph if any(
         token in str(p).lower() for token in ("license", "licence", "rights", "creator", "contributor", "publisher"))})
     return {"repo": repo, "commit": commit, "path": source_path,
-            "sha256": hashlib.sha256(raw).hexdigest(), "read_on": "2026-10-20",
+            "sha256": hashlib.sha256(raw).hexdigest(), "read_on": read_on,
             "namespace": namespace, "ontology_metadata": metadata,
             "license_and_attribution": attribution,
             "terms": sorted(terms, key=lambda t: (t["iri"], t["kind"]))}
@@ -41,10 +41,10 @@ def extract(path, repo, commit, source_path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("ontology", type=Path)
-    for name in ("repo", "commit", "path", "out"):
+    for name in ("repo", "commit", "path", "read-on", "out"):
         parser.add_argument("--" + name, required=True)
     args = parser.parse_args()
-    result = extract(args.ontology, args.repo, args.commit, args.path)
+    result = extract(args.ontology, args.repo, args.commit, args.path, args.read_on)
     Path(args.out).write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
 
 

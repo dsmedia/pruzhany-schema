@@ -117,7 +117,7 @@ Impresso mention IDs of the earlier design both fit inside it.
 Read on 2026-10-19:
 
 - the EHRI Knowledge Graph ontology, [`EHRI/ehri-kg-ontology`](https://github.com/EHRI/ehri-kg-ontology) at
-  `5d42d25` (5 March 2026), version 0.1.1, latest tag `v0.1.1` [corrected 2026-10-20: the pinned EHRI metadata says 0.1.1, not 0.2.0];
+  `5d42d25` (5 March 2026), version 0.1.1, latest tag `v0.1.1` [corrected 2026-10-20: the pinned EHRI metadata says 0.1.1, not 0.2.0] [2026-10-22: 0.2.0 is on branch `develop` at `4b275a7`, untagged, and imports RiC-O 1.1; the gate now checks against it and RiC-O 1.1, at the owner's word];
 - [RiC-O 1.0.2](https://github.com/ICA-EGAD/RiC-O) at `06912e1` (`ontology/previous-versions/RiC-O_v-1-0-2_release/RiC-O_1-0-2.rdf`) [corrected 2026-10-20: EHRI imports 1.0.2; 1.1 is checked separately, not its base];
 - EHRI's report on its digital editions and standards (deliverable D11.6, July 2024);
 - the [EHRI portal's authority sets](https://portal.ehri-project.eu/authorities).

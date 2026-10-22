@@ -32,6 +32,6 @@ The [2026-10-19 people, facts and sources proposal](docs/design/2026-10-19-peopl
 
 The [sourced-entities pilot](pilots/sourced-entities/README.md) is an isolated,
 executable review of corpus-wide people, role-bearing mentions and sourced
-assertions aligned with EHRI 0.1.1 / RiC-O 1.0.2; its terms are checked against both RiC-O 1.0.2 and 1.1. Start with its
+assertions aligned with EHRI 0.2.0 / RiC-O 1.1; its terms also exist in RiC-O 1.0.2. Start with its
 [generated review](pilots/sourced-entities/generated/review.md).
 Run it with `bin/verify zod pydantic pilot standards`. Existing production models are unchanged.

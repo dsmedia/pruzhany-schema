@@ -3,9 +3,10 @@
   "source": "https://github.com/ICA-EGAD/RiC-O/blob/06912e1e20343f2e88e51f1b55fa232cb30b6b5b/ontology/current-version/RiC-O_1-1.rdf",
   "sha256": "cf9afc4c01142161d0ee7282dd1c07f361073d12f1f6f4569115707f169b31e9",
   "checked_on": "2026-10-20",
-  "ehri_version": "0.1.1",
-  "ehri_source": "https://github.com/EHRI/ehri-kg-ontology/blob/5d42d2505661bdfb04b3634b27c7b9e73392fe07/ontology/ehri.owl",
-  "ehri_sha256": "a916194c93c6393a623c38cd51a469fc8a0348801cb3807dd62819a8301b99b3",
+  "ehri_version": "0.2.0",
+  "ehri_source": "https://github.com/EHRI/ehri-kg-ontology/blob/4b275a7d8066b7084dda1e76a16ec0cc7a0a5455/ontology/ehri.owl",
+  "ehri_checked_on": "2026-10-22",
+  "ehri_sha256": "c04f53203e6aecee5aef1dc8f8724092af831bf717698ece6342e2dcc4bcbe50",
   "terms": {
     "Thing": {
       "iri": "https://www.ica.org/standards/RiC/ontology#Thing",
@@ -444,10 +445,9 @@
   },
   "attribution": "RiC-O labels and definitions: International Council on Archives Expert Group on Archival Description (ICA EGAD), Copyright 2019-, International Council on Archives (ICA). Extracted unchanged from the cited ontology; application mappings are separate.",
   "license": "https://creativecommons.org/licenses/by/4.0/",
-  "ehri_rico_version": "1.0.2",
+  "ehri_rico_version": "1.1",
   "checked_versions": [
-    "1.0.2",
     "1.1"
   ],
-  "alignment_note": "All pilot terms exist in both checked RiC-O versions; canonical complete term lists are in standards/."
+  "alignment_note": "All pilot terms exist in RiC-O 1.1, which EHRI 0.2.0 imports, and also in 1.0.2, which EHRI 0.1.1 imported; canonical complete term lists are in standards/."
 }
