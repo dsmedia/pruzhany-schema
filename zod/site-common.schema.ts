@@ -39,21 +39,18 @@ export const PrintedTitleSchema = z
 	});
 export type PrintedTitle = z.infer<typeof PrintedTitleSchema>;
 
-export const SuppliedTitleSchema = z.strictObject({
+const attributedEnglish = {
 	text: siteText,
 	language: z.literal('en'),
 	based_on: TextBasisSchema,
 	attribution: AuthorshipSchema,
-});
+};
+
+export const SuppliedTitleSchema = z.strictObject(attributedEnglish);
 export type SuppliedTitle = z.infer<typeof SuppliedTitleSchema>;
 
 // Translation is semantic work; its basis may survive a later rereading.
-export const TranslationSchema = z.strictObject({
-	text: siteText,
-	language: z.literal('en'),
-	based_on: TextBasisSchema,
-	attribution: AuthorshipSchema,
-});
+export const TranslationSchema = z.strictObject(attributedEnglish);
 export type Translation = z.infer<typeof TranslationSchema>;
 
 export function textBasisMatches(basis: TextBasis, currentText: string): boolean {

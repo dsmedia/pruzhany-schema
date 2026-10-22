@@ -109,18 +109,32 @@ def check(root=ROOT):
 def check_site_content(root=ROOT):
     folder = root / 'vocabulary'
     vocabulary = json.loads((folder / 'site-content.json').read_text(encoding='utf-8'))
-    profile = (folder / 'profile.ttl').read_text(encoding='utf-8')
+    profile = (folder / 'site-content.profile.ttl').read_text(encoding='utf-8')
     errors = []
     if vocabulary.get('status') != 'proposed' or vocabulary.get('released_on') or vocabulary.get('approved_by'):
         errors.append('site-content: this vocabulary is proposed, not approved or released')
     if (folder / 'released' / ('site-content-' + vocabulary['version'] + '.json')).exists():
         errors.append('site-content: proposed vocabulary cannot have a release snapshot')
-    expected_types = {'article', 'ad', 'image', 'table', 'death_notice', 'weather', 'page',
-                      'radio_bulletin', 'radio_broadcast_episode', 'chronicle', 'chapter',
-                      'discussion', 'entertainment'}
+    if f'owl:versionInfo "{vocabulary["version"]} proposed; unreleased"' not in profile:
+        errors.append('site-content: profile must be marked proposed and unreleased at this version')
     types = vocabulary['impresso_types']
-    if set(types) != expected_types or len(types) != len(expected_types):
-        errors.append('site-content: Impresso types differ from the pinned issue schema')
+    if (not isinstance(types, list) or not types
+            or any(not isinstance(value, str) or not value.strip() for value in types)
+            or len(set(types)) != len(types)):
+        errors.append('site-content: Impresso types must be a nonempty list of unique identifiers')
+        types = []
+
+    def local_declaration(entry, where):
+        term, reason = entry['mapping']['local'], entry['mapping']['reason']
+        declaration = re.search(re.escape(term) + r'\s+a\s+.*?\.\s*(?:\n|$)', profile)
+        if not re.fullmatch(r'pc:[A-Za-z_][\w-]*', term) or not declaration or json.dumps(reason, ensure_ascii=False) not in declaration[0]:
+            errors.append(f'{where}: site-content.profile.ttl must declare local term and reason')
+        if not reason.strip() or len(reason.splitlines()) != 1:
+            errors.append(f'{where}: reason must be one line')
+        if reason == entry.get('definition'):
+            errors.append(f'{where}: local reason must explain the mapping, not repeat the definition')
+        return declaration
+
     expected_classes = {'content_item_subtypes': 'rico:DocumentaryFormType',
                         'subjects': 'skos:Concept', 'title_types': 'rico:TitleType'}
     if set(vocabulary['groups']) != set(expected_classes):
@@ -134,15 +148,10 @@ def check_site_content(root=ROOT):
                 if not isinstance(entry.get(key), str) or not entry[key].strip():
                     errors.append(f'{where}: missing {key}')
             mapping = entry.get('mapping', {})
-            if set(mapping) != {'local', 'reason'}:
+            if not isinstance(mapping, dict) or set(mapping) != {'local', 'reason'} or not all(isinstance(v, str) for v in mapping.values()):
                 errors.append(f'{where}: concept needs a local identifier and reason')
                 continue
-            term, reason = mapping['local'], mapping['reason']
-            declaration = re.search(re.escape(term) + r'\s+a\s+.*?\.\s*(?:\n|$)', profile)
-            if not declaration or json.dumps(reason, ensure_ascii=False) not in declaration[0]:
-                errors.append(f'{where}: profile must declare concept and reason')
-            if not reason.strip() or len(reason.splitlines()) != 1:
-                errors.append(f'{where}: reason must be one line')
+            declaration = local_declaration(entry, where)
             cls = expected_classes.get(group)
             if entry.get('concept_class') != cls or not declaration or cls not in declaration[0] or 'skos:Concept' not in declaration[0]:
                 errors.append(f'{where}: incorrect concept class')
@@ -150,10 +159,22 @@ def check_site_content(root=ROOT):
                 parent = entry.get('parent_type')
                 if not isinstance(parent, str) or parent not in types:
                     errors.append(f'{where}: subtype needs exactly one Impresso parent')
-                required = ('ad' if entry['id'].endswith('_greeting') or entry['id'] in {'greeting', 'thanks', 'meeting_notice'}
-                            else 'death_notice' if entry['id'] in {'condolence', 'memorial_notice'} else None)
-                if required and parent != required:
-                    errors.append(f'{where}: parent differs from the owner decision')
+                if 'owner_fixed_parent' in entry:
+                    decision = entry['owner_fixed_parent']
+                    if (not isinstance(decision, dict) or set(decision) != {'type', 'on'}
+                            or decision.get('type') not in types
+                            or not isinstance(decision.get('on'), str)
+                            or not re.fullmatch(r'\d{4}-\d{2}-\d{2}', decision['on'])):
+                        errors.append(f'{where}: owner decision needs an Impresso type and date')
+                    elif parent != decision['type']:
+                        errors.append(f'{where}: parent differs from the owner decision')
+    for entry in vocabulary['bindings']:
+        where = f'bindings.{entry["id"]}'
+        mapping = entry.get('mapping')
+        if not isinstance(mapping, dict) or set(mapping) not in FORMS or not all(isinstance(v, str) and v.strip() for v in mapping.values()):
+            errors.append(f'{where}: invalid mapping form')
+        elif 'local' in mapping:
+            local_declaration(entry, where)
     if {e['id'] for e in vocabulary['groups']['title_types']} != {'printed', 'supplied'}:
         errors.append('site-content: both title types are required')
     return errors

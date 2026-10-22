@@ -198,6 +198,7 @@ export const SiteArchiveSchema = z
 		const organizations = new Set(v.shared_record.organizations.map((o) => o.id));
 		const events = new Map(v.shared_record.events.map((e) => [e.id, e]));
 		for (const issue of v.issues) {
+			const issueEvents = new Set(issue.life_events.life_events.map((e) => e.id));
 			if (issue.mentions.mentions.some((m) => !people.has(m.person_id)))
 				errors.push('unknown mention person');
 			for (const item of issue.content_items.content_items) {
@@ -205,14 +206,15 @@ export const SiteArchiveSchema = z
 					errors.push('unknown content item place');
 				if (item.organization_ids.some((id) => !organizations.has(id)))
 					errors.push('unknown content item organisation');
-				if (item.event_id && !events.has(item.event_id)) errors.push('unknown content item event');
+				if (item.event_id && !events.has(item.event_id) && !issueEvents.has(item.event_id))
+					errors.push('unknown content item event');
 			}
 			for (const event of issue.life_events.life_events) {
 				if (event.principal_ids.some((id) => !people.has(id)))
 					errors.push('unknown life event person');
 				if (event.location_id && !places.has(event.location_id))
 					errors.push('unknown life event place');
-				if (events.get(event.id)?.type !== event.type)
+				if (events.has(event.id) && events.get(event.id)?.type !== event.type)
 					errors.push('life event must agree with shared event');
 			}
 		}

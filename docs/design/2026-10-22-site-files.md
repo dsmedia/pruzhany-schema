@@ -31,6 +31,8 @@ the exact `source_text` and one or more printed addresses. An address is the
 picture's storage name or URI, a box in that picture's native pixels, and the
 text read there. It does not depend on a content item's changing number.
 `content_item_id` on a mention is the current join derived from that address.
+The twins share the common attributed-English fields; neither translation nor
+supplied title inherits from the other.
 
 Old source text is retained after a rereading. `textBasisMatches` /
 `text_basis_matches` compares it without normalisation; consumers must withhold
@@ -46,6 +48,7 @@ content item when the region belongs to one; it is null for a section heading.
 `heading_blocks` on the section identifies those heading regions. No new page
 field is needed. `PrintedSection` avoids colliding with the old `Section`, which
 continues to mean a side-list group.
+Field names retain `block` because that is the site's existing word for a region.
 
 `SiteIssue` checks the four documents together: dates, unique identifiers,
 reciprocal section membership, region ownership, printed addresses, mention and
@@ -55,6 +58,7 @@ of the referenced block transcriptions joined by two newlines. The writer builds
 those transcriptions from the physical source's lines first. `block_breaks` are
 ordered Unicode code-point offsets. Section headings are excluded from the
 content items' text. No `category` or person copies are accepted in the new shapes.
+These integrity checks are the site's data rules and the minimum checks for its writer.
 
 `SiteArchive` is an in-memory validation value, not another persisted file. It
 joins issues to the shared record, checking persons, places, organisations and
@@ -62,6 +66,13 @@ events. `IssueLifeEvent` keeps today's names, dates, descriptions and principal
 ids; only its content references become `content_items`. Principals refer to
 shared persons. Mention roles remain the released roles, with one or more roles
 per occurrence. A signer's role belongs to the mention, not the event's principals.
+
+An issue life event needs no duplicate in the shared record. A content item's
+`event_id` may resolve to that issue's life event or to a shared event. `SharedEvent`
+remains for the reused production facts' `event_id`, required by
+`event_participation`, and for content references to those research events.
+The shared `events` list may be empty. If the same event is also described in an
+issue, its type must agree with the shared description.
 
 ## Keeping the hand-written research
 
@@ -118,11 +129,13 @@ type's qualification class, not an unconditional historical triple.
 
 Subtypes are local SKOS concepts typed `rico:DocumentaryFormType`. Subjects are
 local SKOS concepts because the pinned ontologies supply a subject predicate,
-not this newspaper's topic identifiers. Title types, printed addresses, text
+not controlled identifiers for what these content items are about. Title types, printed addresses, text
 bases, translation, authorship, mention occurrences, shared-file grouping,
 fact subjects/representations, standing, display permission and site copies have declared local
 terms with one-line reasons. `vocabulary/site-content.json` records these
-mappings; `profile.ttl` declares the concepts. Pinned ontology files are untouched.
+mappings; `site-content.profile.ttl` declares the proposed, unreleased concepts.
+The released `profile.ttl` is unchanged. Both profiles and all their mappings are
+checked against the pinned ontology files, which are untouched.
 
 `bin/verify contract` compares the twins and runs shared fictional fixtures,
 including invalid references and pending research. JSON Schema alone cannot
@@ -131,13 +144,18 @@ When serialising reused Pydantic pages, preserve omitted fields with
 `model_dump(mode='json', exclude_unset=True)`: the old Block's default null
 confidence differs from its Zod twin's optional number, and is unchanged here.
 
-The private approval inventory accounts for all 338 category values: 139 form,
-143 heading, 18 subject, 38 unresolved (10,492 / 2,641 / 940 / 629 content items).
+The private approval inventory accounts for all 338 category values: 140 carry a
+form, 144 a heading, 112 a subject and 38 an unresolved part
+(10,493 / 2,644 / 3,516 / 629 content items). These counts overlap: 95 category
+values, used by 2,579 content items, carry more than one route. Each value appears
+once, with every applicable route recorded separately.
 These are proposed routes for labels, not automatic assignments to every content
 item bearing them. Null, individual titles, event labels, unclear headings and
 structural labels needing a parent decision are retained in the unresolved list.
 
-A read-only preservation check of the 44 people's specified hand-written fields
-validated 102 facts and 113 relations in this shape. The original values were
+A retained private script checks the 44 people's specified hand-written fields;
+its run validated 102 facts and 113 relations in this shape. The original values were
 retained exactly, all reviews stayed pending, and no migration file was written.
+It reconstructs all 213 original field values and prints counts per person and
+in total; the command is in the private approval sheet.
 The committed contract fixtures remain entirely fictional.

@@ -170,6 +170,7 @@ class SiteArchive(Strict):
         organizations = {o.id for o in self.shared_record.organizations}
         events = {e.id: e for e in self.shared_record.events}
         for issue in self.issues:
+            issue_events = {e.id for e in issue.life_events.life_events}
             if any(m.person_id not in people for m in issue.mentions.mentions):
                 errors.append('unknown mention person')
             for item in issue.content_items.content_items:
@@ -177,14 +178,14 @@ class SiteArchive(Strict):
                     errors.append('unknown content item place')
                 if any(id not in organizations for id in item.organization_ids):
                     errors.append('unknown content item organisation')
-                if item.event_id and item.event_id not in events:
+                if item.event_id and item.event_id not in events and item.event_id not in issue_events:
                     errors.append('unknown content item event')
             for event in issue.life_events.life_events:
                 if any(id not in people for id in event.principal_ids):
                     errors.append('unknown life event person')
                 if event.location_id and event.location_id not in places:
                     errors.append('unknown life event place')
-                if event.id not in events or events[event.id].type != event.type:
+                if event.id in events and events[event.id].type != event.type:
                     errors.append('life event must agree with shared event')
         if errors:
             raise ValueError('; '.join(errors))

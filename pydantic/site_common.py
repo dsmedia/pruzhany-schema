@@ -31,14 +31,18 @@ class PrintedTitle(Strict):
         return self
 
 
-class SuppliedTitle(Strict):
+class _AttributedEnglish(Strict):
     text: Text
     language: Literal['en']
     based_on: TextBasis
     attribution: Authorship
 
 
-class Translation(SuppliedTitle):
+class SuppliedTitle(_AttributedEnglish):
+    """An attributed English name, distinct from a translation."""
+
+
+class Translation(_AttributedEnglish):
     """Translation is semantic work, distinct from a supplied title."""
 
 

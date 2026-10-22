@@ -52,6 +52,21 @@ class AlignmentTests(unittest.TestCase):
         (self.pilot / 'build.py').write_text('predicate = RICO + {"birth": "Typo"}.get(kind, "")')
         self.assertTrue(check(self.root))
 
+    def test_separate_vocabulary_profile(self):
+        folder = self.root / 'vocabulary'
+        folder.mkdir()
+        (folder / 'profile.ttl').write_text('pc:released a rdf:Property .')
+        (folder / 'proposed.json').write_text(json.dumps({'groups': [
+            {'id': 'custom', 'mapping': {'local': 'pc:custom', 'reason': 'Keeps review state.'}}
+        ]}))
+        profile = folder / 'proposed.profile.ttl'
+        profile.write_text('pc:custom a rdf:Property .')
+        self.assertEqual(check(self.root), [])
+        profile.write_text('pc:custom a rico:Typo .')
+        self.assertTrue(any('proposed.profile.ttl' in e and 'Typo' in e for e in check(self.root)))
+        profile.write_text('pc:different a rdf:Property .')
+        self.assertTrue(any('local mapping' in e for e in check(self.root)))
+
 
 if __name__ == '__main__':
     unittest.main()

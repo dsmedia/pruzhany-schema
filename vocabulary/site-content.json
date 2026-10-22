@@ -29,7 +29,11 @@
           "local": "pc:subtype_wedding_greeting",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "engagement_greeting",
@@ -41,7 +45,11 @@
           "local": "pc:subtype_engagement_greeting",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "birth_greeting",
@@ -53,7 +61,11 @@
           "local": "pc:subtype_birth_greeting",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "bar_mitzvah_greeting",
@@ -65,7 +77,11 @@
           "local": "pc:subtype_bar_mitzvah_greeting",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "new_year_greeting",
@@ -77,7 +93,11 @@
           "local": "pc:subtype_new_year_greeting",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "departure_greeting",
@@ -89,7 +109,11 @@
           "local": "pc:subtype_departure_greeting",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "greeting",
@@ -101,7 +125,11 @@
           "local": "pc:subtype_greeting",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "thanks",
@@ -113,7 +141,11 @@
           "local": "pc:subtype_thanks",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "meeting_notice",
@@ -125,7 +157,11 @@
           "local": "pc:subtype_meeting_notice",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "announcement",
@@ -173,7 +209,11 @@
           "local": "pc:subtype_condolence",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "death_notice"
+        "parent_type": "death_notice",
+        "owner_fixed_parent": {
+          "type": "death_notice",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "memorial_notice",
@@ -185,7 +225,11 @@
           "local": "pc:subtype_memorial_notice",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "death_notice"
+        "parent_type": "death_notice",
+        "owner_fixed_parent": {
+          "type": "death_notice",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "death_announcement",
@@ -281,7 +325,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_education",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -292,7 +336,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_culture",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -303,7 +347,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_health",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -314,7 +358,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_palestine",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -325,7 +369,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_jewish_world",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -336,7 +380,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_literature",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -347,7 +391,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_sport",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -358,7 +402,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_economy",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -369,7 +413,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_community_affairs",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -380,7 +424,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_zionism",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       },
       {
@@ -391,7 +435,7 @@
         "concept_class": "skos:Concept",
         "mapping": {
           "local": "pc:subject_international_affairs",
-          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+          "reason": "A subject identifies what a content item is about; EHRI and RiC-O provide subject relations but no controlled identifier for this value."
         }
       }
     ],
@@ -424,39 +468,52 @@
     {
       "id": "agent_name",
       "definition": "Names of persons, families and organisations use agent names.",
-      "mapping": { "rico": "AgentName" }
+      "mapping": {
+        "rico": "AgentName"
+      }
     },
     {
       "id": "place_name",
       "definition": "A shared place uses place names rather than agent names.",
-      "mapping": { "rico": "PlaceName" }
+      "mapping": {
+        "rico": "PlaceName"
+      }
     },
     {
       "id": "place_parent",
       "definition": "A place's parent is a containing place.",
-      "mapping": { "rico": "isOrWasPartOf" }
+      "mapping": {
+        "rico": "isOrWasPartOf"
+      }
     },
     {
       "id": "place_coordinates",
       "definition": "Coordinates of the place, latitude then longitude.",
-      "mapping": { "rico": "geographicalCoordinates" }
+      "mapping": {
+        "rico": "geographicalCoordinates"
+      }
     },
     {
       "id": "family_membership",
       "definition": "A sourced membership fact with family_id names the family as the group.",
-      "mapping": { "rico": "isOrWasMemberOf", "via": "MembershipRelation" }
+      "mapping": {
+        "rico": "isOrWasMemberOf",
+        "via": "MembershipRelation"
+      }
     },
     {
       "id": "life_event_principal",
       "definition": "A principal person participates in the life event.",
-      "mapping": { "rico": "hasOrHadParticipant" }
+      "mapping": {
+        "rico": "hasOrHadParticipant"
+      }
     },
     {
       "id": "display_permission",
       "definition": "The shown field retains who allowed a relative to be displayed and when.",
       "mapping": {
         "local": "pc:site_display_permission",
-        "reason": "Permission to display a relative under the site's living-person rule is neither historical evidence nor approval of a fact."
+        "reason": "Neither EHRI nor RiC-O expresses the site's permission to display a relative under its living-person rule."
       }
     },
     {
@@ -604,7 +661,7 @@
       "definition": "The picture key, pixel box and printed words locate evidence independently of changing content item numbers.",
       "mapping": {
         "local": "pc:site_printed_address",
-        "reason": "The picture key, pixel box and printed words locate evidence independently of changing content item numbers."
+        "reason": "Neither EHRI nor RiC-O defines an address combining a picture key, native pixel box and the words read there."
       }
     },
     {
@@ -612,15 +669,15 @@
       "definition": "Exact source text and printed addresses preserve the basis of a translation or supplied title, including after a rereading.",
       "mapping": {
         "local": "pc:site_text_basis",
-        "reason": "Exact source text and printed addresses preserve the basis of a translation or supplied title, including after a rereading."
+        "reason": "EHRI and RiC-O source relations do not preserve the exact text and printed addresses used for a particular reading."
       }
     },
     {
       "id": "translation",
-      "definition": "Attributed English text pinned to its source text is semantic work; the pinned ontologies have no exact translation-and-text-basis term.",
+      "definition": "An attributed English rendering of printed text pinned to the exact text it was made from.",
       "mapping": {
         "local": "pc:site_translation",
-        "reason": "Attributed English text pinned to its source text is semantic work; the pinned ontologies have no exact translation-and-text-basis term."
+        "reason": "Neither EHRI nor RiC-O has a term combining a translation with the exact source reading and its printed addresses."
       }
     },
     {
@@ -628,7 +685,7 @@
       "definition": "Records whether a person or a model wrote a supplied title or translation, reusing production attribution.",
       "mapping": {
         "local": "pc:site_authorship",
-        "reason": "Records whether a person or a model wrote a supplied title or translation, reusing production attribution."
+        "reason": "RiC-O AuthorshipRelation describes an author relation, not the site's attribution value with person-or-model kind, writer and day."
       }
     },
     {
@@ -636,7 +693,7 @@
       "definition": "A printed occurrence joins a shared person to a content item with roles; a mention alone does not assert that the person is its subject.",
       "mapping": {
         "local": "pc:site_mention",
-        "reason": "A printed occurrence joins a shared person to a content item with roles; a mention alone does not assert that the person is its subject."
+        "reason": "RiC-O subject relations do not express a named person's printed occurrence, address and role without asserting that the content item is about them."
       }
     },
     {
@@ -644,7 +701,7 @@
       "definition": "One storage document joins the production sourced facts, sources and identities across issues.",
       "mapping": {
         "local": "pc:site_shared_record",
-        "reason": "One storage document joins the production sourced facts, sources and identities across issues."
+        "reason": "EHRI RecordSet groups record resources; it does not describe this application's single storage file combining identities, sourced facts and relations."
       }
     },
     {
@@ -652,7 +709,7 @@
       "definition": "Identifies whose statement a production fact is, including a family or relation.",
       "mapping": {
         "local": "pc:site_fact_subject",
-        "reason": "Identifies whose statement a production fact is, including a family or relation."
+        "reason": "RiC-O relation endpoints do not specify the subject_id field attaching a production fact to a person, family or relation."
       }
     },
     {
@@ -660,7 +717,7 @@
       "definition": "Distinguishes structured facts, prose and image paths without approving their publication.",
       "mapping": {
         "local": "pc:site_fact_representation",
-        "reason": "Distinguishes structured facts, prose and image paths without approving their publication."
+        "reason": "Neither EHRI nor RiC-O defines this site's distinction between a structured fact, retained prose and an image path."
       }
     },
     {
@@ -668,7 +725,7 @@
       "definition": "Proposed is accepted plus pending review; accepted is accepted plus approved review; doubted is disputed; rejected is rejected. Attribution and review retain who said so.",
       "mapping": {
         "local": "pc:site_standing",
-        "reason": "Proposed is accepted plus pending review; accepted is accepted plus approved review; doubted is disputed; rejected is rejected. Attribution and review retain who said so."
+        "reason": "RiC-O relationState does not define this site's combinations of claim status and review or who set them."
       }
     },
     {
@@ -676,7 +733,7 @@
       "definition": "Full text, block breaks and block references are copies for the site, rebuilt from the physical source.",
       "mapping": {
         "local": "pc:site_site_copy",
-        "reason": "Full text, block breaks and block references are copies for the site, rebuilt from the physical source."
+        "reason": "Neither EHRI nor RiC-O defines the rebuilt full-text copies, Unicode offsets and block references used by this site."
       }
     },
     {
@@ -684,7 +741,7 @@
       "definition": "Groups the four issue documents for reference validation without copying shared persons into them.",
       "mapping": {
         "local": "pc:site_site_documents",
-        "reason": "Groups the four issue documents for reference validation without copying shared persons into them."
+        "reason": "EHRI RecordSet describes a collection, not this application's four-document value for validating joins."
       }
     }
   ]

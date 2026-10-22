@@ -3608,6 +3608,62 @@
 					"value": ["0"]
 				}
 			]
+		},
+		{
+			"name": "issue life event and content item need no shared event copy",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "events"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "shared research event needs no issue life event copy",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["issues", 0, "life_events", "life_events"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "shared event can support a production participation fact",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["facts", 0, "type"],
+					"value": "event_participation"
+				},
+				{
+					"path": ["facts", 0, "event_id"],
+					"value": "fictional-event"
+				}
+			]
+		},
+		{
+			"name": "participation fact still needs its shared event",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "type"],
+					"value": "event_participation"
+				},
+				{
+					"path": ["facts", 0, "event_id"],
+					"value": "fictional-event"
+				},
+				{
+					"path": ["events"],
+					"value": []
+				}
+			]
 		}
 	]
 }

@@ -22,7 +22,7 @@ def check(root):
         iri = term if term.startswith(("http:", "https:")) else {"rico": RICO, "ehri": EHRI}[prefix] + term.removeprefix(prefix + ":")
         if iri not in known[prefix]:
             errors.append(f"{path.relative_to(root)}: unapproved {prefix} term {term}")
-    paths = set(root.glob("vocabulary/profile.ttl")) | set(root.glob("pilots/**/profile.ttl")) | set(root.glob("pilots/**/build.py")) | set(root.glob("pilots/**/review.jsonld"))
+    paths = set(root.glob("vocabulary/**/*.ttl")) | set(root.glob("pilots/**/profile.ttl")) | set(root.glob("pilots/**/build.py")) | set(root.glob("pilots/**/review.jsonld"))
     for path in sorted(paths):
         text = path.read_text(encoding="utf-8")
         for prefix, namespace in (("rico", RICO), ("ehri", EHRI)):
@@ -48,7 +48,9 @@ def check(root):
                             validate(prefix, value.value, path)
     vocabularies = set(root.glob("pilots/**/vocabulary.json")) | set(root.glob("vocabulary/*.json"))
     for path in sorted(vocabularies):
-        profile = path.parent / "profile.ttl"
+        profile = path.with_suffix(".profile.ttl")
+        if not profile.exists():
+            profile = path.parent / "profile.ttl"
         declarations = profile.read_text(encoding="utf-8") if profile.exists() else ""
         def walk(value, location):
             if isinstance(value, dict):
@@ -74,7 +76,7 @@ def check(root):
                     if not mapped:
                         local, reason = value.get("local"), value.get("reason")
                         if not isinstance(local, str) or not re.search(re.escape(local) + r'\s+a\s+', declarations):
-                            errors.append(f"{path.relative_to(root)}:{location}: local mapping must name a term declared in profile.ttl")
+                            errors.append(f"{path.relative_to(root)}:{location}: local mapping must name a term declared in {profile.name}")
                         if not isinstance(reason, str) or not reason.strip() or len(reason.splitlines()) != 1:
                             errors.append(f"{path.relative_to(root)}:{location}: local mapping requires a one-line reason")
                 for key, child in value.items():
