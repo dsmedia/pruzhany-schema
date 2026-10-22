@@ -39,7 +39,7 @@ per-issue mentions and life events, plus checks of the four documents and their 
 references. Pages are unchanged. Each module has a Pydantic twin.
 
 `vocabulary/site-content.json` is **proposed, unreleased 0.1.0**, separate from released
-sourced-entities 1.0.0. See the [contract and preservation notes](docs/design/2026-10-22-site-files.md).
+sourced-entities 1.1.0. See the [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.
 
 ## Issue 14 pilot

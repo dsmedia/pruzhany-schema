@@ -3,7 +3,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 <https://pruzhany.org/ns/sourced-entities> a owl:Ontology ;
-  owl:versionInfo "1.0.0 released" ;
+  owl:versionInfo "1.1.0 released" ;
   rdfs:comment "Production application profile; local categories are not ontology equivalence assertions. Namespace is an identifier, not a claim of hosted content." .
 
 pc:fact_types_education a owl:NamedIndividual ; rdfs:label "education" ; rdfs:comment "TeachingRelation identifies teaching rather than establishing school attendance; retain attendance without asserting a teacher relationship." .
@@ -49,6 +49,7 @@ pc:source_kinds_the_paper a owl:NamedIndividual ; rdfs:label "the_paper" ; rdfs:
 pc:confidence_confirmed a owl:NamedIndividual ; rdfs:label "confirmed" ; rdfs:comment "Application-specific confidence category; no exact pinned ontology value is established." .
 pc:confidence_probable a owl:NamedIndividual ; rdfs:label "probable" ; rdfs:comment "Application-specific confidence category; no exact pinned ontology value is established." .
 pc:confidence_possible a owl:NamedIndividual ; rdfs:label "possible" ; rdfs:comment "Application-specific confidence category; no exact pinned ontology value is established." .
+pc:claim_status_proposed a owl:NamedIndividual ; rdfs:label "proposed" ; rdfs:comment "Application-specific claim status category; no exact pinned ontology value is established." .
 pc:claim_status_accepted a owl:NamedIndividual ; rdfs:label "accepted" ; rdfs:comment "Application-specific claim status category; no exact pinned ontology value is established." .
 pc:claim_status_disputed a owl:NamedIndividual ; rdfs:label "disputed" ; rdfs:comment "Application-specific claim status category; no exact pinned ontology value is established." .
 pc:claim_status_rejected a owl:NamedIndividual ; rdfs:label "rejected" ; rdfs:comment "Application-specific claim status category; no exact pinned ontology value is established." .

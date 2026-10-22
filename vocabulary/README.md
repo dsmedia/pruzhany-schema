@@ -34,8 +34,11 @@ heading and its address; it cannot create a section by itself.
 
 `sourced-entities.json` is the released production application vocabulary, version
 1.0.0, dated 2026-10-20. The owner approved the recommended types in advance on
-that date, as recorded on #16. `approved_by` records this decision. The generator
-writes `released/1.0.0.json`; validation requires the current release snapshot to
+that date, as recorded on #16. `approved_by` records this decision. Version 1.1.0,
+released 2026-10-22 at the owner's word, adds one claim status, `proposed`: an
+assertion put forward and not yet accepted, disputed or rejected, never published
+(the site shows only `accepted` facts, and folds some `disputed`). The generator
+writes `released/<version>.json`; validation requires the current release snapshot to
 equal the current vocabulary and preserves every identifier from every snapshot.
 Future changes belong in a new version; historical release snapshots remain
 unchanged. A future `status: proposed` version has not yet been released and has

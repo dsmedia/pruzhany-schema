@@ -75,7 +75,7 @@ class SharedEvent(Strict):
 
 class SharedRecord(Strict):
     version: Literal['1']
-    vocabulary_version: Literal['1.0.0']
+    vocabulary_version: Literal['1.1.0']
     persons: list[SharedPerson]
     families: list[SharedFamily]
     places: list[SharedPlace]

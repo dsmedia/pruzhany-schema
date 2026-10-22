@@ -3,7 +3,7 @@
 	"example": {
 		"shared_record": {
 			"version": "1",
-			"vocabulary_version": "1.0.0",
+			"vocabulary_version": "1.1.0",
 			"persons": [
 				{
 					"id": "fictional-person",
@@ -1745,7 +1745,7 @@
 			"changes": [
 				{
 					"path": ["status"],
-					"value": "proposed"
+					"value": "invented"
 				}
 			]
 		},
@@ -1789,7 +1789,7 @@
 			"changes": [
 				{
 					"path": ["status"],
-					"value": "proposed"
+					"value": "invented"
 				}
 			]
 		},

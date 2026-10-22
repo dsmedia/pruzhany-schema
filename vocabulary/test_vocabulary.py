@@ -31,6 +31,10 @@ class VocabularyTests(unittest.TestCase):
         shutil.copytree(HERE.parent / 'standards', self.root / 'standards', ignore=shutil.ignore_patterns('__pycache__'))
         self.path = self.root / 'vocabulary/sourced-entities.json'
         self.data = json.loads(self.path.read_text(encoding='utf-8'))
+        # The released version these tests start from, and the next one a proposal takes.
+        self.released = self.data['version']
+        major, minor, _ = (int(part) for part in self.released.split('.'))
+        self.following = f'{major}.{minor + 1}.0'
 
     def check(self):
         self.path.write_text(json.dumps(self.data), encoding='utf-8')
@@ -61,11 +65,11 @@ class VocabularyTests(unittest.TestCase):
         self.assertTrue(any('replacement' in e for e in self.check()))
 
     def next_proposal(self):
-        self.data.update(version='1.1.0', status='proposed', released_on=None)
+        self.data.update(version=self.following, status='proposed', released_on=None)
 
     def test_valid_deprecation(self):
         self.next_proposal()
-        self.data['groups']['fact_types'][0].update(deprecated_in='1.1.0', replaced_by='other')
+        self.data['groups']['fact_types'][0].update(deprecated_in=self.following, replaced_by='other')
         self.assertEqual(self.check(), [])
 
     def test_inverse_symmetry(self):
@@ -75,7 +79,7 @@ class VocabularyTests(unittest.TestCase):
     def snapshot(self):
         folder = self.root / 'vocabulary/released'
         folder.mkdir(exist_ok=True)
-        (folder / '1.0.0.json').write_text(json.dumps(self.data), encoding='utf-8')
+        (folder / f'{self.released}.json').write_text(json.dumps(self.data), encoding='utf-8')
 
     def test_released_removal_and_rename(self):
         self.snapshot()
@@ -91,14 +95,14 @@ class VocabularyTests(unittest.TestCase):
         self.snapshot()
         self.next_proposal()
         new = copy.deepcopy(self.data['groups']['fact_types'][0])
-        new.update(id='new_birth', added_in='1.1.0')
+        new.update(id='new_birth', added_in=self.following)
         self.data['groups']['fact_types'].append(new)
-        self.data['groups']['fact_types'][0].update(deprecated_in='1.1.0', replaced_by='new_birth')
+        self.data['groups']['fact_types'][0].update(deprecated_in=self.following, replaced_by='new_birth')
         self.assertEqual(self.check(), [])
 
     def test_generator_snapshot_lifecycle(self):
         outputs = generator.generated(self.root)
-        snapshot = self.root / 'vocabulary/released/1.0.0.json'
+        snapshot = self.root / f'vocabulary/released/{self.released}.json'
         self.assertEqual(json.loads(outputs[snapshot]), self.data)
         self.next_proposal()
         self.check()
@@ -110,7 +114,7 @@ class VocabularyTests(unittest.TestCase):
         self.assertTrue(any('snapshot must equal' in e for e in self.check()))
 
     def test_current_snapshot_required(self):
-        (self.root / 'vocabulary/released/1.0.0.json').unlink()
+        (self.root / f'vocabulary/released/{self.released}.json').unlink()
         self.assertTrue(any('snapshot is missing' in e for e in self.check()))
 
     def test_kinship_crosswalk_direction_and_name(self):
