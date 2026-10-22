@@ -272,7 +272,8 @@
 									"bbox": [10, 20, 100, 30],
 									"text": "Fictional Person sends thanks."
 								}
-							]
+							],
+							"address_grain": "words"
 						}
 					]
 				},
@@ -1462,7 +1463,8 @@
 									"bbox": [10, 20, 100, 30],
 									"text": "Fictional Person sends thanks."
 								}
-							]
+							],
+							"address_grain": "words"
 						},
 						{
 							"id": "fictional-mention",
@@ -1476,7 +1478,8 @@
 									"bbox": [10, 20, 100, 30],
 									"text": "Fictional Person sends thanks."
 								}
-							]
+							],
+							"address_grain": "words"
 						}
 					]
 				}
@@ -2272,7 +2275,8 @@
 												"bbox": [10, 20, 100, 30],
 												"text": "Fictional Person sends thanks."
 											}
-										]
+										],
+										"address_grain": "words"
 									}
 								]
 							},
@@ -2454,7 +2458,8 @@
 												"bbox": [10, 20, 100, 30],
 												"text": "Fictional Person sends thanks."
 											}
-										]
+										],
+										"address_grain": "words"
 									}
 								]
 							},
@@ -4857,6 +4862,1045 @@
 				{
 					"path": ["content_items", "content_items", 0, "block_breaks"],
 					"value": [0, 34]
+				}
+			]
+		},
+		{
+			"name": "region mention records an explicitly unlocated printed name",
+			"model": "IssueMention",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["printed_name"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "word mention cannot have a null printed name",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["printed_name"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "region mention cannot claim located words",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["address_grain"],
+					"value": "regions"
+				}
+			]
+		},
+		{
+			"name": "mention requires an explicit address grain",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["address_grain"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "mention rejects an unknown address grain",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["address_grain"],
+					"value": "item"
+				}
+			]
+		},
+		{
+			"name": "word mention cannot omit its printed name",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["printed_name"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "region mention must use null rather than omit its printed name",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["printed_name"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "word mention cannot use a blank printed name",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["printed_name"],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "region mention still needs a printed address",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["printed_name"],
+					"value": null
+				},
+				{
+					"path": ["addresses"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "located word mention may address a crop and transcription substring",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "bbox"],
+					"value": [10, 20, 60, 10]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "text"],
+					"value": "Fictional Person"
+				}
+			]
+		},
+		{
+			"name": "region mention addresses its complete printed region",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "region mention rejects a crop even with the full transcription",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "bbox"],
+					"value": [10, 20, 60, 10]
+				}
+			]
+		},
+		{
+			"name": "region mention rejects a substring even with the full box",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "text"],
+					"value": "Fictional Person"
+				}
+			]
+		},
+		{
+			"name": "region mention rejects the same box and text on another image",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "image_uri"],
+					"value": "another-fictional-page.png"
+				}
+			]
+		},
+		{
+			"name": "region mention cannot use the section heading",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fictional Person sends thanks."
+						},
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 0, 100, 10],
+							"text": "Fictional notices"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "every region mention address must be a whole region",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fictional Person sends thanks."
+						},
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 60, 10],
+							"text": "Fictional Person sends thanks."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "region mention preserves a familiar-name link to the shared person",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["issues", 0, "mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["issues", 0, "mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["issues", 0, "pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fifi sends thanks."
+				},
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "full_text"],
+					"value": "Fifi sends thanks."
+				},
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "printed_title"],
+					"value": null
+				},
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "supplied_title", "based_on"],
+					"value": {
+						"source_text": "Fifi sends thanks.",
+						"addresses": [
+							{
+								"image_uri": "fictional-page.png",
+								"bbox": [10, 20, 100, 30],
+								"text": "Fifi sends thanks."
+							}
+						]
+					}
+				},
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "translation", "based_on"],
+					"value": {
+						"source_text": "Fifi sends thanks.",
+						"addresses": [
+							{
+								"image_uri": "fictional-page.png",
+								"bbox": [10, 20, 100, 30],
+								"text": "Fifi sends thanks."
+							}
+						]
+					}
+				},
+				{
+					"path": ["issues", 0, "mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fifi sends thanks."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "region mention rejects a whole region owned by another item",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-other-block",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another fictional notice.",
+							"unit_id": "fictional-other-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items"],
+					"value": [
+						{
+							"id": "fictional-item",
+							"type": "ad",
+							"subtype": "thanks",
+							"printed_title": {
+								"text": "Fictional Person sends thanks.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [10, 20, 100, 30],
+										"text": "Fictional Person sends thanks."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Thanks from Fictional Person",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"subject_ids": ["community_affairs"],
+							"section_id": "fictional-section",
+							"full_text": "Fictional Person sends thanks.",
+							"translation": {
+								"text": "Fictional translated thanks.",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "fictional-page",
+									"block_ids": ["fictional-block"]
+								}
+							],
+							"location_ids": ["fictional-place"],
+							"organization_ids": ["fictional-organization"],
+							"cross_references": [],
+							"event_id": "fictional-event"
+						},
+						{
+							"id": "fictional-other-item",
+							"type": "ad",
+							"subtype": "thanks",
+							"printed_title": null,
+							"supplied_title": {
+								"text": "Another fictional notice",
+								"language": "en",
+								"based_on": {
+									"source_text": "Another fictional notice.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 60, 100, 30],
+											"text": "Another fictional notice."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"subject_ids": ["community_affairs"],
+							"section_id": null,
+							"full_text": "Another fictional notice.",
+							"translation": null,
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "fictional-page",
+									"block_ids": ["fictional-other-block"]
+								}
+							],
+							"location_ids": ["fictional-place"],
+							"organization_ids": ["fictional-organization"],
+							"cross_references": [],
+							"event_id": "fictional-event"
+						}
+					]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 60, 100, 30],
+							"text": "Another fictional notice."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "region mention accepts that region for its actual item",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-other-block",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another fictional notice.",
+							"unit_id": "fictional-other-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items"],
+					"value": [
+						{
+							"id": "fictional-item",
+							"type": "ad",
+							"subtype": "thanks",
+							"printed_title": {
+								"text": "Fictional Person sends thanks.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [10, 20, 100, 30],
+										"text": "Fictional Person sends thanks."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Thanks from Fictional Person",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"subject_ids": ["community_affairs"],
+							"section_id": "fictional-section",
+							"full_text": "Fictional Person sends thanks.",
+							"translation": {
+								"text": "Fictional translated thanks.",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "fictional-page",
+									"block_ids": ["fictional-block"]
+								}
+							],
+							"location_ids": ["fictional-place"],
+							"organization_ids": ["fictional-organization"],
+							"cross_references": [],
+							"event_id": "fictional-event"
+						},
+						{
+							"id": "fictional-other-item",
+							"type": "ad",
+							"subtype": "thanks",
+							"printed_title": null,
+							"supplied_title": {
+								"text": "Another fictional notice",
+								"language": "en",
+								"based_on": {
+									"source_text": "Another fictional notice.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 60, 100, 30],
+											"text": "Another fictional notice."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"subject_ids": ["community_affairs"],
+							"section_id": null,
+							"full_text": "Another fictional notice.",
+							"translation": null,
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "fictional-page",
+									"block_ids": ["fictional-other-block"]
+								}
+							],
+							"location_ids": ["fictional-place"],
+							"organization_ids": ["fictional-organization"],
+							"cross_references": [],
+							"event_id": "fictional-event"
+						}
+					]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 60, 100, 30],
+							"text": "Another fictional notice."
+						}
+					]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "content_item_id"],
+					"value": "fictional-other-item"
+				}
+			]
+		},
+		{
+			"name": "region mention may address whole regions on multiple pages",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["pages", "pages"],
+					"value": [
+						{
+							"id": "fictional-page",
+							"issue_date": "1938-01-01",
+							"page_number": 1,
+							"image_uri": "fictional-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-heading",
+									"bbox": [10, 0, 100, 10],
+									"transcription": "Fictional notices",
+									"unit_id": null
+								},
+								{
+									"id": "fictional-block",
+									"bbox": [10, 20, 100, 30],
+									"transcription": "Fictional Person sends thanks.",
+									"unit_id": "fictional-item"
+								}
+							]
+						},
+						{
+							"id": "fictional-next-page",
+							"issue_date": "1938-01-01",
+							"page_number": 2,
+							"image_uri": "fictional-next-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-continuation",
+									"bbox": [10, 60, 100, 30],
+									"transcription": "A second\nprinted region.",
+									"unit_id": "fictional-item"
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks"],
+					"value": [
+						{
+							"page_id": "fictional-page",
+							"block_ids": ["fictional-block"]
+						},
+						{
+							"page_id": "fictional-next-page",
+							"block_ids": ["fictional-continuation"]
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\n\nA second\nprinted region."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 32]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fictional Person sends thanks."
+						},
+						{
+							"image_uri": "fictional-next-page.png",
+							"bbox": [10, 60, 100, 30],
+							"text": "A second\nprinted region."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "region mention may identify one whole region of a multi-region item",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["pages", "pages"],
+					"value": [
+						{
+							"id": "fictional-page",
+							"issue_date": "1938-01-01",
+							"page_number": 1,
+							"image_uri": "fictional-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-heading",
+									"bbox": [10, 0, 100, 10],
+									"transcription": "Fictional notices",
+									"unit_id": null
+								},
+								{
+									"id": "fictional-block",
+									"bbox": [10, 20, 100, 30],
+									"transcription": "Fictional Person sends thanks.",
+									"unit_id": "fictional-item"
+								}
+							]
+						},
+						{
+							"id": "fictional-next-page",
+							"issue_date": "1938-01-01",
+							"page_number": 2,
+							"image_uri": "fictional-next-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-continuation",
+									"bbox": [10, 60, 100, 30],
+									"transcription": "A second\nprinted region.",
+									"unit_id": "fictional-item"
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks"],
+					"value": [
+						{
+							"page_id": "fictional-page",
+							"block_ids": ["fictional-block"]
+						},
+						{
+							"page_id": "fictional-next-page",
+							"block_ids": ["fictional-continuation"]
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\n\nA second\nprinted region."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 32]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fictional Person sends thanks."
+						},
+						{
+							"image_uri": "fictional-next-page.png",
+							"bbox": [10, 60, 100, 30],
+							"text": "A second\nprinted region."
+						}
+					]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-next-page.png",
+							"bbox": [10, 60, 100, 30],
+							"text": "A second\nprinted region."
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "region mention cannot normalise the transcription line breaks",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["pages", "pages"],
+					"value": [
+						{
+							"id": "fictional-page",
+							"issue_date": "1938-01-01",
+							"page_number": 1,
+							"image_uri": "fictional-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-heading",
+									"bbox": [10, 0, 100, 10],
+									"transcription": "Fictional notices",
+									"unit_id": null
+								},
+								{
+									"id": "fictional-block",
+									"bbox": [10, 20, 100, 30],
+									"transcription": "Fictional Person sends thanks.",
+									"unit_id": "fictional-item"
+								}
+							]
+						},
+						{
+							"id": "fictional-next-page",
+							"issue_date": "1938-01-01",
+							"page_number": 2,
+							"image_uri": "fictional-next-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-continuation",
+									"bbox": [10, 60, 100, 30],
+									"transcription": "A second\nprinted region.",
+									"unit_id": "fictional-item"
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks"],
+					"value": [
+						{
+							"page_id": "fictional-page",
+							"block_ids": ["fictional-block"]
+						},
+						{
+							"page_id": "fictional-next-page",
+							"block_ids": ["fictional-continuation"]
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\n\nA second\nprinted region."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 32]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fictional Person sends thanks."
+						},
+						{
+							"image_uri": "fictional-next-page.png",
+							"bbox": [10, 60, 100, 30],
+							"text": "A second\nprinted region."
+						}
+					]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 1, "text"],
+					"value": "A second printed region."
+				}
+			]
+		},
+		{
+			"name": "region mention must pair each box with its own transcription",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "address_grain"],
+					"value": "regions"
+				},
+				{
+					"path": ["mentions", "mentions", 0, "printed_name"],
+					"value": null
+				},
+				{
+					"path": ["pages", "pages"],
+					"value": [
+						{
+							"id": "fictional-page",
+							"issue_date": "1938-01-01",
+							"page_number": 1,
+							"image_uri": "fictional-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-heading",
+									"bbox": [10, 0, 100, 10],
+									"transcription": "Fictional notices",
+									"unit_id": null
+								},
+								{
+									"id": "fictional-block",
+									"bbox": [10, 20, 100, 30],
+									"transcription": "Fictional Person sends thanks.",
+									"unit_id": "fictional-item"
+								}
+							]
+						},
+						{
+							"id": "fictional-next-page",
+							"issue_date": "1938-01-01",
+							"page_number": 2,
+							"image_uri": "fictional-next-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-continuation",
+									"bbox": [10, 60, 100, 30],
+									"transcription": "A second\nprinted region.",
+									"unit_id": "fictional-item"
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks"],
+					"value": [
+						{
+							"page_id": "fictional-page",
+							"block_ids": ["fictional-block"]
+						},
+						{
+							"page_id": "fictional-next-page",
+							"block_ids": ["fictional-continuation"]
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\n\nA second\nprinted region."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 32]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses"],
+					"value": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fictional Person sends thanks."
+						},
+						{
+							"image_uri": "fictional-next-page.png",
+							"bbox": [10, 60, 100, 30],
+							"text": "A second\nprinted region."
+						}
+					]
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "text"],
+					"value": "A second\nprinted region."
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 1, "text"],
+					"value": "Fictional Person sends thanks."
 				}
 			]
 		}

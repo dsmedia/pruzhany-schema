@@ -38,6 +38,28 @@ text read there. It does not depend on a content item's changing number.
 The twins share the common attributed-English fields; neither translation nor
 supplied title inherits from the other.
 
+`IssueMention` requires an explicit `address_grain: words | regions` and a
+`printed_name` field. With `words`, the name is nonblank and must occur exactly
+in the address texts joined by newlines, as before; each address is within one
+of its content item's regions and its text occurs in that region's transcription.
+With `regions`, `printed_name` must be null: this person is named somewhere in
+the addressed regions, but the printed words have not been located. Null is
+required rather than omission so a producer must deliberately record that
+limitation; an accidentally missing name does not weaken validation. The grain
+is explicit so consumers can distinguish these links without inferring precision
+from text or boxes. The proposed site shape's writers must now supply it even
+for located names; the released `Mention` shape is unchanged.
+
+For a region mention, `SiteIssue` requires every address to equal one of the
+content item's own regions: the same image URI, all four box coordinates and
+the complete, unnormalised transcription. A crop, substring, section heading or
+another item's region fails. One or more whole regions may be addressed; these
+need not exhaust a multi-region item. A writer that knows only the old item link
+uses all of that item's regions. `IssueMention` alone can check the grain/name
+pair; validating it through `SiteIssue` is required to check region ownership
+and equality across the files. The addresses remain the evidence and
+`content_item_id` remains their derived join, never the sole anchor.
+
 Old source text is retained after a rereading. `textBasisMatches` /
 `text_basis_matches` compares it without normalisation; consumers must withhold
 or mark a translation or supplied title whose basis no longer matches. Finding
@@ -160,6 +182,13 @@ terms with one-line reasons. `vocabulary/site-content.json` records these
 mappings; `site-content.profile.ttl` declares the proposed, unreleased concepts.
 The released `profile.ttl` is unchanged. Both profiles and all their mappings are
 checked against the pinned ontology files, which are untouched.
+
+Mention address grain maps to the declared local property
+`pc:site_mention_address_grain`, with literal values `words` and `regions`.
+EHRI 0.2.0 has no term for this distinction (its `Region` is a geographic place),
+and its RiC-O version, 1.1, has no term distinguishing located name words from
+whole printed regions. The mapping therefore stays in the proposed site profile,
+beside the existing local mention and printed-address terms.
 
 `bin/verify contract` compares the twins and runs shared fictional fixtures,
 including invalid references and pending research. JSON Schema alone cannot

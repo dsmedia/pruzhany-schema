@@ -730,10 +730,18 @@
     },
     {
       "id": "mention",
-      "definition": "A printed occurrence joins a shared person to a content item with roles; a mention alone does not assert that the person is its subject.",
+      "definition": "A mention joins a shared person to a content item with roles, pinned to located words or whole printed regions when the words are unlocated; a mention alone does not assert that the person is its subject.",
       "mapping": {
         "local": "pc:site_mention",
         "reason": "RiC-O subject relations do not express a named person's printed occurrence, address and role without asserting that the content item is about them."
+      }
+    },
+    {
+      "id": "mention_address_grain",
+      "definition": "IssueMention.address_grain distinguishes words with a located printed name from regions with a null printed name and exact whole-region addresses.",
+      "mapping": {
+        "local": "pc:site_mention_address_grain",
+        "reason": "Neither EHRI 0.2.0 nor its RiC-O 1.1 version defines whether a mention locates name words or only whole printed regions."
       }
     },
     {
