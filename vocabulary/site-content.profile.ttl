@@ -48,6 +48,7 @@ pc:site_text_basis a owl:NamedIndividual ; rdfs:comment "EHRI and RiC-O source r
 pc:site_translation a owl:NamedIndividual ; rdfs:comment "Neither EHRI nor RiC-O has a term combining a translation with the exact source reading and its printed addresses." .
 pc:site_authorship a owl:NamedIndividual ; rdfs:comment "RiC-O AuthorshipRelation describes an author relation, not the site's attribution value with person-or-model kind, writer and day." .
 pc:site_mention a owl:NamedIndividual ; rdfs:comment "RiC-O subject relations do not express a named person's printed occurrence, address and role without asserting that the content item is about them." .
+pc:site_mention_address_grain a owl:DatatypeProperty ; rdfs:label "Mention address grain"@en ; rdfs:range [ a rdfs:Datatype ; owl:oneOf ( "words" "regions" ) ] ; rdfs:comment "Neither EHRI 0.2.0 nor its RiC-O 1.1 version defines whether a mention locates name words or only whole printed regions." .
 pc:site_shared_record a owl:NamedIndividual ; rdfs:comment "EHRI RecordSet groups record resources; it does not describe this application's single storage file combining identities, sourced facts and relations." .
 pc:site_fact_subject a owl:NamedIndividual ; rdfs:comment "RiC-O relation endpoints do not specify the subject_id field attaching a production fact to a person, family or relation." .
 pc:site_fact_representation a owl:NamedIndividual ; rdfs:comment "Neither EHRI nor RiC-O defines this site's distinction between a structured fact, retained prose and an image path." .

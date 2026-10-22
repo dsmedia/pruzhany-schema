@@ -14,17 +14,25 @@ import {
 	type ContentItemBlockRef,
 } from './site-common.schema';
 
-// Mention: an addressed printed name, with a derived content item reference.
+// Mention: located words or whole regions, with a derived content item reference.
 export const IssueMentionSchema = MentionSchema.omit({ unit_id: true, role: true })
 	.extend({
 		content_item_id: siteText,
+		address_grain: z.enum(['words', 'regions']),
+		printed_name: MentionSchema.shape.printed_name.nullable(),
 		roles: z.array(MentionRolesSchema).min(1),
 		addresses: z.array(PrintedAddressSchema).min(1),
 	})
 	.superRefine((v, ctx) => {
 		for (const message of uniqueIds(v.roles, 'mention role'))
 			ctx.addIssue({ code: 'custom', message });
+		if ((v.address_grain === 'regions') !== (v.printed_name === null))
+			ctx.addIssue({
+				code: 'custom',
+				message: 'printed name must be null exactly when address grain is regions',
+			});
 		if (
+			v.printed_name !== null &&
 			!v.addresses
 				.map((a) => a.text)
 				.join('\n')
@@ -129,23 +137,31 @@ function siteIssueErrors(v: SiteIssue): string[] {
 	const addressErrors = (
 		addresses: PrintedAddress[],
 		refs: ContentItemBlockRef[],
-		checkText: boolean
+		match: 'bounds' | 'text' | 'whole-region'
 	) => {
 		for (const a of addresses) {
 			const found = refs.some((ref) => {
 				const page = pages.get(ref.page_id);
 				if (!page || page.image_uri !== a.image_uri) return false;
-				return page.blocks.some(
-					(b) =>
-						ref.block_ids.includes(b.id) &&
+				return page.blocks.some((b) => {
+					if (!ref.block_ids.includes(b.id)) return false;
+					if (match === 'whole-region')
+						return a.bbox.every((n, i) => n === b.bbox[i]) && a.text === b.transcription;
+					return (
 						a.bbox[0] >= b.bbox[0] &&
 						a.bbox[1] >= b.bbox[1] &&
 						a.bbox[0] + a.bbox[2] <= b.bbox[0] + b.bbox[2] &&
 						a.bbox[1] + a.bbox[3] <= b.bbox[1] + b.bbox[3] &&
-						(!checkText || b.transcription.includes(a.text))
-				);
+						(match !== 'text' || b.transcription.includes(a.text))
+					);
+				});
 			});
-			if (!found) errors.push('printed address is outside its content item or heading');
+			if (!found)
+				errors.push(
+					match === 'whole-region'
+						? 'region mention address must equal a whole region of its content item'
+						: 'printed address is outside its content item or heading'
+				);
 		}
 	};
 	for (const item of v.content_items.content_items) {
@@ -154,16 +170,16 @@ function siteIssueErrors(v: SiteIssue): string[] {
 			errors.push(
 				`${item.id}: full_text and block_breaks must follow the regions' line breaks and broken-word joins`
 			);
-		if (item.printed_title) addressErrors(item.printed_title.addresses, item.page_blocks, true);
-		addressErrors(item.supplied_title.based_on.addresses, item.page_blocks, false);
+		if (item.printed_title) addressErrors(item.printed_title.addresses, item.page_blocks, 'text');
+		addressErrors(item.supplied_title.based_on.addresses, item.page_blocks, 'bounds');
 		if (item.translation)
-			addressErrors(item.translation.based_on.addresses, item.page_blocks, false);
+			addressErrors(item.translation.based_on.addresses, item.page_blocks, 'bounds');
 	}
 	for (const section of v.content_items.sections) {
 		own(section.heading_blocks, `section:${section.id}`, null);
-		addressErrors(section.printed_title.addresses, section.heading_blocks, true);
+		addressErrors(section.printed_title.addresses, section.heading_blocks, 'text');
 		if (section.supplied_title)
-			addressErrors(section.supplied_title.based_on.addresses, section.heading_blocks, false);
+			addressErrors(section.supplied_title.based_on.addresses, section.heading_blocks, 'bounds');
 	}
 	for (const page of v.pages.pages) {
 		errors.push(
@@ -178,7 +194,12 @@ function siteIssueErrors(v: SiteIssue): string[] {
 	for (const mention of v.mentions.mentions) {
 		const item = items.get(mention.content_item_id);
 		if (!item) errors.push('unknown mention content item');
-		else addressErrors(mention.addresses, item.page_blocks, true);
+		else
+			addressErrors(
+				mention.addresses,
+				item.page_blocks,
+				mention.address_grain === 'regions' ? 'whole-region' : 'text'
+			);
 	}
 	for (const event of v.life_events.life_events)
 		if (event.content_items.some((r) => !items.has(r.content_item_id)))

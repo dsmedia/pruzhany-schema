@@ -1,4 +1,5 @@
 """Per-issue site documents and their joins to the shared record."""
+from typing import Literal
 from pydantic import Field, model_validator
 from .sourced_entities import Strict, Text, Day
 from .sourced_entities_vocabulary import MentionRoles, LifeEventTypes, ContentUnitRoles
@@ -9,11 +10,12 @@ from .shared_record import SharedRecord
 
 
 class IssueMention(Strict):
-    """An addressed printed name; content_item_id is its current derived join."""
+    """Located words or whole regions; content_item_id is the current derived join."""
     id: Text
     person_id: Text
     content_item_id: Text
-    printed_name: Text
+    address_grain: Literal['words', 'regions']
+    printed_name: Text | None
     roles: list[MentionRoles] = Field(min_length=1)
     addresses: list[PrintedAddress] = Field(min_length=1)
     title: str | None = None
@@ -23,7 +25,10 @@ class IssueMention(Strict):
     @model_validator(mode='after')
     def mention_contract(self):
         errors = unique_ids(self.roles, 'mention role')
-        if self.printed_name not in '\n'.join(a.text for a in self.addresses):
+        if (self.address_grain == 'regions') != (self.printed_name is None):
+            errors.append('printed name must be null exactly when address grain is regions')
+        if (self.printed_name is not None and
+                self.printed_name not in '\n'.join(a.text for a in self.addresses)):
             errors.append('printed name must occur at the mention address')
         if errors:
             raise ValueError('; '.join(errors))
@@ -112,7 +117,7 @@ def site_issue_errors(value):
                 texts.append(block.transcription)
         return texts
 
-    def address_errors(addresses, refs, check_text):
+    def address_errors(addresses, refs, match):
         for address in addresses:
             found = False
             for ref in refs:
@@ -120,28 +125,38 @@ def site_issue_errors(value):
                 if not page or page.image_uri != address.image_uri:
                     continue
                 for block in page.blocks:
+                    if block.id not in ref.block_ids:
+                        continue
                     a, b = address.bbox, block.bbox
-                    if (block.id in ref.block_ids and a[0] >= b[0] and a[1] >= b[1] and
+                    if match == 'whole-region':
+                        matches = a == b and address.text == block.transcription
+                    else:
+                        matches = (
+                            a[0] >= b[0] and a[1] >= b[1] and
                             a[0] + a[2] <= b[0] + b[2] and a[1] + a[3] <= b[1] + b[3] and
-                            (not check_text or address.text in block.transcription)):
+                            (match != 'text' or address.text in block.transcription)
+                        )
+                    if matches:
                         found = True
             if not found:
-                errors.append('printed address is outside its content item or heading')
+                errors.append('region mention address must equal a whole region of its content item'
+                              if match == 'whole-region' else
+                              'printed address is outside its content item or heading')
 
     for item in value.content_items.content_items:
         texts = own(item.page_blocks, f'item:{item.id}', item.id)
         if not text_from_regions(texts, item.full_text, item.block_breaks):
             errors.append(f"{item.id}: full_text and block_breaks must follow the regions' line breaks and broken-word joins")
         if item.printed_title:
-            address_errors(item.printed_title.addresses, item.page_blocks, True)
-        address_errors(item.supplied_title.based_on.addresses, item.page_blocks, False)
+            address_errors(item.printed_title.addresses, item.page_blocks, 'text')
+        address_errors(item.supplied_title.based_on.addresses, item.page_blocks, 'bounds')
         if item.translation:
-            address_errors(item.translation.based_on.addresses, item.page_blocks, False)
+            address_errors(item.translation.based_on.addresses, item.page_blocks, 'bounds')
     for section in value.content_items.sections:
         own(section.heading_blocks, f'section:{section.id}', None)
-        address_errors(section.printed_title.addresses, section.heading_blocks, True)
+        address_errors(section.printed_title.addresses, section.heading_blocks, 'text')
         if section.supplied_title:
-            address_errors(section.supplied_title.based_on.addresses, section.heading_blocks, False)
+            address_errors(section.supplied_title.based_on.addresses, section.heading_blocks, 'bounds')
     for page in value.pages.pages:
         errors += unique_ids([b.id for b in page.blocks], 'block id')
         for block in page.blocks:
@@ -152,7 +167,8 @@ def site_issue_errors(value):
         if item is None:
             errors.append('unknown mention content item')
         else:
-            address_errors(mention.addresses, item.page_blocks, True)
+            address_errors(mention.addresses, item.page_blocks,
+                           'whole-region' if mention.address_grain == 'regions' else 'text')
     for event in value.life_events.life_events:
         if any(r.content_item_id not in items for r in event.content_items):
             errors.append('unknown life event content item')
