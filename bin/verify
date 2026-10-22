@@ -14,8 +14,11 @@
 #             then the zod/*.test.ts suite under vitest and a strict tsc
 #             typecheck of zod/.
 #   pydantic  loads the pydantic/ package (under a non-shadowing name) with
-#             the pydantic version pruzhany-press's uv.lock resolves, and
-#             generates the JSON Schema of every model it defines.
+#             the pinned pydantic version, and generates the JSON Schema of
+#             every model it defines.
+#   contract  the Zod<->Pydantic lockstep: every twin's field names and enum
+#             values agree (tests/contract/; moved here from pruzhany-press
+#             when that repository was retired on 2026-10-22).
 #   entities  checks shared production sourced-entity parity and JSON Schema.
 #   vocabulary validates production vocabulary, history, crosswalk and generated contracts.
 #   standards checks pinned RiC-O/EHRI terms and explicit local mappings.
@@ -23,19 +26,13 @@
 #             issue-14 pilot, including parsed RDF and privacy/reversal cases,
 #             the isolated TS parity test under bun and a non-UTF-8 locale check.
 #
-# NOT run here, because it needs a sibling checkout of a private consumer repo
-# that this public repo's CI cannot clone:
-#   the Zod<->Pydantic drift gate, which lives in pruzhany-press/tests/contract/
-#   and runs in pruzhany-press's CI against the pinned submodule. Before pushing
-#   a contract change, run it locally against this checkout: `just test-contract`.
-#
 # Tools: bash, git, bun, uv, gitleaks (versions pinned in mise.toml; CI
 # installs the same ones).
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-# Keep these in step with pruzhany-press's uv.lock.
+# The Python and pydantic every Python step runs with.
 PYDANTIC_VERSION="2.12.5"
 PYTHON_VERSION="3.11"
 
@@ -62,7 +59,7 @@ step_pydantic() {
 
 The tree is a package literally named `pydantic`, which would shadow the
 library if the repo root were on sys.path (hence `python -P`), so it is
-loaded under another name, the same way pruzhany-press's contract gate does.
+loaded under another name, the same way tests/contract/check_lockstep.py does.
 """
 
 import importlib.util
@@ -148,13 +145,19 @@ step_entities() {
 	bun x vitest run --dir zod
 }
 
-ALL_STEPS=(scan zod pydantic pilot standards vocabulary entities)
+step_contract() {
+	bun install --frozen-lockfile
+	uv run --no-project --python "$PYTHON_VERSION" --with "pydantic==$PYDANTIC_VERSION" \
+		python -P tests/contract/check_lockstep.py
+}
+
+ALL_STEPS=(scan zod pydantic contract pilot standards vocabulary entities)
 steps=("$@")
 [ ${#steps[@]} -eq 0 ] && steps=("${ALL_STEPS[@]}")
 
 for step in "${steps[@]}"; do
 	case "$step" in
-	scan | zod | pydantic | pilot | standards | vocabulary | entities) ;;
+	scan | zod | pydantic | contract | pilot | standards | vocabulary | entities) ;;
 	*)
 		echo "bin/verify: unknown step '$step' (expected: ${ALL_STEPS[*]})" >&2
 		exit 2
