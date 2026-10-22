@@ -25,6 +25,10 @@ fills that field. Both map through `rico:hasOrHadTitle` to `rico:Title`, with
 `rico:textualValue` and `rico:hasTitleType`. The two local title type concepts are
 instances of `rico:TitleType` and `skos:Concept`.
 
+A supplied title is required on a content item but optional (omitted or null) on
+a printed section. The writer omits a section's supplied title when its members'
+English heading answers disagree or are missing; the printed title remains required.
+
 Supplied titles and translations are separate English values with authorship
 (`kind: person | model`, `by`, `on`, optional note). Each has a `based_on` value:
 the exact `source_text` and one or more printed addresses. An address is the
@@ -53,11 +57,31 @@ Field names retain `block` because that is the site's existing word for a region
 `SiteIssue` checks the four documents together: dates, unique identifiers,
 reciprocal section membership, region ownership, printed addresses, mention and
 life-event references. Every region has exactly one owner. `page_blocks` and
-`heading_blocks` are in reading order. In the new file, `full_text` is a site copy
-of the referenced block transcriptions joined by two newlines. The writer builds
-those transcriptions from the physical source's lines first. `block_breaks` are
-ordered Unicode code-point offsets. Section headings are excluded from the
-content items' text. No `category` or person copies are accepted in the new shapes.
+`heading_blocks` are in reading order. The page transcriptions retain the printed
+line breaks; `full_text` is a site copy assembled from those lines and the program's
+recorded broken-word joins.
+
+**Text rule:** `full_text` must match the referenced regions in order at the starts
+given by `block_breaks`, allowing only LF preserved or replaced by one space and
+line-ending `-`/`־` words joined with that sign retained or removed, with a word
+joined across regions placed wholly in the following segment and exactly two LFs
+between nonempty segments (the exact legacy blank-line join is also accepted).
+
+`block_breaks` supplies one ordered Unicode code-point start per region, beginning
+at zero; a single region accepts either `[]` or `[0]`. The exact legacy join must
+have those same region starts, including when a transcription is empty. A carried
+first half also removes its preceding space or LF from the earlier segment;
+other spaces, punctuation and letters cannot change or move between regions.
+For example, regions `A co-` and `operative opens.` may yield
+`A\n\ncooperative opens.` with starts `[0, 3]`: the first half is carried forward,
+so comparing each segment independently with its region would reject valid text.
+The check recognises possible joins; only the writer, which has `find_broken`'s
+marks, can certify which joins were recorded. It neither normalises the stored
+text nor chooses a join. Hand-made issues that preserve the transcriptions and
+join regions by blank lines remain valid with the corresponding starts.
+
+Section headings are excluded from the content items' text. No `category` or
+person copies are accepted in the new shapes.
 These integrity checks are the site's data rules and the minimum checks for its writer.
 
 `SiteArchive` is an in-memory validation value, not another persisted file. It

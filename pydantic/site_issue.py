@@ -110,7 +110,7 @@ def site_issue_errors(value):
                 if block.unit_id != unit:
                     errors.append('block content item disagrees with owner')
                 texts.append(block.transcription)
-        return '\n\n'.join(texts)
+        return texts
 
     def address_errors(addresses, refs, check_text):
         for address in addresses:
@@ -129,8 +129,9 @@ def site_issue_errors(value):
                 errors.append('printed address is outside its content item or heading')
 
     for item in value.content_items.content_items:
-        if own(item.page_blocks, f'item:{item.id}', item.id) != item.full_text:
-            errors.append('full_text must be the block transcriptions joined by blank lines')
+        texts = own(item.page_blocks, f'item:{item.id}', item.id)
+        if not text_from_regions(texts, item.full_text, item.block_breaks):
+            errors.append(f"{item.id}: full_text and block_breaks must follow the regions' line breaks and broken-word joins")
         if item.printed_title:
             address_errors(item.printed_title.addresses, item.page_blocks, True)
         address_errors(item.supplied_title.based_on.addresses, item.page_blocks, False)
@@ -139,7 +140,8 @@ def site_issue_errors(value):
     for section in value.content_items.sections:
         own(section.heading_blocks, f'section:{section.id}', None)
         address_errors(section.printed_title.addresses, section.heading_blocks, True)
-        address_errors(section.supplied_title.based_on.addresses, section.heading_blocks, False)
+        if section.supplied_title:
+            address_errors(section.supplied_title.based_on.addresses, section.heading_blocks, False)
     for page in value.pages.pages:
         errors += unique_ids([b.id for b in page.blocks], 'block id')
         for block in page.blocks:
@@ -155,6 +157,74 @@ def site_issue_errors(value):
         if any(r.content_item_id not in items for r in event.content_items):
             errors.append('unknown life event content item')
     return errors
+
+
+def line_text_matches(source: str, text: str) -> bool:
+    """Only LF-to-space and line-ending -/maqaf joins may change the text."""
+    lines = source.split('\n')
+    positions = {0}
+    for i, literal in enumerate(lines):
+        endings = ['\n', ' '] if i + 1 < len(lines) else ['']
+        if i + 1 < len(lines) and can_join(literal, lines[i + 1]):
+            sign, literal = literal[-1], literal[:-1]
+            endings = [sign + '\n', sign + ' ', sign, '']
+        following = set()
+        for at in positions:
+            for ending in endings:
+                piece = literal + ending
+                if text.startswith(piece, at):
+                    following.add(at + len(piece))
+        positions = following
+        if not positions:
+            return False
+    return len(text) in positions
+
+
+def can_join(before: str, after: str) -> bool:
+    return (len(before) > 1 and before[-1] in '-־' and before[-2] not in ' \t\r\n'
+            and bool(after) and after[0] not in ' \t\r\n')
+
+
+def text_from_regions(regions: list[str], text: str, breaks: list[int]) -> bool:
+    starts = breaks or [0]
+    if len(starts) != len(regions) or starts[0] != 0:
+        return False
+    # Keep the hand-made form, including its exact whitespace and empty regions.
+    literal_starts, offset = [], 0
+    for region in regions:
+        literal_starts.append(offset)
+        offset += len(region) + 2
+    if text == '\n\n'.join(regions) and starts == literal_starts:
+        return True
+
+    states = {('', 0)}
+    for i, source in enumerate(regions):
+        start = starts[i]
+        ends = [starts[i + 1] - 2, starts[i + 1]] if i + 1 < len(starts) else [len(text)]
+        following = set()
+        for carry, previous_end in states:
+            choices = [(carry + source, '')]
+            if i + 1 < len(regions) and can_join(source, regions[i + 1]):
+                split = max(source.rfind(c) for c in ' \t\r\n')
+                head, tail = source[:max(0, split)], source[split + 1:]
+                # text_of emits the whole joined word in the following region.
+                # A token already receiving a carry cannot also be deferred.
+                if (split < 0 or source[split] in ' \n') and (head or not carry):
+                    choices.extend((carry + head, pending) for pending in (tail[:-1], tail))
+            for end in ends:
+                if end < start:
+                    continue
+                separator = '\n\n' if end > start and previous_end > 0 else ''
+                if start != previous_end + len(separator) or text[previous_end:start] != separator:
+                    continue
+                segment = text[start:end]
+                for candidate, pending in choices:
+                    if line_text_matches(candidate, segment):
+                        following.add((pending, end))
+        states = following
+        if not states:
+            return False
+    return ('', len(text)) in states
 
 
 class SiteArchive(Strict):

@@ -124,7 +124,7 @@ function siteIssueErrors(v: SiteIssue): string[] {
 				if (block.unit_id !== unit) errors.push('block content item disagrees with owner');
 				texts.push(block.transcription);
 			}
-		return texts.join('\n\n');
+		return texts;
 	};
 	const addressErrors = (
 		addresses: PrintedAddress[],
@@ -149,8 +149,11 @@ function siteIssueErrors(v: SiteIssue): string[] {
 		}
 	};
 	for (const item of v.content_items.content_items) {
-		if (own(item.page_blocks, `item:${item.id}`, item.id) !== item.full_text)
-			errors.push('full_text must be the block transcriptions joined by blank lines');
+		const texts = own(item.page_blocks, `item:${item.id}`, item.id);
+		if (!textFromRegions(texts, item.full_text, item.block_breaks))
+			errors.push(
+				`${item.id}: full_text and block_breaks must follow the regions' line breaks and broken-word joins`
+			);
 		if (item.printed_title) addressErrors(item.printed_title.addresses, item.page_blocks, true);
 		addressErrors(item.supplied_title.based_on.addresses, item.page_blocks, false);
 		if (item.translation)
@@ -159,7 +162,8 @@ function siteIssueErrors(v: SiteIssue): string[] {
 	for (const section of v.content_items.sections) {
 		own(section.heading_blocks, `section:${section.id}`, null);
 		addressErrors(section.printed_title.addresses, section.heading_blocks, true);
-		addressErrors(section.supplied_title.based_on.addresses, section.heading_blocks, false);
+		if (section.supplied_title)
+			addressErrors(section.supplied_title.based_on.addresses, section.heading_blocks, false);
 	}
 	for (const page of v.pages.pages) {
 		errors.push(
@@ -180,6 +184,97 @@ function siteIssueErrors(v: SiteIssue): string[] {
 		if (event.content_items.some((r) => !items.has(r.content_item_id)))
 			errors.push('unknown life event content item');
 	return errors;
+}
+
+// Only LF may become a space. At a line-ending - or maqaf, a join may
+// retain or drop that sign; every other character stays exact.
+function lineTextMatches(source: string, text: string): boolean {
+	const lines = source.split('\n');
+	let positions = new Set([0]);
+	for (let i = 0; i < lines.length; i++) {
+		let literal = lines[i];
+		let endings = i + 1 < lines.length ? ['\n', ' '] : [''];
+		if (i + 1 < lines.length && canJoin(literal, lines[i + 1])) {
+			const sign = literal.slice(-1);
+			literal = literal.slice(0, -1);
+			endings = [sign + '\n', sign + ' ', sign, ''];
+		}
+		const next = new Set<number>();
+		for (const at of positions)
+			for (const ending of endings) {
+				const piece = literal + ending;
+				if (text.startsWith(piece, at)) next.add(at + piece.length);
+			}
+		positions = next;
+		if (!positions.size) return false;
+	}
+	return positions.has(text.length);
+}
+
+function canJoin(before: string, after: string): boolean {
+	return (
+		before.length > 1 &&
+		['-', '־'].includes(before.slice(-1)) &&
+		![' ', '\t', '\r', '\n'].includes(before.slice(-2, -1)) &&
+		after.length > 0 &&
+		![' ', '\t', '\r', '\n'].includes(after[0])
+	);
+}
+
+function textFromRegions(regions: string[], text: string, breaks: number[]): boolean {
+	const starts = breaks.length ? breaks : [0];
+	if (starts.length !== regions.length || starts[0] !== 0) return false;
+	// Keep the hand-made form, including its exact whitespace and empty regions.
+	let offset = 0;
+	if (
+		text === regions.join('\n\n') &&
+		regions.every((region, i) => {
+			const matches = starts[i] === offset;
+			offset += [...region].length + 2;
+			return matches;
+		})
+	)
+		return true;
+
+	const points = [...text]; // block_breaks are Unicode code-point offsets.
+	let states = [{ carry: '', end: 0 }];
+	for (let i = 0; i < regions.length; i++) {
+		const source = regions[i];
+		const start = starts[i];
+		const ends = i + 1 < starts.length ? [starts[i + 1] - 2, starts[i + 1]] : [points.length];
+		const next = new Map<string, { carry: string; end: number }>();
+		for (const state of states) {
+			const choices = [{ source: state.carry + source, carry: '' }];
+			if (i + 1 < regions.length && canJoin(source, regions[i + 1])) {
+				const split = Math.max(...[' ', '\t', '\r', '\n'].map((c) => source.lastIndexOf(c)));
+				const head = source.slice(0, Math.max(0, split));
+				const tail = source.slice(split + 1);
+				// text_of emits the whole joined word in the following region.
+				// A token already receiving a carry cannot also be deferred.
+				if ((split < 0 || [' ', '\n'].includes(source[split])) && (head || !state.carry))
+					for (const carry of [tail.slice(0, -1), tail])
+						choices.push({ source: state.carry + head, carry });
+			}
+			for (const end of ends) {
+				if (end < start) continue;
+				const separator = end > start && state.end > 0 ? '\n\n' : '';
+				if (
+					start !== state.end + separator.length ||
+					points.slice(state.end, start).join('') !== separator
+				)
+					continue;
+				const segment = points.slice(start, end).join('');
+				for (const choice of choices)
+					if (lineTextMatches(choice.source, segment)) {
+						const candidate = { carry: choice.carry, end };
+						next.set(JSON.stringify(candidate), candidate);
+					}
+			}
+		}
+		states = [...next.values()];
+		if (!states.length) return false;
+	}
+	return states.some((state) => !state.carry && state.end === points.length);
 }
 
 // Validate joins without embedding any person in an issue's persisted files.

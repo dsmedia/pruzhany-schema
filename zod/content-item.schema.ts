@@ -52,7 +52,9 @@ export const PrintedSectionSchema = z
 	.strictObject({
 		id: siteText,
 		printed_title: PrintedTitleSchema,
-		supplied_title: SuppliedTitleSchema,
+		// Zod 4, "Nullish" (https://zod.dev/api#nullish), read 2026-10-22:
+		// accept omission and null, matching the Pydantic default.
+		supplied_title: SuppliedTitleSchema.nullish(),
 		content_item_ids: z.array(siteText).min(1),
 		heading_blocks: z.array(ContentItemBlockRefSchema).min(1),
 	})
