@@ -5,9 +5,10 @@ Moved here from pruzhany-press/tests/contract/test_schema_contract.py on
 it. For each paired model it compares the set of field names and the value-set
 of every top-level enum field, from the JSON Schema each side emits (Zod by
 ``z.toJSONSchema()``, through dump_zod_schemas.ts under bun; Pydantic by
-``model_json_schema()``). It does not compare required-ness: Pydantic gives
+``model_json_schema()``). For the old shapes it does not compare required-ness: Pydantic gives
 collections ``default_factory=list`` (not required) where Zod marks the same
 arrays required, an intended difference, not drift.
+The new site shapes also compare required fields and run shared validation fixtures.
 
     python -P tests/contract/check_lockstep.py   # from the repository root
 
@@ -25,10 +26,36 @@ from pathlib import Path
 from types import ModuleType
 
 ROOT = Path(__file__).resolve().parents[2]
+SITE_MODELS = set(json.loads((ROOT / 'tests/contract/site-shapes.fixtures.json').read_text(encoding='utf-8'))['models'])
 
 # Pydantic class name -> Zod export key. Identical today, kept explicit so that a
 # rename on one side is a visible one-line change and never a silent skip.
 MODEL_PAIRS = {
+    "PrintedAddress": "PrintedAddress",
+    "TextBasis": "TextBasis",
+    "Authorship": "Authorship",
+    "PrintedTitle": "PrintedTitle",
+    "SuppliedTitle": "SuppliedTitle",
+    "Translation": "Translation",
+    "ContentItemBlockRef": "ContentItemBlockRef",
+    "ContentItem": "ContentItem",
+    "PrintedSection": "PrintedSection",
+    "ContentItemsData": "ContentItemsData",
+    "SharedFact": "SharedFact",
+    "SourcedRelation": "SourcedRelation",
+    "SharedPerson": "SharedPerson",
+    "SharedFamily": "SharedFamily",
+    "SharedPlace": "SharedPlace",
+    "SharedOrganization": "SharedOrganization",
+    "SharedEvent": "SharedEvent",
+    "SharedRecord": "SharedRecord",
+    "IssueMention": "IssueMention",
+    "IssueMentionsData": "IssueMentionsData",
+    "ContentItemRef": "ContentItemRef",
+    "IssueLifeEvent": "IssueLifeEvent",
+    "IssueLifeEventsData": "IssueLifeEventsData",
+    "SiteIssue": "SiteIssue",
+    "SiteArchive": "SiteArchive",
     "ExternalReference": "ExternalReference",
     "EnrichedPerson": "EnrichedPerson",
     "EnrichedLocation": "EnrichedLocation",
@@ -113,6 +140,8 @@ def signature(schema: dict) -> dict:
 
 def problems(zod_schemas: dict, module: ModuleType, package: ModuleType) -> list[str]:
     found: list[str] = []
+    if missing := SITE_MODELS - MODEL_PAIRS.keys():
+        found.append(f'site models missing from lockstep pairs: {sorted(missing)}')
     for py_name, zod_name in MODEL_PAIRS.items():
         py_cls = getattr(module, py_name, None) or getattr(package, py_name, None)
         zod_schema = zod_schemas.get(zod_name)
@@ -124,6 +153,11 @@ def problems(zod_schemas: dict, module: ModuleType, package: ModuleType) -> list
             continue
         py_sig = signature(py_cls.model_json_schema())
         zod_sig = signature(zod_schema)
+        if py_name in SITE_MODELS:
+            py_required = set(py_cls.model_json_schema().get('required', []))
+            zod_required = set(zod_schema.get('required', []))
+            if py_required != zod_required:
+                found.append(f'[{py_name}] required fields differ: Pydantic={sorted(py_required)}, Zod={sorted(zod_required)}')
         if only := py_sig["fields"] - zod_sig["fields"]:
             found.append(f"[{py_name}] fields only in Pydantic: {sorted(only)}")
         if only := zod_sig["fields"] - py_sig["fields"]:
@@ -149,6 +183,11 @@ def main() -> None:
     if found:
         sys.exit("Zod<->Pydantic contract drift:\n" + "\n".join(f"  - {p}" for p in found))
     print(f"contract: {len(MODEL_PAIRS)} Zod/Pydantic twins in lockstep")
+    # Load by path so python -P keeps the local pydantic directory off sys.path.
+    spec = importlib.util.spec_from_file_location('site_shape_cases', ROOT / 'tests/contract/check_site_shapes.py')
+    cases = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cases)
+    cases.check_site_shapes(package)
 
 
 if __name__ == "__main__":

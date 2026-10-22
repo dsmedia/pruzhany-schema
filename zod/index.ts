@@ -116,3 +116,10 @@ export {
 } from './edition-bundle.schema';
 
 export * from './sourced-entities.schema';
+
+// Proposed site files; existing exports above keep their meanings.
+export * from './site-common.schema';
+export * from './site-content.vocabulary';
+export * from './content-item.schema';
+export * from './shared-record.schema';
+export * from './site-issue.schema';

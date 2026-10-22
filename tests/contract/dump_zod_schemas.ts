@@ -14,6 +14,7 @@ import { z } from 'zod/v4';
 import * as enrichment from '../../zod/enrichment.schema';
 import * as shared from '../../zod/shared.schema';
 import * as sourced from '../../zod/sourced-entities.schema';
+import * as site from '../../zod/index';
 
 const targets: Record<string, unknown> = {
 	ExternalReference: shared.ExternalReferenceSchema,
@@ -35,6 +36,31 @@ const targets: Record<string, unknown> = {
 };
 
 const out: Record<string, unknown> = {};
+targets.PrintedAddress = site.PrintedAddressSchema;
+targets.TextBasis = site.TextBasisSchema;
+targets.Authorship = site.AuthorshipSchema;
+targets.PrintedTitle = site.PrintedTitleSchema;
+targets.SuppliedTitle = site.SuppliedTitleSchema;
+targets.Translation = site.TranslationSchema;
+targets.ContentItemBlockRef = site.ContentItemBlockRefSchema;
+targets.ContentItem = site.ContentItemSchema;
+targets.PrintedSection = site.PrintedSectionSchema;
+targets.ContentItemsData = site.ContentItemsDataSchema;
+targets.SharedFact = site.SharedFactSchema;
+targets.SourcedRelation = site.SourcedRelationSchema;
+targets.SharedPerson = site.SharedPersonSchema;
+targets.SharedFamily = site.SharedFamilySchema;
+targets.SharedPlace = site.SharedPlaceSchema;
+targets.SharedOrganization = site.SharedOrganizationSchema;
+targets.SharedEvent = site.SharedEventSchema;
+targets.SharedRecord = site.SharedRecordSchema;
+targets.IssueMention = site.IssueMentionSchema;
+targets.IssueMentionsData = site.IssueMentionsDataSchema;
+targets.ContentItemRef = site.ContentItemRefSchema;
+targets.IssueLifeEvent = site.IssueLifeEventSchema;
+targets.IssueLifeEventsData = site.IssueLifeEventsDataSchema;
+targets.SiteIssue = site.SiteIssueSchema;
+targets.SiteArchive = site.SiteArchiveSchema;
 for (const [name, schema] of Object.entries(targets)) {
 	out[name] = schema === undefined ? { __missing__: true } : z.toJSONSchema(schema as never);
 }

@@ -1,5 +1,35 @@
 # Sourced entities vocabulary
 
+`site-content.json` adds a separate **proposed, unreleased 0.1.0** vocabulary for
+content-item subtypes, subjects and title types. It does not change the released
+production vocabulary or its generated enums. The generator writes the separate
+`site-content.vocabulary.ts` / `site_content_vocabulary.py` modules; the validator
+checks each subtype's single Impresso parent and the owner's fixed parents.
+The type list is read from `impresso_types`; each fixed parent's type and decision
+date are recorded in that subtype's `owner_fixed_parent` value. The checker reads
+these decisions from the vocabulary rather than inferring them from subtype names.
+The Impresso type list is copied from `pruzhany-steps/schemas/issue.schema.json`,
+`$defs.metadata.properties.tp.enum`, read 2026-10-22. There is no new local base type.
+
+Each subtype is a local SKOS concept typed `rico:DocumentaryFormType`, connected
+by `rico:hasDocumentaryFormType`; it is not equivalent to the whole ontology class.
+Subjects are declared local SKOS concepts reached by `rico:hasOrHadSubject` because
+the pinned ontologies do not enumerate what these content items are about. Printed and supplied titles
+use `rico:hasOrHadTitle` / `rico:Title`, with two declared concepts typed
+`rico:TitleType` via `rico:hasTitleType`. Every proposed concept's reason is in
+`site-content.profile.ttl`, explicitly marked proposed and unreleased. The released
+`profile.ttl` remains unchanged.
+New shape mappings are also recorded in `site-content.json` and checked by the
+alignment gate. Existing sourced-entity mappings continue to apply to reused fields.
+
+The private approval sheet sorts 338 category values (337 strings and null):
+140 values carry subtype candidates, 144 section-heading candidates, 112 subjects
+and 38 an unresolved part. These route counts overlap; 95 values carry more than
+one route. It gives two or three real examples for each of the 21
+subtypes and 11 subjects. No real examples are copied into this repository.
+An English heading label is only a lead for recovering the original printed
+heading and its address; it cannot create a section by itself.
+
 `sourced-entities.json` is the released production application vocabulary, version
 1.0.0, dated 2026-10-20. The owner approved the recommended types in advance on
 that date, as recorded on #16. `approved_by` records this decision. The generator
@@ -18,7 +48,7 @@ Only add identifiers. Never remove or rename a released identifier. Deprecate an
 entry with `deprecated_in` and `replaced_by` pointing to an existing entry in its
 group; retain its original mapping. The owner approves additions in batches,
 with real examples reviewed privately. Every addition names its pinned EHRI or
-RiC-O term, or a local term declared and explained in `profile.ttl`. Prefer EHRI
+RiC-O term, or a local term declared and explained in its vocabulary's profile. Prefer EHRI
 where applicable, then RiC-O 1.1 terms (the version EHRI 0.2.0 imports), then a local term with
 a reason. Mappings describe correspondence, not unconditional RDF assertions.
 Disputed and pending claims must not become unqualified historical triples.
@@ -88,6 +118,6 @@ these standalone modules into the production contracts. `check.py` validates
 mapping forms, local declarations and reasons, replacement targets, relationship
 inverses, crosswalk routing and every snapshot's retained identifiers. The
 standards alignment gate independently validates ontology terms and relation
-classes, including the production profile. Tests exercise release preservation,
+classes, including both the released and proposed profiles. Tests exercise release preservation,
 current snapshot equality, kinship direction, and compatibility using temporary
 fixtures.

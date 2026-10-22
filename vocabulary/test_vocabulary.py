@@ -198,6 +198,91 @@ class VocabularyTests(unittest.TestCase):
             self.assertNotIn('\r', content)
         compile(first[HERE.parent / 'pydantic/sourced_entities_vocabulary.py'], '<generated>', 'exec')
 
+    def test_site_vocabulary_stays_proposed(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['released_on'] = '2026-10-22'
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('proposed' in e for e in self.check()))
+
+    def test_owner_chosen_subtype_parent(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['groups']['content_item_subtypes'][0]['parent_type'] = 'article'
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('owner decision' in e for e in self.check()))
+
+    def test_owner_parent_rule_comes_from_data(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        entry = next(e for e in data['groups']['content_item_subtypes'] if e['id'] == 'poem')
+        entry['owner_fixed_parent'] = {'type': 'entertainment', 'on': '2026-10-22'}
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('owner decision' in e for e in self.check()))
+        entry['parent_type'] = 'entertainment'
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertEqual(self.check(), [])
+
+    def test_impresso_parents_come_from_data(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['impresso_types'].append('fictional_type')
+        entry = next(e for e in data['groups']['content_item_subtypes'] if e['id'] == 'poem')
+        entry['parent_type'] = 'fictional_type'
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertEqual(self.check(), [])
+        data['impresso_types'].remove('fictional_type')
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('exactly one' in e for e in self.check()))
+
+    def test_impresso_types_are_unique(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['impresso_types'].append(data['impresso_types'][0])
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('unique identifiers' in e for e in self.check()))
+
+    def test_subtype_needs_one_parent(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['groups']['content_item_subtypes'][0]['parent_type'] = ['ad', 'article']
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('exactly one' in e for e in self.check()))
+
+    def test_title_type_is_a_declared_concept(self):
+        path = self.root / 'vocabulary/site-content.profile.ttl'
+        text = path.read_text(encoding='utf-8').replace('skos:Concept, rico:TitleType', 'owl:Class')
+        path.write_text(text, encoding='utf-8')
+        self.assertTrue(any('concept class' in e for e in self.check()))
+
+    def test_proposed_profile_is_checked_for_alignment(self):
+        with (self.root / 'vocabulary/site-content.profile.ttl').open('a') as stream:
+            stream.write('\npc:bad a rico:UnknownClass .\n')
+        self.assertTrue(any('site-content.profile.ttl' in e and 'UnknownClass' in e
+                            for e in alignment.check(self.root)))
+
+    def test_proposed_profile_cannot_claim_release(self):
+        path = self.root / 'vocabulary/site-content.profile.ttl'
+        path.write_text(path.read_text().replace('proposed; unreleased', 'released'))
+        self.assertTrue(any('profile must be marked proposed' in e for e in self.check()))
+
+    def test_proposed_bindings_need_declared_reasons(self):
+        path = self.root / 'vocabulary/site-content.profile.ttl'
+        text = path.read_text(encoding='utf-8')
+        path.write_text('\n'.join(line for line in text.splitlines()
+                                 if not line.startswith('pc:site_translation ')), encoding='utf-8')
+        self.assertTrue(any('bindings.translation' in e for e in self.check()))
+        self.assertTrue(any('site_translation' in e or 'bindings[' in e
+                            for e in alignment.check(self.root)))
+
+    def test_local_reason_is_not_a_copy_of_the_definition(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        entry = next(e for e in data['bindings'] if e['id'] == 'translation')
+        entry['mapping']['reason'] = entry['definition']
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('not repeat the definition' in e for e in self.check()))
+
 
 if __name__ == '__main__':
     unittest.main()
