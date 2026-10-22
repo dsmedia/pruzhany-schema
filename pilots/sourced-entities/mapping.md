@@ -1,6 +1,6 @@
 # RiC-O / EHRI mapping exercised by the pilot
 
-EHRI ontology 0.1.1 imports RiC-O 1.0.2. RiC-O 1.0.2 (EHRI’s base) and 1.1 are both checked; the pilot’s terms exist in both. The pilot uses that RiC-O namespace directly and adds a small, explicit application profile for research workflow. It does not assume EHRI supplies a general historical-claims or Holocaust-fate ontology.
+EHRI ontology 0.2.0 imports RiC-O 1.1, and the gate checks against both (the owner's word of 2026-10-22); the pilot’s terms also exist in RiC-O 1.0.2, which EHRI 0.1.1 imported. The pilot uses that RiC-O namespace directly and adds a small, explicit application profile for research workflow. It does not assume EHRI supplies a general historical-claims or Holocaust-fate ontology.
 
 The upstream RDF files were read on 2026-10-19. [The checked component profile](ric-o-profile.json) records their SHA-256 hashes, versions and source links. This is a checked vocabulary subset, not an OWL conformance certification.
 

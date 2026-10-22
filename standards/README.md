@@ -2,18 +2,23 @@
 
 These JSON lists record upstream class and property IRIs, kinds and English labels, plus provenance, SHA-256, ontology version metadata, licence and attribution. EHRI entries also record named superclasses and superproperties. They are checked data, not vendored ontologies or a claim of OWL conformance. Upstream ontology metadata is preserved verbatim in `ontology_metadata`.
 
-EHRI `EHRI/ehri-kg-ontology` commit `5d42d2505661bdfb04b3634b27c7b9e73392fe07`, tag v0.1.1, has versionInfo 0.1.1, versionIRI `http://lod.ehri-project-test.eu/ontology/0.1.1`, and imports RiC-O **1.0.2**, not 1.1. Its namespace is the upstream test domain `http://lod.ehri-project-test.eu/ontology#`. Its `ontology/ehri.owl` SHA-256 is `a916194c93c6393a623c38cd51a469fc8a0348801cb3807dd62819a8301b99b3`.
+The gate checks every mapping against **EHRI 0.2.0** (`ehri-0.2.0.json`) and **RiC-O 1.1** (`rico-1.1.json`), the version EHRI 0.2.0 imports: the owner's word of 2026-10-22, after EHRI announced on 2026-09-07 that its knowledge graph is aligned with RiC-O 1.1 (<https://ehri-kg.ehri-project.eu/news/alignment-rico-11-and-additional-services/>). The earlier lists, `ehri-0.1.1.json` and `rico-1.0.2.json`, stay as they were pinned, for history; the gate no longer reads them.
 
-RiC-O's pinned checkout is `ICA-EGAD/RiC-O` commit `06912e1e20343f2e88e51f1b55fa232cb30b6b5b`. Both its 1.0.2 release and 1.1 are checked. The pilot's RiC-O terms exist in both; the gate requires the intersection, preserving compatibility with EHRI's base. Read date: 2026-10-20.
+EHRI 0.2.0 is `EHRI/ehri-kg-ontology` commit `4b275a7d8066b7084dda1e76a16ec0cc7a0a5455` on branch `develop` (2026-09-02; PR #15, which closes issue #14 "alignment to RiC-O 1.1"; not yet tagged, and `main` still holds 0.1.1). It has versionInfo 0.2.0, versionIRI `http://lod.ehri-project-test.eu/ontology/0.2.0`, and imports `https://www.ica.org/standards/RiC/ontology/1.1`. Against 0.1.1 it removes `notes` and the misspelt `physicalCharacterisiticsAndTechnicalRequirements` (now `physicalCharacteristicsAndTechnicalRequirements`), and adds `biographicalHistory`, `HasCopyRelation`, `IsCopyOfRelation` and their two role properties; none of the removed terms was used here. Its namespace is still the upstream test domain `http://lod.ehri-project-test.eu/ontology#`, which EHRI says will change when the graph moves to production. Its `ontology/ehri.owl` SHA-256 is `c04f53203e6aecee5aef1dc8f8724092af831bf717698ece6342e2dcc4bcbe50`. Read date: 2026-10-22.
+
+EHRI 0.1.1 was read at commit `5d42d2505661bdfb04b3634b27c7b9e73392fe07` of `main`; tag v0.1.1 is commit `ed5ec57f2fa8ce75902f76b75295fcc361f00891`, and `ontology/ehri.owl` is the same file in both (SHA-256 `a916194c93c6393a623c38cd51a469fc8a0348801cb3807dd62819a8301b99b3`). It imports RiC-O 1.0.2.
+
+RiC-O's pinned checkout is `ICA-EGAD/RiC-O` commit `06912e1e20343f2e88e51f1b55fa232cb30b6b5b`, read on 2026-10-20. RiC-O 1.1 (May 2025) only adds to 1.0.2 but for one rename recorded in its history note: `hasOrHadCategory` and `isOrWasCategoryOf` (with their four member-level forms) became `hasOrHadType` and `isOrWasTypeOf`; none of them was used here. It adds `TitleType` and `hasTitleType`.
 
 Only at the owner's word, read a new upstream version and add a **new** list file; never edit an existing pinned list in place. Re-check every mapping. No upstream imports are fetched by extraction. No new dependency is required for consumers or the alignment checker.
 
 Generate from clean local upstream checkouts (set `RICO_SRC` and `EHRI_SRC` to their roots):
 
 ```sh
-uv run --no-project --python 3.11 --with rdflib==7.1.4 python standards/extract_terms.py "$RICO_SRC/ontology/previous-versions/RiC-O_v-1-0-2_release/RiC-O_1-0-2.rdf" --repo ICA-EGAD/RiC-O --commit 06912e1e20343f2e88e51f1b55fa232cb30b6b5b --path ontology/previous-versions/RiC-O_v-1-0-2_release/RiC-O_1-0-2.rdf --out standards/rico-1.0.2.json
-uv run --no-project --python 3.11 --with rdflib==7.1.4 python standards/extract_terms.py "$RICO_SRC/ontology/current-version/RiC-O_1-1.rdf" --repo ICA-EGAD/RiC-O --commit 06912e1e20343f2e88e51f1b55fa232cb30b6b5b --path ontology/current-version/RiC-O_1-1.rdf --out standards/rico-1.1.json
-uv run --no-project --python 3.11 --with rdflib==7.1.4 python standards/extract_terms.py "$EHRI_SRC/ontology/ehri.owl" --repo EHRI/ehri-kg-ontology --commit 5d42d2505661bdfb04b3634b27c7b9e73392fe07 --path ontology/ehri.owl --out standards/ehri-0.1.1.json
+uv run --no-project --python 3.11 --with rdflib==7.1.4 python standards/extract_terms.py --read-on 2026-10-20 "$RICO_SRC/ontology/previous-versions/RiC-O_v-1-0-2_release/RiC-O_1-0-2.rdf" --repo ICA-EGAD/RiC-O --commit 06912e1e20343f2e88e51f1b55fa232cb30b6b5b --path ontology/previous-versions/RiC-O_v-1-0-2_release/RiC-O_1-0-2.rdf --out standards/rico-1.0.2.json
+uv run --no-project --python 3.11 --with rdflib==7.1.4 python standards/extract_terms.py --read-on 2026-10-20 "$RICO_SRC/ontology/current-version/RiC-O_1-1.rdf" --repo ICA-EGAD/RiC-O --commit 06912e1e20343f2e88e51f1b55fa232cb30b6b5b --path ontology/current-version/RiC-O_1-1.rdf --out standards/rico-1.1.json
+uv run --no-project --python 3.11 --with rdflib==7.1.4 python standards/extract_terms.py --read-on 2026-10-20 "$EHRI_SRC/ontology/ehri.owl" --repo EHRI/ehri-kg-ontology --commit 5d42d2505661bdfb04b3634b27c7b9e73392fe07 --path ontology/ehri.owl --out standards/ehri-0.1.1.json  # main, 0.1.1
+uv run --no-project --python 3.11 --with rdflib==7.1.4 python standards/extract_terms.py --read-on 2026-10-22 "$EHRI_SRC/ontology/ehri.owl" --repo EHRI/ehri-kg-ontology --commit 4b275a7d8066b7084dda1e76a16ec0cc7a0a5455 --path ontology/ehri.owl --out standards/ehri-0.2.0.json  # develop, 0.2.0
 bin/verify standards
 ```
 

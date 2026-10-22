@@ -7,13 +7,16 @@ from pathlib import Path
 
 RICO = "https://www.ica.org/standards/RiC/ontology#"
 EHRI = "http://lod.ehri-project-test.eu/ontology#"
+# The pinned lists every mapping is checked against: EHRI's ontology and the RiC-O
+# version it imports (EHRI 0.2.0 imports RiC-O 1.1; the owner's word of 2026-10-22).
+RICO_LIST, EHRI_LIST = "rico-1.1.json", "ehri-0.2.0.json"
 
 
 def check(root):
     standards = root / "standards"
     def load(name):
         return {term["iri"] for term in json.loads((standards / name).read_text(encoding="utf-8"))["terms"]}
-    known = {"rico": load("rico-1.0.2.json") & load("rico-1.1.json"), "ehri": load("ehri-0.1.1.json")}
+    known = {"rico": load(RICO_LIST), "ehri": load(EHRI_LIST)}
     errors = []
     def validate(prefix, term, path):
         iri = term if term.startswith(("http:", "https:")) else {"rico": RICO, "ehri": EHRI}[prefix] + term.removeprefix(prefix + ":")
@@ -64,7 +67,7 @@ def check(root):
                     if value.get("via"):
                         validate("rico", value["via"], path)
                         # A qualification path must name a Relation class, not a property.
-                        terms = json.loads((standards / "rico-1.0.2.json").read_text(encoding="utf-8"))["terms"]
+                        terms = json.loads((standards / RICO_LIST).read_text(encoding="utf-8"))["terms"]
                         via = value["via"].removeprefix("rico:")
                         if not any(t["iri"] == RICO + via and t["kind"] == "class" and via.endswith("Relation") for t in terms):
                             errors.append(f"{path.relative_to(root)}: via must be a RiC-O Relation class")

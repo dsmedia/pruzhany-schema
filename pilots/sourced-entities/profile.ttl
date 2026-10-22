@@ -5,7 +5,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 
 <https://example.org/pruzhany-pilot/issue-14/profile> a owl:Ontology ;
-  owl:versionInfo "0.1.0 experimental application profile for EHRI 0.1.1 / RiC-O 1.0.2, also checked against RiC-O 1.1" ;
+  owl:versionInfo "0.1.0 experimental application profile for EHRI 0.2.0 / RiC-O 1.1" ;
   rdfs:comment "Local review and assertion terms alongside RiC-O. No automatic equivalence or production identity assertions." .
 
 pc:Claim a rdfs:Class ; rdfs:subClassOf rdf:Statement ;
