@@ -198,6 +198,33 @@ class VocabularyTests(unittest.TestCase):
             self.assertNotIn('\r', content)
         compile(first[HERE.parent / 'pydantic/sourced_entities_vocabulary.py'], '<generated>', 'exec')
 
+    def test_site_vocabulary_stays_proposed(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['released_on'] = '2026-10-22'
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('proposed' in e for e in self.check()))
+
+    def test_owner_chosen_subtype_parent(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['groups']['content_item_subtypes'][0]['parent_type'] = 'article'
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('owner decision' in e for e in self.check()))
+
+    def test_subtype_needs_one_parent(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['groups']['content_item_subtypes'][0]['parent_type'] = ['ad', 'article']
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('exactly one' in e for e in self.check()))
+
+    def test_title_type_is_a_declared_concept(self):
+        path = self.root / 'vocabulary/profile.ttl'
+        text = path.read_text(encoding='utf-8').replace('skos:Concept, rico:TitleType', 'owl:Class')
+        path.write_text(text, encoding='utf-8')
+        self.assertTrue(any('concept class' in e for e in self.check()))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,29 @@
 # Sourced entities vocabulary
 
+`site-content.json` adds a separate **proposed, unreleased 0.1.0** vocabulary for
+content-item subtypes, subjects and title types. It does not change the released
+production vocabulary or its generated enums. The generator writes the separate
+`site-content.vocabulary.ts` / `site_content_vocabulary.py` modules; the validator
+checks each subtype's single Impresso parent and the owner's fixed parents.
+The Impresso type list is copied from `pruzhany-steps/schemas/issue.schema.json`,
+`$defs.metadata.properties.tp.enum`, read 2026-10-22. There is no new local base type.
+
+Each subtype is a local SKOS concept typed `rico:DocumentaryFormType`, connected
+by `rico:hasDocumentaryFormType`; it is not equivalent to the whole ontology class.
+Subjects are declared local SKOS concepts reached by `rico:hasOrHadSubject` because
+the pinned ontologies do not enumerate these topics. Printed and supplied titles
+use `rico:hasOrHadTitle` / `rico:Title`, with two declared concepts typed
+`rico:TitleType` via `rico:hasTitleType`. Every concept's reason is in `profile.ttl`.
+New shape mappings are also recorded in `site-content.json` and checked by the
+alignment gate. Existing sourced-entity mappings continue to apply to reused fields.
+
+The private approval sheet sorts 338 category values (337 strings and null):
+139 subtype candidates, 143 section-heading candidates, 18 subject candidates and
+38 unresolved values. It gives two or three real examples for each of the 21
+subtypes and 11 subjects. No real examples are copied into this repository.
+An English heading label is only a lead for recovering the original printed
+heading and its address; it cannot create a section by itself.
+
 `sourced-entities.json` is the released production application vocabulary, version
 1.0.0, dated 2026-10-20. The owner approved the recommended types in advance on
 that date, as recorded on #16. `approved_by` records this decision. The generator

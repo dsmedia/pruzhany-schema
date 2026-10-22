@@ -1,0 +1,691 @@
+{
+  "version": "0.1.0",
+  "status": "proposed",
+  "scope": "Site content; separate from the unchanged released sourced-entities vocabulary.",
+  "impresso_types": [
+    "article",
+    "ad",
+    "image",
+    "table",
+    "death_notice",
+    "weather",
+    "page",
+    "radio_bulletin",
+    "radio_broadcast_episode",
+    "chronicle",
+    "chapter",
+    "discussion",
+    "entertainment"
+  ],
+  "groups": {
+    "content_item_subtypes": [
+      {
+        "id": "wedding_greeting",
+        "label": "Wedding greeting",
+        "definition": "A greeting to a couple on their wedding.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_wedding_greeting",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "engagement_greeting",
+        "label": "Engagement greeting",
+        "definition": "A greeting on an engagement.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_engagement_greeting",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "birth_greeting",
+        "label": "Birth greeting",
+        "definition": "A greeting on the birth of a child.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_birth_greeting",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "bar_mitzvah_greeting",
+        "label": "Bar mitzvah greeting",
+        "definition": "A greeting on a bar mitzvah.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_bar_mitzvah_greeting",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "new_year_greeting",
+        "label": "New Year greeting",
+        "definition": "A greeting for the New Year.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_new_year_greeting",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "departure_greeting",
+        "label": "Departure greeting",
+        "definition": "Good wishes on departure or settlement elsewhere.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_departure_greeting",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "greeting",
+        "label": "Greeting",
+        "definition": "A greeting whose occasion is not specified by a narrower form.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_greeting",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "thanks",
+        "label": "Thanks",
+        "definition": "A public expression of thanks or acknowledgement.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_thanks",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "meeting_notice",
+        "label": "Meeting notice",
+        "definition": "A notice inviting people to a meeting.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_meeting_notice",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "announcement",
+        "label": "Announcement",
+        "definition": "A public announcement without a narrower established form.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_announcement",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "appeal",
+        "label": "Appeal",
+        "definition": "A public request for support, contributions or participation.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_appeal",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "commercial_advertisement",
+        "label": "Commercial advertisement",
+        "definition": "An advertisement for goods, services or premises.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_commercial_advertisement",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "ad"
+      },
+      {
+        "id": "condolence",
+        "label": "Condolence",
+        "definition": "An expression of sympathy to mourners.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_condolence",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "death_notice"
+      },
+      {
+        "id": "memorial_notice",
+        "label": "Memorial notice",
+        "definition": "A notice commemorating someone who has died.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_memorial_notice",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "death_notice"
+      },
+      {
+        "id": "death_announcement",
+        "label": "Death announcement",
+        "definition": "An announcement of a death or funeral.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_death_announcement",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "death_notice"
+      },
+      {
+        "id": "editorial",
+        "label": "Editorial",
+        "definition": "An editorial statement by the newspaper.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_editorial",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "article"
+      },
+      {
+        "id": "opinion",
+        "label": "Opinion",
+        "definition": "An argument or commentary expressing a view.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_opinion",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "article"
+      },
+      {
+        "id": "letter",
+        "label": "Letter",
+        "definition": "A letter printed for readers, including letters to the editor.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_letter",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "article"
+      },
+      {
+        "id": "poem",
+        "label": "Poem",
+        "definition": "A composition in verse.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_poem",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "article"
+      },
+      {
+        "id": "sketch",
+        "label": "Sketch",
+        "definition": "A short literary sketch.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_sketch",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "article"
+      },
+      {
+        "id": "humour",
+        "label": "Humour",
+        "definition": "A joke or short humorous composition.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:DocumentaryFormType",
+        "mapping": {
+          "local": "pc:subtype_humour",
+          "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+        },
+        "parent_type": "entertainment"
+      }
+    ],
+    "subjects": [
+      {
+        "id": "education",
+        "label": "Education",
+        "definition": "Education, schools and learning.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_education",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "culture",
+        "label": "Culture",
+        "definition": "Cultural activity and institutions.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_culture",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "health",
+        "label": "Health",
+        "definition": "Health, medicine and hygiene.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_health",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "palestine",
+        "label": "Palestine",
+        "definition": "Life and developments in Palestine.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_palestine",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "jewish_world",
+        "label": "Jewish world",
+        "definition": "Jewish communities beyond the immediate locality.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_jewish_world",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "literature",
+        "label": "Literature",
+        "definition": "Literary works and literary life.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_literature",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "sport",
+        "label": "Sport",
+        "definition": "Sport and sporting associations.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_sport",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "economy",
+        "label": "Economy",
+        "definition": "Trade, work and economic conditions.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_economy",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "community_affairs",
+        "label": "Community affairs",
+        "definition": "Local and regional communal life.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_community_affairs",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "zionism",
+        "label": "Zionism",
+        "definition": "Zionist activity, institutions and campaigns.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_zionism",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      },
+      {
+        "id": "international_affairs",
+        "label": "International affairs",
+        "definition": "News of the wider world.",
+        "added_in": "0.1.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:subject_international_affairs",
+          "reason": "A local subject concept supplies a topic value; the pinned ontologies provide subject relations but no matching controlled topic identifier."
+        }
+      }
+    ],
+    "title_types": [
+      {
+        "id": "printed",
+        "label": "Printed title",
+        "definition": "The printed words naming a content item or a section.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:TitleType",
+        "mapping": {
+          "local": "pc:title_type_printed",
+          "reason": "Distinguishes words printed in the source from a supplied name; RiC-O defines TitleType but not this controlled value."
+        }
+      },
+      {
+        "id": "supplied",
+        "label": "Supplied title",
+        "definition": "An attributed English name pinned to the text it was made from.",
+        "added_in": "0.1.0",
+        "concept_class": "rico:TitleType",
+        "mapping": {
+          "local": "pc:title_type_supplied",
+          "reason": "Distinguishes an attributed English name from printed words; RiC-O defines TitleType but not this controlled value."
+        }
+      }
+    ]
+  },
+  "bindings": [
+    {
+      "id": "agent_name",
+      "definition": "Names of persons, families and organisations use agent names.",
+      "mapping": { "rico": "AgentName" }
+    },
+    {
+      "id": "place_name",
+      "definition": "A shared place uses place names rather than agent names.",
+      "mapping": { "rico": "PlaceName" }
+    },
+    {
+      "id": "place_parent",
+      "definition": "A place's parent is a containing place.",
+      "mapping": { "rico": "isOrWasPartOf" }
+    },
+    {
+      "id": "place_coordinates",
+      "definition": "Coordinates of the place, latitude then longitude.",
+      "mapping": { "rico": "geographicalCoordinates" }
+    },
+    {
+      "id": "family_membership",
+      "definition": "A sourced membership fact with family_id names the family as the group.",
+      "mapping": { "rico": "isOrWasMemberOf", "via": "MembershipRelation" }
+    },
+    {
+      "id": "life_event_principal",
+      "definition": "A principal person participates in the life event.",
+      "mapping": { "rico": "hasOrHadParticipant" }
+    },
+    {
+      "id": "display_permission",
+      "definition": "The shown field retains who allowed a relative to be displayed and when.",
+      "mapping": {
+        "local": "pc:site_display_permission",
+        "reason": "Permission to display a relative under the site's living-person rule is neither historical evidence nor approval of a fact."
+      }
+    },
+    {
+      "id": "content_item",
+      "definition": "A content item is a record resource.",
+      "mapping": {
+        "ehri": "RecordResource"
+      }
+    },
+    {
+      "id": "section",
+      "definition": "A section groups content items under a printed heading.",
+      "mapping": {
+        "ehri": "RecordSet"
+      }
+    },
+    {
+      "id": "section_membership",
+      "definition": "A section includes its content items.",
+      "mapping": {
+        "rico": "includesOrIncluded"
+      }
+    },
+    {
+      "id": "title",
+      "definition": "Both printed and supplied titles use Title nodes.",
+      "mapping": {
+        "rico": "Title"
+      }
+    },
+    {
+      "id": "has_title",
+      "definition": "Connect a content item or section to either title.",
+      "mapping": {
+        "rico": "hasOrHadTitle"
+      }
+    },
+    {
+      "id": "title_type",
+      "definition": "A Title uses one of the declared title type concepts.",
+      "mapping": {
+        "rico": "hasTitleType"
+      }
+    },
+    {
+      "id": "title_text",
+      "definition": "The words of a title.",
+      "mapping": {
+        "rico": "textualValue"
+      }
+    },
+    {
+      "id": "subtype",
+      "definition": "Connect a content item to its documentary form concept.",
+      "mapping": {
+        "rico": "hasDocumentaryFormType"
+      }
+    },
+    {
+      "id": "subject",
+      "definition": "Connect a content item to what it is about.",
+      "mapping": {
+        "rico": "hasOrHadSubject"
+      }
+    },
+    {
+      "id": "person",
+      "definition": "A person in the shared record.",
+      "mapping": {
+        "ehri": "Person"
+      }
+    },
+    {
+      "id": "family",
+      "definition": "A family in the shared record.",
+      "mapping": {
+        "ehri": "Family"
+      }
+    },
+    {
+      "id": "place",
+      "definition": "A place without a more specific EHRI class.",
+      "mapping": {
+        "rico": "Place"
+      }
+    },
+    {
+      "id": "city",
+      "definition": "A city in the shared record.",
+      "mapping": {
+        "ehri": "City"
+      }
+    },
+    {
+      "id": "region",
+      "definition": "A region in the shared record.",
+      "mapping": {
+        "ehri": "Region"
+      }
+    },
+    {
+      "id": "country",
+      "definition": "A country in the shared record.",
+      "mapping": {
+        "ehri": "Country"
+      }
+    },
+    {
+      "id": "organization",
+      "definition": "An organisation in the shared record.",
+      "mapping": {
+        "ehri": "CorporateBody"
+      }
+    },
+    {
+      "id": "life_event",
+      "definition": "A life event with persons and content items.",
+      "mapping": {
+        "rico": "Event"
+      }
+    },
+    {
+      "id": "source",
+      "definition": "A source used by a fact or relation.",
+      "mapping": {
+        "ehri": "RecordResource"
+      }
+    },
+    {
+      "id": "relation",
+      "definition": "A relation reuses the production kinship or other/proposed_type payload; a released relationship type selects the specific qualification class.",
+      "mapping": {
+        "rico": "Relation"
+      }
+    },
+    {
+      "id": "fact_source",
+      "definition": "A qualified fact cites its sources.",
+      "mapping": {
+        "rico": "relationHasSource"
+      }
+    },
+    {
+      "id": "printed_address",
+      "definition": "The picture key, pixel box and printed words locate evidence independently of changing content item numbers.",
+      "mapping": {
+        "local": "pc:site_printed_address",
+        "reason": "The picture key, pixel box and printed words locate evidence independently of changing content item numbers."
+      }
+    },
+    {
+      "id": "text_basis",
+      "definition": "Exact source text and printed addresses preserve the basis of a translation or supplied title, including after a rereading.",
+      "mapping": {
+        "local": "pc:site_text_basis",
+        "reason": "Exact source text and printed addresses preserve the basis of a translation or supplied title, including after a rereading."
+      }
+    },
+    {
+      "id": "translation",
+      "definition": "Attributed English text pinned to its source text is semantic work; the pinned ontologies have no exact translation-and-text-basis term.",
+      "mapping": {
+        "local": "pc:site_translation",
+        "reason": "Attributed English text pinned to its source text is semantic work; the pinned ontologies have no exact translation-and-text-basis term."
+      }
+    },
+    {
+      "id": "authorship",
+      "definition": "Records whether a person or a model wrote a supplied title or translation, reusing production attribution.",
+      "mapping": {
+        "local": "pc:site_authorship",
+        "reason": "Records whether a person or a model wrote a supplied title or translation, reusing production attribution."
+      }
+    },
+    {
+      "id": "mention",
+      "definition": "A printed occurrence joins a shared person to a content item with roles; a mention alone does not assert that the person is its subject.",
+      "mapping": {
+        "local": "pc:site_mention",
+        "reason": "A printed occurrence joins a shared person to a content item with roles; a mention alone does not assert that the person is its subject."
+      }
+    },
+    {
+      "id": "shared_record",
+      "definition": "One storage document joins the production sourced facts, sources and identities across issues.",
+      "mapping": {
+        "local": "pc:site_shared_record",
+        "reason": "One storage document joins the production sourced facts, sources and identities across issues."
+      }
+    },
+    {
+      "id": "fact_subject",
+      "definition": "Identifies whose statement a production fact is, including a family or relation.",
+      "mapping": {
+        "local": "pc:site_fact_subject",
+        "reason": "Identifies whose statement a production fact is, including a family or relation."
+      }
+    },
+    {
+      "id": "fact_representation",
+      "definition": "Distinguishes structured facts, prose and image paths without approving their publication.",
+      "mapping": {
+        "local": "pc:site_fact_representation",
+        "reason": "Distinguishes structured facts, prose and image paths without approving their publication."
+      }
+    },
+    {
+      "id": "standing",
+      "definition": "Proposed is accepted plus pending review; accepted is accepted plus approved review; doubted is disputed; rejected is rejected. Attribution and review retain who said so.",
+      "mapping": {
+        "local": "pc:site_standing",
+        "reason": "Proposed is accepted plus pending review; accepted is accepted plus approved review; doubted is disputed; rejected is rejected. Attribution and review retain who said so."
+      }
+    },
+    {
+      "id": "site_copy",
+      "definition": "Full text, block breaks and block references are copies for the site, rebuilt from the physical source.",
+      "mapping": {
+        "local": "pc:site_site_copy",
+        "reason": "Full text, block breaks and block references are copies for the site, rebuilt from the physical source."
+      }
+    },
+    {
+      "id": "site_documents",
+      "definition": "Groups the four issue documents for reference validation without copying shared persons into them.",
+      "mapping": {
+        "local": "pc:site_site_documents",
+        "reason": "Groups the four issue documents for reference validation without copying shared persons into them."
+      }
+    }
+  ]
+}

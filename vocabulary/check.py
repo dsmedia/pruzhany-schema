@@ -102,6 +102,60 @@ def check(root=ROOT):
             errors.append('birth_year_or_age must be inferred')
         if row['fact_kind'] == 'other' and 'proposed_type' not in row.get('requires', []):
             errors.append('other requires proposed_type')
+    errors.extend(check_site_content(root))
+    return errors
+
+
+def check_site_content(root=ROOT):
+    folder = root / 'vocabulary'
+    vocabulary = json.loads((folder / 'site-content.json').read_text(encoding='utf-8'))
+    profile = (folder / 'profile.ttl').read_text(encoding='utf-8')
+    errors = []
+    if vocabulary.get('status') != 'proposed' or vocabulary.get('released_on') or vocabulary.get('approved_by'):
+        errors.append('site-content: this vocabulary is proposed, not approved or released')
+    if (folder / 'released' / ('site-content-' + vocabulary['version'] + '.json')).exists():
+        errors.append('site-content: proposed vocabulary cannot have a release snapshot')
+    expected_types = {'article', 'ad', 'image', 'table', 'death_notice', 'weather', 'page',
+                      'radio_bulletin', 'radio_broadcast_episode', 'chronicle', 'chapter',
+                      'discussion', 'entertainment'}
+    types = vocabulary['impresso_types']
+    if set(types) != expected_types or len(types) != len(expected_types):
+        errors.append('site-content: Impresso types differ from the pinned issue schema')
+    expected_classes = {'content_item_subtypes': 'rico:DocumentaryFormType',
+                        'subjects': 'skos:Concept', 'title_types': 'rico:TitleType'}
+    if set(vocabulary['groups']) != set(expected_classes):
+        errors.append('site-content: unexpected concept groups')
+    for group, entries in vocabulary['groups'].items():
+        if not entries or len({e['id'] for e in entries}) != len(entries):
+            errors.append(f'{group}: empty group or duplicate ids')
+        for entry in entries:
+            where = f'{group}.{entry["id"]}'
+            for key in ('id', 'label', 'definition', 'added_in'):
+                if not isinstance(entry.get(key), str) or not entry[key].strip():
+                    errors.append(f'{where}: missing {key}')
+            mapping = entry.get('mapping', {})
+            if set(mapping) != {'local', 'reason'}:
+                errors.append(f'{where}: concept needs a local identifier and reason')
+                continue
+            term, reason = mapping['local'], mapping['reason']
+            declaration = re.search(re.escape(term) + r'\s+a\s+.*?\.\s*(?:\n|$)', profile)
+            if not declaration or json.dumps(reason, ensure_ascii=False) not in declaration[0]:
+                errors.append(f'{where}: profile must declare concept and reason')
+            if not reason.strip() or len(reason.splitlines()) != 1:
+                errors.append(f'{where}: reason must be one line')
+            cls = expected_classes.get(group)
+            if entry.get('concept_class') != cls or not declaration or cls not in declaration[0] or 'skos:Concept' not in declaration[0]:
+                errors.append(f'{where}: incorrect concept class')
+            if group == 'content_item_subtypes':
+                parent = entry.get('parent_type')
+                if not isinstance(parent, str) or parent not in types:
+                    errors.append(f'{where}: subtype needs exactly one Impresso parent')
+                required = ('ad' if entry['id'].endswith('_greeting') or entry['id'] in {'greeting', 'thanks', 'meeting_notice'}
+                            else 'death_notice' if entry['id'] in {'condolence', 'memorial_notice'} else None)
+                if required and parent != required:
+                    errors.append(f'{where}: parent differs from the owner decision')
+    if {e['id'] for e in vocabulary['groups']['title_types']} != {'printed', 'supplied'}:
+        errors.append('site-content: both title types are required')
     return errors
 
 

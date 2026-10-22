@@ -28,6 +28,20 @@ TBD.
 The [2026-04-25 cross-edition design](docs/design/2026-04-25-cross-edition-entities.md) records the identity conventions.
 The [2026-10-19 people, facts and sources proposal](docs/design/2026-10-19-people-facts-and-sources.md) includes the decisions and changes of 20 October.
 
+## Proposed site files
+
+The new exports sit beside the existing shapes. `content-item.schema.ts` adds content
+items with printed and supplied titles, Impresso types, subtypes, subjects and printed
+sections. `site-common.schema.ts` supplies printed addresses, authorship and translations
+pinned to their source text. `shared-record.schema.ts` reuses production sourced facts,
+names, sources, fate and standing for one shared record. `site-issue.schema.ts` adds
+per-issue mentions and life events, plus checks of the four documents and their shared
+references. Pages are unchanged. Each module has a Pydantic twin.
+
+`vocabulary/site-content.json` is **proposed, unreleased 0.1.0**, separate from released
+sourced-entities 1.0.0. See the [contract and preservation notes](docs/design/2026-10-22-site-files.md).
+`bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.
+
 ## Issue 14 pilot
 
 The [sourced-entities pilot](pilots/sourced-entities/README.md) is an isolated,

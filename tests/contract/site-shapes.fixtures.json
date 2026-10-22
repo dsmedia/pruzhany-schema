@@ -1,0 +1,3613 @@
+{
+	"description": "Entirely fictional. Each case changes the example at its model path; both runtimes validate the resulting JSON.",
+	"example": {
+		"shared_record": {
+			"version": "1",
+			"vocabulary_version": "1.0.0",
+			"persons": [
+				{
+					"id": "fictional-person",
+					"name": "Fictional Person",
+					"names": [
+						{
+							"value": "Fictional Person",
+							"kind": "printed",
+							"script": "Latn"
+						}
+					],
+					"gender": "unknown",
+					"fate": {
+						"outcome": "unknown",
+						"confidence": "possible",
+						"rests_on": [],
+						"review": {
+							"state": "pending"
+						}
+					}
+				}
+			],
+			"families": [
+				{
+					"id": "fictional-family",
+					"name": "Fictional Family",
+					"names": []
+				}
+			],
+			"places": [
+				{
+					"id": "fictional-place",
+					"name": "Fictional Town",
+					"names": [],
+					"type": "town",
+					"coordinates": [50, 25]
+				}
+			],
+			"organizations": [
+				{
+					"id": "fictional-organization",
+					"name": "Fictional Association",
+					"names": []
+				}
+			],
+			"events": [
+				{
+					"id": "fictional-event",
+					"name": "Fictional event",
+					"type": "community_event"
+				}
+			],
+			"sources": [
+				{
+					"id": "fictional-source",
+					"kind": "book",
+					"title": "Fictional source"
+				}
+			],
+			"facts": [
+				{
+					"id": "fictional-fact",
+					"subject_id": "fictional-person",
+					"type": "birth",
+					"place_id": "fictional-place",
+					"representation": "structured",
+					"citations": [
+						{
+							"source_id": "fictional-source",
+							"page": "1"
+						}
+					],
+					"evidence_confidence": "possible",
+					"identity_confidence": "possible",
+					"status": "accepted",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional researcher",
+						"on": "2026-10-22"
+					}
+				}
+			],
+			"relations": [
+				{
+					"id": "fictional-relation",
+					"subject_id": "fictional-person",
+					"type": "kinship",
+					"citations": [
+						{
+							"source_id": "fictional-source",
+							"page": "1"
+						}
+					],
+					"evidence_confidence": "possible",
+					"identity_confidence": "possible",
+					"status": "accepted",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional researcher",
+						"on": "2026-10-22"
+					},
+					"related_name": "Fictional Relative",
+					"relationship_type": "sibling",
+					"family_id": "fictional-family"
+				}
+			]
+		},
+		"issues": [
+			{
+				"pages": {
+					"edition_date": "1938-01-01",
+					"pages": [
+						{
+							"id": "fictional-page",
+							"issue_date": "1938-01-01",
+							"page_number": 1,
+							"image_uri": "fictional-page.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "fictional-heading",
+									"bbox": [10, 0, 100, 10],
+									"transcription": "Fictional notices",
+									"unit_id": null
+								},
+								{
+									"id": "fictional-block",
+									"bbox": [10, 20, 100, 30],
+									"transcription": "Fictional Person sends thanks.",
+									"unit_id": "fictional-item"
+								}
+							]
+						}
+					]
+				},
+				"content_items": {
+					"issue_date": "1938-01-01",
+					"vocabulary_version": "0.1.0",
+					"content_items": [
+						{
+							"id": "fictional-item",
+							"type": "ad",
+							"subtype": "thanks",
+							"printed_title": {
+								"text": "Fictional Person sends thanks.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [10, 20, 100, 30],
+										"text": "Fictional Person sends thanks."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Thanks from Fictional Person",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"subject_ids": ["community_affairs"],
+							"section_id": "fictional-section",
+							"full_text": "Fictional Person sends thanks.",
+							"translation": {
+								"text": "Fictional translated thanks.",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "fictional-page",
+									"block_ids": ["fictional-block"]
+								}
+							],
+							"location_ids": ["fictional-place"],
+							"organization_ids": ["fictional-organization"],
+							"cross_references": [],
+							"event_id": "fictional-event"
+						}
+					],
+					"sections": [
+						{
+							"id": "fictional-section",
+							"printed_title": {
+								"text": "Fictional notices",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [10, 0, 100, 10],
+										"text": "Fictional notices"
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Public notices",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional notices",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 0, 100, 10],
+											"text": "Fictional notices"
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"content_item_ids": ["fictional-item"],
+							"heading_blocks": [
+								{
+									"page_id": "fictional-page",
+									"block_ids": ["fictional-heading"]
+								}
+							]
+						}
+					]
+				},
+				"mentions": {
+					"issue_date": "1938-01-01",
+					"mentions": [
+						{
+							"id": "fictional-mention",
+							"person_id": "fictional-person",
+							"content_item_id": "fictional-item",
+							"printed_name": "Fictional Person",
+							"roles": ["signer", "donor"],
+							"addresses": [
+								{
+									"image_uri": "fictional-page.png",
+									"bbox": [10, 20, 100, 30],
+									"text": "Fictional Person sends thanks."
+								}
+							]
+						}
+					]
+				},
+				"life_events": {
+					"issue_date": "1938-01-01",
+					"life_events": [
+						{
+							"id": "fictional-event",
+							"type": "community_event",
+							"name": "Fictional event",
+							"principal_ids": ["fictional-person"],
+							"date_hebrew": null,
+							"date_gregorian": null,
+							"location_id": "fictional-place",
+							"content_items": [
+								{
+									"content_item_id": "fictional-item",
+									"role": "mention"
+								}
+							],
+							"description": null
+						}
+					]
+				}
+			}
+		]
+	},
+	"models": {
+		"PrintedAddress": ["issues", 0, "mentions", "mentions", 0, "addresses", 0],
+		"TextBasis": ["issues", 0, "content_items", "content_items", 0, "supplied_title", "based_on"],
+		"Authorship": [
+			"issues",
+			0,
+			"content_items",
+			"content_items",
+			0,
+			"supplied_title",
+			"attribution"
+		],
+		"PrintedTitle": ["issues", 0, "content_items", "content_items", 0, "printed_title"],
+		"SuppliedTitle": ["issues", 0, "content_items", "content_items", 0, "supplied_title"],
+		"Translation": ["issues", 0, "content_items", "content_items", 0, "translation"],
+		"ContentItemBlockRef": ["issues", 0, "content_items", "content_items", 0, "page_blocks", 0],
+		"ContentItem": ["issues", 0, "content_items", "content_items", 0],
+		"PrintedSection": ["issues", 0, "content_items", "sections", 0],
+		"ContentItemsData": ["issues", 0, "content_items"],
+		"SharedFact": ["shared_record", "facts", 0],
+		"SourcedRelation": ["shared_record", "relations", 0],
+		"SharedPerson": ["shared_record", "persons", 0],
+		"SharedFamily": ["shared_record", "families", 0],
+		"SharedPlace": ["shared_record", "places", 0],
+		"SharedOrganization": ["shared_record", "organizations", 0],
+		"SharedEvent": ["shared_record", "events", 0],
+		"SharedRecord": ["shared_record"],
+		"IssueMention": ["issues", 0, "mentions", "mentions", 0],
+		"IssueMentionsData": ["issues", 0, "mentions"],
+		"ContentItemRef": ["issues", 0, "life_events", "life_events", 0, "content_items", 0],
+		"IssueLifeEvent": ["issues", 0, "life_events", "life_events", 0],
+		"IssueLifeEventsData": ["issues", 0, "life_events"],
+		"SiteIssue": ["issues", 0],
+		"SiteArchive": []
+	},
+	"cases": [
+		{
+			"name": "PrintedAddress: valid shape",
+			"model": "PrintedAddress",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "PrintedAddress: unknown field",
+			"model": "PrintedAddress",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "TextBasis: valid shape",
+			"model": "TextBasis",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "TextBasis: unknown field",
+			"model": "TextBasis",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "Authorship: valid shape",
+			"model": "Authorship",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "Authorship: unknown field",
+			"model": "Authorship",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "PrintedTitle: valid shape",
+			"model": "PrintedTitle",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "PrintedTitle: unknown field",
+			"model": "PrintedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle: valid shape",
+			"model": "SuppliedTitle",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SuppliedTitle: unknown field",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "Translation: valid shape",
+			"model": "Translation",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "Translation: unknown field",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "ContentItemBlockRef: valid shape",
+			"model": "ContentItemBlockRef",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "ContentItemBlockRef: unknown field",
+			"model": "ContentItemBlockRef",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "ContentItem: valid shape",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "ContentItem: unknown field",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "PrintedSection: valid shape",
+			"model": "PrintedSection",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "PrintedSection: unknown field",
+			"model": "PrintedSection",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "ContentItemsData: valid shape",
+			"model": "ContentItemsData",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "ContentItemsData: unknown field",
+			"model": "ContentItemsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SharedFact: valid shape",
+			"model": "SharedFact",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SharedFact: unknown field",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SourcedRelation: valid shape",
+			"model": "SourcedRelation",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SourcedRelation: unknown field",
+			"model": "SourcedRelation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SharedPerson: valid shape",
+			"model": "SharedPerson",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SharedPerson: unknown field",
+			"model": "SharedPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SharedFamily: valid shape",
+			"model": "SharedFamily",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SharedFamily: unknown field",
+			"model": "SharedFamily",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SharedPlace: valid shape",
+			"model": "SharedPlace",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SharedPlace: unknown field",
+			"model": "SharedPlace",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SharedOrganization: valid shape",
+			"model": "SharedOrganization",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SharedOrganization: unknown field",
+			"model": "SharedOrganization",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SharedEvent: valid shape",
+			"model": "SharedEvent",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SharedEvent: unknown field",
+			"model": "SharedEvent",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SharedRecord: valid shape",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SharedRecord: unknown field",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "IssueMention: valid shape",
+			"model": "IssueMention",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "IssueMention: unknown field",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "IssueMentionsData: valid shape",
+			"model": "IssueMentionsData",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "IssueMentionsData: unknown field",
+			"model": "IssueMentionsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "ContentItemRef: valid shape",
+			"model": "ContentItemRef",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "ContentItemRef: unknown field",
+			"model": "ContentItemRef",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "IssueLifeEvent: valid shape",
+			"model": "IssueLifeEvent",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "IssueLifeEvent: unknown field",
+			"model": "IssueLifeEvent",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "IssueLifeEventsData: valid shape",
+			"model": "IssueLifeEventsData",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "IssueLifeEventsData: unknown field",
+			"model": "IssueLifeEventsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SiteIssue: valid shape",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SiteIssue: unknown field",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "SiteArchive: valid shape",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SiteArchive: unknown field",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "old category forbidden",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["category"],
+					"value": "Thanks"
+				}
+			]
+		},
+		{
+			"name": "person copies forbidden",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons"],
+					"value": [
+						{
+							"id": "fictional-person",
+							"name": "Fictional Person",
+							"names": [
+								{
+									"value": "Fictional Person",
+									"kind": "printed",
+									"script": "Latn"
+								}
+							],
+							"gender": "unknown",
+							"fate": {
+								"outcome": "unknown",
+								"confidence": "possible",
+								"rests_on": [],
+								"review": {
+									"state": "pending"
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "old type forbidden",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "congratulation"
+				}
+			]
+		},
+		{
+			"name": "unknown subtype",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "invented"
+				}
+			]
+		},
+		{
+			"name": "unknown subject",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subject_ids", 0],
+					"value": "invented"
+				}
+			]
+		},
+		{
+			"name": "duplicate subject",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subject_ids"],
+					"value": ["community_affairs", "community_affairs"]
+				}
+			]
+		},
+		{
+			"name": "no printed title",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["printed_title"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "nullable optional fields",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": null
+				},
+				{
+					"path": ["printed_title"],
+					"value": null
+				},
+				{
+					"path": ["section_id"],
+					"value": null
+				},
+				{
+					"path": ["translation"],
+					"value": null
+				},
+				{
+					"path": ["event_id"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "no subjects or translation",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subject_ids"],
+					"value": []
+				},
+				{
+					"path": ["translation"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "empty region refs",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["page_blocks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "block offset beyond text",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["block_breaks"],
+					"value": [10000]
+				}
+			]
+		},
+		{
+			"name": "repeated block offset",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["block_breaks"],
+					"value": [0, 0]
+				}
+			]
+		},
+		{
+			"name": "negative pixel",
+			"model": "PrintedAddress",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["bbox", 0],
+					"value": -1
+				}
+			]
+		},
+		{
+			"name": "zero extent",
+			"model": "PrintedAddress",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["bbox", 2],
+					"value": 0
+				}
+			]
+		},
+		{
+			"name": "invented printed title",
+			"model": "PrintedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["text"],
+					"value": "Composed title"
+				}
+			]
+		},
+		{
+			"name": "missing printed words",
+			"model": "PrintedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["addresses"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "unidentified writer",
+			"model": "Authorship",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["by"],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "invalid author kind",
+			"model": "Authorship",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "unknown"
+				}
+			]
+		},
+		{
+			"name": "invalid authorship day",
+			"model": "Authorship",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["on"],
+					"value": "2025-02-29"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle needs exact source text",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["based_on", "source_text"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle needs a printed address",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["based_on", "addresses"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle needs attribution",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["attribution"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle English required",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "yi"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle model writer",
+			"model": "SuppliedTitle",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["attribution", "kind"],
+					"value": "model"
+				}
+			]
+		},
+		{
+			"name": "Translation needs exact source text",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["based_on", "source_text"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Translation needs a printed address",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["based_on", "addresses"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "Translation needs attribution",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["attribution"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Translation English required",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "yi"
+				}
+			]
+		},
+		{
+			"name": "Translation model writer",
+			"model": "Translation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["attribution", "kind"],
+					"value": "model"
+				}
+			]
+		},
+		{
+			"name": "empty basis for unreadable patch",
+			"model": "TextBasis",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["source_text"],
+					"value": ""
+				},
+				{
+					"path": ["addresses", 0, "text"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "empty blocks",
+			"model": "ContentItemBlockRef",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["block_ids"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "empty section",
+			"model": "PrintedSection",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_item_ids"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "repeated section member",
+			"model": "PrintedSection",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_item_ids"],
+					"value": ["fictional-item", "fictional-item"]
+				}
+			]
+		},
+		{
+			"name": "unknown section",
+			"model": "ContentItemsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items", 0, "section_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown section member",
+			"model": "ContentItemsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sections", 0, "content_item_ids", 0],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "section points to unassigned item",
+			"model": "ContentItemsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items", 0, "section_id"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "duplicate content item",
+			"model": "ContentItemsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items"],
+					"value": [
+						{
+							"id": "fictional-item",
+							"type": "ad",
+							"subtype": "thanks",
+							"printed_title": {
+								"text": "Fictional Person sends thanks.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [10, 20, 100, 30],
+										"text": "Fictional Person sends thanks."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Thanks from Fictional Person",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"subject_ids": ["community_affairs"],
+							"section_id": "fictional-section",
+							"full_text": "Fictional Person sends thanks.",
+							"translation": {
+								"text": "Fictional translated thanks.",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "fictional-page",
+									"block_ids": ["fictional-block"]
+								}
+							],
+							"location_ids": ["fictional-place"],
+							"organization_ids": ["fictional-organization"],
+							"cross_references": [],
+							"event_id": "fictional-event"
+						},
+						{
+							"id": "fictional-item",
+							"type": "ad",
+							"subtype": "thanks",
+							"printed_title": {
+								"text": "Fictional Person sends thanks.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [10, 20, 100, 30],
+										"text": "Fictional Person sends thanks."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Thanks from Fictional Person",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"subject_ids": ["community_affairs"],
+							"section_id": "fictional-section",
+							"full_text": "Fictional Person sends thanks.",
+							"translation": {
+								"text": "Fictional translated thanks.",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional Person sends thanks.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [10, 20, 100, 30],
+											"text": "Fictional Person sends thanks."
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional writer",
+									"on": "2026-10-22",
+									"kind": "person"
+								}
+							},
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "fictional-page",
+									"block_ids": ["fictional-block"]
+								}
+							],
+							"location_ids": ["fictional-place"],
+							"organization_ids": ["fictional-organization"],
+							"cross_references": [],
+							"event_id": "fictional-event"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "unknown cross reference",
+			"model": "ContentItemsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items", 0, "cross_references"],
+					"value": [
+						{
+							"target_id": "missing",
+							"confidence": 1,
+							"relationship": "continuation",
+							"evidence": "Fictional"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "role required",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["roles"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "invalid mention role",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["roles"],
+					"value": ["bride"]
+				}
+			]
+		},
+		{
+			"name": "duplicate mention role",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["roles", 1],
+					"value": "signer"
+				}
+			]
+		},
+		{
+			"name": "name not printed",
+			"model": "IssueMention",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["printed_name"],
+					"value": "Unprinted Person"
+				}
+			]
+		},
+		{
+			"name": "no person copies in issue",
+			"model": "IssueMentionsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons"],
+					"value": [
+						{
+							"id": "fictional-person",
+							"name": "Fictional Person",
+							"names": [
+								{
+									"value": "Fictional Person",
+									"kind": "printed",
+									"script": "Latn"
+								}
+							],
+							"gender": "unknown",
+							"fate": {
+								"outcome": "unknown",
+								"confidence": "possible",
+								"rests_on": [],
+								"review": {
+									"state": "pending"
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "duplicate mention",
+			"model": "IssueMentionsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions"],
+					"value": [
+						{
+							"id": "fictional-mention",
+							"person_id": "fictional-person",
+							"content_item_id": "fictional-item",
+							"printed_name": "Fictional Person",
+							"roles": ["signer", "donor"],
+							"addresses": [
+								{
+									"image_uri": "fictional-page.png",
+									"bbox": [10, 20, 100, 30],
+									"text": "Fictional Person sends thanks."
+								}
+							]
+						},
+						{
+							"id": "fictional-mention",
+							"person_id": "fictional-person",
+							"content_item_id": "fictional-item",
+							"printed_name": "Fictional Person",
+							"roles": ["signer", "donor"],
+							"addresses": [
+								{
+									"image_uri": "fictional-page.png",
+									"bbox": [10, 20, 100, 30],
+									"text": "Fictional Person sends thanks."
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "duplicate event",
+			"model": "IssueLifeEventsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["life_events"],
+					"value": [
+						{
+							"id": "fictional-event",
+							"type": "community_event",
+							"name": "Fictional event",
+							"principal_ids": ["fictional-person"],
+							"date_hebrew": null,
+							"date_gregorian": null,
+							"location_id": "fictional-place",
+							"content_items": [
+								{
+									"content_item_id": "fictional-item",
+									"role": "mention"
+								}
+							],
+							"description": null
+						},
+						{
+							"id": "fictional-event",
+							"type": "community_event",
+							"name": "Fictional event",
+							"principal_ids": ["fictional-person"],
+							"date_hebrew": null,
+							"date_gregorian": null,
+							"location_id": "fictional-place",
+							"content_items": [
+								{
+									"content_item_id": "fictional-item",
+									"role": "mention"
+								}
+							],
+							"description": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "old unit reference forbidden",
+			"model": "IssueLifeEvent",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_units"],
+					"value": [
+						{
+							"unit_id": "fictional-item",
+							"role": "mention"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "unknown source",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "citations", 0, "source_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown subject",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "subject_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown birth place",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "place_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown fact organization",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "organization_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown fact event",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "event_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown fact relative",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "related_person_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown relation family",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["relations", 0, "family_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown relation source",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["relations", 0, "citations", 0, "source_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "nonperson relation subject",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["relations", 0, "subject_id"],
+					"value": "fictional-family"
+				}
+			]
+		},
+		{
+			"name": "self relation",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["relations", 0, "related_person_id"],
+					"value": "fictional-person"
+				}
+			]
+		},
+		{
+			"name": "fate on foreign fact",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "fate", "rests_on"],
+					"value": ["fictional-fact"]
+				},
+				{
+					"path": ["facts", 0, "subject_id"],
+					"value": "fictional-family"
+				}
+			]
+		},
+		{
+			"name": "unknown name source",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "names", 0, "citations"],
+					"value": [
+						{
+							"source_id": "missing",
+							"page": "1"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "duplicate shared id",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["families", 0, "id"],
+					"value": "fictional-person"
+				}
+			]
+		},
+		{
+			"name": "unknown place parent",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["places", 0, "parent_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "place cycle",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["places", 0, "parent_id"],
+					"value": "fictional-place"
+				}
+			]
+		},
+		{
+			"name": "SharedFact sources required",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["citations"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "SharedFact locator required",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["citations", 0, "page"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SharedFact invented standing",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["status"],
+					"value": "proposed"
+				}
+			]
+		},
+		{
+			"name": "SharedFact approval needs reviewer",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["review", "state"],
+					"value": "approved"
+				}
+			]
+		},
+		{
+			"name": "SourcedRelation sources required",
+			"model": "SourcedRelation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["citations"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "SourcedRelation locator required",
+			"model": "SourcedRelation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["citations", 0, "page"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SourcedRelation invented standing",
+			"model": "SourcedRelation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["status"],
+					"value": "proposed"
+				}
+			]
+		},
+		{
+			"name": "SourcedRelation approval needs reviewer",
+			"model": "SourcedRelation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["review", "state"],
+					"value": "approved"
+				}
+			]
+		},
+		{
+			"name": "image needs path",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "other"
+				},
+				{
+					"path": ["place_id"],
+					"remove": true
+				},
+				{
+					"path": ["representation"],
+					"value": "image"
+				},
+				{
+					"path": ["proposed_type"],
+					"value": "headshot"
+				}
+			]
+		},
+		{
+			"name": "prose has no released type",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["representation"],
+					"value": "prose"
+				},
+				{
+					"path": ["value"],
+					"value": "Unreviewed prose"
+				}
+			]
+		},
+		{
+			"name": "unresolved name retained",
+			"model": "SourcedRelation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["related_name"],
+					"value": "Unresolved Fictional Relative"
+				}
+			]
+		},
+		{
+			"name": "missing relative",
+			"model": "SourcedRelation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["related_name"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "bad coordinates",
+			"model": "SharedPlace",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["coordinates", 0],
+					"value": 100
+				},
+				{
+					"path": ["coordinates", 1],
+					"value": 0
+				}
+			]
+		},
+		{
+			"name": "issue dates differ",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "issue_date"],
+					"value": "1938-01-02"
+				}
+			]
+		},
+		{
+			"name": "duplicate region owner",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items", "sections", 0, "heading_blocks", 0, "block_ids"],
+					"value": ["fictional-heading", "fictional-block"]
+				}
+			]
+		},
+		{
+			"name": "unowned region",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "extra",
+							"bbox": [0, 60, 10, 10],
+							"transcription": "Extra",
+							"unit_id": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "wrong block page",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "page_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "block owner differs",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "unit_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "wrong copied text",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Later text"
+				}
+			]
+		},
+		{
+			"name": "unknown mention content item",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "content_item_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "mention wrong picture",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "image_uri"],
+					"value": "other.png"
+				}
+			]
+		},
+		{
+			"name": "mention outside content item",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "bbox", 0],
+					"value": 150
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "bbox", 1],
+					"value": 200
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "bbox", 2],
+					"value": 10
+				},
+				{
+					"path": ["mentions", "mentions", 0, "addresses", 0, "bbox", 3],
+					"value": 10
+				}
+			]
+		},
+		{
+			"name": "unknown life event item",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["life_events", "life_events", 0, "content_items", 0, "content_item_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "stale translation remains identifiable",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["content_items", "content_items", 0, "translation", "based_on", "source_text"],
+					"value": "Earlier reading"
+				}
+			]
+		},
+		{
+			"name": "unknown mention person",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "mentions", "mentions", 0, "person_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown principal",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "life_events", "life_events", 0, "principal_ids", 0],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown event place",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "life_events", "life_events", 0, "location_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown item place",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "location_ids", 0],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown item organization",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "organization_ids", 0],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "unknown item event",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "event_id"],
+					"value": "missing"
+				}
+			]
+		},
+		{
+			"name": "event type disagreement",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "type"],
+					"value": "wedding"
+				}
+			]
+		},
+		{
+			"name": "duplicate issue",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues"],
+					"value": [
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "fictional-page",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "fictional-heading",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "fictional-block",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "fictional-item"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "fictional-item",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-block"]
+											}
+										],
+										"location_ids": ["fictional-place"],
+										"organization_ids": ["fictional-organization"],
+										"cross_references": [],
+										"event_id": "fictional-event"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["fictional-item"],
+										"heading_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-heading"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "fictional-person",
+										"content_item_id": "fictional-item",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										]
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "fictional-event",
+										"type": "community_event",
+										"name": "Fictional event",
+										"principal_ids": ["fictional-person"],
+										"date_hebrew": null,
+										"date_gregorian": null,
+										"location_id": "fictional-place",
+										"content_items": [
+											{
+												"content_item_id": "fictional-item",
+												"role": "mention"
+											}
+										],
+										"description": null
+									}
+								]
+							}
+						},
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "fictional-page",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "fictional-heading",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "fictional-block",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "fictional-item"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "fictional-item",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-block"]
+											}
+										],
+										"location_ids": ["fictional-place"],
+										"organization_ids": ["fictional-organization"],
+										"cross_references": [],
+										"event_id": "fictional-event"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["fictional-item"],
+										"heading_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-heading"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "fictional-person",
+										"content_item_id": "fictional-item",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										]
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "fictional-event",
+										"type": "community_event",
+										"name": "Fictional event",
+										"principal_ids": ["fictional-person"],
+										"date_hebrew": null,
+										"date_gregorian": null,
+										"location_id": "fictional-place",
+										"content_items": [
+											{
+												"content_item_id": "fictional-item",
+												"role": "mention"
+											}
+										],
+										"description": null
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "subtype wedding_greeting parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "wedding_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype wedding_greeting wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "wedding_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype engagement_greeting parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "engagement_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype engagement_greeting wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "engagement_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype birth_greeting parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "birth_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype birth_greeting wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "birth_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype bar_mitzvah_greeting parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "bar_mitzvah_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype bar_mitzvah_greeting wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "bar_mitzvah_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype new_year_greeting parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "new_year_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype new_year_greeting wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "new_year_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype departure_greeting parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "departure_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype departure_greeting wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "departure_greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype greeting parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype greeting wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "greeting"
+				}
+			]
+		},
+		{
+			"name": "subtype thanks parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "subtype thanks wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				}
+			]
+		},
+		{
+			"name": "subtype meeting_notice parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "meeting_notice"
+				}
+			]
+		},
+		{
+			"name": "subtype meeting_notice wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "meeting_notice"
+				}
+			]
+		},
+		{
+			"name": "subtype announcement parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "announcement"
+				}
+			]
+		},
+		{
+			"name": "subtype announcement wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "announcement"
+				}
+			]
+		},
+		{
+			"name": "subtype appeal parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "appeal"
+				}
+			]
+		},
+		{
+			"name": "subtype appeal wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "appeal"
+				}
+			]
+		},
+		{
+			"name": "subtype commercial_advertisement parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "commercial_advertisement"
+				}
+			]
+		},
+		{
+			"name": "subtype commercial_advertisement wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "commercial_advertisement"
+				}
+			]
+		},
+		{
+			"name": "subtype condolence parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "death_notice"
+				},
+				{
+					"path": ["subtype"],
+					"value": "condolence"
+				}
+			]
+		},
+		{
+			"name": "subtype condolence wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "condolence"
+				}
+			]
+		},
+		{
+			"name": "subtype memorial_notice parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "death_notice"
+				},
+				{
+					"path": ["subtype"],
+					"value": "memorial_notice"
+				}
+			]
+		},
+		{
+			"name": "subtype memorial_notice wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "memorial_notice"
+				}
+			]
+		},
+		{
+			"name": "subtype death_announcement parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "death_notice"
+				},
+				{
+					"path": ["subtype"],
+					"value": "death_announcement"
+				}
+			]
+		},
+		{
+			"name": "subtype death_announcement wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "death_announcement"
+				}
+			]
+		},
+		{
+			"name": "subtype editorial parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "editorial"
+				}
+			]
+		},
+		{
+			"name": "subtype editorial wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "editorial"
+				}
+			]
+		},
+		{
+			"name": "subtype opinion parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "opinion"
+				}
+			]
+		},
+		{
+			"name": "subtype opinion wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "opinion"
+				}
+			]
+		},
+		{
+			"name": "subtype letter parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "letter"
+				}
+			]
+		},
+		{
+			"name": "subtype letter wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "letter"
+				}
+			]
+		},
+		{
+			"name": "subtype poem parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "poem"
+				}
+			]
+		},
+		{
+			"name": "subtype poem wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "poem"
+				}
+			]
+		},
+		{
+			"name": "subtype sketch parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "sketch"
+				}
+			]
+		},
+		{
+			"name": "subtype sketch wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "sketch"
+				}
+			]
+		},
+		{
+			"name": "subtype humour parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "entertainment"
+				},
+				{
+					"path": ["subtype"],
+					"value": "humour"
+				}
+			]
+		},
+		{
+			"name": "subtype humour wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "humour"
+				}
+			]
+		},
+		{
+			"name": "Impresso article",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso ad",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso image",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "image"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso table",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "table"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso death_notice",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "death_notice"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso weather",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "weather"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso page",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "page"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso radio_bulletin",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "radio_bulletin"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso radio_broadcast_episode",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "radio_broadcast_episode"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso chronicle",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "chronicle"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso chapter",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "chapter"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso discussion",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "discussion"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Impresso entertainment",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "entertainment"
+				},
+				{
+					"path": ["subtype"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "all hand-written forms remain sourced and pending",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["facts"],
+					"value": [
+						{
+							"id": "fictional-fact",
+							"subject_id": "fictional-person",
+							"type": "birth",
+							"place_id": "fictional-place",
+							"representation": "structured",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							}
+						},
+						{
+							"id": "fictional-biography",
+							"subject_id": "fictional-person",
+							"type": "other",
+							"representation": "prose",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							},
+							"value": "Fictional biography.\n\nUnreviewed prose.",
+							"proposed_type": "biographical_narrative",
+							"qualifiers": {
+								"original_writer": "fictional model"
+							}
+						},
+						{
+							"id": "fictional-ghetto",
+							"subject_id": "fictional-person",
+							"type": "ghetto_role",
+							"representation": "structured",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							},
+							"value": "Fictional role"
+						},
+						{
+							"id": "fictional-partisan",
+							"subject_id": "fictional-person",
+							"type": "partisan_service",
+							"representation": "structured",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							},
+							"value": "Fictional unit",
+							"qualifiers": {
+								"rank": "Fictional rank",
+								"alternate_unit": "Fictional alternate unit",
+								"alias": "Fictional alias"
+							}
+						},
+						{
+							"id": "fictional-activity",
+							"subject_id": "fictional-person",
+							"type": "other",
+							"representation": "prose",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							},
+							"value": "Unreviewed account of fictional activities.",
+							"proposed_type": "partisan_activity"
+						},
+						{
+							"id": "fictional-photo",
+							"subject_id": "fictional-person",
+							"type": "other",
+							"representation": "image",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							},
+							"value": "/images/family/fictional.jpg",
+							"proposed_type": "headshot"
+						},
+						{
+							"id": "fictional-detail",
+							"subject_id": "fictional-person",
+							"type": "other",
+							"representation": "prose",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							},
+							"value": "Unreviewed fictional research gap.",
+							"proposed_type": "additional_detail",
+							"qualifiers": {
+								"label": "Research note"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "facts about families and relations",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["facts"],
+					"value": [
+						{
+							"id": "fictional-fact",
+							"subject_id": "fictional-person",
+							"type": "birth",
+							"place_id": "fictional-place",
+							"representation": "structured",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							}
+						},
+						{
+							"id": "family-fact",
+							"subject_id": "fictional-family",
+							"type": "birth",
+							"place_id": "fictional-place",
+							"representation": "structured",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							}
+						},
+						{
+							"id": "relation-fact",
+							"subject_id": "fictional-relation",
+							"type": "birth",
+							"place_id": "fictional-place",
+							"representation": "structured",
+							"citations": [
+								{
+									"source_id": "fictional-source",
+									"page": "1"
+								}
+							],
+							"evidence_confidence": "possible",
+							"identity_confidence": "possible",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-22"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"model": "SourcedRelation",
+			"name": "unreleased relation type is preserved",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "other"
+				},
+				{
+					"path": ["proposed_type"],
+					"value": "step_parent_of"
+				},
+				{
+					"path": ["relationship_type"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"model": "SourcedRelation",
+			"name": "ambiguous relative type is preserved",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "other"
+				},
+				{
+					"path": ["proposed_type"],
+					"value": "sibling_of_or_parent_of"
+				},
+				{
+					"path": ["relationship_type"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"model": "SourcedRelation",
+			"name": "unreleased relation still needs relative",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "other"
+				},
+				{
+					"path": ["proposed_type"],
+					"value": "step_parent_of"
+				},
+				{
+					"path": ["relationship_type"],
+					"remove": true
+				},
+				{
+					"path": ["related_name"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"model": "SourcedRelation",
+			"name": "unreleased relation cannot assert a released type",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "other"
+				},
+				{
+					"path": ["proposed_type"],
+					"value": "step_parent_of"
+				},
+				{
+					"path": ["relationship_type"],
+					"remove": true
+				},
+				{
+					"path": ["relationship_type"],
+					"value": "parent_of"
+				}
+			]
+		},
+		{
+			"model": "ContentItem",
+			"name": "integer-valued JSON offset",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["block_breaks"],
+					"value": [0.0]
+				}
+			]
+		},
+		{
+			"model": "ContentItem",
+			"name": "fractional offset",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["block_breaks"],
+					"value": [0.5]
+				}
+			]
+		},
+		{
+			"model": "ContentItem",
+			"name": "boolean offset",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["block_breaks"],
+					"value": [true]
+				}
+			]
+		},
+		{
+			"model": "ContentItem",
+			"name": "string offset",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["block_breaks"],
+					"value": ["0"]
+				}
+			]
+		}
+	]
+}
