@@ -13,7 +13,7 @@ This repo shares schemas between the Pruzhany Digital Archive's SvelteKit fronte
 
 - **No test under `zod/` may need anything but bun.** pruzhany-svelte runs every `*.test.ts` under `zod/` through its `src/lib/schemas` symlink, with bun only (#15). Pilot and cross-language tests live beside their pilot and are run by `bin/verify`.
 - **New vocabulary types are approved by the owner, in batches** (#16): each proposed type with two or three real examples and its mapping. Until then a fact stays `other` with its `proposed_type`. A released type is never removed or renamed.
-- **A change here is checked against its consumers before it merges**: pruzhany-svelte (`bun run test:run`, `bun run check`, `bun run validate:data` with its submodule pointed at the branch) and pruzhany-press (`just test-contract`, which needs `bun install` in its `tests/contract/` first, or it only skips).
+- **A change here is checked against its consumers before it merges**: pruzhany-svelte (`bun run test:run`, `bun run check`, `bun run validate:data` with its submodule pointed at the branch). The Zod↔Pydantic lockstep runs here, in `bin/verify` (step `contract`), since pruzhany-press was retired on 2026-10-22.
 
 `bin/verify` is the single verification entry point, including the standards alignment gate. Its header describes the steps, pinned toolchain and private consumer drift gate.
 
