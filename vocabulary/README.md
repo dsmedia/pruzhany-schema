@@ -8,6 +8,8 @@ checks each subtype's single Impresso parent and the owner's fixed parents.
 The type list is read from `impresso_types`; each fixed parent's type and decision
 date are recorded in that subtype's `owner_fixed_parent` value. The checker reads
 these decisions from the vocabulary rather than inferring them from subtype names.
+Since 2026-10-22 the owner has fixed the parent of every subtype listed (the last ten,
+announcement to humour, approved as proposed); the subtypes themselves stay proposed.
 The Impresso type list is copied from `pruzhany-steps/schemas/issue.schema.json`,
 `$defs.metadata.properties.tp.enum`, read 2026-10-22. There is no new local base type.
 

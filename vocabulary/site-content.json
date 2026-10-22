@@ -173,7 +173,11 @@
           "local": "pc:subtype_announcement",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "appeal",
@@ -185,7 +189,11 @@
           "local": "pc:subtype_appeal",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "commercial_advertisement",
@@ -197,7 +205,11 @@
           "local": "pc:subtype_commercial_advertisement",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "ad"
+        "parent_type": "ad",
+        "owner_fixed_parent": {
+          "type": "ad",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "condolence",
@@ -241,7 +253,11 @@
           "local": "pc:subtype_death_announcement",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "death_notice"
+        "parent_type": "death_notice",
+        "owner_fixed_parent": {
+          "type": "death_notice",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "editorial",
@@ -253,7 +269,11 @@
           "local": "pc:subtype_editorial",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "article"
+        "parent_type": "article",
+        "owner_fixed_parent": {
+          "type": "article",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "opinion",
@@ -265,7 +285,11 @@
           "local": "pc:subtype_opinion",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "article"
+        "parent_type": "article",
+        "owner_fixed_parent": {
+          "type": "article",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "letter",
@@ -277,7 +301,11 @@
           "local": "pc:subtype_letter",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "article"
+        "parent_type": "article",
+        "owner_fixed_parent": {
+          "type": "article",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "poem",
@@ -289,7 +317,11 @@
           "local": "pc:subtype_poem",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "article"
+        "parent_type": "article",
+        "owner_fixed_parent": {
+          "type": "article",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "sketch",
@@ -301,7 +333,11 @@
           "local": "pc:subtype_sketch",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "article"
+        "parent_type": "article",
+        "owner_fixed_parent": {
+          "type": "article",
+          "on": "2026-10-22"
+        }
       },
       {
         "id": "humour",
@@ -313,7 +349,11 @@
           "local": "pc:subtype_humour",
           "reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
         },
-        "parent_type": "entertainment"
+        "parent_type": "entertainment",
+        "owner_fixed_parent": {
+          "type": "entertainment",
+          "on": "2026-10-22"
+        }
       }
     ],
     "subjects": [

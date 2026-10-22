@@ -229,6 +229,8 @@ class VocabularyTests(unittest.TestCase):
         data['impresso_types'].append('fictional_type')
         entry = next(e for e in data['groups']['content_item_subtypes'] if e['id'] == 'poem')
         entry['parent_type'] = 'fictional_type'
+        # poem's parent is fixed by the owner, so the recorded decision moves with it.
+        entry['owner_fixed_parent']['type'] = 'fictional_type'
         path.write_text(json.dumps(data), encoding='utf-8')
         self.assertEqual(self.check(), [])
         data['impresso_types'].remove('fictional_type')
