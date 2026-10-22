@@ -49,7 +49,10 @@ class PrintedSection(Strict):
     """A printed heading and the content items beneath it, not a side list."""
     id: Text
     printed_title: PrintedTitle
-    supplied_title: SuppliedTitle
+    # Pydantic 2.12, "Fields / Default values", read 2026-10-22:
+    # https://pydantic.dev/docs/validation/2.12/concepts/fields/#default-values
+    # None in the type permits null; the default also permits omission.
+    supplied_title: SuppliedTitle | None = None
     content_item_ids: list[Text] = Field(min_length=1)
     heading_blocks: list[ContentItemBlockRef] = Field(min_length=1)
 

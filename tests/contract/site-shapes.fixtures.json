@@ -3664,6 +3664,1201 @@
 					"value": []
 				}
 			]
+		},
+		{
+			"name": "section supplied title may be omitted",
+			"model": "PrintedSection",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["supplied_title"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "section supplied title may be null",
+			"model": "PrintedSection",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["supplied_title"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "section printed title remains required",
+			"model": "PrintedSection",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["printed_title"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "section printed title cannot be null",
+			"model": "PrintedSection",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["printed_title"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "content item supplied title remains required",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["supplied_title"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "content item supplied title cannot be null",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["supplied_title"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "archive with a section lacking a supplied title",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["issues", 0, "content_items", "sections", 0, "supplied_title"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "archive with a null section supplied title",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["issues", 0, "content_items", "sections", 0, "supplied_title"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "present section supplied title still needs a heading address",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": [
+						"issues",
+						0,
+						"content_items",
+						"sections",
+						0,
+						"supplied_title",
+						"based_on",
+						"addresses",
+						0,
+						"image_uri"
+					],
+					"value": "other-fictional-page.png"
+				}
+			]
+		},
+		{
+			"name": "printed lines may be preserved",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA short note.\nAnother line."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\nA short note.\nAnother line."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "printed LF may become one space",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA short note.\nAnother line."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A short note. Another line."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "ordinary line boundary cannot disappear",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA short\nnote."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A shortnote."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "broken word joins within a region",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA co-\noperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A cooperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "broken word may keep its maqaf",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA יום־\nטוב."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A יום־טוב."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "broken word may drop its maqaf",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA מיט־\nגליד."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A מיטגליד."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "unjoined broken word keeps its sign",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA co-\noperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A co- operative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "doubled Latin break sign may become one",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA co-\n-operative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A co-operative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "dropping a break sign without joining fails",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA co-\noperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A co operative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "ordinary spaces cannot be removed",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA co operative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A cooperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "internal punctuation cannot be removed",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA well-known guest."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A wellknown guest."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "repeated spaces cannot be normalised",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA  short note."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A short note."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "joined text still cannot change letters",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA co-\noperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A cxoperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "joined text still cannot change punctuation",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks.\nA co-\noperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A cooperative opens!"
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "extra trailing newline is not region text",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\n"
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "single region also accepts an explicit zero start",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0]
+				}
+			]
+		},
+		{
+			"name": "single region cannot start after zero",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks", 1, "transcription"],
+					"value": "Fictional Person sends thanks."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [1]
+				}
+			]
+		},
+		{
+			"name": "hand-made blank-line joins retain printed lines",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA short note.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another\nregion.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\nA short note.\n\nAnother\nregion."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 46]
+				}
+			]
+		},
+		{
+			"name": "multiple regions may flatten printed lines",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA short note.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another\nregion.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A short note.\n\nAnother region."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 46]
+				}
+			]
+		},
+		{
+			"name": "multiple regions require their starts",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA short note.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another\nregion.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\nA short note.\n\nAnother\nregion."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "region starts must point to the actual boundaries",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA short note.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another\nregion.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\nA short note.\n\nAnother\nregion."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 3]
+				}
+			]
+		},
+		{
+			"name": "all regions must have exactly one start",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA short note.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another\nregion.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\nA short note.\n\nAnother\nregion."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 3, 7]
+				}
+			]
+		},
+		{
+			"name": "multiple regions cannot omit the zero start",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA short note.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another\nregion.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\nA short note.\n\nAnother\nregion."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [46]
+				}
+			]
+		},
+		{
+			"name": "region separator must be two newlines",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Another region.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. Another region."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 31]
+				}
+			]
+		},
+		{
+			"name": "broken word crossing regions moves to the following segment",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA co-",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "operative opens.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A\n\ncooperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 34]
+				}
+			]
+		},
+		{
+			"name": "cross-region join cannot lose its first half",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA co-",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "operative opens.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A\n\noperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 34]
+				}
+			]
+		},
+		{
+			"name": "cross-region join cannot move into the preceding segment",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA co-",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "operative opens.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A cooperative\n\nopens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 46]
+				}
+			]
+		},
+		{
+			"name": "unbroken word cannot move between regions",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA first",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "second region.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A\n\nfirst second region."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 34]
+				}
+			]
+		},
+		{
+			"name": "cross-region join may retain its maqaf",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\nA יום־",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "טוב.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A\n\nיום־טוב."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 34]
+				}
+			]
+		},
+		{
+			"name": "region order cannot change",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "Second region.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-3",
+							"bbox": [10, 100, 100, 30],
+							"transcription": "Third region.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2", "fictional-block-3"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\n\nThird region.\n\nSecond region."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 32, 47]
+				}
+			]
+		},
+		{
+			"name": "region starts count Unicode code points during joins",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\n📜 co-",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "operative opens.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. 📜\n\ncooperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 34]
+				}
+			]
+		},
+		{
+			"name": "UTF-16 region offsets are invalid",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.\n📜 co-",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "operative opens.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. 📜\n\ncooperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 35]
+				}
+			]
+		},
+		{
+			"name": "empty final region has no added separator in writer text",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 30]
+				}
+			]
+		},
+		{
+			"name": "legacy blank-line join may include an empty final region",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks.",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks.\n\n"
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 32]
+				}
+			]
+		},
+		{
+			"name": "cross-region join cannot erase a tab",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "fictional-heading",
+							"bbox": [10, 0, 100, 10],
+							"transcription": "Fictional notices",
+							"unit_id": null
+						},
+						{
+							"id": "fictional-block",
+							"bbox": [10, 20, 100, 30],
+							"transcription": "Fictional Person sends thanks. A\tco-",
+							"unit_id": "fictional-item"
+						},
+						{
+							"id": "fictional-block-2",
+							"bbox": [10, 60, 100, 30],
+							"transcription": "operative opens.",
+							"unit_id": "fictional-item"
+						}
+					]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "page_blocks", 0, "block_ids"],
+					"value": ["fictional-block", "fictional-block-2"]
+				},
+				{
+					"path": ["content_items", "content_items", 0, "full_text"],
+					"value": "Fictional Person sends thanks. A\n\ncooperative opens."
+				},
+				{
+					"path": ["content_items", "content_items", 0, "block_breaks"],
+					"value": [0, 34]
+				}
+			]
 		}
 	]
 }
