@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "released",
-  "released_on": "2026-10-20",
+  "released_on": "2026-10-22",
   "groups": {
     "fact_types": [
       {
@@ -741,6 +741,16 @@
       }
     ],
     "claim_status": [
+      {
+        "id": "proposed",
+        "label": "Proposed",
+        "definition": "An assertion put forward and not yet accepted, disputed or rejected; never published.",
+        "added_in": "1.1.0",
+        "mapping": {
+          "local": "pc:claim_status_proposed",
+          "reason": "Application-specific claim status category; no exact pinned ontology value is established."
+        }
+      },
       {
         "id": "accepted",
         "label": "Accepted",
@@ -1513,5 +1523,5 @@
       }
     ]
   },
-  "approved_by": "the owner, in advance, as recommended (#16)"
+  "approved_by": "the owner, in advance, as recommended (#16); 1.1.0's claim status proposed by the owner's word of 2026-10-22"
 }
