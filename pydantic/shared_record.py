@@ -1,9 +1,55 @@
 """One shared record, built on production sourced facts and standing."""
-from typing import Annotated, Literal
+from typing import Annotated, Literal, get_args
 from pydantic import Field, model_validator
-from .sourced_entities import Strict, Text, Fact, Name, Fate, Source, Attribution
-from .sourced_entities_vocabulary import Gender, LocationTypes, EventTypes
+from .sourced_entities import Strict, Text, Date, Day, Fact, Name, Fate, Source, Attribution
+from .sourced_entities_vocabulary import Gender, LocationTypes, LifeEventTypes, NameKinds
+from .site_content_vocabulary import EventParts, ProposedNameKinds, EVENT_PART_KINDS
 from .site_common import unique_ids
+
+
+class SharedName(Name):
+    """Site-next description names; the production Name contract stays unchanged."""
+    kind: NameKinds | Literal['other']
+    proposed_type: ProposedNameKinds | None = None
+    attribution: Attribution | None = None
+
+    @model_validator(mode='after')
+    def proposed_name(self):
+        if (self.kind == 'other') != bool(self.proposed_type):
+            raise ValueError('proposed name kind exactly for other')
+        if self.proposed_type == 'supplied' and (not self.attribution or not self.citations):
+            raise ValueError('supplied name needs attribution and citations')
+        if self.attribution and self.proposed_type != 'supplied':
+            raise ValueError('supplied attribution needs the proposed name kind')
+        return self
+
+
+def is_printed_name(name: SharedName) -> bool:
+    return name.kind == 'printed' and not name.proposed_type
+
+
+class LifeEventDate(Strict):
+    printed: Text | None = None
+    printed_calendar: Literal['gregorian', 'hebrew'] | None = None
+    start: Date | None = None
+    qualifier: Literal['reported_in'] | None = None
+    reported_in: Day | None = None
+
+    @model_validator(mode='after')
+    def event_date(self):
+        if self.qualifier == 'reported_in' and self.reported_in:
+            if self.printed or self.printed_calendar or self.start:
+                raise ValueError('reported_in cannot carry a printed or normalized event date')
+        elif not self.printed or not self.printed_calendar or self.qualifier or self.reported_in:
+            raise ValueError('event date needs printed words and calendar or reported_in qualifier')
+        if self.start and self.printed_calendar == 'hebrew':
+            raise ValueError('normalization requires a printed Gregorian date')
+        return self
+
+
+class LifeEventParticipant(Strict):
+    person_id: Text
+    part: EventParts
 
 
 class SharedFact(Fact):
@@ -39,13 +85,16 @@ class SourcedRelation(Fact):
             raise ValueError('relation needs a person or an unresolved name')
         if self.type == 'other' and self.relationship_type:
             raise ValueError('unreleased relation uses proposed_type only')
+        if (any(c.unit_id and c.edition_date for c in self.citations) and
+                (self.relationship_type == 'child_of' or self.proposed_type == 'child_of')):
+            raise ValueError('notice relation must use parent_of, not child_of')
         return self
 
 
 class SharedPerson(Strict):
     id: Text
     name: Text
-    names: list[Name]
+    names: list[SharedName]
     gender: Gender
     fate: Fate | None = None
 
@@ -70,7 +119,28 @@ class SharedOrganization(SharedFamily):
 class SharedEvent(Strict):
     id: Text
     name: Text
-    type: EventTypes
+    type: LifeEventTypes | Literal['holocaust_event']
+    proposed_type: Text | None = None
+    participants: list[LifeEventParticipant]
+    dates: Annotated[list[LifeEventDate], Field(min_length=1)]
+    location_id: Text | None = None
+    description: str | None = None
+
+    @model_validator(mode='after')
+    def event_contract(self):
+        errors = unique_ids([p.person_id for p in self.participants], 'event participant')
+        if (self.type == 'other') != bool(self.proposed_type):
+            errors.append('event proposed_type exactly for other')
+        if self.proposed_type in (*get_args(LifeEventTypes), 'holocaust_event'):
+            errors.append('released event kind cannot be proposed_type')
+        kind = self.proposed_type or self.type
+        if any(kind not in EVENT_PART_KINDS[p.part] for p in self.participants):
+            errors.append('part does not fit event kind')
+        if any(d.qualifier == 'reported_in' for d in self.dates) and len(self.dates) != 1:
+            errors.append('reported_in must be the only date when no date is printed')
+        if errors:
+            raise ValueError('; '.join(errors))
+        return self
 
 
 class SharedRecord(Strict):
@@ -98,6 +168,19 @@ class SharedRecord(Strict):
         sources = {s.id for s in self.sources}
         subjects = {x.id for x in [*identities, *self.events, *self.relations]}
         facts = {f.id: f for f in self.facts}
+        births, deaths = set(), set()
+        for event in self.events:
+            if event.location_id and event.location_id not in places:
+                errors.append('unknown life event place')
+            for participant in event.participants:
+                if participant.person_id not in persons:
+                    errors.append('participant must resolve to a person')
+                seen = (births if event.type == 'birth' and participant.part == 'baby' else
+                        deaths if event.type == 'death' and participant.part == 'deceased' else None)
+                if seen is not None:
+                    if participant.person_id in seen:
+                        errors.append(f'person has more than one {event.type}')
+                    seen.add(participant.person_id)
         for fact in [*self.facts, *self.relations]:
             if fact.subject_id not in subjects:
                 errors.append('unknown fact subject')
@@ -110,11 +193,18 @@ class SharedRecord(Strict):
                     errors.append(f'unknown fact {label}')
             if any(c.source_id not in sources for c in fact.citations):
                 errors.append('unknown citation source')
+        notice_relations = set()
         for relation in self.relations:
             if relation.subject_id not in persons:
                 errors.append('relation subject must be a person')
             if relation.subject_id == relation.related_person_id:
                 errors.append('self relation')
+            if any(c.unit_id and c.edition_date for c in relation.citations):
+                key = (relation.subject_id, relation.relationship_type or relation.proposed_type,
+                       relation.related_person_id or relation.related_name)
+                if key in notice_relations:
+                    errors.append('duplicate notice relation')
+                notice_relations.add(key)
         for identity in identities:
             if any(c.source_id not in sources for n in identity.names for c in (n.citations or [])):
                 errors.append('unknown name citation source')

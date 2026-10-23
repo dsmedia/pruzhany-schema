@@ -131,7 +131,8 @@ class PilotTests(unittest.TestCase):
         self.assertIn((URIRef(BASE + "test-person-a"), rico.hasOrHadSpouse, URIRef(BASE + "test-person-b")), graph)
         self.assertIn((URIRef(BASE + "test-fact"), RDF.type, rico.Relation), graph)
         self.assertIn((URIRef(BASE + "test-citation"), rico.evidences, URIRef(BASE + "test-fact")), graph)
-        self.assertIn((URIRef(BASE + "test-fact"), rico.relationHasSource, URIRef(BASE + "test-citation")), graph)
+        self.assertIn((URIRef(BASE + "test-fact"), rico.isEvidencedBy, URIRef(BASE + "test-citation")), graph)
+        self.assertNotIn((URIRef(BASE + "test-fact"), rico.relationHasSource, URIRef(BASE + "test-citation")), graph)
 
     def test_date_range_and_hebrew_printed_date_survive_jsonld(self):
         data = synthetic()

@@ -8,7 +8,12 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def fixture_cases():
-    data = json.loads((ROOT / 'tests/contract/site-shapes.fixtures.json').read_text(encoding='utf-8'))
+    for filename in ['site-shapes.fixtures.json', 'life-event-shapes.fixtures.json']:
+        yield from cases_from_file(filename)
+
+
+def cases_from_file(filename):
+    data = json.loads((ROOT / 'tests/contract' / filename).read_text(encoding='utf-8'))
     for case in data['cases']:
         value = data['example']
         for part in data['models'][case['model']]:
@@ -24,7 +29,8 @@ def fixture_cases():
                 del target[change['path'][-1]]
             else:
                 target[change['path'][-1]] = copy.deepcopy(change['value'])
-        yield dict(name=case['name'], model=case['model'], valid=case['valid'], value=value)
+        yield dict(name=case['name'], model=case['model'], valid=case['valid'], value=value,
+                   error=case.get('error'))
 
 
 def run_zod(cases):
@@ -44,10 +50,15 @@ def check_site_shapes(package):
         try:
             parsed = model.model_validate_json(json.dumps(case['value']))
             accepted = True
-        except ValueError:
+        except ValueError as exc:
             accepted = False
+            python_error = str(exc)
         if accepted != case['valid'] or result['valid'] != case['valid']:
             errors.append(f'{case["name"]}: expected {case["valid"]}, Pydantic={accepted}, Zod={result["valid"]}')
+        if case.get('error') and (accepted or result['valid'] or
+                                  case['error'] not in python_error or
+                                  case['error'] not in result.get('error', '')):
+            errors.append(f'{case["name"]}: both twins must refuse for {case["error"]!r}')
         if case['valid'] and accepted and result['valid']:
             try:
                 from_zod = model.model_validate_json(json.dumps(result['value']))
@@ -72,4 +83,8 @@ def check_site_shapes(package):
     record = package.SharedRecord.model_validate_json(json.dumps(rich['value']))
     prose = [f for f in record.facts if f.representation == 'prose']
     assert len(prose) == 3 and all(package.is_unreviewed_prose(f) for f in prose)
+    later_naming = next(c for c in cases if c['name'] ==
+                        'local 13: later naming on the same child id retains supplied description')
+    child = package.SiteArchive.model_validate_json(json.dumps(later_naming['value'])).shared_record.persons[2]
+    assert [n.value for n in child.names if package.is_printed_name(n)] == ['צעסקעלע']
     print(f'contract: {len(cases)} site-shape cases and {len(roundtrips)} round trips agree')

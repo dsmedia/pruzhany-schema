@@ -12,7 +12,7 @@ The upstream RDF files were read on 2026-10-19. [The checked component profile](
 | Printed name | `rico:AgentName` | — | `rico:name` carries a language tag; `pc:recordedFor` records its proposed association with a person. |
 | Event / place | `rico:Event` / `rico:Place` | `ehri:City`, `ehri:Region`, `ehri:Country` when known | Event identity proposals remain explicit. |
 | Pending, disputed or rejected assertion | `rdf:Statement`, `pc:Claim` | — | `rdf:subject`, `rdf:predicate`, `rdf:object`; no corresponding base triple is emitted. |
-| Approved assertion with confirmed identity | Base RiC-O property plus a qualified `rico:Relation` | — | `relationConnects`, `relationHasSource`, `relationCertainty`, and the source record's `evidences`. An unapproved identity join still blocks promotion. |
+| Approved assertion with confirmed identity | Base RiC-O property plus a qualified `rico:Relation` | — | `relationConnects`, `isEvidencedBy`, `relationCertainty`, and the source record's `evidences`. An unapproved identity join still blocks promotion. [Corrected 2026-10-23: `relationHasSource` is the first endpoint, not evidence.] |
 | Residence | `rico:hasOrHadLocation` | — | Dates remain attached to the qualified statement; the legacy scalar is resolved at the edition date. |
 | Occupation | `rico:hasOrHadOccupationOfType` → `rico:OccupationType` | — | An occupation is not a free literal in an object-property position. |
 | Birth/death date | `rico:hasBirthDate` / `hasDeathDate` → `rico:Date` | — | Printed date, calendar, normalized interval and inference flag survive as typed JSON extension data. |

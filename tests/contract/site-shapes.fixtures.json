@@ -53,7 +53,14 @@
 				{
 					"id": "fictional-event",
 					"name": "Fictional event",
-					"type": "community_event"
+					"type": "community_event",
+					"participants": [],
+					"dates": [
+						{
+							"qualifier": "reported_in",
+							"reported_in": "1938-01-01"
+						}
+					]
 				}
 			],
 			"sources": [
@@ -306,19 +313,12 @@
 					"life_events": [
 						{
 							"id": "fictional-event",
-							"type": "community_event",
-							"name": "Fictional event",
-							"principal_ids": ["fictional-person"],
-							"date_hebrew": null,
-							"date_gregorian": null,
-							"location_id": "fictional-place",
 							"content_items": [
 								{
 									"content_item_id": "fictional-item",
 									"role": "mention"
 								}
-							],
-							"description": null
+							]
 						}
 					]
 				}
@@ -1546,35 +1546,21 @@
 					"value": [
 						{
 							"id": "fictional-event",
-							"type": "community_event",
-							"name": "Fictional event",
-							"principal_ids": ["fictional-person"],
-							"date_hebrew": null,
-							"date_gregorian": null,
-							"location_id": "fictional-place",
 							"content_items": [
 								{
 									"content_item_id": "fictional-item",
 									"role": "mention"
 								}
-							],
-							"description": null
+							]
 						},
 						{
 							"id": "fictional-event",
-							"type": "community_event",
-							"name": "Fictional event",
-							"principal_ids": ["fictional-person"],
-							"date_hebrew": null,
-							"date_gregorian": null,
-							"location_id": "fictional-place",
 							"content_items": [
 								{
 									"content_item_id": "fictional-item",
 									"role": "mention"
 								}
-							],
-							"description": null
+							]
 						}
 					]
 				}
@@ -2097,13 +2083,22 @@
 			]
 		},
 		{
-			"name": "unknown principal",
+			"name": "unknown participant",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
 				{
-					"path": ["issues", 0, "life_events", "life_events", 0, "principal_ids", 0],
-					"value": "missing"
+					"path": ["shared_record", "events", 0, "type"],
+					"value": "birth"
+				},
+				{
+					"path": ["shared_record", "events", 0, "participants"],
+					"value": [
+						{
+							"person_id": "missing",
+							"part": "baby"
+						}
+					]
 				}
 			]
 		},
@@ -2113,7 +2108,7 @@
 			"valid": false,
 			"changes": [
 				{
-					"path": ["issues", 0, "life_events", "life_events", 0, "location_id"],
+					"path": ["shared_record", "events", 0, "location_id"],
 					"value": "missing"
 				}
 			]
@@ -2152,13 +2147,13 @@
 			]
 		},
 		{
-			"name": "event type disagreement",
+			"name": "issue may not duplicate the shared event kind",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
 				{
-					"path": ["shared_record", "events", 0, "type"],
-					"value": "wedding"
+					"path": ["issues", 0, "life_events", "life_events", 0, "type"],
+					"value": "death"
 				}
 			]
 		},
@@ -2336,19 +2331,12 @@
 								"life_events": [
 									{
 										"id": "fictional-event",
-										"type": "community_event",
-										"name": "Fictional event",
-										"principal_ids": ["fictional-person"],
-										"date_hebrew": null,
-										"date_gregorian": null,
-										"location_id": "fictional-place",
 										"content_items": [
 											{
 												"content_item_id": "fictional-item",
 												"role": "mention"
 											}
-										],
-										"description": null
+										]
 									}
 								]
 							}
@@ -2519,19 +2507,12 @@
 								"life_events": [
 									{
 										"id": "fictional-event",
-										"type": "community_event",
-										"name": "Fictional event",
-										"principal_ids": ["fictional-person"],
-										"date_hebrew": null,
-										"date_gregorian": null,
-										"location_id": "fictional-place",
 										"content_items": [
 											{
 												"content_item_id": "fictional-item",
 												"role": "mention"
 											}
-										],
-										"description": null
+										]
 									}
 								]
 							}
@@ -3666,9 +3647,9 @@
 			]
 		},
 		{
-			"name": "issue life event and content item need no shared event copy",
+			"name": "issue life event requires the shared event",
 			"model": "SiteArchive",
-			"valid": true,
+			"valid": false,
 			"changes": [
 				{
 					"path": ["shared_record", "events"],

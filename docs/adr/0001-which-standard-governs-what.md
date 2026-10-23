@@ -45,8 +45,9 @@ labelled RiC-O cites the axiom in `standards/rico-1.1-axioms.json`, pinned at th
 
 - The cross-edition design of 2026-04-25 is amended where it says Impresso settles identity: Impresso settles the
   Wikidata-linked half; the NIL half (#1) is answered by this decision's identity row and §4's rule.
-- Round 4 of ticket 09 (pruzhany-steps) builds events, parts and the described children to this table; storing
-  relations once, and the evidence mapping, are their own tickets.
+- Round 4 of ticket 09 (pruzhany-steps) builds events, parts and the described children to this table, with the
+  evidence mapping corrected inside it (the owner's fourth grilling, answer 1); storing relations once is the round
+  after. The shape is `docs/design/2026-10-23-one-life-event.md`.
 - Vocabulary changes it implies go to the owner's batch (#16): the parts, two event kinds, grandparents remapped to
   `hasDescendant`, the `supplied` name kind, `parenthood` deprecated.
 - When EHRI moves its namespace, or RiC-O 1.2 or 2.0 is released and EHRI imports it, the owner is told; a new

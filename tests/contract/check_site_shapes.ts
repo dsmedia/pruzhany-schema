@@ -11,7 +11,12 @@ const cases = JSON.parse(readFileSync(0, 'utf8')) as {
 const results = cases.map((c) => {
 	const schema = schemas[`${c.model}Schema` as keyof typeof schemas] as z.ZodType;
 	const parsed = schema.safeParse(c.value);
-	return { name: c.name, valid: parsed.success, value: parsed.success ? parsed.data : null };
+	return {
+		name: c.name,
+		valid: parsed.success,
+		value: parsed.success ? parsed.data : null,
+		error: parsed.success ? '' : parsed.error.issues.map((i) => i.message).join('; '),
+	};
 });
 
 const basis = {
@@ -35,5 +40,18 @@ if (rich) {
 	const prose = record.facts.filter((f) => f.representation === 'prose');
 	if (prose.length !== 3 || !prose.every(schemas.isUnreviewedProse))
 		throw new Error('unreviewed prose must stay identifiable as unreviewed');
+}
+const laterNaming = cases.find(
+	(c) => c.name === 'local 13: later naming on the same child id retains supplied description'
+);
+if (laterNaming) {
+	const child = schemas.SiteArchiveSchema.parse(laterNaming.value).shared_record.persons[2];
+	if (
+		child.names
+			.filter(schemas.isPrintedName)
+			.map((n) => n.value)
+			.join() !== 'צעסקעלע'
+	)
+		throw new Error('a supplied description must never enter the printed-name match set');
 }
 process.stdout.write(JSON.stringify(results));

@@ -502,6 +502,162 @@
           "reason": "Distinguishes an attributed English name from printed words; RiC-O defines TitleType but not this controlled value."
         }
       }
+    ],
+    "event_parts": [
+      {
+        "id": "baby",
+        "label": "Baby",
+        "definition": "The baby at a birth.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "applies_to": [
+          "birth"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_baby",
+          "reason": "The birth happens to this person; RiC-O has no baby part."
+        }
+      },
+      {
+        "id": "parent",
+        "label": "Parent",
+        "definition": "The parent at a birth.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "applies_to": [
+          "birth"
+        ],
+        "rico_parent": "rico:hasOrHadParticipant",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_parent",
+          "reason": "A parent participates in a birth but is not the person born; RiC-O has no birth-parent part."
+        }
+      },
+      {
+        "id": "bride",
+        "label": "Bride",
+        "definition": "The bride at a engagement or wedding.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "applies_to": [
+          "engagement",
+          "wedding"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_bride",
+          "reason": "The engagement or wedding happens to the bride; RiC-O has no bride part."
+        }
+      },
+      {
+        "id": "groom",
+        "label": "Groom",
+        "definition": "The groom at a engagement or wedding.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "applies_to": [
+          "engagement",
+          "wedding"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_groom",
+          "reason": "The engagement or wedding happens to the groom; RiC-O has no groom part."
+        }
+      },
+      {
+        "id": "boy",
+        "label": "Boy",
+        "definition": "The boy at a bar_mitzvah.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "applies_to": [
+          "bar_mitzvah"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_boy",
+          "reason": "The bar mitzvah happens to this boy; RiC-O has no bar-mitzvah part."
+        }
+      },
+      {
+        "id": "deceased",
+        "label": "Deceased",
+        "definition": "The deceased at a death.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "applies_to": [
+          "death"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_deceased",
+          "reason": "The death happens to this person; RiC-O has no deceased part."
+        }
+      },
+      {
+        "id": "remembered",
+        "label": "Remembered",
+        "definition": "The remembered at a memorial.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "applies_to": [
+          "memorial"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_remembered",
+          "reason": "The commemoration concerns this person without asserting another death; RiC-O has no remembered part."
+        }
+      }
+    ],
+    "proposed_event_types": [
+      {
+        "id": "engagement",
+        "label": "Engagement",
+        "definition": "An engagement, separate from its wedding.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "concept_class": "rico:EventType",
+        "mapping": {
+          "local": "pc:site_event_engagement",
+          "reason": "The site life-event kind awaits approval; RiC-O defines EventType without enumerating this kind."
+        }
+      },
+      {
+        "id": "memorial",
+        "label": "Memorial",
+        "definition": "One commemoration of a deceased person, including annual and 30-day memorials.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "concept_class": "rico:EventType",
+        "mapping": {
+          "local": "pc:site_event_memorial",
+          "reason": "RiC-O defines EventType without distinguishing the commemorations printed by this newspaper."
+        }
+      }
+    ],
+    "proposed_name_kinds": [
+      {
+        "id": "supplied",
+        "label": "Supplied description",
+        "definition": "An attributed description used to name a person whom the source does not name.",
+        "added_in": "0.1.0",
+        "status": "proposed",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:site_name_supplied",
+          "reason": "RiC-O has AgentName but no name kind separating our supplied description from printed words."
+        }
+      }
     ]
   },
   "bindings": [
@@ -691,9 +847,9 @@
     },
     {
       "id": "fact_source",
-      "definition": "A qualified fact cites its sources.",
+      "definition": "A qualified fact or relation cites the record resources that evidence it, not its source endpoint.",
       "mapping": {
-        "rico": "relationHasSource"
+        "rico": "isEvidencedBy"
       }
     },
     {
@@ -843,6 +999,55 @@
       "mapping": {
         "local": "pc:site_judgement_sha256",
         "reason": "Neither pinned ontology binds a field-level check to the exact retained judgement file bytes."
+      }
+    },
+    {
+      "id": "event_type",
+      "definition": "The one kind of a shared life event.",
+      "mapping": {
+        "rico": "hasEventType"
+      }
+    },
+    {
+      "id": "event_date",
+      "definition": "A printed event date or a qualified first report.",
+      "mapping": {
+        "rico": "Date"
+      }
+    },
+    {
+      "id": "event_date_printed",
+      "definition": "The event date words with their printed calendar.",
+      "mapping": {
+        "rico": "expressedDate"
+      }
+    },
+    {
+      "id": "event_date_normalized",
+      "definition": "An ISO value only for a printed Gregorian event date.",
+      "mapping": {
+        "rico": "normalizedDateValue"
+      }
+    },
+    {
+      "id": "event_date_qualifier",
+      "definition": "Reported in qualifies an issue date; it never bounds the happening.",
+      "mapping": {
+        "rico": "dateQualifier"
+      }
+    },
+    {
+      "id": "person_name",
+      "definition": "Connect a person to an AgentName, including a supplied description.",
+      "mapping": {
+        "rico": "hasOrHadAgentName"
+      }
+    },
+    {
+      "id": "agent_name",
+      "definition": "A printed or supplied name of a person.",
+      "mapping": {
+        "rico": "AgentName"
       }
     }
   ]

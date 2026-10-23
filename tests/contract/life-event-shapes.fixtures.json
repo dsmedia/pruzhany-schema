@@ -1,0 +1,3303 @@
+{
+	"note": "Shape fixtures informed by the worked cases; simplified text and boxes, not historical transcriptions.",
+	"example": {
+		"shared_record": {
+			"version": "1",
+			"vocabulary_version": "1.1.0",
+			"persons": [
+				{
+					"id": "person-rivtche-judewicz",
+					"name": "Rivtche Judewicz",
+					"names": [],
+					"gender": "unknown"
+				},
+				{
+					"id": "person-moshe-judewicz",
+					"name": "Moshe Judewicz",
+					"names": [],
+					"gender": "unknown"
+				},
+				{
+					"id": "person-judewicz-daughter-1938",
+					"name": "daughter of Rivtche and Moshe Judewicz",
+					"names": [
+						{
+							"value": "daughter of Rivtche and Moshe Judewicz",
+							"kind": "other",
+							"proposed_type": "supplied",
+							"script": "Latn",
+							"lang": "en",
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל"
+								}
+							]
+						}
+					],
+					"gender": "unknown"
+				}
+			],
+			"families": [],
+			"places": [],
+			"organizations": [],
+			"sources": [
+				{
+					"id": "paper",
+					"kind": "the_paper",
+					"title": "Shape fixture newspaper"
+				}
+			],
+			"events": [
+				{
+					"id": "event-judewicz-birth",
+					"name": "Shape fixture, not a transcription",
+					"type": "birth",
+					"dates": [
+						{
+							"qualifier": "reported_in",
+							"reported_in": "1938-12-16"
+						}
+					],
+					"participants": [
+						{
+							"person_id": "person-rivtche-judewicz",
+							"part": "parent"
+						},
+						{
+							"person_id": "person-moshe-judewicz",
+							"part": "parent"
+						},
+						{
+							"person_id": "person-judewicz-daughter-1938",
+							"part": "baby"
+						}
+					]
+				}
+			],
+			"facts": [
+				{
+					"id": "birth-fact",
+					"subject_id": "person-judewicz-daughter-1938",
+					"type": "birth",
+					"value": "The notice reports a birth.",
+					"citations": [
+						{
+							"source_id": "paper",
+							"edition_date": "1938-12-16",
+							"unit_id": "notice-1938-12-16",
+							"quote": "ריבטשע משה זייער טעכטערל"
+						}
+					],
+					"evidence_confidence": "confirmed",
+					"identity_confidence": "confirmed",
+					"status": "proposed",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional shape test",
+						"on": "2026-10-23"
+					},
+					"event_id": "event-judewicz-birth",
+					"representation": "structured",
+					"qualifiers": {
+						"child_count": "1"
+					}
+				}
+			],
+			"relations": [
+				{
+					"id": "parent-0",
+					"subject_id": "person-rivtche-judewicz",
+					"type": "kinship",
+					"value": "The notice reports a birth.",
+					"citations": [
+						{
+							"source_id": "paper",
+							"edition_date": "1938-12-16",
+							"unit_id": "notice-1938-12-16",
+							"quote": "ריבטשע משה זייער טעכטערל"
+						}
+					],
+					"evidence_confidence": "confirmed",
+					"identity_confidence": "confirmed",
+					"status": "proposed",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional shape test",
+						"on": "2026-10-23"
+					},
+					"relationship_type": "parent_of",
+					"related_person_id": "person-judewicz-daughter-1938"
+				},
+				{
+					"id": "parent-1",
+					"subject_id": "person-moshe-judewicz",
+					"type": "kinship",
+					"value": "The notice reports a birth.",
+					"citations": [
+						{
+							"source_id": "paper",
+							"edition_date": "1938-12-16",
+							"unit_id": "notice-1938-12-16",
+							"quote": "ריבטשע משה זייער טעכטערל"
+						}
+					],
+					"evidence_confidence": "confirmed",
+					"identity_confidence": "confirmed",
+					"status": "proposed",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional shape test",
+						"on": "2026-10-23"
+					},
+					"relationship_type": "parent_of",
+					"related_person_id": "person-judewicz-daughter-1938"
+				}
+			]
+		},
+		"issues": [
+			{
+				"pages": {
+					"edition_date": "1938-12-16",
+					"pages": [
+						{
+							"id": "page-1938-12-16",
+							"issue_date": "1938-12-16",
+							"page_number": 1,
+							"image_uri": "page-1938-12-16.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "block",
+									"bbox": [0, 0, 100, 100],
+									"transcription": "ריבטשע משה זייער טעכטערל",
+									"unit_id": "notice-1938-12-16"
+								}
+							]
+						}
+					]
+				},
+				"content_items": {
+					"issue_date": "1938-12-16",
+					"vocabulary_version": "0.1.0",
+					"content_items": [
+						{
+							"id": "notice-1938-12-16",
+							"type": "ad",
+							"subtype": "birth_greeting",
+							"supplied_title": {
+								"text": "Shape fixture",
+								"language": "en",
+								"based_on": {
+									"source_text": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional shape test",
+									"on": "2026-10-23",
+									"kind": "person"
+								}
+							},
+							"full_text": "ריבטשע משה זייער טעכטערל",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-1938-12-16",
+									"block_ids": ["block"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"subject_ids": [],
+							"cross_references": [],
+							"event_id": "event-judewicz-birth"
+						}
+					],
+					"sections": []
+				},
+				"mentions": {
+					"issue_date": "1938-12-16",
+					"mentions": [
+						{
+							"id": "mention-1938-12-16-0",
+							"person_id": "person-rivtche-judewicz",
+							"content_item_id": "notice-1938-12-16",
+							"printed_name": "ריבטשע",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-16.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "ריבטשע"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-16-1",
+							"person_id": "person-moshe-judewicz",
+							"content_item_id": "notice-1938-12-16",
+							"printed_name": "משה",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-16.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "משה"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-16-2",
+							"person_id": "person-judewicz-daughter-1938",
+							"content_item_id": "notice-1938-12-16",
+							"printed_name": "זייער טעכטערל",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-16.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "זייער טעכטערל"
+								}
+							]
+						}
+					]
+				},
+				"life_events": {
+					"issue_date": "1938-12-16",
+					"life_events": [
+						{
+							"id": "event-judewicz-birth",
+							"content_items": [
+								{
+									"content_item_id": "notice-1938-12-16",
+									"role": "congratulation"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"pages": {
+					"edition_date": "1938-12-23",
+					"pages": [
+						{
+							"id": "page-1938-12-23",
+							"issue_date": "1938-12-23",
+							"page_number": 1,
+							"image_uri": "page-1938-12-23.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "block",
+									"bbox": [0, 0, 100, 100],
+									"transcription": "ריבטשע משה זייער טעכטערל",
+									"unit_id": "notice-1938-12-23"
+								}
+							]
+						}
+					]
+				},
+				"content_items": {
+					"issue_date": "1938-12-23",
+					"vocabulary_version": "0.1.0",
+					"content_items": [
+						{
+							"id": "notice-1938-12-23",
+							"type": "ad",
+							"subtype": "birth_greeting",
+							"supplied_title": {
+								"text": "Shape fixture",
+								"language": "en",
+								"based_on": {
+									"source_text": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-23.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional shape test",
+									"on": "2026-10-23",
+									"kind": "person"
+								}
+							},
+							"full_text": "ריבטשע משה זייער טעכטערל",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-1938-12-23",
+									"block_ids": ["block"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"subject_ids": [],
+							"cross_references": [],
+							"event_id": "event-judewicz-birth"
+						}
+					],
+					"sections": []
+				},
+				"mentions": {
+					"issue_date": "1938-12-23",
+					"mentions": [
+						{
+							"id": "mention-1938-12-23-0",
+							"person_id": "person-rivtche-judewicz",
+							"content_item_id": "notice-1938-12-23",
+							"printed_name": "ריבטשע",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-23.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "ריבטשע"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-23-1",
+							"person_id": "person-moshe-judewicz",
+							"content_item_id": "notice-1938-12-23",
+							"printed_name": "משה",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-23.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "משה"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-23-2",
+							"person_id": "person-judewicz-daughter-1938",
+							"content_item_id": "notice-1938-12-23",
+							"printed_name": "זייער טעכטערל",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-23.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "זייער טעכטערל"
+								}
+							]
+						}
+					]
+				},
+				"life_events": {
+					"issue_date": "1938-12-23",
+					"life_events": [
+						{
+							"id": "event-judewicz-birth",
+							"content_items": [
+								{
+									"content_item_id": "notice-1938-12-23",
+									"role": "congratulation"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"pages": {
+					"edition_date": "1938-12-30",
+					"pages": [
+						{
+							"id": "page-1938-12-30",
+							"issue_date": "1938-12-30",
+							"page_number": 1,
+							"image_uri": "page-1938-12-30.png",
+							"dimensions": [200, 300],
+							"blocks": [
+								{
+									"id": "block",
+									"bbox": [0, 0, 100, 100],
+									"transcription": "ריבטשע משה זייער טעכטערל",
+									"unit_id": "notice-1938-12-30"
+								}
+							]
+						}
+					]
+				},
+				"content_items": {
+					"issue_date": "1938-12-30",
+					"vocabulary_version": "0.1.0",
+					"content_items": [
+						{
+							"id": "notice-1938-12-30",
+							"type": "ad",
+							"subtype": "birth_greeting",
+							"supplied_title": {
+								"text": "Shape fixture",
+								"language": "en",
+								"based_on": {
+									"source_text": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-30.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
+								},
+								"attribution": {
+									"by": "fictional shape test",
+									"on": "2026-10-23",
+									"kind": "person"
+								}
+							},
+							"full_text": "ריבטשע משה זייער טעכטערל",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-1938-12-30",
+									"block_ids": ["block"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"subject_ids": [],
+							"cross_references": [],
+							"event_id": "event-judewicz-birth"
+						}
+					],
+					"sections": []
+				},
+				"mentions": {
+					"issue_date": "1938-12-30",
+					"mentions": [
+						{
+							"id": "mention-1938-12-30-0",
+							"person_id": "person-rivtche-judewicz",
+							"content_item_id": "notice-1938-12-30",
+							"printed_name": "ריבטשע",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-30.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "ריבטשע"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-30-1",
+							"person_id": "person-moshe-judewicz",
+							"content_item_id": "notice-1938-12-30",
+							"printed_name": "משה",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-30.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "משה"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-30-2",
+							"person_id": "person-judewicz-daughter-1938",
+							"content_item_id": "notice-1938-12-30",
+							"printed_name": "זייער טעכטערל",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-30.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "זייער טעכטערל"
+								}
+							]
+						}
+					]
+				},
+				"life_events": {
+					"issue_date": "1938-12-30",
+					"life_events": [
+						{
+							"id": "event-judewicz-birth",
+							"content_items": [
+								{
+									"content_item_id": "notice-1938-12-30",
+									"role": "congratulation"
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	},
+	"models": {
+		"SiteArchive": []
+	},
+	"cases": [
+		{
+			"name": "local: one Judewicz birth, parents and baby, pieces in three issues",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "local 13: child known by description has birth, parents and located designation",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "local 13: later naming on the same child id retains supplied description",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "persons", 2, "name"],
+					"value": "Tseskele Judewicz"
+				},
+				{
+					"path": ["shared_record", "persons", 2, "names"],
+					"value": [
+						{
+							"value": "daughter of Rivtche and Moshe Judewicz",
+							"kind": "other",
+							"proposed_type": "supplied",
+							"script": "Latn",
+							"lang": "en",
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל"
+								}
+							]
+						},
+						{
+							"value": "צעסקעלע",
+							"kind": "printed",
+							"script": "Hebr",
+							"lang": "yi",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1939-04-14",
+									"unit_id": "notice-1939-04-14",
+									"quote": "צעסקעלע"
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["issues"],
+					"value": [
+						{
+							"pages": {
+								"edition_date": "1938-12-16",
+								"pages": [
+									{
+										"id": "page-1938-12-16",
+										"issue_date": "1938-12-16",
+										"page_number": 1,
+										"image_uri": "page-1938-12-16.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "block",
+												"bbox": [0, 0, 100, 100],
+												"transcription": "ריבטשע משה זייער טעכטערל",
+												"unit_id": "notice-1938-12-16"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-12-16",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "notice-1938-12-16",
+										"type": "ad",
+										"subtype": "birth_greeting",
+										"supplied_title": {
+											"text": "Shape fixture",
+											"language": "en",
+											"based_on": {
+												"source_text": "ריבטשע משה זייער טעכטערל",
+												"addresses": [
+													{
+														"image_uri": "page-1938-12-16.png",
+														"bbox": [0, 0, 100, 100],
+														"text": "ריבטשע משה זייער טעכטערל"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional shape test",
+												"on": "2026-10-23",
+												"kind": "person"
+											}
+										},
+										"full_text": "ריבטשע משה זייער טעכטערל",
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "page-1938-12-16",
+												"block_ids": ["block"]
+											}
+										],
+										"location_ids": [],
+										"organization_ids": [],
+										"subject_ids": [],
+										"cross_references": [],
+										"event_id": "event-judewicz-birth"
+									}
+								],
+								"sections": []
+							},
+							"mentions": {
+								"issue_date": "1938-12-16",
+								"mentions": [
+									{
+										"id": "mention-1938-12-16-0",
+										"person_id": "person-rivtche-judewicz",
+										"content_item_id": "notice-1938-12-16",
+										"printed_name": "ריבטשע",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-16.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "ריבטשע"
+											}
+										]
+									},
+									{
+										"id": "mention-1938-12-16-1",
+										"person_id": "person-moshe-judewicz",
+										"content_item_id": "notice-1938-12-16",
+										"printed_name": "משה",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-16.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "משה"
+											}
+										]
+									},
+									{
+										"id": "mention-1938-12-16-2",
+										"person_id": "person-judewicz-daughter-1938",
+										"content_item_id": "notice-1938-12-16",
+										"printed_name": "זייער טעכטערל",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-16.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "זייער טעכטערל"
+											}
+										]
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-12-16",
+								"life_events": [
+									{
+										"id": "event-judewicz-birth",
+										"content_items": [
+											{
+												"content_item_id": "notice-1938-12-16",
+												"role": "congratulation"
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"pages": {
+								"edition_date": "1938-12-23",
+								"pages": [
+									{
+										"id": "page-1938-12-23",
+										"issue_date": "1938-12-23",
+										"page_number": 1,
+										"image_uri": "page-1938-12-23.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "block",
+												"bbox": [0, 0, 100, 100],
+												"transcription": "ריבטשע משה זייער טעכטערל",
+												"unit_id": "notice-1938-12-23"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-12-23",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "notice-1938-12-23",
+										"type": "ad",
+										"subtype": "birth_greeting",
+										"supplied_title": {
+											"text": "Shape fixture",
+											"language": "en",
+											"based_on": {
+												"source_text": "ריבטשע משה זייער טעכטערל",
+												"addresses": [
+													{
+														"image_uri": "page-1938-12-23.png",
+														"bbox": [0, 0, 100, 100],
+														"text": "ריבטשע משה זייער טעכטערל"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional shape test",
+												"on": "2026-10-23",
+												"kind": "person"
+											}
+										},
+										"full_text": "ריבטשע משה זייער טעכטערל",
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "page-1938-12-23",
+												"block_ids": ["block"]
+											}
+										],
+										"location_ids": [],
+										"organization_ids": [],
+										"subject_ids": [],
+										"cross_references": [],
+										"event_id": "event-judewicz-birth"
+									}
+								],
+								"sections": []
+							},
+							"mentions": {
+								"issue_date": "1938-12-23",
+								"mentions": [
+									{
+										"id": "mention-1938-12-23-0",
+										"person_id": "person-rivtche-judewicz",
+										"content_item_id": "notice-1938-12-23",
+										"printed_name": "ריבטשע",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-23.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "ריבטשע"
+											}
+										]
+									},
+									{
+										"id": "mention-1938-12-23-1",
+										"person_id": "person-moshe-judewicz",
+										"content_item_id": "notice-1938-12-23",
+										"printed_name": "משה",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-23.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "משה"
+											}
+										]
+									},
+									{
+										"id": "mention-1938-12-23-2",
+										"person_id": "person-judewicz-daughter-1938",
+										"content_item_id": "notice-1938-12-23",
+										"printed_name": "זייער טעכטערל",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-23.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "זייער טעכטערל"
+											}
+										]
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-12-23",
+								"life_events": [
+									{
+										"id": "event-judewicz-birth",
+										"content_items": [
+											{
+												"content_item_id": "notice-1938-12-23",
+												"role": "congratulation"
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"pages": {
+								"edition_date": "1938-12-30",
+								"pages": [
+									{
+										"id": "page-1938-12-30",
+										"issue_date": "1938-12-30",
+										"page_number": 1,
+										"image_uri": "page-1938-12-30.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "block",
+												"bbox": [0, 0, 100, 100],
+												"transcription": "ריבטשע משה זייער טעכטערל",
+												"unit_id": "notice-1938-12-30"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-12-30",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "notice-1938-12-30",
+										"type": "ad",
+										"subtype": "birth_greeting",
+										"supplied_title": {
+											"text": "Shape fixture",
+											"language": "en",
+											"based_on": {
+												"source_text": "ריבטשע משה זייער טעכטערל",
+												"addresses": [
+													{
+														"image_uri": "page-1938-12-30.png",
+														"bbox": [0, 0, 100, 100],
+														"text": "ריבטשע משה זייער טעכטערל"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional shape test",
+												"on": "2026-10-23",
+												"kind": "person"
+											}
+										},
+										"full_text": "ריבטשע משה זייער טעכטערל",
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "page-1938-12-30",
+												"block_ids": ["block"]
+											}
+										],
+										"location_ids": [],
+										"organization_ids": [],
+										"subject_ids": [],
+										"cross_references": [],
+										"event_id": "event-judewicz-birth"
+									}
+								],
+								"sections": []
+							},
+							"mentions": {
+								"issue_date": "1938-12-30",
+								"mentions": [
+									{
+										"id": "mention-1938-12-30-0",
+										"person_id": "person-rivtche-judewicz",
+										"content_item_id": "notice-1938-12-30",
+										"printed_name": "ריבטשע",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-30.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "ריבטשע"
+											}
+										]
+									},
+									{
+										"id": "mention-1938-12-30-1",
+										"person_id": "person-moshe-judewicz",
+										"content_item_id": "notice-1938-12-30",
+										"printed_name": "משה",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-30.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "משה"
+											}
+										]
+									},
+									{
+										"id": "mention-1938-12-30-2",
+										"person_id": "person-judewicz-daughter-1938",
+										"content_item_id": "notice-1938-12-30",
+										"printed_name": "זייער טעכטערל",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1938-12-30.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "זייער טעכטערל"
+											}
+										]
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-12-30",
+								"life_events": [
+									{
+										"id": "event-judewicz-birth",
+										"content_items": [
+											{
+												"content_item_id": "notice-1938-12-30",
+												"role": "congratulation"
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"pages": {
+								"edition_date": "1939-04-14",
+								"pages": [
+									{
+										"id": "page-1939-04-14",
+										"issue_date": "1939-04-14",
+										"page_number": 1,
+										"image_uri": "page-1939-04-14.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "block",
+												"bbox": [0, 0, 100, 100],
+												"transcription": "צעסקעלע",
+												"unit_id": "notice-1939-04-14"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1939-04-14",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "notice-1939-04-14",
+										"type": "ad",
+										"subtype": "birth_greeting",
+										"supplied_title": {
+											"text": "Shape fixture",
+											"language": "en",
+											"based_on": {
+												"source_text": "צעסקעלע",
+												"addresses": [
+													{
+														"image_uri": "page-1939-04-14.png",
+														"bbox": [0, 0, 100, 100],
+														"text": "צעסקעלע"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional shape test",
+												"on": "2026-10-23",
+												"kind": "person"
+											}
+										},
+										"full_text": "צעסקעלע",
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "page-1939-04-14",
+												"block_ids": ["block"]
+											}
+										],
+										"location_ids": [],
+										"organization_ids": [],
+										"subject_ids": [],
+										"cross_references": []
+									}
+								],
+								"sections": []
+							},
+							"mentions": {
+								"issue_date": "1939-04-14",
+								"mentions": [
+									{
+										"id": "mention-1939-04-14-0",
+										"person_id": "person-judewicz-daughter-1938",
+										"content_item_id": "notice-1939-04-14",
+										"printed_name": "צעסקעלע",
+										"roles": ["subject"],
+										"address_grain": "words",
+										"addresses": [
+											{
+												"image_uri": "page-1939-04-14.png",
+												"bbox": [0, 0, 100, 100],
+												"text": "צעסקעלע"
+											}
+										]
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1939-04-14",
+								"life_events": []
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "local evidence: bride's mother is parent_of bride citing the notice",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"shared_record": {
+							"version": "1",
+							"vocabulary_version": "1.1.0",
+							"persons": [
+								{
+									"id": "mother",
+									"name": "Hilde",
+									"names": [],
+									"gender": "unknown"
+								},
+								{
+									"id": "bride",
+									"name": "Bride",
+									"names": [],
+									"gender": "unknown"
+								}
+							],
+							"families": [],
+							"places": [],
+							"organizations": [],
+							"sources": [
+								{
+									"id": "paper",
+									"kind": "the_paper",
+									"title": "Shape fixture newspaper"
+								}
+							],
+							"events": [
+								{
+									"id": "event-judewicz-birth",
+									"name": "Shape fixture, not a transcription",
+									"type": "wedding",
+									"dates": [
+										{
+											"qualifier": "reported_in",
+											"reported_in": "1938-12-16"
+										}
+									],
+									"participants": [
+										{
+											"person_id": "bride",
+											"part": "bride"
+										}
+									]
+								}
+							],
+							"facts": [],
+							"relations": [
+								{
+									"id": "mother-relation",
+									"subject_id": "mother",
+									"type": "kinship",
+									"value": "The notice reports a birth.",
+									"citations": [
+										{
+											"source_id": "paper",
+											"edition_date": "1938-12-16",
+											"unit_id": "notice-1938-12-16",
+											"quote": "Hilde, the bride's mother"
+										}
+									],
+									"evidence_confidence": "confirmed",
+									"identity_confidence": "confirmed",
+									"status": "proposed",
+									"review": {
+										"state": "pending"
+									},
+									"attribution": {
+										"by": "fictional shape test",
+										"on": "2026-10-23"
+									},
+									"relationship_type": "parent_of",
+									"related_person_id": "bride"
+								}
+							]
+						},
+						"issues": [
+							{
+								"pages": {
+									"edition_date": "1938-12-16",
+									"pages": [
+										{
+											"id": "page-1938-12-16",
+											"issue_date": "1938-12-16",
+											"page_number": 1,
+											"image_uri": "page-1938-12-16.png",
+											"dimensions": [200, 300],
+											"blocks": [
+												{
+													"id": "block",
+													"bbox": [0, 0, 100, 100],
+													"transcription": "Hilde, the bride's mother",
+													"unit_id": "notice-1938-12-16"
+												}
+											]
+										}
+									]
+								},
+								"content_items": {
+									"issue_date": "1938-12-16",
+									"vocabulary_version": "0.1.0",
+									"content_items": [
+										{
+											"id": "notice-1938-12-16",
+											"type": "ad",
+											"subtype": "birth_greeting",
+											"supplied_title": {
+												"text": "Shape fixture",
+												"language": "en",
+												"based_on": {
+													"source_text": "Hilde, the bride's mother",
+													"addresses": [
+														{
+															"image_uri": "page-1938-12-16.png",
+															"bbox": [0, 0, 100, 100],
+															"text": "Hilde, the bride's mother"
+														}
+													]
+												},
+												"attribution": {
+													"by": "fictional shape test",
+													"on": "2026-10-23",
+													"kind": "person"
+												}
+											},
+											"full_text": "Hilde, the bride's mother",
+											"block_breaks": [],
+											"page_blocks": [
+												{
+													"page_id": "page-1938-12-16",
+													"block_ids": ["block"]
+												}
+											],
+											"location_ids": [],
+											"organization_ids": [],
+											"subject_ids": [],
+											"cross_references": [],
+											"event_id": "event-judewicz-birth"
+										}
+									],
+									"sections": []
+								},
+								"mentions": {
+									"issue_date": "1938-12-16",
+									"mentions": [
+										{
+											"id": "mention-1938-12-16-0",
+											"person_id": "mother",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "Hilde",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Hilde"
+												}
+											]
+										},
+										{
+											"id": "mention-1938-12-16-1",
+											"person_id": "bride",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "bride",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "bride"
+												}
+											]
+										}
+									]
+								},
+								"life_events": {
+									"issue_date": "1938-12-16",
+									"life_events": [
+										{
+											"id": "event-judewicz-birth",
+											"content_items": [
+												{
+													"content_item_id": "notice-1938-12-16",
+													"role": "congratulation"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "RiC-CM 9: death and memorial are two events for the same person",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"shared_record": {
+							"version": "1",
+							"vocabulary_version": "1.1.0",
+							"persons": [
+								{
+									"id": "yosef",
+									"name": "Yosef Vigotov",
+									"names": [],
+									"gender": "unknown"
+								}
+							],
+							"families": [],
+							"places": [],
+							"organizations": [],
+							"sources": [
+								{
+									"id": "paper",
+									"kind": "the_paper",
+									"title": "Shape fixture newspaper"
+								}
+							],
+							"events": [
+								{
+									"id": "death",
+									"name": "Shape fixture, not a transcription",
+									"type": "death",
+									"dates": [
+										{
+											"qualifier": "reported_in",
+											"reported_in": "1938-12-16"
+										}
+									],
+									"participants": [
+										{
+											"person_id": "yosef",
+											"part": "deceased"
+										}
+									]
+								},
+								{
+									"id": "memorial",
+									"name": "Shape fixture, not a transcription",
+									"type": "other",
+									"dates": [
+										{
+											"qualifier": "reported_in",
+											"reported_in": "1938-12-16"
+										}
+									],
+									"participants": [
+										{
+											"person_id": "yosef",
+											"part": "remembered"
+										}
+									],
+									"proposed_type": "memorial"
+								}
+							],
+							"facts": [],
+							"relations": []
+						},
+						"issues": [
+							{
+								"pages": {
+									"edition_date": "1938-12-16",
+									"pages": [
+										{
+											"id": "page-1938-12-16",
+											"issue_date": "1938-12-16",
+											"page_number": 1,
+											"image_uri": "page-1938-12-16.png",
+											"dimensions": [200, 300],
+											"blocks": [
+												{
+													"id": "block",
+													"bbox": [0, 0, 100, 100],
+													"transcription": "Yosef",
+													"unit_id": "notice-1938-12-16"
+												}
+											]
+										}
+									]
+								},
+								"content_items": {
+									"issue_date": "1938-12-16",
+									"vocabulary_version": "0.1.0",
+									"content_items": [
+										{
+											"id": "notice-1938-12-16",
+											"type": "ad",
+											"subtype": "birth_greeting",
+											"supplied_title": {
+												"text": "Shape fixture",
+												"language": "en",
+												"based_on": {
+													"source_text": "Yosef",
+													"addresses": [
+														{
+															"image_uri": "page-1938-12-16.png",
+															"bbox": [0, 0, 100, 100],
+															"text": "Yosef"
+														}
+													]
+												},
+												"attribution": {
+													"by": "fictional shape test",
+													"on": "2026-10-23",
+													"kind": "person"
+												}
+											},
+											"full_text": "Yosef",
+											"block_breaks": [],
+											"page_blocks": [
+												{
+													"page_id": "page-1938-12-16",
+													"block_ids": ["block"]
+												}
+											],
+											"location_ids": [],
+											"organization_ids": [],
+											"subject_ids": [],
+											"cross_references": [],
+											"event_id": "death"
+										}
+									],
+									"sections": []
+								},
+								"mentions": {
+									"issue_date": "1938-12-16",
+									"mentions": [
+										{
+											"id": "mention-1938-12-16-0",
+											"person_id": "yosef",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "Yosef",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Yosef"
+												}
+											]
+										}
+									]
+								},
+								"life_events": {
+									"issue_date": "1938-12-16",
+									"life_events": [
+										{
+											"id": "death",
+											"content_items": [
+												{
+													"content_item_id": "notice-1938-12-16",
+													"role": "congratulation"
+												}
+											]
+										},
+										{
+											"id": "memorial",
+											"content_items": [
+												{
+													"content_item_id": "notice-1938-12-16",
+													"role": "mention"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "local 7: engagement stays other with proposed_type",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"shared_record": {
+							"version": "1",
+							"vocabulary_version": "1.1.0",
+							"persons": [
+								{
+									"id": "mother",
+									"name": "Hilde",
+									"names": [],
+									"gender": "unknown"
+								},
+								{
+									"id": "bride",
+									"name": "Bride",
+									"names": [],
+									"gender": "unknown"
+								}
+							],
+							"families": [],
+							"places": [],
+							"organizations": [],
+							"sources": [
+								{
+									"id": "paper",
+									"kind": "the_paper",
+									"title": "Shape fixture newspaper"
+								}
+							],
+							"events": [
+								{
+									"id": "event-judewicz-birth",
+									"name": "Shape fixture, not a transcription",
+									"type": "other",
+									"dates": [
+										{
+											"qualifier": "reported_in",
+											"reported_in": "1938-12-16"
+										}
+									],
+									"participants": [
+										{
+											"person_id": "bride",
+											"part": "bride"
+										}
+									],
+									"proposed_type": "engagement"
+								}
+							],
+							"facts": [],
+							"relations": [
+								{
+									"id": "mother-relation",
+									"subject_id": "mother",
+									"type": "kinship",
+									"value": "The notice reports a birth.",
+									"citations": [
+										{
+											"source_id": "paper",
+											"edition_date": "1938-12-16",
+											"unit_id": "notice-1938-12-16",
+											"quote": "Hilde, the bride's mother"
+										}
+									],
+									"evidence_confidence": "confirmed",
+									"identity_confidence": "confirmed",
+									"status": "proposed",
+									"review": {
+										"state": "pending"
+									},
+									"attribution": {
+										"by": "fictional shape test",
+										"on": "2026-10-23"
+									},
+									"relationship_type": "parent_of",
+									"related_person_id": "bride"
+								}
+							]
+						},
+						"issues": [
+							{
+								"pages": {
+									"edition_date": "1938-12-16",
+									"pages": [
+										{
+											"id": "page-1938-12-16",
+											"issue_date": "1938-12-16",
+											"page_number": 1,
+											"image_uri": "page-1938-12-16.png",
+											"dimensions": [200, 300],
+											"blocks": [
+												{
+													"id": "block",
+													"bbox": [0, 0, 100, 100],
+													"transcription": "Hilde, the bride's mother",
+													"unit_id": "notice-1938-12-16"
+												}
+											]
+										}
+									]
+								},
+								"content_items": {
+									"issue_date": "1938-12-16",
+									"vocabulary_version": "0.1.0",
+									"content_items": [
+										{
+											"id": "notice-1938-12-16",
+											"type": "ad",
+											"subtype": "birth_greeting",
+											"supplied_title": {
+												"text": "Shape fixture",
+												"language": "en",
+												"based_on": {
+													"source_text": "Hilde, the bride's mother",
+													"addresses": [
+														{
+															"image_uri": "page-1938-12-16.png",
+															"bbox": [0, 0, 100, 100],
+															"text": "Hilde, the bride's mother"
+														}
+													]
+												},
+												"attribution": {
+													"by": "fictional shape test",
+													"on": "2026-10-23",
+													"kind": "person"
+												}
+											},
+											"full_text": "Hilde, the bride's mother",
+											"block_breaks": [],
+											"page_blocks": [
+												{
+													"page_id": "page-1938-12-16",
+													"block_ids": ["block"]
+												}
+											],
+											"location_ids": [],
+											"organization_ids": [],
+											"subject_ids": [],
+											"cross_references": [],
+											"event_id": "event-judewicz-birth"
+										}
+									],
+									"sections": []
+								},
+								"mentions": {
+									"issue_date": "1938-12-16",
+									"mentions": [
+										{
+											"id": "mention-1938-12-16-0",
+											"person_id": "mother",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "Hilde",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Hilde"
+												}
+											]
+										},
+										{
+											"id": "mention-1938-12-16-1",
+											"person_id": "bride",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "bride",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "bride"
+												}
+											]
+										}
+									]
+								},
+								"life_events": {
+									"issue_date": "1938-12-16",
+									"life_events": [
+										{
+											"id": "event-judewicz-birth",
+											"content_items": [
+												{
+													"content_item_id": "notice-1938-12-16",
+													"role": "congratulation"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "local 10: both printed calendars survive",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"printed": "15 December 1938",
+							"printed_calendar": "gregorian",
+							"start": "1938-12-15"
+						},
+						{
+							"printed": "כ״ב כסלו תרצ״ט",
+							"printed_calendar": "hebrew"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "local 8: refuse birth part bride",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "participants", 2, "part"],
+					"value": "bride"
+				}
+			],
+			"error": "part does not fit event kind"
+		},
+		{
+			"name": "local 8: refuse birth part doctor",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "participants", 2, "part"],
+					"value": "doctor"
+				}
+			]
+		},
+		{
+			"name": "local 6: refuse participant missing",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "participants", 2, "person_id"],
+					"value": "missing"
+				}
+			],
+			"error": "participant must resolve to a person"
+		},
+		{
+			"name": "local 6: refuse participant event-judewicz-birth",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "participants", 2, "person_id"],
+					"value": "event-judewicz-birth"
+				}
+			],
+			"error": "participant must resolve to a person"
+		},
+		{
+			"name": "local 6: refuse a family as baby",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "families"],
+					"value": [
+						{
+							"id": "family",
+							"name": "Family",
+							"names": []
+						}
+					]
+				},
+				{
+					"path": ["shared_record", "events", 0, "participants", 2, "person_id"],
+					"value": "family"
+				}
+			],
+			"error": "participant must resolve to a person"
+		},
+		{
+			"name": "RiC-O 5: refuse person-family identity overlap",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "families"],
+					"value": [
+						{
+							"id": "person-rivtche-judewicz",
+							"name": "Family",
+							"names": []
+						}
+					]
+				}
+			],
+			"error": "duplicate shared id"
+		},
+		{
+			"name": "RiC-CM 9: refuse the baby of two births",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events"],
+					"value": [
+						{
+							"id": "event-judewicz-birth",
+							"name": "Shape fixture, not a transcription",
+							"type": "birth",
+							"dates": [
+								{
+									"qualifier": "reported_in",
+									"reported_in": "1938-12-16"
+								}
+							],
+							"participants": [
+								{
+									"person_id": "person-rivtche-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-moshe-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-judewicz-daughter-1938",
+									"part": "baby"
+								}
+							]
+						},
+						{
+							"id": "second-birth",
+							"name": "Shape fixture, not a transcription",
+							"type": "birth",
+							"dates": [
+								{
+									"qualifier": "reported_in",
+									"reported_in": "1938-12-16"
+								}
+							],
+							"participants": [
+								{
+									"person_id": "person-rivtche-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-moshe-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-judewicz-daughter-1938",
+									"part": "baby"
+								}
+							]
+						}
+					]
+				}
+			],
+			"error": "person has more than one birth"
+		},
+		{
+			"name": "RiC-CM 9: refuse the deceased of two deaths",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"shared_record": {
+							"version": "1",
+							"vocabulary_version": "1.1.0",
+							"persons": [
+								{
+									"id": "yosef",
+									"name": "Yosef Vigotov",
+									"names": [],
+									"gender": "unknown"
+								}
+							],
+							"families": [],
+							"places": [],
+							"organizations": [],
+							"sources": [
+								{
+									"id": "paper",
+									"kind": "the_paper",
+									"title": "Shape fixture newspaper"
+								}
+							],
+							"events": [
+								{
+									"id": "death",
+									"name": "Shape fixture, not a transcription",
+									"type": "death",
+									"dates": [
+										{
+											"qualifier": "reported_in",
+											"reported_in": "1938-12-16"
+										}
+									],
+									"participants": [
+										{
+											"person_id": "yosef",
+											"part": "deceased"
+										}
+									]
+								},
+								{
+									"id": "memorial",
+									"name": "Shape fixture, not a transcription",
+									"type": "death",
+									"dates": [
+										{
+											"qualifier": "reported_in",
+											"reported_in": "1938-12-16"
+										}
+									],
+									"participants": [
+										{
+											"person_id": "yosef",
+											"part": "deceased"
+										}
+									],
+									"proposed_type": null
+								}
+							],
+							"facts": [],
+							"relations": []
+						},
+						"issues": [
+							{
+								"pages": {
+									"edition_date": "1938-12-16",
+									"pages": [
+										{
+											"id": "page-1938-12-16",
+											"issue_date": "1938-12-16",
+											"page_number": 1,
+											"image_uri": "page-1938-12-16.png",
+											"dimensions": [200, 300],
+											"blocks": [
+												{
+													"id": "block",
+													"bbox": [0, 0, 100, 100],
+													"transcription": "Yosef",
+													"unit_id": "notice-1938-12-16"
+												}
+											]
+										}
+									]
+								},
+								"content_items": {
+									"issue_date": "1938-12-16",
+									"vocabulary_version": "0.1.0",
+									"content_items": [
+										{
+											"id": "notice-1938-12-16",
+											"type": "ad",
+											"subtype": "birth_greeting",
+											"supplied_title": {
+												"text": "Shape fixture",
+												"language": "en",
+												"based_on": {
+													"source_text": "Yosef",
+													"addresses": [
+														{
+															"image_uri": "page-1938-12-16.png",
+															"bbox": [0, 0, 100, 100],
+															"text": "Yosef"
+														}
+													]
+												},
+												"attribution": {
+													"by": "fictional shape test",
+													"on": "2026-10-23",
+													"kind": "person"
+												}
+											},
+											"full_text": "Yosef",
+											"block_breaks": [],
+											"page_blocks": [
+												{
+													"page_id": "page-1938-12-16",
+													"block_ids": ["block"]
+												}
+											],
+											"location_ids": [],
+											"organization_ids": [],
+											"subject_ids": [],
+											"cross_references": [],
+											"event_id": "death"
+										}
+									],
+									"sections": []
+								},
+								"mentions": {
+									"issue_date": "1938-12-16",
+									"mentions": [
+										{
+											"id": "mention-1938-12-16-0",
+											"person_id": "yosef",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "Yosef",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Yosef"
+												}
+											]
+										}
+									]
+								},
+								"life_events": {
+									"issue_date": "1938-12-16",
+									"life_events": [
+										{
+											"id": "death",
+											"content_items": [
+												{
+													"content_item_id": "notice-1938-12-16",
+													"role": "congratulation"
+												}
+											]
+										},
+										{
+											"id": "memorial",
+											"content_items": [
+												{
+													"content_item_id": "notice-1938-12-16",
+													"role": "mention"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			],
+			"error": "person has more than one death"
+		},
+		{
+			"name": "local 13: refuse supplied description offered as printed",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "persons", 2, "names", 0, "kind"],
+					"value": "printed"
+				}
+			],
+			"error": "proposed name kind exactly for other"
+		},
+		{
+			"name": "local 13: refuse supplied name without attribution",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "persons", 2, "names", 0, "attribution"],
+					"value": null
+				}
+			],
+			"error": "supplied name needs attribution and citations"
+		},
+		{
+			"name": "local 13: refuse supplied name without citations",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "persons", 2, "names", 0, "citations"],
+					"value": []
+				}
+			],
+			"error": "supplied name needs attribution and citations"
+		},
+		{
+			"name": "local evidence: refuse notice inverse child_of",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"shared_record": {
+							"version": "1",
+							"vocabulary_version": "1.1.0",
+							"persons": [
+								{
+									"id": "mother",
+									"name": "Hilde",
+									"names": [],
+									"gender": "unknown"
+								},
+								{
+									"id": "bride",
+									"name": "Bride",
+									"names": [],
+									"gender": "unknown"
+								}
+							],
+							"families": [],
+							"places": [],
+							"organizations": [],
+							"sources": [
+								{
+									"id": "paper",
+									"kind": "the_paper",
+									"title": "Shape fixture newspaper"
+								}
+							],
+							"events": [
+								{
+									"id": "event-judewicz-birth",
+									"name": "Shape fixture, not a transcription",
+									"type": "wedding",
+									"dates": [
+										{
+											"qualifier": "reported_in",
+											"reported_in": "1938-12-16"
+										}
+									],
+									"participants": [
+										{
+											"person_id": "bride",
+											"part": "bride"
+										}
+									]
+								}
+							],
+							"facts": [],
+							"relations": [
+								{
+									"id": "mother-relation",
+									"subject_id": "mother",
+									"type": "kinship",
+									"value": "The notice reports a birth.",
+									"citations": [
+										{
+											"source_id": "paper",
+											"edition_date": "1938-12-16",
+											"unit_id": "notice-1938-12-16",
+											"quote": "Hilde, the bride's mother"
+										}
+									],
+									"evidence_confidence": "confirmed",
+									"identity_confidence": "confirmed",
+									"status": "proposed",
+									"review": {
+										"state": "pending"
+									},
+									"attribution": {
+										"by": "fictional shape test",
+										"on": "2026-10-23"
+									},
+									"relationship_type": "child_of",
+									"related_person_id": "bride"
+								}
+							]
+						},
+						"issues": [
+							{
+								"pages": {
+									"edition_date": "1938-12-16",
+									"pages": [
+										{
+											"id": "page-1938-12-16",
+											"issue_date": "1938-12-16",
+											"page_number": 1,
+											"image_uri": "page-1938-12-16.png",
+											"dimensions": [200, 300],
+											"blocks": [
+												{
+													"id": "block",
+													"bbox": [0, 0, 100, 100],
+													"transcription": "Hilde, the bride's mother",
+													"unit_id": "notice-1938-12-16"
+												}
+											]
+										}
+									]
+								},
+								"content_items": {
+									"issue_date": "1938-12-16",
+									"vocabulary_version": "0.1.0",
+									"content_items": [
+										{
+											"id": "notice-1938-12-16",
+											"type": "ad",
+											"subtype": "birth_greeting",
+											"supplied_title": {
+												"text": "Shape fixture",
+												"language": "en",
+												"based_on": {
+													"source_text": "Hilde, the bride's mother",
+													"addresses": [
+														{
+															"image_uri": "page-1938-12-16.png",
+															"bbox": [0, 0, 100, 100],
+															"text": "Hilde, the bride's mother"
+														}
+													]
+												},
+												"attribution": {
+													"by": "fictional shape test",
+													"on": "2026-10-23",
+													"kind": "person"
+												}
+											},
+											"full_text": "Hilde, the bride's mother",
+											"block_breaks": [],
+											"page_blocks": [
+												{
+													"page_id": "page-1938-12-16",
+													"block_ids": ["block"]
+												}
+											],
+											"location_ids": [],
+											"organization_ids": [],
+											"subject_ids": [],
+											"cross_references": [],
+											"event_id": "event-judewicz-birth"
+										}
+									],
+									"sections": []
+								},
+								"mentions": {
+									"issue_date": "1938-12-16",
+									"mentions": [
+										{
+											"id": "mention-1938-12-16-0",
+											"person_id": "mother",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "Hilde",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Hilde"
+												}
+											]
+										},
+										{
+											"id": "mention-1938-12-16-1",
+											"person_id": "bride",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "bride",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "bride"
+												}
+											]
+										}
+									]
+								},
+								"life_events": {
+									"issue_date": "1938-12-16",
+									"life_events": [
+										{
+											"id": "event-judewicz-birth",
+											"content_items": [
+												{
+													"content_item_id": "notice-1938-12-16",
+													"role": "congratulation"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			],
+			"error": "notice relation must use parent_of, not child_of"
+		},
+		{
+			"name": "local evidence: refuse notice inverse other",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"shared_record": {
+							"version": "1",
+							"vocabulary_version": "1.1.0",
+							"persons": [
+								{
+									"id": "mother",
+									"name": "Hilde",
+									"names": [],
+									"gender": "unknown"
+								},
+								{
+									"id": "bride",
+									"name": "Bride",
+									"names": [],
+									"gender": "unknown"
+								}
+							],
+							"families": [],
+							"places": [],
+							"organizations": [],
+							"sources": [
+								{
+									"id": "paper",
+									"kind": "the_paper",
+									"title": "Shape fixture newspaper"
+								}
+							],
+							"events": [
+								{
+									"id": "event-judewicz-birth",
+									"name": "Shape fixture, not a transcription",
+									"type": "wedding",
+									"dates": [
+										{
+											"qualifier": "reported_in",
+											"reported_in": "1938-12-16"
+										}
+									],
+									"participants": [
+										{
+											"person_id": "bride",
+											"part": "bride"
+										}
+									]
+								}
+							],
+							"facts": [],
+							"relations": [
+								{
+									"id": "mother-relation",
+									"subject_id": "mother",
+									"type": "other",
+									"value": "The notice reports a birth.",
+									"citations": [
+										{
+											"source_id": "paper",
+											"edition_date": "1938-12-16",
+											"unit_id": "notice-1938-12-16",
+											"quote": "Hilde, the bride's mother"
+										}
+									],
+									"evidence_confidence": "confirmed",
+									"identity_confidence": "confirmed",
+									"status": "proposed",
+									"review": {
+										"state": "pending"
+									},
+									"attribution": {
+										"by": "fictional shape test",
+										"on": "2026-10-23"
+									},
+									"relationship_type": null,
+									"related_person_id": "bride",
+									"proposed_type": "child_of"
+								}
+							]
+						},
+						"issues": [
+							{
+								"pages": {
+									"edition_date": "1938-12-16",
+									"pages": [
+										{
+											"id": "page-1938-12-16",
+											"issue_date": "1938-12-16",
+											"page_number": 1,
+											"image_uri": "page-1938-12-16.png",
+											"dimensions": [200, 300],
+											"blocks": [
+												{
+													"id": "block",
+													"bbox": [0, 0, 100, 100],
+													"transcription": "Hilde, the bride's mother",
+													"unit_id": "notice-1938-12-16"
+												}
+											]
+										}
+									]
+								},
+								"content_items": {
+									"issue_date": "1938-12-16",
+									"vocabulary_version": "0.1.0",
+									"content_items": [
+										{
+											"id": "notice-1938-12-16",
+											"type": "ad",
+											"subtype": "birth_greeting",
+											"supplied_title": {
+												"text": "Shape fixture",
+												"language": "en",
+												"based_on": {
+													"source_text": "Hilde, the bride's mother",
+													"addresses": [
+														{
+															"image_uri": "page-1938-12-16.png",
+															"bbox": [0, 0, 100, 100],
+															"text": "Hilde, the bride's mother"
+														}
+													]
+												},
+												"attribution": {
+													"by": "fictional shape test",
+													"on": "2026-10-23",
+													"kind": "person"
+												}
+											},
+											"full_text": "Hilde, the bride's mother",
+											"block_breaks": [],
+											"page_blocks": [
+												{
+													"page_id": "page-1938-12-16",
+													"block_ids": ["block"]
+												}
+											],
+											"location_ids": [],
+											"organization_ids": [],
+											"subject_ids": [],
+											"cross_references": [],
+											"event_id": "event-judewicz-birth"
+										}
+									],
+									"sections": []
+								},
+								"mentions": {
+									"issue_date": "1938-12-16",
+									"mentions": [
+										{
+											"id": "mention-1938-12-16-0",
+											"person_id": "mother",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "Hilde",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Hilde"
+												}
+											]
+										},
+										{
+											"id": "mention-1938-12-16-1",
+											"person_id": "bride",
+											"content_item_id": "notice-1938-12-16",
+											"printed_name": "bride",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "bride"
+												}
+											]
+										}
+									]
+								},
+								"life_events": {
+									"issue_date": "1938-12-16",
+									"life_events": [
+										{
+											"id": "event-judewicz-birth",
+											"content_items": [
+												{
+													"content_item_id": "notice-1938-12-16",
+													"role": "congratulation"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			],
+			"error": "notice relation must use parent_of, not child_of"
+		},
+		{
+			"name": "local 13: refuse child count 2",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "qualifiers"],
+					"value": {
+						"child_count": "2"
+					}
+				}
+			],
+			"error": "described child needs a single-child birth fact"
+		},
+		{
+			"name": "local 13: refuse child count unknown",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "qualifiers"],
+					"value": {
+						"child_count": "unknown"
+					}
+				}
+			],
+			"error": "described child needs a single-child birth fact"
+		},
+		{
+			"name": "local 13: refuse child count None",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "qualifiers"],
+					"value": {}
+				}
+			],
+			"error": "described child needs a single-child birth fact"
+		},
+		{
+			"name": "local 13: refuse described child without designation mentions",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "mentions", "mentions"],
+					"value": [
+						{
+							"id": "mention-1938-12-16-0",
+							"person_id": "person-rivtche-judewicz",
+							"content_item_id": "notice-1938-12-16",
+							"printed_name": "ריבטשע",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-16.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "ריבטשע"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-16-1",
+							"person_id": "person-moshe-judewicz",
+							"content_item_id": "notice-1938-12-16",
+							"printed_name": "משה",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-16.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "משה"
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["issues", 1, "mentions", "mentions"],
+					"value": [
+						{
+							"id": "mention-1938-12-23-0",
+							"person_id": "person-rivtche-judewicz",
+							"content_item_id": "notice-1938-12-23",
+							"printed_name": "ריבטשע",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-23.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "ריבטשע"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-23-1",
+							"person_id": "person-moshe-judewicz",
+							"content_item_id": "notice-1938-12-23",
+							"printed_name": "משה",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-23.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "משה"
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["issues", 2, "mentions", "mentions"],
+					"value": [
+						{
+							"id": "mention-1938-12-30-0",
+							"person_id": "person-rivtche-judewicz",
+							"content_item_id": "notice-1938-12-30",
+							"printed_name": "ריבטשע",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-30.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "ריבטשע"
+								}
+							]
+						},
+						{
+							"id": "mention-1938-12-30-1",
+							"person_id": "person-moshe-judewicz",
+							"content_item_id": "notice-1938-12-30",
+							"printed_name": "משה",
+							"roles": ["subject"],
+							"address_grain": "words",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-30.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "משה"
+								}
+							]
+						}
+					]
+				}
+			],
+			"error": "described child needs a cited designation mention"
+		},
+		{
+			"name": "local 13: refuse described child without birth fact",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts"],
+					"value": []
+				}
+			],
+			"error": "described child needs a single-child birth fact"
+		},
+		{
+			"name": "local 13: refuse described child without both parent relations",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "relations"],
+					"value": [
+						{
+							"id": "parent-0",
+							"subject_id": "person-rivtche-judewicz",
+							"type": "kinship",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"relationship_type": "parent_of",
+							"related_person_id": "person-judewicz-daughter-1938"
+						}
+					]
+				}
+			],
+			"error": "described child needs each parent relation citing the birth notice"
+		},
+		{
+			"name": "local evidence: refuse missing cited piece",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "unit_id"],
+					"value": "missing"
+				}
+			],
+			"error": "unknown cited content item"
+		},
+		{
+			"name": "local evidence: refuse quote absent from notice",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "quote"],
+					"value": "not printed here"
+				}
+			],
+			"error": "citation quote must occur in content item"
+		},
+		{
+			"name": "local evidence: refuse duplicate notice relation",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "relations"],
+					"value": [
+						{
+							"id": "parent-0",
+							"subject_id": "person-rivtche-judewicz",
+							"type": "kinship",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"relationship_type": "parent_of",
+							"related_person_id": "person-judewicz-daughter-1938"
+						},
+						{
+							"id": "parent-1",
+							"subject_id": "person-moshe-judewicz",
+							"type": "kinship",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"relationship_type": "parent_of",
+							"related_person_id": "person-judewicz-daughter-1938"
+						},
+						{
+							"id": "duplicate-relation",
+							"subject_id": "person-rivtche-judewicz",
+							"type": "kinship",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"relationship_type": "parent_of",
+							"related_person_id": "person-judewicz-daughter-1938"
+						}
+					]
+				}
+			],
+			"error": "duplicate notice relation"
+		},
+		{
+			"name": "local 7: refuse released engagement bypass",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "type"],
+					"value": "engagement"
+				}
+			]
+		},
+		{
+			"name": "local 7: refuse other without proposed_type",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "type"],
+					"value": "other"
+				}
+			],
+			"error": "event proposed_type exactly for other"
+		},
+		{
+			"name": "local 7: refuse proposal on released type",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "proposed_type"],
+					"value": "memorial"
+				}
+			],
+			"error": "event proposed_type exactly for other"
+		},
+		{
+			"name": "local 7: refuse an issue copy of event type",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "life_events", "life_events", 0, "type"],
+					"value": "death"
+				}
+			]
+		},
+		{
+			"name": "local 7: refuse issue event without shared event",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues", 0, "life_events", "life_events", 0, "id"],
+					"value": "missing-event"
+				}
+			],
+			"error": "unknown life event"
+		},
+		{
+			"name": "local 10: refuse impossible normalized date",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"printed": "31 February 1938",
+							"printed_calendar": "gregorian",
+							"start": "1938-02-31"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "local 10: refuse unprinted normalized date",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"start": "1938-12-16"
+						}
+					]
+				}
+			],
+			"error": "event date needs printed words and calendar or reported_in qualifier"
+		},
+		{
+			"name": "local 10: refuse fallback without qualifier",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"reported_in": "1938-12-16"
+						}
+					]
+				}
+			],
+			"error": "event date needs printed words and calendar or reported_in qualifier"
+		},
+		{
+			"name": "local 10: refuse fallback as exact date",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates", 0, "start"],
+					"value": "1938-12-16"
+				}
+			],
+			"error": "reported_in cannot carry a printed or normalized event date"
+		},
+		{
+			"name": "local 10: refuse fallback bound",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates", 0, "end"],
+					"value": "1938-12-16"
+				}
+			]
+		},
+		{
+			"name": "local 10: refuse later issue as first report",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates", 0, "reported_in"],
+					"value": "1938-12-23"
+				}
+			],
+			"error": "reported_in must be the first issue date"
+		},
+		{
+			"name": "local 10: refuse Hebrew conversion as printed normalization",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"printed": "כ״ב כסלו תרצ״ט",
+							"printed_calendar": "hebrew",
+							"start": "1938-12-15"
+						}
+					]
+				}
+			],
+			"error": "normalization requires a printed Gregorian date"
+		},
+		{
+			"name": "local 7: refuse released birth disguised as a proposal",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "type"],
+					"value": "other"
+				},
+				{
+					"path": ["shared_record", "events", 0, "proposed_type"],
+					"value": "birth"
+				}
+			],
+			"error": "released event kind cannot be proposed_type"
+		},
+		{
+			"name": "local 13: refuse supplied attribution attached to a printed name",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "persons", 2, "names", 0],
+					"value": {
+						"value": "daughter of Rivtche and Moshe Judewicz",
+						"kind": "printed",
+						"script": "Latn",
+						"lang": "en",
+						"attribution": {
+							"by": "fictional shape test",
+							"on": "2026-10-23"
+						},
+						"citations": [
+							{
+								"source_id": "paper",
+								"edition_date": "1938-12-16",
+								"unit_id": "notice-1938-12-16",
+								"quote": "ריבטשע משה זייער טעכטערל"
+							}
+						]
+					}
+				}
+			],
+			"error": "supplied attribution needs the proposed name kind"
+		},
+		{
+			"name": "local 13: refuse a second baby on a single-child described birth",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "persons"],
+					"value": [
+						{
+							"id": "person-rivtche-judewicz",
+							"name": "Rivtche Judewicz",
+							"names": [],
+							"gender": "unknown"
+						},
+						{
+							"id": "person-moshe-judewicz",
+							"name": "Moshe Judewicz",
+							"names": [],
+							"gender": "unknown"
+						},
+						{
+							"id": "person-judewicz-daughter-1938",
+							"name": "daughter of Rivtche and Moshe Judewicz",
+							"names": [
+								{
+									"value": "daughter of Rivtche and Moshe Judewicz",
+									"kind": "other",
+									"proposed_type": "supplied",
+									"script": "Latn",
+									"lang": "en",
+									"attribution": {
+										"by": "fictional shape test",
+										"on": "2026-10-23"
+									},
+									"citations": [
+										{
+											"source_id": "paper",
+											"edition_date": "1938-12-16",
+											"unit_id": "notice-1938-12-16",
+											"quote": "ריבטשע משה זייער טעכטערל"
+										}
+									]
+								}
+							],
+							"gender": "unknown"
+						},
+						{
+							"id": "another-baby",
+							"name": "Another baby",
+							"names": [],
+							"gender": "unknown"
+						}
+					]
+				},
+				{
+					"path": ["shared_record", "events", 0, "participants"],
+					"value": [
+						{
+							"person_id": "person-rivtche-judewicz",
+							"part": "parent"
+						},
+						{
+							"person_id": "person-moshe-judewicz",
+							"part": "parent"
+						},
+						{
+							"person_id": "person-judewicz-daughter-1938",
+							"part": "baby"
+						},
+						{
+							"person_id": "another-baby",
+							"part": "baby"
+						}
+					]
+				}
+			],
+			"error": "single-child birth must have exactly one baby"
+		},
+		{
+			"name": "local 10: refuse printed date plus fallback",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"qualifier": "reported_in",
+							"reported_in": "1938-12-16"
+						},
+						{
+							"printed": "December 1938",
+							"printed_calendar": "gregorian",
+							"start": "1938-12"
+						}
+					]
+				}
+			],
+			"error": "reported_in must be the only date"
+		},
+		{
+			"name": "local 10: printed month need not invent a day",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"printed": "December 1938",
+							"printed_calendar": "gregorian",
+							"start": "1938-12"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "local evidence: refuse notice relation without a quote",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "quote"],
+					"value": null
+				}
+			],
+			"error": "notice relation needs a quote"
+		},
+		{
+			"name": "local evidence: refuse relation with no citations",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "relations", 0, "citations"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "local evidence: refuse unknown registry source",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "source_id"],
+					"value": "missing"
+				}
+			],
+			"error": "unknown citation source"
+		},
+		{
+			"name": "local 8: refuse duplicate person with two event parts",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "participants"],
+					"value": [
+						{
+							"person_id": "person-rivtche-judewicz",
+							"part": "parent"
+						},
+						{
+							"person_id": "person-moshe-judewicz",
+							"part": "parent"
+						},
+						{
+							"person_id": "person-judewicz-daughter-1938",
+							"part": "baby"
+						},
+						{
+							"person_id": "person-judewicz-daughter-1938",
+							"part": "parent"
+						}
+					]
+				}
+			],
+			"error": "duplicate event participant"
+		},
+		{
+			"name": "local 13: refuse directly released supplied name kind",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "persons", 2, "names", 0, "kind"],
+					"value": "supplied"
+				}
+			]
+		},
+		{
+			"name": "local 7: refuse directly released memorial kind",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "type"],
+					"value": "memorial"
+				}
+			]
+		},
+		{
+			"name": "local 7: refuse duplicate shared event identity",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events"],
+					"value": [
+						{
+							"id": "event-judewicz-birth",
+							"name": "Shape fixture, not a transcription",
+							"type": "birth",
+							"dates": [
+								{
+									"qualifier": "reported_in",
+									"reported_in": "1938-12-16"
+								}
+							],
+							"participants": [
+								{
+									"person_id": "person-rivtche-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-moshe-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-judewicz-daughter-1938",
+									"part": "baby"
+								}
+							]
+						},
+						{
+							"id": "event-judewicz-birth",
+							"name": "Shape fixture, not a transcription",
+							"type": "birth",
+							"dates": [
+								{
+									"qualifier": "reported_in",
+									"reported_in": "1938-12-16"
+								}
+							],
+							"participants": [
+								{
+									"person_id": "person-rivtche-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-moshe-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-judewicz-daughter-1938",
+									"part": "baby"
+								}
+							]
+						}
+					]
+				}
+			],
+			"error": "duplicate shared id"
+		}
+	]
+}

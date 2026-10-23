@@ -1,8 +1,8 @@
 """Per-issue site documents and their joins to the shared record."""
-from typing import Literal
+from typing import Annotated, Literal
 from pydantic import Field, model_validator
 from .sourced_entities import Strict, Text, Day
-from .sourced_entities_vocabulary import MentionRoles, LifeEventTypes, ContentUnitRoles
+from .sourced_entities_vocabulary import MentionRoles, ContentUnitRoles
 from .project_output import PagesData
 from .site_common import PrintedAddress, unique_ids
 from .content_item import ContentItemsData
@@ -53,14 +53,13 @@ class ContentItemRef(Strict):
 
 class IssueLifeEvent(Strict):
     id: Text
-    type: LifeEventTypes
-    name: str
-    principal_ids: list[Text]  # Persons in the shared record.
-    date_hebrew: str | None
-    date_gregorian: str | None
-    location_id: str | None
-    content_items: list[ContentItemRef]
-    description: str | None
+    content_items: Annotated[list[ContentItemRef], Field(min_length=1)]
+
+    @model_validator(mode='after')
+    def piece_ids(self):
+        if errors := unique_ids([c.content_item_id for c in self.content_items], 'event content item'):
+            raise ValueError('; '.join(errors))
+        return self
 
 
 class IssueLifeEventsData(Strict):
@@ -255,11 +254,18 @@ class SiteArchive(Strict):
         places = {p.id for p in self.shared_record.places}
         organizations = {o.id for o in self.shared_record.organizations}
         events = {e.id: e for e in self.shared_record.events}
+        first_issues = {}
+        pieces = {}
         for issue in self.issues:
+            date = issue.content_items.issue_date
             issue_events = {e.id for e in issue.life_events.life_events}
             if any(m.person_id not in people for m in issue.mentions.mentions):
                 errors.append('unknown mention person')
             for item in issue.content_items.content_items:
+                pieces[(date, item.id)] = dict(text=item.full_text,
+                    mentions=[m for m in issue.mentions.mentions if m.content_item_id == item.id],
+                    events={e.id for e in issue.life_events.life_events
+                            if any(c.content_item_id == item.id for c in e.content_items)})
                 if any(id not in places for id in item.location_ids):
                     errors.append('unknown content item place')
                 if any(id not in organizations for id in item.organization_ids):
@@ -267,12 +273,66 @@ class SiteArchive(Strict):
                 if item.event_id and item.event_id not in events and item.event_id not in issue_events:
                     errors.append('unknown content item event')
             for event in issue.life_events.life_events:
-                if any(id not in people for id in event.principal_ids):
-                    errors.append('unknown life event person')
-                if event.location_id and event.location_id not in places:
-                    errors.append('unknown life event place')
-                if event.id in events and events[event.id].type != event.type:
-                    errors.append('life event must agree with shared event')
+                if event.id not in events:
+                    errors.append('unknown life event')
+                first_issues[event.id] = min(date, first_issues.get(event.id, date))
+        for event in self.shared_record.events:
+            for date in event.dates:
+                if (date.qualifier == 'reported_in' and event.id in first_issues and
+                        date.reported_in != first_issues[event.id]):
+                    errors.append('reported_in must be the first issue date')
+
+        def cited_piece(c):
+            return pieces.get((c.edition_date, c.unit_id)) if c.edition_date and c.unit_id else None
+
+        assertions = [*self.shared_record.facts, *self.shared_record.relations]
+        identities = [*self.shared_record.persons, *self.shared_record.families,
+                      *self.shared_record.places, *self.shared_record.organizations]
+        citations = [c for f in assertions for c in f.citations] + [
+            c for p in identities for n in p.names for c in (n.citations or [])]
+        for c in citations:
+            if not c.unit_id:
+                continue
+            piece = cited_piece(c)
+            if not piece:
+                errors.append('unknown cited content item')
+            elif c.quote and c.quote not in piece['text']:
+                errors.append('citation quote must occur in content item')
+        for r in self.shared_record.relations:
+            if any(c.unit_id and not (c.quote or '').strip() for c in r.citations):
+                errors.append('notice relation needs a quote')
+        for child in self.shared_record.persons:
+            if not any(n.proposed_type == 'supplied' for n in child.names):
+                continue
+            births = [f for f in self.shared_record.facts if f.subject_id == child.id and
+                      f.type == 'birth' and (f.qualifiers or {}).get('child_count') == '1' and
+                      f.event_id in events and events[f.event_id].type == 'birth' and
+                      any(p.person_id == child.id and p.part == 'baby' for p in events[f.event_id].participants)]
+            if not births:
+                errors.append('described child needs a single-child birth fact')
+            for birth in births:
+                if sum(p.part == 'baby' for p in events[birth.event_id].participants) != 1:
+                    errors.append('single-child birth must have exactly one baby')
+                notices = [c for c in birth.citations if c.quote and cited_piece(c) and
+                           birth.event_id in cited_piece(c)['events']]
+                if not any(m.person_id == child.id and m.address_grain == 'words' and
+                           'subject' in m.roles and m.printed_name and m.printed_name in c.quote
+                           for c in notices for m in cited_piece(c)['mentions']):
+                    errors.append('described child needs a cited designation mention')
+
+                def same_notice(c):
+                    return any(n.source_id == c.source_id and n.edition_date == c.edition_date and
+                               n.unit_id == c.unit_id for n in notices)
+
+                if not any(n.proposed_type == 'supplied' and any(same_notice(c) for c in (n.citations or []))
+                           for n in child.names):
+                    errors.append('supplied name must cite the birth notice')
+                parents = [p for p in events[birth.event_id].participants if p.part == 'parent']
+                if not parents or any(not any(r.subject_id == p.person_id and
+                        r.related_person_id == child.id and r.relationship_type == 'parent_of' and
+                        any(same_notice(c) for c in r.citations) for r in self.shared_record.relations)
+                        for p in parents):
+                    errors.append('described child needs each parent relation citing the birth notice')
         if errors:
             raise ValueError('; '.join(errors))
         return self

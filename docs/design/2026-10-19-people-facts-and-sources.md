@@ -130,7 +130,7 @@ What EHRI does:
   of `rico:Person`, and EHRI reuses schema.org for addresses and opening hours. EHRI's own extensions concern
   archives and institutions. EHRI adds nothing of its own for people: a person is RiC-O's person.
 - **RiC-O records a relation as a record of its own** (`rico:Relation` and its subclasses `FamilyRelation`,
-  `AgentToAgentRelation`, `PerformanceRelation`, …). A relation has `relationHasSource`, `relationCertainty`,
+  `AgentToAgentRelation`, `PerformanceRelation`, …). A relation has `isEvidencedBy` [corrected 2026-10-23: evidence, not `relationHasSource`, the first endpoint], `relationCertainty`,
   `isAssociatedWithDate` and `relationState` [corrected 2026-10-20: `relationHasDate` is absent from RiC-O 1.0.2; `relationState` describes temporal state, not editorial approval]. The inverse property `rico:evidences` links a document to the
   relation it proves. Names are records of their own too (`rico:AgentName`, with `usedFromDate`), not strings.
   A person has `hasBirthDate`/`hasDeathDate`, `hasBirthPlace`/`hasDeathPlace`, `hasOrHadOccupationOfType`
@@ -148,8 +148,8 @@ What this means for us:
 
 | our proposal | RiC-O / EHRI | note |
 |---|---|---|
-| `Relationship` with `citations`, `confidence`, `status` | `rico:Relation` + `relationHasSource`, `relationCertainty`, `relationState` | source and certainty map; editorial status is local [corrected 2026-10-20: `relationState` is temporal state] |
-| `Fact` with `citations`, `confidence`, `date` | an n-ary `rico:Relation` or `rico:Event` with source and certainty | RiC-O has no general "fact"; use a qualified assertion and map where justified [corrected 2026-10-20: pending/disputed assertions must not become unqualified historical triples; see the pilot] |
+| `Relationship` with `citations`, `confidence`, `status` | `rico:Relation` + `isEvidencedBy`, `relationCertainty`, `relationState` | evidence and certainty map; editorial status is local [corrected 2026-10-20: `relationState` is temporal state; corrected 2026-10-23: `isEvidencedBy` connects Relation → RecordResource; `relationHasSource` is the first endpoint] |
+| `Fact` with `citations`, `confidence`, `date` | a qualified `rico:Relation` with `isEvidencedBy` and certainty | RiC-O has no general "fact"; use a qualified assertion and map where justified [corrected 2026-10-20: pending/disputed assertions must not become unqualified historical triples; see the pilot; corrected 2026-10-23: fact citations use `isEvidencedBy` on the qualified Relation] |
 | `Name` with `kind`, `script` | `rico:AgentName` + `usedFromDate` | RiC-O's names are records of their own, as ours would be |
 | `Citation.unit_id` (the paper's piece) | `rico:evidences` from a `RecordResource` | each piece of the paper is a `RecordResource` |
 | `Fact.place_id` for a ghetto or camp | EHRI vocabulary URI (camps, ghettos) | the `dsmedia/arolsen` catalogue already loads EHRI's camp and ghetto lists |

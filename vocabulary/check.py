@@ -136,8 +136,9 @@ def check_site_content(root=ROOT):
         return declaration
 
     expected_classes = {'content_item_subtypes': 'rico:DocumentaryFormType',
-                        'subjects': 'skos:Concept', 'title_types': 'rico:TitleType'}
-    if set(vocabulary['groups']) != set(expected_classes):
+                        'subjects': 'skos:Concept', 'title_types': 'rico:TitleType',
+                        'proposed_event_types': 'rico:EventType', 'proposed_name_kinds': 'skos:Concept'}
+    if set(vocabulary['groups']) != set(expected_classes) | {'event_parts'}:
         errors.append('site-content: unexpected concept groups')
     for group, entries in vocabulary['groups'].items():
         if not entries or len({e['id'] for e in entries}) != len(entries):
@@ -153,8 +154,24 @@ def check_site_content(root=ROOT):
                 continue
             declaration = local_declaration(entry, where)
             cls = expected_classes.get(group)
-            if entry.get('concept_class') != cls or not declaration or cls not in declaration[0] or 'skos:Concept' not in declaration[0]:
+            if group == 'event_parts':
+                known_kinds = {e['id'] for e in vocabulary['groups']['proposed_event_types']} | {
+                    e['id'] for e in json.loads((folder / 'sourced-entities.json').read_text())['groups']['event_types']}
+                if (not entry.get('applies_to') or len(set(entry['applies_to'])) != len(entry['applies_to'])
+                        or not set(entry['applies_to']) <= known_kinds):
+                    errors.append(f'{where}: part must fit known event kinds')
+                if entry.get('rico_parent') not in {'rico:affectsOrAffected', 'rico:hasOrHadParticipant'}:
+                    errors.append(f'{where}: part needs a RiC-O participant parent')
+                if entry.get('range_class') != 'rico:Person':
+                    errors.append(f'{where}: main part needs a person')
+                if not declaration or not all(term in declaration[0] for term in [
+                        'owl:ObjectProperty', 'rdfs:domain rico:Event',
+                        'rdfs:range rico:Person', 'rdfs:subPropertyOf ' + entry.get('rico_parent', '')]):
+                    errors.append(f'{where}: part profile must declare its parent, domain and range')
+            elif entry.get('concept_class') != cls or not declaration or cls not in declaration[0] or 'skos:Concept' not in declaration[0]:
                 errors.append(f'{where}: incorrect concept class')
+            if group in {'event_parts', 'proposed_event_types', 'proposed_name_kinds'} and entry.get('status') != 'proposed':
+                errors.append(f'{where}: new term must remain proposed')
             if group == 'content_item_subtypes':
                 parent = entry.get('parent_type')
                 if not isinstance(parent, str) or parent not in types:

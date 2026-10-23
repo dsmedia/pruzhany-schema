@@ -441,6 +441,20 @@
       "range": [
         "https://www.ica.org/standards/RiC/ontology#Place"
       ]
+    },
+    "isEvidencedBy": {
+      "iri": "https://www.ica.org/standards/RiC/ontology#isEvidencedBy",
+      "kind": "object property",
+      "label": [
+        "is evidenced by"
+      ],
+      "element": "ObjectProperty",
+      "domain": [
+        "https://www.ica.org/standards/RiC/ontology#Relation"
+      ],
+      "range": [
+        "https://www.ica.org/standards/RiC/ontology#RecordResource"
+      ]
     }
   },
   "attribution": "RiC-O labels and definitions: International Council on Archives Expert Group on Archival Description (ICA EGAD), Copyright 2019-, International Council on Archives (ICA). Extracted unchanged from the cited ontology; application mappings are separate.",

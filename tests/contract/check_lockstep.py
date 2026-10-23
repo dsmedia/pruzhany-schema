@@ -27,6 +27,7 @@ from types import ModuleType
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE_MODELS = set(json.loads((ROOT / 'tests/contract/site-shapes.fixtures.json').read_text(encoding='utf-8'))['models'])
+SITE_MODELS |= {'SharedName', 'LifeEventDate', 'LifeEventParticipant'}
 
 # Pydantic class name -> Zod export key. Identical today, kept explicit so that a
 # rename on one side is a visible one-line change and never a silent skip.
@@ -51,6 +52,9 @@ MODEL_PAIRS = {
     "SharedPlace": "SharedPlace",
     "SharedOrganization": "SharedOrganization",
     "SharedEvent": "SharedEvent",
+    "SharedName": "SharedName",
+    "LifeEventDate": "LifeEventDate",
+    "LifeEventParticipant": "LifeEventParticipant",
     "SharedRecord": "SharedRecord",
     "IssueMention": "IssueMention",
     "IssueMentionsData": "IssueMentionsData",
@@ -123,13 +127,13 @@ def enum_values(prop, root) -> frozenset | None:
         return None
     if "enum" in node:
         return frozenset(node["enum"])
+    if "const" in node:
+        return frozenset([node['const']])
     for combinator in ("anyOf", "oneOf", "allOf"):
         if combinator in node:
             values: set = set()
             for sub in node[combinator]:
-                resolved = resolve(sub, root)
-                if isinstance(resolved, dict) and "enum" in resolved:
-                    values |= set(resolved["enum"])
+                values |= enum_values(sub, root) or set()
             if values:
                 return frozenset(values)
     return None

@@ -328,7 +328,7 @@ def rico_export(data):
             if predicate.startswith(RICO):
                 node["@type"].append("rico:Relation")
                 node["rico:relationCertainty"] = claim["evidence_confidence"]
-                node["rico:relationHasSource"] = [ref(cid) for cid in claim["citation_ids"]]
+                node["rico:isEvidencedBy"] = [ref(cid) for cid in claim["citation_ids"]]
                 node["rico:relationConnects"] = [ref(subject), obj]
                 for cid in claim["citation_ids"]:
                     graph.append({**ref(cid), "rico:evidences": ref(claim["id"])})

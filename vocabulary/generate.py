@@ -60,6 +60,9 @@ def generated_site_content(root=ROOT):
     parents = {entry['id']: entry['parent_type'] for entry in vocabulary['groups']['content_item_subtypes']}
     ts += f'export const subtypeParents = {json.dumps(parents)} as const satisfies Record<ContentItemSubtypes, ImpressoTypes>;\n'
     py += f'SUBTYPE_PARENTS: dict[str, str] = {parents!r}\n'
+    kinds = {entry['id']: entry['applies_to'] for entry in vocabulary['groups']['event_parts']}
+    ts += f'export const eventPartKinds: Record<EventParts, readonly string[]> = {json.dumps(kinds)};\n'
+    py += f'EVENT_PART_KINDS: dict[str, list[str]] = {kinds!r}\n'
     return {root / 'zod/site-content.vocabulary.ts': format_ts(ts, 'site-content.vocabulary.ts'),
             root / 'pydantic/site_content_vocabulary.py': py}
 

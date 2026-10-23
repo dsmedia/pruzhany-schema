@@ -1,7 +1,6 @@
 import { z } from 'zod/v4';
 import { PagesDataSchema } from './page.schema';
-import { LifeEventSchema } from './life-event.schema';
-import { MentionSchema } from './sourced-entities.schema';
+import { MentionSchema, type Citation } from './sourced-entities.schema';
 import { MentionRolesSchema, ContentUnitRolesSchema } from './sourced-entities.vocabulary';
 import { ContentItemsDataSchema } from './content-item.schema';
 import { SharedRecordSchema } from './shared-record.schema';
@@ -60,13 +59,18 @@ export const ContentItemRefSchema = z.strictObject({
 	role: ContentUnitRolesSchema, // Role of the content item, not the person's role.
 });
 export type ContentItemRef = z.infer<typeof ContentItemRefSchema>;
-export const IssueLifeEventSchema = LifeEventSchema.omit({ content_units: true })
-	.extend({
+export const IssueLifeEventSchema = z
+	.strictObject({
 		id: siteText,
-		principal_ids: z.array(siteText), // Persons in the shared record.
-		content_items: z.array(ContentItemRefSchema),
+		content_items: z.array(ContentItemRefSchema).min(1),
 	})
-	.strict();
+	.superRefine((v, ctx) => {
+		for (const message of uniqueIds(
+			v.content_items.map((c) => c.content_item_id),
+			'event content item'
+		))
+			ctx.addIssue({ code: 'custom', message });
+	});
 export type IssueLifeEvent = z.infer<typeof IssueLifeEventSchema>;
 export const IssueLifeEventsDataSchema = z
 	.strictObject({
@@ -313,11 +317,27 @@ export const SiteArchiveSchema = z
 		const places = new Set(v.shared_record.places.map((p) => p.id));
 		const organizations = new Set(v.shared_record.organizations.map((o) => o.id));
 		const events = new Map(v.shared_record.events.map((e) => [e.id, e]));
+		const firstIssues = new Map<string, string>();
+		const pieces = new Map<
+			string,
+			{ text: string; mentions: IssueMention[]; events: Set<string> }
+		>();
+		const pieceKey = (date: string, id: string) => JSON.stringify([date, id]);
 		for (const issue of v.issues) {
+			const date = issue.content_items.issue_date;
 			const issueEvents = new Set(issue.life_events.life_events.map((e) => e.id));
 			if (issue.mentions.mentions.some((m) => !people.has(m.person_id)))
 				errors.push('unknown mention person');
 			for (const item of issue.content_items.content_items) {
+				pieces.set(pieceKey(date, item.id), {
+					text: item.full_text,
+					mentions: issue.mentions.mentions.filter((m) => m.content_item_id === item.id),
+					events: new Set(
+						issue.life_events.life_events
+							.filter((e) => e.content_items.some((c) => c.content_item_id === item.id))
+							.map((e) => e.id)
+					),
+				});
 				if (item.location_ids.some((id) => !places.has(id)))
 					errors.push('unknown content item place');
 				if (item.organization_ids.some((id) => !organizations.has(id)))
@@ -326,12 +346,103 @@ export const SiteArchiveSchema = z
 					errors.push('unknown content item event');
 			}
 			for (const event of issue.life_events.life_events) {
-				if (event.principal_ids.some((id) => !people.has(id)))
-					errors.push('unknown life event person');
-				if (event.location_id && !places.has(event.location_id))
-					errors.push('unknown life event place');
-				if (events.has(event.id) && events.get(event.id)?.type !== event.type)
-					errors.push('life event must agree with shared event');
+				if (!events.has(event.id)) errors.push('unknown life event');
+				if (!firstIssues.has(event.id) || date < firstIssues.get(event.id)!)
+					firstIssues.set(event.id, date);
+			}
+		}
+		for (const event of v.shared_record.events)
+			for (const date of event.dates)
+				if (
+					date.qualifier === 'reported_in' &&
+					firstIssues.has(event.id) &&
+					date.reported_in !== firstIssues.get(event.id)
+				)
+					errors.push('reported_in must be the first issue date');
+		const citedPiece = (c: Citation) =>
+			c.edition_date && c.unit_id ? pieces.get(pieceKey(c.edition_date, c.unit_id)) : undefined;
+		const assertions = [...v.shared_record.facts, ...v.shared_record.relations];
+		const citations = [
+			...assertions.flatMap((f) => f.citations),
+			...[
+				...v.shared_record.persons,
+				...v.shared_record.families,
+				...v.shared_record.places,
+				...v.shared_record.organizations,
+			].flatMap((p) => p.names.flatMap((n) => n.citations ?? [])),
+		];
+		for (const c of citations) {
+			if (!c.unit_id) continue;
+			const piece = citedPiece(c);
+			if (!piece) errors.push('unknown cited content item');
+			else if (c.quote && !piece.text.includes(c.quote))
+				errors.push('citation quote must occur in content item');
+		}
+		for (const r of v.shared_record.relations)
+			if (r.citations.some((c) => c.unit_id && !c.quote?.trim()))
+				errors.push('notice relation needs a quote');
+		for (const child of v.shared_record.persons.filter((p) =>
+			p.names.some((n) => n.proposed_type === 'supplied')
+		)) {
+			const births = v.shared_record.facts.filter(
+				(f) =>
+					f.subject_id === child.id &&
+					f.type === 'birth' &&
+					f.qualifiers?.child_count === '1' &&
+					f.event_id &&
+					events.get(f.event_id)?.type === 'birth' &&
+					events
+						.get(f.event_id)
+						?.participants.some((p) => p.person_id === child.id && p.part === 'baby')
+			);
+			if (!births.length) errors.push('described child needs a single-child birth fact');
+			for (const birth of births) {
+				if (events.get(birth.event_id!)!.participants.filter((p) => p.part === 'baby').length !== 1)
+					errors.push('single-child birth must have exactly one baby');
+				const notices = birth.citations.filter(
+					(c) => c.quote && citedPiece(c)?.events.has(birth.event_id!)
+				);
+				if (
+					!notices.some((c) =>
+						citedPiece(c)?.mentions.some(
+							(m) =>
+								m.person_id === child.id &&
+								m.address_grain === 'words' &&
+								m.roles.includes('subject') &&
+								m.printed_name &&
+								c.quote!.includes(m.printed_name)
+						)
+					)
+				)
+					errors.push('described child needs a cited designation mention');
+				const sameNotice = (c: Citation) =>
+					notices.some(
+						(n) =>
+							n.source_id === c.source_id &&
+							n.edition_date === c.edition_date &&
+							n.unit_id === c.unit_id
+					);
+				if (
+					!child.names.some((n) => n.proposed_type === 'supplied' && n.citations?.some(sameNotice))
+				)
+					errors.push('supplied name must cite the birth notice');
+				const parents = events
+					.get(birth.event_id!)!
+					.participants.filter((p) => p.part === 'parent');
+				if (
+					!parents.length ||
+					parents.some(
+						(p) =>
+							!v.shared_record.relations.some(
+								(r) =>
+									r.subject_id === p.person_id &&
+									r.related_person_id === child.id &&
+									r.relationship_type === 'parent_of' &&
+									r.citations.some(sameNotice)
+							)
+					)
+				)
+					errors.push('described child needs each parent relation citing the birth notice');
 			}
 		}
 		for (const message of errors) ctx.addIssue({ code: 'custom', message });

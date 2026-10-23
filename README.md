@@ -47,6 +47,14 @@ optional independent check to each supplied title and translation, preserving
 its original source and author. Exact-byte bindings and field-specific judgement
 identifiers are shared by both language contracts.
 
+The [one-life-event contract](docs/design/2026-10-23-one-life-event.md) moves the
+event's participants, parts and dates into the shared record; issue entries keep
+only the event id and their pieces. This intentionally breaks the previous
+site-next shape and requires the round-4 writer and site migrations. The live
+production shapes stay unchanged. Proposed parts, kinds and supplied descriptions
+remain in the owner's batch; semantic fixtures run in `contract`, and tests that
+read RiC-O's pinned axioms run in `standards` outside the bun-only `zod/` tree.
+
 ## Issue 14 pilot
 
 The [sourced-entities pilot](pilots/sourced-entities/README.md) is an isolated,

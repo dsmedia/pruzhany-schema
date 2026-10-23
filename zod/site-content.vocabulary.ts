@@ -58,6 +58,20 @@ export const SubjectsSchema = z.enum([
 export type Subjects = z.infer<typeof SubjectsSchema>;
 export const TitleTypesSchema = z.enum(['printed', 'supplied']);
 export type TitleTypes = z.infer<typeof TitleTypesSchema>;
+export const EventPartsSchema = z.enum([
+	'baby',
+	'parent',
+	'bride',
+	'groom',
+	'boy',
+	'deceased',
+	'remembered',
+]);
+export type EventParts = z.infer<typeof EventPartsSchema>;
+export const ProposedEventTypesSchema = z.enum(['engagement', 'memorial']);
+export type ProposedEventTypes = z.infer<typeof ProposedEventTypesSchema>;
+export const ProposedNameKindsSchema = z.enum(['supplied']);
+export type ProposedNameKinds = z.infer<typeof ProposedNameKindsSchema>;
 export const subtypeParents = {
 	wedding_greeting: 'ad',
 	engagement_greeting: 'ad',
@@ -81,3 +95,12 @@ export const subtypeParents = {
 	sketch: 'article',
 	humour: 'entertainment',
 } as const satisfies Record<ContentItemSubtypes, ImpressoTypes>;
+export const eventPartKinds: Record<EventParts, readonly string[]> = {
+	baby: ['birth'],
+	parent: ['birth'],
+	bride: ['engagement', 'wedding'],
+	groom: ['engagement', 'wedding'],
+	boy: ['bar_mitzvah'],
+	deceased: ['death'],
+	remembered: ['memorial'],
+};
