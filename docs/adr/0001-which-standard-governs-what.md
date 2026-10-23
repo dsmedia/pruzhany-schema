@@ -1,7 +1,6 @@
 # ADR 0001: Which standard governs which part of the data
 
-**Status:** proposed (draft of 23 October 2026), awaiting the owner. The direction was agreed by the owner as Q14 of brief
-09 (pruzhany-steps `.scratch/site-files-keeper/briefs/09-round-4-one-event-across-issues.md`) and vetted in
+**Status:** accepted by the owner on 23 October 2026 ("yes to all", the fourth grilling of brief 09). The direction was agreed as Q14 of brief 09 (pruzhany-steps `.scratch/site-files-keeper/briefs/09-round-4-one-event-across-issues.md`) and vetted in
 [`docs/design/2026-10-23-standards-foundation-vetting.md`](../design/2026-10-23-standards-foundation-vetting.md), whose
 sections are cited below as §n.
 

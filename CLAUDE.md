@@ -6,7 +6,7 @@ The owner's word of 20 October 2026: 'It's important to me we stick close to EHR
 - Read the ontology through `standards/` before mapping; never map from memory.
 - Read and add a new EHRI or RiC-O version as a new `standards/` file only at the owner's word, then re-check every mapping. Never edit a pinned list in place.
 - An owner-approved vocabulary addition names its mapping. Run the alignment check for every mapping change.
-- **Persons, life events and relations are being vetted** (the owner's direction of 23 October 2026: shaped as the standard shapes them, one identity per person across issues, tests of meaning). Before changing how any of them is identified, shaped or related, read `docs/design/2026-10-23-standards-foundation-vetting.md` (the vetting, 23 October 2026) and `docs/adr/0001-which-standard-governs-what.md` (proposed until the owner agrees).
+- **Persons, life events and relations are being vetted** (the owner's direction of 23 October 2026: shaped as the standard shapes them, one identity per person across issues, tests of meaning). Before changing how any of them is identified, shaped or related, read `docs/design/2026-10-23-standards-foundation-vetting.md` (the vetting, 23 October 2026) and `docs/adr/0001-which-standard-governs-what.md` (accepted by the owner, 23 October 2026).
 
 # Working here
 
