@@ -229,11 +229,12 @@ ISWC 2023 paper, RiC-CM and RiC-AG on ica.org (their GitHub copies were read).
   | 13 | a described child: made only from a notice of one child, has a mention, and a supplied name never counts as printed in a join | local, from E | not yet applicable |
   | 14 | a join resting on a given name alone, or on a name only, is refused | local, from Q7 and §4 | 6 of the 206 joins of the rule as worded |
 
-- **One gap.** `standards/rico-1.1.json` records only each term's IRI, kind and label, not its domain, range,
-  `inverseOf`, `subPropertyOf`, symmetry or disjointness. Rules 1–9 and 11 can only cite RiC-O as "our rule, after RiC-O"
-  until those axioms are pinned too: a new list file from the same commit, made by the existing extractor (rdflib at
-  extraction only, no new dependency for the site or the program), added only at the owner's word as this repository's
-  `CLAUDE.md` requires.
+- **One gap, closed the same day.** `standards/rico-1.1.json` records only each term's IRI, kind and label, not its
+  domain, range, `inverseOf`, `subPropertyOf`, symmetry or disjointness, so rules 1–9 and 11 could only cite RiC-O as
+  "our rule, after RiC-O". At the owner's word ("yes, pin the rules", 23 October 2026) they are pinned as
+  `standards/rico-1.1-axioms.json`, from the same file at the same commit, by the existing extractor (`--axioms`; rdflib
+  at extraction only, no new dependency for the site or the program); the gate keeps it in step with the terms list, and
+  its tests read the rules this note cites from it. A test of meaning cites that file, not this note.
 
 ## 7. The verdicts
 
@@ -245,7 +246,7 @@ Each of the owner's answers in brief 09 against what was read. "Holds" means con
 | **Q14** which standard governs what | **Changed in wording.** Impresso governs the newspaper's layers and its mentions with their Wikidata links, not identity across issues (§4). EHRI governs persons and families (`ehri:Person`, `ehri:Family`), adds nothing for events, parts or kinship, and its namespace is not stored (§1). RiC-O 1.1 governs events, their kinds, participants, family relations, evidence, dates and identifiers (§2, §3). Identity of people not in Wikidata is ours, after TAC-KBP's NIL clusters and Yad Vashem's personal files (§4). Drafted as ADR 0001. |
 | **Q15** shape as the standard shapes | **Holds, made exact.** Relations once: only parent → child and ascendant → descendant have a RiC-O direction; symmetric kinds once per pair; uncle/aunt and in-laws in a local direction; the merge unions citations (§3). Main people as participants: each part a local subproperty of `affectsOrAffected` or `hasOrHadParticipant` (§2). Evidence maps to `isEvidencedBy`, not `relationHasSource` (§3). |
 | **Q16** one identity across issues | **Holds in shape, changed in the rule.** Resolved ids join first; the name test needs every main person's full printed name, never a given name alone; a letter's difference is listed; the 8 weeks are the event's window, measured from its first piece; the same full names further apart make a person proposal, never an event join; ids never renamed, reused or deleted, merges redirect for ever, a split keeps the old id on one side; outside ids only on evidence (§4). |
-| **Q17** tests of meaning on our JSON, no export, no new library | **Holds.** Fourteen rules, each labelled RiC-O, RiC-CM or local, several failing on today's data (§6). "Conformant" is never claimed. To cite RiC-O's own axioms, pin them as a new list (the owner's word). |
+| **Q17** tests of meaning on our JSON, no export, no new library | **Holds.** Fourteen rules, each labelled RiC-O, RiC-CM or local, several failing on today's data (§6). "Conformant" is never claimed. RiC-O's own axioms are pinned (`standards/rico-1.1-axioms.json`) so the tests cite them. |
 | first grilling Q1, one event per happening | holds: RiC-O's EventType, RiC-CM's one birth per person (§2) |
 | Q2, 8 weeks | holds as the event's window, not as a person rule (§4) |
 | Q3, engagement and wedding two events; Q4, a death and its memorial two | hold: two happenings, two Events |
@@ -267,8 +268,8 @@ Each of the owner's answers in brief 09 against what was read. "Holds" means con
 
 ## 8. Open, and whose
 
-- **The owner's:** whether RiC-O 1.1's axioms (domains, ranges, inverses, symmetry, disjointness) may be pinned as a new
-  `standards/` list from the same commit, so the tests check against the standard itself (§6).
+- **The owner's, answered:** RiC-O 1.1's axioms are pinned (`standards/rico-1.1-axioms.json`, the owner's "yes, pin the
+  rules" of 23 October 2026; §6).
 - **The owner's batch (#16), when round 4 brings it:** the parts and their two RiC-O parents; the event kinds engagement
   and anniversary memorial; grandparent and great-grandparent remapped to `hasDescendant`; the `supplied` name kind;
   `parenthood` deprecated.

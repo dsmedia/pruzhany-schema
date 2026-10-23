@@ -10,6 +10,22 @@ EHRI = "http://lod.ehri-project-test.eu/ontology#"
 # The pinned lists every mapping is checked against: EHRI's ontology and the RiC-O
 # version it imports (EHRI 0.2.0 imports RiC-O 1.1; the owner's word of 2026-10-22).
 RICO_LIST, EHRI_LIST = "rico-1.1.json", "ehri-0.2.0.json"
+# RiC-O 1.1's own axioms (domains, ranges, inverses, characteristics, chains, disjointness,
+# cardinalities), pinned from the same file as its terms: the owner's word of 2026-10-23.
+RICO_AXIOMS = "rico-1.1-axioms.json"
+PROVENANCE = ("repo", "commit", "path", "sha256")
+
+
+def check_axioms(standards):
+    """The axioms list is read from the very file its terms list was, and names only pinned terms."""
+    terms = json.loads((standards / RICO_LIST).read_text(encoding="utf-8"))
+    axioms = json.loads((standards / RICO_AXIOMS).read_text(encoding="utf-8"))
+    errors = [f"standards/{RICO_AXIOMS}: {key} differs from {RICO_LIST}"
+              for key in PROVENANCE if axioms.get(key) != terms.get(key)]
+    known = {term["iri"] for term in terms["terms"]}
+    for iri in sorted(set(re.findall(re.escape(RICO) + r'[A-Za-z_][\w-]*', json.dumps(axioms["axioms"]))) - known):
+        errors.append(f"standards/{RICO_AXIOMS}: {iri} is not a pinned term")
+    return errors
 
 
 def check(root):
@@ -17,7 +33,7 @@ def check(root):
     def load(name):
         return {term["iri"] for term in json.loads((standards / name).read_text(encoding="utf-8"))["terms"]}
     known = {"rico": load(RICO_LIST), "ehri": load(EHRI_LIST)}
-    errors = []
+    errors = check_axioms(standards)
     def validate(prefix, term, path):
         iri = term if term.startswith(("http:", "https:")) else {"rico": RICO, "ehri": EHRI}[prefix] + term.removeprefix(prefix + ":")
         if iri not in known[prefix]:

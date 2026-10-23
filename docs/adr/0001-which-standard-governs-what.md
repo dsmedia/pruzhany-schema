@@ -39,7 +39,8 @@ vetting found that they cover different ground and leave one part to us:
 | a mention's role, standing and review, the supplied name kind, uncle/aunt and in-law directions | **ours** (local terms) | each with its reason in a profile; a mention maps to RiC-O 1.2's `hasContentWhichRefersTo` once it is released and pinned (§1) |
 
 What we claim is "mapped to RiC-O 1.1 as EHRI 0.2.0 imports it, with these rules tested", never "conformant": no
-conformance notion exists for RiC-O (§6). The rules are those of §6, each labelled RiC-O, RiC-CM or local.
+conformance notion exists for RiC-O (§6). The rules are those of §6, each labelled RiC-O, RiC-CM or local; a rule
+labelled RiC-O cites the axiom in `standards/rico-1.1-axioms.json`, pinned at the owner's word of 23 October 2026.
 
 ## Consequences
 
