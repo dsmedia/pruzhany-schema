@@ -321,7 +321,7 @@ class SiteArchive(Strict):
                 errors += printed_address_errors(c.addresses, content_item['page_blocks'],
                                                  content_item['pages'], 'text')
         for child in self.shared_record.persons:
-            if not any(n.proposed_type == 'supplied' for n in child.names):
+            if not any(n.kind == 'supplied' for n in child.names):
                 continue
             births = [f for f in self.shared_record.facts if f.subject_id == child.id and
                       f.type == 'birth' and (f.qualifiers or {}).get('child_count') == '1' and
@@ -340,7 +340,7 @@ class SiteArchive(Strict):
                     errors.append('described child needs a cited designation mention')
 
                 notice_keys = {notice_key(c) for c in notices}
-                if not any(n.proposed_type == 'supplied' and any(c.addresses and notice_key(c) in notice_keys for c in (n.citations or []))
+                if not any(n.kind == 'supplied' and any(c.addresses and notice_key(c) in notice_keys for c in (n.citations or []))
                            for n in child.names):
                     errors.append('supplied name must cite the birth notice')
                 parents = [p for p in events[birth.event_id].main_people if p.part == 'parent']

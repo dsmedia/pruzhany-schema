@@ -115,6 +115,15 @@ class Name(Strict):
     script: Annotated[str, Field(pattern=r"^[A-Za-z]{4}$")]
     lang: Annotated[str, Field(pattern=r"^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$")] | None = None
     citations: list[Citation] | None = None
+    attribution: Attribution | None = None
+
+    @model_validator(mode='after')
+    def supplied_name(self):
+        if self.kind == 'supplied' and (not self.attribution or not self.citations):
+            raise ValueError('supplied name needs attribution and citations')
+        if self.attribution and self.kind != 'supplied':
+            raise ValueError('supplied attribution needs the supplied name kind')
+        return self
 
 
 class Fate(Strict):

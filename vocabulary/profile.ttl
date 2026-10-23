@@ -1,15 +1,17 @@
 @prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 <https://pruzhany.org/ns/sourced-entities> a owl:Ontology ;
-  owl:versionInfo "1.1.0 released" ;
+  owl:versionInfo "1.2.0 released" ;
   rdfs:comment "Production application profile; local categories are not ontology equivalence assertions. Namespace is an identifier, not a claim of hosted content." .
 
 pc:fact_types_education a owl:NamedIndividual ; rdfs:label "education" ; rdfs:comment "TeachingRelation identifies teaching rather than establishing school attendance; retain attendance without asserting a teacher relationship." .
 pc:fact_types_emigration a owl:NamedIndividual ; rdfs:label "emigration" ; rdfs:comment "RiC-O MigrationRelation concerns instantiations, not migration of people." .
 pc:fact_types_survival a owl:NamedIndividual ; rdfs:label "survival" ; rdfs:comment "No dedicated pinned relation expresses evidence of being alive at a time." .
-pc:fact_types_parenthood a owl:NamedIndividual ; rdfs:label "parenthood" ; rdfs:comment "Preserves an unnamed child without inventing a person node for a child relation." .
+pc:fact_types_parenthood a owl:NamedIndividual ; owl:deprecated true ; rdfs:label "parenthood" ; rdfs:comment "Preserves an unnamed child without inventing a person node for a child relation." .
 pc:fact_types_ghetto_role a owl:NamedIndividual ; rdfs:label "ghetto_role" ; rdfs:comment "No precise pinned counterpart for residual ghetto activities beyond membership or office." .
 pc:fact_types_partisan_service a owl:NamedIndividual ; rdfs:label "partisan_service" ; rdfs:comment "No precise pinned counterpart for residual partisan activities beyond membership or office." .
 pc:fact_types_deportation a owl:NamedIndividual ; rdfs:label "deportation" ; rdfs:comment "No dedicated pinned term captures forced removal of a person." .
@@ -119,3 +121,14 @@ pc:holocaust_fate_types_not_applicable a owl:NamedIndividual ; rdfs:label "not_a
 pc:holocaust_fate_types_perished a owl:NamedIndividual ; rdfs:label "perished" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
 pc:holocaust_fate_types_survived a owl:NamedIndividual ; rdfs:label "survived" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
 pc:holocaust_fate_types_unknown a owl:NamedIndividual ; rdfs:label "unknown" ; rdfs:comment "Compatibility identifier from the site taxonomy; no exact pinned ontology value is established." .
+
+# Owner's batch (#16), released 1.2.0 on 2026-10-23.
+pc:part_baby a owl:ObjectProperty ; rdfs:subPropertyOf rico:affectsOrAffected ; rdfs:domain rico:Event ; rdfs:range rico:Person ; rdfs:label "Baby"@en ; rdfs:comment "The birth happens to this person; RiC-O has no baby part." .
+pc:part_parent a owl:ObjectProperty ; rdfs:subPropertyOf rico:hasOrHadParticipant ; rdfs:domain rico:Event ; rdfs:range rico:Person ; rdfs:label "Parent"@en ; rdfs:comment "A parent participates in a birth but is not the person born; RiC-O has no birth-parent part." .
+pc:part_bride a owl:ObjectProperty ; rdfs:subPropertyOf rico:affectsOrAffected ; rdfs:domain rico:Event ; rdfs:range rico:Person ; rdfs:label "Bride"@en ; rdfs:comment "The engagement or wedding happens to the bride; RiC-O has no bride part." .
+pc:part_groom a owl:ObjectProperty ; rdfs:subPropertyOf rico:affectsOrAffected ; rdfs:domain rico:Event ; rdfs:range rico:Person ; rdfs:label "Groom"@en ; rdfs:comment "The engagement or wedding happens to the groom; RiC-O has no groom part." .
+pc:part_boy a owl:ObjectProperty ; rdfs:subPropertyOf rico:affectsOrAffected ; rdfs:domain rico:Event ; rdfs:range rico:Person ; rdfs:label "Boy"@en ; rdfs:comment "The bar mitzvah happens to this boy; RiC-O has no bar-mitzvah part." .
+pc:part_deceased a owl:ObjectProperty ; rdfs:subPropertyOf rico:affectsOrAffected ; rdfs:domain rico:Event ; rdfs:range rico:Person ; rdfs:label "Deceased"@en ; rdfs:comment "The death happens to this person; RiC-O has no deceased part." .
+pc:part_remembered a owl:ObjectProperty ; rdfs:subPropertyOf rico:affectsOrAffected ; rdfs:domain rico:Event ; rdfs:range rico:Person ; rdfs:label "Remembered"@en ; rdfs:comment "The commemoration concerns this person without asserting another death; RiC-O has no remembered part." .
+pc:site_event_memorial a skos:Concept, rico:EventType ; rdfs:label "Memorial"@en ; rdfs:comment "RiC-O defines EventType without distinguishing the commemorations printed by this newspaper." .
+pc:site_name_supplied a skos:Concept ; rdfs:label "Supplied description"@en ; rdfs:comment "RiC-O has AgentName but no name kind separating our supplied description from printed words." .

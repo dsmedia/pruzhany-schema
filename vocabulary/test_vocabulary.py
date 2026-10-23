@@ -72,6 +72,75 @@ class VocabularyTests(unittest.TestCase):
         self.data['groups']['fact_types'][0].update(deprecated_in=self.following, replaced_by='other')
         self.assertEqual(self.check(), [])
 
+    def test_cross_group_deprecation(self):
+        self.next_proposal()
+        entry = self.data['groups']['fact_types'][0]
+        entry.update(deprecated_in=self.following, replaced_by={
+            'group': 'relationship_types', 'id': 'parent_of',
+            'reason': 'Use a relation to the child as a person.'})
+        self.assertEqual(self.check(), [])
+        for replacement in [
+                {'group': 'missing', 'id': 'parent_of', 'reason': 'A child person.'},
+                {'group': 'relationship_types', 'id': 'missing', 'reason': 'A child person.'},
+                {'group': 'relationship_types', 'id': 'parent_of'},
+                {'group': 'relationship_types', 'id': 'parent_of', 'reason': ' '},
+                {'group': [], 'id': 'parent_of', 'reason': 'A child person.'},
+                {'group': 'relationship_types', 'id': 'parent_of', 'reason': 'A child person.', 'extra': 'bad'},
+                None, []]:
+            with self.subTest(replacement=replacement):
+                entry['replaced_by'] = replacement
+                self.assertTrue(any('replacement' in e for e in self.check()))
+
+    def test_deprecation_requires_replacement(self):
+        self.next_proposal()
+        self.data['groups']['fact_types'][0]['deprecated_in'] = self.following
+        self.assertTrue(any('deprecation requires replacement' in e for e in self.check()))
+
+    def test_owner_batch_and_historical_mappings(self):
+        groups = self.data['groups']
+        parenthood = next(e for e in groups['fact_types'] if e['id'] == 'parenthood')
+        self.assertEqual(parenthood['deprecated_in'], '1.2.0')
+        self.assertEqual(parenthood['replaced_by']['group'], 'relationship_types')
+        self.assertEqual(parenthood['replaced_by']['id'], 'parent_of')
+        self.assertIn('child as a person', parenthood['replaced_by']['reason'])
+        for version in ['1.0.0', '1.1.0']:
+            old = json.loads((HERE / f'released/{version}.json').read_text())['groups']
+            self.assertEqual(parenthood['mapping'], next(e for e in old['fact_types']
+                                                       if e['id'] == 'parenthood')['mapping'])
+            for entry in old['relationship_types']:
+                if entry['id'] in {'grandparent_of', 'grandchild_of', 'great_grandparent_of', 'great_grandchild_of'}:
+                    self.assertEqual(entry['mapping'], {'rico': 'hasFamilyAssociationWith', 'via': 'FamilyRelation'})
+
+    def test_mapping_change_needs_a_new_version_but_is_allowed_in_it(self):
+        entry = next(e for e in self.data['groups']['relationship_types'] if e['id'] == 'grandparent_of')
+        entry['mapping'] = {'rico': 'hasFamilyAssociationWith', 'via': 'FamilyRelation'}
+        self.assertTrue(any('snapshot must equal' in e for e in self.check()))
+        self.next_proposal()
+        self.assertEqual(self.check(), [])
+
+    def test_released_part_checks_follow_the_terms_out_of_site_content(self):
+        self.next_proposal()
+        part = self.data['groups']['event_parts'][0]
+        for field, value, error in [('applies_to', ['unknown'], 'released event kinds'),
+                                    ('applies_to', ['birth', 'birth'], 'released event kinds'),
+                                    ('rico_parent', 'rico:hasChild', 'participant parent'),
+                                    ('range_class', 'rico:Family', 'needs a person')]:
+            with self.subTest(field=field, value=value):
+                original = part[field]
+                part[field] = value
+                self.assertTrue(any(error in e for e in self.check()))
+                part[field] = original
+        path = self.root / 'vocabulary/profile.ttl'
+        path.write_text(path.read_text().replace('rdfs:domain rico:Event', 'rdfs:domain rico:Person'))
+        self.assertTrue(any('part profile' in e for e in self.check()))
+
+    def test_released_concept_classes_are_checked(self):
+        self.next_proposal()
+        for group, id in [('event_types', 'memorial'), ('name_kinds', 'supplied')]:
+            entry = next(e for e in self.data['groups'][group] if e['id'] == id)
+            entry['concept_class'] = 'owl:Class'
+            self.assertTrue(any(f'{group}.{id}: incorrect concept class' in e for e in self.check()))
+
     def test_inverse_symmetry(self):
         self.data['groups']['relationship_types'][0]['inverse'] = 'child_of'
         self.assertTrue(any('inverse' in e for e in self.check()))
@@ -209,12 +278,16 @@ class VocabularyTests(unittest.TestCase):
         path.write_text(json.dumps(data), encoding='utf-8')
         self.assertTrue(any('proposed' in e for e in self.check()))
 
-    def test_local_released_event_kind_cannot_be_proposed_again(self):
+    def test_released_batch_cannot_be_proposed_again(self):
         path = self.root / 'vocabulary/site-content.json'
         data = json.loads(path.read_text(encoding='utf-8'))
-        data['groups']['proposed_event_types'][0]['id'] = 'engagement'
-        path.write_text(json.dumps(data), encoding='utf-8')
-        self.assertTrue(any('released event kind cannot be proposed again' in e for e in self.check()))
+        for group, released_group in [('proposed_event_types', 'event_types'),
+                                      ('proposed_name_kinds', 'name_kinds'), ('event_parts', 'event_parts')]:
+            with self.subTest(group=group):
+                data['groups'][group] = copy.deepcopy(self.data['groups'][released_group])
+                path.write_text(json.dumps(data), encoding='utf-8')
+                self.assertTrue(any('unexpected concept groups' in e for e in self.check()))
+                del data['groups'][group]
 
     def test_owner_chosen_subtype_parent(self):
         path = self.root / 'vocabulary/site-content.json'

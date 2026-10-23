@@ -3,7 +3,7 @@
 	"example": {
 		"shared_record": {
 			"version": "1",
-			"vocabulary_version": "1.1.0",
+			"vocabulary_version": "1.2.0",
 			"persons": [
 				{
 					"id": "person-rivtche-judewicz",
@@ -23,8 +23,7 @@
 					"names": [
 						{
 							"value": "daughter of Rivtche and Moshe Judewicz",
-							"kind": "other",
-							"proposed_type": "supplied",
+							"kind": "supplied",
 							"script": "Latn",
 							"lang": "en",
 							"attribution": {
@@ -592,7 +591,10 @@
 		"SiteArchive": [],
 		"IssueLifeEvent": ["issues", 0, "life_events", "life_events", 0],
 		"SiteCitation": ["shared_record", "facts", 0, "citations", 0],
-		"SharedEvent": ["shared_record", "events", 0]
+		"SharedEvent": ["shared_record", "events", 0],
+		"SharedName": ["shared_record", "persons", 2, "names", 0],
+		"SharedFact": ["shared_record", "facts", 0],
+		"Fact": ["shared_record", "facts", 0]
 	},
 	"cases": [
 		{
@@ -621,8 +623,7 @@
 					"value": [
 						{
 							"value": "daughter of Rivtche and Moshe Judewicz",
-							"kind": "other",
-							"proposed_type": "supplied",
+							"kind": "supplied",
 							"script": "Latn",
 							"lang": "en",
 							"attribution": {
@@ -1164,7 +1165,7 @@
 					"value": {
 						"shared_record": {
 							"version": "1",
-							"vocabulary_version": "1.1.0",
+							"vocabulary_version": "1.2.0",
 							"persons": [
 								{
 									"id": "mother",
@@ -1376,7 +1377,7 @@
 					"value": {
 						"shared_record": {
 							"version": "1",
-							"vocabulary_version": "1.1.0",
+							"vocabulary_version": "1.2.0",
 							"persons": [
 								{
 									"id": "yosef",
@@ -1416,7 +1417,7 @@
 								{
 									"id": "memorial",
 									"name": "Shape fixture, not a transcription",
-									"type": "other",
+									"type": "memorial",
 									"dates": [
 										{
 											"qualifier": "reported_in",
@@ -1428,8 +1429,7 @@
 											"person_id": "yosef",
 											"part": "remembered"
 										}
-									],
-									"proposed_type": "memorial"
+									]
 								}
 							],
 							"facts": [],
@@ -1651,7 +1651,7 @@
 					"value": {
 						"shared_record": {
 							"version": "1",
-							"vocabulary_version": "1.1.0",
+							"vocabulary_version": "1.2.0",
 							"persons": [
 								{
 									"id": "mother",
@@ -2034,7 +2034,7 @@
 					"value": {
 						"shared_record": {
 							"version": "1",
-							"vocabulary_version": "1.1.0",
+							"vocabulary_version": "1.2.0",
 							"persons": [
 								{
 									"id": "yosef",
@@ -2310,7 +2310,7 @@
 					"value": "printed"
 				}
 			],
-			"error": "proposed name kind exactly for other"
+			"error": "supplied attribution needs the supplied name kind"
 		},
 		{
 			"name": "local 13: refuse supplied name without attribution",
@@ -2346,7 +2346,7 @@
 					"value": {
 						"shared_record": {
 							"version": "1",
-							"vocabulary_version": "1.1.0",
+							"vocabulary_version": "1.2.0",
 							"persons": [
 								{
 									"id": "mother",
@@ -2559,7 +2559,7 @@
 					"value": {
 						"shared_record": {
 							"version": "1",
-							"vocabulary_version": "1.1.0",
+							"vocabulary_version": "1.2.0",
 							"persons": [
 								{
 									"id": "mother",
@@ -3333,7 +3333,7 @@
 					}
 				}
 			],
-			"error": "supplied attribution needs the proposed name kind"
+			"error": "supplied attribution needs the supplied name kind"
 		},
 		{
 			"name": "local 13: refuse a second baby on a single-child described birth",
@@ -3361,8 +3361,7 @@
 							"names": [
 								{
 									"value": "daughter of Rivtche and Moshe Judewicz",
-									"kind": "other",
-									"proposed_type": "supplied",
+									"kind": "supplied",
 									"script": "Latn",
 									"lang": "en",
 									"attribution": {
@@ -3524,24 +3523,28 @@
 			"error": "duplicate event main person"
 		},
 		{
-			"name": "local 13: refuse directly released supplied name kind",
-			"model": "SiteArchive",
-			"valid": false,
-			"changes": [
-				{
-					"path": ["shared_record", "persons", 2, "names", 0, "kind"],
-					"value": "supplied"
-				}
-			]
+			"name": "release 1.2.0: supplied name uses its released kind",
+			"model": "SharedName",
+			"valid": true,
+			"changes": []
 		},
 		{
-			"name": "RiC-O + RiC-CM 7: refuse directly released memorial kind",
-			"model": "SiteArchive",
-			"valid": false,
+			"name": "release 1.2.0: memorial uses its released kind",
+			"model": "SharedEvent",
+			"valid": true,
 			"changes": [
 				{
-					"path": ["shared_record", "events", 0, "type"],
+					"path": ["type"],
 					"value": "memorial"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "remembered-person",
+							"part": "remembered"
+						}
+					]
 				}
 			]
 		},
@@ -4172,6 +4175,262 @@
 							"part": "baby"
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: released event part baby",
+			"model": "SharedEvent",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "birth"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "fictional-main-person",
+							"part": "baby"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: released event part parent",
+			"model": "SharedEvent",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "birth"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "fictional-main-person",
+							"part": "parent"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: released event part bride",
+			"model": "SharedEvent",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "wedding"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "fictional-main-person",
+							"part": "bride"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: released event part groom",
+			"model": "SharedEvent",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "wedding"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "fictional-main-person",
+							"part": "groom"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: released event part boy",
+			"model": "SharedEvent",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "bar_mitzvah"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "fictional-main-person",
+							"part": "boy"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: released event part deceased",
+			"model": "SharedEvent",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "death"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "fictional-main-person",
+							"part": "deceased"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: released event part remembered",
+			"model": "SharedEvent",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "memorial"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "fictional-main-person",
+							"part": "remembered"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: refuse supplied as other with proposed_type",
+			"model": "SharedName",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "other"
+				},
+				{
+					"path": ["proposed_type"],
+					"value": "supplied"
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: refuse proposed_type on a released supplied name",
+			"model": "SharedName",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["proposed_type"],
+					"value": "supplied"
+				}
+			]
+		},
+		{
+			"name": "release 1.2.0: refuse memorial disguised as a proposal",
+			"model": "SharedEvent",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "other"
+				},
+				{
+					"path": ["proposed_type"],
+					"value": "memorial"
+				},
+				{
+					"path": ["main_people"],
+					"value": [
+						{
+							"person_id": "remembered-person",
+							"part": "remembered"
+						}
+					]
+				}
+			],
+			"error": "released event kind cannot be proposed_type"
+		},
+		{
+			"name": "release 1.2.0: refuse parenthood in writer SharedFact as parenthood",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "parenthood"
+				}
+			],
+			"error": "parenthood is deprecated; use parent_of to a child person"
+		},
+		{
+			"name": "release 1.2.0: refuse parenthood in writer SharedFact as other",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "other"
+				},
+				{
+					"path": ["proposed_type"],
+					"value": "parenthood"
+				}
+			],
+			"error": "parenthood is deprecated; use parent_of to a child person"
+		},
+		{
+			"name": "legacy compatibility: Fact still reads deprecated parenthood",
+			"model": "Fact",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "birth-fact",
+						"type": "parenthood",
+						"value": "The notice reports a birth.",
+						"citations": [
+							{
+								"source_id": "paper",
+								"edition_date": "1938-12-16",
+								"unit_id": "notice-1938-12-16",
+								"quote": "זייער טעכטערל"
+							}
+						],
+						"evidence_confidence": "confirmed",
+						"identity_confidence": "confirmed",
+						"status": "proposed",
+						"review": {
+							"state": "pending"
+						},
+						"attribution": {
+							"by": "fictional shape test",
+							"on": "2026-10-23"
+						},
+						"event_id": "event-judewicz-birth",
+						"qualifiers": {
+							"child_count": "1"
+						}
+					}
 				}
 			]
 		}

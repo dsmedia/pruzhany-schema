@@ -61,6 +61,7 @@ for model, field, enum in [('Fact','type',v.FactTypes),('Fact','relationship_typ
             if value=='other': data['proposed_type']='fictional proposal'
         if model=='Review' and value=='approved': data.update(by='fixture',on='2024-02-29')
         if model=='Fate': data['rests_on']=['fictional-fact']
+        if model=='Name' and value=='supplied': data.update(attribution=bases['Attribution'],citations=[citation])
         add(f'{model}.{field}={value}',model,data)
     change(model,f'{model}.{field} invalid',**{field:'invented'})
 
@@ -87,6 +88,11 @@ change('Fact','empty citations',citations=[])
 change('Name','invalid script',script='Latin')
 change('Name','invalid lang',lang='en_XX')
 change('Name','BCP shaped lang',True,lang='zh-Hant-TW',script='Cyrl')
+change('Name','supplied name needs attribution',kind='supplied',citations=[citation])
+change('Name','supplied name needs citations',kind='supplied',attribution=bases['Attribution'])
+change('Name','supplied name refuses empty citations',kind='supplied',attribution=bases['Attribution'],citations=[])
+change('Name','supplied attribution cannot label printed words',attribution=bases['Attribution'],citations=[citation])
+change('Name','supplied cannot use the old proposed spelling',kind='other',proposed_type='supplied',attribution=bases['Attribution'],citations=[citation])
 change('Fate','left_before forbidden',outcome='left_before',rests_on=['fictional-fact'])
 change('Fate','known without facts',outcome='survived')
 full=copy.deepcopy(edition)

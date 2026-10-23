@@ -116,6 +116,12 @@ export {
 } from './edition-bundle.schema';
 
 export * from './sourced-entities.schema';
+export {
+	EventPartsSchema,
+	type EventParts,
+	eventPartKinds,
+	lifeEventKinds,
+} from './sourced-entities.vocabulary';
 
 // Proposed site files; existing exports above keep their meanings.
 export * from './site-common.schema';

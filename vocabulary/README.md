@@ -20,7 +20,9 @@ the pinned ontologies do not enumerate what these content items are about. Print
 use `rico:hasOrHadTitle` / `rico:Title`, with two declared concepts typed
 `rico:TitleType` via `rico:hasTitleType`. Every proposed concept's reason is in
 `site-content.profile.ttl`, explicitly marked proposed and unreleased. The released
-`profile.ttl` remains unchanged.
+life-event parts, `memorial` and the `supplied` name kind moved to
+`sourced-entities.json` and `profile.ttl` in 1.2.0; the proposed subtypes, subjects
+and title types are unchanged.
 New shape mappings are also recorded in `site-content.json` and checked by the
 alignment gate. Existing sourced-entity mappings continue to apply to reused fields.
 
@@ -32,12 +34,19 @@ subtypes and 11 subjects. No real examples are copied into this repository.
 An English heading label is only a lead for recovering the original printed
 heading and its address; it cannot create a section by itself.
 
-`sourced-entities.json` is the released production application vocabulary, version
-1.0.0, dated 2026-10-20. The owner approved the recommended types in advance on
-that date, as recorded on #16. `approved_by` records this decision. Version 1.1.0,
+`sourced-entities.json` is the released production application vocabulary, now
+**1.2.0, released 2026-10-23**. The owner approved 1.0.0's recommended types in advance on
+2026-10-20, as recorded on #16. `approved_by` records the decisions. Version 1.1.0,
 released 2026-10-22 at the owner's word, adds one claim status, `proposed`: an
 assertion put forward and not yet accepted, disputed or rejected, never published
-(the site shows only `accepted` facts, and folds some `disputed`). The generator
+(the site shows only `accepted` facts, and folds some `disputed`). Version 1.2.0
+releases the owner's batch (#16): seven `event_parts`, `event_types.memorial`,
+`name_kinds.supplied`, the `parenthood` deprecation, and the grandparent/great-grandparent
+descent mappings including their inverses. The owner answered **"Yes"** to **"yes to all"**
+on 23 October 2026 after reviewing two or three printed notices and their English
+for each new term on the private approval page. Engagement was already released.
+The same answer keeps a son's bris greeting with the birth event; no new term.
+The generator
 writes `released/<version>.json`; validation requires the current release snapshot to
 equal the current vocabulary and preserves every identifier from every snapshot.
 Future changes belong in a new version; historical release snapshots remain
@@ -50,8 +59,19 @@ application profile in `profile.ttl` is separate from the pilot's profile; its
 namespace identifies local terms and does not imply hosted ontology content.
 
 Only add identifiers. Never remove or rename a released identifier. Deprecate an
-entry with `deprecated_in` and `replaced_by` pointing to an existing entry in its
-group; retain its original mapping. The owner approves additions in batches,
+entry with `deprecated_in` and `replaced_by`; retain the deprecated entry's original
+mapping. A string replacement still names an existing entry in the same group.
+Since 1.2.0 a cross-group replacement may instead be
+`{"group": "relationship_types", "id": "parent_of", "reason": "…"}`: the target
+must exist, and a nonempty reason explains how to replace the old representation.
+This small extension is needed because `parenthood` is a fact kind, while its
+replacement is a `parent_of` relation from each parent to the child **as a person**.
+A same-group fact replacement would misstate that decision. Both forms are tested.
+An owner-approved mapping correction on a retained identifier belongs to a new
+version, as the four descent mappings do in 1.2.0. The checks require the current
+snapshot to match and retain historical identifiers; they do not forbid a mapping
+change in a new version. The 1.0.0 and 1.1.0 snapshots retain their original mappings.
+The owner approves additions in batches,
 with real examples reviewed privately. Every addition names its pinned EHRI or
 RiC-O term, or a local term declared and explained in its vocabulary's profile. Prefer EHRI
 where applicable, then RiC-O 1.1 terms (the version EHRI 0.2.0 imports), then a local term with
@@ -63,9 +83,15 @@ subject-to-related-person direction and symmetric inverses. A source's claim
 about a named relative who need not have an identified record uses the `kinship`
 fact, with `relationship_type` and `related_name` (fields added in ticket 3).
 Its RiC-O FamilyRelation can connect a Person node without an otherwise resolved
-identity. Parenthood of an unnamed child remains the separate `parenthood` fact.
-Names use `name_kinds`: maiden names are birth
-names. Events use `event_types`; taking part uses the `event_participation` fact
+identity. `parenthood` is deprecated: represent even an unnamed child as a person
+and link each parent with `parent_of`. The legacy `Fact` contract still reads the
+released identifier for old data; `SharedFact` refuses it, including as
+`other/proposed_type`, so the site writer cannot emit it. The isolated pilot keeps
+its historical vocabulary.
+Names use `name_kinds`: maiden names are birth names; `supplied` marks our
+description and requires attribution and citations in both `Name` and its site
+extension `SharedName`. A supplied name no longer uses `other/proposed_type`.
+Events use `event_types`; taking part uses the `event_participation` fact
 and a mention role. There is no marriage, name, or parent-name fact type.
 `other` facts require a nonempty `proposed_type`. Emigration is dated evidence,
 never a fate outcome or proof of survival.
@@ -73,7 +99,7 @@ never a fate outcome or proof of survival.
 `fate_outcomes`, `location_types`, `compatibility_event_types`,
 `content_unit_roles`, `life_event_types`, and `gender` preserve today's production
 values exactly. The released `event_types` also includes engagement. Existing
-production schemas and package exports are untouched. Compatibility categories
+compatibility enums remain unchanged. Compatibility categories
 with no precise pinned ontology value use declared local terms rather than
 asserting equivalence to a broader class.
 
@@ -85,6 +111,11 @@ It adds `great_grandparent_of` and `great_grandchild_of` as a symmetric pair in
 broader `isAgentAssociatedWithAgent` via `AgentToAgentRelation`, retaining their
 specific vocabulary IDs. `teacher_of` maps from teacher to student using
 `hasOrHadStudent`; `student_of` uses `hasOrHadTeacher`, both via `TeachingRelation`.
+Since 1.2.0, `grandparent_of` and `great_grandparent_of` map to `hasDescendant`
+via `DescendanceRelation`, ascendant → descendant. Their inverses `grandchild_of`
+and `great_grandchild_of` map to the pinned inverse `hasAncestor`, through the
+same relation class, descendant → ascendant. Their identifiers retain the exact
+generation even though RiC-O's descent relation is broader.
 `external_source_types` and `holocaust_fate_types` preserve the supplied site's
 compatibility registry values and metadata. Fate descriptions are legacy
 compatibility text, not new fate criteria or permission to infer survival from
@@ -118,8 +149,9 @@ python3 -I -B standards/check_alignment.py
 ```
 
 `generate.py --check` checks exact UTF-8/LF bytes. It generates a Zod enum per
-group and Python Literals plus the vocabulary version. Ticket 3 will integrate
-these standalone modules into the production contracts. `check.py` validates
+group and Python Literals plus the vocabulary version. The production contracts
+consume these modules; the released module also owns the parts' allowed kinds
+and the life-event kind list. `check.py` validates
 mapping forms, local declarations and reasons, replacement targets, relationship
 inverses, crosswalk routing and every snapshot's retained identifiers. The
 standards alignment gate independently validates ontology terms and relation

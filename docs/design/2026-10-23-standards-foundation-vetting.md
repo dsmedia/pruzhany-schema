@@ -1,6 +1,6 @@
 # The standards foundation of persons, life events and relations, vetted
 
-**Status:** research of 23 October 2026, for the owner's decision. Nothing in the code or the data changes with it.
+**Status:** research of 23 October 2026; the owner's batch was answered and released in 1.2.0 that day (§8). The research and measurements below describe the pre-release state.
 **Date:** 2026-10-23
 **Asked by:** pruzhany-steps `.scratch/site-files-keeper/handoff-standards-foundation.md` (the owner's word of 23 October
 2026: "this is worth some deeper research as it is foundational … vet the approach and consider how it should be done per
@@ -270,9 +270,15 @@ Each of the owner's answers in brief 09 against what was read. "Holds" means con
 
 - **The owner's, answered:** RiC-O 1.1's axioms are pinned (`standards/rico-1.1-axioms.json`, the owner's "yes, pin the
   rules" of 23 October 2026; §6).
-- **The owner's batch (#16), when round 4 brings it:** the parts and their two RiC-O parents; the event kinds engagement
-  and anniversary memorial; grandparent and great-grandparent remapped to `hasDescendant`; the `supplied` name kind;
-  `parenthood` deprecated.
+- **The owner's batch (#16), answered and released in 1.2.0 on 2026-10-23:** after seeing two or three real printed
+  notices and their English for each new term on the private batch page, the owner answered **"Yes"** to **"yes to all"**.
+  The seven parts are released as §2 proposed them: `parent` under `rico:hasOrHadParticipant`; `baby`, `bride`,
+  `groom`, `boy`, `deceased` and `remembered` under `rico:affectsOrAffected`. `memorial` covers annual and 30-day remembrance, never the death; `supplied` marks our attributed
+  description of an unnamed person. `parenthood` is deprecated in favour of a `parent_of` relation to the child as
+  a person. Grandparent and great-grandparent map to `hasDescendant` via `DescendanceRelation`; their inverses map to
+  the pinned `hasAncestor`. The 1.0.0 and 1.1.0 snapshots retain their old mappings. Engagement was already released
+  and used, so needed no change. The same **"Yes"** keeps a son's bris greeting in its birth's event, with no new word;
+  `שלום זכר` is not a bris. ADR 0001 is unchanged.
 - **Settled by the owner's existing words, so not asked:** a given name alone never joins (Q7); twins or "children" make
   no child, they are listed ("only where the notice makes clear there is one child", first grilling Q9); the description's
   wording is the owner's own example.

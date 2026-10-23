@@ -448,7 +448,7 @@ export const SiteArchiveSchema = z
 			}
 		}
 		for (const child of v.shared_record.persons.filter((p) =>
-			p.names.some((n) => n.proposed_type === 'supplied')
+			p.names.some((n) => n.kind === 'supplied')
 		)) {
 			const births = v.shared_record.facts.filter(
 				(f) =>
@@ -485,7 +485,7 @@ export const SiteArchiveSchema = z
 				if (
 					!child.names.some(
 						(n) =>
-							n.proposed_type === 'supplied' &&
+							n.kind === 'supplied' &&
 							n.citations?.some((c) => c.addresses && noticeKeys.has(noticeKey(c)))
 					)
 				)

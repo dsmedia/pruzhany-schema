@@ -129,16 +129,27 @@ export const FactSchema = z
 		if (error) ctx.addIssue({ code: 'custom', message: error });
 	});
 export type Fact = z.infer<typeof FactSchema>;
-export const NameSchema = z.strictObject({
-	value: text,
-	kind: NameKindsSchema,
-	script: z.string().regex(/^[A-Za-z]{4}$/),
-	lang: z
-		.string()
-		.regex(/^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$/)
-		.nullish(),
-	citations: z.array(CitationSchema).nullish(),
-});
+export const NameSchema = z
+	.strictObject({
+		value: text,
+		kind: NameKindsSchema,
+		script: z.string().regex(/^[A-Za-z]{4}$/),
+		lang: z
+			.string()
+			.regex(/^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$/)
+			.nullish(),
+		citations: z.array(CitationSchema).nullish(),
+		attribution: AttributionSchema.nullish(),
+	})
+	.superRefine((v, ctx) => {
+		if (v.kind === 'supplied' && (!v.attribution || !v.citations?.length))
+			ctx.addIssue({ code: 'custom', message: 'supplied name needs attribution and citations' });
+		if (v.attribution && v.kind !== 'supplied')
+			ctx.addIssue({
+				code: 'custom',
+				message: 'supplied attribution needs the supplied name kind',
+			});
+	});
 export type Name = z.infer<typeof NameSchema>;
 export const FateSchema = z
 	.strictObject({

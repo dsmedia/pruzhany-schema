@@ -1,9 +1,9 @@
 # One life event, its main people and their parts
 
-Round 4a, revised in 4d, 23 October 2026. Implementation contract for the writer
+Round 4a, revised in 4d and 4f, 23 October 2026. Implementation contract for the writer
 (pruzhany-steps) and site (pruzhany-svelte), following ADR 0001 and brief 09's fourth grilling. The present
-brief brings the evidence correction into round 4, as ADR 0001 now says. Vocabulary
-additions below remain **proposed**.
+brief brings the evidence correction into round 4, as ADR 0001 now says. The
+owner's batch below is **released in vocabulary 1.2.0, 2026-10-23**.
 
 ## Stored once
 
@@ -37,25 +37,34 @@ by the supplied name until a sourced later name is available.
 
 ## Parts, kinds and dates
 
-The proposed vocabulary owns each part's allowed event kinds and person range;
+The released vocabulary owns each part's allowed event kinds and person range;
 its generator emits the same lookup for both languages. The profile declares
 Event → Person subproperties. Doctor, midwife, greeter, mourners and the couple's
 parents remain mentions, not main people. There is no participation-role node.
-The proposed parts remain direct values, following the site-content vocabulary's
-existing proposed-subtype precedent (review Standards 4, kept).
+The seven parts are direct released values. `parent` uses
+`rico:hasOrHadParticipant`; `baby` and the other five use `rico:affectsOrAffected`,
+as proposed and as the owner's batch page showed them ("filed under 'affected by the
+event'" for the baby), approved on 23 October 2026.
 
-One proposed `memorial` kind covers annual and 30-day commemorations: both remember
+One released `memorial` kind covers annual and 30-day commemorations: both remember
 the deceased; their printed date and description distinguish the occurrence.
 Each commemoration is a separate event, and neither is the death. Engagement and
-wedding are also separate. Memorial uses `other/proposed_type`; engagement uses
+wedding are also separate. Memorial uses `type: "memorial"`; engagement uses
 the released `event_types` value `engagement` and its existing mapping
 `pc:event_types_engagement`, released in 1.0.0. Shared events reuse `EventTypes`
 in both languages, including `holocaust_event` for retained research events.
-Engagement is removed from the proposed batch and its duplicate local term is
-removed. No released identifier or mapping changes. The generated `lifeEventKinds`
-and `LIFE_EVENT_KINDS` combine the released event types (excluding `other` and
-`holocaust_event`) with the proposed kinds, so consumers share one vocabulary list.
+Engagement needs no new release. The generated `lifeEventKinds`
+and `LIFE_EVENT_KINDS` take the released event types (excluding `other` and
+`holocaust_event`), so consumers share one vocabulary list.
 An unrecognised proposed kind may be retained with no main people, for review.
+A released kind, including `memorial`, is refused as `other/proposed_type`.
+
+**The bris decision (4f):** on the private batch page the owner answered **"Yes"**
+to **"yes to all"** on 23 October 2026, including keeping a greeting on a son's
+bris (circumcision) with that birth's event. It is not a separate event or a new
+vocabulary word. `שלום זכר` is not a bris. After the schema review and commit,
+the writer must check every bris greeting in the written files, including spellings
+of `ברית`, `ברית מילה` and `ברית-מילה`, and report its birth event.
 
 `dates` is a nonempty array so both printed calendars can survive. Each entry is
 either `{printed, printed_calendar, start?}` or
@@ -75,11 +84,12 @@ before another notice's printed date of death cannot describe that death.
 
 An ordinary `SharedPerson` keeps its permanent id. Its site-only `SharedName`
 extends `Name`: the supplied description is
-`{value: "daughter of Rivtche and Moshe Judewicz", kind: "other",
-proposed_type: "supplied", script: "Latn", lang: "en", attribution, citations}`.
-The proposed kind, attribution and nonempty citations are required together;
-`kind: printed` with `proposed_type` is refused. `isPrintedName` selects printed
-names only. The existing production `Name` and its released enum stay unchanged.
+`{value: "daughter of Rivtche and Moshe Judewicz", kind: "supplied",
+script: "Latn", lang: "en", attribution, citations}`.
+The released kind, attribution and nonempty citations are required together in
+both `Name` and `SharedName`; a supplied attribution on a printed name is refused.
+`SharedName` only extends citations with printed addresses; it no longer has
+`other` or `proposed_type`. `isPrintedName` selects printed names only.
 Later naming appends a cited printed/birth/later name, updates the display name,
 and retains the supplied entry and the person's id.
 
@@ -109,7 +119,7 @@ For these new citations, the cited content item must exist in a complete
 and the addresses must be inside the item's printed regions, using the same check
 as mentions. The writer quotes the words stating the fact or relation, not the
 whole notice. `SiteCitation` extends the production citation only in site-next;
-the production citation and name contracts do not change. Shared facts, relations
+the production citation contract does not change. Shared facts, relations
 and person names accept it. Supplied names and their birth/parent evidence must
 all use located citations. A later printed name may retain the supplied name.
 
@@ -166,9 +176,11 @@ suggestion is superseded by the later vetting and fourth grilling.
 
 ## Owner's batch
 
-All nine terms below are proposed in `site-content.json` and its profile. Each
-row needs two or three real finished-page examples in 4b/4c, with print beside
-English on the one private batch artifact. No synthetic fixture approves a term.
+All nine terms below moved from `site-content.json` and its profile into
+`sourced-entities.json` 1.2.0 and `profile.ttl`, released 2026-10-23. On that day
+the owner answered **"Yes"** to **"yes to all"** on the private batch page after
+seeing two or three real printed notices and their English for each new term.
+`approved_by` records that decision. Subtypes, subjects and title types remain proposed.
 
 | id | mapping and one-line reason |
 |---|---|
@@ -182,11 +194,20 @@ English on the one private batch artifact. No synthetic fixture approves a term.
 | `memorial` | `pc:site_event_memorial`, a `rico:EventType`: commemorations of either interval |
 | `supplied` | `pc:site_name_supplied`, local concept; names use `rico:AgentName` via `hasOrHadAgentName`: marks our description, not print |
 
-Also present the `fact_source` correction to `rico:isEvidencedBy`. For the batch,
-**not implemented now**: deprecate released `parenthood`, replaced by `parent_of`
-to the described child (`hasChild` via `ChildRelation`); remap `grandparent_of`
-and `great_grandparent_of` to `hasDescendant` via `DescendanceRelation`, retaining
-their distinct local meanings and all released ids.
+The `fact_source` correction to `rico:isEvidencedBy` was already implemented.
+The same 1.2.0 batch deprecates `parenthood`, replaced by `relationship_types.parent_of`
+to the child as a person (`hasChild` via `ChildRelation`). Its `replaced_by`
+object names the target group, id and reason: a same-group fact could not express
+the decision. The released identifier and its original mapping remain so legacy
+`Fact` and the isolated pilot can read old data; `SharedFact` refuses `parenthood`
+both directly and as `other/proposed_type`. New writer output must use relations.
+
+`grandparent_of` and `great_grandparent_of` now map to `hasDescendant` via
+`DescendanceRelation`, ascendant → descendant; their inverses `grandchild_of`
+and `great_grandchild_of` use the pinned `hasAncestor`, descendant → ascendant.
+Their distinct generation meanings and all identifiers remain. Only the 1.2.0
+mapping changes; 1.0.0 and 1.1.0 snapshots retain the catch-all mapping. Existing
+checks allow a mapping change in a new version; no preservation rule was weakened.
 
 ## Tests and boundaries
 
@@ -194,7 +215,7 @@ their distinct local meanings and all released ids.
 |---|---|
 | 5 | RiC-O: Family ⊑ Group, Group disjoint Person; refuse an id in both collections |
 | 6 | RiC-O participant range, locally narrowed from Thing to our Person parts; refuse missing/person-in-wrong-collection references, including a family |
-| 7 | RiC-O + RiC-CM: single Event Type, mapped by `hasEventType`; refuse a direct proposed kind, missing proposal, or an issue copy of kind/name |
+| 7 | RiC-O + RiC-CM: single Event Type, mapped by `hasEventType`; refuse an unrecognised direct kind, a released kind as a proposal, missing proposal, or an issue copy of kind/name |
 | 8 | Local: every part exists, has an explained Event → Person subproperty and fits the kind; refuse a wedding baby or a doctor part |
 | 9 | RiC-CM R070/R072: refuse the same baby in two births, or the deceased in two deaths; memorials remain allowed |
 | 10 | RiC-O date property domains/ranges, with local ISO validation and qualifier rules; refuse impossible dates, unprinted normalization, fallback bounds or a later-issue fallback |
@@ -215,7 +236,7 @@ and their superclasses; RiC-O `Event`, `EventType`, `hasEventType`,
 `AgentName`, `hasOrHadAgentName`, `Date`, `expressedDate`, `normalizedDateValue`,
 `dateQualifier`, `Relation`, `RecordResource`, `isEvidencedBy`, `evidences`,
 `relationHasSource`, `relationHasTarget`, `hasChild`, `ChildRelation`,
-`hasDescendant`, `DescendanceRelation`, `Identifier`, `IdentifierType`. Their
+`hasDescendant`, `hasAncestor`, `DescendanceRelation`, `Identifier`, `IdentifierType`. Their
 kinds, domains, ranges, hierarchy, disjointness and child property chain are read
 from the pins. Claim only “mapped to RiC-O 1.1 as EHRI 0.2.0 imports it, with these
 rules tested”.
@@ -223,14 +244,14 @@ rules tested”.
 4b must change `site_writer._life_events`, `_event_faults`, `site_people` merging,
 hand-made/preservation/carry paths and generated site-next shapes. 4c must change
 the projection, public validation, data-to-view adapters, event/person pages and
-their fixtures. `content-unit`, `enrichment`, production names/dates and
+their fixtures. `content-unit`, `enrichment`, production dates and
 `life-event.schema.ts`'s live `LifeEventSchema` stay unchanged. Site-next is an
 intentional breaking shape; old site-next data must be rebuilt before publication.
 
 The [round-4a verification record](2026-10-23-one-life-event-verification.json)
 preserves that run's failing-before/passing-after counts, gate results, exact
 consumer commands and affected paths. Its missing-scanner and consumer-migration
-results describe that earlier run. Vocabulary approval remains the end-of-round batch.
+results describe that earlier run. Vocabulary approval was given in round 4f as recorded above.
 
 Round 4d's schema changes are recorded separately in
 [`2026-10-23-one-life-event-4d-verification.json`](2026-10-23-one-life-event-4d-verification.json).
@@ -239,3 +260,10 @@ under bun before installing any files. Its remaining checks must say what they
 add beyond the schema and consume `tests/contract/life-event-shapes.fixtures.json`.
 Round 4d stops after the schema gate for the session's review and commit; the
 writer then refreshes from that clean HEAD, and the site pins the resulting commit.
+
+Round 4f likewise stops after the schema gate for the session's review and commit.
+Then the writer refreshes from that clean HEAD, writes all 238 issues twice to
+check byte stability, and lists every changed event against the 4e site baseline.
+The site pins the schema commit supplied by the session and takes the released
+labels from the released vocabulary. No writer or site regeneration is part of
+the schema-only stop.

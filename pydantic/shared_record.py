@@ -2,8 +2,7 @@
 from typing import Annotated, Literal, get_args
 from pydantic import Field, TypeAdapter, ValidationError, model_validator
 from .sourced_entities import Strict, Text, Date, Day, Fact, Name, Fate, Source, Attribution, Citation
-from .sourced_entities_vocabulary import Gender, LocationTypes, EventTypes, NameKinds
-from .site_content_vocabulary import EventParts, ProposedNameKinds, EVENT_PART_KINDS
+from .sourced_entities_vocabulary import Gender, LocationTypes, EventTypes, EventParts, EVENT_PART_KINDS, VocabularyVersion
 from .site_common import PrintedAddress, unique_ids
 
 _DAY = TypeAdapter(Day)
@@ -30,25 +29,12 @@ class SiteCitation(Citation):
 
 
 class SharedName(Name):
-    """Site-next description names; the production Name contract stays unchanged."""
-    kind: NameKinds | Literal['other']
-    proposed_type: ProposedNameKinds | None = None
-    attribution: Attribution | None = None
+    """Released names with located evidence; supplied attribution is inherited."""
     citations: list[SiteCitation] | None = None
-
-    @model_validator(mode='after')
-    def proposed_name(self):
-        if (self.kind == 'other') != bool(self.proposed_type):
-            raise ValueError('proposed name kind exactly for other')
-        if self.proposed_type == 'supplied' and (not self.attribution or not self.citations):
-            raise ValueError('supplied name needs attribution and citations')
-        if self.attribution and self.proposed_type != 'supplied':
-            raise ValueError('supplied attribution needs the proposed name kind')
-        return self
 
 
 def is_printed_name(name: SharedName) -> bool:
-    return name.kind == 'printed' and not name.proposed_type
+    return name.kind == 'printed'
 
 
 class LifeEventDate(Strict):
@@ -83,6 +69,9 @@ class SharedFact(Fact):
 
     @model_validator(mode='after')
     def representation_contract(self):
+        # Legacy Fact still reads parenthood; the current site writer must use a child person.
+        if self.type == 'parenthood' or self.proposed_type == 'parenthood':
+            raise ValueError('parenthood is deprecated; use parent_of to a child person')
         if self.representation != 'structured':
             if not self.value:
                 raise ValueError('prose or image fact needs its value')
@@ -170,7 +159,7 @@ class SharedEvent(Strict):
 
 class SharedRecord(Strict):
     version: Literal['1']
-    vocabulary_version: Literal['1.1.0']
+    vocabulary_version: VocabularyVersion
     persons: list[SharedPerson]
     families: list[SharedFamily]
     places: list[SharedPlace]

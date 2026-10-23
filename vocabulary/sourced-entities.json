@@ -1,7 +1,7 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "released",
-  "released_on": "2026-10-22",
+  "released_on": "2026-10-23",
   "groups": {
     "fact_types": [
       {
@@ -93,11 +93,17 @@
       {
         "id": "parenthood",
         "label": "Parenthood",
-        "definition": "Parenthood of an unnamed child without inventing a person node; claims naming a relative use kinship, and links between identified people use relationships.",
+        "definition": "Parenthood of an unnamed child without inventing a person node; claims naming a relative use kinship, and links between identified people use relationships. Deprecated in 1.2.0: represent the child as a person and link each parent by parent_of.",
         "added_in": "1.0.0",
         "mapping": {
           "local": "pc:fact_types_parenthood",
           "reason": "Preserves an unnamed child without inventing a person node for a child relation."
+        },
+        "deprecated_in": "1.2.0",
+        "replaced_by": {
+          "group": "relationship_types",
+          "id": "parent_of",
+          "reason": "Replace this fact with a parent_of relation from each parent to the child as a person; use a supplied name when the source does not name the child."
         }
       },
       {
@@ -250,22 +256,22 @@
       {
         "id": "grandchild_of",
         "label": "Grandchild of",
-        "definition": "The subject is grandchild of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "definition": "The subject is grandchild of the related person; direction is descendant to ascendant. The vocabulary ID retains the exact generation; RiC-O DescendanceRelation covers descent across any number of intermediate persons.",
         "added_in": "1.0.0",
         "mapping": {
-          "rico": "hasFamilyAssociationWith",
-          "via": "FamilyRelation"
+          "rico": "hasAncestor",
+          "via": "DescendanceRelation"
         },
         "inverse": "grandparent_of"
       },
       {
         "id": "grandparent_of",
         "label": "Grandparent of",
-        "definition": "The subject is grandparent of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "definition": "The subject is grandparent of the related person; direction is ascendant to descendant. The vocabulary ID retains the exact generation; RiC-O DescendanceRelation covers descent across any number of intermediate persons.",
         "added_in": "1.0.0",
         "mapping": {
-          "rico": "hasFamilyAssociationWith",
-          "via": "FamilyRelation"
+          "rico": "hasDescendant",
+          "via": "DescendanceRelation"
         },
         "inverse": "grandchild_of"
       },
@@ -382,22 +388,22 @@
       {
         "id": "great_grandparent_of",
         "label": "Great-grandparent of",
-        "definition": "The subject is great grandparent of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "definition": "The subject is great-grandparent of the related person; direction is ascendant to descendant. The vocabulary ID retains the exact generation; RiC-O DescendanceRelation covers descent across any number of intermediate persons.",
         "added_in": "1.0.0",
         "mapping": {
-          "rico": "hasFamilyAssociationWith",
-          "via": "FamilyRelation"
+          "rico": "hasDescendant",
+          "via": "DescendanceRelation"
         },
         "inverse": "great_grandchild_of"
       },
       {
         "id": "great_grandchild_of",
         "label": "Great-grandchild of",
-        "definition": "The subject is great grandchild of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+        "definition": "The subject is great-grandchild of the related person; direction is descendant to ascendant. The vocabulary ID retains the exact generation; RiC-O DescendanceRelation covers descent across any number of intermediate persons.",
         "added_in": "1.0.0",
         "mapping": {
-          "rico": "hasFamilyAssociationWith",
-          "via": "FamilyRelation"
+          "rico": "hasAncestor",
+          "via": "DescendanceRelation"
         },
         "inverse": "great_grandparent_of"
       }
@@ -481,6 +487,17 @@
         "mapping": {
           "local": "pc:name_kinds_spelling",
           "reason": "Application-specific name kinds category; no exact pinned ontology value is established."
+        }
+      },
+      {
+        "id": "supplied",
+        "label": "Supplied description",
+        "definition": "An attributed description used to name a person whom the source does not name.",
+        "added_in": "1.2.0",
+        "concept_class": "skos:Concept",
+        "mapping": {
+          "local": "pc:site_name_supplied",
+          "reason": "RiC-O has AgentName but no name kind separating our supplied description from printed words."
         }
       }
     ],
@@ -1095,6 +1112,17 @@
           "local": "pc:event_types_other",
           "reason": "Application-specific event types category; no exact pinned ontology value is established."
         }
+      },
+      {
+        "id": "memorial",
+        "label": "Memorial",
+        "definition": "One commemoration of a deceased person, including annual and 30-day memorials. A remembrance is never the death itself.",
+        "added_in": "1.2.0",
+        "concept_class": "rico:EventType",
+        "mapping": {
+          "local": "pc:site_event_memorial",
+          "reason": "RiC-O defines EventType without distinguishing the commemorations printed by this newspaper."
+        }
       }
     ],
     "content_unit_roles": [
@@ -1521,7 +1549,116 @@
         },
         "description": "Non-Jewish individual"
       }
+    ],
+    "event_parts": [
+      {
+        "id": "baby",
+        "label": "Baby",
+        "definition": "The baby at a birth.",
+        "added_in": "1.2.0",
+        "applies_to": [
+          "birth"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_baby",
+          "reason": "The birth happens to this person; RiC-O has no baby part."
+        }
+      },
+      {
+        "id": "parent",
+        "label": "Parent",
+        "definition": "The parent at a birth.",
+        "added_in": "1.2.0",
+        "applies_to": [
+          "birth"
+        ],
+        "rico_parent": "rico:hasOrHadParticipant",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_parent",
+          "reason": "A parent participates in a birth but is not the person born; RiC-O has no birth-parent part."
+        }
+      },
+      {
+        "id": "bride",
+        "label": "Bride",
+        "definition": "The bride at an engagement or a wedding.",
+        "added_in": "1.2.0",
+        "applies_to": [
+          "engagement",
+          "wedding"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_bride",
+          "reason": "The engagement or wedding happens to the bride; RiC-O has no bride part."
+        }
+      },
+      {
+        "id": "groom",
+        "label": "Groom",
+        "definition": "The groom at an engagement or a wedding.",
+        "added_in": "1.2.0",
+        "applies_to": [
+          "engagement",
+          "wedding"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_groom",
+          "reason": "The engagement or wedding happens to the groom; RiC-O has no groom part."
+        }
+      },
+      {
+        "id": "boy",
+        "label": "Boy",
+        "definition": "The boy at his bar mitzvah.",
+        "added_in": "1.2.0",
+        "applies_to": [
+          "bar_mitzvah"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_boy",
+          "reason": "The bar mitzvah happens to this boy; RiC-O has no bar-mitzvah part."
+        }
+      },
+      {
+        "id": "deceased",
+        "label": "Deceased",
+        "definition": "The person who died, at a death.",
+        "added_in": "1.2.0",
+        "applies_to": [
+          "death"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_deceased",
+          "reason": "The death happens to this person; RiC-O has no deceased part."
+        }
+      },
+      {
+        "id": "remembered",
+        "label": "Remembered",
+        "definition": "The person remembered, at a memorial.",
+        "added_in": "1.2.0",
+        "applies_to": [
+          "memorial"
+        ],
+        "rico_parent": "rico:affectsOrAffected",
+        "range_class": "rico:Person",
+        "mapping": {
+          "local": "pc:part_remembered",
+          "reason": "The commemoration concerns this person without asserting another death; RiC-O has no remembered part."
+        }
+      }
     ]
   },
-  "approved_by": "the owner, in advance, as recommended (#16); 1.1.0's claim status proposed by the owner's word of 2026-10-22"
+  "approved_by": "the owner, in advance, as recommended (#16); 1.1.0's claim status proposed by the owner's word of 2026-10-22; 1.2.0: the owner answered \"Yes\" to \"yes to all\" on 2026-10-23 for the owner's batch (#16), after reviewing two or three printed notices and their English for each new term"
 }

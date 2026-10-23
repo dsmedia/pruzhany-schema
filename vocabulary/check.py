@@ -30,9 +30,8 @@ def check(root=ROOT):
             errors.append('current released snapshot is missing')
         elif json.loads(current_snapshot.read_text(encoding='utf-8')) != vocabulary:
             errors.append('current released snapshot must equal current vocabulary')
-    ids = {}
+    ids = {group: {entry['id'] for entry in entries} for group, entries in groups.items()}
     for group, entries in groups.items():
-        ids[group] = {entry['id'] for entry in entries}
         if len(ids[group]) != len(entries):
             errors.append(f'{group}: duplicate ids')
         if not entries:
@@ -43,6 +42,8 @@ def check(root=ROOT):
                 if not isinstance(entry.get(key), str) or not entry[key].strip():
                     errors.append(f'{where}: missing {key}')
             mapping = entry.get('mapping')
+            if vocabulary['status'] == 'released' and entry.get('status') == 'proposed':
+                errors.append(f'{where}: released entry cannot remain proposed')
             if not isinstance(mapping, dict) or set(mapping) not in FORMS or not all(isinstance(v, str) and v.strip() for v in mapping.values()):
                 errors.append(f'{where}: invalid mapping form')
                 continue
@@ -55,8 +56,35 @@ def check(root=ROOT):
                 declaration = re.search(re.escape(term) + r'\s+a\s+.*?\.\s*(?:\n|$)', profile)
                 if declaration and json.dumps(reason, ensure_ascii=False) not in declaration[0]:
                     errors.append(f'{where}: profile must document local reason')
-            if 'replaced_by' in entry and entry['replaced_by'] not in ids[group]:
-                errors.append(f'{where}: unknown replacement')
+            if group == 'event_parts':
+                kinds = entry.get('applies_to')
+                if (not isinstance(kinds, list) or not kinds or
+                        any(not isinstance(kind, str) for kind in kinds) or
+                        len(set(kinds)) != len(kinds) or not set(kinds) <= ids['event_types']):
+                    errors.append(f'{where}: part must fit released event kinds')
+                if entry.get('rico_parent') not in {'rico:affectsOrAffected', 'rico:hasOrHadParticipant'}:
+                    errors.append(f'{where}: part needs a RiC-O participant parent')
+                if entry.get('range_class') != 'rico:Person':
+                    errors.append(f'{where}: main part needs a person')
+                if 'local' not in mapping or not declaration or not all(term in declaration[0] for term in [
+                        'owl:ObjectProperty', 'rdfs:domain rico:Event',
+                        'rdfs:range rico:Person', 'rdfs:subPropertyOf ' + entry.get('rico_parent', '')]):
+                    errors.append(f'{where}: part profile must declare its parent, domain and range')
+            elif 'concept_class' in entry:
+                cls = {'event_types': 'rico:EventType', 'name_kinds': 'skos:Concept'}.get(group)
+                if (entry['concept_class'] != cls or 'local' not in mapping or not declaration or
+                        cls not in declaration[0] or 'skos:Concept' not in declaration[0]):
+                    errors.append(f'{where}: incorrect concept class')
+            if 'replaced_by' in entry:
+                replacement = entry['replaced_by']
+                if isinstance(replacement, str):
+                    if replacement not in ids[group]:
+                        errors.append(f'{where}: unknown replacement')
+                elif (not isinstance(replacement, dict) or set(replacement) != {'group', 'id', 'reason'} or
+                      any(not isinstance(v, str) or not v.strip() for v in replacement.values())):
+                    errors.append(f'{where}: cross-group replacement requires group, id and reason')
+                elif replacement['id'] not in ids.get(replacement['group'], set()):
+                    errors.append(f'{where}: unknown replacement')
             if 'deprecated_in' in entry and 'replaced_by' not in entry:
                 errors.append(f'{where}: deprecation requires replacement mapping')
     relationships = {e['id']: e for e in groups.get('relationship_types', [])}
@@ -136,15 +164,9 @@ def check_site_content(root=ROOT):
         return declaration
 
     expected_classes = {'content_item_subtypes': 'rico:DocumentaryFormType',
-                        'subjects': 'skos:Concept', 'title_types': 'rico:TitleType',
-                        'proposed_event_types': 'rico:EventType', 'proposed_name_kinds': 'skos:Concept'}
-    if set(vocabulary['groups']) != set(expected_classes) | {'event_parts'}:
+                        'subjects': 'skos:Concept', 'title_types': 'rico:TitleType'}
+    if set(vocabulary['groups']) != set(expected_classes):
         errors.append('site-content: unexpected concept groups')
-    released_event_kinds = {e['id'] for e in json.loads(
-        (folder / 'sourced-entities.json').read_text(encoding='utf-8'))['groups']['event_types']}
-    proposed_event_kinds = {e['id'] for e in vocabulary['groups']['proposed_event_types']}
-    if proposed_event_kinds & released_event_kinds:
-        errors.append('site-content: released event kind cannot be proposed again')
     for group, entries in vocabulary['groups'].items():
         if not entries or len({e['id'] for e in entries}) != len(entries):
             errors.append(f'{group}: empty group or duplicate ids')
@@ -159,23 +181,8 @@ def check_site_content(root=ROOT):
                 continue
             declaration = local_declaration(entry, where)
             cls = expected_classes.get(group)
-            if group == 'event_parts':
-                known_kinds = proposed_event_kinds | released_event_kinds
-                if (not entry.get('applies_to') or len(set(entry['applies_to'])) != len(entry['applies_to'])
-                        or not set(entry['applies_to']) <= known_kinds):
-                    errors.append(f'{where}: part must fit known event kinds')
-                if entry.get('rico_parent') not in {'rico:affectsOrAffected', 'rico:hasOrHadParticipant'}:
-                    errors.append(f'{where}: part needs a RiC-O participant parent')
-                if entry.get('range_class') != 'rico:Person':
-                    errors.append(f'{where}: main part needs a person')
-                if not declaration or not all(term in declaration[0] for term in [
-                        'owl:ObjectProperty', 'rdfs:domain rico:Event',
-                        'rdfs:range rico:Person', 'rdfs:subPropertyOf ' + entry.get('rico_parent', '')]):
-                    errors.append(f'{where}: part profile must declare its parent, domain and range')
-            elif entry.get('concept_class') != cls or not declaration or cls not in declaration[0] or 'skos:Concept' not in declaration[0]:
+            if not cls or entry.get('concept_class') != cls or not declaration or cls not in declaration[0] or 'skos:Concept' not in declaration[0]:
                 errors.append(f'{where}: incorrect concept class')
-            if group in {'event_parts', 'proposed_event_types', 'proposed_name_kinds'} and entry.get('status') != 'proposed':
-                errors.append(f'{where}: new term must remain proposed')
             if group == 'content_item_subtypes':
                 parent = entry.get('parent_type')
                 if not isinstance(parent, str) or parent not in types:

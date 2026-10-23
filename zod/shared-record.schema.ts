@@ -12,14 +12,11 @@ import {
 	GenderSchema,
 	LocationTypesSchema,
 	EventTypesSchema,
+	EventPartsSchema,
+	eventPartKinds,
 	vocabularyVersion,
 } from './sourced-entities.vocabulary';
 import { PrintedAddressSchema, siteText, siteDay, uniqueIds } from './site-common.schema';
-import {
-	EventPartsSchema,
-	ProposedNameKindsSchema,
-	eventPartKinds,
-} from './site-content.vocabulary';
 
 // Located notice evidence written by the site writer. An older Citation without
 // addresses retains its locator and quote verbatim, even after a rereading.
@@ -42,23 +39,13 @@ export const SiteCitationSchema = CitationSchema.safeExtend({
 });
 export type SiteCitation = z.infer<typeof SiteCitationSchema>;
 
-// Site-next only: preserve the released Name shape used by enrichment.
-export const SharedNameSchema = NameSchema.extend({
-	kind: z.union([NameSchema.shape.kind, z.literal('other')]),
-	proposed_type: ProposedNameKindsSchema.nullish(),
-	attribution: AttributionSchema.nullish(),
+// Released names with the site's located evidence; supplied attribution is inherited.
+export const SharedNameSchema = NameSchema.safeExtend({
 	citations: z.array(SiteCitationSchema).nullish(),
-}).superRefine((v, ctx) => {
-	if ((v.kind === 'other') !== !!v.proposed_type)
-		ctx.addIssue({ code: 'custom', message: 'proposed name kind exactly for other' });
-	if (v.proposed_type === 'supplied' && (!v.attribution || !v.citations?.length))
-		ctx.addIssue({ code: 'custom', message: 'supplied name needs attribution and citations' });
-	if (v.attribution && v.proposed_type !== 'supplied')
-		ctx.addIssue({ code: 'custom', message: 'supplied attribution needs the proposed name kind' });
 });
 export type SharedName = z.infer<typeof SharedNameSchema>;
 export function isPrintedName(name: SharedName): boolean {
-	return name.kind === 'printed' && !name.proposed_type;
+	return name.kind === 'printed';
 }
 
 // Reuse sourced-date field names and ISO parser, without its range/inference semantics.
@@ -95,6 +82,12 @@ export const SharedFactSchema = FactSchema.safeExtend({
 	family_id: siteText.nullish(),
 	representation: z.enum(['structured', 'prose', 'image']),
 }).superRefine((v, ctx) => {
+	// Legacy Fact still reads parenthood; the current site writer must use a child person.
+	if (v.type === 'parenthood' || v.proposed_type === 'parenthood')
+		ctx.addIssue({
+			code: 'custom',
+			message: 'parenthood is deprecated; use parent_of to a child person',
+		});
 	if (v.representation !== 'structured' && !v.value)
 		ctx.addIssue({ code: 'custom', message: 'prose or image fact needs its value' });
 	if (v.representation !== 'structured' && v.type !== 'other')
