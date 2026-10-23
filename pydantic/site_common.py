@@ -58,10 +58,11 @@ class _AttributedEnglish(Strict):
     language: Literal['en']
     based_on: TextBasis
     attribution: Authorship
+    checked_against: EnglishCheck | None = Field(default=None, exclude_if=lambda v: v is None)
 
-    @field_validator('checked_against', mode='before', check_fields=False)
+    @field_validator('checked_against', mode='before')
     @classmethod
-    def check_is_not_null(cls, value):
+    def check_is_not_null(cls, value: object) -> object:
         if value is None:
             raise ValueError('omit an absent check; a present check must be complete')
         return value

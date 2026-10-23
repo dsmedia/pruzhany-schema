@@ -45,27 +45,27 @@ neither pinned ontology expresses the exact reading, English and judgement
 byte bindings stored in the check. They extend the proposed site profile,
 without changing the released vocabulary or pinned standards.
 
-`bin/verify` runs bun-only field tests and the shared Zod/Pydantic valid, missing,
-unknown, malformed and wrong-field cases and round trips. Consumer validation
-and the eventual committed schema pin are recorded in ticket 09's handoff.
+`bin/verify` exercises field-specific checks and shared Zod/Pydantic valid,
+missing, unknown, malformed and wrong-field cases and round trips. The session
+committed this change in `094ae61`, merged the same tree as `9a21339`, pinned the
+site in `fcdc1c1`, and refreshed the steps shapes in `e5ee79f4`. The site then
+rewrote all 238 issues in `f94a99b`: 434 checks, all recomputed successfully; every
+translation on the five hand-made dates shows. The old pre-commit symlink and
+fixture results are superseded by this integration. The real-data site CI exposed
+a stale leak-test title expectation, repaired in ticket 09 round 3c; it was not a
+schema or person-page display mismatch.
 
-At the round 3 handoff, all seven runnable `bin/verify` steps passed: 38 Zod tests,
-117 Pydantic models, 44 twins, 342 site cases and 106 round trips. The `scan`
-step cannot run here because gitleaks is absent. The Svelte consumer was tested
-through a temporary symlink to this worktree: 2,349 unit tests, a clean
-1,399-file typecheck, data validation for 238 issues, 27 privacy/leak tests and
-61 browser tests pass. Its single CI command stopped on Vitest resolving four
-schema test paths outside the consumer; temporarily preserving symlinks let
-the complete test suite pass, then the remaining CI steps passed separately.
-Both temporary settings are restored at handoff. The committed consumer pin
-and the steps schema refresh await the session's schema commit.
+Round 3c moves the typed non-null validator onto the base that declares
+`checked_against`, retaining the narrower title/translation suffix checks.
+`pc:site_checked_against_text` now follows the adjacent NamedIndividual/comment
+pattern: it names the application binding, rather than asserting an RDF object
+property that the application does not store. Its registered one-line reason is
+unchanged. The three digest properties retain their datatype-property declarations.
+The Zod data contract and generated vocabulary are unchanged by these cleanups.
 
-Round 3b verification: all seven runnable `bin/verify` steps pass, including
-56 Zod tests, 425 shared site cases, 122 round trips, standards alignment and
-vocabulary generation checks. The default command still stops at `scan`
-because gitleaks is absent. Opaque IDs, both field suffixes, empty identifiers,
-wrong suffixes and ASCII/Unicode whitespace are exercised in both runtimes.
-Steps passes ruff, format, mypy and all 11 touched writer tests; the site passes
-all 10 touched tests using an opaque judgement ID against this schema worktree.
-Its temporary schema symlink was restored. No schema refresh, commit or paid
-call was made. Logs are under `/tmp/t09/round3b/`.
+The [verification record](2026-10-23-checked-english-verification.json) contains
+this worktree's current counts: all seven runnable verification steps pass,
+including 56 Zod tests, 117 Pydantic models, 44 twins, 425 shared site cases and
+122 round trips. Default `bin/verify` stops at `scan` because gitleaks is absent.
+These two cleanups were committed by the session as the commit after `9a21339`;
+the site pins it and the steps' shapes are refreshed from it.

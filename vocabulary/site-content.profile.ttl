@@ -57,7 +57,7 @@ pc:site_site_copy a owl:NamedIndividual ; rdfs:comment "Neither EHRI nor RiC-O d
 pc:site_site_documents a owl:NamedIndividual ; rdfs:comment "EHRI RecordSet describes a collection, not this application's four-document value for validating joins." .
 
 # Exact-byte bindings for the independent rico:Activity; the agent is ehri:Agent.
-pc:site_checked_against_text a owl:ObjectProperty ; rdfs:label "checked_against_text"@en ; rdfs:comment "Neither pinned ontology defines this application-specific field-level digest binding." ; skos:definition "Binds an English field to the exact checked reading and judgement."@en .
+pc:site_checked_against_text a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines this application-specific field-level digest binding." .
 pc:site_reading_sha256 a owl:DatatypeProperty ; rdfs:label "reading_sha256"@en ; rdfs:comment "Neither pinned ontology specifies the digest of the exact reading in a field-level check." ; skos:definition "SHA-256 of the exact current reading UTF-8 bytes."@en .
 pc:site_english_sha256 a owl:DatatypeProperty ; rdfs:label "english_sha256"@en ; rdfs:comment "Neither pinned ontology specifies the digest of the exact English field in a later check." ; skos:definition "SHA-256 of the exact English field UTF-8 bytes."@en .
 pc:site_judgement_sha256 a owl:DatatypeProperty ; rdfs:label "judgement_sha256"@en ; rdfs:comment "Neither pinned ontology binds a field-level check to the exact retained judgement file bytes." ; skos:definition "SHA-256 of the exact retained judgement file bytes."@en .

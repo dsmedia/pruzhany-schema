@@ -1,0 +1,20 @@
+{
+  "scope": "Round-3c working-tree cleanup on schema 9a21339; S12/S14 uncommitted.",
+  "command": "bin/verify zod pydantic contract pilot standards vocabulary entities",
+  "result": {
+    "default_exit": 127,
+    "scan": "gitleaks unavailable",
+    "runnable_steps": "all seven passed",
+    "zod_tests": 56,
+    "pydantic_models": 117,
+    "lockstep_twins": 44,
+    "site_cases": 425,
+    "roundtrips": 122,
+    "pilot_python_tests": 27,
+    "pilot_ts_tests": 58,
+    "standards_tests": 10,
+    "vocabulary_tests": 31,
+    "entities_ts_tests": 319,
+    "entities_shared_cases": 302
+  }
+}
