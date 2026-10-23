@@ -29,6 +29,30 @@ export const AuthorshipSchema = AttributionSchema.extend({
 });
 export type Authorship = z.infer<typeof AuthorshipSchema>;
 
+// Exact UTF-8 bytes, without whitespace or Unicode normalisation.
+const sha256 = z
+	.string()
+	.length(64)
+	.regex(/^[0-9a-f]{64}$/);
+// Opaque ID plus field suffix. Include NEL/BOM in whitespace in both runtimes;
+// the end guard prevents JavaScript's $ from accepting a final line terminator.
+export const EnglishCheckSchema = z.strictObject({
+	reading_id: siteText,
+	reading_sha256: sha256,
+	english_sha256: sha256,
+	judgement_id: z.string().regex(/^[^\s\u0085\uFEFF]+:(title|text)$(?![\s\S])/),
+	judgement_sha256: sha256,
+	attribution: AuthorshipSchema,
+});
+export type EnglishCheck = z.infer<typeof EnglishCheckSchema>;
+
+export const TitleCheckSchema = EnglishCheckSchema.extend({
+	judgement_id: z.string().regex(/^[^\s\u0085\uFEFF]+:title$(?![\s\S])/),
+});
+export const TranslationCheckSchema = EnglishCheckSchema.extend({
+	judgement_id: z.string().regex(/^[^\s\u0085\uFEFF]+:text$(?![\s\S])/),
+});
+
 export const PrintedTitleSchema = z
 	.strictObject({
 		text: siteText,
@@ -46,11 +70,17 @@ const attributedEnglish = {
 	attribution: AuthorshipSchema,
 };
 
-export const SuppliedTitleSchema = z.strictObject(attributedEnglish);
+export const SuppliedTitleSchema = z.strictObject({
+	...attributedEnglish,
+	checked_against: TitleCheckSchema.optional(),
+});
 export type SuppliedTitle = z.infer<typeof SuppliedTitleSchema>;
 
 // Translation is semantic work; its basis may survive a later rereading.
-export const TranslationSchema = z.strictObject(attributedEnglish);
+export const TranslationSchema = z.strictObject({
+	...attributedEnglish,
+	checked_against: TranslationCheckSchema.optional(),
+});
 export type Translation = z.infer<typeof TranslationSchema>;
 
 export function textBasisMatches(basis: TextBasis, currentText: string): boolean {

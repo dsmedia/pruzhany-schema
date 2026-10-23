@@ -1,6 +1,6 @@
 """Printed places, titles and translation in the proposed site shape."""
 from typing import Annotated, Literal
-from pydantic import Field, model_validator
+from pydantic import Field, field_validator, model_validator
 from .sourced_entities import Strict, Text, Day, Attribution
 
 
@@ -20,6 +20,28 @@ class Authorship(Attribution):
     kind: Literal['person', 'model']
 
 
+Sha256 = Annotated[str, Field(min_length=64, max_length=64, pattern=r'^[0-9a-f]{64}$')]
+
+
+# Opaque ID plus field suffix; include NEL/BOM in whitespace in both runtimes.
+# Pydantic's Rust regex $ already requires the absolute end of the string.
+class EnglishCheck(Strict):
+    reading_id: Text
+    reading_sha256: Sha256
+    english_sha256: Sha256
+    judgement_id: Annotated[str, Field(pattern=r'^[^\s\u0085\uFEFF]+:(title|text)$')]
+    judgement_sha256: Sha256
+    attribution: Authorship
+
+
+class TitleCheck(EnglishCheck):
+    judgement_id: Annotated[str, Field(pattern=r'^[^\s\u0085\uFEFF]+:title$')]
+
+
+class TranslationCheck(EnglishCheck):
+    judgement_id: Annotated[str, Field(pattern=r'^[^\s\u0085\uFEFF]+:text$')]
+
+
 class PrintedTitle(Strict):
     text: Text
     addresses: list[PrintedAddress] = Field(min_length=1)
@@ -37,13 +59,22 @@ class _AttributedEnglish(Strict):
     based_on: TextBasis
     attribution: Authorship
 
+    @field_validator('checked_against', mode='before', check_fields=False)
+    @classmethod
+    def check_is_not_null(cls, value):
+        if value is None:
+            raise ValueError('omit an absent check; a present check must be complete')
+        return value
+
 
 class SuppliedTitle(_AttributedEnglish):
     """An attributed English name, distinct from a translation."""
+    checked_against: TitleCheck | None = Field(default=None, exclude_if=lambda v: v is None)
 
 
 class Translation(_AttributedEnglish):
     """Translation is semantic work, distinct from a supplied title."""
+    checked_against: TranslationCheck | None = Field(default=None, exclude_if=lambda v: v is None)
 
 
 def text_basis_matches(basis: TextBasis, current_text: str) -> bool:

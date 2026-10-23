@@ -36,6 +36,9 @@ const targets: Record<string, unknown> = {
 };
 
 const out: Record<string, unknown> = {};
+targets.EnglishCheck = site.EnglishCheckSchema;
+targets.TitleCheck = site.TitleCheckSchema;
+targets.TranslationCheck = site.TranslationCheckSchema;
 targets.PrintedAddress = site.PrintedAddressSchema;
 targets.TextBasis = site.TextBasisSchema;
 targets.Authorship = site.AuthorshipSchema;

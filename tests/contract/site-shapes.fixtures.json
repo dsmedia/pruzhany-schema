@@ -178,6 +178,18 @@
 									"by": "fictional writer",
 									"on": "2026-10-22",
 									"kind": "person"
+								},
+								"checked_against": {
+									"reading_id": "fictional-item",
+									"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+									"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+									"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+									"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+									"attribution": {
+										"by": "Fictional checker",
+										"on": "2026-01-03",
+										"kind": "person"
+									}
 								}
 							},
 							"subject_ids": ["community_affairs"],
@@ -200,6 +212,18 @@
 									"by": "fictional writer",
 									"on": "2026-10-22",
 									"kind": "person"
+								},
+								"checked_against": {
+									"reading_id": "fictional-item",
+									"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+									"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+									"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+									"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+									"attribution": {
+										"by": "Fictional checker",
+										"on": "2026-01-03",
+										"kind": "person"
+									}
 								}
 							},
 							"block_breaks": [],
@@ -334,7 +358,34 @@
 		"IssueLifeEvent": ["issues", 0, "life_events", "life_events", 0],
 		"IssueLifeEventsData": ["issues", 0, "life_events"],
 		"SiteIssue": ["issues", 0],
-		"SiteArchive": []
+		"SiteArchive": [],
+		"EnglishCheck": [
+			"issues",
+			0,
+			"content_items",
+			"content_items",
+			0,
+			"supplied_title",
+			"checked_against"
+		],
+		"TitleCheck": [
+			"issues",
+			0,
+			"content_items",
+			"content_items",
+			0,
+			"supplied_title",
+			"checked_against"
+		],
+		"TranslationCheck": [
+			"issues",
+			0,
+			"content_items",
+			"content_items",
+			0,
+			"translation",
+			"checked_against"
+		]
 	},
 	"cases": [
 		{
@@ -5901,6 +5952,2191 @@
 				{
 					"path": ["mentions", "mentions", 0, "addresses", 1, "text"],
 					"value": "Fictional Person sends thanks."
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck complete",
+			"model": "EnglishCheck",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "TitleCheck complete",
+			"model": "TitleCheck",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "TranslationCheck complete",
+			"model": "TranslationCheck",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SuppliedTitle check complete",
+			"model": "SuppliedTitle",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing reading_id",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing reading_sha256",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing english_sha256",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing judgement_id",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing judgement_sha256",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing attribution",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check unknown member",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						},
+						"private_reason": "not part of proof"
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check null",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check empty",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check reading_sha256 short",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check reading_sha256 uppercase",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check reading_sha256 nonhex",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check reading_sha256 trailing newline",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check english_sha256 short",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check english_sha256 uppercase",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check english_sha256 nonhex",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check english_sha256 trailing newline",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check judgement_sha256 short",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check judgement_sha256 uppercase",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check judgement_sha256 nonhex",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check judgement_sha256 trailing newline",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check blank reading",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": " ",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check malformed judgement",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "unknown",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check wrong field",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing check author by",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing check author on",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check missing check author kind",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check unknown check author",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person",
+							"private_reason": "hidden"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle check malformed check date",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-02-30",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check complete",
+			"model": "Translation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing reading_id",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing reading_sha256",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing english_sha256",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing judgement_id",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing judgement_sha256",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing attribution",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check unknown member",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						},
+						"private_reason": "not part of proof"
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check null",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "Translation check empty",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {}
+				}
+			]
+		},
+		{
+			"name": "Translation check reading_sha256 short",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check reading_sha256 uppercase",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check reading_sha256 nonhex",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check reading_sha256 trailing newline",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check english_sha256 short",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check english_sha256 uppercase",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check english_sha256 nonhex",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check english_sha256 trailing newline",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check judgement_sha256 short",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check judgement_sha256 uppercase",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check judgement_sha256 nonhex",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check judgement_sha256 trailing newline",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check blank reading",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": " ",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check malformed judgement",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "unknown",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check wrong field",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing check author by",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"on": "2026-01-03",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing check author on",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check missing check author kind",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check unknown check author",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-01-03",
+							"kind": "person",
+							"private_reason": "hidden"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation check malformed check date",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": {
+						"reading_id": "fictional-item",
+						"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+						"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+						"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+						"attribution": {
+							"by": "Fictional checker",
+							"on": "2026-02-30",
+							"kind": "person"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement short opaque",
+			"model": "EnglishCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement opaque with colons and fragment",
+			"model": "EnglishCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "urn:archive:judgement/J42#review:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement opaque Unicode",
+			"model": "EnglishCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "בדיקה/42:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement empty",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement empty identifier",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": ":title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement missing suffix",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement unknown suffix",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:summary"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement leading space",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": " J42:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement embedded space",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J 42:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement embedded tab",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J\t42:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement trailing newline",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title\n"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement trailing CRLF",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title\r\n"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement embedded nonbreaking space",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J 42:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement embedded next line",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement embedded BOM",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J﻿42:title"
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement trailing line separator",
+			"model": "EnglishCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title "
+				}
+			]
+		},
+		{
+			"name": "EnglishCheck judgement text suffix",
+			"model": "EnglishCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:text"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement short opaque",
+			"model": "TitleCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement opaque with colons and fragment",
+			"model": "TitleCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "urn:archive:judgement/J42#review:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement opaque Unicode",
+			"model": "TitleCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "בדיקה/42:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement empty",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement empty identifier",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": ":title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement missing suffix",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement unknown suffix",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:summary"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement leading space",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": " J42:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement embedded space",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J 42:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement embedded tab",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J\t42:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement trailing newline",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title\n"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement trailing CRLF",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title\r\n"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement embedded nonbreaking space",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J 42:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement embedded next line",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement embedded BOM",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J﻿42:title"
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement trailing line separator",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title "
+				}
+			]
+		},
+		{
+			"name": "TitleCheck judgement wrong field",
+			"model": "TitleCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement short opaque",
+			"model": "TranslationCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement opaque with colons and fragment",
+			"model": "TranslationCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "urn:archive:judgement/J42#review:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement opaque Unicode",
+			"model": "TranslationCheck",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "בדיקה/42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement empty",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement empty identifier",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": ":text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement missing suffix",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement unknown suffix",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:summary"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement leading space",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": " J42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement embedded space",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J 42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement embedded tab",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J\t42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement trailing newline",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:text\n"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement trailing CRLF",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:text\r\n"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement embedded nonbreaking space",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J 42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement embedded next line",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement embedded BOM",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J﻿42:text"
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement trailing line separator",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:text "
+				}
+			]
+		},
+		{
+			"name": "TranslationCheck judgement wrong field",
+			"model": "TranslationCheck",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["judgement_id"],
+					"value": "J42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement short opaque",
+			"model": "SuppliedTitle",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement opaque with colons and fragment",
+			"model": "SuppliedTitle",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "urn:archive:judgement/J42#review:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement opaque Unicode",
+			"model": "SuppliedTitle",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "בדיקה/42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement empty",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement empty identifier",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": ":title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement missing suffix",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement unknown suffix",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:summary"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement leading space",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": " J42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement embedded space",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J 42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement embedded tab",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J\t42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement trailing newline",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:title\n"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement trailing CRLF",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:title\r\n"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement embedded nonbreaking space",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J 42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement embedded next line",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement embedded BOM",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J﻿42:title"
+				}
+			]
+		},
+		{
+			"name": "SuppliedTitle judgement trailing line separator",
+			"model": "SuppliedTitle",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:title "
+				}
+			]
+		},
+		{
+			"name": "Translation judgement short opaque",
+			"model": "Translation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement opaque with colons and fragment",
+			"model": "Translation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "urn:archive:judgement/J42#review:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement opaque Unicode",
+			"model": "Translation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "בדיקה/42:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement empty",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "Translation judgement empty identifier",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": ":text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement missing suffix",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement unknown suffix",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:summary"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement leading space",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": " J42:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement embedded space",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J 42:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement embedded tab",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J\t42:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement trailing newline",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:text\n"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement trailing CRLF",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:text\r\n"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement embedded nonbreaking space",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J 42:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement embedded next line",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement embedded BOM",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J﻿42:text"
+				}
+			]
+		},
+		{
+			"name": "Translation judgement trailing line separator",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against", "judgement_id"],
+					"value": "J42:text "
 				}
 			]
 		}

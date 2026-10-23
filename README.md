@@ -42,6 +42,11 @@ references. Pages are unchanged. Each module has a Pydantic twin.
 sourced-entities 1.1.0. See the [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.
 
+The [checked-English addition](docs/design/2026-10-23-checked-english.md) adds an
+optional independent check to each supplied title and translation, preserving
+its original source and author. Exact-byte bindings and field-specific judgement
+identifiers are shared by both language contracts.
+
 ## Issue 14 pilot
 
 The [sourced-entities pilot](pilots/sourced-entities/README.md) is an isolated,

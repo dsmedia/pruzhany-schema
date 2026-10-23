@@ -62,13 +62,13 @@ from .sourced_entities import SourcedDate, Review, Attribution, Source, Citation
 
 __all__ += ["SourcedDate", "Review", "Attribution", "Source", "Citation", "Fact", "Name", "Fate", "Mention", "legacyHolocaustFate"]
 
-from .site_common import PrintedAddress, TextBasis, Authorship, PrintedTitle, SuppliedTitle, Translation, ContentItemBlockRef, text_basis_matches
+from .site_common import EnglishCheck, TitleCheck, TranslationCheck, PrintedAddress, TextBasis, Authorship, PrintedTitle, SuppliedTitle, Translation, ContentItemBlockRef, text_basis_matches
 from .content_item import ContentItem, PrintedSection, ContentItemsData
 from .shared_record import SharedFact, SourcedRelation, SharedPerson, SharedFamily, SharedPlace, SharedOrganization, SharedEvent, SharedRecord, is_unreviewed_prose
 from .site_issue import IssueMention, IssueMentionsData, ContentItemRef, IssueLifeEvent, IssueLifeEventsData, SiteIssue, SiteArchive
 
 __all__ += [
-    'PrintedAddress', 'TextBasis', 'Authorship', 'PrintedTitle', 'SuppliedTitle', 'Translation',
+    'EnglishCheck', 'TitleCheck', 'TranslationCheck', 'PrintedAddress', 'TextBasis', 'Authorship', 'PrintedTitle', 'SuppliedTitle', 'Translation',
     'ContentItemBlockRef', 'text_basis_matches', 'ContentItem', 'PrintedSection', 'ContentItemsData',
     'SharedFact', 'SourcedRelation', 'SharedPerson', 'SharedFamily', 'SharedPlace',
     'SharedOrganization', 'SharedEvent', 'SharedRecord', 'is_unreviewed_prose',

@@ -31,6 +31,9 @@ SITE_MODELS = set(json.loads((ROOT / 'tests/contract/site-shapes.fixtures.json')
 # Pydantic class name -> Zod export key. Identical today, kept explicit so that a
 # rename on one side is a visible one-line change and never a silent skip.
 MODEL_PAIRS = {
+    "EnglishCheck": "EnglishCheck",
+    "TitleCheck": "TitleCheck",
+    "TranslationCheck": "TranslationCheck",
     "PrintedAddress": "PrintedAddress",
     "TextBasis": "TextBasis",
     "Authorship": "Authorship",

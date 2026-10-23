@@ -791,6 +791,59 @@
         "local": "pc:site_site_documents",
         "reason": "EHRI RecordSet describes a collection, not this application's four-document value for validating joins."
       }
+    },
+    {
+      "id": "english_check",
+      "definition": "The checked_against value records an independent later check of one exact English field against one exact reading.",
+      "mapping": {
+        "rico": "Activity"
+      }
+    },
+    {
+      "id": "english_check_agent",
+      "definition": "The checking person or software agent named by checked_against.attribution.",
+      "mapping": {
+        "ehri": "Agent"
+      }
+    },
+    {
+      "id": "english_check_judgement",
+      "definition": "The retained judgement record referenced by checked_against.judgement_id.",
+      "mapping": {
+        "rico": "Record"
+      }
+    },
+    {
+      "id": "checked_against_text",
+      "definition": "Binds an English field to the exact checked reading and judgement.",
+      "mapping": {
+        "local": "pc:site_checked_against_text",
+        "reason": "Neither pinned ontology defines this application-specific field-level digest binding."
+      }
+    },
+    {
+      "id": "reading_sha256",
+      "definition": "SHA-256 of the exact current reading UTF-8 bytes.",
+      "mapping": {
+        "local": "pc:site_reading_sha256",
+        "reason": "Neither pinned ontology specifies the digest of the exact reading in a field-level check."
+      }
+    },
+    {
+      "id": "english_sha256",
+      "definition": "SHA-256 of the exact English field UTF-8 bytes.",
+      "mapping": {
+        "local": "pc:site_english_sha256",
+        "reason": "Neither pinned ontology specifies the digest of the exact English field in a later check."
+      }
+    },
+    {
+      "id": "judgement_sha256",
+      "definition": "SHA-256 of the exact retained judgement file bytes.",
+      "mapping": {
+        "local": "pc:site_judgement_sha256",
+        "reason": "Neither pinned ontology binds a field-level check to the exact retained judgement file bytes."
+      }
     }
   ]
 }
