@@ -36,7 +36,14 @@
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
 									"unit_id": "notice-1938-12-16",
-									"quote": "ריבטשע משה זייער טעכטערל"
+									"quote": "זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [10, 10, 80, 20],
+											"text": "זייער טעכטערל"
+										}
+									]
 								}
 							]
 						}
@@ -65,7 +72,7 @@
 							"reported_in": "1938-12-16"
 						}
 					],
-					"participants": [
+					"main_people": [
 						{
 							"person_id": "person-rivtche-judewicz",
 							"part": "parent"
@@ -92,7 +99,14 @@
 							"source_id": "paper",
 							"edition_date": "1938-12-16",
 							"unit_id": "notice-1938-12-16",
-							"quote": "ריבטשע משה זייער טעכטערל"
+							"quote": "זייער טעכטערל",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-16.png",
+									"bbox": [10, 10, 80, 20],
+									"text": "זייער טעכטערל"
+								}
+							]
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -123,7 +137,14 @@
 							"source_id": "paper",
 							"edition_date": "1938-12-16",
 							"unit_id": "notice-1938-12-16",
-							"quote": "ריבטשע משה זייער טעכטערל"
+							"quote": "ריבטשע משה זייער טעכטערל",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-16.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "ריבטשע משה זייער טעכטערל"
+								}
+							]
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -149,7 +170,14 @@
 							"source_id": "paper",
 							"edition_date": "1938-12-16",
 							"unit_id": "notice-1938-12-16",
-							"quote": "ריבטשע משה זייער טעכטערל"
+							"quote": "ריבטשע משה זייער טעכטערל",
+							"addresses": [
+								{
+									"image_uri": "page-1938-12-16.png",
+									"bbox": [0, 0, 100, 100],
+									"text": "ריבטשע משה זייער טעכטערל"
+								}
+							]
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -561,11 +589,14 @@
 		]
 	},
 	"models": {
-		"SiteArchive": []
+		"SiteArchive": [],
+		"IssueLifeEvent": ["issues", 0, "life_events", "life_events", 0],
+		"SiteCitation": ["shared_record", "facts", 0, "citations", 0],
+		"SharedEvent": ["shared_record", "events", 0]
 	},
 	"cases": [
 		{
-			"name": "local: one Judewicz birth, parents and baby, pieces in three issues",
+			"name": "local: one Judewicz birth, parents and baby, content items in three issues",
 			"model": "SiteArchive",
 			"valid": true,
 			"changes": []
@@ -603,7 +634,14 @@
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
 									"unit_id": "notice-1938-12-16",
-									"quote": "ריבטשע משה זייער טעכטערל"
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
 								}
 							]
 						},
@@ -617,7 +655,14 @@
 									"source_id": "paper",
 									"edition_date": "1939-04-14",
 									"unit_id": "notice-1939-04-14",
-									"quote": "צעסקעלע"
+									"quote": "צעסקעלע",
+									"addresses": [
+										{
+											"image_uri": "page-1939-04-14.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "צעסקעלע"
+										}
+									]
 								}
 							]
 						}
@@ -1155,7 +1200,7 @@
 											"reported_in": "1938-12-16"
 										}
 									],
-									"participants": [
+									"main_people": [
 										{
 											"person_id": "bride",
 											"part": "bride"
@@ -1175,7 +1220,14 @@
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
 											"unit_id": "notice-1938-12-16",
-											"quote": "Hilde, the bride's mother"
+											"quote": "Hilde, the bride's mother",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Hilde, the bride's mother"
+												}
+											]
 										}
 									],
 									"evidence_confidence": "confirmed",
@@ -1354,7 +1406,7 @@
 											"reported_in": "1938-12-16"
 										}
 									],
-									"participants": [
+									"main_people": [
 										{
 											"person_id": "yosef",
 											"part": "deceased"
@@ -1368,10 +1420,10 @@
 									"dates": [
 										{
 											"qualifier": "reported_in",
-											"reported_in": "1938-12-16"
+											"reported_in": "1939-01-16"
 										}
 									],
-									"participants": [
+									"main_people": [
 										{
 											"person_id": "yosef",
 											"part": "remembered"
@@ -1480,12 +1532,103 @@
 													"role": "congratulation"
 												}
 											]
-										},
+										}
+									]
+								}
+							},
+							{
+								"pages": {
+									"edition_date": "1939-01-16",
+									"pages": [
+										{
+											"id": "page-1939-01-16",
+											"issue_date": "1939-01-16",
+											"page_number": 1,
+											"image_uri": "page-1939-01-16.png",
+											"dimensions": [200, 300],
+											"blocks": [
+												{
+													"id": "block",
+													"bbox": [0, 0, 100, 100],
+													"transcription": "Yosef",
+													"unit_id": "notice-1939-01-16"
+												}
+											]
+										}
+									]
+								},
+								"content_items": {
+									"issue_date": "1939-01-16",
+									"vocabulary_version": "0.1.0",
+									"content_items": [
+										{
+											"id": "notice-1939-01-16",
+											"type": "ad",
+											"subtype": "birth_greeting",
+											"supplied_title": {
+												"text": "Shape fixture",
+												"language": "en",
+												"based_on": {
+													"source_text": "Yosef",
+													"addresses": [
+														{
+															"image_uri": "page-1939-01-16.png",
+															"bbox": [0, 0, 100, 100],
+															"text": "Yosef"
+														}
+													]
+												},
+												"attribution": {
+													"by": "fictional shape test",
+													"on": "2026-10-23",
+													"kind": "person"
+												}
+											},
+											"full_text": "Yosef",
+											"block_breaks": [],
+											"page_blocks": [
+												{
+													"page_id": "page-1939-01-16",
+													"block_ids": ["block"]
+												}
+											],
+											"location_ids": [],
+											"organization_ids": [],
+											"subject_ids": [],
+											"cross_references": [],
+											"event_id": "memorial"
+										}
+									],
+									"sections": []
+								},
+								"mentions": {
+									"issue_date": "1939-01-16",
+									"mentions": [
+										{
+											"id": "mention-1939-01-16-0",
+											"person_id": "yosef",
+											"content_item_id": "notice-1939-01-16",
+											"printed_name": "Yosef",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1939-01-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Yosef"
+												}
+											]
+										}
+									]
+								},
+								"life_events": {
+									"issue_date": "1939-01-16",
+									"life_events": [
 										{
 											"id": "memorial",
 											"content_items": [
 												{
-													"content_item_id": "notice-1938-12-16",
+													"content_item_id": "notice-1939-01-16",
 													"role": "mention"
 												}
 											]
@@ -1499,7 +1642,7 @@
 			]
 		},
 		{
-			"name": "local 7: engagement stays other with proposed_type",
+			"name": "RiC-O + RiC-CM 7: engagement reuses the released event kind",
 			"model": "SiteArchive",
 			"valid": true,
 			"changes": [
@@ -1537,20 +1680,19 @@
 								{
 									"id": "event-judewicz-birth",
 									"name": "Shape fixture, not a transcription",
-									"type": "other",
+									"type": "engagement",
 									"dates": [
 										{
 											"qualifier": "reported_in",
 											"reported_in": "1938-12-16"
 										}
 									],
-									"participants": [
+									"main_people": [
 										{
 											"person_id": "bride",
 											"part": "bride"
 										}
-									],
-									"proposed_type": "engagement"
+									]
 								}
 							],
 							"facts": [],
@@ -1565,7 +1707,14 @@
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
 											"unit_id": "notice-1938-12-16",
-											"quote": "Hilde, the bride's mother"
+											"quote": "Hilde, the bride's mother",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Hilde, the bride's mother"
+												}
+											]
 										}
 									],
 									"evidence_confidence": "confirmed",
@@ -1731,7 +1880,7 @@
 			"valid": false,
 			"changes": [
 				{
-					"path": ["shared_record", "events", 0, "participants", 2, "part"],
+					"path": ["shared_record", "events", 0, "main_people", 2, "part"],
 					"value": "bride"
 				}
 			],
@@ -1743,37 +1892,37 @@
 			"valid": false,
 			"changes": [
 				{
-					"path": ["shared_record", "events", 0, "participants", 2, "part"],
+					"path": ["shared_record", "events", 0, "main_people", 2, "part"],
 					"value": "doctor"
 				}
 			]
 		},
 		{
-			"name": "local 6: refuse participant missing",
+			"name": "RiC-O 6: refuse main person missing",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
 				{
-					"path": ["shared_record", "events", 0, "participants", 2, "person_id"],
+					"path": ["shared_record", "events", 0, "main_people", 2, "person_id"],
 					"value": "missing"
 				}
 			],
-			"error": "participant must resolve to a person"
+			"error": "main person must resolve to a person"
 		},
 		{
-			"name": "local 6: refuse participant event-judewicz-birth",
+			"name": "RiC-O 6: refuse main person event-judewicz-birth",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
 				{
-					"path": ["shared_record", "events", 0, "participants", 2, "person_id"],
+					"path": ["shared_record", "events", 0, "main_people", 2, "person_id"],
 					"value": "event-judewicz-birth"
 				}
 			],
-			"error": "participant must resolve to a person"
+			"error": "main person must resolve to a person"
 		},
 		{
-			"name": "local 6: refuse a family as baby",
+			"name": "RiC-O 6: refuse a family as baby",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -1788,11 +1937,11 @@
 					]
 				},
 				{
-					"path": ["shared_record", "events", 0, "participants", 2, "person_id"],
+					"path": ["shared_record", "events", 0, "main_people", 2, "person_id"],
 					"value": "family"
 				}
 			],
-			"error": "participant must resolve to a person"
+			"error": "main person must resolve to a person"
 		},
 		{
 			"name": "RiC-O 5: refuse person-family identity overlap",
@@ -1830,7 +1979,7 @@
 									"reported_in": "1938-12-16"
 								}
 							],
-							"participants": [
+							"main_people": [
 								{
 									"person_id": "person-rivtche-judewicz",
 									"part": "parent"
@@ -1855,7 +2004,7 @@
 									"reported_in": "1938-12-16"
 								}
 							],
-							"participants": [
+							"main_people": [
 								{
 									"person_id": "person-rivtche-judewicz",
 									"part": "parent"
@@ -1915,7 +2064,7 @@
 											"reported_in": "1938-12-16"
 										}
 									],
-									"participants": [
+									"main_people": [
 										{
 											"person_id": "yosef",
 											"part": "deceased"
@@ -1929,10 +2078,10 @@
 									"dates": [
 										{
 											"qualifier": "reported_in",
-											"reported_in": "1938-12-16"
+											"reported_in": "1939-01-16"
 										}
 									],
-									"participants": [
+									"main_people": [
 										{
 											"person_id": "yosef",
 											"part": "deceased"
@@ -2041,12 +2190,103 @@
 													"role": "congratulation"
 												}
 											]
-										},
+										}
+									]
+								}
+							},
+							{
+								"pages": {
+									"edition_date": "1939-01-16",
+									"pages": [
+										{
+											"id": "page-1939-01-16",
+											"issue_date": "1939-01-16",
+											"page_number": 1,
+											"image_uri": "page-1939-01-16.png",
+											"dimensions": [200, 300],
+											"blocks": [
+												{
+													"id": "block",
+													"bbox": [0, 0, 100, 100],
+													"transcription": "Yosef",
+													"unit_id": "notice-1939-01-16"
+												}
+											]
+										}
+									]
+								},
+								"content_items": {
+									"issue_date": "1939-01-16",
+									"vocabulary_version": "0.1.0",
+									"content_items": [
+										{
+											"id": "notice-1939-01-16",
+											"type": "ad",
+											"subtype": "birth_greeting",
+											"supplied_title": {
+												"text": "Shape fixture",
+												"language": "en",
+												"based_on": {
+													"source_text": "Yosef",
+													"addresses": [
+														{
+															"image_uri": "page-1939-01-16.png",
+															"bbox": [0, 0, 100, 100],
+															"text": "Yosef"
+														}
+													]
+												},
+												"attribution": {
+													"by": "fictional shape test",
+													"on": "2026-10-23",
+													"kind": "person"
+												}
+											},
+											"full_text": "Yosef",
+											"block_breaks": [],
+											"page_blocks": [
+												{
+													"page_id": "page-1939-01-16",
+													"block_ids": ["block"]
+												}
+											],
+											"location_ids": [],
+											"organization_ids": [],
+											"subject_ids": [],
+											"cross_references": [],
+											"event_id": "memorial"
+										}
+									],
+									"sections": []
+								},
+								"mentions": {
+									"issue_date": "1939-01-16",
+									"mentions": [
+										{
+											"id": "mention-1939-01-16-0",
+											"person_id": "yosef",
+											"content_item_id": "notice-1939-01-16",
+											"printed_name": "Yosef",
+											"roles": ["subject"],
+											"address_grain": "words",
+											"addresses": [
+												{
+													"image_uri": "page-1939-01-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Yosef"
+												}
+											]
+										}
+									]
+								},
+								"life_events": {
+									"issue_date": "1939-01-16",
+									"life_events": [
 										{
 											"id": "memorial",
 											"content_items": [
 												{
-													"content_item_id": "notice-1938-12-16",
+													"content_item_id": "notice-1939-01-16",
 													"role": "mention"
 												}
 											]
@@ -2142,7 +2382,7 @@
 											"reported_in": "1938-12-16"
 										}
 									],
-									"participants": [
+									"main_people": [
 										{
 											"person_id": "bride",
 											"part": "bride"
@@ -2162,7 +2402,14 @@
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
 											"unit_id": "notice-1938-12-16",
-											"quote": "Hilde, the bride's mother"
+											"quote": "Hilde, the bride's mother",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Hilde, the bride's mother"
+												}
+											]
 										}
 									],
 									"evidence_confidence": "confirmed",
@@ -2348,7 +2595,7 @@
 											"reported_in": "1938-12-16"
 										}
 									],
-									"participants": [
+									"main_people": [
 										{
 											"person_id": "bride",
 											"part": "bride"
@@ -2368,7 +2615,14 @@
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
 											"unit_id": "notice-1938-12-16",
-											"quote": "Hilde, the bride's mother"
+											"quote": "Hilde, the bride's mother",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "Hilde, the bride's mother"
+												}
+											]
 										}
 									],
 									"evidence_confidence": "confirmed",
@@ -2692,7 +2946,14 @@
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
 									"unit_id": "notice-1938-12-16",
-									"quote": "ריבטשע משה זייער טעכטערל"
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -2714,7 +2975,7 @@
 			"error": "described child needs each parent relation citing the birth notice"
 		},
 		{
-			"name": "local evidence: refuse missing cited piece",
+			"name": "local evidence: refuse missing cited content item",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -2732,6 +2993,10 @@
 			"changes": [
 				{
 					"path": ["shared_record", "relations", 0, "citations", 0, "quote"],
+					"value": "not printed here"
+				},
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "addresses", 0, "text"],
 					"value": "not printed here"
 				}
 			],
@@ -2755,7 +3020,14 @@
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
 									"unit_id": "notice-1938-12-16",
-									"quote": "ריבטשע משה זייער טעכטערל"
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -2781,7 +3053,14 @@
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
 									"unit_id": "notice-1938-12-16",
-									"quote": "ריבטשע משה זייער טעכטערל"
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -2807,7 +3086,14 @@
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
 									"unit_id": "notice-1938-12-16",
-									"quote": "ריבטשע משה זייער טעכטערל"
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -2829,18 +3115,23 @@
 			"error": "duplicate notice relation"
 		},
 		{
-			"name": "local 7: refuse released engagement bypass",
+			"name": "RiC-O + RiC-CM 7: refuse released engagement disguised as a proposal",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
 				{
 					"path": ["shared_record", "events", 0, "type"],
+					"value": "other"
+				},
+				{
+					"path": ["shared_record", "events", 0, "proposed_type"],
 					"value": "engagement"
 				}
-			]
+			],
+			"error": "released event kind cannot be proposed_type"
 		},
 		{
-			"name": "local 7: refuse other without proposed_type",
+			"name": "RiC-O + RiC-CM 7: refuse other without proposed_type",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -2852,7 +3143,7 @@
 			"error": "event proposed_type exactly for other"
 		},
 		{
-			"name": "local 7: refuse proposal on released type",
+			"name": "RiC-O + RiC-CM 7: refuse proposal on released type",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -2864,7 +3155,7 @@
 			"error": "event proposed_type exactly for other"
 		},
 		{
-			"name": "local 7: refuse an issue copy of event type",
+			"name": "RiC-O + RiC-CM 7: refuse an issue copy of event type",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -2875,12 +3166,16 @@
 			]
 		},
 		{
-			"name": "local 7: refuse issue event without shared event",
+			"name": "RiC-O + RiC-CM 7: refuse issue event without shared event",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
 				{
 					"path": ["issues", 0, "life_events", "life_events", 0, "id"],
+					"value": "missing-event"
+				},
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "event_id"],
 					"value": "missing-event"
 				}
 			],
@@ -2989,7 +3284,7 @@
 			"error": "normalization requires a printed Gregorian date"
 		},
 		{
-			"name": "local 7: refuse released birth disguised as a proposal",
+			"name": "RiC-O + RiC-CM 7: refuse released birth disguised as a proposal",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -3025,7 +3320,14 @@
 								"source_id": "paper",
 								"edition_date": "1938-12-16",
 								"unit_id": "notice-1938-12-16",
-								"quote": "ריבטשע משה זייער טעכטערל"
+								"quote": "ריבטשע משה זייער טעכטערל",
+								"addresses": [
+									{
+										"image_uri": "page-1938-12-16.png",
+										"bbox": [0, 0, 100, 100],
+										"text": "ריבטשע משה זייער טעכטערל"
+									}
+								]
 							}
 						]
 					}
@@ -3072,7 +3374,14 @@
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
 											"unit_id": "notice-1938-12-16",
-											"quote": "ריבטשע משה זייער טעכטערל"
+											"quote": "ריבטשע משה זייער טעכטערל",
+											"addresses": [
+												{
+													"image_uri": "page-1938-12-16.png",
+													"bbox": [0, 0, 100, 100],
+													"text": "ריבטשע משה זייער טעכטערל"
+												}
+											]
 										}
 									]
 								}
@@ -3088,7 +3397,7 @@
 					]
 				},
 				{
-					"path": ["shared_record", "events", 0, "participants"],
+					"path": ["shared_record", "events", 0, "main_people"],
 					"value": [
 						{
 							"person_id": "person-rivtche-judewicz",
@@ -3160,7 +3469,7 @@
 					"value": null
 				}
 			],
-			"error": "notice relation needs a quote"
+			"error": "located notice citation needs content item, issue date and quote"
 		},
 		{
 			"name": "local evidence: refuse relation with no citations",
@@ -3191,7 +3500,7 @@
 			"valid": false,
 			"changes": [
 				{
-					"path": ["shared_record", "events", 0, "participants"],
+					"path": ["shared_record", "events", 0, "main_people"],
 					"value": [
 						{
 							"person_id": "person-rivtche-judewicz",
@@ -3212,7 +3521,7 @@
 					]
 				}
 			],
-			"error": "duplicate event participant"
+			"error": "duplicate event main person"
 		},
 		{
 			"name": "local 13: refuse directly released supplied name kind",
@@ -3226,7 +3535,7 @@
 			]
 		},
 		{
-			"name": "local 7: refuse directly released memorial kind",
+			"name": "RiC-O + RiC-CM 7: refuse directly released memorial kind",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -3237,7 +3546,7 @@
 			]
 		},
 		{
-			"name": "local 7: refuse duplicate shared event identity",
+			"name": "RiC-O + RiC-CM 7: refuse duplicate shared event identity",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -3254,7 +3563,7 @@
 									"reported_in": "1938-12-16"
 								}
 							],
-							"participants": [
+							"main_people": [
 								{
 									"person_id": "person-rivtche-judewicz",
 									"part": "parent"
@@ -3279,7 +3588,7 @@
 									"reported_in": "1938-12-16"
 								}
 							],
-							"participants": [
+							"main_people": [
 								{
 									"person_id": "person-rivtche-judewicz",
 									"part": "parent"
@@ -3298,6 +3607,573 @@
 				}
 			],
 			"error": "duplicate shared id"
+		},
+		{
+			"name": "local evidence: preserve an old quote without rewriting its locator",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "facts"],
+					"value": [
+						{
+							"id": "birth-fact",
+							"subject_id": "person-judewicz-daughter-1938",
+							"type": "birth",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"event_id": "event-judewicz-birth",
+							"representation": "structured",
+							"qualifiers": {
+								"child_count": "1"
+							}
+						},
+						{
+							"id": "preserved-birth-fact",
+							"subject_id": "person-rivtche-judewicz",
+							"type": "birth",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "Earlier reading retained verbatim"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"representation": "structured"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "local evidence: preserve an old content item locator absent from the current reading",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "facts"],
+					"value": [
+						{
+							"id": "birth-fact",
+							"subject_id": "person-judewicz-daughter-1938",
+							"type": "birth",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"event_id": "event-judewicz-birth",
+							"representation": "structured",
+							"qualifiers": {
+								"child_count": "1"
+							}
+						},
+						{
+							"id": "preserved-birth-fact",
+							"subject_id": "person-rivtche-judewicz",
+							"type": "birth",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "old-content-item-id",
+									"quote": "Earlier reading retained verbatim",
+									"record_id": "original-record"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"representation": "structured"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "local evidence: preserve an old inverse relation until the relations migration",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "relations"],
+					"value": [
+						{
+							"id": "parent-0",
+							"subject_id": "person-rivtche-judewicz",
+							"type": "kinship",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"relationship_type": "parent_of",
+							"related_person_id": "person-judewicz-daughter-1938"
+						},
+						{
+							"id": "parent-1",
+							"subject_id": "person-moshe-judewicz",
+							"type": "kinship",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16",
+									"quote": "ריבטשע משה זייער טעכטערל",
+									"addresses": [
+										{
+											"image_uri": "page-1938-12-16.png",
+											"bbox": [0, 0, 100, 100],
+											"text": "ריבטשע משה זייער טעכטערל"
+										}
+									]
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"relationship_type": "parent_of",
+							"related_person_id": "person-judewicz-daughter-1938"
+						},
+						{
+							"id": "preserved-inverse",
+							"subject_id": "person-judewicz-daughter-1938",
+							"type": "kinship",
+							"value": "The notice reports a birth.",
+							"citations": [
+								{
+									"source_id": "paper",
+									"edition_date": "1938-12-16",
+									"unit_id": "notice-1938-12-16"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "proposed",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional shape test",
+								"on": "2026-10-23"
+							},
+							"relationship_type": "child_of",
+							"related_person_id": "person-rivtche-judewicz"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "local: refuse a content item twice in one life event with different roles",
+			"model": "IssueLifeEvent",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items"],
+					"value": [
+						{
+							"content_item_id": "notice-1938-12-16",
+							"role": "congratulation"
+						},
+						{
+							"content_item_id": "notice-1938-12-16",
+							"role": "advertisement"
+						}
+					]
+				}
+			],
+			"error": "duplicate event content item"
+		},
+		{
+			"name": "local: refuse a content item in a resolved birth and an unresolved birth",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events"],
+					"value": [
+						{
+							"id": "event-judewicz-birth",
+							"name": "Shape fixture, not a transcription",
+							"type": "birth",
+							"dates": [
+								{
+									"qualifier": "reported_in",
+									"reported_in": "1938-12-16"
+								}
+							],
+							"main_people": [
+								{
+									"person_id": "person-rivtche-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-moshe-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-judewicz-daughter-1938",
+									"part": "baby"
+								}
+							]
+						},
+						{
+							"id": "unresolved-second-birth",
+							"name": "Shape fixture, not a transcription",
+							"type": "birth",
+							"dates": [
+								{
+									"qualifier": "reported_in",
+									"reported_in": "1938-12-16"
+								}
+							],
+							"main_people": []
+						}
+					]
+				},
+				{
+					"path": ["issues", 0, "life_events", "life_events"],
+					"value": [
+						{
+							"id": "event-judewicz-birth",
+							"content_items": [
+								{
+									"content_item_id": "notice-1938-12-16",
+									"role": "congratulation"
+								}
+							]
+						},
+						{
+							"id": "unresolved-second-birth",
+							"content_items": [
+								{
+									"content_item_id": "notice-1938-12-16",
+									"role": "congratulation"
+								}
+							]
+						}
+					]
+				}
+			],
+			"error": "content item belongs to more than one life event"
+		},
+		{
+			"name": "local: refuse a content item pointing to a different life event",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events"],
+					"value": [
+						{
+							"id": "event-judewicz-birth",
+							"name": "Shape fixture, not a transcription",
+							"type": "birth",
+							"dates": [
+								{
+									"qualifier": "reported_in",
+									"reported_in": "1938-12-16"
+								}
+							],
+							"main_people": [
+								{
+									"person_id": "person-rivtche-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-moshe-judewicz",
+									"part": "parent"
+								},
+								{
+									"person_id": "person-judewicz-daughter-1938",
+									"part": "baby"
+								}
+							]
+						},
+						{
+							"id": "unresolved-second-birth",
+							"name": "Shape fixture, not a transcription",
+							"type": "birth",
+							"dates": [
+								{
+									"qualifier": "reported_in",
+									"reported_in": "1938-12-16"
+								}
+							],
+							"main_people": []
+						}
+					]
+				},
+				{
+					"path": ["issues", 0, "content_items", "content_items", 0, "event_id"],
+					"value": "unresolved-second-birth"
+				}
+			],
+			"error": "content item event disagrees with life event"
+		},
+		{
+			"name": "local evidence: located designation is a short quote at its printed address",
+			"model": "SiteCitation",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "local evidence: refuse quote outside its printed address",
+			"model": "SiteCitation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["addresses", 0, "text"],
+					"value": "משה"
+				}
+			],
+			"error": "citation quote must occur at its printed address"
+		},
+		{
+			"name": "local evidence: refuse located citation without unit_id",
+			"model": "SiteCitation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["record_id"],
+					"value": "kept-other-locator"
+				},
+				{
+					"path": ["unit_id"],
+					"remove": true
+				}
+			],
+			"error": "located notice citation needs content item, issue date and quote"
+		},
+		{
+			"name": "local evidence: refuse located citation without edition_date",
+			"model": "SiteCitation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["edition_date"],
+					"remove": true
+				}
+			],
+			"error": "located notice citation needs content item, issue date and quote"
+		},
+		{
+			"name": "local evidence: refuse located citation without quote",
+			"model": "SiteCitation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote"],
+					"remove": true
+				}
+			],
+			"error": "located notice citation needs content item, issue date and quote"
+		},
+		{
+			"name": "local evidence: refuse located citation with impossible issue date",
+			"model": "SiteCitation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["edition_date"],
+					"value": "1938-02-30"
+				}
+			],
+			"error": "located notice citation needs content item, issue date and quote"
+		},
+		{
+			"name": "local evidence: refuse empty printed addresses",
+			"model": "SiteCitation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["addresses"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "local evidence: refuse notice citation with wrong image_uri",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "citations", 0, "addresses", 0, "image_uri"],
+					"value": "another-page.png"
+				}
+			],
+			"error": "printed address is outside its content item or heading"
+		},
+		{
+			"name": "local evidence: refuse notice citation with wrong bbox",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "citations", 0, "addresses", 0, "bbox"],
+					"value": [500, 500, 20, 20]
+				}
+			],
+			"error": "printed address is outside its content item or heading"
+		},
+		{
+			"name": "local 13: refuse a described birth with only an unlocated older citation",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "citations", 0, "addresses"],
+					"remove": true
+				}
+			],
+			"error": "described child needs a cited designation mention"
+		},
+		{
+			"name": "local 13: refuse an unlocated supplied name citation",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "persons", 2, "names", 0, "citations", 0, "addresses"],
+					"remove": true
+				}
+			],
+			"error": "supplied name must cite the birth notice"
+		},
+		{
+			"name": "local 13: refuse an unlocated parent relation as evidence for a described child",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "addresses"],
+					"remove": true
+				}
+			],
+			"error": "described child needs each parent relation citing the birth notice"
+		},
+		{
+			"name": "local: refuse the replaced participants field",
+			"model": "SharedEvent",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["main_people"],
+					"remove": true
+				},
+				{
+					"path": ["participants"],
+					"value": [
+						{
+							"person_id": "person-rivtche-judewicz",
+							"part": "parent"
+						},
+						{
+							"person_id": "person-moshe-judewicz",
+							"part": "parent"
+						},
+						{
+							"person_id": "person-judewicz-daughter-1938",
+							"part": "baby"
+						}
+					]
+				}
+			]
 		}
 	]
 }

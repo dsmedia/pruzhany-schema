@@ -1,5 +1,5 @@
 import { z } from 'zod/v4';
-import { PagesDataSchema } from './page.schema';
+import { PagesDataSchema, type PagesData } from './page.schema';
 import { MentionSchema, type Citation } from './sourced-entities.schema';
 import { MentionRolesSchema, ContentUnitRolesSchema } from './sourced-entities.vocabulary';
 import { ContentItemsDataSchema } from './content-item.schema';
@@ -83,6 +83,16 @@ export const IssueLifeEventsDataSchema = z
 			'life event id'
 		))
 			ctx.addIssue({ code: 'custom', message });
+		const assigned = new Set<string>();
+		for (const event of v.life_events)
+			for (const ref of event.content_items) {
+				if (assigned.has(ref.content_item_id))
+					ctx.addIssue({
+						code: 'custom',
+						message: 'content item belongs to more than one life event',
+					});
+				assigned.add(ref.content_item_id);
+			}
 	});
 export type IssueLifeEventsData = z.infer<typeof IssueLifeEventsDataSchema>;
 
@@ -98,6 +108,40 @@ export const SiteIssueSchema = z
 		for (const message of siteIssueErrors(v)) ctx.addIssue({ code: 'custom', message });
 	});
 export type SiteIssue = z.infer<typeof SiteIssueSchema>;
+
+function printedAddressErrors(
+	addresses: PrintedAddress[],
+	refs: ContentItemBlockRef[],
+	pages: Map<string, PagesData['pages'][number]>,
+	match: 'bounds' | 'text' | 'whole-region'
+): string[] {
+	const errors: string[] = [];
+	for (const a of addresses) {
+		const found = refs.some((ref) => {
+			const page = pages.get(ref.page_id);
+			if (!page || page.image_uri !== a.image_uri) return false;
+			return page.blocks.some((b) => {
+				if (!ref.block_ids.includes(b.id)) return false;
+				if (match === 'whole-region')
+					return a.bbox.every((n, i) => n === b.bbox[i]) && a.text === b.transcription;
+				return (
+					a.bbox[0] >= b.bbox[0] &&
+					a.bbox[1] >= b.bbox[1] &&
+					a.bbox[0] + a.bbox[2] <= b.bbox[0] + b.bbox[2] &&
+					a.bbox[1] + a.bbox[3] <= b.bbox[1] + b.bbox[3] &&
+					(match !== 'text' || b.transcription.includes(a.text))
+				);
+			});
+		});
+		if (!found)
+			errors.push(
+				match === 'whole-region'
+					? 'region mention address must equal a whole region of its content item'
+					: 'printed address is outside its content item or heading'
+			);
+	}
+	return errors;
+}
 
 function siteIssueErrors(v: SiteIssue): string[] {
 	const errors: string[] = [];
@@ -138,52 +182,54 @@ function siteIssueErrors(v: SiteIssue): string[] {
 			}
 		return texts;
 	};
-	const addressErrors = (
-		addresses: PrintedAddress[],
-		refs: ContentItemBlockRef[],
-		match: 'bounds' | 'text' | 'whole-region'
-	) => {
-		for (const a of addresses) {
-			const found = refs.some((ref) => {
-				const page = pages.get(ref.page_id);
-				if (!page || page.image_uri !== a.image_uri) return false;
-				return page.blocks.some((b) => {
-					if (!ref.block_ids.includes(b.id)) return false;
-					if (match === 'whole-region')
-						return a.bbox.every((n, i) => n === b.bbox[i]) && a.text === b.transcription;
-					return (
-						a.bbox[0] >= b.bbox[0] &&
-						a.bbox[1] >= b.bbox[1] &&
-						a.bbox[0] + a.bbox[2] <= b.bbox[0] + b.bbox[2] &&
-						a.bbox[1] + a.bbox[3] <= b.bbox[1] + b.bbox[3] &&
-						(match !== 'text' || b.transcription.includes(a.text))
-					);
-				});
-			});
-			if (!found)
-				errors.push(
-					match === 'whole-region'
-						? 'region mention address must equal a whole region of its content item'
-						: 'printed address is outside its content item or heading'
-				);
-		}
-	};
+
 	for (const item of v.content_items.content_items) {
 		const texts = own(item.page_blocks, `item:${item.id}`, item.id);
 		if (!textFromRegions(texts, item.full_text, item.block_breaks))
 			errors.push(
 				`${item.id}: full_text and block_breaks must follow the regions' line breaks and broken-word joins`
 			);
-		if (item.printed_title) addressErrors(item.printed_title.addresses, item.page_blocks, 'text');
-		addressErrors(item.supplied_title.based_on.addresses, item.page_blocks, 'bounds');
+		if (item.printed_title)
+			errors.push(
+				...printedAddressErrors(item.printed_title.addresses, item.page_blocks, pages, 'text')
+			);
+		errors.push(
+			...printedAddressErrors(
+				item.supplied_title.based_on.addresses,
+				item.page_blocks,
+				pages,
+				'bounds'
+			)
+		);
 		if (item.translation)
-			addressErrors(item.translation.based_on.addresses, item.page_blocks, 'bounds');
+			errors.push(
+				...printedAddressErrors(
+					item.translation.based_on.addresses,
+					item.page_blocks,
+					pages,
+					'bounds'
+				)
+			);
 	}
 	for (const section of v.content_items.sections) {
 		own(section.heading_blocks, `section:${section.id}`, null);
-		addressErrors(section.printed_title.addresses, section.heading_blocks, 'text');
+		errors.push(
+			...printedAddressErrors(
+				section.printed_title.addresses,
+				section.heading_blocks,
+				pages,
+				'text'
+			)
+		);
 		if (section.supplied_title)
-			addressErrors(section.supplied_title.based_on.addresses, section.heading_blocks, 'bounds');
+			errors.push(
+				...printedAddressErrors(
+					section.supplied_title.based_on.addresses,
+					section.heading_blocks,
+					pages,
+					'bounds'
+				)
+			);
 	}
 	for (const page of v.pages.pages) {
 		errors.push(
@@ -199,15 +245,22 @@ function siteIssueErrors(v: SiteIssue): string[] {
 		const item = items.get(mention.content_item_id);
 		if (!item) errors.push('unknown mention content item');
 		else
-			addressErrors(
-				mention.addresses,
-				item.page_blocks,
-				mention.address_grain === 'regions' ? 'whole-region' : 'text'
+			errors.push(
+				...printedAddressErrors(
+					mention.addresses,
+					item.page_blocks,
+					pages,
+					mention.address_grain === 'regions' ? 'whole-region' : 'text'
+				)
 			);
 	}
 	for (const event of v.life_events.life_events)
-		if (event.content_items.some((r) => !items.has(r.content_item_id)))
-			errors.push('unknown life event content item');
+		for (const ref of event.content_items) {
+			const item = items.get(ref.content_item_id);
+			if (!item) errors.push('unknown life event content item');
+			else if (item.event_id && item.event_id !== event.id)
+				errors.push('content item event disagrees with life event');
+		}
 	return errors;
 }
 
@@ -227,8 +280,8 @@ function lineTextMatches(source: string, text: string): boolean {
 		const next = new Set<number>();
 		for (const at of positions)
 			for (const ending of endings) {
-				const piece = literal + ending;
-				if (text.startsWith(piece, at)) next.add(at + piece.length);
+				const fragment = literal + ending;
+				if (text.startsWith(fragment, at)) next.add(at + fragment.length);
 			}
 		positions = next;
 		if (!positions.size) return false;
@@ -303,6 +356,10 @@ function textFromRegions(regions: string[], text: string, breaks: number[]): boo
 }
 
 // Validate joins without embedding any person in an issue's persisted files.
+function noticeKey(c: Citation): string {
+	return JSON.stringify([c.source_id, c.edition_date, c.unit_id]);
+}
+
 export const SiteArchiveSchema = z
 	.strictObject({
 		shared_record: SharedRecordSchema,
@@ -318,19 +375,28 @@ export const SiteArchiveSchema = z
 		const organizations = new Set(v.shared_record.organizations.map((o) => o.id));
 		const events = new Map(v.shared_record.events.map((e) => [e.id, e]));
 		const firstIssues = new Map<string, string>();
-		const pieces = new Map<
+		const contentItems = new Map<
 			string,
-			{ text: string; mentions: IssueMention[]; events: Set<string> }
+			{
+				text: string;
+				mentions: IssueMention[];
+				events: Set<string>;
+				pageBlocks: ContentItemBlockRef[];
+				pages: Map<string, PagesData['pages'][number]>;
+			}
 		>();
-		const pieceKey = (date: string, id: string) => JSON.stringify([date, id]);
+		const contentItemKey = (date: string, id: string) => JSON.stringify([date, id]);
 		for (const issue of v.issues) {
 			const date = issue.content_items.issue_date;
+			const pages = new Map(issue.pages.pages.map((p) => [p.id, p]));
 			const issueEvents = new Set(issue.life_events.life_events.map((e) => e.id));
 			if (issue.mentions.mentions.some((m) => !people.has(m.person_id)))
 				errors.push('unknown mention person');
 			for (const item of issue.content_items.content_items) {
-				pieces.set(pieceKey(date, item.id), {
+				contentItems.set(contentItemKey(date, item.id), {
 					text: item.full_text,
+					pageBlocks: item.page_blocks,
+					pages,
 					mentions: issue.mentions.mentions.filter((m) => m.content_item_id === item.id),
 					events: new Set(
 						issue.life_events.life_events
@@ -359,28 +425,28 @@ export const SiteArchiveSchema = z
 					date.reported_in !== firstIssues.get(event.id)
 				)
 					errors.push('reported_in must be the first issue date');
-		const citedPiece = (c: Citation) =>
-			c.edition_date && c.unit_id ? pieces.get(pieceKey(c.edition_date, c.unit_id)) : undefined;
+		const citedContentItem = (c: Citation) =>
+			c.edition_date && c.unit_id
+				? contentItems.get(contentItemKey(c.edition_date, c.unit_id))
+				: undefined;
 		const assertions = [...v.shared_record.facts, ...v.shared_record.relations];
 		const citations = [
 			...assertions.flatMap((f) => f.citations),
-			...[
-				...v.shared_record.persons,
-				...v.shared_record.families,
-				...v.shared_record.places,
-				...v.shared_record.organizations,
-			].flatMap((p) => p.names.flatMap((n) => n.citations ?? [])),
+			...v.shared_record.persons.flatMap((p) => p.names.flatMap((n) => n.citations ?? [])),
 		];
 		for (const c of citations) {
-			if (!c.unit_id) continue;
-			const piece = citedPiece(c);
-			if (!piece) errors.push('unknown cited content item');
-			else if (c.quote && !piece.text.includes(c.quote))
-				errors.push('citation quote must occur in content item');
+			// Scope to located evidence written now; older citations keep their reading.
+			if (!c.addresses) continue;
+			const contentItem = citedContentItem(c);
+			if (!contentItem) errors.push('unknown cited content item');
+			else {
+				if (c.quote && !contentItem.text.includes(c.quote))
+					errors.push('citation quote must occur in content item');
+				errors.push(
+					...printedAddressErrors(c.addresses, contentItem.pageBlocks, contentItem.pages, 'text')
+				);
+			}
 		}
-		for (const r of v.shared_record.relations)
-			if (r.citations.some((c) => c.unit_id && !c.quote?.trim()))
-				errors.push('notice relation needs a quote');
 		for (const child of v.shared_record.persons.filter((p) =>
 			p.names.some((n) => n.proposed_type === 'supplied')
 		)) {
@@ -393,18 +459,18 @@ export const SiteArchiveSchema = z
 					events.get(f.event_id)?.type === 'birth' &&
 					events
 						.get(f.event_id)
-						?.participants.some((p) => p.person_id === child.id && p.part === 'baby')
+						?.main_people.some((p) => p.person_id === child.id && p.part === 'baby')
 			);
 			if (!births.length) errors.push('described child needs a single-child birth fact');
 			for (const birth of births) {
-				if (events.get(birth.event_id!)!.participants.filter((p) => p.part === 'baby').length !== 1)
+				if (events.get(birth.event_id!)!.main_people.filter((p) => p.part === 'baby').length !== 1)
 					errors.push('single-child birth must have exactly one baby');
 				const notices = birth.citations.filter(
-					(c) => c.quote && citedPiece(c)?.events.has(birth.event_id!)
+					(c) => c.addresses && c.quote && citedContentItem(c)?.events.has(birth.event_id!)
 				);
 				if (
 					!notices.some((c) =>
-						citedPiece(c)?.mentions.some(
+						citedContentItem(c)?.mentions.some(
 							(m) =>
 								m.person_id === child.id &&
 								m.address_grain === 'words' &&
@@ -415,20 +481,16 @@ export const SiteArchiveSchema = z
 					)
 				)
 					errors.push('described child needs a cited designation mention');
-				const sameNotice = (c: Citation) =>
-					notices.some(
-						(n) =>
-							n.source_id === c.source_id &&
-							n.edition_date === c.edition_date &&
-							n.unit_id === c.unit_id
-					);
+				const noticeKeys = new Set(notices.map(noticeKey));
 				if (
-					!child.names.some((n) => n.proposed_type === 'supplied' && n.citations?.some(sameNotice))
+					!child.names.some(
+						(n) =>
+							n.proposed_type === 'supplied' &&
+							n.citations?.some((c) => c.addresses && noticeKeys.has(noticeKey(c)))
+					)
 				)
 					errors.push('supplied name must cite the birth notice');
-				const parents = events
-					.get(birth.event_id!)!
-					.participants.filter((p) => p.part === 'parent');
+				const parents = events.get(birth.event_id!)!.main_people.filter((p) => p.part === 'parent');
 				if (
 					!parents.length ||
 					parents.some(
@@ -438,7 +500,7 @@ export const SiteArchiveSchema = z
 									r.subject_id === p.person_id &&
 									r.related_person_id === child.id &&
 									r.relationship_type === 'parent_of' &&
-									r.citations.some(sameNotice)
+									r.citations.some((c) => c.addresses && noticeKeys.has(noticeKey(c)))
 							)
 					)
 				)

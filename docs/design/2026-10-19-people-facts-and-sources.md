@@ -149,7 +149,7 @@ What this means for us:
 | our proposal | RiC-O / EHRI | note |
 |---|---|---|
 | `Relationship` with `citations`, `confidence`, `status` | `rico:Relation` + `isEvidencedBy`, `relationCertainty`, `relationState` | evidence and certainty map; editorial status is local [corrected 2026-10-20: `relationState` is temporal state; corrected 2026-10-23: `isEvidencedBy` connects Relation → RecordResource; `relationHasSource` is the first endpoint] |
-| `Fact` with `citations`, `confidence`, `date` | a qualified `rico:Relation` with `isEvidencedBy` and certainty | RiC-O has no general "fact"; use a qualified assertion and map where justified [corrected 2026-10-20: pending/disputed assertions must not become unqualified historical triples; see the pilot; corrected 2026-10-23: fact citations use `isEvidencedBy` on the qualified Relation] |
+| `Fact` with `citations`, `confidence`, `date` | an n-ary `rico:Relation` or `rico:Event` with source and certainty | RiC-O has no general "fact"; use a qualified assertion and map where justified [corrected 2026-10-20: pending/disputed assertions must not become unqualified historical triples; see the pilot; corrected 2026-10-23: `fact_source` is `isEvidencedBy` on the qualified Relation, not `relationHasSource`] |
 | `Name` with `kind`, `script` | `rico:AgentName` + `usedFromDate` | RiC-O's names are records of their own, as ours would be |
 | `Citation.unit_id` (the paper's piece) | `rico:evidences` from a `RecordResource` | each piece of the paper is a `RecordResource` |
 | `Fact.place_id` for a ghetto or camp | EHRI vocabulary URI (camps, ghettos) | the `dsmedia/arolsen` catalogue already loads EHRI's camp and ghetto lists |

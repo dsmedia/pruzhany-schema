@@ -140,6 +140,11 @@ def check_site_content(root=ROOT):
                         'proposed_event_types': 'rico:EventType', 'proposed_name_kinds': 'skos:Concept'}
     if set(vocabulary['groups']) != set(expected_classes) | {'event_parts'}:
         errors.append('site-content: unexpected concept groups')
+    released_event_kinds = {e['id'] for e in json.loads(
+        (folder / 'sourced-entities.json').read_text(encoding='utf-8'))['groups']['event_types']}
+    proposed_event_kinds = {e['id'] for e in vocabulary['groups']['proposed_event_types']}
+    if proposed_event_kinds & released_event_kinds:
+        errors.append('site-content: released event kind cannot be proposed again')
     for group, entries in vocabulary['groups'].items():
         if not entries or len({e['id'] for e in entries}) != len(entries):
             errors.append(f'{group}: empty group or duplicate ids')
@@ -155,8 +160,7 @@ def check_site_content(root=ROOT):
             declaration = local_declaration(entry, where)
             cls = expected_classes.get(group)
             if group == 'event_parts':
-                known_kinds = {e['id'] for e in vocabulary['groups']['proposed_event_types']} | {
-                    e['id'] for e in json.loads((folder / 'sourced-entities.json').read_text())['groups']['event_types']}
+                known_kinds = proposed_event_kinds | released_event_kinds
                 if (not entry.get('applies_to') or len(set(entry['applies_to'])) != len(entry['applies_to'])
                         or not set(entry['applies_to']) <= known_kinds):
                     errors.append(f'{where}: part must fit known event kinds')

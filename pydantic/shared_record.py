@@ -1,10 +1,32 @@
 """One shared record, built on production sourced facts and standing."""
 from typing import Annotated, Literal, get_args
-from pydantic import Field, model_validator
-from .sourced_entities import Strict, Text, Date, Day, Fact, Name, Fate, Source, Attribution
-from .sourced_entities_vocabulary import Gender, LocationTypes, LifeEventTypes, NameKinds
+from pydantic import Field, TypeAdapter, ValidationError, model_validator
+from .sourced_entities import Strict, Text, Date, Day, Fact, Name, Fate, Source, Attribution, Citation
+from .sourced_entities_vocabulary import Gender, LocationTypes, EventTypes, NameKinds
 from .site_content_vocabulary import EventParts, ProposedNameKinds, EVENT_PART_KINDS
-from .site_common import unique_ids
+from .site_common import PrintedAddress, unique_ids
+
+_DAY = TypeAdapter(Day)
+
+
+class SiteCitation(Citation):
+    """Located notice evidence; an unlocated older citation stays verbatim."""
+    addresses: Annotated[list[PrintedAddress], Field(min_length=1)] | None = None
+
+    @model_validator(mode='after')
+    def located_notice(self):
+        if self.addresses is None:
+            return self
+        if not (self.unit_id and self.unit_id.strip() and self.edition_date and
+                self.quote and self.quote.strip()):
+            raise ValueError('located notice citation needs content item, issue date and quote')
+        try:
+            _DAY.validate_python(self.edition_date)
+        except ValidationError as exc:
+            raise ValueError('located notice citation needs content item, issue date and quote') from exc
+        if self.quote not in '\n'.join(a.text for a in self.addresses):
+            raise ValueError('citation quote must occur at its printed address')
+        return self
 
 
 class SharedName(Name):
@@ -12,6 +34,7 @@ class SharedName(Name):
     kind: NameKinds | Literal['other']
     proposed_type: ProposedNameKinds | None = None
     attribution: Attribution | None = None
+    citations: list[SiteCitation] | None = None
 
     @model_validator(mode='after')
     def proposed_name(self):
@@ -47,12 +70,13 @@ class LifeEventDate(Strict):
         return self
 
 
-class LifeEventParticipant(Strict):
+class LifeEventMainPerson(Strict):
     person_id: Text
     part: EventParts
 
 
 class SharedFact(Fact):
+    citations: list[SiteCitation] = Field(min_length=1)
     subject_id: Text
     family_id: Text | None = None
     representation: Literal['structured', 'prose', 'image']
@@ -75,6 +99,7 @@ def is_unreviewed_prose(fact: SharedFact) -> bool:
 class SourcedRelation(Fact):
     """Relation from subject to relative; unreleased types keep other/proposed_type."""
     type: Literal['kinship', 'other']
+    citations: list[SiteCitation] = Field(min_length=1)
     subject_id: Text
     family_id: Text | None = None
     shown: Attribution | None = None  # Permission to show, never death evidence.
@@ -85,7 +110,7 @@ class SourcedRelation(Fact):
             raise ValueError('relation needs a person or an unresolved name')
         if self.type == 'other' and self.relationship_type:
             raise ValueError('unreleased relation uses proposed_type only')
-        if (any(c.unit_id and c.edition_date for c in self.citations) and
+        if (any(c.addresses for c in self.citations) and
                 (self.relationship_type == 'child_of' or self.proposed_type == 'child_of')):
             raise ValueError('notice relation must use parent_of, not child_of')
         return self
@@ -119,22 +144,22 @@ class SharedOrganization(SharedFamily):
 class SharedEvent(Strict):
     id: Text
     name: Text
-    type: LifeEventTypes | Literal['holocaust_event']
+    type: EventTypes
     proposed_type: Text | None = None
-    participants: list[LifeEventParticipant]
+    main_people: list[LifeEventMainPerson]
     dates: Annotated[list[LifeEventDate], Field(min_length=1)]
     location_id: Text | None = None
     description: str | None = None
 
     @model_validator(mode='after')
     def event_contract(self):
-        errors = unique_ids([p.person_id for p in self.participants], 'event participant')
+        errors = unique_ids([p.person_id for p in self.main_people], 'event main person')
         if (self.type == 'other') != bool(self.proposed_type):
             errors.append('event proposed_type exactly for other')
-        if self.proposed_type in (*get_args(LifeEventTypes), 'holocaust_event'):
+        if self.proposed_type in get_args(EventTypes):
             errors.append('released event kind cannot be proposed_type')
         kind = self.proposed_type or self.type
-        if any(kind not in EVENT_PART_KINDS[p.part] for p in self.participants):
+        if any(kind not in EVENT_PART_KINDS[p.part] for p in self.main_people):
             errors.append('part does not fit event kind')
         if any(d.qualifier == 'reported_in' for d in self.dates) and len(self.dates) != 1:
             errors.append('reported_in must be the only date when no date is printed')
@@ -172,15 +197,16 @@ class SharedRecord(Strict):
         for event in self.events:
             if event.location_id and event.location_id not in places:
                 errors.append('unknown life event place')
-            for participant in event.participants:
-                if participant.person_id not in persons:
-                    errors.append('participant must resolve to a person')
-                seen = (births if event.type == 'birth' and participant.part == 'baby' else
-                        deaths if event.type == 'death' and participant.part == 'deceased' else None)
+            for main_person in event.main_people:
+                if main_person.person_id not in persons:
+                    errors.append('main person must resolve to a person')
+                # RiC-CM R070/R072, not an OWL functional-property claim.
+                seen = (births if event.type == 'birth' and main_person.part == 'baby' else
+                        deaths if event.type == 'death' and main_person.part == 'deceased' else None)
                 if seen is not None:
-                    if participant.person_id in seen:
+                    if main_person.person_id in seen:
                         errors.append(f'person has more than one {event.type}')
-                    seen.add(participant.person_id)
+                    seen.add(main_person.person_id)
         for fact in [*self.facts, *self.relations]:
             if fact.subject_id not in subjects:
                 errors.append('unknown fact subject')
@@ -199,7 +225,7 @@ class SharedRecord(Strict):
                 errors.append('relation subject must be a person')
             if relation.subject_id == relation.related_person_id:
                 errors.append('self relation')
-            if any(c.unit_id and c.edition_date for c in relation.citations):
+            if any(c.addresses for c in relation.citations):
                 key = (relation.subject_id, relation.relationship_type or relation.proposed_type,
                        relation.related_person_id or relation.related_name)
                 if key in notice_relations:

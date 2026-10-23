@@ -621,18 +621,6 @@
     ],
     "proposed_event_types": [
       {
-        "id": "engagement",
-        "label": "Engagement",
-        "definition": "An engagement, separate from its wedding.",
-        "added_in": "0.1.0",
-        "status": "proposed",
-        "concept_class": "rico:EventType",
-        "mapping": {
-          "local": "pc:site_event_engagement",
-          "reason": "The site life-event kind awaits approval; RiC-O defines EventType without enumerating this kind."
-        }
-      },
-      {
         "id": "memorial",
         "label": "Memorial",
         "definition": "One commemoration of a deceased person, including annual and 30-day memorials.",
@@ -698,8 +686,8 @@
       }
     },
     {
-      "id": "life_event_principal",
-      "definition": "A principal person participates in the life event.",
+      "id": "life_event_main_person",
+      "definition": "A main person participates in the life event.",
       "mapping": {
         "rico": "hasOrHadParticipant"
       }

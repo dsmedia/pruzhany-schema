@@ -6,25 +6,48 @@ import {
 	SourceSchema,
 	AttributionSchema,
 	SourcedDateSchema,
+	CitationSchema,
 } from './sourced-entities.schema';
 import {
 	GenderSchema,
 	LocationTypesSchema,
-	LifeEventTypesSchema,
+	EventTypesSchema,
 	vocabularyVersion,
 } from './sourced-entities.vocabulary';
-import { siteText, siteDay, uniqueIds } from './site-common.schema';
+import { PrintedAddressSchema, siteText, siteDay, uniqueIds } from './site-common.schema';
 import {
 	EventPartsSchema,
 	ProposedNameKindsSchema,
 	eventPartKinds,
 } from './site-content.vocabulary';
 
+// Located notice evidence written by the site writer. An older Citation without
+// addresses retains its locator and quote verbatim, even after a rereading.
+export const SiteCitationSchema = CitationSchema.safeExtend({
+	addresses: z.array(PrintedAddressSchema).min(1).nullish(),
+}).superRefine((v, ctx) => {
+	if (!v.addresses) return;
+	if (!v.unit_id?.trim() || !siteDay.safeParse(v.edition_date).success || !v.quote?.trim())
+		ctx.addIssue({
+			code: 'custom',
+			message: 'located notice citation needs content item, issue date and quote',
+		});
+	else if (
+		!v.addresses
+			.map((a) => a.text)
+			.join('\n')
+			.includes(v.quote)
+	)
+		ctx.addIssue({ code: 'custom', message: 'citation quote must occur at its printed address' });
+});
+export type SiteCitation = z.infer<typeof SiteCitationSchema>;
+
 // Site-next only: preserve the released Name shape used by enrichment.
 export const SharedNameSchema = NameSchema.extend({
 	kind: z.union([NameSchema.shape.kind, z.literal('other')]),
 	proposed_type: ProposedNameKindsSchema.nullish(),
 	attribution: AttributionSchema.nullish(),
+	citations: z.array(SiteCitationSchema).nullish(),
 }).superRefine((v, ctx) => {
 	if ((v.kind === 'other') !== !!v.proposed_type)
 		ctx.addIssue({ code: 'custom', message: 'proposed name kind exactly for other' });
@@ -59,14 +82,15 @@ export const LifeEventDateSchema = z
 			fail('normalization requires a printed Gregorian date');
 	});
 export type LifeEventDate = z.infer<typeof LifeEventDateSchema>;
-export const LifeEventParticipantSchema = z.strictObject({
+export const LifeEventMainPersonSchema = z.strictObject({
 	person_id: siteText,
 	part: EventPartsSchema,
 });
-export type LifeEventParticipant = z.infer<typeof LifeEventParticipantSchema>;
+export type LifeEventMainPerson = z.infer<typeof LifeEventMainPersonSchema>;
 
 // Fact and standing reuse the production contract, including its sources and review.
 export const SharedFactSchema = FactSchema.safeExtend({
+	citations: z.array(SiteCitationSchema).min(1),
 	subject_id: siteText,
 	family_id: siteText.nullish(),
 	representation: z.enum(['structured', 'prose', 'image']),
@@ -85,6 +109,7 @@ export function isUnreviewedProse(fact: SharedFact): boolean {
 
 // Relation: subject -> relative; unreleased types keep other/proposed_type.
 export const SourcedRelationSchema = FactSchema.safeExtend({
+	citations: z.array(SiteCitationSchema).min(1),
 	type: z.enum(['kinship', 'other']),
 	subject_id: siteText,
 	family_id: siteText.nullish(),
@@ -95,7 +120,7 @@ export const SourcedRelationSchema = FactSchema.safeExtend({
 	if (v.type === 'other' && v.relationship_type)
 		ctx.addIssue({ code: 'custom', message: 'unreleased relation uses proposed_type only' });
 	if (
-		v.citations.some((c) => c.unit_id && c.edition_date) &&
+		v.citations.some((c) => c.addresses) &&
 		(v.relationship_type === 'child_of' || v.proposed_type === 'child_of')
 	)
 		ctx.addIssue({ code: 'custom', message: 'notice relation must use parent_of, not child_of' });
@@ -125,9 +150,9 @@ export const SharedEventSchema = z
 	.strictObject({
 		id: siteText,
 		name: siteText,
-		type: z.union([LifeEventTypesSchema, z.literal('holocaust_event')]),
+		type: EventTypesSchema,
 		proposed_type: siteText.nullish(),
-		participants: z.array(LifeEventParticipantSchema),
+		main_people: z.array(LifeEventMainPersonSchema),
 		dates: z.array(LifeEventDateSchema).min(1),
 		location_id: siteText.nullish(),
 		description: z.string().nullish(),
@@ -135,19 +160,15 @@ export const SharedEventSchema = z
 	.superRefine((v, ctx) => {
 		const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
 		if ((v.type === 'other') !== !!v.proposed_type) fail('event proposed_type exactly for other');
-		if (
-			v.proposed_type &&
-			(LifeEventTypesSchema.options.includes(v.proposed_type as never) ||
-				v.proposed_type === 'holocaust_event')
-		)
+		if (v.proposed_type && EventTypesSchema.safeParse(v.proposed_type).success)
 			fail('released event kind cannot be proposed_type');
 		for (const message of uniqueIds(
-			v.participants.map((p) => p.person_id),
-			'event participant'
+			v.main_people.map((p) => p.person_id),
+			'event main person'
 		))
 			fail(message);
 		const kind = v.proposed_type ?? v.type;
-		for (const p of v.participants)
+		for (const p of v.main_people)
 			if (!eventPartKinds[p.part].includes(kind)) fail('part does not fit event kind');
 		if (v.dates.some((d) => d.qualifier === 'reported_in') && v.dates.length !== 1)
 			fail('reported_in must be the only date when no date is printed');
@@ -193,8 +214,8 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 	for (const event of v.events) {
 		if (event.location_id && !places.has(event.location_id))
 			errors.push('unknown life event place');
-		for (const p of event.participants) {
-			if (!persons.has(p.person_id)) errors.push('participant must resolve to a person');
+		for (const p of event.main_people) {
+			if (!persons.has(p.person_id)) errors.push('main person must resolve to a person');
 			// RiC-CM R070/R072, not an OWL functional-property claim.
 			const seen =
 				event.type === 'birth' && p.part === 'baby'
@@ -222,7 +243,7 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 	for (const relation of v.relations) {
 		if (!persons.has(relation.subject_id)) errors.push('relation subject must be a person');
 		if (relation.subject_id === relation.related_person_id) errors.push('self relation');
-		if (relation.citations.some((c) => c.unit_id && c.edition_date)) {
+		if (relation.citations.some((c) => c.addresses)) {
 			const key = JSON.stringify([
 				relation.subject_id,
 				relation.relationship_type ?? relation.proposed_type,

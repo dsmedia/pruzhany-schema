@@ -54,7 +54,7 @@
 					"id": "fictional-event",
 					"name": "Fictional event",
 					"type": "community_event",
-					"participants": [],
+					"main_people": [],
 					"dates": [
 						{
 							"qualifier": "reported_in",
@@ -2083,7 +2083,7 @@
 			]
 		},
 		{
-			"name": "unknown participant",
+			"name": "unknown main person",
 			"model": "SiteArchive",
 			"valid": false,
 			"changes": [
@@ -2092,7 +2092,7 @@
 					"value": "birth"
 				},
 				{
-					"path": ["shared_record", "events", 0, "participants"],
+					"path": ["shared_record", "events", 0, "main_people"],
 					"value": [
 						{
 							"person_id": "missing",

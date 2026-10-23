@@ -1,0 +1,109 @@
+{
+  "round": "09 / 4d, schema only",
+  "date": "2026-10-23",
+  "base_commit": "29347265f73ef31dc75b44b19a68275475c91aaa",
+  "status": "All schema changes verified; stopped for the session to review and commit.",
+  "changes": [
+    "SharedEvent.main_people and LifeEventMainPerson replace participants and LifeEventParticipant in both twins, exports and fixtures; domain identifiers, messages and current docs use main person/content item/life event.",
+    "Shared events reuse released EventTypes, including engagement (pc:event_types_engagement); removed duplicate engagement proposal/profile term. Generated lifeEventKinds/LIFE_EVENT_KINDS use the vocabulary, including ProposedEventTypes, and the vocabulary checker refuses re-proposing a released event kind.",
+    "SiteCitation extends the existing citation only for site-next with optional printed addresses. Located new notice evidence requires a valid issue date, content item and quote; quote/address text, source registry, current content item, image and bounds are validated. The same printed-address checker serves mentions and citations.",
+    "Older unlocated citations retain their original unit_id, record_id and quote. New notice inverse/duplicate rules apply to located evidence; old inverse rows remain for the later relations migration. Supplied child names, birth facts and parent relations require located evidence.",
+    "One content item occurs once per life event and belongs to only one life event per issue; a present content-item event_id must agree. The positive death/memorial fixture now has separate notices in separate issues.",
+    "Removed the function defined inside the described-child birth loop; compare notice keys. Added the RiC-CM R070/R072 comment to the Pydantic twin.",
+    "Fixture labels for rules 6 and 7 match vetting section 6. Restored the historical Fact row wording, retaining only the marked fact_source correction. Updated the design contract, including the kept direct proposed parts and the schema-first stop."
+  ],
+  "regressions": {
+    "life_event_fixtures_before": 53,
+    "life_event_fixtures_after": 72,
+    "valid_after": 12,
+    "invalid_after": 60,
+    "initial_refusals_or_acceptances_reproduced": [
+      "released engagement refused",
+      "old quote and old content-item locator refused",
+      "old inverse relation refused",
+      "same content item in resolved and unresolved births accepted",
+      "content item pointing to a different life event accepted"
+    ],
+    "added_coverage": "Located citation fields, impossible issue date, quote/address mismatch, wrong image/box, missing child/name/parent location evidence, repeated content-item roles and replaced participants field."
+  },
+  "verification": {
+    "command": "PATH=\"/tmp/t10/gitleaks:$PATH\" UV_CACHE_DIR=/tmp/t10/uv-cache TMPDIR=/tmp/t10 UV_OFFLINE=1 bin/verify",
+    "exit_code": 0,
+    "steps": [
+      "scan",
+      "zod",
+      "pydantic",
+      "contract",
+      "pilot",
+      "standards",
+      "vocabulary",
+      "entities"
+    ],
+    "scan": {
+      "version": "8.24.3",
+      "commits": 66,
+      "leaks": 0
+    },
+    "zod": {
+      "tests": 56,
+      "strict_typecheck": "pass",
+      "formatting": "pass"
+    },
+    "pydantic": {
+      "models_emit_json_schema": 121
+    },
+    "contract": {
+      "twins": 48,
+      "site_shape_cases": 497,
+      "round_trips": 133
+    },
+    "pilot": {
+      "python_tests": 27,
+      "typescript_tests": 58,
+      "reproducible_artifacts": 5,
+      "non_utf8_locale": "pass"
+    },
+    "standards": {
+      "tests": 24,
+      "alignment": "pass"
+    },
+    "vocabulary": {
+      "tests": 32,
+      "generated_contracts": "pass",
+      "released_history": "pass"
+    },
+    "entities": {
+      "typescript_tests": 319,
+      "shared_cases": 302,
+      "legacy_mappings": 15,
+      "json_schema": "pass",
+      "legacy_zod_tests": 56
+    },
+    "git_diff_check": "pass"
+  },
+  "preserved": "Production Citation/Name/LifeEvent schemas, released vocabulary files and mappings, ontology pins, ADR 0001, and previous verification records.",
+  "consumer_work": "Deferred as instructed until the session commits the schema: steps refreshes from the clean HEAD and site pins the commit. Both worktrees are unchanged; no consumer tests or data regeneration were performed in this stage.",
+  "writer_obligation": "Every notice citation newly written in 4d must have addresses; the writer must test this and validate the complete candidate archive with SiteArchiveSchema before installation. Unlocated citations are retained legacy data, not a new evidence path.",
+  "deferred": "Writer fixes and independent counts, all 238 issues and byte-identical repeat, steps/site gates, join-review-2, Decision 155 updates and screenshots follow the schema commit in the same conversation.",
+  "operations": {
+    "committed": false,
+    "pushed": false,
+    "git_metadata_changed": false,
+    "paid_calls": 0,
+    "web_searches": 0
+  },
+  "logs": {
+    "red-contract.log": {
+      "path": "/tmp/t10/r4d/schema/red-contract.log",
+      "sha256": "12a19611ab60be9913fad934102db7a203ee894266eb8222c1464e46dd02b7fd"
+    },
+    "contract.log": {
+      "path": "/tmp/t10/r4d/schema/contract.log",
+      "sha256": "ad49a16677009b96d91b7824b2ba3705a379c28bef5ef5cb49f58aca3de2bde5"
+    },
+    "verify.log": {
+      "path": "/tmp/t10/r4d/schema/verify.log",
+      "sha256": "50b0b4a5ce32a6b60ac53c28c65f3213339a13aabad0418dc2d9202edb52e1f4"
+    }
+  }
+}

@@ -48,12 +48,14 @@ its original source and author. Exact-byte bindings and field-specific judgement
 identifiers are shared by both language contracts.
 
 The [one-life-event contract](docs/design/2026-10-23-one-life-event.md) moves the
-event's participants, parts and dates into the shared record; issue entries keep
-only the event id and their pieces. This intentionally breaks the previous
+event's main people (`main_people`), parts and dates into the shared record; issue entries keep
+only the event id and their content items. This intentionally breaks the previous
 site-next shape and requires the round-4 writer and site migrations. The live
-production shapes stay unchanged. Proposed parts, kinds and supplied descriptions
+production shapes stay unchanged. Proposed parts, memorial and supplied descriptions
 remain in the owner's batch; semantic fixtures run in `contract`, and tests that
 read RiC-O's pinned axioms run in `standards` outside the bun-only `zod/` tree.
+Round 4d reuses released engagement, locates new notice citations without rewriting
+older citations, and refuses a content item assigned to two life events.
 
 ## Issue 14 pilot
 

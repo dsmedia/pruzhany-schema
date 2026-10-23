@@ -209,6 +209,13 @@ class VocabularyTests(unittest.TestCase):
         path.write_text(json.dumps(data), encoding='utf-8')
         self.assertTrue(any('proposed' in e for e in self.check()))
 
+    def test_local_released_event_kind_cannot_be_proposed_again(self):
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        data['groups']['proposed_event_types'][0]['id'] = 'engagement'
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('released event kind cannot be proposed again' in e for e in self.check()))
+
     def test_owner_chosen_subtype_parent(self):
         path = self.root / 'vocabulary/site-content.json'
         data = json.loads(path.read_text(encoding='utf-8'))
