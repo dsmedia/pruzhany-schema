@@ -11,7 +11,7 @@ import {
 	FateOutcomesSchema,
 } from './sourced-entities.vocabulary';
 import type { HolocaustFate } from './shared.schema';
-import citationRequirements from '../vocabulary/citation-requirements.json';
+import citationRequirements from '../vocabulary/citation-requirements.json' with { type: 'json' };
 
 const text = z.string().regex(/\S/);
 const date = z

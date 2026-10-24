@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import fixtures from '../tests/contract/citation-requirements.fixtures.json';
+import fixtures from '../tests/contract/citation-requirements.fixtures.json' with { type: 'json' };
 import { CitationSchema, SourceSchema } from './sourced-entities.schema';
 import { statementCitationShortfalls } from './citation-requirements';
 

@@ -1,4 +1,4 @@
-import requirements from '../vocabulary/citation-requirements.json';
+import requirements from '../vocabulary/citation-requirements.json' with { type: 'json' };
 import type { Citation, Source } from './sourced-entities.schema';
 import type { SharedRecord } from './shared-record.schema';
 
