@@ -180,5 +180,17 @@
       "evidence": false
     }
   },
-  "private_quote_clearance": true
+  "private_quote_clearance": true,
+  "source_overrides": {
+    "judewicz-kaplan": {
+      "required": [
+        [
+          "citation.locator"
+        ]
+      ],
+      "statement_kind": "family_register",
+      "private_quote_clearance": "when_quoted",
+      "preferred_over_record": false
+    }
+  }
 }

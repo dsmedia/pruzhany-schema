@@ -9,6 +9,8 @@ type Rule = {
 	host?: boolean;
 	evidence?: boolean;
 	family_transcript_requires_via?: boolean;
+	// A source-specific override (the family's own register): its quote is cleared only when quoted.
+	private_quote_clearance?: 'when_quoted';
 };
 
 /** Advisory shortfalls for a statement, never a schema refinement or publication permission. */
@@ -17,8 +19,11 @@ export function statementCitationShortfalls(
 	source: Source,
 	via?: Source
 ): string[] {
-	const rule = (requirements.kinds as Record<string, Rule>)[source.kind];
-	if (!rule) return ['source.kind'];
+	const kind = (requirements.kinds as Record<string, Rule>)[source.kind];
+	if (!kind) return ['source.kind'];
+	const overrides = (requirements as { source_overrides?: Record<string, Partial<Rule>> })
+		.source_overrides;
+	const rule: Rule = { ...kind, ...(overrides?.[source.id] ?? {}) };
 	const values: Record<string, unknown> = { citation, source, via };
 	const present = (field: string): boolean => {
 		const [scope, key] = field.split('.');
@@ -40,7 +45,10 @@ export function statementCitationShortfalls(
 				missing.push('citation.url on source.host');
 		}
 	}
-	if (requirements.private_quote_clearance) {
+	if (
+		requirements.private_quote_clearance &&
+		(citation.quote || rule.private_quote_clearance !== 'when_quoted')
+	) {
 		if (source.private && !source.quotes_cleared) missing.push('source.quotes_cleared');
 		if (via?.private && !via.quotes_cleared) missing.push('via.quotes_cleared');
 	}

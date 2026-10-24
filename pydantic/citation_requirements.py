@@ -4,9 +4,11 @@ from .sourced_entities import CITATION_REQUIREMENTS, Citation, Source
 
 
 def statement_citation_shortfalls(citation: Citation, source: Source, via: Source | None = None) -> list[str]:
-    rule = CITATION_REQUIREMENTS['kinds'].get(source.kind)
-    if rule is None:
+    kind = CITATION_REQUIREMENTS['kinds'].get(source.kind)
+    if kind is None:
         return ['source.kind']
+    # A source-specific override (the family's own register), as the Zod twin applies it.
+    rule = {**kind, **CITATION_REQUIREMENTS.get('source_overrides', {}).get(source.id, {})}
     values = {'citation': citation, 'source': source, 'via': via}
     def present(field):
         scope, key = field.split('.')
@@ -24,7 +26,8 @@ def statement_citation_shortfalls(citation: Citation, source: Source, via: Sourc
             host = (urlsplit(citation.url).hostname or '').removeprefix('www.')
             if host != source.host and not host.endswith('.' + source.host):
                 missing.append('citation.url on source.host')
-    if CITATION_REQUIREMENTS['private_quote_clearance']:
+    if CITATION_REQUIREMENTS['private_quote_clearance'] and (
+            citation.quote or rule.get('private_quote_clearance') != 'when_quoted'):
         if source.private and not source.quotes_cleared:
             missing.append('source.quotes_cleared')
         if via and via.private and not via.quotes_cleared:
