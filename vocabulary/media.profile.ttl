@@ -1,0 +1,13 @@
+@prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+pc:media_kind a owl:NamedIndividual ; rdfs:comment "These are presentation kinds of an instantiation, not released ContentType concepts. RiC-O hasContentOfType belongs to Record or RecordPart; its ContentType list has not been read." .
+pc:media_caption a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines this application's caption text and its reviewed by/on value." .
+pc:media_alt a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines the application's accessibility text and its human review." .
+pc:media_duration a owl:NamedIndividual ; rdfs:comment "This design claims no pinned duration mapping; seconds remain a local display measurement." .
+pc:media_rights a owl:NamedIndividual ; rdfs:comment "This URI identifies terms, not the owner's permission to publish this particular copy." .
+pc:media_clearance a owl:NamedIndividual ; rdfs:comment "Rights and text review cannot stand for the owner's permission to derive or serve a private copy." .
+pc:media_link a owl:NamedIndividual ; rdfs:comment "This link is a referral to the holder's page, not a served media file or clearance." .
+pc:media_master a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines this application's content-addressed private storage descriptor; it never enters the public projection." .
+pc:media_derived a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines this application's responsive WebP delivery manifest." .

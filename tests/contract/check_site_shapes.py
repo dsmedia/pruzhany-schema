@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def fixture_cases():
     for filename in ['site-shapes.fixtures.json', 'life-event-shapes.fixtures.json',
-                     'death-event-shapes.fixtures.json']:
+                     'death-event-shapes.fixtures.json', 'media-shapes.fixtures.json']:
         yield from cases_from_file(filename)
 
 
@@ -80,6 +80,11 @@ def check_site_shapes(package):
     basis = package.TextBasis.model_validate_json(json.dumps(dict(source_text='Original text', addresses=[dict(image_uri='fictional.png', bbox=[0, 0, 1, 1], text='Original text')])))
     assert package.text_basis_matches(basis, 'Original text')
     assert not package.text_basis_matches(basis, 'Changed text')
+    medium = package.Media.model_validate_json(json.dumps(next(
+        c['value'] for c in cases if c['name'] == 'valid Media')))
+    public = package.public_media(medium).model_dump()
+    assert not {'master', 'key', 'sha256', 'mime', 'bytes'} & public.keys()
+    assert medium.master is not None
     rich = next(c for c in cases if c['name'] == 'all hand-written forms remain sourced and pending')
     record = package.SharedRecord.model_validate_json(json.dumps(rich['value']))
     prose = [f for f in record.facts if f.representation == 'prose']

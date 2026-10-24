@@ -1,0 +1,120 @@
+{
+  "status": "local",
+  "scope": "Media design of 24 October 2026; no new released vocabulary type.",
+  "bindings": [
+    {
+      "id": "medium",
+      "definition": "One held or linked instantiation of a registered source.",
+      "mapping": {
+        "rico": "Instantiation"
+      }
+    },
+    {
+      "id": "media_source",
+      "definition": "Media.source_id names the record instantiated, never the person depicted.",
+      "mapping": {
+        "rico": "isOrWasInstantiationOf"
+      }
+    },
+    {
+      "id": "source_subjects",
+      "definition": "Source.subjects names persons, places or events depicted or spoken of.",
+      "mapping": {
+        "rico": "hasOrHadSubject"
+      }
+    },
+    {
+      "id": "media_conditions_of_use",
+      "definition": "The holder's terms as written, without inferred permission.",
+      "mapping": {
+        "rico": "conditionsOfUse"
+      }
+    },
+    {
+      "id": "media_width",
+      "definition": "Master width in display pixels, after orientation.",
+      "mapping": {
+        "rico": "width"
+      }
+    },
+    {
+      "id": "media_height",
+      "definition": "Master height in display pixels, after orientation.",
+      "mapping": {
+        "rico": "height"
+      }
+    },
+    {
+      "id": "media_kind",
+      "definition": "image, audio, video or document: a closed local presentation list.",
+      "mapping": {
+        "local": "pc:media_kind",
+        "reason": "These are presentation kinds of an instantiation, not released ContentType concepts. RiC-O hasContentOfType belongs to Record or RecordPart; its ContentType list has not been read."
+      }
+    },
+    {
+      "id": "media_caption",
+      "definition": "Our page caption, with a separate human review.",
+      "mapping": {
+        "local": "pc:media_caption",
+        "reason": "Neither pinned ontology defines this application's caption text and its reviewed by/on value."
+      }
+    },
+    {
+      "id": "media_alt",
+      "definition": "Our screen-reader description, required for images, with a separate human review.",
+      "mapping": {
+        "local": "pc:media_alt",
+        "reason": "Neither pinned ontology defines the application's accessibility text and its human review."
+      }
+    },
+    {
+      "id": "media_duration",
+      "definition": "Master duration in seconds.",
+      "mapping": {
+        "local": "pc:media_duration",
+        "reason": "This design claims no pinned duration mapping; seconds remain a local display measurement."
+      }
+    },
+    {
+      "id": "media_rights",
+      "definition": "An applicable rightsstatements.org or Creative Commons URI.",
+      "mapping": {
+        "local": "pc:media_rights",
+        "reason": "This URI identifies terms, not the owner's permission to publish this particular copy."
+      }
+    },
+    {
+      "id": "media_clearance",
+      "definition": "The owner's explicit permission by medium, with who and when.",
+      "mapping": {
+        "local": "pc:media_clearance",
+        "reason": "Rights and text review cannot stand for the owner's permission to derive or serve a private copy."
+      }
+    },
+    {
+      "id": "media_link",
+      "definition": "A holder-host page for audio or video.",
+      "mapping": {
+        "local": "pc:media_link",
+        "reason": "This link is a referral to the holder's page, not a served media file or clearance."
+      }
+    },
+    {
+      "id": "media_master",
+      "definition": "Private storage key, SHA-256, MIME type and byte count.",
+      "mapping": {
+        "local": "pc:media_master",
+        "reason": "Neither pinned ontology defines this application's content-addressed private storage descriptor; it never enters the public projection."
+      }
+    },
+    {
+      "id": "media_derived",
+      "definition": "WebP addresses and actual dimensions at the page-picture widths.",
+      "mapping": {
+        "local": "pc:media_derived",
+        "reason": "Neither pinned ontology defines this application's responsive WebP delivery manifest."
+      }
+    }
+  ]
+}

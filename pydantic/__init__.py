@@ -43,6 +43,9 @@ from .content_item import ContentItem, PrintedSection, ContentItemsData
 from .shared_record import SharedFact, SourcedRelation, SharedPerson, SharedFamily, PlaceIdentifier, SharedPlace, SharedOrganization, SharedEvent, SharedRecord, is_unreviewed_prose
 from .shared_record import SiteCitation, SharedName, LifeEventDate, LifeEventMainPerson, is_printed_name
 from .site_issue import IssueMention, IssueMentionsData, ContentItemRef, IssueLifeEvent, IssueLifeEventsData, SiteIssue, SiteArchive
+from .media import MediaDecision, MediaText, MediaMaster, MediaDerivative, Media, PublicMedia, public_media
+
+__all__ += ['MediaDecision', 'MediaText', 'MediaMaster', 'MediaDerivative', 'Media', 'PublicMedia', 'public_media']
 
 __all__ += [
     'SiteCitation', 'SharedName', 'LifeEventDate', 'LifeEventMainPerson', 'is_printed_name',

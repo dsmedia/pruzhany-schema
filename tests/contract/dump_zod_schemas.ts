@@ -16,6 +16,12 @@ import * as sourced from '../../zod/sourced-entities.schema';
 import * as site from '../../zod/index';
 
 const targets: Record<string, unknown> = {
+	MediaDecision: site.MediaDecisionSchema,
+	MediaText: site.MediaTextSchema,
+	MediaMaster: site.MediaMasterSchema,
+	MediaDerivative: site.MediaDerivativeSchema,
+	Media: site.MediaSchema,
+	PublicMedia: site.PublicMediaSchema,
 	Block: site.BlockSchema,
 	Page: site.PageSchema,
 	PagesData: site.PagesDataSchema,

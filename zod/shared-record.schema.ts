@@ -17,6 +17,7 @@ import {
 	vocabularyVersion,
 } from './sourced-entities.vocabulary';
 import { PrintedAddressSchema, siteText, siteDay, uniqueIds } from './site-common.schema';
+import { MediaSchema, mediaReferenceErrors } from './media.schema';
 
 // Located notice evidence written by the site writer. An older Citation without
 // addresses retains its locator and quote verbatim, even after a rereading.
@@ -216,6 +217,7 @@ export const SharedRecordSchema = z
 		sources: z.array(SourceSchema),
 		facts: z.array(SharedFactSchema),
 		relations: z.array(SourcedRelationSchema),
+		media: z.array(MediaSchema).nullish(),
 	})
 	.superRefine((v, ctx) => {
 		for (const message of sharedRecordErrors(v)) ctx.addIssue({ code: 'custom', message });
@@ -224,12 +226,22 @@ export type SharedRecord = z.infer<typeof SharedRecordSchema>;
 
 function sharedRecordErrors(v: SharedRecord): string[] {
 	const identities = [...v.persons, ...v.families, ...v.places, ...v.organizations];
-	const all = [...identities, ...v.events, ...v.sources, ...v.facts, ...v.relations];
+	const all = [
+		...identities,
+		...v.events,
+		...v.sources,
+		...v.facts,
+		...v.relations,
+		...(v.media ?? []),
+	];
 	const errors = uniqueIds(
 		all.map((x) => x.id),
 		'shared id'
 	);
 	const ids = (xs: { id: string }[]) => new Set(xs.map((x) => x.id));
+	errors.push(
+		...mediaReferenceErrors(v.media ?? [], v.sources, ids([...v.persons, ...v.places, ...v.events]))
+	);
 	const persons = ids(v.persons),
 		places = ids(v.places),
 		organizations = ids(v.organizations);

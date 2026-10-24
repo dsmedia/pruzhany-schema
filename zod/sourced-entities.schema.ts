@@ -86,6 +86,7 @@ export const SourceSchema = z.strictObject({
 		.refine((h) => !h.startsWith('www.'), 'host without www')
 		.nullish(),
 	ehri_institution_id: z.string().nullish(),
+	subjects: z.array(text).min(1).nullish(),
 });
 export type Source = z.infer<typeof SourceSchema>;
 export const CitationSchema = z

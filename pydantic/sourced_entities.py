@@ -69,6 +69,7 @@ class Source(Strict):
     host: Annotated[str, Field(pattern=r"^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"),
                     AfterValidator(_bare_host)] | None = None
     ehri_institution_id: str | None = None
+    subjects: Annotated[list[Text], Field(min_length=1)] | None = None
 
 
 class Citation(Strict):
