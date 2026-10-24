@@ -67,3 +67,11 @@ pc:site_judgement_sha256 a owl:DatatypeProperty ; rdfs:label "judgement_sha256"@
 pc:site_event_evidence_basis a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology records this application-specific absence of newspaper evidence." .
 
 pc:site_event_record_date a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology chooses a preferred source statement for this application; the referenced date uses the existing RiC-O Date mapping." .
+
+pc:site_source_display a owl:NamedIndividual ; rdfs:comment "Neither standard specifies the site voice for crediting a source." .
+
+pc:site_source_privacy a owl:NamedIndividual ; rdfs:comment "Neither standard defines this project publication policy." .
+
+pc:site_citation_public_note a owl:NamedIndividual ; rdfs:comment "Neither standard encodes this project public/private note boundary." .
+
+pc:site_citation_locator a owl:NamedIndividual ; rdfs:comment "Neither standard specifies pointers into this project files." .

@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def fixture_cases():
     for filename in ['site-shapes.fixtures.json', 'life-event-shapes.fixtures.json',
-                     'death-event-shapes.fixtures.json']:
+                     'death-event-shapes.fixtures.json', 'sources-citations.fixtures.json']:
         yield from cases_from_file(filename)
 
 
@@ -89,3 +89,13 @@ def check_site_shapes(package):
     child = package.SiteArchive.model_validate_json(json.dumps(later_naming['value'])).shared_record.persons[2]
     assert [n.value for n in child.names if package.is_printed_name(n)] == ['צעסקעלע']
     print(f'contract: {len(cases)} site-shape cases and {len(roundtrips)} round trips agree')
+    advisory = json.loads((ROOT / 'tests/contract/citation-requirements.fixtures.json').read_text(encoding='utf-8'))['cases']
+    zod_advisory = json.loads(subprocess.run(['bun', str(ROOT / 'tests/contract/check_citation_requirements.ts')],
+        input=json.dumps(advisory), capture_output=True, text=True, check=True, cwd=ROOT).stdout)
+    for case, actual in zip(advisory, zod_advisory, strict=True):
+        citation = package.Citation.model_validate_json(json.dumps(case['citation']))
+        source = package.Source.model_validate_json(json.dumps(case['source']))
+        via = package.Source.model_validate_json(json.dumps(case['via'])) if case.get('via') else None
+        python = package.statement_citation_shortfalls(citation, source, via)
+        assert python == actual == case['shortfalls'], (case['name'], python, actual, case['shortfalls'])
+    print(f'contract: {len(advisory)} advisory citation reports agree')

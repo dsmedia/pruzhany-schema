@@ -2,7 +2,7 @@
 from typing import Annotated, Literal, get_args
 from urllib.parse import urlsplit
 from pydantic import Field, TypeAdapter, ValidationError, model_validator
-from .sourced_entities import Strict, Text, Date, Day, Fact, Name, Fate, Source, Attribution, Citation
+from .sourced_entities import Strict, Text, Date, Day, Fact, Name, Fate, Source, Attribution, Citation, SourceHost
 from .sourced_entities_vocabulary import Gender, LocationTypes, EventTypes, EventParts, EVENT_PART_KINDS, VocabularyVersion
 from .site_common import PrintedAddress, unique_ids
 
@@ -142,6 +142,16 @@ class SharedPlace(SharedFamily):
     identifiers: Annotated[list[PlaceIdentifier], Field(min_length=1)] | None = None
 
 
+class Holder(Strict):
+    """Same evidence as a place identifier; a private holder's name is never public."""
+    id: Text
+    name: Text
+    short_name: Text | None = None
+    kind: Literal['institution', 'family', 'private']
+    identifiers: Annotated[list[PlaceIdentifier], Field(min_length=1)] | None = None
+    host: SourceHost | None = None
+
+
 def on_host(url: str, host: str | None) -> bool:
     """An address is on a source's host, or a subdomain of it; a source naming no host takes any."""
     if not host:
@@ -201,13 +211,14 @@ class SharedRecord(Strict):
     organizations: list[SharedOrganization]
     events: list[SharedEvent]
     sources: list[Source]
+    holders: list[Holder] = Field(default_factory=list)
     facts: list[SharedFact]
     relations: list[SourcedRelation]
 
     @model_validator(mode='after')
     def record_references(self):
         identities = [*self.persons, *self.families, *self.places, *self.organizations]
-        all_values = [*identities, *self.events, *self.sources, *self.facts, *self.relations]
+        all_values = [*identities, *self.events, *self.sources, *self.holders, *self.facts, *self.relations]
         errors = unique_ids([x.id for x in all_values], 'shared id')
         persons = {p.id for p in self.persons}
         places = {p.id for p in self.places}
@@ -217,6 +228,37 @@ class SharedRecord(Strict):
         sources = {s.id for s in self.sources}
         hosts = {s.id: s.host for s in self.sources}
         paper_sources = {s.id for s in self.sources if s.kind == 'the_paper'}
+        holders = {h.id for h in self.holders}
+        by_source = {s.id: s for s in self.sources}
+        for source in self.sources:
+            if source.holder_id and source.holder_id not in holders:
+                errors.append('unknown source holder')
+            if any(d.source_id not in sources for d in source.derived_from or []):
+                errors.append('unknown derived source')
+        completed, visiting = set(), set()
+        def visit(id):
+            if id in visiting:
+                errors.append('derived_from cycle')
+                return
+            if id in completed:
+                return
+            visiting.add(id)
+            if id in by_source:
+                for link in by_source[id].derived_from or []:
+                    visit(link.source_id)
+            visiting.remove(id)
+            completed.add(id)
+        for id in sources:
+            visit(id)
+        def check_citation(c):
+            if c.url and not on_host(c.url, hosts.get(c.source_id)):
+                errors.append('citation off its source host')
+            if c.via:
+                via = by_source.get(c.via)
+                if via is None:
+                    errors.append('unknown citation via')
+                elif not any(d.source_id == c.source_id for d in via.derived_from or []):
+                    errors.append('citation via must derive from its source')
         subjects = {x.id for x in [*identities, *self.events, *self.relations]}
         facts = {f.id: f for f in self.facts}
         death_events = {}
@@ -262,8 +304,7 @@ class SharedRecord(Strict):
             if any(c.source_id not in sources for c in fact.citations):
                 errors.append('unknown citation source')
             for c in fact.citations:
-                if c.url and not on_host(c.url, hosts.get(c.source_id)):
-                    errors.append('citation off its source host')
+                check_citation(c)
         notice_relations = set()
         for relation in self.relations:
             if relation.subject_id not in persons:
@@ -279,21 +320,25 @@ class SharedRecord(Strict):
         for identity in identities:
             if any(c.source_id not in sources for n in identity.names for c in (n.citations or [])):
                 errors.append('unknown name citation source')
+            for name in identity.names:
+                for citation in name.citations or []:
+                    check_citation(citation)
         for person in self.persons:
             if person.fate and any(id not in facts or facts[id].subject_id != person.id for id in person.fate.rests_on):
                 errors.append('fate must rest on own facts')
-        identified = {}
-        for place in self.places:
-            errors += unique_ids([(i.source_id, i.value) for i in place.identifiers or []], 'place identifier')
-            for identifier in place.identifiers or []:
-                if identifier.source_id not in sources:
-                    errors.append('unknown identifier source')
-                if identifier.url and not on_host(identifier.url, hosts.get(identifier.source_id)):
-                    errors.append('identifier off its source host')
-                key = (identifier.source_id, identifier.value)
-                if identified.get(key, place.id) != place.id:
-                    errors.append('one identifier on two places')
-                identified[key] = place.id
+        for entities, label in [(self.places, 'places'), (self.holders, 'holders')]:
+            identified = {}
+            for place in entities:
+                errors += unique_ids([(i.source_id, i.value) for i in place.identifiers or []], ('place' if label == 'places' else 'holder') + ' identifier')
+                for identifier in place.identifiers or []:
+                    if identifier.source_id not in sources:
+                        errors.append('unknown identifier source')
+                    if identifier.url and not on_host(identifier.url, hosts.get(identifier.source_id)):
+                        errors.append('identifier off its source host')
+                    key = (identifier.source_id, identifier.value)
+                    if identified.get(key, place.id) != place.id:
+                        errors.append(f'one identifier on two {label}')
+                    identified[key] = place.id
         by_place = {p.id: p for p in self.places}
         for place in self.places:
             seen = set()

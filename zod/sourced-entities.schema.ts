@@ -11,6 +11,7 @@ import {
 	FateOutcomesSchema,
 } from './sourced-entities.vocabulary';
 import type { HolocaustFate } from './shared.schema';
+import citationRequirements from '../vocabulary/citation-requirements.json';
 
 const text = z.string().regex(/\S/);
 const date = z
@@ -69,28 +70,51 @@ export const AttributionSchema = z.strictObject({
 	note: z.string().nullish(),
 });
 export type Attribution = z.infer<typeof AttributionSchema>;
+export const SourceHostSchema = z
+	.string()
+	.regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/)
+	.refine((h) => !h.startsWith('www.'), 'host without www');
+// RFC 5646 §2.1, https://www.rfc-editor.org/rfc/rfc5646, read 2026-10-24:
+// syntax (including private-use and grandfathered tags), not registry membership.
+export const SourceLanguageSchema = z
+	.string()
+	.regex(new RegExp(citationRequirements.language_tag_pattern));
+export const SourceDerivationSchema = z.strictObject({
+	source_id: text,
+	relation: z.enum(['copy', 'transcription']),
+});
+export type SourceDerivation = z.infer<typeof SourceDerivationSchema>;
 export const SourceSchema = z.strictObject({
 	id: text,
 	kind: SourceKindsSchema,
 	title: text,
+	short_name: text.nullish(),
+	holder_id: text.nullish(),
+	reference_code: text.nullish(),
+	language: z.array(SourceLanguageSchema).min(1).nullish(),
+	derived_from: z.array(SourceDerivationSchema).min(1).nullish(),
+	dated: SourcedDateSchema.nullish(),
+	quotes_cleared: AttributionSchema.nullish(),
+	private: z.boolean().nullish(),
 	work_id: z.string().nullish(),
 	author: z.string().nullish(),
 	editor: z.string().nullish(),
 	published: z.string().nullish(),
-	repository: z.string().nullish(),
+	repository: z.string().nullish(), // Read for one release: site projection and retained research.
 	url_pattern: z.string().nullish(),
 	// A bare lowercase host name: the source's addresses are on it or a subdomain of it.
-	host: z
-		.string()
-		.regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/)
-		.refine((h) => !h.startsWith('www.'), 'host without www')
-		.nullish(),
-	ehri_institution_id: z.string().nullish(),
+	host: SourceHostSchema.nullish(),
 });
 export type Source = z.infer<typeof SourceSchema>;
 export const CitationSchema = z
 	.strictObject({
 		source_id: text,
+		via: text.nullish(),
+		reference_code: text.nullish(),
+		record_type: text.nullish(),
+		quote_language: SourceLanguageSchema.nullish(),
+		public_note: text.nullish(),
+		locator: text.nullish(), // Internal only; never a holder's record number.
 		record_id: z.string().nullish(),
 		page: z.string().nullish(),
 		scan: z.string().nullish(),
@@ -199,10 +223,17 @@ function validateReview(v: Review) {
 		return 'approval requires reviewer and day';
 }
 function validateCitation(v: Citation) {
-	if (![v.record_id, v.page, v.scan, v.time, v.unit_id, v.url].some((x) => x?.trim()))
+	if (
+		![v.record_id, v.page, v.scan, v.time, v.unit_id, v.url, v.locator, v.reference_code].some(
+			(x) => x?.trim()
+		)
+	)
 		return 'citation needs locator';
 }
 function validateFact(v: Fact) {
+	const originals = new Set(v.citations.map((c) => c.source_id));
+	if (v.citations.some((c) => c.via && originals.has(c.via)))
+		return 'citation via cannot also be an original for the same statement';
 	if ((v.type === 'other') !== !!v.proposed_type?.trim()) return 'proposed_type exactly for other';
 	if (v.type === 'kinship' && !(v.relationship_type && (v.related_name || v.related_person_id)))
 		return 'kinship needs relationship and relative';

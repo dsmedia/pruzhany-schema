@@ -44,3 +44,5 @@ export * from './site-content.vocabulary';
 export * from './content-item.schema';
 export * from './shared-record.schema';
 export * from './site-issue.schema';
+
+export * from './citation-requirements';

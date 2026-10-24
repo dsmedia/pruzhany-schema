@@ -33,6 +33,8 @@ const targets: Record<string, unknown> = {
 };
 
 const out: Record<string, unknown> = {};
+targets.Holder = site.HolderSchema;
+targets.SourceDerivation = site.SourceDerivationSchema;
 targets.EnglishCheck = site.EnglishCheckSchema;
 targets.TitleCheck = site.TitleCheckSchema;
 targets.TranslationCheck = site.TranslationCheckSchema;

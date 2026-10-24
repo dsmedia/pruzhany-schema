@@ -2,6 +2,8 @@
 from typing import Literal, Annotated
 from datetime import date as calendar_date
 from calendar import monthrange
+import json
+from pathlib import Path
 from pydantic import BaseModel, ConfigDict, Field, AfterValidator, model_validator
 from .sourced_entities_vocabulary import FactTypes, RelationshipTypes, NameKinds, MentionRoles, SourceKinds, Confidence, ClaimStatus, ReviewStates, FateOutcomes, HolocaustFateTypes
 
@@ -16,6 +18,9 @@ def valid_date(v):
 Text = Annotated[str, Field(pattern=r"\S")]
 Date = Annotated[str, Field(pattern=r"^\d{4}(-\d{2}(-\d{2})?)?$"), AfterValidator(valid_date)]
 Day = Annotated[str, Field(pattern=r"^\d{4}-\d{2}-\d{2}$"), AfterValidator(valid_date)]
+CITATION_REQUIREMENTS = json.loads((Path(__file__).resolve().parents[1] / 'vocabulary/citation-requirements.json').read_text(encoding='utf-8'))
+# RFC 5646 §2.1, https://www.rfc-editor.org/rfc/rfc5646, read 2026-10-24: syntax, not registry membership.
+SourceLanguage = Annotated[str, Field(pattern=CITATION_REQUIREMENTS['language_tag_pattern'])]
 
 
 class SourcedDate(Strict):
@@ -54,25 +59,44 @@ def _bare_host(value: str) -> str:
         raise ValueError('host without www')
     return value
 
+SourceHost = Annotated[str, Field(pattern=r"^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"), AfterValidator(_bare_host)]
+
+
+class SourceDerivation(Strict):
+    source_id: Text
+    relation: Literal['copy', 'transcription']
+
 
 class Source(Strict):
     id: Text
     kind: SourceKinds
     title: Text
+    short_name: Text | None = None
+    holder_id: Text | None = None
+    reference_code: Text | None = None
+    language: Annotated[list[SourceLanguage], Field(min_length=1)] | None = None
+    derived_from: Annotated[list[SourceDerivation], Field(min_length=1)] | None = None
+    dated: SourcedDate | None = None
+    quotes_cleared: Attribution | None = None
+    private: bool | None = None
     work_id: str | None = None
     author: str | None = None
     editor: str | None = None
     published: str | None = None
-    repository: str | None = None
+    repository: str | None = None  # One-release reader: site projection and retained research.
     url_pattern: str | None = None
     # A bare lowercase host name: the source's addresses are on it or a subdomain of it.
-    host: Annotated[str, Field(pattern=r"^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"),
-                    AfterValidator(_bare_host)] | None = None
-    ehri_institution_id: str | None = None
+    host: SourceHost | None = None
 
 
 class Citation(Strict):
     source_id: Text
+    via: Text | None = None
+    reference_code: Text | None = None
+    record_type: Text | None = None
+    quote_language: SourceLanguage | None = None
+    public_note: Text | None = None
+    locator: Text | None = None
     record_id: str | None = None
     page: str | None = None
     scan: str | None = None
@@ -182,11 +206,14 @@ def validate_Review(v):
 
 
 def validate_Citation(v):
-    if not any(x and x.strip() for x in (v.record_id,v.page,v.scan,v.time,v.unit_id,v.url)):
+    if not any(x and x.strip() for x in (v.record_id,v.page,v.scan,v.time,v.unit_id,v.url,v.locator,v.reference_code)):
         raise ValueError('citation needs locator')
 
 
 def validate_Fact(v):
+    originals = {c.source_id for c in v.citations}
+    if any(c.via in originals for c in v.citations if c.via):
+        raise ValueError('citation via cannot also be an original for the same statement')
     if (v.type == 'other') != bool(v.proposed_type and v.proposed_type.strip()):
         raise ValueError('proposed_type exactly for other')
     if v.type == 'kinship' and not (v.relationship_type and (v.related_name or v.related_person_id)):
