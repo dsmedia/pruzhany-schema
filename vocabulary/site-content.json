@@ -1097,6 +1097,14 @@
 				"local": "pc:site_citation_locator",
 				"reason": "Neither standard specifies pointers into this project files."
 			}
+		},
+		{
+			"id": "source_quote_condition",
+			"definition": "The owner's condition on a private source's cleared quotes: shown only where no other record states the same.",
+			"mapping": {
+				"local": "pc:site_source_quote_condition",
+				"reason": "Neither pinned ontology encodes this project's publication condition."
+			}
 		}
 	]
 }
