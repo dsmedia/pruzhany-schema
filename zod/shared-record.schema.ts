@@ -141,21 +141,15 @@ export const PlaceIdentifierSchema = z.strictObject({
 	attribution: AttributionSchema,
 });
 export type PlaceIdentifier = z.infer<typeof PlaceIdentifierSchema>;
-export const SharedPlaceSchema = z
-	.strictObject({
-		...identity,
-		type: LocationTypesSchema,
-		parent_id: siteText.nullish(),
-		coordinates: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]).nullish(),
-		identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(
-			(v.identifiers ?? []).map((i) => JSON.stringify([i.source_id, i.value])),
-			'place identifier'
-		))
-			ctx.addIssue({ code: 'custom', message });
-	});
+// Plain object: the site derives its public place with .omit(). The identifiers' own
+// rules (once per place, a registered authority, its host) are the shared record's.
+export const SharedPlaceSchema = z.strictObject({
+	...identity,
+	type: LocationTypesSchema,
+	parent_id: siteText.nullish(),
+	coordinates: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]).nullish(),
+	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
+});
 export type SharedPlace = z.infer<typeof SharedPlaceSchema>;
 export const SharedOrganizationSchema = z.strictObject(identity);
 export type SharedOrganization = z.infer<typeof SharedOrganizationSchema>;
@@ -277,7 +271,13 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 		if (p.fate?.rests_on.some((id) => facts.get(id)?.subject_id !== p.id))
 			errors.push('fate must rest on own facts');
 	const identified = new Map<string, string>();
-	for (const place of v.places)
+	for (const place of v.places) {
+		errors.push(
+			...uniqueIds(
+				(place.identifiers ?? []).map((i) => JSON.stringify([i.source_id, i.value])),
+				'place identifier'
+			)
+		);
 		for (const identifier of place.identifiers ?? []) {
 			if (!sources.has(identifier.source_id)) errors.push('unknown identifier source');
 			if (identifier.url && !onHost(identifier.url, hosts.get(identifier.source_id)))
@@ -287,6 +287,7 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 				errors.push('one identifier on two places');
 			identified.set(key, place.id);
 		}
+	}
 	const byPlace = new Map(v.places.map((p) => [p.id, p]));
 	for (const place of v.places) {
 		const seen = new Set<string>();

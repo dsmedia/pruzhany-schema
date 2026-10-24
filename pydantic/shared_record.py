@@ -136,13 +136,6 @@ class SharedPlace(SharedFamily):
                        Annotated[float, Field(ge=-180, le=180)]] | None = None
     identifiers: Annotated[list[PlaceIdentifier], Field(min_length=1)] | None = None
 
-    @model_validator(mode='after')
-    def place_identifiers(self):
-        errors = unique_ids([(i.source_id, i.value) for i in self.identifiers or []], 'place identifier')
-        if errors:
-            raise ValueError('; '.join(errors))
-        return self
-
 
 def on_host(url: str, host: str | None) -> bool:
     """An address is on a source's host, or a subdomain of it; a source naming no host takes any."""
@@ -258,6 +251,7 @@ class SharedRecord(Strict):
                 errors.append('fate must rest on own facts')
         identified = {}
         for place in self.places:
+            errors += unique_ids([(i.source_id, i.value) for i in place.identifiers or []], 'place identifier')
             for identifier in place.identifiers or []:
                 if identifier.source_id not in sources:
                     errors.append('unknown identifier source')

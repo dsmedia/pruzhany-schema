@@ -2024,12 +2024,12 @@
 		},
 		{
 			"name": "one identifier twice on a place",
-			"model": "SharedPlace",
+			"model": "SharedRecord",
 			"valid": false,
 			"error": "duplicate place identifier",
 			"changes": [
 				{
-					"path": ["identifiers"],
+					"path": ["places", 0, "identifiers"],
 					"value": [
 						{
 							"source_id": "fictional-authority",
