@@ -64,10 +64,22 @@ the citation.
 | `identifiers` | as places have them (`source_id`, `value`, `url`, `accessed`, `by`): EHRI institution ids first | `rico:hasOrHadIdentifier` |
 | `host` | its web host, the one gate for its addresses | — |
 
-`Source.ehri_institution_id` is retired. EHRI ids read on the portal on 24 October 2026 (council): RGVA `ru-003203`, the
-FSB archive `ru-003198`, Arolsen `de-002409`, Sachsenhausen `de-002649`, Buchenwald `de-002463`, Bergen-Belsen
-`de-002598`, USHMM `us-005578`, Yad Vashem `il-002798`, NLI `il-002794`. They are read again on the portal before they
-are written. "The family's papers" is a `family` holder with no id.
+`Source.ehri_institution_id` is retired. Three kinds of identifier, in this order:
+
+1. **EHRI's institution id** (the owner's rule: EHRI first). All nine were read on EHRI's portal
+   (`portal.ehri-project.eu/institutions/<id>`) by this session on 24 October 2026, each page giving the institution's
+   own name and a persistent ARK (`ark:/41045/…`): RGVA `ru-003203` (Российский государственный военный архив), the
+   FSB's central archive `ru-003198`, the Arolsen Archives `de-002409`, the Sachsenhausen Memorial's archive
+   `de-002649`, the Buchenwald Memorial's archive `de-002463`, the Bergen-Belsen Memorial `de-002598`, USHMM
+   `us-005578`, the Yad Vashem Archives `il-002798`, the National Library of Israel's archives department `il-002794`.
+   The ARK is kept beside the id as its `url`.
+2. **ISIL** (ISO 15511, the international identifier for libraries and archives) where the institution has one. Read on
+   Wikidata on 24 October 2026, not yet on the ISIL agencies' own registers: Arolsen `DE-2379`, the Sachsenhausen
+   Memorial `DE-MUS-825314`, the National Library of Israel `IL-NNL`; none found for the others.
+3. **Wikidata** later, after the vetting's Impresso-2 check. Today Wikidata links an EHRI id (P14900) for only three
+   of the nine (Arolsen, USHMM, RGVA); VIAF and Library of Congress ids exist there for most, and are not used.
+
+"The family's papers" is a `family` holder with no id.
 
 ### 3.2 Source: a record resource we cite
 
