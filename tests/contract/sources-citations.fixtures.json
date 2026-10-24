@@ -1,0 +1,1323 @@
+{
+	"description": "Fictional holders, originals and transcriptions; no real person or archive records.",
+	"example": {
+		"version": "1",
+		"vocabulary_version": "1.2.0",
+		"persons": [
+			{
+				"id": "person-one",
+				"name": "Fictional Person",
+				"gender": "unknown",
+				"names": []
+			}
+		],
+		"families": [],
+		"places": [],
+		"organizations": [],
+		"events": [],
+		"holders": [
+			{
+				"id": "holder-one",
+				"name": "Fictional Archive",
+				"short_name": "The archive",
+				"kind": "institution",
+				"identifiers": [
+					{
+						"source_id": "authority",
+						"value": "institution-1",
+						"url": "https://authority.example.org/1",
+						"accessed": "2026-10-24",
+						"attribution": {
+							"by": "fictional editor",
+							"on": "2026-10-24"
+						}
+					}
+				],
+				"host": "archive.example.org"
+			}
+		],
+		"sources": [
+			{
+				"id": "original",
+				"title": "Fictional list",
+				"short_name": "The list",
+				"kind": "archive_database",
+				"holder_id": "holder-one",
+				"reference_code": "1/2/3",
+				"language": ["de", "yi-Latn"],
+				"dated": {
+					"start": "1944-10-27",
+					"precision": "day"
+				},
+				"private": false,
+				"host": "archive.example.org"
+			},
+			{
+				"id": "copy",
+				"title": "Fictional transcription",
+				"kind": "family_document",
+				"derived_from": [
+					{
+						"source_id": "original",
+						"relation": "transcription"
+					}
+				],
+				"private": true,
+				"dated": {
+					"start": "2022",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional editor",
+					"on": "2026-10-24"
+				}
+			},
+			{
+				"id": "authority",
+				"title": "Fictional authority",
+				"kind": "archive_database",
+				"host": "authority.example.org"
+			}
+		],
+		"facts": [
+			{
+				"id": "fact-one",
+				"subject_id": "person-one",
+				"type": "death",
+				"value": "perished",
+				"representation": "structured",
+				"citations": [
+					{
+						"source_id": "original",
+						"via": "copy",
+						"reference_code": "1/2/3",
+						"record_id": "12",
+						"record_type": "list",
+						"page": "Bl. 15",
+						"quote": "Fictional words",
+						"quote_language": "en",
+						"public_note": "Fictional identification",
+						"locator": "internal entry",
+						"url": "https://archive.example.org/12",
+						"accessed": "2026-10-24"
+					}
+				],
+				"evidence_confidence": "confirmed",
+				"identity_confidence": "confirmed",
+				"status": "accepted",
+				"review": {
+					"state": "pending"
+				},
+				"attribution": {
+					"by": "fictional editor",
+					"on": "2026-10-24"
+				}
+			}
+		],
+		"relations": []
+	},
+	"models": {
+		"SharedRecord": [],
+		"Holder": ["holders", 0],
+		"PlaceIdentifier": ["holders", 0, "identifiers", 0],
+		"Source": ["sources", 0],
+		"SourceDerivation": ["sources", 1, "derived_from", 0],
+		"Citation": ["facts", 0, "citations", 0],
+		"SharedFact": ["facts", 0]
+	},
+	"cases": [
+		{
+			"name": "holders and typed derivations round trip",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "holder institution",
+			"model": "Holder",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "institution"
+				}
+			]
+		},
+		{
+			"name": "holder family",
+			"model": "Holder",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "family"
+				}
+			]
+		},
+		{
+			"name": "holder private",
+			"model": "Holder",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "private"
+				}
+			]
+		},
+		{
+			"name": "blank holder id",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "blank holder name",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["name"],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "blank holder short_name",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["short_name"],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "unknown holder kind",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "archive"
+				}
+			]
+		},
+		{
+			"name": "invalid holder host https://example.org",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["host"],
+					"value": "https://example.org"
+				}
+			]
+		},
+		{
+			"name": "invalid holder host www.example.org",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["host"],
+					"value": "www.example.org"
+				}
+			]
+		},
+		{
+			"name": "invalid holder host EXAMPLE.org",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["host"],
+					"value": "EXAMPLE.org"
+				}
+			]
+		},
+		{
+			"name": "invalid holder host example.org/path",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["host"],
+					"value": "example.org/path"
+				}
+			]
+		},
+		{
+			"name": "holder empty identifiers",
+			"model": "Holder",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "identifier needs source_id",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier needs value",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["value"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier needs accessed",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["accessed"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier needs attribution",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["attribution"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier needs attributed reader",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["attribution", "by"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier date must be real",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["accessed"],
+					"value": "2026-02-30"
+				}
+			]
+		},
+		{
+			"name": "identifier must use https",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "http://authority.example.org/1"
+				}
+			]
+		},
+		{
+			"name": "holder unknown identifier authority",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["holders", 0, "identifiers", 0, "source_id"],
+					"value": "missing"
+				}
+			],
+			"error": "unknown identifier source"
+		},
+		{
+			"name": "holder identifier host",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["holders", 0, "identifiers", 0, "url"],
+					"value": "https://wrong.example.org/1"
+				}
+			],
+			"error": "identifier off its source host"
+		},
+		{
+			"name": "holder repeated identifier",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["holders", 0, "identifiers"],
+					"value": [
+						{
+							"source_id": "authority",
+							"value": "institution-1",
+							"url": "https://authority.example.org/1",
+							"accessed": "2026-10-24",
+							"attribution": {
+								"by": "fictional editor",
+								"on": "2026-10-24"
+							}
+						},
+						{
+							"source_id": "authority",
+							"value": "institution-1",
+							"url": "https://authority.example.org/1",
+							"accessed": "2026-10-24",
+							"attribution": {
+								"by": "fictional editor",
+								"on": "2026-10-24"
+							}
+						}
+					]
+				}
+			],
+			"error": "holder identifier"
+		},
+		{
+			"name": "holder identifier unique across holders",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["holders"],
+					"value": [
+						{
+							"id": "holder-one",
+							"name": "Fictional Archive",
+							"short_name": "The archive",
+							"kind": "institution",
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "institution-1",
+									"url": "https://authority.example.org/1",
+									"accessed": "2026-10-24",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-24"
+									}
+								}
+							],
+							"host": "archive.example.org"
+						},
+						{
+							"id": "holder-two",
+							"name": "Fictional Archive",
+							"short_name": "The archive",
+							"kind": "institution",
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "institution-1",
+									"url": "https://authority.example.org/1",
+									"accessed": "2026-10-24",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-24"
+									}
+								}
+							],
+							"host": "archive.example.org"
+						}
+					]
+				}
+			],
+			"error": "one identifier on two holders"
+		},
+		{
+			"name": "holder id unique across shared entities",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["holders", 0, "id"],
+					"value": "person-one"
+				}
+			],
+			"error": "shared id"
+		},
+		{
+			"name": "source unknown holder",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "holder_id"],
+					"value": "missing"
+				}
+			],
+			"error": "unknown source holder"
+		},
+		{
+			"name": "source unknown derivative",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 1, "derived_from", 0, "source_id"],
+					"value": "missing"
+				}
+			],
+			"error": "unknown derived source"
+		},
+		{
+			"name": "source direct cycle",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "derived_from"],
+					"value": [
+						{
+							"source_id": "original",
+							"relation": "copy"
+						}
+					]
+				}
+			],
+			"error": "derived_from cycle"
+		},
+		{
+			"name": "source indirect cycle",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "derived_from"],
+					"value": [
+						{
+							"source_id": "copy",
+							"relation": "copy"
+						}
+					]
+				}
+			],
+			"error": "derived_from cycle"
+		},
+		{
+			"name": "source derivation DAG",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["sources", 1, "derived_from"],
+					"value": [
+						{
+							"source_id": "original",
+							"relation": "copy"
+						},
+						{
+							"source_id": "authority",
+							"relation": "transcription"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "derivation copy",
+			"model": "SourceDerivation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["relation"],
+					"value": "copy"
+				}
+			]
+		},
+		{
+			"name": "derivation transcription",
+			"model": "SourceDerivation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["relation"],
+					"value": "transcription"
+				}
+			]
+		},
+		{
+			"name": "unknown derivation relation",
+			"model": "SourceDerivation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["relation"],
+					"value": "identification"
+				}
+			]
+		},
+		{
+			"name": "blank derivation source",
+			"model": "SourceDerivation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "retired ehri source field",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["ehri_institution_id"],
+					"value": "fictional"
+				}
+			]
+		},
+		{
+			"name": "repository one release reader",
+			"model": "Source",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["repository"],
+					"value": "Fictional old holder"
+				}
+			]
+		},
+		{
+			"name": "unreleased archival_record",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "archival_record"
+				}
+			]
+		},
+		{
+			"name": "unreleased provenance",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "provenance"
+				}
+			]
+		},
+		{
+			"name": "BCP 47 de",
+			"model": "Source",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["de"]
+				}
+			]
+		},
+		{
+			"name": "BCP 47 yi-Latn",
+			"model": "Source",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["yi-Latn"]
+				}
+			]
+		},
+		{
+			"name": "BCP 47 en-GB",
+			"model": "Source",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["en-GB"]
+				}
+			]
+		},
+		{
+			"name": "BCP 47 x-fiction",
+			"model": "Source",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["x-fiction"]
+				}
+			]
+		},
+		{
+			"name": "BCP 47 i-klingon",
+			"model": "Source",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["i-klingon"]
+				}
+			]
+		},
+		{
+			"name": "BCP 47 zh-Hant-TW",
+			"model": "Source",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["zh-Hant-TW"]
+				}
+			]
+		},
+		{
+			"name": "BCP 47 en-u-ca-gregory",
+			"model": "Source",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["en-u-ca-gregory"]
+				}
+			]
+		},
+		{
+			"name": "invalid BCP 47 ",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": [""]
+				}
+			]
+		},
+		{
+			"name": "invalid BCP 47 en_US",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["en_US"]
+				}
+			]
+		},
+		{
+			"name": "invalid BCP 47 english tag",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["english tag"]
+				}
+			]
+		},
+		{
+			"name": "invalid BCP 47 x",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["x"]
+				}
+			]
+		},
+		{
+			"name": "invalid BCP 47 e",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["e"]
+				}
+			]
+		},
+		{
+			"name": "invalid BCP 47 en-123456789",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["en-123456789"]
+				}
+			]
+		},
+		{
+			"name": "empty source languages",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "empty source derivations",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["derived_from"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "source private boolean",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["private"],
+					"value": "yes"
+				}
+			]
+		},
+		{
+			"name": "clearance needs its day",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quotes_cleared"],
+					"value": {
+						"by": "fictional owner"
+					}
+				}
+			]
+		},
+		{
+			"name": "source document date real",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["dated"],
+					"value": {
+						"start": "1944-02-30",
+						"precision": "day"
+					}
+				}
+			]
+		},
+		{
+			"name": "source date not a bare string",
+			"model": "Source",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["dated"],
+					"value": "1944-10-27"
+				}
+			]
+		},
+		{
+			"name": "citation reference_code alone locates",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"source_id": "original",
+						"reference_code": "part one"
+					}
+				}
+			]
+		},
+		{
+			"name": "blank reference_code cannot locate",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"source_id": "original",
+						"reference_code": " "
+					}
+				}
+			]
+		},
+		{
+			"name": "citation locator alone locates",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"source_id": "original",
+						"locator": "part one"
+					}
+				}
+			]
+		},
+		{
+			"name": "blank locator cannot locate",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"source_id": "original",
+						"locator": " "
+					}
+				}
+			]
+		},
+		{
+			"name": "citation missing locator",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"source_id": "original",
+						"quote": "Fictional words"
+					}
+				}
+			]
+		},
+		{
+			"name": "citation quote language invalid",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_language"],
+					"value": "en_US"
+				}
+			]
+		},
+		{
+			"name": "unknown citation via",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "citations", 0, "via"],
+					"value": "missing"
+				}
+			],
+			"error": "unknown citation via"
+		},
+		{
+			"name": "unrelated citation via",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "citations", 0, "via"],
+					"value": "authority"
+				}
+			],
+			"error": "citation via must derive from its source"
+		},
+		{
+			"name": "via must directly name original",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 1, "derived_from"],
+					"value": [
+						{
+							"source_id": "authority",
+							"relation": "copy"
+						}
+					]
+				},
+				{
+					"path": ["sources", 2, "derived_from"],
+					"value": [
+						{
+							"source_id": "original",
+							"relation": "copy"
+						}
+					]
+				}
+			],
+			"error": "citation via must derive from its source"
+		},
+		{
+			"name": "name citation copy https://archive.example.org/12",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["persons", 0, "names"],
+					"value": [
+						{
+							"value": "Fictional name",
+							"kind": "printed",
+							"script": "Latn",
+							"citations": [
+								{
+									"source_id": "original",
+									"via": "copy",
+									"reference_code": "1/2/3",
+									"record_id": "12",
+									"record_type": "list",
+									"page": "Bl. 15",
+									"quote": "Fictional words",
+									"quote_language": "en",
+									"public_note": "Fictional identification",
+									"locator": "internal entry",
+									"url": "https://archive.example.org/12",
+									"accessed": "2026-10-24"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "name citation missing https://archive.example.org/12",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "names"],
+					"value": [
+						{
+							"value": "Fictional name",
+							"kind": "printed",
+							"script": "Latn",
+							"citations": [
+								{
+									"source_id": "original",
+									"via": "missing",
+									"reference_code": "1/2/3",
+									"record_id": "12",
+									"record_type": "list",
+									"page": "Bl. 15",
+									"quote": "Fictional words",
+									"quote_language": "en",
+									"public_note": "Fictional identification",
+									"locator": "internal entry",
+									"url": "https://archive.example.org/12",
+									"accessed": "2026-10-24"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "name citation authority https://archive.example.org/12",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "names"],
+					"value": [
+						{
+							"value": "Fictional name",
+							"kind": "printed",
+							"script": "Latn",
+							"citations": [
+								{
+									"source_id": "original",
+									"via": "authority",
+									"reference_code": "1/2/3",
+									"record_id": "12",
+									"record_type": "list",
+									"page": "Bl. 15",
+									"quote": "Fictional words",
+									"quote_language": "en",
+									"public_note": "Fictional identification",
+									"locator": "internal entry",
+									"url": "https://archive.example.org/12",
+									"accessed": "2026-10-24"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "name citation copy https://wrong.example.org/1",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "names"],
+					"value": [
+						{
+							"value": "Fictional name",
+							"kind": "printed",
+							"script": "Latn",
+							"citations": [
+								{
+									"source_id": "original",
+									"via": "copy",
+									"reference_code": "1/2/3",
+									"record_id": "12",
+									"record_type": "list",
+									"page": "Bl. 15",
+									"quote": "Fictional words",
+									"quote_language": "en",
+									"public_note": "Fictional identification",
+									"locator": "internal entry",
+									"url": "https://wrong.example.org/1",
+									"accessed": "2026-10-24"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "relation citation via",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["relations"],
+					"value": [
+						{
+							"id": "relation-one",
+							"subject_id": "person-one",
+							"type": "kinship",
+							"value": "perished",
+							"citations": [
+								{
+									"source_id": "original",
+									"via": "copy",
+									"reference_code": "1/2/3",
+									"record_id": "12",
+									"record_type": "list",
+									"page": "Bl. 15",
+									"quote": "Fictional words",
+									"quote_language": "en",
+									"public_note": "Fictional identification",
+									"locator": "internal entry",
+									"url": "https://archive.example.org/12",
+									"accessed": "2026-10-24"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional editor",
+								"on": "2026-10-24"
+							},
+							"relationship_type": "sibling",
+							"related_name": "Fictional sibling"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "unknown relation citation via",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["relations"],
+					"value": [
+						{
+							"id": "relation-one",
+							"subject_id": "person-one",
+							"type": "kinship",
+							"value": "perished",
+							"citations": [
+								{
+									"source_id": "original",
+									"via": "missing",
+									"reference_code": "1/2/3",
+									"record_id": "12",
+									"record_type": "list",
+									"page": "Bl. 15",
+									"quote": "Fictional words",
+									"quote_language": "en",
+									"public_note": "Fictional identification",
+									"locator": "internal entry",
+									"url": "https://archive.example.org/12",
+									"accessed": "2026-10-24"
+								}
+							],
+							"evidence_confidence": "confirmed",
+							"identity_confidence": "confirmed",
+							"status": "accepted",
+							"review": {
+								"state": "pending"
+							},
+							"attribution": {
+								"by": "fictional editor",
+								"on": "2026-10-24"
+							},
+							"relationship_type": "sibling",
+							"related_name": "Fictional sibling"
+						}
+					]
+				}
+			],
+			"error": "unknown citation via"
+		},
+		{
+			"name": "shortfalls do not refuse old citation",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["facts", 0, "citations"],
+					"value": [
+						{
+							"source_id": "original",
+							"locator": "internal"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SharedRecord: via cannot be a second original",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["facts", 0, "citations"],
+					"value": [
+						{
+							"source_id": "original",
+							"via": "copy",
+							"reference_code": "1/2/3",
+							"record_id": "12",
+							"record_type": "list",
+							"page": "Bl. 15",
+							"quote": "Fictional words",
+							"quote_language": "en",
+							"public_note": "Fictional identification",
+							"locator": "internal entry",
+							"url": "https://archive.example.org/12",
+							"accessed": "2026-10-24"
+						},
+						{
+							"source_id": "copy",
+							"locator": "part one"
+						}
+					]
+				}
+			],
+			"error": "citation via cannot also be an original for the same statement"
+		},
+		{
+			"name": "SharedFact: via cannot be a second original",
+			"model": "SharedFact",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["citations"],
+					"value": [
+						{
+							"source_id": "original",
+							"via": "copy",
+							"reference_code": "1/2/3",
+							"record_id": "12",
+							"record_type": "list",
+							"page": "Bl. 15",
+							"quote": "Fictional words",
+							"quote_language": "en",
+							"public_note": "Fictional identification",
+							"locator": "internal entry",
+							"url": "https://archive.example.org/12",
+							"accessed": "2026-10-24"
+						},
+						{
+							"source_id": "copy",
+							"locator": "part one"
+						}
+					]
+				}
+			],
+			"error": "citation via cannot also be an original for the same statement"
+		},
+		{
+			"name": "two originals may use the same copy",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["sources", 1, "derived_from"],
+					"value": [
+						{
+							"source_id": "original",
+							"relation": "copy"
+						},
+						{
+							"source_id": "authority",
+							"relation": "transcription"
+						}
+					]
+				},
+				{
+					"path": ["facts", 0, "citations"],
+					"value": [
+						{
+							"source_id": "original",
+							"via": "copy",
+							"reference_code": "1/2/3",
+							"record_id": "12",
+							"record_type": "list",
+							"page": "Bl. 15",
+							"quote": "Fictional words",
+							"quote_language": "en",
+							"public_note": "Fictional identification",
+							"locator": "internal entry",
+							"url": "https://archive.example.org/12",
+							"accessed": "2026-10-24"
+						},
+						{
+							"source_id": "authority",
+							"via": "copy",
+							"locator": "part two"
+						}
+					]
+				}
+			]
+		}
+	]
+}

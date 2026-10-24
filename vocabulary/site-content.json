@@ -965,6 +965,122 @@
       "mapping": {
         "rico": "AgentName"
       }
+    },
+    {
+      "id": "holder_institution",
+      "definition": "An institutional source holder.",
+      "mapping": {
+        "ehri": "Institution"
+      }
+    },
+    {
+      "id": "holder_family",
+      "definition": "A family holding papers.",
+      "mapping": {
+        "ehri": "Family"
+      }
+    },
+    {
+      "id": "holder_private",
+      "definition": "A private person holding papers; the name is never published.",
+      "mapping": {
+        "rico": "Person"
+      }
+    },
+    {
+      "id": "holder_name",
+      "definition": "The name and display name of a holder.",
+      "mapping": {
+        "rico": "hasOrHadName"
+      }
+    },
+    {
+      "id": "holder_identifier",
+      "definition": "Outside holder identifiers have the same evidence as place identifiers.",
+      "mapping": {
+        "rico": "hasOrHadIdentifier"
+      }
+    },
+    {
+      "id": "source_holder",
+      "definition": "The holder identified by holder_id.",
+      "mapping": {
+        "rico": "hasOrHadHolder"
+      }
+    },
+    {
+      "id": "source_copy",
+      "definition": "A copy names its original through derived_from.",
+      "mapping": {
+        "ehri": "isCopyOf"
+      }
+    },
+    {
+      "id": "source_transcription",
+      "definition": "A transcription describes its original; it is not a copy.",
+      "mapping": {
+        "rico": "describesOrDescribed"
+      }
+    },
+    {
+      "id": "source_reference_code",
+      "definition": "The holder reference on a source or citation.",
+      "mapping": {
+        "rico": "hasOrHadIdentifier"
+      }
+    },
+    {
+      "id": "source_language",
+      "definition": "BCP 47 languages of a record, or of its quoted translation.",
+      "mapping": {
+        "rico": "hasOrHadLanguage"
+      }
+    },
+    {
+      "id": "citation_record_type",
+      "definition": "The documentary form named by the holding institution.",
+      "mapping": {
+        "rico": "hasDocumentaryFormType"
+      }
+    },
+    {
+      "id": "source_dated",
+      "definition": "The document own date, separate from publication and consultation.",
+      "mapping": {
+        "rico": "hasCreationDate"
+      }
+    },
+    {
+      "id": "source_display",
+      "definition": "A source short name for display.",
+      "mapping": {
+        "local": "pc:site_source_display",
+        "reason": "Neither standard specifies the site voice for crediting a source."
+      }
+    },
+    {
+      "id": "source_privacy",
+      "definition": "A private document and attributed permission to quote it.",
+      "mapping": {
+        "local": "pc:site_source_privacy",
+        "reason": "Neither standard defines this project publication policy."
+      }
+    },
+    {
+      "id": "citation_public_note",
+      "definition": "Reviewed editorial words distinct from the record quote.",
+      "mapping": {
+        "local": "pc:site_citation_public_note",
+        "reason": "Neither standard encodes this project public/private note boundary."
+      }
+    },
+    {
+      "id": "citation_locator",
+      "definition": "Internal provenance, never an archive record id.",
+      "mapping": {
+        "local": "pc:site_citation_locator",
+        "reason": "Neither standard specifies pointers into this project files."
+      }
     }
   ]
 }

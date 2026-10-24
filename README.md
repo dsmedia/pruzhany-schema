@@ -50,6 +50,11 @@ its compatibility helpers, `llm_output.py` and `bbox_review.py` remain available
 sourced-entities 1.2.0. See the [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.
 
+The [sources contract](docs/design/2026-10-24-sources-implementation.md) adds holders,
+source ancestry and citation fields. Both twins read the advisory per-kind rules
+from `vocabulary/citation-requirements.json`; missing evidence is reported separately
+from the reference checks that refuse invalid records.
+
 The [checked-English addition](docs/design/2026-10-23-checked-english.md) adds an
 optional independent check to each supplied title and translation, preserving
 its original source and author. Exact-byte bindings and field-specific judgement

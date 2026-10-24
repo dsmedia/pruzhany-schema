@@ -1,0 +1,1505 @@
+{
+	"cases": [
+		{
+			"name": "the_paper complete",
+			"source": {
+				"id": "fictional",
+				"kind": "the_paper",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "the_paper missing citation.unit_id",
+			"source": {
+				"id": "fictional",
+				"kind": "the_paper",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.unit_id"]
+		},
+		{
+			"name": "the_paper missing citation.edition_date",
+			"source": {
+				"id": "fictional",
+				"kind": "the_paper",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.edition_date"]
+		},
+		{
+			"name": "the_paper missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "the_paper",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "archive_database complete",
+			"source": {
+				"id": "fictional",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "archive_database missing citation.record_id",
+			"source": {
+				"id": "fictional",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.record_id"]
+		},
+		{
+			"name": "archive_database missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "archive_database missing citation.accessed",
+			"source": {
+				"id": "fictional",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.accessed"]
+		},
+		{
+			"name": "archive_database missing citation.url",
+			"source": {
+				"id": "fictional",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.url"]
+		},
+		{
+			"name": "memorial_book complete",
+			"source": {
+				"id": "fictional",
+				"kind": "memorial_book",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "memorial_book missing citation.page",
+			"source": {
+				"id": "fictional",
+				"kind": "memorial_book",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.page"]
+		},
+		{
+			"name": "memorial_book missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "memorial_book",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "oral_history complete",
+			"source": {
+				"id": "fictional",
+				"kind": "oral_history",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "oral_history missing citation.time or citation.page",
+			"source": {
+				"id": "fictional",
+				"kind": "oral_history",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.time or citation.page"]
+		},
+		{
+			"name": "oral_history missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "oral_history",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "memoir complete",
+			"source": {
+				"id": "fictional",
+				"kind": "memoir",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "memoir missing citation.page",
+			"source": {
+				"id": "fictional",
+				"kind": "memoir",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.page"]
+		},
+		{
+			"name": "memoir missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "memoir",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "family_document complete",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "family_document missing citation.page",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.page"]
+		},
+		{
+			"name": "family_document missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "family_document missing source.private",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["source.private"]
+		},
+		{
+			"name": "family_document missing source.dated",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["source.dated"]
+		},
+		{
+			"name": "family_document missing source.quotes_cleared",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["source.quotes_cleared"]
+		},
+		{
+			"name": "web_page complete",
+			"source": {
+				"id": "fictional",
+				"kind": "web_page",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "web_page missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "web_page",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "web_page missing citation.accessed",
+			"source": {
+				"id": "fictional",
+				"kind": "web_page",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.accessed"]
+		},
+		{
+			"name": "web_page missing citation.url",
+			"source": {
+				"id": "fictional",
+				"kind": "web_page",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.url"]
+		},
+		{
+			"name": "book complete",
+			"source": {
+				"id": "fictional",
+				"kind": "book",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "book missing citation.page",
+			"source": {
+				"id": "fictional",
+				"kind": "book",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.page"]
+		},
+		{
+			"name": "book missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "book",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "press complete",
+			"source": {
+				"id": "fictional",
+				"kind": "press",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "press missing citation.page or citation.edition_date",
+			"source": {
+				"id": "fictional",
+				"kind": "press",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.page or citation.edition_date"]
+		},
+		{
+			"name": "press missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "press",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "photograph complete",
+			"source": {
+				"id": "fictional",
+				"kind": "photograph",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "photograph missing citation.page",
+			"source": {
+				"id": "fictional",
+				"kind": "photograph",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.page"]
+		},
+		{
+			"name": "photograph missing citation.quote",
+			"source": {
+				"id": "fictional",
+				"kind": "photograph",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.quote"]
+		},
+		{
+			"name": "online book needs read day",
+			"source": {
+				"id": "fictional",
+				"kind": "memorial_book",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.accessed"]
+		},
+		{
+			"name": "offline book needs no read day",
+			"source": {
+				"id": "fictional",
+				"kind": "memorial_book",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "Yad Vashem type",
+			"source": {
+				"id": "yad-vashem",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "yad-vashem",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10"
+			},
+			"shortfalls": ["citation.record_type"]
+		},
+		{
+			"name": "other archive type optional",
+			"source": {
+				"id": "fictional",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "host needed for web",
+			"source": {
+				"id": "fictional",
+				"kind": "web_page",
+				"title": "Fictional source",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["source.host"]
+		},
+		{
+			"name": "off host reported",
+			"source": {
+				"id": "fictional",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org.evil.test/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["citation.url on source.host"]
+		},
+		{
+			"name": "subdomain accepted",
+			"source": {
+				"id": "fictional",
+				"kind": "archive_database",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://images.example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "private via needs clearance",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list",
+				"via": "transcript"
+			},
+			"via": {
+				"id": "transcript",
+				"title": "Fictional transcript",
+				"kind": "family_document",
+				"private": true
+			},
+			"shortfalls": ["via.quotes_cleared"]
+		},
+		{
+			"name": "private via cleared",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list",
+				"via": "transcript"
+			},
+			"via": {
+				"id": "transcript",
+				"title": "Fictional transcript",
+				"kind": "family_document",
+				"private": true,
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"shortfalls": []
+		},
+		{
+			"name": "cite original through transcript",
+			"source": {
+				"id": "fictional",
+				"kind": "oral_history",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				},
+				"derived_from": [
+					{
+						"source_id": "original",
+						"relation": "transcription"
+					}
+				]
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": ["cite original with citation.via for family transcript"]
+		},
+		{
+			"name": "internal locator not a transcript page",
+			"source": {
+				"id": "fictional",
+				"kind": "oral_history",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"quote": "Fictional words",
+				"locator": "typed transcript"
+			},
+			"shortfalls": ["citation.time or citation.page"]
+		},
+		{
+			"name": "research letter can state a finding of its own",
+			"source": {
+				"id": "fictional",
+				"kind": "family_document",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				},
+				"derived_from": [
+					{
+						"source_id": "original",
+						"relation": "transcription"
+					}
+				]
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fictional words",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list"
+			},
+			"shortfalls": []
+		}
+	]
+}

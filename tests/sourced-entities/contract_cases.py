@@ -44,7 +44,7 @@ for model, base in bases.items():
 change('SourcedDate','all date fields',True,start='1940-02-01',end='1940-02-29',precision='range',printed='Fictional date',printed_calendar='hebrew',inferred=True)
 change('Review','review metadata',True,by='fixture',on='2024-02-29')
 change('Attribution','attribution note',True,note='Fictional note')
-change('Source','all source metadata',True,**{n:'Fictional metadata' for n in 'work_id author editor published repository url_pattern ehri_institution_id'.split()},host='fictional.example.org')
+change('Source','all source metadata',True,**{n:'Fictional metadata' for n in 'work_id author editor published repository url_pattern short_name holder_id reference_code'.split()},host='fictional.example.org')
 change('Source','host with a scheme',False,host='https://fictional.example.org')
 change('Source','host with www',False,host='www.fictional.example.org')
 change('Source','host in capitals',False,host='Fictional.example.org')
@@ -74,7 +74,7 @@ for model, field in [('Review','on'),('Attribution','on'),('Citation','accessed'
 change('Review','approval missing reviewer',state='approved',on='2024-02-29')
 change('Review','approval blank reviewer',state='approved',by=' ',on='2024-02-29')
 change('Review','approval missing day',state='approved',by='fixture')
-for key in ['record_id','page','scan','time','unit_id','url']:
+for key in ['record_id','page','scan','time','unit_id','url','locator','reference_code']:
     add('locator '+key,'Citation',dict(source_id='fictional-source',**{key:'https://example.org/fictional' if key=='url' else '1'}))
     add('empty locator '+key,'Citation',dict(source_id='fictional-source',**{key:' '}),False)
 for data in [{'source_id':'fictional-source'},{'source_id':'fictional-source','edition_date':'1938-01-01','quote':'Fictional quote'}]: add('no locator '+repr(data),'Citation',data,False)

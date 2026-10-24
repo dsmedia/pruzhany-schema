@@ -53,3 +53,10 @@ __all__ += [
     'IssueMention', 'IssueMentionsData', 'ContentItemRef', 'IssueLifeEvent',
     'IssueLifeEventsData', 'SiteIssue', 'SiteArchive',
 ]
+
+from .shared_record import Holder
+from .sourced_entities import SourceDerivation
+__all__ += ["Holder", "SourceDerivation"]
+
+from .citation_requirements import statement_citation_shortfalls, shared_record_citation_shortfalls
+__all__ += ['statement_citation_shortfalls', 'shared_record_citation_shortfalls']

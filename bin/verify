@@ -45,7 +45,7 @@ step_zod() {
 	# --dir keeps vitest from collecting tests inside .claude/worktrees/.
 	bun x vitest run --dir zod
 	bun x tsc --noEmit --strict --target es2022 --module esnext \
-		--moduleResolution bundler --skipLibCheck zod/*.ts
+		--moduleResolution bundler --resolveJsonModule --skipLibCheck zod/*.ts
 	echo "tsc: zod/ typechecks"
 	# pruzhany-svelte runs `prettier --check src/`, and src/lib/schemas is this zod/:
 	# the same prettier version and options, so an unformatted file fails here first.

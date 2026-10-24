@@ -63,3 +63,11 @@ pc:site_checked_against_text a owl:NamedIndividual ; rdfs:comment "Neither pinne
 pc:site_reading_sha256 a owl:DatatypeProperty ; rdfs:label "reading_sha256"@en ; rdfs:comment "Neither pinned ontology specifies the digest of the exact reading in a field-level check." ; skos:definition "SHA-256 of the exact current reading UTF-8 bytes."@en .
 pc:site_english_sha256 a owl:DatatypeProperty ; rdfs:label "english_sha256"@en ; rdfs:comment "Neither pinned ontology specifies the digest of the exact English field in a later check." ; skos:definition "SHA-256 of the exact English field UTF-8 bytes."@en .
 pc:site_judgement_sha256 a owl:DatatypeProperty ; rdfs:label "judgement_sha256"@en ; rdfs:comment "Neither pinned ontology binds a field-level check to the exact retained judgement file bytes." ; skos:definition "SHA-256 of the exact retained judgement file bytes."@en .
+
+pc:site_source_display a owl:NamedIndividual ; rdfs:comment "Neither standard specifies the site voice for crediting a source." .
+
+pc:site_source_privacy a owl:NamedIndividual ; rdfs:comment "Neither standard defines this project publication policy." .
+
+pc:site_citation_public_note a owl:NamedIndividual ; rdfs:comment "Neither standard encodes this project public/private note boundary." .
+
+pc:site_citation_locator a owl:NamedIndividual ; rdfs:comment "Neither standard specifies pointers into this project files." .

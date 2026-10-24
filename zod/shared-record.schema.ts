@@ -7,6 +7,7 @@ import {
 	AttributionSchema,
 	SourcedDateSchema,
 	CitationSchema,
+	SourceHostSchema,
 } from './sourced-entities.schema';
 import {
 	GenderSchema,
@@ -141,6 +142,16 @@ export const PlaceIdentifierSchema = z.strictObject({
 	attribution: AttributionSchema,
 });
 export type PlaceIdentifier = z.infer<typeof PlaceIdentifierSchema>;
+// Same evidence and uniqueness rules as places; a private holder's name is never public.
+export const HolderSchema = z.strictObject({
+	id: siteText,
+	name: siteText,
+	short_name: siteText.nullish(),
+	kind: z.enum(['institution', 'family', 'private']),
+	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
+	host: SourceHostSchema.nullish(),
+});
+export type Holder = z.infer<typeof HolderSchema>;
 // Plain object: the site derives its public place with .omit(). The identifiers' own
 // rules (once per place, a registered authority, its host) are the shared record's.
 export const SharedPlaceSchema = z.strictObject({
@@ -192,6 +203,7 @@ export const SharedRecordSchema = z
 		organizations: z.array(SharedOrganizationSchema),
 		events: z.array(SharedEventSchema),
 		sources: z.array(SourceSchema),
+		holders: z.array(HolderSchema).optional(),
 		facts: z.array(SharedFactSchema),
 		relations: z.array(SourcedRelationSchema),
 	})
@@ -202,7 +214,14 @@ export type SharedRecord = z.infer<typeof SharedRecordSchema>;
 
 function sharedRecordErrors(v: SharedRecord): string[] {
 	const identities = [...v.persons, ...v.families, ...v.places, ...v.organizations];
-	const all = [...identities, ...v.events, ...v.sources, ...v.facts, ...v.relations];
+	const all = [
+		...identities,
+		...v.events,
+		...v.sources,
+		...(v.holders ?? []),
+		...v.facts,
+		...v.relations,
+	];
 	const errors = uniqueIds(
 		all.map((x) => x.id),
 		'shared id'
@@ -215,6 +234,37 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 		events = ids(v.events),
 		sources = ids(v.sources);
 	const hosts = new Map(v.sources.map((s) => [s.id, s.host]));
+	const holders = ids(v.holders ?? []);
+	const bySource = new Map(v.sources.map((s) => [s.id, s]));
+	for (const source of v.sources) {
+		if (source.holder_id && !holders.has(source.holder_id)) errors.push('unknown source holder');
+		for (const link of source.derived_from ?? [])
+			if (!sources.has(link.source_id)) errors.push('unknown derived source');
+	}
+	const completed = new Set<string>();
+	const visiting = new Set<string>();
+	function visit(id: string): void {
+		if (visiting.has(id)) {
+			errors.push('derived_from cycle');
+			return;
+		}
+		if (completed.has(id)) return;
+		visiting.add(id);
+		for (const link of bySource.get(id)?.derived_from ?? []) visit(link.source_id);
+		visiting.delete(id);
+		completed.add(id);
+	}
+	for (const id of sources) visit(id);
+	function checkCitation(c: SiteCitation): void {
+		if (c.url && !onHost(c.url, hosts.get(c.source_id)))
+			errors.push('citation off its source host');
+		if (c.via) {
+			const via = bySource.get(c.via);
+			if (!via) errors.push('unknown citation via');
+			else if (!via.derived_from?.some((d) => d.source_id === c.source_id))
+				errors.push('citation via must derive from its source');
+		}
+	}
 	const subjects = ids([...identities, ...v.events, ...v.relations]);
 	const facts = new Map(v.facts.map((f) => [f.id, f]));
 	const births = new Set<string>(),
@@ -246,9 +296,7 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 		] as const)
 			if (id && !known.has(id)) errors.push(`unknown fact ${label}`);
 		if (f.citations.some((c) => !sources.has(c.source_id))) errors.push('unknown citation source');
-		for (const c of f.citations)
-			if (c.url && !onHost(c.url, hosts.get(c.source_id)))
-				errors.push('citation off its source host');
+		for (const c of f.citations) checkCitation(c);
 	}
 	const noticeRelations = new Set<string>();
 	for (const relation of v.relations) {
@@ -264,28 +312,35 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 			noticeRelations.add(key);
 		}
 	}
-	for (const identity of identities)
+	for (const identity of identities) {
 		if (identity.names.some((n) => n.citations?.some((c) => !sources.has(c.source_id))))
 			errors.push('unknown name citation source');
+		for (const name of identity.names) for (const c of name.citations ?? []) checkCitation(c);
+	}
 	for (const p of v.persons)
 		if (p.fate?.rests_on.some((id) => facts.get(id)?.subject_id !== p.id))
 			errors.push('fate must rest on own facts');
-	const identified = new Map<string, string>();
-	for (const place of v.places) {
-		errors.push(
-			...uniqueIds(
-				(place.identifiers ?? []).map((i) => JSON.stringify([i.source_id, i.value])),
-				'place identifier'
-			)
-		);
-		for (const identifier of place.identifiers ?? []) {
-			if (!sources.has(identifier.source_id)) errors.push('unknown identifier source');
-			if (identifier.url && !onHost(identifier.url, hosts.get(identifier.source_id)))
-				errors.push('identifier off its source host');
-			const key = JSON.stringify([identifier.source_id, identifier.value]);
-			if ((identified.get(key) ?? place.id) !== place.id)
-				errors.push('one identifier on two places');
-			identified.set(key, place.id);
+	for (const [entities, label] of [
+		[v.places, 'places'],
+		[v.holders ?? [], 'holders'],
+	] as const) {
+		const identified = new Map<string, string>();
+		for (const place of entities) {
+			errors.push(
+				...uniqueIds(
+					(place.identifiers ?? []).map((i) => JSON.stringify([i.source_id, i.value])),
+					`${label === 'places' ? 'place' : 'holder'} identifier`
+				)
+			);
+			for (const identifier of place.identifiers ?? []) {
+				if (!sources.has(identifier.source_id)) errors.push('unknown identifier source');
+				if (identifier.url && !onHost(identifier.url, hosts.get(identifier.source_id)))
+					errors.push('identifier off its source host');
+				const key = JSON.stringify([identifier.source_id, identifier.value]);
+				if ((identified.get(key) ?? place.id) !== place.id)
+					errors.push(`one identifier on two ${label}`);
+				identified.set(key, place.id);
+			}
 		}
 	}
 	const byPlace = new Map(v.places.map((p) => [p.id, p]));
