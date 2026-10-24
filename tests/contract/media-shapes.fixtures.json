@@ -1,0 +1,875 @@
+{
+	"example": {
+		"shared": {
+			"version": "1",
+			"vocabulary_version": "1.2.0",
+			"persons": [
+				{
+					"id": "person-fixture",
+					"name": "Fictional person",
+					"names": [],
+					"gender": "unknown"
+				}
+			],
+			"families": [
+				{
+					"id": "family-fixture",
+					"name": "Fictional family",
+					"names": []
+				}
+			],
+			"places": [
+				{
+					"id": "place-fixture",
+					"name": "Fictional town",
+					"type": "town",
+					"names": []
+				}
+			],
+			"organizations": [],
+			"events": [
+				{
+					"id": "event-fixture",
+					"name": "Fictional birth",
+					"type": "birth",
+					"main_people": [
+						{
+							"person_id": "person-fixture",
+							"part": "baby"
+						}
+					],
+					"dates": [
+						{
+							"qualifier": "reported_in",
+							"reported_in": "1900-01-01"
+						}
+					]
+				}
+			],
+			"sources": [
+				{
+					"id": "source-fixture",
+					"kind": "photograph",
+					"title": "Fictional photograph",
+					"host": "archive.example",
+					"subjects": ["person-fixture", "place-fixture", "event-fixture"]
+				}
+			],
+			"facts": [],
+			"relations": [],
+			"media": [
+				{
+					"id": "media-fixture",
+					"source_id": "source-fixture",
+					"kind": "image",
+					"caption": {
+						"text": "A fictional photograph."
+					},
+					"alt": {
+						"text": "A drawn square."
+					},
+					"width": 1200,
+					"height": 600,
+					"master": {
+						"key": "private/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"mime": "image/png",
+						"bytes": 128
+					}
+				}
+			]
+		},
+		"public": {
+			"id": "media-fixture",
+			"source_id": "source-fixture",
+			"kind": "image",
+			"caption": {
+				"text": "A fictional photograph."
+			},
+			"alt": {
+				"text": "A drawn square."
+			},
+			"width": 1200,
+			"height": 600
+		},
+		"decision": {
+			"by": "Fixture owner",
+			"on": "2026-10-24"
+		},
+		"derivative": {
+			"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+			"width": 400,
+			"height": 200
+		}
+	},
+	"models": {
+		"SharedRecord": ["shared"],
+		"Media": ["shared", "media", 0],
+		"PublicMedia": ["public"],
+		"MediaMaster": ["shared", "media", 0, "master"],
+		"MediaText": ["shared", "media", 0, "alt"],
+		"MediaDecision": ["decision"],
+		"MediaDerivative": ["derivative"]
+	},
+	"cases": [
+		{
+			"name": "valid SharedRecord",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid Media",
+			"model": "Media",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid PublicMedia",
+			"model": "PublicMedia",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaMaster",
+			"model": "MediaMaster",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaText",
+			"model": "MediaText",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaDecision",
+			"model": "MediaDecision",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaDerivative",
+			"model": "MediaDerivative",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "image without alt",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["alt"],
+					"remove": true
+				}
+			],
+			"error": "image needs alt"
+		},
+		{
+			"name": "blank alt",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["alt", "text"],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "caption required",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["caption"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "review is independent of clearance",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["caption", "reviewed"],
+					"value": {
+						"by": "Fixture owner",
+						"on": "2026-10-24"
+					}
+				}
+			]
+		},
+		{
+			"name": "clearance does not assert text review",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["cleared"],
+					"value": {
+						"by": "Fixture owner",
+						"on": "2026-10-24"
+					}
+				}
+			]
+		},
+		{
+			"name": "derived picture after clearance",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["cleared"],
+					"value": {
+						"by": "Fixture owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["derived"],
+					"value": [
+						{
+							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"width": 400,
+							"height": 200
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "derivation without clearance",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["derived"],
+					"value": [
+						{
+							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"width": 400,
+							"height": 200
+						}
+					]
+				}
+			],
+			"error": "derived media needs clearance"
+		},
+		{
+			"name": "review cannot clear media",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["caption", "reviewed"],
+					"value": {
+						"by": "Fixture owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["derived"],
+					"value": [
+						{
+							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"width": 400,
+							"height": 200
+						}
+					]
+				}
+			],
+			"error": "derived media needs clearance"
+		},
+		{
+			"name": "null clearance",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["cleared"],
+					"value": null
+				},
+				{
+					"path": ["derived"],
+					"value": [
+						{
+							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"width": 400,
+							"height": 200
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "derived without dimensions",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["width"],
+					"remove": true
+				},
+				{
+					"path": ["height"],
+					"remove": true
+				},
+				{
+					"path": ["cleared"],
+					"value": {
+						"by": "Fixture owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["derived"],
+					"value": [
+						{
+							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"width": 400,
+							"height": 200
+						}
+					]
+				}
+			],
+			"error": "derived media needs dimensions or duration"
+		},
+		{
+			"name": "only one dimension",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["height"],
+					"remove": true
+				}
+			],
+			"error": "media width and height must occur together"
+		},
+		{
+			"name": "unknown source",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "source_id"],
+					"value": "absent"
+				}
+			],
+			"error": "unknown media source"
+		},
+		{
+			"name": "invalid source subject absent",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "subjects"],
+					"value": ["absent"]
+				}
+			],
+			"error": "source subject must resolve to a person, place or event"
+		},
+		{
+			"name": "invalid source subject source-fixture",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "subjects"],
+					"value": ["source-fixture"]
+				}
+			],
+			"error": "source subject must resolve to a person, place or event"
+		},
+		{
+			"name": "invalid source subject family-fixture",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "subjects"],
+					"value": ["family-fixture"]
+				}
+			],
+			"error": "source subject must resolve to a person, place or event"
+		},
+		{
+			"name": "repeated source subject",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "subjects"],
+					"value": ["person-fixture", "person-fixture"]
+				}
+			],
+			"error": "duplicate source subject"
+		},
+		{
+			"name": "global duplicate media id",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "id"],
+					"value": "person-fixture"
+				}
+			],
+			"error": "duplicate shared id"
+		},
+		{
+			"name": "uncleared holder audio",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["media", 0, "kind"],
+					"value": "audio"
+				},
+				{
+					"path": ["media", 0, "link"],
+					"value": "https://collections.archive.example/record/1"
+				}
+			]
+		},
+		{
+			"name": "uncleared holder video",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["media", 0, "kind"],
+					"value": "video"
+				},
+				{
+					"path": ["media", 0, "link"],
+					"value": "https://collections.archive.example/record/1"
+				}
+			]
+		},
+		{
+			"name": "image cannot use link as served address",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["link"],
+					"value": "https://archive.example/picture.webp"
+				}
+			],
+			"error": "holder link is only for audio or video"
+		},
+		{
+			"name": "off holder host",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "kind"],
+					"value": "audio"
+				},
+				{
+					"path": ["media", 0, "link"],
+					"value": "https://archive.example.evil.test/record"
+				}
+			],
+			"error": "media link must be on its holder host"
+		},
+		{
+			"name": "unknown holder host",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "kind"],
+					"value": "video"
+				},
+				{
+					"path": ["media", 0, "link"],
+					"value": "https://archive.example/record"
+				},
+				{
+					"path": ["sources", 0, "host"],
+					"remove": true
+				}
+			],
+			"error": "media link must be on its holder host"
+		},
+		{
+			"name": "public master refused",
+			"model": "PublicMedia",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["master"],
+					"value": {
+						"key": "private/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"mime": "image/png",
+						"bytes": 128
+					}
+				}
+			]
+		},
+		{
+			"name": "public null master refused",
+			"model": "PublicMedia",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["master"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "public uncleared derived refused",
+			"model": "PublicMedia",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["derived"],
+					"value": [
+						{
+							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"width": 400,
+							"height": 200
+						}
+					]
+				}
+			],
+			"error": "derived media needs clearance"
+		},
+		{
+			"name": "public cleared derivative",
+			"model": "PublicMedia",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["derived"],
+					"value": [
+						{
+							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"width": 400,
+							"height": 200
+						}
+					]
+				},
+				{
+					"path": ["cleared"],
+					"value": {
+						"by": "Fixture owner",
+						"on": "2026-10-24"
+					}
+				}
+			]
+		},
+		{
+			"name": "nested master leak refused",
+			"model": "MediaText",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["master"],
+					"value": {
+						"key": "private/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"mime": "image/png",
+						"bytes": 128
+					}
+				}
+			]
+		},
+		{
+			"name": "unknown served field url",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "https://archive.example/a.webp"
+				}
+			]
+		},
+		{
+			"name": "unknown served field src",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["src"],
+					"value": "/private/master"
+				}
+			]
+		},
+		{
+			"name": "unknown served field thumbnail",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["thumbnail"],
+					"value": "https://archive.example/t.webp"
+				}
+			]
+		},
+		{
+			"name": "only local media kinds",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "photograph"
+				}
+			]
+		},
+		{
+			"name": "stable address-ready id",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "../image"
+				}
+			]
+		},
+		{
+			"name": "master key disagrees",
+			"model": "MediaMaster",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+				}
+			],
+			"error": "master key must be named by its sha256"
+		},
+		{
+			"name": "master cannot be a served address",
+			"model": "MediaMaster",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "https://pictures.pruzhanychronicles.org/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+				}
+			]
+		},
+		{
+			"name": "positive bytes",
+			"model": "MediaMaster",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["bytes"],
+					"value": 0
+				}
+			]
+		},
+		{
+			"name": "review complete",
+			"model": "MediaText",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["reviewed"],
+					"value": {
+						"by": "Fixture reader"
+					}
+				}
+			]
+		},
+		{
+			"name": "review valid day",
+			"model": "MediaDecision",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["on"],
+					"value": "2026-02-30"
+				}
+			]
+		},
+		{
+			"name": "clearance is attributed",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["cleared"],
+					"value": {
+						"by": " ",
+						"on": "2026-10-24"
+					}
+				}
+			]
+		},
+		{
+			"name": "rights URI",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "https://creativecommons.org/licenses/by/4.0/"
+				}
+			]
+		},
+		{
+			"name": "rights host boundary",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "https://creativecommons.org.evil.test/licenses/by/4.0/"
+				}
+			]
+		},
+		{
+			"name": "webp only",
+			"model": "MediaDerivative",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "https://pictures.pruzhanychronicles.org/media/fixture-w400.jpg"
+				}
+			]
+		},
+		{
+			"name": "public picture host only",
+			"model": "MediaDerivative",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "https://archive.example/media/fixture-w400.webp"
+				}
+			]
+		},
+		{
+			"name": "no credentialed holder link",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "audio"
+				},
+				{
+					"path": ["link"],
+					"value": "https://user:pass@archive.example/record"
+				}
+			]
+		},
+		{
+			"name": "no backslash holder link",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "audio"
+				},
+				{
+					"path": ["link"],
+					"value": "https://archive.example/\\evil.test/record"
+				}
+			]
+		},
+		{
+			"name": "no newline after Media.id",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "media-fixture\n"
+				}
+			]
+		},
+		{
+			"name": "no newline after MediaMaster.key",
+			"model": "MediaMaster",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+				}
+			]
+		},
+		{
+			"name": "no newline after MediaMaster.sha256",
+			"model": "MediaMaster",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sha256"],
+					"value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+				}
+			]
+		},
+		{
+			"name": "no newline after MediaDerivative.url",
+			"model": "MediaDerivative",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp\n"
+				}
+			]
+		},
+		{
+			"name": "no newline after Media.rights",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "https://creativecommons.org/licenses/by/4.0/\n"
+				}
+			]
+		},
+		{
+			"name": "no newline after Media.link",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["link"],
+					"value": "https://archive.example/record\n"
+				},
+				{
+					"path": ["kind"],
+					"value": "audio"
+				}
+			]
+		},
+		{
+			"name": "malformed numeric host is refused without throwing",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "kind"],
+					"value": "audio"
+				},
+				{
+					"path": ["media", 0, "link"],
+					"value": "https://999.999.999.999/record"
+				}
+			],
+			"error": "media link must be on its holder host"
+		}
+	]
+}

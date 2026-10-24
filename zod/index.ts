@@ -46,3 +46,4 @@ export * from './shared-record.schema';
 export * from './site-issue.schema';
 
 export * from './citation-requirements';
+export * from './media.schema';

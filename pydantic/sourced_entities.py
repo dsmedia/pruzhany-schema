@@ -87,6 +87,7 @@ class Source(Strict):
     url_pattern: str | None = None
     # A bare lowercase host name: the source's addresses are on it or a subdomain of it.
     host: SourceHost | None = None
+    subjects: Annotated[list[Text], Field(min_length=1)] | None = None
 
 
 class Citation(Strict):

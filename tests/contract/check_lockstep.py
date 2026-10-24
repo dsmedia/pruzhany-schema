@@ -26,10 +26,17 @@ from types import ModuleType
 ROOT = Path(__file__).resolve().parents[2]
 SITE_MODELS = set(json.loads((ROOT / 'tests/contract/site-shapes.fixtures.json').read_text(encoding='utf-8'))['models'])
 SITE_MODELS |= {'Holder', 'SourceDerivation', 'PlaceIdentifier', 'SiteCitation', 'SharedName', 'LifeEventDate', 'LifeEventMainPerson', 'Block', 'Page', 'PagesData', 'CrossReference', 'ExternalReference'}
+SITE_MODELS |= {'MediaDecision', 'MediaText', 'MediaMaster', 'MediaDerivative', 'Media', 'PublicMedia'}
 
 # Pydantic class name -> Zod export key. Identical today, kept explicit so that a
 # rename on one side is a visible one-line change and never a silent skip.
 MODEL_PAIRS = {
+    "MediaDecision": "MediaDecision",
+    "MediaText": "MediaText",
+    "MediaMaster": "MediaMaster",
+    "MediaDerivative": "MediaDerivative",
+    "Media": "Media",
+    "PublicMedia": "PublicMedia",
     "EnglishCheck": "EnglishCheck",
     "TitleCheck": "TitleCheck",
     "TranslationCheck": "TranslationCheck",

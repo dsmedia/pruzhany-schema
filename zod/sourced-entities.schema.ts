@@ -104,6 +104,7 @@ export const SourceSchema = z.strictObject({
 	url_pattern: z.string().nullish(),
 	// A bare lowercase host name: the source's addresses are on it or a subdomain of it.
 	host: SourceHostSchema.nullish(),
+	subjects: z.array(text).min(1).nullish(),
 });
 export type Source = z.infer<typeof SourceSchema>;
 export const CitationSchema = z
