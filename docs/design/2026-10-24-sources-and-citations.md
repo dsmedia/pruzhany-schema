@@ -1,7 +1,6 @@
 # Sources and citations: what a source is, and what citing one must carry
 
-**Status:** draft with the council's decisions folded in, for the site-redesign session's last check (24 October
-2026); not built. The owner asked on 24 October
+**Status:** agreed by the steps and site-redesign sessions on 24 October 2026; built from that day at the owner's "Yes". The owner asked on 24 October
 2026, in their own words, that the two sessions "coordinate … on data model of sources and sourcing". It folds in the
 decisions of the council run `2026-10-24-sources` (pruzhany-svelte branch `ccr-059c2aef-b1kljr`, commit `d8f43f2e`,
 `docs/council/runs/2026-10-24-sources/decisions.md`, with its four reports), cited below as "council".
@@ -121,7 +120,10 @@ the public as a source. Until approved they stay as they are.
 | `note` | ours, private, as today (414 of 993 notes name a Page of Testimony's giver) | no | — |
 | `locator` (new) | an internal pointer (a register entry, a provenance path) moved out of `record_id` | no | — |
 
-Publication is decided by field and by the source's kind and `private` flag, never by a value's shape. `via` is one
+Two refusals, so a page never fails to word a citation (the site-redesign session's asks): a citation whose `via`
+source has no `derived_from` entry for that citation's `source_id` is refused; and a `via` source is never also cited
+as an original for the same statement. Publication is decided by field and by the source's kind and `private` flag,
+never by a value's shape. `via` is one
 hop: a longer chain (the researcher's copy of the USHMM microfilm of the RGVA original) is followed through the sources'
 own `derived_from`, each hop described once.
 
@@ -172,13 +174,20 @@ before it stands) are counted. The gaps are read again or marked for what they a
   whose `derived_from` is `[{arrival list, transcription}, {transport list, transcription}]`: it gives 1908 where the
   list, as the Buchenwald Memorial reads it, gives 1918. The page says "as transcribed by the Sachsenhausen Memorial for
   the family, 2022".
-- **Sachsenhausen to Ohrdruf.** `source_id` = the transport list of 13.11.1944 (holder the FSB archive, `reference_code`
-  "N 19092/Tom 90"), `page` "Bl. 107". Worded cautiously: file N 19092 may be the 1947 Soviet Sachsenhausen trial file in
-  which the list survived (council; not verified). `via` = what the family's papers show the copy came from: the
-  memorial's letter, or a researcher's copy, possibly of USHMM RG-11.001M.20 (a microfilm of RGVA fond 1367), marked
-  uncertain until the papers say.
-- **Ohrdruf.** `source_id` = the Nordlager list of 24.12.1944 (holder the Arolsen Archives, its DocID as `record_id`, the
-  permalink as `url`, the tree signature as `reference_code`). `public_note` = the Buchenwald Memorial's identification
+- **Sachsenhausen to Ohrdruf.** `source_id` = the transport list of 13.11.1944 (holder the FSB's central archive,
+  `reference_code` "N-19092, tom 90"; worded cautiously: the file is among the records of the Soviet war-crimes trial of
+  Sachsenhausen, council, not verified), its entry "No. 668" (Szylan Judewicz, prisoner number 110849) as the locator.
+  The family holds two derivatives of it, each a source of its own:
+  - the USHMM's microfilm, RG-06.025*26 ("Sachsenhausen, 1939-1951"), item 2281 (`derived_from` `copy`, holder the
+    USHMM), scanned at the USHMM's reading room on 28 February 2023 and sent to the family as two PDFs by an independent
+    researcher the family paid (the owner's Gmail, read by the site-redesign session on 24 October 2026). The route is
+    private: no public field names the researcher or the fee. This copy is the statement's `via`;
+  - the Sachsenhausen Memorial archive's copy, "JSU 1, Bd. 90", sent to the family by the Buchenwald Memorial with its
+    letter of 17 February 2022 (`derived_from` `copy`, holder the Sachsenhausen Memorial).
+  The Sachsenhausen Memorial's answer of 31 March 2022 is a separate `transcription` of the same list (it gives 1908).
+- **Ohrdruf.** `source_id` = the alphabetical list of the northern camp (Nordlager) of 24.12.1944 (holder the Arolsen
+  Archives, its DocID as `record_id`, the permalink as `url`, the tree signature as `reference_code`), which the
+  Buchenwald Memorial also sent the family on 23 May 2022. `public_note` = the Buchenwald Memorial's identification
   by the two prisoner numbers, 110849 and 103878; the letter is the `via`, its public `author` the Buchenwald Memorial.
 - **Arolsen card and transport list** (DocIDs 6203612 to 6203614, today only in a note): `record_id` and `url` each.
 - **"Possibly 26 October"**: stays accepted with evidence `possible`; it does not contradict the list (the day the
