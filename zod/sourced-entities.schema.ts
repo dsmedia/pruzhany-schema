@@ -79,7 +79,12 @@ export const SourceSchema = z.strictObject({
 	published: z.string().nullish(),
 	repository: z.string().nullish(),
 	url_pattern: z.string().nullish(),
-	host: z.string().nullish(),
+	// A bare lowercase host name: the source's addresses are on it or a subdomain of it.
+	host: z
+		.string()
+		.regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/)
+		.refine((h) => !h.startsWith('www.'), 'host without www')
+		.nullish(),
 	ehri_institution_id: z.string().nullish(),
 });
 export type Source = z.infer<typeof SourceSchema>;

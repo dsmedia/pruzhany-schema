@@ -534,6 +534,78 @@
       }
     },
     {
+      "id": "place_identifier",
+      "definition": "A place's outside identifiers, each from a registered authority list, read on its own pages and carried only on that evidence.",
+      "mapping": {
+        "rico": "hasOrHadIdentifier"
+      }
+    },
+    {
+      "id": "identifier",
+      "definition": "One outside identifier of a place.",
+      "mapping": {
+        "rico": "Identifier"
+      }
+    },
+    {
+      "id": "identifier_value",
+      "definition": "The identifier as its authority writes it.",
+      "mapping": {
+        "rico": "textualValue"
+      }
+    },
+    {
+      "id": "identifier_authority",
+      "definition": "The registered source an identifier comes from names its identifier type; an export makes one identifier type for each such source.",
+      "mapping": {
+        "rico": "hasIdentifierType"
+      }
+    },
+    {
+      "id": "identifier_reading",
+      "definition": "Who added an identifier, and the day it was read on its authority's own pages.",
+      "mapping": {
+        "local": "pc:site_identifier_reading",
+        "reason": "RiC-O's isEvidencedBy has Relation as its domain, and an Identifier is an Appellation, so the reading that justifies an identifier has no pinned term."
+      }
+    },
+    {
+      "id": "source_host",
+      "definition": "A registered source's host: every address cited from it, or given for an identifier of it, is on that host or a subdomain of it.",
+      "mapping": {
+        "local": "pc:site_source_host",
+        "reason": "Neither EHRI nor RiC-O 1.1 records the web host a source's records are served from."
+      }
+    },
+    {
+      "id": "fact_place_relation",
+      "definition": "A sourced fact with a place, with its citations and its evidence confidence, is a place relation from the place to the fact's subject; one per source's statement, never merged.",
+      "mapping": {
+        "rico": "PlaceRelation"
+      }
+    },
+    {
+      "id": "fact_certainty",
+      "definition": "A fact's evidence confidence is the certainty of the relation its statement maps to.",
+      "mapping": {
+        "rico": "relationCertainty"
+      }
+    },
+    {
+      "id": "death_place_shortcut",
+      "definition": "Written only in an export, from the person's preferred accepted death statement; never stored, and never from a disputed or proposed one.",
+      "mapping": {
+        "rico": "hasDeathPlace"
+      }
+    },
+    {
+      "id": "death_date_shortcut",
+      "definition": "Written only in an export, from the person's preferred accepted death statement; never stored, and never from a disputed or proposed one.",
+      "mapping": {
+        "rico": "hasDeathDate"
+      }
+    },
+    {
       "id": "family_membership",
       "definition": "A sourced membership fact with family_id names the family as the group.",
       "mapping": {

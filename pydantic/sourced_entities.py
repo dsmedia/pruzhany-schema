@@ -49,6 +49,12 @@ class Attribution(Strict):
     note: str | None = None
 
 
+def _bare_host(value: str) -> str:
+    if value.startswith('www.'):
+        raise ValueError('host without www')
+    return value
+
+
 class Source(Strict):
     id: Text
     kind: SourceKinds
@@ -59,7 +65,9 @@ class Source(Strict):
     published: str | None = None
     repository: str | None = None
     url_pattern: str | None = None
-    host: str | None = None
+    # A bare lowercase host name: the source's addresses are on it or a subdomain of it.
+    host: Annotated[str, Field(pattern=r"^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"),
+                    AfterValidator(_bare_host)] | None = None
     ehri_institution_id: str | None = None
 
 

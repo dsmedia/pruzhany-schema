@@ -40,7 +40,7 @@ __all__ += ["SourcedDate", "Review", "Attribution", "Source", "Citation", "Fact"
 
 from .site_common import EnglishCheck, TitleCheck, TranslationCheck, PrintedAddress, TextBasis, Authorship, PrintedTitle, SuppliedTitle, Translation, ContentItemBlockRef, text_basis_matches
 from .content_item import ContentItem, PrintedSection, ContentItemsData
-from .shared_record import SharedFact, SourcedRelation, SharedPerson, SharedFamily, SharedPlace, SharedOrganization, SharedEvent, SharedRecord, is_unreviewed_prose
+from .shared_record import SharedFact, SourcedRelation, SharedPerson, SharedFamily, PlaceIdentifier, SharedPlace, SharedOrganization, SharedEvent, SharedRecord, is_unreviewed_prose
 from .shared_record import SiteCitation, SharedName, LifeEventDate, LifeEventMainPerson, is_printed_name
 from .site_issue import IssueMention, IssueMentionsData, ContentItemRef, IssueLifeEvent, IssueLifeEventsData, SiteIssue, SiteArchive
 
@@ -48,7 +48,7 @@ __all__ += [
     'SiteCitation', 'SharedName', 'LifeEventDate', 'LifeEventMainPerson', 'is_printed_name',
     'EnglishCheck', 'TitleCheck', 'TranslationCheck', 'PrintedAddress', 'TextBasis', 'Authorship', 'PrintedTitle', 'SuppliedTitle', 'Translation',
     'ContentItemBlockRef', 'text_basis_matches', 'ContentItem', 'PrintedSection', 'ContentItemsData',
-    'SharedFact', 'SourcedRelation', 'SharedPerson', 'SharedFamily', 'SharedPlace',
+    'SharedFact', 'SourcedRelation', 'SharedPerson', 'SharedFamily', 'PlaceIdentifier', 'SharedPlace',
     'SharedOrganization', 'SharedEvent', 'SharedRecord', 'is_unreviewed_prose',
     'IssueMention', 'IssueMentionsData', 'ContentItemRef', 'IssueLifeEvent',
     'IssueLifeEventsData', 'SiteIssue', 'SiteArchive',

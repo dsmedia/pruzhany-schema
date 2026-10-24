@@ -130,12 +130,32 @@ export const SharedPersonSchema = z.strictObject({
 export type SharedPerson = z.infer<typeof SharedPersonSchema>;
 export const SharedFamilySchema = z.strictObject(identity);
 export type SharedFamily = z.infer<typeof SharedFamilySchema>;
-export const SharedPlaceSchema = z.strictObject({
-	...identity,
-	type: LocationTypesSchema,
-	parent_id: siteText.nullish(),
-	coordinates: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]).nullish(),
+// An outside id of a place (rico:Identifier), read on its authority's own pages: the
+// authority list is a registered source, so its host and address form are described once.
+// Carried only on evidence, never from a name match (vetting §4).
+export const PlaceIdentifierSchema = z.strictObject({
+	source_id: siteText,
+	value: siteText,
+	url: z.url({ protocol: /^https$/ }).nullish(),
+	accessed: siteDay,
+	attribution: AttributionSchema,
 });
+export type PlaceIdentifier = z.infer<typeof PlaceIdentifierSchema>;
+export const SharedPlaceSchema = z
+	.strictObject({
+		...identity,
+		type: LocationTypesSchema,
+		parent_id: siteText.nullish(),
+		coordinates: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]).nullish(),
+		identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
+	})
+	.superRefine((v, ctx) => {
+		for (const message of uniqueIds(
+			(v.identifiers ?? []).map((i) => JSON.stringify([i.source_id, i.value])),
+			'place identifier'
+		))
+			ctx.addIssue({ code: 'custom', message });
+	});
 export type SharedPlace = z.infer<typeof SharedPlaceSchema>;
 export const SharedOrganizationSchema = z.strictObject(identity);
 export type SharedOrganization = z.infer<typeof SharedOrganizationSchema>;
@@ -200,6 +220,7 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 	const families = ids(v.families),
 		events = ids(v.events),
 		sources = ids(v.sources);
+	const hosts = new Map(v.sources.map((s) => [s.id, s.host]));
 	const subjects = ids([...identities, ...v.events, ...v.relations]);
 	const facts = new Map(v.facts.map((f) => [f.id, f]));
 	const births = new Set<string>(),
@@ -231,6 +252,9 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 		] as const)
 			if (id && !known.has(id)) errors.push(`unknown fact ${label}`);
 		if (f.citations.some((c) => !sources.has(c.source_id))) errors.push('unknown citation source');
+		for (const c of f.citations)
+			if (c.url && !onHost(c.url, hosts.get(c.source_id)))
+				errors.push('citation off its source host');
 	}
 	const noticeRelations = new Set<string>();
 	for (const relation of v.relations) {
@@ -252,6 +276,17 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 	for (const p of v.persons)
 		if (p.fate?.rests_on.some((id) => facts.get(id)?.subject_id !== p.id))
 			errors.push('fate must rest on own facts');
+	const identified = new Map<string, string>();
+	for (const place of v.places)
+		for (const identifier of place.identifiers ?? []) {
+			if (!sources.has(identifier.source_id)) errors.push('unknown identifier source');
+			if (identifier.url && !onHost(identifier.url, hosts.get(identifier.source_id)))
+				errors.push('identifier off its source host');
+			const key = JSON.stringify([identifier.source_id, identifier.value]);
+			if ((identified.get(key) ?? place.id) !== place.id)
+				errors.push('one identifier on two places');
+			identified.set(key, place.id);
+		}
 	const byPlace = new Map(v.places.map((p) => [p.id, p]));
 	for (const place of v.places) {
 		const seen = new Set<string>();
@@ -270,4 +305,11 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 		}
 	}
 	return errors;
+}
+
+// An address is on a source's host, or a subdomain of it; a source naming no host takes any.
+export function onHost(url: string, host: string | null | undefined): boolean {
+	if (!host) return true;
+	const name = new URL(url).hostname.replace(/^www\./, '');
+	return name === host || name.endsWith(`.${host}`);
 }

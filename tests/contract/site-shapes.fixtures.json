@@ -39,7 +39,19 @@
 					"name": "Fictional Town",
 					"names": [],
 					"type": "town",
-					"coordinates": [50, 25]
+					"coordinates": [50, 25],
+					"identifiers": [
+						{
+							"source_id": "fictional-authority",
+							"value": "42",
+							"url": "https://authority.example.org/places/42",
+							"accessed": "2026-10-24",
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-24"
+							}
+						}
+					]
 				}
 			],
 			"organizations": [
@@ -68,6 +80,13 @@
 					"id": "fictional-source",
 					"kind": "book",
 					"title": "Fictional source"
+				},
+				{
+					"id": "fictional-authority",
+					"kind": "archive_database",
+					"title": "Fictional authority list",
+					"host": "authority.example.org",
+					"url_pattern": "https://authority.example.org/places/{}"
 				}
 			],
 			"facts": [
@@ -385,7 +404,8 @@
 			0,
 			"translation",
 			"checked_against"
-		]
+		],
+		"PlaceIdentifier": ["shared_record", "places", 0, "identifiers", 0]
 	},
 	"cases": [
 		{
@@ -1916,6 +1936,309 @@
 				{
 					"path": ["coordinates", 1],
 					"value": 0
+				}
+			]
+		},
+		{
+			"name": "PlaceIdentifier: valid shape",
+			"model": "PlaceIdentifier",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "PlaceIdentifier: unknown field",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["unexpected"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "identifier needs the day it was read",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["accessed"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier needs who added it",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["attribution"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier without an address of its own",
+			"model": "PlaceIdentifier",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["url"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier address must be https",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "http://authority.example.org/places/42"
+				}
+			]
+		},
+		{
+			"name": "place without identifiers",
+			"model": "SharedPlace",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "empty identifier list",
+			"model": "SharedPlace",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "one identifier twice on a place",
+			"model": "SharedPlace",
+			"valid": false,
+			"error": "duplicate place identifier",
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"value": [
+						{
+							"source_id": "fictional-authority",
+							"value": "42",
+							"url": "https://authority.example.org/places/42",
+							"accessed": "2026-10-24",
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-24"
+							}
+						},
+						{
+							"source_id": "fictional-authority",
+							"value": "42",
+							"url": "https://authority.example.org/places/42",
+							"accessed": "2026-10-24",
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-24"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "identifier of an unknown authority",
+			"model": "SharedRecord",
+			"valid": false,
+			"error": "unknown identifier source",
+			"changes": [
+				{
+					"path": ["places", 0, "identifiers", 0, "source_id"],
+					"value": "nowhere"
+				}
+			]
+		},
+		{
+			"name": "identifier off its authority's host",
+			"model": "SharedRecord",
+			"valid": false,
+			"error": "identifier off its source host",
+			"changes": [
+				{
+					"path": ["places", 0, "identifiers", 0, "url"],
+					"value": "https://elsewhere.example.org/places/42"
+				}
+			]
+		},
+		{
+			"name": "identifier on a subdomain of its authority's host",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["places", 0, "identifiers", 0, "url"],
+					"value": "https://www.portal.authority.example.org/places/42"
+				}
+			]
+		},
+		{
+			"name": "one identifier on two places",
+			"model": "SharedRecord",
+			"valid": false,
+			"error": "one identifier on two places",
+			"changes": [
+				{
+					"path": ["places"],
+					"value": [
+						{
+							"id": "fictional-place",
+							"name": "Fictional Town",
+							"names": [],
+							"type": "town",
+							"coordinates": [50, 25],
+							"identifiers": [
+								{
+									"source_id": "fictional-authority",
+									"value": "42",
+									"url": "https://authority.example.org/places/42",
+									"accessed": "2026-10-24",
+									"attribution": {
+										"by": "fictional researcher",
+										"on": "2026-10-24"
+									}
+								}
+							]
+						},
+						{
+							"id": "fictional-place-2",
+							"name": "Fictional Camp",
+							"names": [],
+							"type": "camp",
+							"identifiers": [
+								{
+									"source_id": "fictional-authority",
+									"value": "42",
+									"url": "https://authority.example.org/places/42",
+									"accessed": "2026-10-24",
+									"attribution": {
+										"by": "fictional researcher",
+										"on": "2026-10-24"
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "citation off its source host",
+			"model": "SharedRecord",
+			"valid": false,
+			"error": "citation off its source host",
+			"changes": [
+				{
+					"path": ["facts", 0, "citations", 0],
+					"value": {
+						"source_id": "fictional-authority",
+						"record_id": "42",
+						"url": "https://elsewhere.example.org/42"
+					}
+				}
+			]
+		},
+		{
+			"name": "citation on its source host",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["facts", 0, "citations", 0],
+					"value": {
+						"source_id": "fictional-authority",
+						"record_id": "42",
+						"url": "https://authority.example.org/places/42"
+					}
+				}
+			]
+		},
+		{
+			"name": "citation of a source naming no host takes any address",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["facts", 0, "citations", 0],
+					"value": {
+						"source_id": "fictional-source",
+						"url": "https://anywhere.example.org/42"
+					}
+				}
+			]
+		},
+		{
+			"name": "host is a bare lowercase name",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 1, "host"],
+					"value": "https://authority.example.org"
+				}
+			]
+		},
+		{
+			"name": "host without www",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 1, "host"],
+					"value": "www.authority.example.org"
+				}
+			]
+		},
+		{
+			"name": "a death statement with its place, a range and the record's words",
+			"model": "SharedFact",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "death"
+				},
+				{
+					"path": ["value"],
+					"value": "perished"
+				},
+				{
+					"path": ["date"],
+					"value": {
+						"printed": "1945",
+						"start": "1945-03-13",
+						"end": "1945-12-31",
+						"precision": "range",
+						"inferred": true
+					}
+				},
+				{
+					"path": ["citations", 0],
+					"value": {
+						"source_id": "fictional-source",
+						"record_id": "4695",
+						"quote": "Fictional Person, died 1945",
+						"note": "The entry has no address of its own.",
+						"accessed": "2026-10-24"
+					}
 				}
 			]
 		},

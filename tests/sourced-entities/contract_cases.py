@@ -44,7 +44,11 @@ for model, base in bases.items():
 change('SourcedDate','all date fields',True,start='1940-02-01',end='1940-02-29',precision='range',printed='Fictional date',printed_calendar='hebrew',inferred=True)
 change('Review','review metadata',True,by='fixture',on='2024-02-29')
 change('Attribution','attribution note',True,note='Fictional note')
-change('Source','all source metadata',True,**{n:'Fictional metadata' for n in 'work_id author editor published repository url_pattern host ehri_institution_id'.split()})
+change('Source','all source metadata',True,**{n:'Fictional metadata' for n in 'work_id author editor published repository url_pattern ehri_institution_id'.split()},host='fictional.example.org')
+change('Source','host with a scheme',False,host='https://fictional.example.org')
+change('Source','host with www',False,host='www.fictional.example.org')
+change('Source','host in capitals',False,host='Fictional.example.org')
+change('Source','host with no dot',False,host='localhost')
 change('Citation','all citation metadata',True,record_id='fictional-record',scan='1',time='00:01',edition_date='1938-01-01',unit_id='fictional-unit',url='https://example.org/fictional',quote='Fictional quote',note='Private fictional remark',accessed='2024-02-29')
 change('Fact','all fact payload shapes',True,date={'start':'1940'},place_id='fictional-place',organization_id='fictional-org',event_id='fictional-event',related_person_id='fictional-relative',relationship_type='child_of',related_name='Fictional Relative',qualifiers={'fictional':'value'},holocaust_related=False)
 change('Name','name citations',True,lang='en',citations=[citation])
@@ -95,7 +99,7 @@ change('Fate','left_before forbidden',outcome='left_before',rests_on=['fictional
 change('Fate','known without facts',outcome='survived')
 full=copy.deepcopy(archive)
 record=full['shared_record']
-record['sources']=[bases['Source']]
+record['sources']=[bases['Source'],*(s for s in record['sources'] if s['id']!=bases['Source']['id'])]
 record['facts']=[dict(fact, subject_id=person['id'], representation='structured')]
 record['persons'][0].update(names=[dict(bases['Name'],citations=[citation])],fate=dict(bases['Fate'],outcome='survived',rests_on=['fictional-fact']))
 add('complete archive','SiteArchive',full)

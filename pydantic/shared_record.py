@@ -1,5 +1,6 @@
 """One shared record, built on production sourced facts and standing."""
 from typing import Annotated, Literal, get_args
+from urllib.parse import urlsplit
 from pydantic import Field, TypeAdapter, ValidationError, model_validator
 from .sourced_entities import Strict, Text, Date, Day, Fact, Name, Fate, Source, Attribution, Citation
 from .sourced_entities_vocabulary import Gender, LocationTypes, EventTypes, EventParts, EVENT_PART_KINDS, VocabularyVersion
@@ -119,11 +120,36 @@ class SharedFamily(Strict):
     names: list[Name]
 
 
+class PlaceIdentifier(Strict):
+    """An outside id of a place (rico:Identifier), read on its authority's own pages."""
+    source_id: Text
+    value: Text
+    url: Annotated[str, Field(pattern=r"^https://[^\s/?#]+[^\s]*$")] | None = None
+    accessed: Day
+    attribution: Attribution
+
+
 class SharedPlace(SharedFamily):
     type: LocationTypes
     parent_id: Text | None = None
     coordinates: tuple[Annotated[float, Field(ge=-90, le=90)],
                        Annotated[float, Field(ge=-180, le=180)]] | None = None
+    identifiers: Annotated[list[PlaceIdentifier], Field(min_length=1)] | None = None
+
+    @model_validator(mode='after')
+    def place_identifiers(self):
+        errors = unique_ids([(i.source_id, i.value) for i in self.identifiers or []], 'place identifier')
+        if errors:
+            raise ValueError('; '.join(errors))
+        return self
+
+
+def on_host(url: str, host: str | None) -> bool:
+    """An address is on a source's host, or a subdomain of it; a source naming no host takes any."""
+    if not host:
+        return True
+    name = (urlsplit(url).hostname or '').removeprefix('www.')
+    return name == host or name.endswith(f'.{host}')
 
 
 class SharedOrganization(SharedFamily):
@@ -180,6 +206,7 @@ class SharedRecord(Strict):
         families = {f.id for f in self.families}
         events = {e.id for e in self.events}
         sources = {s.id for s in self.sources}
+        hosts = {s.id: s.host for s in self.sources}
         subjects = {x.id for x in [*identities, *self.events, *self.relations]}
         facts = {f.id: f for f in self.facts}
         births, deaths = set(), set()
@@ -208,6 +235,9 @@ class SharedRecord(Strict):
                     errors.append(f'unknown fact {label}')
             if any(c.source_id not in sources for c in fact.citations):
                 errors.append('unknown citation source')
+            for c in fact.citations:
+                if c.url and not on_host(c.url, hosts.get(c.source_id)):
+                    errors.append('citation off its source host')
         notice_relations = set()
         for relation in self.relations:
             if relation.subject_id not in persons:
@@ -226,6 +256,17 @@ class SharedRecord(Strict):
         for person in self.persons:
             if person.fate and any(id not in facts or facts[id].subject_id != person.id for id in person.fate.rests_on):
                 errors.append('fate must rest on own facts')
+        identified = {}
+        for place in self.places:
+            for identifier in place.identifiers or []:
+                if identifier.source_id not in sources:
+                    errors.append('unknown identifier source')
+                if identifier.url and not on_host(identifier.url, hosts.get(identifier.source_id)):
+                    errors.append('identifier off its source host')
+                key = (identifier.source_id, identifier.value)
+                if identified.get(key, place.id) != place.id:
+                    errors.append('one identifier on two places')
+                identified[key] = place.id
         by_place = {p.id: p for p in self.places}
         for place in self.places:
             seen = set()

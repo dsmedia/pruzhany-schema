@@ -43,6 +43,8 @@ pc:subject_international_affairs a skos:Concept ; skos:prefLabel "International 
 pc:title_type_printed a skos:Concept, rico:TitleType ; skos:prefLabel "Printed title"@en ; skos:definition "The printed words naming a content item or a section."@en ; rdfs:comment "Distinguishes words printed in the source from a supplied name; RiC-O defines TitleType but not this controlled value." .
 pc:title_type_supplied a skos:Concept, rico:TitleType ; skos:prefLabel "Supplied title"@en ; skos:definition "An attributed English name pinned to the text it was made from."@en ; rdfs:comment "Distinguishes an attributed English name from printed words; RiC-O defines TitleType but not this controlled value." .
 pc:site_display_permission a owl:NamedIndividual ; rdfs:comment "Neither EHRI nor RiC-O expresses the site's permission to display a relative under its living-person rule." .
+pc:site_identifier_reading a owl:NamedIndividual ; rdfs:comment "RiC-O's isEvidencedBy has Relation as its domain, and an Identifier is an Appellation, so the reading that justifies an identifier has no pinned term." .
+pc:site_source_host a owl:NamedIndividual ; rdfs:comment "Neither EHRI nor RiC-O 1.1 records the web host a source's records are served from." .
 pc:site_printed_address a owl:NamedIndividual ; rdfs:comment "Neither EHRI nor RiC-O defines an address combining a picture key, native pixel box and the words read there." .
 pc:site_text_basis a owl:NamedIndividual ; rdfs:comment "EHRI and RiC-O source relations do not preserve the exact text and printed addresses used for a particular reading." .
 pc:site_translation a owl:NamedIndividual ; rdfs:comment "Neither EHRI nor RiC-O has a term combining a translation with the exact source reading and its printed addresses." .

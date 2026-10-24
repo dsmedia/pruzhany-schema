@@ -50,6 +50,7 @@ targets.SharedFact = site.SharedFactSchema;
 targets.SourcedRelation = site.SourcedRelationSchema;
 targets.SharedPerson = site.SharedPersonSchema;
 targets.SharedFamily = site.SharedFamilySchema;
+targets.PlaceIdentifier = site.PlaceIdentifierSchema;
 targets.SharedPlace = site.SharedPlaceSchema;
 targets.SharedOrganization = site.SharedOrganizationSchema;
 targets.SharedEvent = site.SharedEventSchema;
