@@ -2,10 +2,10 @@
 # bin/verify — the one verify entry point for pruzhany-schema; run it locally
 # before pushing. CI runs it verbatim, split across two workflows so the
 # history is scanned once: gitleaks.yml runs `bin/verify scan` (every push to
-# every branch) and ci.yml runs `bin/verify zod pydantic pilot standards vocabulary entities`.
+# every branch) and ci.yml runs `bin/verify zod pydantic contract pilot standards vocabulary entities`.
 #
 #   bin/verify            run every step below
-#   bin/verify <step>...  run only the named steps (scan, zod, pydantic, pilot, standards, vocabulary, entities)
+#   bin/verify <step>...  run only the named steps (scan, zod, pydantic, contract, pilot, standards, vocabulary, entities)
 #
 # Steps (all self-contained: nothing outside this checkout is read):
 #   scan      gitleaks over the full git history, secrets redacted.
@@ -19,7 +19,7 @@
 #   contract  the Zod<->Pydantic lockstep: every twin's field names and enum
 #             values agree (tests/contract/; moved here from pruzhany-press
 #             when that repository was retired on 2026-10-22).
-#   entities  checks shared production sourced-entity parity and JSON Schema.
+#   entities  checks sourced-entity parity in the current SiteArchive carrier and its JSON Schema.
 #   vocabulary validates production vocabulary, history, crosswalk and generated contracts.
 #   standards checks pinned RiC-O/EHRI terms and explicit local mappings.
 #   pilot     checks generated vocabulary/artifacts and exercises the isolated
@@ -138,10 +138,10 @@ step_entities() {
 		python -P tests/sourced-entities/contract_cases.py > "$fixtures"
 	bun install --frozen-lockfile
 	ENTITIES_CONTRACT_FIXTURES="$fixtures" bun x vitest run --dir tests/sourced-entities
-	bun -e "import {z} from 'zod/v4'; import {EnrichmentDataSchema} from './zod/enrichment.schema'; console.log(JSON.stringify(z.toJSONSchema(EnrichmentDataSchema)))" > "$schema"
+	bun -e "import {z} from 'zod/v4'; import {SiteArchiveSchema} from './zod/site-issue.schema'; console.log(JSON.stringify(z.toJSONSchema(SiteArchiveSchema)))" > "$schema"
 	uv run --no-project --python "$PYTHON_VERSION" --with 'jsonschema==4.26.0' \
 		python -P tests/sourced-entities/check_json_schema.py "$schema" "$fixtures"
-	# Existing production tests remain unchanged and must pass with the attachments.
+	# Current site and sourced-entity contracts must still pass together.
 	bun x vitest run --dir zod
 }
 

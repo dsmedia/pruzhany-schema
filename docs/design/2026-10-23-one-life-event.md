@@ -1,5 +1,7 @@
 # One life event, its main people and their parts
 
+> Historical design note, 2026-10-24: the owner approved the switch to four issue documents and one shared record; the old persisted models described below are retired (see [current contracts](../../README.md#current-site-files)).
+
 Round 4a, revised in 4d and 4f, 23 October 2026. Implementation contract for the writer
 (pruzhany-steps) and site (pruzhany-svelte), following ADR 0001 and brief 09's fourth grilling. The present
 brief brings the evidence correction into round 4, as ADR 0001 now says. The

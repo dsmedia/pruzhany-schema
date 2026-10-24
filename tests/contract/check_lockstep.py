@@ -5,10 +5,9 @@ Moved here from pruzhany-press/tests/contract/test_schema_contract.py on
 it. For each paired model it compares the set of field names and the value-set
 of every top-level enum field, from the JSON Schema each side emits (Zod by
 ``z.toJSONSchema()``, through dump_zod_schemas.ts under bun; Pydantic by
-``model_json_schema()``). For the old shapes it does not compare required-ness: Pydantic gives
-collections ``default_factory=list`` (not required) where Zod marks the same
-arrays required, an intended difference, not drift.
-The new site shapes also compare required fields and run shared validation fixtures.
+``model_json_schema()``). Current site documents and their page/reference
+components also compare required fields and run shared validation fixtures.
+Runtime-specific optional-null behavior remains unchanged.
 
     python -P tests/contract/check_lockstep.py   # from the repository root
 
@@ -17,7 +16,6 @@ Exits 1 and names every difference when the twins drift.
 
 from __future__ import annotations
 
-import importlib
 import importlib.util
 import json
 import subprocess
@@ -27,7 +25,7 @@ from types import ModuleType
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE_MODELS = set(json.loads((ROOT / 'tests/contract/site-shapes.fixtures.json').read_text(encoding='utf-8'))['models'])
-SITE_MODELS |= {'SiteCitation', 'SharedName', 'LifeEventDate', 'LifeEventMainPerson'}
+SITE_MODELS |= {'SiteCitation', 'SharedName', 'LifeEventDate', 'LifeEventMainPerson', 'Block', 'Page', 'PagesData', 'CrossReference', 'ExternalReference'}
 
 # Pydantic class name -> Zod export key. Identical today, kept explicit so that a
 # rename on one side is a visible one-line change and never a silent skip.
@@ -64,13 +62,11 @@ MODEL_PAIRS = {
     "IssueLifeEventsData": "IssueLifeEventsData",
     "SiteIssue": "SiteIssue",
     "SiteArchive": "SiteArchive",
+    "Block": "Block",
+    "Page": "Page",
+    "PagesData": "PagesData",
+    "CrossReference": "CrossReference",
     "ExternalReference": "ExternalReference",
-    "EnrichedPerson": "EnrichedPerson",
-    "EnrichedLocation": "EnrichedLocation",
-    "EnrichedEvent": "EnrichedEvent",
-    "EnrichedOrganization": "EnrichedOrganization",
-    "Topic": "Topic",
-    "EnrichmentData": "EnrichmentData",
     "SourcedDate": "SourcedDate",
     "Review": "Review",
     "Attribution": "Attribution",
@@ -83,7 +79,7 @@ MODEL_PAIRS = {
 }
 
 
-def load_pydantic(root: Path) -> tuple[ModuleType, ModuleType]:
+def load_pydantic(root: Path) -> ModuleType:
     """Load pydantic/ under another name: it would shadow the library if imported as is."""
     name = "pruzhany_schema_pydantic"
     tree = root / "pydantic"
@@ -95,7 +91,7 @@ def load_pydantic(root: Path) -> tuple[ModuleType, ModuleType]:
     package = importlib.util.module_from_spec(spec)
     sys.modules[name] = package
     spec.loader.exec_module(package)
-    return importlib.import_module(f"{name}.project_output"), package
+    return package
 
 
 def dump_zod(root: Path) -> dict:
@@ -146,12 +142,12 @@ def signature(schema: dict) -> dict:
     return {"fields": set(props), "enums": {k: v for k, v in enums.items() if v is not None}}
 
 
-def problems(zod_schemas: dict, module: ModuleType, package: ModuleType) -> list[str]:
+def problems(zod_schemas: dict, package: ModuleType) -> list[str]:
     found: list[str] = []
     if missing := SITE_MODELS - MODEL_PAIRS.keys():
         found.append(f'site models missing from lockstep pairs: {sorted(missing)}')
     for py_name, zod_name in MODEL_PAIRS.items():
-        py_cls = getattr(module, py_name, None) or getattr(package, py_name, None)
+        py_cls = getattr(package, py_name, None)
         zod_schema = zod_schemas.get(zod_name)
         if py_cls is None:
             found.append(f"[{py_name}] missing from the Pydantic package")
@@ -186,8 +182,8 @@ def problems(zod_schemas: dict, module: ModuleType, package: ModuleType) -> list
 
 
 def main() -> None:
-    module, package = load_pydantic(ROOT)
-    found = problems(dump_zod(ROOT), module, package)
+    package = load_pydantic(ROOT)
+    found = problems(dump_zod(ROOT), package)
     if found:
         sys.exit("Zod<->Pydantic contract drift:\n" + "\n".join(f"  - {p}" for p in found))
     print(f"contract: {len(MODEL_PAIRS)} Zod/Pydantic twins in lockstep")

@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
-import { CrossReferenceSchema } from './content-unit.schema';
 import {
+	CrossReferenceSchema,
 	ContentItemBlockRefSchema,
 	PrintedTitleSchema,
 	SuppliedTitleSchema,
@@ -17,7 +17,7 @@ import {
 	subtypeParents,
 } from './site-content.vocabulary';
 
-// Content item: the new logical shape, beside the unchanged ContentUnit.
+// Content item: the logical shape in the current site documents.
 export const ContentItemSchema = z
 	.strictObject({
 		id: siteText,

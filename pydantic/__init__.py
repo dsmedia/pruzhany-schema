@@ -1,4 +1,4 @@
-"""Schema definitions for the ADK edition pipeline."""
+"""Current site contracts and LLM extraction schemas."""
 
 from .llm_output import (
     LlmBlock,
@@ -11,23 +11,9 @@ from .llm_output import (
     LlmPerson,
     LlmPersonRelationship,
 )
-from .project_output import (
-    Block,
-    ContentUnit,
-    ContentUnitsData,
-    ContentUnitRef,
-    EnrichedEvent,
-    EnrichedLocation,
-    EnrichedOrganization,
-    EnrichedPerson,
-    EnrichmentData,
-    LifeEvent,
-    LifeEventsData,
-    OrganizationMember,
-    Page,
-    PagesData,
-    Topic,
-)
+from .page import Block, Page, PagesData
+from .shared import ExternalReference
+from .site_common import CrossReference
 
 __all__ = [
     # LLM Output Schemas
@@ -40,22 +26,12 @@ __all__ = [
     "LlmPageLayout",
     "LlmPerson",
     "LlmPersonRelationship",
-    # Project Output Schemas
+    # Physical pages and shared references
     "Block",
-    "ContentUnit",
-    "ContentUnitsData",
-    "ContentUnitRef",
-    "EnrichedEvent",
-    "EnrichedLocation",
-    "EnrichedOrganization",
-    "EnrichedPerson",
-    "EnrichmentData",
-    "LifeEvent",
-    "LifeEventsData",
-    "OrganizationMember",
     "Page",
     "PagesData",
-    "Topic",
+    "CrossReference",
+    "ExternalReference",
 ]
 
 from .sourced_entities import SourcedDate, Review, Attribution, Source, Citation, Fact, Name, Fate, Mention, legacyHolocaustFate

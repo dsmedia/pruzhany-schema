@@ -1,9 +1,8 @@
-"""Content items and printed sections, beside the unchanged ContentUnit."""
+"""Content items and printed sections in the current site documents."""
 from typing import Annotated, Literal
 from pydantic import BeforeValidator, Field, model_validator
 from .sourced_entities import Strict, Text, Day
-from .project_output import CrossReference
-from .site_common import ContentItemBlockRef, PrintedTitle, SuppliedTitle, Translation, unique_ids
+from .site_common import CrossReference, ContentItemBlockRef, PrintedTitle, SuppliedTitle, Translation, unique_ids
 from .site_content_vocabulary import ImpressoTypes, ContentItemSubtypes, Subjects, SUBTYPE_PARENTS
 
 

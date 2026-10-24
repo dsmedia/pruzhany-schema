@@ -1,5 +1,5 @@
 /**
- * Layer 1: Physical Newspaper Structure
+ * Physical Newspaper Structure
  *
  * Defines the foundational schema for newspaper pages and blocks.
  * Pages represent individual newspaper pages with their metadata and dimensions.

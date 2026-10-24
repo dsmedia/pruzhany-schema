@@ -12,11 +12,13 @@ The owner's word of 20 October 2026: 'It's important to me we stick close to EHR
 
 This repo shares schemas between the Pruzhany Digital Archive's SvelteKit frontend and Python extraction pipeline. Keep the two language contracts in step; the sourced-entities pilot is isolated from production models. See README.md for layout and consumer contract checks.
 
+The site uses four issue documents and one shared record after the owner's switch of 24 October 2026. The old persisted article, content-unit, life-event, enrichment and edition-bundle contracts are retired. Pages and blocks live in the page modules, cross-references in site-common, and external references in shared; their wire behavior is preserved. Keep released vocabulary and snapshots, standards pins, LLM extraction models and the isolated pilot intact.
+
 - **No test under `zod/` may need anything but bun.** pruzhany-svelte runs every `*.test.ts` under `zod/` through its `src/lib/schemas` symlink, with bun only (#15). Pilot and cross-language tests live beside their pilot and are run by `bin/verify`.
 - **New vocabulary types are approved by the owner, in batches** (#16): each proposed type with two or three real examples and its mapping. Until then a fact stays `other` with its `proposed_type`. A released type is never removed or renamed.
-- **A change here is checked against its consumers before it merges**: pruzhany-svelte (`bun run test:run`, `bun run check`, `bun run validate:data` with its submodule pointed at the branch). The Zod↔Pydantic lockstep runs here, in `bin/verify` (step `contract`), since pruzhany-press was retired on 2026-10-22.
+- **A change here is checked against its consumers before it merges**: pruzhany-svelte (`bun run format:check`, `bun run lint`, `bun run check`, `bun run test:run`, `bun run validate:data` against the changed schema files; a temporary copy can preserve its recorded submodule pin). In pruzhany-steps, `site_shapes refresh` requires a clean committed schema HEAD; preview generated differences separately until that commit exists. The Zod↔Pydantic lockstep runs here, in `bin/verify` (step `contract`), since pruzhany-press was retired on 2026-10-22.
 
-`bin/verify` is the single verification entry point, including the standards alignment gate. Its header describes the steps, pinned toolchain and private consumer drift gate.
+`bin/verify` is the single verification entry point, including the standards alignment gate. Its header describes all eight steps and the pinned toolchain. The `entities` step checks sourced assertions in the current `SiteArchive` carrier; consumer checks run separately as described above.
 
 ## Agent skills
 

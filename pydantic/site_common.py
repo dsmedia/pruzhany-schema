@@ -1,8 +1,16 @@
-"""Printed places, titles and translation in the proposed site shape."""
+"""Printed places, titles, translation and cross-references in the site shape."""
 from typing import Annotated, Literal
-from pydantic import Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from .sourced_entities import Strict, Text, Day, Attribution
 
+
+class CrossReference(BaseModel):
+    """Cross-reference between content units."""
+
+    target_id: str = Field(description="Target content unit ID")
+    confidence: float = Field(description="Confidence in the relationship (0-1)")
+    relationship: str = Field(description="Type of relationship")
+    evidence: str = Field(description="Evidence supporting the relationship")
 
 class PrintedAddress(Strict):
     image_uri: Text

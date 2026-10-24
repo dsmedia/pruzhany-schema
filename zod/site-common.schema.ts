@@ -1,6 +1,14 @@
 import { z } from 'zod/v4';
 import { AttributionSchema } from './sourced-entities.schema';
 
+export const CrossReferenceSchema = z.object({
+	target_id: z.string(),
+	confidence: z.number(),
+	relationship: z.string(),
+	evidence: z.string(),
+});
+export type CrossReference = z.infer<typeof CrossReferenceSchema>;
+
 export const siteText = z.string().regex(/\S/);
 export const siteDay = AttributionSchema.shape.on;
 const pixelBox = z.tuple([

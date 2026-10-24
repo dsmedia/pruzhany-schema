@@ -10,6 +10,6 @@ validator=Draft202012Validator(schema)
 validator.validate(fixtures['full'])
 validator.validate(fixtures['baseline'])
 bad=copy.deepcopy(fixtures['full'])
-bad['people'][0]['unexpected']='must fail'
+bad['shared_record']['persons'][0]['unexpected']='must fail'
 assert not validator.is_valid(bad)
-print(f"entities: {len(fixtures['cases'])} shared cases, {len(fixtures['legacy'])} legacy mappings; exported JSON Schema accepts attachments and rejects unknown person fields")
+print(f"entities: {len(fixtures['cases'])} shared cases, {len(fixtures['legacy'])} legacy mappings; exported SiteArchive JSON Schema accepts the current carrier and rejects unknown person fields")

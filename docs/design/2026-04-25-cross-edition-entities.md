@@ -1,5 +1,7 @@
 # Cross-edition entity identity (adopting Impresso + open NIL question)
 
+> Historical design note, 2026-10-24: the owner approved the switch to four issue documents and one shared record; the old persisted models described below are retired (see [current contracts](../../README.md#current-site-files)).
+
 **Status:** finalized decisions in this doc. Open questions live in [#1](https://github.com/dsmedia/pruzhany-schema/issues/1) (NIL clustering) and [#3](https://github.com/dsmedia/pruzhany-schema/issues/3) (type-taxonomy extensions).
 
 **Date:** 2026-04-25

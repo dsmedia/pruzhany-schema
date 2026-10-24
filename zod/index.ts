@@ -10,41 +10,6 @@ export {
 } from './shared.schema';
 
 export {
-	TopicSchema,
-	AdditionalDetailSchema,
-	EnrichedPersonSchema,
-	EnrichedLocationSchema,
-	EnrichedEventSchema,
-	EnrichedOrganizationSchema,
-	EnrichmentDataSchema,
-	ArticleEnrichmentSchema,
-	SectionItemSchema,
-	SectionCategorySchema,
-	SectionSchema,
-	LocationTypeSchema,
-	LocalizedNamesSchema,
-	HistoricalContextSchema,
-	HolocaustSiteSchema,
-	type Topic,
-	type AdditionalDetail,
-	type EnrichedPerson,
-	type EnrichedLocation,
-	type EnrichedEvent,
-	type EnrichedOrganization,
-	type EnrichmentData,
-	type ArticleEnrichment,
-	type SectionItem,
-	type SectionCategory,
-	type Section,
-	type LocationType,
-	type LocalizedNames,
-	type HistoricalContext,
-	type HolocaustSite,
-} from './enrichment.schema';
-
-export { ArticleSchema, ArticleDataSchema, type Article, type ArticleData } from './article.schema';
-
-export {
 	EditionSchema,
 	HolidaySchema,
 	HistoricalEventSchema,
@@ -55,7 +20,7 @@ export {
 	type EditionsCatalog,
 } from './editions.schema';
 
-// Three-layer data model schemas
+// Physical pages and blocks
 export {
 	BlockSchema,
 	PageSchema,
@@ -65,56 +30,6 @@ export {
 	type PagesData,
 } from './page.schema';
 
-export {
-	PageBlockRefSchema,
-	CrossReferenceSchema,
-	ContentUnitTypeSchema,
-	ContentUnitSchema,
-	ContentUnitsDataSchema,
-	type PageBlockRef,
-	type CrossReference,
-	type ContentUnit,
-	type ContentUnitsData,
-} from './content-unit.schema';
-
-export {
-	ContentUnitRefSchema,
-	LifeEventSchema,
-	LifeEventsDataSchema,
-	type ContentUnitRef,
-	type LifeEvent,
-	type LifeEventsData,
-} from './life-event.schema';
-
-// Unified edition bundle schema
-export {
-	EditionBundleSchema,
-	EditionIdentitySchema,
-	EditionPageSchema,
-	EditionBlockSchema,
-	EditionContentUnitSchema,
-	EditionEventSchema,
-	EditionPersonSchema,
-	EditionLocationSchema,
-	EditionOrganizationSchema,
-	EditionTopicSchema,
-	EventTypeSchema,
-	type EditionBundle,
-	type EditionIdentity,
-	type EditionPage,
-	type EditionBlock,
-	type PageImage,
-	type EditionContentUnit,
-	type EditionEvent,
-	type EventParticipant,
-	type EventContentUnitRef,
-	type EditionPerson,
-	type EditionLocation,
-	type EditionOrganization,
-	type EditionTopic,
-	type ReferenceData,
-} from './edition-bundle.schema';
-
 export * from './sourced-entities.schema';
 export {
 	EventPartsSchema,
@@ -123,7 +38,7 @@ export {
 	lifeEventKinds,
 } from './sourced-entities.vocabulary';
 
-// Proposed site files; existing exports above keep their meanings.
+// Current site files and their shared record.
 export * from './site-common.schema';
 export * from './site-content.vocabulary';
 export * from './content-item.schema';

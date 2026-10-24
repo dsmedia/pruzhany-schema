@@ -16,9 +16,9 @@ from schema_contract import sourced_entities_vocabulary as v
 
 citation = {'source_id':'fictional-source','page':'1'}
 fact = dict(id='fictional-fact', type='occupation', value='Fictional trade', citations=[citation], evidence_confidence='confirmed', identity_confidence='confirmed', status='accepted', review={'state':'pending'}, attribution={'by':'fixture','on':'2024-02-29'})
-person = dict(id='fictional-person',name='Fictional Person',aliases=[],gender='unknown',holocaust_fate='unknown',unit_ids=[],relationships=[],external_references=[])
-edition = dict(version='1',edition_date='1938-01-01',last_updated='2026-10-20',people=[person],locations=[],events=[],topics=[])
-bases = dict(SourcedDate={'start':'1940'}, Review={'state':'pending'}, Attribution={'by':'fixture','on':'2024-02-29'}, Source={'id':'fictional-source','kind':'book','title':'Fictional source'}, Citation=citation, Fact=fact, Name={'value':'Fictional Person','kind':'printed','script':'Latn'}, Fate={'outcome':'unknown','confidence':'possible','rests_on':[],'review':{'state':'pending'}}, Mention={'id':'fictional-mention','person_id':'fictional-person','unit_id':'fictional-unit','printed_name':'Fictional Person'}, EnrichedPerson=person, EnrichmentData=edition)
+person = dict(id='fictional-person', name='Fictional Person', names=[], gender='unknown')
+archive = json.loads((root/'tests/contract/site-shapes.fixtures.json').read_text(encoding='utf-8'))['example']
+bases = dict(SourcedDate={'start':'1940'}, Review={'state':'pending'}, Attribution={'by':'fixture','on':'2024-02-29'}, Source={'id':'fictional-source','kind':'book','title':'Fictional source'}, Citation=citation, Fact=fact, Name={'value':'Fictional Person','kind':'printed','script':'Latn'}, Fate={'outcome':'unknown','confidence':'possible','rests_on':[],'review':{'state':'pending'}}, Mention={'id':'fictional-mention','person_id':'fictional-person','unit_id':'fictional-unit','printed_name':'Fictional Person'}, SharedPerson=person, SiteArchive=archive)
 models = {name:getattr(pkg,name) for name in bases}
 cases=[]
 def add(name, model, value, valid=True):
@@ -29,9 +29,8 @@ def change(model, name, valid=False, **updates):
 for model, base in bases.items():
     add('baseline '+model,model,base)
     for name, field in models[model].model_fields.items():
-        # Every optional new field: omission and explicit null. Existing fields
-        # retain their own historical contract and are covered by production tests.
-        if not field.is_required() and (model not in ('EnrichedPerson','EnrichmentData') or name in ('facts','names','fate','sources','mentions','vocabulary_version')):
+        # Optional fields retain their omission/null behavior in the current carrier.
+        if not field.is_required():
             optional_base = copy.deepcopy(base)
             if model == 'SourcedDate': optional_base['printed'] = 'Fictional printed date'
             if model == 'Fact': optional_base.update(type='office')
@@ -39,8 +38,7 @@ for model, base in bases.items():
             optional_base.pop(name, None)
             add(f'{model}.{name} omitted',model,optional_base)
             add(f'{model}.{name} null',model,dict(optional_base,**{name:None}))
-    if model not in ('EnrichedPerson','EnrichmentData'):
-        change(model,model+' unknown key',unexpected=True)
+    change(model,model+' unknown key',unexpected=True)
 
 # Non-null examples exercise all optional field shapes as well as omission/null.
 change('SourcedDate','all date fields',True,start='1940-02-01',end='1940-02-29',precision='range',printed='Fictional date',printed_calendar='hebrew',inferred=True)
@@ -95,16 +93,25 @@ change('Name','supplied attribution cannot label printed words',attribution=base
 change('Name','supplied cannot use the old proposed spelling',kind='other',proposed_type='supplied',attribution=bases['Attribution'],citations=[citation])
 change('Fate','left_before forbidden',outcome='left_before',rests_on=['fictional-fact'])
 change('Fate','known without facts',outcome='survived')
-full=copy.deepcopy(edition)
-full.update(sources=[bases['Source']],mentions=[bases['Mention']],vocabulary_version='1.0.0')
-full['people'][0].update(facts=[fact],names=[dict(bases['Name'],citations=[citation])],fate=dict(bases['Fate'],outcome='survived',rests_on=['fictional-fact']))
-add('complete edition','EnrichmentData',full)
-for label, mutate in [('unknown fact source',lambda d:d['people'][0]['facts'][0]['citations'][0].update(source_id='missing')),('unknown name source',lambda d:d['people'][0]['names'][0]['citations'][0].update(source_id='missing')),('missing sources',lambda d:d.pop('sources')),('unknown mention person',lambda d:d['mentions'][0].update(person_id='missing')),('foreign fate fact',lambda d:d['people'][0]['fate'].update(rests_on=['foreign-fact']))]:
-    data=copy.deepcopy(full);mutate(data);add(label,'EnrichmentData',data,False)
+full=copy.deepcopy(archive)
+record=full['shared_record']
+record['sources']=[bases['Source']]
+record['facts']=[dict(fact, subject_id=person['id'], representation='structured')]
+record['persons'][0].update(names=[dict(bases['Name'],citations=[citation])],fate=dict(bases['Fate'],outcome='survived',rests_on=['fictional-fact']))
+add('complete archive','SiteArchive',full)
+for label, mutate in [
+    ('unknown fact source', lambda d:d['shared_record']['facts'][0]['citations'][0].update(source_id='missing')),
+    ('unknown name source', lambda d:d['shared_record']['persons'][0]['names'][0]['citations'][0].update(source_id='missing')),
+    ('missing sources', lambda d:d['shared_record'].pop('sources')),
+    ('unknown mention person', lambda d:d['issues'][0]['mentions']['mentions'][0].update(person_id='missing')),
+    ('foreign fate fact', lambda d:d['shared_record']['persons'][0]['fate'].update(rests_on=['foreign-fact'])),
+]:
+    data=copy.deepcopy(full);mutate(data);add(label,'SiteArchive',data,False)
 data=copy.deepcopy(full)
-data['people'].append(dict(person,id='fictional-other',facts=[dict(fact,id='foreign-fact')]))
-data['people'][0]['fate']['rests_on']=['foreign-fact']
-add('fate cannot rest on another edition person facts','EnrichmentData',data,False)
+data['shared_record']['persons'].append(dict(person,id='fictional-other'))
+data['shared_record']['facts'].append(dict(fact,id='foreign-fact',subject_id='fictional-other',representation='structured'))
+data['shared_record']['persons'][0]['fate']['rests_on']=['foreign-fact']
+add('fate cannot rest on another person facts','SiteArchive',data,False)
 # Shared exhaustive mapping expectations, independent of either helper.
 legacy=[]
 for outcome in get_args(v.FateOutcomes):
@@ -114,8 +121,10 @@ for outcome in get_args(v.FateOutcomes):
         assert e.legacyHolocaustFate(e.Fate.model_validate(value))==expected
         legacy.append(dict(value=value,expected=expected))
 for case in cases:
-    try: models[case['model']].model_validate(case['value']);accepted=True
+    # The current carrier contains strict geometry tuples: validate its JSON wire
+    # representation, just as the cross-language site contract fixtures do.
+    try: models[case['model']].model_validate_json(json.dumps(case['value']));accepted=True
     except ValueError: accepted=False
     assert accepted==case['valid'],case['name']
 sys.stdout.reconfigure(encoding='utf-8')
-print(json.dumps(dict(cases=cases,legacy=legacy,full=full,baseline=edition),ensure_ascii=False))
+print(json.dumps(dict(cases=cases,legacy=legacy,full=full,baseline=archive),ensure_ascii=False))

@@ -3,7 +3,7 @@ from typing import Annotated, Literal
 from pydantic import Field, model_validator
 from .sourced_entities import Strict, Text, Day
 from .sourced_entities_vocabulary import MentionRoles, ContentUnitRoles
-from .project_output import PagesData
+from .page import PagesData
 from .site_common import PrintedAddress, unique_ids
 from .content_item import ContentItemsData
 from .shared_record import SharedRecord

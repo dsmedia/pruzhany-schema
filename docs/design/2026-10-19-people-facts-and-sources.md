@@ -1,5 +1,7 @@
 # People, places, organisations and events, with their facts and sources: a proposal
 
+> Historical design note, 2026-10-24: the owner approved the switch to four issue documents and one shared record; the old persisted models described below are retired (see [current contracts](../../README.md#current-site-files)).
+
 **Status:** proposal of 19 October 2026, reconciled on 20 October; the decisions since are at the end and win where they differ.
 **Date:** 2026-10-19
 **Builds on:** [`2026-04-25-cross-edition-entities.md`](2026-04-25-cross-edition-entities.md) (Impresso mentions, NIL clustering).

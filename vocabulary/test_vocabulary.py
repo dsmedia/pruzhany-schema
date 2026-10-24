@@ -239,28 +239,10 @@ class VocabularyTests(unittest.TestCase):
             text = (root / file).read_text(encoding='utf-8')
             body = re.search(r'\b' + name + r' = z.enum\(\[(.*?)\]\)', text, re.S)[1]
             return re.findall(r"'([^']+)'", body)
-        for group, file, name in [
-            ('holocaust_fate_types', 'zod/shared.schema.ts', 'HolocaustFateSchema'),
-            ('holocaust_fate_types', 'zod/edition-bundle.schema.ts', 'HolocaustFateSchema'),
-            ('location_types', 'zod/enrichment.schema.ts', 'LocationTypeSchema'),
-            ('location_types', 'zod/edition-bundle.schema.ts', 'LocationTypeSchema'),
-            ('compatibility_event_types', 'zod/enrichment.schema.ts', 'EventTypeSchema'),
-            ('compatibility_event_types', 'zod/edition-bundle.schema.ts', 'EventTypeSchema'),
-            ('content_unit_roles', 'zod/edition-bundle.schema.ts', 'ContentUnitRoleSchema'),
-        ]:
-            self.assertEqual(ids(group), ts_enum(file, name))
-        tree = ast.parse((root / 'pydantic/project_output.py').read_text(encoding='utf-8'))
-        aliases = {n.targets[0].id: ast.literal_eval(n.value.slice)
-                   for n in tree.body if isinstance(n, ast.Assign)
-                   and isinstance(n.value, ast.Subscript)
-                   and isinstance(n.value.value, ast.Name) and n.value.value.id == 'Literal'}
-        for group, alias in [('holocaust_fate_types', 'HolocaustFate'), ('location_types', 'LocationType'),
-                             ('life_event_types', 'LifeEventType'), ('content_unit_roles', 'ContentUnitRole'),
-                             ('gender', 'Gender'), ('compatibility_event_types', 'EnrichedEventType')]:
-            self.assertEqual(ids(group), list(aliases[alias]))
-        life = (root / 'zod/life-event.schema.ts').read_text(encoding='utf-8')
-        self.assertEqual(ids('life_event_types'), re.findall(r"'([^']+)'", re.search(r'type: z.enum\(\[(.*?)\]\)', life, re.S)[1]))
-        self.assertEqual(ids('content_unit_roles'), re.findall(r"'([^']+)'", re.search(r'role: z.enum\(\[(.*?)\]\)', life, re.S)[1]))
+        self.assertEqual(ids('holocaust_fate_types'), ts_enum('zod/shared.schema.ts', 'HolocaustFateSchema'))
+        tree = ast.parse((root / 'pydantic/shared.py').read_text(encoding='utf-8'))
+        fate = next(n for n in tree.body if isinstance(n, ast.Assign) and n.targets[0].id == 'HolocaustFate')
+        self.assertEqual(ids('holocaust_fate_types'), list(ast.literal_eval(fate.value.slice)))
         self.assertNotIn('left_before', ids('fate_outcomes'))
 
     def test_generation_is_deterministic_and_current(self):

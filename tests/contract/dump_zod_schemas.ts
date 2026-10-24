@@ -11,19 +11,16 @@
  * Python side reports it as drift rather than crashing.
  */
 import { z } from 'zod/v4';
-import * as enrichment from '../../zod/enrichment.schema';
 import * as shared from '../../zod/shared.schema';
 import * as sourced from '../../zod/sourced-entities.schema';
 import * as site from '../../zod/index';
 
 const targets: Record<string, unknown> = {
+	Block: site.BlockSchema,
+	Page: site.PageSchema,
+	PagesData: site.PagesDataSchema,
+	CrossReference: site.CrossReferenceSchema,
 	ExternalReference: shared.ExternalReferenceSchema,
-	EnrichedPerson: enrichment.EnrichedPersonSchema,
-	EnrichedLocation: enrichment.EnrichedLocationSchema,
-	EnrichedEvent: enrichment.EnrichedEventSchema,
-	EnrichedOrganization: enrichment.EnrichedOrganizationSchema,
-	Topic: enrichment.TopicSchema,
-	EnrichmentData: enrichment.EnrichmentDataSchema,
 	SourcedDate: sourced.SourcedDateSchema,
 	Review: sourced.ReviewSchema,
 	Attribution: sourced.AttributionSchema,

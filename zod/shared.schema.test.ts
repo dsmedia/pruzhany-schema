@@ -33,4 +33,31 @@ describe('Shared Schemas', () => {
 			expect(() => ExternalReferenceSchema.parse({ url: 'https://example.com' })).toThrow();
 		});
 	});
+
+	describe('ExternalReferenceSchema', () => {
+		it('accepts url: null for negative-evidence citations', () => {
+			const ref = {
+				source: 'yad-vashem',
+				url: null,
+				notes: 'Negative evidence: no record found under any spelling',
+				verified: false,
+			};
+			expect(() => ExternalReferenceSchema.parse(ref)).not.toThrow();
+		});
+
+		it('accepts verified: true', () => {
+			const ref = {
+				source: 'jri-poland',
+				url: 'https://example.com/record/123',
+				record_id: 'JRI-12345',
+				verified: true,
+			};
+			expect(() => ExternalReferenceSchema.parse(ref)).not.toThrow();
+		});
+
+		it('accepts omitted verified and url (backward compat)', () => {
+			const ref = { source: 'Yad Vashem' };
+			expect(() => ExternalReferenceSchema.parse(ref)).not.toThrow();
+		});
+	});
 });

@@ -1,5 +1,7 @@
 # The proposed site files beside the old shapes
 
+> Historical design note, 2026-10-24: the owner approved the switch to four issue documents and one shared record; the old persisted models described below are retired (see [current contracts](../../README.md#current-site-files)).
+
 The existing schemas, enums and exports keep their meanings. These new exports
 are for the later site-writer/site switch. No data is migrated or published here.
 The four issue documents hold pages, content items and sections, mentions, and
