@@ -27,8 +27,9 @@ citing only the family's register, with no place and no date.
   and `legacyHolocaustFate`. The ranking, best first: a record made at the time, a memorial's book of the dead, a page
   of testimony, a later oral testimony. Confidence never rises above the best witness.
 - **A record-only death stays a fact** (constraint (a) of the council: every life event so far comes from the paper).
-  Its `event_id` stays empty, so that one death event can later gather the facts unchanged. Whether a death event may
-  rest on records alone is the owner's to decide, as an amendment to ADR 0001.
+  Its `event_id` stays empty, so that one death event can later gather the facts unchanged. The owner answered on
+  24 October 2026 that a death event may rest on records alone (ADR 0001, its amendment of that day); building it is
+  the next piece of work.
 
 ## What changed
 

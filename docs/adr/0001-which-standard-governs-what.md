@@ -62,3 +62,19 @@ labelled RiC-O cites the axiom in `standards/rico-1.1-axioms.json`, pinned at th
   to creation relations; RiC's own guidance is a local subproperty (§2).
 - **An RDF export validated by SHACL now**: declined by the owner on 23 October 2026 ("I don't [want] standards theater,
   but real proper tests if possible"); RiC-O publishes no shapes, and EHRI's describe only its own records (§1, §6).
+
+## Amendment of 24 October 2026: a death known only from records
+
+The place-of-death council run (pruzhany-svelte `docs/council/runs/2026-10-23-place-of-death/`) kept a death the
+newspaper never printed as a fact on the person, since every life event had come from the paper, and sent up whether
+such a death may be an event of its own. Asked by the site-redesign session ("when a death is known only from archive
+records and not from the newspaper, should it appear as an event in the person's life, the way his birth does?"), the
+owner answered on 24 October 2026, verbatim: "Yes" (pruzhany-steps `.scratch/site-redesign/grilling.md`, "Deaths known
+only from records", branch `ccr-059c2aef-b1kljr`).
+
+So a life event may rest on records alone. Such a death is one `rico:Event` of the death kind that gathers, by their
+`event_id`, the death facts of every source that states it ([the design of 24 October 2026](../design/2026-10-24-deaths-outside-the-paper.md)),
+each fact kept as its source gives it and never merged; the event cites no piece of the paper and says so. The row for
+life events above stands: one event per happening, the person's death date derived from it. Building the event is the
+next piece of work; until it lands, such a death stays the facts alone.
+
