@@ -47,3 +47,4 @@ export * from './site-issue.schema';
 
 export * from './citation-requirements';
 export * from './media.schema';
+export * from './quote-publication';

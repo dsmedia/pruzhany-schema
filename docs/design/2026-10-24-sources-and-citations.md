@@ -225,3 +225,16 @@ sources with EHRI ARKs, CSL-JSON "cite this", an EHRI micro-archive of the famil
 
 - Whether a `family` holder is shown by name ("the Sorid family") or as "the family": the owner's.
 - The institution credit is the council's default; the owner may say otherwise.
+
+## 10. The owner's rules of 24 October 2026, evening
+
+- **Quotes from the family's papers** (Morris Sorid's testimonies and memoir, the memorials' letters to the family):
+  "Yes they may if unique information". Such a source carries `quotes_cleared` (the owner, 24 October 2026) and
+  `quote_condition: unique_information`: a quote is shown only where no other accepted statement of the same kind about
+  the same person rests on a source that is not private (`quoteShown` and `corroborated`, Zod and Pydantic twins, with
+  contract cases). Otherwise the record is still cited, by name and reference, without its words.
+- **Find the archive, as a general rule**: "Morris testimonies are via other archives like USC shoah foundation. Find
+  the archive as a general rule." A document or recording the family holds a copy of is cited as its original, held by
+  the archive that holds it (with its holder, reference and catalogue address); the family's copy is the citation's
+  `via`. Only what exists nowhere else (the family's own register, a letter to the family, a photograph never deposited)
+  is cited as the family's.

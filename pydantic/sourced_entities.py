@@ -78,6 +78,8 @@ class Source(Strict):
     derived_from: Annotated[list[SourceDerivation], Field(min_length=1)] | None = None
     dated: SourcedDate | None = None
     quotes_cleared: Attribution | None = None
+    # The owner's condition on cleared quotes (24 October 2026): shown only where no other record says it.
+    quote_condition: Literal['unique_information'] | None = None
     private: bool | None = None
     work_id: str | None = None
     author: str | None = None

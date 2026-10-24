@@ -1,0 +1,133 @@
+{
+	"cases": [
+		{
+			"name": "private not cleared is not shown",
+			"citation": {
+				"source_id": "fam",
+				"quote": "Fictional words",
+				"locator": "x"
+			},
+			"source": {
+				"id": "fam",
+				"kind": "oral_history",
+				"title": "Fictional transcript",
+				"private": true
+			},
+			"corroborated": false,
+			"shown": false
+		},
+		{
+			"name": "private cleared is shown",
+			"citation": {
+				"source_id": "fam",
+				"quote": "Fictional words",
+				"locator": "x"
+			},
+			"source": {
+				"id": "fam",
+				"kind": "oral_history",
+				"title": "Fictional transcript",
+				"private": true,
+				"quotes_cleared": {
+					"by": "the owner",
+					"on": "2026-10-24"
+				}
+			},
+			"corroborated": true,
+			"shown": true
+		},
+		{
+			"name": "unique information shown when nothing else says it",
+			"citation": {
+				"source_id": "fam",
+				"quote": "Fictional words",
+				"locator": "x"
+			},
+			"source": {
+				"id": "fam",
+				"kind": "oral_history",
+				"title": "Fictional transcript",
+				"private": true,
+				"quotes_cleared": {
+					"by": "the owner",
+					"on": "2026-10-24"
+				},
+				"quote_condition": "unique_information"
+			},
+			"corroborated": false,
+			"shown": true
+		},
+		{
+			"name": "unique information hidden when a public record says it",
+			"citation": {
+				"source_id": "fam",
+				"quote": "Fictional words",
+				"locator": "x"
+			},
+			"source": {
+				"id": "fam",
+				"kind": "oral_history",
+				"title": "Fictional transcript",
+				"private": true,
+				"quotes_cleared": {
+					"by": "the owner",
+					"on": "2026-10-24"
+				},
+				"quote_condition": "unique_information"
+			},
+			"corroborated": true,
+			"shown": false
+		},
+		{
+			"name": "public original read through a private uncleared copy is not shown",
+			"citation": {
+				"source_id": "pub",
+				"via": "fam",
+				"quote": "Fictional words",
+				"time": "00:10"
+			},
+			"source": {
+				"id": "pub",
+				"kind": "oral_history",
+				"title": "Fictional archive testimony"
+			},
+			"via": {
+				"id": "fam",
+				"kind": "oral_history",
+				"title": "Fictional transcript",
+				"private": true
+			},
+			"corroborated": false,
+			"shown": false
+		},
+		{
+			"name": "public source is shown",
+			"citation": {
+				"source_id": "pub",
+				"quote": "Fictional words",
+				"time": "00:10"
+			},
+			"source": {
+				"id": "pub",
+				"kind": "oral_history",
+				"title": "Fictional archive testimony"
+			},
+			"corroborated": true,
+			"shown": true
+		},
+		{
+			"name": "no quote, nothing to show",
+			"citation": {
+				"source_id": "pub",
+				"time": "00:10"
+			},
+			"source": {
+				"id": "pub",
+				"kind": "oral_history",
+				"title": "Fictional archive testimony"
+			},
+			"corroborated": false,
+			"shown": false
+		}
+	]
+}

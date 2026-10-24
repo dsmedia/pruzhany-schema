@@ -105,3 +105,13 @@ def check_site_shapes(package):
         python = package.statement_citation_shortfalls(citation, source, via)
         assert python == actual == case['shortfalls'], (case['name'], python, actual, case['shortfalls'])
     print(f'contract: {len(advisory)} advisory citation reports agree')
+    quotes = json.loads((ROOT / 'tests/contract/quote-publication.fixtures.json').read_text(encoding='utf-8'))['cases']
+    zod_quotes = json.loads(subprocess.run(['bun', str(ROOT / 'tests/contract/check_quote_publication.ts')],
+        input=json.dumps(quotes), capture_output=True, text=True, check=True, cwd=ROOT).stdout)
+    for case, actual in zip(quotes, zod_quotes, strict=True):
+        citation = package.Citation.model_validate_json(json.dumps(case['citation']))
+        source = package.Source.model_validate_json(json.dumps(case['source']))
+        via = package.Source.model_validate_json(json.dumps(case['via'])) if case.get('via') else None
+        python = package.quote_shown(citation, source, via, case['corroborated'])
+        assert python == actual == case['shown'], (case['name'], python, actual, case['shown'])
+    print(f'contract: {len(quotes)} quote publication cases agree')

@@ -95,6 +95,8 @@ export const SourceSchema = z.strictObject({
 	derived_from: z.array(SourceDerivationSchema).min(1).nullish(),
 	dated: SourcedDateSchema.nullish(),
 	quotes_cleared: AttributionSchema.nullish(),
+	// The owner's condition on cleared quotes (24 October 2026): shown only where no other record says it.
+	quote_condition: z.enum(['unique_information']).nullish(),
 	private: z.boolean().nullish(),
 	work_id: z.string().nullish(),
 	author: z.string().nullish(),

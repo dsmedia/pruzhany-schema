@@ -75,3 +75,5 @@ pc:site_source_privacy a owl:NamedIndividual ; rdfs:comment "Neither standard de
 pc:site_citation_public_note a owl:NamedIndividual ; rdfs:comment "Neither standard encodes this project public/private note boundary." .
 
 pc:site_citation_locator a owl:NamedIndividual ; rdfs:comment "Neither standard specifies pointers into this project files." .
+
+pc:site_source_quote_condition a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology encodes this project's publication condition." .
