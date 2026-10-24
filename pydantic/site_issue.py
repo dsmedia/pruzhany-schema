@@ -292,11 +292,18 @@ class SiteArchive(Strict):
                     errors.append('unknown content item organisation')
                 if item.event_id and item.event_id not in events and item.event_id not in issue_events:
                     errors.append('unknown content item event')
+                if item.event_id in events and events[item.event_id].evidence_basis == 'records_only':
+                    errors.append('records-only death cannot have an issue selection')
             for event in issue.life_events.life_events:
                 if event.id not in events:
                     errors.append('unknown life event')
+                if event.id in events and events[event.id].evidence_basis == 'records_only':
+                    errors.append('records-only death cannot have an issue selection')
                 first_issues[event.id] = min(date, first_issues.get(event.id, date))
         for event in self.shared_record.events:
+            if (any(d.record_fact_id for d in event.dates) and event.id not in first_issues and
+                    event.evidence_basis != 'records_only'):
+                errors.append('record death without an issue selection must say records_only')
             for date in event.dates:
                 if (date.qualifier == 'reported_in' and event.id in first_issues and
                         date.reported_in != first_issues[event.id]):

@@ -39,6 +39,7 @@ def is_printed_name(name: SharedName) -> bool:
 
 
 class LifeEventDate(Strict):
+    record_fact_id: Text | None = None
     printed: Text | None = None
     printed_calendar: Literal['gregorian', 'hebrew'] | None = None
     start: Date | None = None
@@ -47,6 +48,10 @@ class LifeEventDate(Strict):
 
     @model_validator(mode='after')
     def event_date(self):
+        if self.record_fact_id:
+            if self.printed or self.printed_calendar or self.start or self.qualifier or self.reported_in:
+                raise ValueError('record date must only name its fact')
+            return self
         if self.qualifier == 'reported_in' and self.reported_in:
             if self.printed or self.printed_calendar or self.start:
                 raise ValueError('reported_in cannot carry a printed or normalized event date')
@@ -155,6 +160,7 @@ class SharedEvent(Strict):
     type: EventTypes
     proposed_type: Text | None = None
     main_people: list[LifeEventMainPerson]
+    evidence_basis: Literal['records_only'] | None = None
     dates: Annotated[list[LifeEventDate], Field(min_length=1)]
     location_id: Text | None = None
     description: str | None = None
@@ -171,6 +177,16 @@ class SharedEvent(Strict):
             errors.append('part does not fit event kind')
         if any(d.qualifier == 'reported_in' for d in self.dates) and len(self.dates) != 1:
             errors.append('reported_in must be the only date when no date is printed')
+        if any(d.record_fact_id for d in self.dates):
+            if (self.type != 'death' or not self.dates[0].record_fact_id or
+                    sum(bool(d.record_fact_id) for d in self.dates) != 1):
+                errors.append('death must put its one preferred record date first')
+            if len(self.main_people) != 1 or self.main_people[0].part != 'deceased':
+                errors.append('record death needs one deceased person')
+        if self.evidence_basis == 'records_only' and not self.dates[0].record_fact_id:
+            errors.append('records-only death needs its preferred record fact')
+        if self.evidence_basis == 'records_only' and len(self.dates) != 1:
+            errors.append('records-only death takes its date only from its preferred fact')
         if errors:
             raise ValueError('; '.join(errors))
         return self
@@ -200,13 +216,17 @@ class SharedRecord(Strict):
         events = {e.id for e in self.events}
         sources = {s.id for s in self.sources}
         hosts = {s.id: s.host for s in self.sources}
+        paper_sources = {s.id for s in self.sources if s.kind == 'the_paper'}
         subjects = {x.id for x in [*identities, *self.events, *self.relations]}
         facts = {f.id: f for f in self.facts}
+        death_events = {}
         births, deaths = set(), set()
         for event in self.events:
             if event.location_id and event.location_id not in places:
                 errors.append('unknown life event place')
             for main_person in event.main_people:
+                if event.type == 'death' and main_person.part == 'deceased':
+                    death_events[main_person.person_id] = event.id
                 if main_person.person_id not in persons:
                     errors.append('main person must resolve to a person')
                 # RiC-CM R070/R072, not an OWL functional-property claim.
@@ -216,6 +236,19 @@ class SharedRecord(Strict):
                     if main_person.person_id in seen:
                         errors.append(f'person has more than one {event.type}')
                     seen.add(main_person.person_id)
+            record_date = event.dates[0].record_fact_id
+            if record_date:
+                fact = facts.get(record_date)
+                if (not fact or fact.type != 'death' or fact.status != 'accepted' or
+                        (fact.qualifiers or {}).get('support_kind') != 'record' or
+                        any(c.source_id in paper_sources or (c.edition_date and c.unit_id) for c in fact.citations) or
+                        fact.event_id != event.id or fact.subject_id != event.main_people[0].person_id):
+                    errors.append('record date must name an accepted record statement of this death')
+                if event.location_id != (fact.place_id if fact else None):
+                    errors.append('record death place must be its preferred statement place')
+        for fact in self.facts:
+            if fact.type == 'death' and fact.event_id and death_events.get(fact.subject_id) != fact.event_id:
+                errors.append('death fact must name its person death event')
         for fact in [*self.facts, *self.relations]:
             if fact.subject_id not in subjects:
                 errors.append('unknown fact subject')

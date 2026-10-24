@@ -742,7 +742,7 @@
     },
     {
       "id": "life_event",
-      "definition": "A life event with persons and content items.",
+      "definition": "A life event with persons, evidenced by newspaper content items or records alone.",
       "mapping": {
         "rico": "Event"
       }
@@ -926,7 +926,7 @@
     },
     {
       "id": "event_date",
-      "definition": "A printed event date or a qualified first report.",
+      "definition": "A printed event date, a qualified first report, or the date of the preferred record statement.",
       "mapping": {
         "rico": "Date"
       }
@@ -964,6 +964,22 @@
       "definition": "A printed or supplied name of a person.",
       "mapping": {
         "rico": "AgentName"
+      }
+    },
+    {
+      "id": "event_evidence_basis",
+      "definition": "Records alone support a death; no issue selects it.",
+      "mapping": {
+        "local": "pc:site_event_evidence_basis",
+        "reason": "Neither pinned ontology records this application-specific absence of newspaper evidence."
+      }
+    },
+    {
+      "id": "event_record_date",
+      "definition": "Select the accepted death fact whose date and place describe the event; retain all other statements.",
+      "mapping": {
+        "local": "pc:site_event_record_date",
+        "reason": "Neither pinned ontology chooses a preferred source statement for this application; the referenced date uses the existing RiC-O Date mapping."
       }
     }
   ]

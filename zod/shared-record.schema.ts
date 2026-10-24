@@ -48,9 +48,11 @@ export function isPrintedName(name: SharedName): boolean {
 	return name.kind === 'printed';
 }
 
-// Reuse sourced-date field names and ISO parser, without its range/inference semantics.
+// Printed dates keep their original rules. A record date refers to the preferred
+// fact, whose SourcedDate retains ranges, inference and even an unknown date.
 export const LifeEventDateSchema = z
 	.strictObject({
+		record_fact_id: siteText.nullish(),
 		printed: SourcedDateSchema.shape.printed,
 		printed_calendar: SourcedDateSchema.shape.printed_calendar,
 		start: SourcedDateSchema.shape.start,
@@ -59,6 +61,11 @@ export const LifeEventDateSchema = z
 	})
 	.superRefine((v, ctx) => {
 		const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
+		if (v.record_fact_id) {
+			if (v.printed || v.printed_calendar || v.start || v.qualifier || v.reported_in)
+				fail('record date must only name its fact');
+			return;
+		}
 		if (v.qualifier === 'reported_in' && v.reported_in) {
 			if (v.printed || v.printed_calendar || v.start)
 				fail('reported_in cannot carry a printed or normalized event date');
@@ -160,6 +167,7 @@ export const SharedEventSchema = z
 		type: EventTypesSchema,
 		proposed_type: siteText.nullish(),
 		main_people: z.array(LifeEventMainPersonSchema),
+		evidence_basis: z.literal('records_only').nullish(),
 		dates: z.array(LifeEventDateSchema).min(1),
 		location_id: siteText.nullish(),
 		description: z.string().nullish(),
@@ -179,6 +187,20 @@ export const SharedEventSchema = z
 			if (!eventPartKinds[p.part].includes(kind)) fail('part does not fit event kind');
 		if (v.dates.some((d) => d.qualifier === 'reported_in') && v.dates.length !== 1)
 			fail('reported_in must be the only date when no date is printed');
+		if (v.dates.some((d) => d.record_fact_id)) {
+			if (
+				v.type !== 'death' ||
+				!v.dates[0].record_fact_id ||
+				v.dates.filter((d) => d.record_fact_id).length !== 1
+			)
+				fail('death must put its one preferred record date first');
+			if (v.main_people.length !== 1 || v.main_people[0].part !== 'deceased')
+				fail('record death needs one deceased person');
+		}
+		if (v.evidence_basis === 'records_only' && !v.dates[0]?.record_fact_id)
+			fail('records-only death needs its preferred record fact');
+		if (v.evidence_basis === 'records_only' && v.dates.length !== 1)
+			fail('records-only death takes its date only from its preferred fact');
 	});
 export type SharedEvent = z.infer<typeof SharedEventSchema>;
 
@@ -215,14 +237,17 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 		events = ids(v.events),
 		sources = ids(v.sources);
 	const hosts = new Map(v.sources.map((s) => [s.id, s.host]));
+	const paperSources = new Set(v.sources.filter((s) => s.kind === 'the_paper').map((s) => s.id));
 	const subjects = ids([...identities, ...v.events, ...v.relations]);
 	const facts = new Map(v.facts.map((f) => [f.id, f]));
+	const deathEvents = new Map<string, string>();
 	const births = new Set<string>(),
 		deaths = new Set<string>();
 	for (const event of v.events) {
 		if (event.location_id && !places.has(event.location_id))
 			errors.push('unknown life event place');
 		for (const p of event.main_people) {
+			if (event.type === 'death' && p.part === 'deceased') deathEvents.set(p.person_id, event.id);
 			if (!persons.has(p.person_id)) errors.push('main person must resolve to a person');
 			// RiC-CM R070/R072, not an OWL functional-property claim.
 			const seen =
@@ -234,7 +259,32 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 			if (seen?.has(p.person_id)) errors.push(`person has more than one ${event.type}`);
 			seen?.add(p.person_id);
 		}
+		const recordDate = event.dates[0]?.record_fact_id;
+		if (recordDate) {
+			const fact = facts.get(recordDate);
+			if (
+				!fact ||
+				fact.type !== 'death' ||
+				fact.status !== 'accepted' ||
+				fact.qualifiers?.support_kind !== 'record' ||
+				fact.citations.some(
+					(c) => paperSources.has(c.source_id) || (c.edition_date && c.unit_id)
+				) ||
+				fact.event_id !== event.id ||
+				fact.subject_id !== event.main_people[0]?.person_id
+			)
+				errors.push('record date must name an accepted record statement of this death');
+			if ((event.location_id ?? null) !== (fact?.place_id ?? null))
+				errors.push('record death place must be its preferred statement place');
+		}
 	}
+	for (const fact of v.facts)
+		if (
+			fact.type === 'death' &&
+			fact.event_id &&
+			deathEvents.get(fact.subject_id) !== fact.event_id
+		)
+			errors.push('death fact must name its person death event');
 	for (const f of [...v.facts, ...v.relations]) {
 		if (!subjects.has(f.subject_id)) errors.push('unknown fact subject');
 		for (const [id, known, label] of [

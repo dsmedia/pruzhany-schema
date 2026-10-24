@@ -78,6 +78,19 @@ class LifeEventMeaning(unittest.TestCase):
         self.assertTrue(set(axiom['range']) <= set(self.ehri[
             namespace + self.bindings['source']['ehri']]['superclasses']))
 
+    def test_record_death_evidence_is_on_the_relation_not_directly_on_the_event(self):
+        event = RICO + self.bindings['life_event']['rico']
+        evidence = self.axioms[RICO + self.bindings['fact_source']['rico']]
+        self.assertNotIn(RICO + 'Relation', self.ancestors(event))
+        self.assertIn(RICO + 'Relation', self.ancestors(RICO + 'EventRelation'))
+        self.assertEqual(evidence['domain'], [RICO + 'Relation'])
+        source = next(c for c in self.axioms[RICO + 'EventRelation']['cardinalities']
+                      if c['on_property'] == RICO + 'relationHasSource')
+        self.assertEqual(source['on_class'], [event])
+        part = next(p for p in self.released['groups']['event_parts'] if p['id'] == 'deceased')
+        self.assertEqual(part['rico_parent'], 'rico:affectsOrAffected')
+        self.assertEqual(self.axioms[RICO + 'affectsOrAffected']['domain'], [event])
+
     def test_rico_parent_relation_uses_the_actual_source_to_target_chain(self):
         vocab = json.loads((ROOT / 'vocabulary/sourced-entities.json').read_text())
         parent = next(v for v in vocab['groups']['relationship_types'] if v['id'] == 'parent_of')['mapping']

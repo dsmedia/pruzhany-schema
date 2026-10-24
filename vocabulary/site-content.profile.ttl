@@ -63,3 +63,7 @@ pc:site_checked_against_text a owl:NamedIndividual ; rdfs:comment "Neither pinne
 pc:site_reading_sha256 a owl:DatatypeProperty ; rdfs:label "reading_sha256"@en ; rdfs:comment "Neither pinned ontology specifies the digest of the exact reading in a field-level check." ; skos:definition "SHA-256 of the exact current reading UTF-8 bytes."@en .
 pc:site_english_sha256 a owl:DatatypeProperty ; rdfs:label "english_sha256"@en ; rdfs:comment "Neither pinned ontology specifies the digest of the exact English field in a later check." ; skos:definition "SHA-256 of the exact English field UTF-8 bytes."@en .
 pc:site_judgement_sha256 a owl:DatatypeProperty ; rdfs:label "judgement_sha256"@en ; rdfs:comment "Neither pinned ontology binds a field-level check to the exact retained judgement file bytes." ; skos:definition "SHA-256 of the exact retained judgement file bytes."@en .
+
+pc:site_event_evidence_basis a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology records this application-specific absence of newspaper evidence." .
+
+pc:site_event_record_date a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology chooses a preferred source statement for this application; the referenced date uses the existing RiC-O Date mapping." .

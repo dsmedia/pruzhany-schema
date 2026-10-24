@@ -1,0 +1,1507 @@
+{
+	"note": "Fictional deceased people only. A source date is read through the preferred fact, never copied or merged.",
+	"example": {
+		"shared_record": {
+			"version": "1",
+			"vocabulary_version": "1.2.0",
+			"persons": [
+				{
+					"id": "person-fictional-deceased",
+					"name": "Fictional deceased",
+					"names": [],
+					"gender": "unknown"
+				}
+			],
+			"families": [],
+			"places": [
+				{
+					"id": "place-camp",
+					"name": "place-camp",
+					"names": [],
+					"type": "camp"
+				},
+				{
+					"id": "place-other",
+					"name": "place-other",
+					"names": [],
+					"type": "camp"
+				}
+			],
+			"organizations": [],
+			"events": [
+				{
+					"id": "event-fictional-death",
+					"name": "Death of fictional deceased",
+					"type": "death",
+					"main_people": [
+						{
+							"person_id": "person-fictional-deceased",
+							"part": "deceased"
+						}
+					],
+					"dates": [
+						{
+							"record_fact_id": "fact-preferred"
+						}
+					],
+					"location_id": "place-camp",
+					"evidence_basis": "records_only"
+				}
+			],
+			"sources": [
+				{
+					"id": "record",
+					"kind": "archive_database",
+					"title": "Fictional archive"
+				},
+				{
+					"id": "paper",
+					"kind": "the_paper",
+					"title": "Fictional newspaper"
+				}
+			],
+			"facts": [
+				{
+					"id": "fact-preferred",
+					"subject_id": "person-fictional-deceased",
+					"type": "death",
+					"value": "perished",
+					"event_id": "event-fictional-death",
+					"place_id": "place-camp",
+					"date": {
+						"printed": "00.00.1945",
+						"start": "1945-03-13",
+						"end": "1945-12-31",
+						"precision": "range",
+						"inferred": true
+					},
+					"citations": [
+						{
+							"source_id": "record",
+							"record_id": "entry-1",
+							"quote": "Fictional death, 1945"
+						}
+					],
+					"evidence_confidence": "confirmed",
+					"identity_confidence": "confirmed",
+					"status": "accepted",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional reader",
+						"on": "2026-10-24"
+					},
+					"representation": "structured",
+					"qualifiers": {
+						"support_kind": "record",
+						"witness": "memorial"
+					}
+				},
+				{
+					"id": "fact-disputed",
+					"subject_id": "person-fictional-deceased",
+					"type": "death",
+					"value": "perished",
+					"event_id": "event-fictional-death",
+					"place_id": "place-other",
+					"date": {
+						"start": "1943",
+						"precision": "year"
+					},
+					"citations": [
+						{
+							"source_id": "record",
+							"record_id": "entry-2",
+							"quote": "Fictional death, 1943"
+						}
+					],
+					"evidence_confidence": "confirmed",
+					"identity_confidence": "confirmed",
+					"status": "disputed",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional reader",
+						"on": "2026-10-24"
+					},
+					"representation": "structured",
+					"qualifiers": {
+						"support_kind": "record",
+						"witness": "memorial"
+					}
+				},
+				{
+					"id": "fact-removal",
+					"subject_id": "person-fictional-deceased",
+					"type": "deportation",
+					"value": "perished",
+					"place_id": "place-camp",
+					"date": {
+						"start": "1945-03-13",
+						"precision": "day"
+					},
+					"citations": [
+						{
+							"source_id": "record",
+							"record_id": "entry-1",
+							"quote": "Fictional death, 1945"
+						}
+					],
+					"evidence_confidence": "confirmed",
+					"identity_confidence": "confirmed",
+					"status": "accepted",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional reader",
+						"on": "2026-10-24"
+					},
+					"representation": "structured",
+					"qualifiers": {
+						"support_kind": "record",
+						"witness": "memorial"
+					}
+				}
+			],
+			"relations": []
+		},
+		"issues": []
+	},
+	"models": {
+		"SiteArchive": []
+	},
+	"cases": [
+		{
+			"name": "records-only death preserves a range, disputed source and removal",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "an accepted disagreeing statement remains a separate fact",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 1, "status"],
+					"value": "accepted"
+				}
+			]
+		},
+		{
+			"name": "preferred statement may have no known date",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "date"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "preferred statement may give words only",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "date"],
+					"value": {
+						"printed": "during the war"
+					}
+				}
+			]
+		},
+		{
+			"name": "preferred statement gives an exact day",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "date"],
+					"value": {
+						"printed": "1 May 1945",
+						"start": "1945-05-01",
+						"precision": "day"
+					}
+				}
+			]
+		},
+		{
+			"name": "record death may have no known place",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "place_id"],
+					"remove": true
+				},
+				{
+					"path": ["shared_record", "events", 0, "location_id"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "range cannot be reversed",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "date", "end"],
+					"value": "1945-01-01"
+				}
+			],
+			"error": "range"
+		},
+		{
+			"name": "record date cannot invent a day on the event",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates", 0, "start"],
+					"value": "1945-03-13"
+				}
+			],
+			"error": "record date must only name its fact"
+		},
+		{
+			"name": "record date cannot be an issue date",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates", 0, "qualifier"],
+					"value": "reported_in"
+				},
+				{
+					"path": ["shared_record", "events", 0, "dates", 0, "reported_in"],
+					"value": "1945-03-13"
+				}
+			],
+			"error": "record date must only name its fact"
+		},
+		{
+			"name": "preferred death cannot be disputed",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "status"],
+					"value": "disputed"
+				}
+			],
+			"error": "record date must name an accepted record statement of this death"
+		},
+		{
+			"name": "preferred death cannot be proposed",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "status"],
+					"value": "proposed"
+				}
+			],
+			"error": "record date must name an accepted record statement of this death"
+		},
+		{
+			"name": "preferred death cannot be a family assertion alone",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "qualifiers", "support_kind"],
+					"value": "family_register"
+				}
+			],
+			"error": "record date must name an accepted record statement of this death"
+		},
+		{
+			"name": "preferred statement must exist",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates", 0, "record_fact_id"],
+					"value": "missing"
+				}
+			],
+			"error": "record date must name an accepted record statement of this death"
+		},
+		{
+			"name": "preferred statement must be a death",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates", 0, "record_fact_id"],
+					"value": "fact-removal"
+				}
+			],
+			"error": "record date must name an accepted record statement of this death"
+		},
+		{
+			"name": "preferred statement must name this event",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "event_id"],
+					"remove": true
+				}
+			],
+			"error": "record date must name an accepted record statement of this death"
+		},
+		{
+			"name": "preferred statement place must be the event place",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "location_id"],
+					"value": "place-other"
+				}
+			],
+			"error": "record death place must be its preferred statement place"
+		},
+		{
+			"name": "record death needs its one deceased",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "main_people"],
+					"value": []
+				}
+			],
+			"error": "record death needs one deceased person"
+		},
+		{
+			"name": "records-only death needs its preferred statement",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"printed": "1945",
+							"printed_calendar": "gregorian",
+							"start": "1945"
+						}
+					]
+				}
+			],
+			"error": "records-only death needs its preferred record fact"
+		},
+		{
+			"name": "records-only death cannot carry an extra printed date",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"record_fact_id": "fact-preferred"
+						},
+						{
+							"printed": "1945",
+							"printed_calendar": "gregorian",
+							"start": "1945"
+						}
+					]
+				}
+			],
+			"error": "records-only death takes its date only from its preferred fact"
+		},
+		{
+			"name": "death without newspaper selection must declare its basis",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events", 0, "evidence_basis"],
+					"remove": true
+				}
+			],
+			"error": "record death without an issue selection must say records_only"
+		},
+		{
+			"name": "RiC-CM: one death per deceased person",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events"],
+					"value": [
+						{
+							"id": "event-fictional-death",
+							"name": "Death of fictional deceased",
+							"type": "death",
+							"main_people": [
+								{
+									"person_id": "person-fictional-deceased",
+									"part": "deceased"
+								}
+							],
+							"dates": [
+								{
+									"record_fact_id": "fact-preferred"
+								}
+							],
+							"location_id": "place-camp",
+							"evidence_basis": "records_only"
+						},
+						{
+							"id": "event-second-death",
+							"name": "Death of fictional deceased",
+							"type": "death",
+							"main_people": [
+								{
+									"person_id": "person-fictional-deceased",
+									"part": "deceased"
+								}
+							],
+							"dates": [
+								{
+									"record_fact_id": "fact-preferred"
+								}
+							],
+							"location_id": "place-camp",
+							"evidence_basis": "records_only"
+						}
+					]
+				}
+			],
+			"error": "person has more than one death"
+		},
+		{
+			"name": "a memorial is a separate happening from the death",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["shared_record", "events"],
+					"value": [
+						{
+							"id": "event-fictional-death",
+							"name": "Death of fictional deceased",
+							"type": "death",
+							"main_people": [
+								{
+									"person_id": "person-fictional-deceased",
+									"part": "deceased"
+								}
+							],
+							"dates": [
+								{
+									"record_fact_id": "fact-preferred"
+								}
+							],
+							"location_id": "place-camp",
+							"evidence_basis": "records_only"
+						},
+						{
+							"id": "event-memorial",
+							"name": "Fictional memorial",
+							"type": "memorial",
+							"main_people": [
+								{
+									"person_id": "person-fictional-deceased",
+									"part": "remembered"
+								}
+							],
+							"dates": [
+								{
+									"printed": "1946",
+									"printed_calendar": "gregorian",
+									"start": "1946"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "a death fact cannot point to the memorial",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "events"],
+					"value": [
+						{
+							"id": "event-fictional-death",
+							"name": "Death of fictional deceased",
+							"type": "death",
+							"main_people": [
+								{
+									"person_id": "person-fictional-deceased",
+									"part": "deceased"
+								}
+							],
+							"dates": [
+								{
+									"record_fact_id": "fact-preferred"
+								}
+							],
+							"location_id": "place-camp",
+							"evidence_basis": "records_only"
+						},
+						{
+							"id": "event-memorial",
+							"name": "Fictional memorial",
+							"type": "memorial",
+							"main_people": [
+								{
+									"person_id": "person-fictional-deceased",
+									"part": "remembered"
+								}
+							],
+							"dates": [
+								{
+									"printed": "1946",
+									"printed_calendar": "gregorian",
+									"start": "1946"
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["shared_record", "facts", 1, "event_id"],
+					"value": "event-memorial"
+				}
+			],
+			"error": "death fact must name its person death event"
+		},
+		{
+			"name": "a death fact cannot point to somebody else death",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "persons"],
+					"value": [
+						{
+							"id": "person-fictional-deceased",
+							"name": "Fictional deceased",
+							"names": [],
+							"gender": "unknown"
+						},
+						{
+							"id": "person-other",
+							"name": "Another fictional deceased",
+							"names": [],
+							"gender": "unknown"
+						}
+					]
+				},
+				{
+					"path": ["shared_record", "facts", 1, "subject_id"],
+					"value": "person-other"
+				}
+			],
+			"error": "death fact must name its person death event"
+		},
+		{
+			"name": "preferred record statement cannot be newspaper evidence",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "citations"],
+					"value": [
+						{
+							"source_id": "paper",
+							"record_id": "notice-1"
+						}
+					]
+				}
+			],
+			"error": "record date must name an accepted record statement of this death"
+		},
+		{
+			"name": "records-only death cannot have an issue selection",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues"],
+					"value": [
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "fictional-page",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "fictional-heading",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "fictional-block",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "fictional-item"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "fictional-item",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "fictional-item",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "fictional-item",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-block"]
+											}
+										],
+										"location_ids": [],
+										"organization_ids": [],
+										"cross_references": [],
+										"event_id": "event-fictional-death"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["fictional-item"],
+										"heading_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-heading"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "person-fictional-deceased",
+										"content_item_id": "fictional-item",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										],
+										"address_grain": "words"
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "event-fictional-death",
+										"content_items": [
+											{
+												"content_item_id": "fictional-item",
+												"role": "mention"
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			],
+			"error": "records-only death cannot have an issue selection"
+		},
+		{
+			"name": "records-only death cannot be selected just on a content item",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues"],
+					"value": [
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "fictional-page",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "fictional-heading",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "fictional-block",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "fictional-item"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "fictional-item",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "fictional-item",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "fictional-item",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-block"]
+											}
+										],
+										"location_ids": [],
+										"organization_ids": [],
+										"cross_references": [],
+										"event_id": "event-fictional-death"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["fictional-item"],
+										"heading_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-heading"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "person-fictional-deceased",
+										"content_item_id": "fictional-item",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										],
+										"address_grain": "words"
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": []
+							}
+						}
+					]
+				}
+			],
+			"error": "records-only death cannot have an issue selection"
+		},
+		{
+			"name": "paper death may gather the record statements and keep its printed date",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["issues"],
+					"value": [
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "fictional-page",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "fictional-heading",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "fictional-block",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "fictional-item"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "fictional-item",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "fictional-item",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "fictional-item",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-block"]
+											}
+										],
+										"location_ids": [],
+										"organization_ids": [],
+										"cross_references": [],
+										"event_id": "event-fictional-death"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["fictional-item"],
+										"heading_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-heading"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "person-fictional-deceased",
+										"content_item_id": "fictional-item",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										],
+										"address_grain": "words"
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "event-fictional-death",
+										"content_items": [
+											{
+												"content_item_id": "fictional-item",
+												"role": "mention"
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				},
+				{
+					"path": ["shared_record", "events", 0, "evidence_basis"],
+					"remove": true
+				},
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"record_fact_id": "fact-preferred"
+						},
+						{
+							"printed": "1945",
+							"printed_calendar": "gregorian",
+							"start": "1945"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "record preference cannot follow a printed date",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues"],
+					"value": [
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "fictional-page",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "fictional-heading",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "fictional-block",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "fictional-item"
+											}
+										]
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "fictional-item",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "fictional-item",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "fictional-item",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-block"]
+											}
+										],
+										"location_ids": [],
+										"organization_ids": [],
+										"cross_references": [],
+										"event_id": "event-fictional-death"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["fictional-item"],
+										"heading_blocks": [
+											{
+												"page_id": "fictional-page",
+												"block_ids": ["fictional-heading"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "person-fictional-deceased",
+										"content_item_id": "fictional-item",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										],
+										"address_grain": "words"
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "event-fictional-death",
+										"content_items": [
+											{
+												"content_item_id": "fictional-item",
+												"role": "mention"
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				},
+				{
+					"path": ["shared_record", "events", 0, "evidence_basis"],
+					"remove": true
+				},
+				{
+					"path": ["shared_record", "events", 0, "dates"],
+					"value": [
+						{
+							"printed": "1945",
+							"printed_calendar": "gregorian",
+							"start": "1945"
+						},
+						{
+							"record_fact_id": "fact-preferred"
+						}
+					]
+				}
+			],
+			"error": "death must put its one preferred record date first"
+		}
+	]
+}

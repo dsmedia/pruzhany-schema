@@ -410,14 +410,24 @@ export const SiteArchiveSchema = z
 					errors.push('unknown content item organisation');
 				if (item.event_id && !events.has(item.event_id) && !issueEvents.has(item.event_id))
 					errors.push('unknown content item event');
+				if (item.event_id && events.get(item.event_id)?.evidence_basis === 'records_only')
+					errors.push('records-only death cannot have an issue selection');
 			}
 			for (const event of issue.life_events.life_events) {
 				if (!events.has(event.id)) errors.push('unknown life event');
+				if (events.get(event.id)?.evidence_basis === 'records_only')
+					errors.push('records-only death cannot have an issue selection');
 				if (!firstIssues.has(event.id) || date < firstIssues.get(event.id)!)
 					firstIssues.set(event.id, date);
 			}
 		}
-		for (const event of v.shared_record.events)
+		for (const event of v.shared_record.events) {
+			if (
+				event.dates.some((d) => d.record_fact_id) &&
+				!firstIssues.has(event.id) &&
+				event.evidence_basis !== 'records_only'
+			)
+				errors.push('record death without an issue selection must say records_only');
 			for (const date of event.dates)
 				if (
 					date.qualifier === 'reported_in' &&
@@ -425,6 +435,7 @@ export const SiteArchiveSchema = z
 					date.reported_in !== firstIssues.get(event.id)
 				)
 					errors.push('reported_in must be the first issue date');
+		}
 		const citedContentItem = (c: Citation) =>
 			c.edition_date && c.unit_id
 				? contentItems.get(contentItemKey(c.edition_date, c.unit_id))

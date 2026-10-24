@@ -26,10 +26,9 @@ citing only the family's register, with no place and no date.
 - **The person's `death_year` and `holocaust_fate` are derived** from the preferred statement through `Fate.rests_on`
   and `legacyHolocaustFate`. The ranking, best first: a record made at the time, a memorial's book of the dead, a page
   of testimony, a later oral testimony. Confidence never rises above the best witness.
-- **A record-only death stays a fact** (constraint (a) of the council: every life event so far comes from the paper).
-  Its `event_id` stays empty, so that one death event can later gather the facts unchanged. The owner answered on
-  24 October 2026 that a death event may rest on records alone (ADR 0001, its amendment of that day); building it is
-  the next piece of work.
+- **The council initially left a record-only death as facts** (constraint (a): every life event then came from the
+  paper). The owner answered on 24 October 2026 that a death event may rest on records alone (ADR 0001's amendment).
+  Ticket 03 below builds that amendment; the facts acquire `event_id` without changing their statements.
 
 ## What changed
 
@@ -77,8 +76,59 @@ Each address is `https://portal.ehri-project.eu/keywords/<id>`. EHRI 0.2.0 has n
 only), so `location_types.camp` stays local. The portal's pages also give Wikidata ids; no Wikidata identifier is
 written until Impresso-2's form is checked again (vetting §8, "Later").
 
-## Not done here
+## Death events from records (ticket 03, 24 October 2026)
 
-- The register's structured statements and the writer: pruzhany-steps.
-- The site's wording and its `ARCHIVE_HOSTS` copy: the redesign session.
-- The crosswalk rows for death and place of death from the fan-out: the owner's next vocabulary batch.
+`SharedEvent.evidence_basis: "records_only"` explicitly says that no issue selects this death. Absence of an issue
+selection alone is insufficient: older research events also have no selection, and a shared event must remain
+intelligible when read without every issue. The marker is optional on existing events and is removed if a newspaper
+death later covers the same person. A records-only event has exactly one main person, with the released `deceased`
+part, and one date entry: `{record_fact_id: "<preferred death fact id>"}`.
+
+This new `LifeEventDate` form refers to the accepted record statement instead of copying its date. Read that fact's
+`date` for the event and the person's derived death date. This preserves `SourcedDate` exactly, including ranges,
+inferred bounds, words without normalization, and the absence of a known date. Shulim's `00.00.1945` remains the range
+`1945-03-13` to `1945-12-31`, `inferred: true`; it gives 1945, never a death on 13 March. Where records disagree,
+`Person.preferred_death()` selects the statement, with the existing witness/confidence ranking and register tie order;
+the other dates stay in their facts. `location_id` must equal that same statement's `place_id`, including absence.
+No date is added to `SharedPerson`. The site's consumer must resolve the date reference before projecting or displaying
+the event or deriving the person's year/day; public projection remains the site session's work.
+
+The writer gathers records after resolving the newspaper's events and people's identities. It reuses an existing
+death for the same resolved deceased person, retaining its id and its actual printed dates after the preferred record
+reference; an issue-date fallback is replaced. Otherwise it makes `event-death-<person id without person->`, independent
+of the date, source, place and enumeration order. Every death fact of that person receives the event id, including
+disputed and proposed facts and older family assertions. Facts retain their ids, payloads, standing and citations.
+Deportations remain facts. A later newspaper death retires the record event through the writer's permanent redirects.
+
+The prior distinction between a memorial and a death still holds (ADR 0001; the one-life-event design): an annual or
+thirtieth-day commemoration keeps its own `memorial` event, `remembered` part and date. A memorial is not silently
+retyped as the death. No eligible person in this measurement has only a newspaper memorial.
+
+Both language contracts refuse a second death for one person, a death fact referencing another person's death or a
+memorial, a missing/disputed/proposed/non-record preferred statement, a place different from that statement, or a
+records-only event selected by an issue or by a content item's `event_id`. A date reference is first and unique; it
+cannot also carry a printed or reported-in date. Existing printed-calendar, ISO-date and first-report rules remain.
+`records_only` describes the event's basis and lack of selection, not the absence of all older assertions: the writer
+must gather them unchanged. In particular, the input includes 70 accepted paper assertions on these people whose
+citations alone do not identify them as the event's deceased. They cannot establish an event join. Their editorial
+standing is preserved; no source or citation is corrected in this ticket.
+
+Mappings checked in the pinned `standards/rico-1.1-axioms.json` and vocabulary:
+
+| element | mapping |
+|---|---|
+| death event and kind | existing `rico:Event`, `rico:hasEventType`, released `pc:event_types_death` |
+| person who died | released `pc:part_deceased` under `rico:affectsOrAffected` (Event → Thing, narrowed to Person) |
+| evidence on the sourced statement | existing `rico:isEvidencedBy` (Relation → RecordResource); an export qualifies the event assertion through `rico:EventRelation`, never puts this property directly on Event |
+| selected source date | existing `rico:Date` with `expressedDate`, `normalizedDateValue` and `dateQualifier`; no new date claim |
+| `evidence_basis` and `record_fact_id` | local `pc:site_event_evidence_basis` and `pc:site_event_record_date`, declared with reasons in `vocabulary/site-content.profile.ttl`; neither pinned ontology chooses a preferred statement or records absence from this newspaper |
+
+The 238-issue input gains **260** death events; **0** people join an existing newspaper death. **137** preferred
+statements have dates and **123** do not. **2,491** death facts gain their person's event id, including facts joining
+already existing newspaper deaths; all **25** deportation facts and every citation remain unchanged. The entire
+candidate archive passes the schema, and repeating the gathering gives identical shared-record shard bytes.
+The full Shulim event, its three record statements, counts and input digest are kept in pruzhany-steps
+`decisions/159-death-events-from-records/measurement.json`; decision 159 records checks and refresh commands.
+
+The site's wording, projection and `ARCHIVE_HOSTS` copy remain the redesign session's. The fan-out crosswalk rows for
+death and place of death remain the owner's vocabulary batch; this ticket releases no new event kind or part.
