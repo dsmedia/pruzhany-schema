@@ -13,7 +13,7 @@ import {
 	ImpressoTypesSchema,
 	ContentItemSubtypesSchema,
 	SubjectsSchema,
-	siteVocabularyVersion,
+	SiteVocabularyVersionSchema,
 	subtypeParents,
 } from './site-content.vocabulary';
 
@@ -67,7 +67,7 @@ export type PrintedSection = z.infer<typeof PrintedSectionSchema>;
 export const ContentItemsDataSchema = z
 	.strictObject({
 		issue_date: siteDay,
-		vocabulary_version: z.literal(siteVocabularyVersion),
+		vocabulary_version: SiteVocabularyVersionSchema,
 		content_items: z.array(ContentItemSchema),
 		sections: z.array(PrintedSectionSchema),
 	})

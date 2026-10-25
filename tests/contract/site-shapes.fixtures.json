@@ -8443,6 +8443,50 @@
 					"value": "J42:text "
 				}
 			]
+		},
+		{
+			"name": "ContentItemsData: released vocabulary stamp",
+			"model": "ContentItemsData",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["vocabulary_version"],
+					"value": "1.0.0"
+				}
+			]
+		},
+		{
+			"name": "ContentItemsData: unknown vocabulary stamp",
+			"model": "ContentItemsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["vocabulary_version"],
+					"value": "9.9.9"
+				}
+			]
+		},
+		{
+			"name": "ContentItem: unresolved subtype stays unreleased",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "masthead"
+				}
+			]
+		},
+		{
+			"name": "ContentItem: unknown subject stays unreleased",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subject_ids"],
+					"value": ["unresolved_subject"]
+				}
+			]
 		}
 	]
 }
