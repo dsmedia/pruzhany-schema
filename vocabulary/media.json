@@ -46,10 +46,9 @@
     },
     {
       "id": "media_kind",
-      "definition": "image, audio, video or document: a closed local presentation list.",
+      "definition": "An instantiation uses one of our four local RepresentationType concepts: image, audio, video, document.",
       "mapping": {
-        "local": "pc:media_kind",
-        "reason": "These are presentation kinds of an instantiation, not released ContentType concepts. RiC-O hasContentOfType belongs to Record or RecordPart; its ContentType list has not been read."
+        "rico": "hasRepresentationType"
       }
     },
     {
@@ -57,7 +56,7 @@
       "definition": "Our page caption, with a separate human review.",
       "mapping": {
         "local": "pc:media_caption",
-        "reason": "Neither pinned ontology defines this application's caption text and its reviewed by/on value."
+        "reason": "The application records caption language and review day/role; the pinned ontologies do not define that composite."
       }
     },
     {
@@ -86,7 +85,7 @@
     },
     {
       "id": "media_clearance",
-      "definition": "The owner's explicit permission by medium, with who and when.",
+      "definition": "Public clearance day and closed role; contributor identity and consent evidence are private.",
       "mapping": {
         "local": "pc:media_clearance",
         "reason": "Rights and text review cannot stand for the owner's permission to derive or serve a private copy."
@@ -102,7 +101,7 @@
     },
     {
       "id": "media_master",
-      "definition": "Private storage key, SHA-256, MIME type and byte count.",
+      "definition": "A separate private bucket name, content key, SHA-256, MIME, byte count and dated fixity check.",
       "mapping": {
         "local": "pc:media_master",
         "reason": "Neither pinned ontology defines this application's content-addressed private storage descriptor; it never enters the public projection."
@@ -110,10 +109,97 @@
     },
     {
       "id": "media_derived",
-      "definition": "WebP addresses and actual dimensions at the page-picture widths.",
+      "definition": "Content-hashed WebP addresses, actual dimensions and the sole process resize at the exported widths.",
       "mapping": {
         "local": "pc:media_derived",
         "reason": "Neither pinned ontology defines this application's responsive WebP delivery manifest."
+      }
+    },
+    {
+      "id": "media_conditions_of_access",
+      "definition": "The holder's access terms, verbatim.",
+      "mapping": {
+        "rico": "conditionsOfAccess"
+      }
+    },
+    {
+      "id": "media_credit",
+      "definition": "The holder or family's credit, verbatim.",
+      "mapping": {
+        "local": "pc:media_credit",
+        "reason": "IIIF requiredStatement is a future delivery crosswalk; no IIIF ontology is pinned here."
+      }
+    },
+    {
+      "id": "media_depicted",
+      "definition": "Identified or unidentified people, human identification basis and master pixel regions.",
+      "mapping": {
+        "local": "pc:media_depicted",
+        "reason": "Source subjects use RiC-O; this per-picture identification and rectangle are application data."
+      }
+    },
+    {
+      "id": "media_shows_unidentified",
+      "definition": "An explicit declaration that the picture includes unidentified people.",
+      "mapping": {
+        "local": "pc:media_shows_unidentified",
+        "reason": "This publication safeguard is local, not a record subject inference."
+      }
+    },
+    {
+      "id": "media_inscription",
+      "definition": "The object's own words with language and human review.",
+      "mapping": {
+        "local": "pc:media_inscription",
+        "reason": "The text and review composite is local; the object remains the cited record."
+      }
+    },
+    {
+      "id": "media_family_words",
+      "definition": "A public citation of the family's words, quote language and page or recorded part.",
+      "mapping": {
+        "local": "pc:media_family_words",
+        "reason": "This is a Citation subset, not a second caption or an invented source."
+      }
+    },
+    {
+      "id": "media_transcript",
+      "definition": "Full document text with language and review.",
+      "mapping": {
+        "local": "pc:media_transcript",
+        "reason": "The transcript text and its review are application data, not an inferred RiC-O relationship."
+      }
+    },
+    {
+      "id": "media_consent",
+      "definition": "Private basis, giver, scope, evidence reference and withdrawal day.",
+      "mapping": {
+        "local": "pc:media_consent",
+        "reason": "Permission evidence is private and must not be represented as public creator or holder metadata."
+      }
+    },
+    {
+      "id": "media_withdrawn",
+      "definition": "A retained withdrawal day and closed reason, with no served files.",
+      "mapping": {
+        "local": "pc:media_withdrawn",
+        "reason": "Withdrawal is a publication state; it does not delete the cited record."
+      }
+    },
+    {
+      "id": "media_portrait",
+      "definition": "A person's reviewed medium and crop region in oriented master pixels.",
+      "mapping": {
+        "local": "pc:media_portrait",
+        "reason": "This is a presentation selection; it does not change the photograph or its source."
+      }
+    },
+    {
+      "id": "source_made_by",
+      "definition": "Family, studio, institution, perpetrator or unknown origin classification.",
+      "mapping": {
+        "local": "pc:source_made_by",
+        "reason": "A category is not a creator Agent, so made_by must not be asserted as rico:hasCreator."
       }
     }
   ]

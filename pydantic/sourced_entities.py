@@ -68,6 +68,7 @@ class SourceDerivation(Strict):
 
 
 class Source(Strict):
+    made_by: Literal['family', 'studio', 'institution', 'perpetrator', 'unknown'] | None = None
     id: Text
     kind: SourceKinds
     title: Text
