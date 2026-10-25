@@ -48,7 +48,7 @@ labelled RiC-O cites the axiom in `standards/rico-1.1-axioms.json`, pinned at th
 - Round 4 of ticket 09 (pruzhany-steps) builds events, parts and the described children to this table, with the
   evidence mapping corrected inside it (the owner's fourth grilling, answer 1); storing relations once is the round
   after. The shape is `docs/design/2026-10-23-one-life-event.md`.
-- Vocabulary changes it implies go to the owner's batch (#16): the parts, two event kinds, grandparents remapped to
+- Vocabulary changes it implies go to the owner's batch ([approval record](../vocabulary-approvals.md)): the parts, two event kinds, grandparents remapped to
   `hasDescendant`, the `supplied` name kind, `parenthood` deprecated.
 - When EHRI moves its namespace, or RiC-O 1.2 or 2.0 is released and EHRI imports it, the owner is told; a new
   `standards/` file is added at the owner's word and every mapping re-checked. Stored data does not change.

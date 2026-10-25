@@ -92,7 +92,7 @@ def check(root=ROOT):
         inverse = entry.get('inverse')
         if inverse not in relationships or relationships[inverse].get('inverse') != id:
             errors.append(f'{id}: inverse must exist and be symmetric')
-    for snapshot in sorted((folder / 'released').glob('*.json')):
+    for snapshot in sorted((folder / 'released').glob('[0-9]*.json')):
         previous = json.loads(snapshot.read_text(encoding='utf-8'))
         for group, entries in previous['groups'].items():
             missing = {e['id'] for e in entries} - ids.get(group, set())
@@ -139,12 +139,45 @@ def check_site_content(root=ROOT):
     vocabulary = json.loads((folder / 'site-content.json').read_text(encoding='utf-8'))
     profile = (folder / 'site-content.profile.ttl').read_text(encoding='utf-8')
     errors = []
-    if vocabulary.get('status') != 'proposed' or vocabulary.get('released_on') or vocabulary.get('approved_by'):
-        errors.append('site-content: this vocabulary is proposed, not approved or released')
-    if (folder / 'released' / ('site-content-' + vocabulary['version'] + '.json')).exists():
-        errors.append('site-content: proposed vocabulary cannot have a release snapshot')
-    if f'owl:versionInfo "{vocabulary["version"]} proposed; unreleased"' not in profile:
-        errors.append('site-content: profile must be marked proposed and unreleased at this version')
+    status = vocabulary.get('status')
+    snapshot = folder / 'released' / ('site-content-' + vocabulary['version'] + '.json')
+    if status not in {'proposed', 'released'}:
+        errors.append('site-content: invalid vocabulary status')
+    if status == 'released':
+        if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', vocabulary.get('released_on') or ''):
+            errors.append('site-content: released vocabulary requires a date')
+        if not vocabulary.get('approved_by'):
+            errors.append('site-content: released vocabulary requires approval metadata')
+        if not snapshot.exists():
+            errors.append('site-content: current released snapshot is missing')
+        elif json.loads(snapshot.read_text(encoding='utf-8')) != vocabulary:
+            errors.append('site-content: current released snapshot must equal current vocabulary')
+        version_info = f'{vocabulary["version"]} released {vocabulary.get("released_on")}'
+    else:
+        if vocabulary.get('released_on') is not None:
+            errors.append('site-content: proposed vocabulary cannot have a release date')
+        if snapshot.exists():
+            errors.append('site-content: proposed vocabulary cannot have a release snapshot')
+        version_info = f'{vocabulary["version"]} proposed; unreleased'
+    if f'owl:versionInfo "{version_info}"' not in profile:
+        errors.append('site-content: profile must match vocabulary version and release status')
+    compatible = vocabulary.get('compatible_versions', [])
+    if (not isinstance(compatible, list) or
+            any(not isinstance(v, str) or not re.fullmatch(r'\d+\.\d+\.\d+', v) for v in compatible) or
+            len(set(compatible)) != len(compatible) or vocabulary['version'] in compatible):
+        errors.append('site-content: compatible versions must be unique prior version strings')
+    for previous_path in sorted((folder / 'released').glob('site-content-*.json')):
+        previous = json.loads(previous_path.read_text(encoding='utf-8'))
+        for group, entries in previous['groups'].items():
+            current_ids = {e['id'] for e in vocabulary['groups'].get(group, [])}
+            missing = {e['id'] for e in entries} - current_ids
+            if missing:
+                errors.append(f'{previous_path.name}: released ids removed from {group}: {sorted(missing)}')
+        for key in ('impresso_types', 'bindings'):
+            def identifiers(data):
+                return set(data[key]) if key == 'impresso_types' else {e['id'] for e in data[key]}
+            if identifiers(previous) - identifiers(vocabulary):
+                errors.append(f'{previous_path.name}: released ids removed from {key}')
     types = vocabulary['impresso_types']
     if (not isinstance(types, list) or not types
             or any(not isinstance(value, str) or not value.strip() for value in types)
@@ -167,11 +200,21 @@ def check_site_content(root=ROOT):
                         'subjects': 'skos:Concept', 'title_types': 'rico:TitleType'}
     if set(vocabulary['groups']) != set(expected_classes):
         errors.append('site-content: unexpected concept groups')
+    released_groups = vocabulary.get('released_groups', [])
+    if status == 'released' and (not isinstance(released_groups, list) or not released_groups or
+            any(not isinstance(group, str) or group not in expected_classes for group in released_groups) or
+            len(set(released_groups)) != len(released_groups)):
+        errors.append('site-content: release must name its approved concept groups')
+        released_groups = []
     for group, entries in vocabulary['groups'].items():
         if not entries or len({e['id'] for e in entries}) != len(entries):
             errors.append(f'{group}: empty group or duplicate ids')
         for entry in entries:
             where = f'{group}.{entry["id"]}'
+            if status == 'released' and group in released_groups and entry.get('status') == 'proposed':
+                errors.append(f'{where}: released entry cannot remain proposed')
+            if status == 'released' and group not in released_groups and entry.get('status') != 'proposed':
+                errors.append(f'{where}: unapproved entry must remain proposed')
             for key in ('id', 'label', 'definition', 'added_in'):
                 if not isinstance(entry.get(key), str) or not entry[key].strip():
                     errors.append(f'{where}: missing {key}')

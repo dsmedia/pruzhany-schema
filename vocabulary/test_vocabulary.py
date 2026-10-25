@@ -38,6 +38,9 @@ class VocabularyTests(unittest.TestCase):
         self.released = self.data['version']
         major, minor, _ = (int(part) for part in self.released.split('.'))
         self.following = f'{major}.{minor + 1}.0'
+        self.site_path = self.root / 'vocabulary/site-content.json'
+        self.site = json.loads(self.site_path.read_text(encoding='utf-8'))
+        self.site_released = self.site['version']
 
     def check(self):
         self.path.write_text(json.dumps(self.data), encoding='utf-8')
@@ -178,8 +181,9 @@ class VocabularyTests(unittest.TestCase):
         self.assertEqual(json.loads(outputs[snapshot]), self.data)
         self.next_proposal()
         self.check()
-        self.assertFalse(any(path.parent.name == 'released'
-                             for path in generator.generated(self.root)))
+        outputs = generator.generated(self.root)
+        self.assertEqual({path for path in outputs if path.parent.name == 'released'},
+                         {self.root / f'vocabulary/released/site-content-{self.site_released}.json'})
 
     def test_current_snapshot_must_match(self):
         self.data['groups']['fact_types'][0]['label'] = 'Changed label'
@@ -256,12 +260,75 @@ class VocabularyTests(unittest.TestCase):
             self.assertNotIn('\r', content)
         compile(first[HERE.parent / 'pydantic/sourced_entities_vocabulary.py'], '<generated>', 'exec')
 
-    def test_site_vocabulary_stays_proposed(self):
-        path = self.root / 'vocabulary/site-content.json'
-        data = json.loads(path.read_text(encoding='utf-8'))
-        data['released_on'] = '2026-10-22'
-        path.write_text(json.dumps(data), encoding='utf-8')
-        self.assertTrue(any('proposed' in e for e in self.check()))
+    def site_check(self):
+        self.site_path.write_text(json.dumps(self.site), encoding='utf-8')
+        return validator.check(self.root)
+
+    def site_proposal(self):
+        self.site.update(version='1.1.0', status='proposed')
+        self.site.pop('released_on', None)
+        self.site.pop('approved_by', None)
+        path = self.root / 'vocabulary/site-content.profile.ttl'
+        path.write_text(path.read_text().replace(
+            f'{self.site_released} released 2026-10-25', '1.1.0 proposed; unreleased'))
+
+    def test_site_release_requires_snapshot_date_and_approval(self):
+        snapshot = self.root / f'vocabulary/released/site-content-{self.site_released}.json'
+        snapshot.unlink()
+        self.assertTrue(any('site-content: current released snapshot is missing' in e for e in self.site_check()))
+        for key, message in [('released_on', 'requires a date'), ('approved_by', 'requires approval')]:
+            with self.subTest(key=key):
+                original = self.site.pop(key)
+                self.assertTrue(any(message in e for e in self.site_check()))
+                self.site[key] = original
+
+    def test_site_current_snapshot_must_match(self):
+        self.site['groups']['subjects'][0]['label'] = 'Changed label'
+        self.assertTrue(any('snapshot must equal' in e for e in self.site_check()))
+
+    def test_site_released_ids_cannot_be_removed_or_renamed(self):
+        for group in self.site['groups']:
+            with self.subTest(group=group):
+                self.site_proposal()
+                original = self.site['groups'][group][0]['id']
+                self.site['groups'][group][0]['id'] = 'renamed'
+                self.assertTrue(any(f'released ids removed from {group}' in e for e in self.site_check()))
+                self.site['groups'][group][0]['id'] = original
+
+    def test_site_snapshot_history_is_independent(self):
+        outputs = generator.generated(self.root)
+        snapshot = self.root / f'vocabulary/released/site-content-{self.site_released}.json'
+        self.assertEqual(json.loads(outputs[snapshot]), self.site)
+        self.site_proposal()
+        self.assertEqual(self.site_check(), [])
+        outputs = generator.generated(self.root)
+        self.assertEqual({path for path in outputs if path.parent.name == 'released'},
+                         {self.root / f'vocabulary/released/{self.released}.json'})
+        self.site['released_on'] = '2026-10-26'
+        self.assertTrue(any('proposed vocabulary cannot have a release date' in e for e in self.site_check()))
+        self.site.pop('released_on')
+        (self.root / 'vocabulary/released/site-content-1.1.0.json').write_text(json.dumps(self.site))
+        self.assertTrue(any('proposed vocabulary cannot have a release snapshot' in e for e in self.site_check()))
+
+    def test_site_released_entry_cannot_remain_proposed(self):
+        self.site['groups']['subjects'][0]['status'] = 'proposed'
+        self.assertTrue(any('released entry cannot remain proposed' in e for e in self.site_check()))
+
+    def test_site_release_names_approved_groups_and_keeps_titles_proposed(self):
+        self.assertEqual(self.site['released_groups'], ['content_item_subtypes', 'subjects'])
+        self.assertTrue(all(e['status'] == 'proposed' for e in self.site['groups']['title_types']))
+        self.site['groups']['title_types'][0].pop('status')
+        self.assertTrue(any('unapproved entry must remain proposed' in e for e in self.site_check()))
+        for groups in [[], ['missing'], ['subjects', 'subjects'], [None], 'subjects']:
+            with self.subTest(groups=groups):
+                self.site['released_groups'] = groups
+                self.assertTrue(any('release must name its approved concept groups' in e for e in self.site_check()))
+
+    def test_site_compatible_versions_are_explicit(self):
+        for versions in [['0.1.0', '0.1.0'], [self.site_released], [''], [None], '0.1.0']:
+            with self.subTest(versions=versions):
+                self.site['compatible_versions'] = versions
+                self.assertTrue(any('compatible versions' in e for e in self.site_check()))
 
     def test_released_batch_cannot_be_proposed_again(self):
         path = self.root / 'vocabulary/site-content.json'
@@ -282,6 +349,8 @@ class VocabularyTests(unittest.TestCase):
         self.assertTrue(any('owner decision' in e for e in self.check()))
 
     def test_owner_parent_rule_comes_from_data(self):
+        self.site_proposal()
+        self.site_check()
         path = self.root / 'vocabulary/site-content.json'
         data = json.loads(path.read_text(encoding='utf-8'))
         entry = next(e for e in data['groups']['content_item_subtypes'] if e['id'] == 'poem')
@@ -293,6 +362,8 @@ class VocabularyTests(unittest.TestCase):
         self.assertEqual(self.check(), [])
 
     def test_impresso_parents_come_from_data(self):
+        self.site_proposal()
+        self.site_check()
         path = self.root / 'vocabulary/site-content.json'
         data = json.loads(path.read_text(encoding='utf-8'))
         data['impresso_types'].append('fictional_type')
@@ -332,10 +403,11 @@ class VocabularyTests(unittest.TestCase):
         self.assertTrue(any('site-content.profile.ttl' in e and 'UnknownClass' in e
                             for e in alignment.check(self.root)))
 
-    def test_proposed_profile_cannot_claim_release(self):
+    def test_profile_must_match_release_status(self):
         path = self.root / 'vocabulary/site-content.profile.ttl'
-        path.write_text(path.read_text().replace('proposed; unreleased', 'released'))
-        self.assertTrue(any('profile must be marked proposed' in e for e in self.check()))
+        path.write_text(path.read_text().replace(
+            f'{self.site_released} released 2026-10-25', f'{self.site_released} proposed; unreleased'))
+        self.assertTrue(any('profile must match vocabulary version and release status' in e for e in self.check()))
 
     def test_proposed_bindings_need_declared_reasons(self):
         path = self.root / 'vocabulary/site-content.profile.ttl'

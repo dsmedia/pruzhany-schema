@@ -30,3 +30,6 @@ Thumbs.db
 .claude/worktrees/
 .claude/projects/
 .claude/scheduled_tasks.lock
+
+# Local session commit handoff
+.codex-commit-message.txt

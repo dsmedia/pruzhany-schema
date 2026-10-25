@@ -5,8 +5,8 @@
 @prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
 
 <https://pruzhany.org/ns/site-content> a owl:Ontology ;
-  owl:versionInfo "0.1.0 proposed; unreleased" ;
-  rdfs:comment "Proposed site-content application profile; terms await owner approval and do not alter the released sourced-entities profile." .
+  owl:versionInfo "1.0.0 released 2026-10-25" ;
+  rdfs:comment "Site-content application profile; subtypes and subjects approved by the owner on 2026-10-25 (steps decision 164). Title types remain proposed and existing shape bindings are retained; sourced-entities is independently versioned." .
 
 pc:subtype_wedding_greeting a skos:Concept, rico:DocumentaryFormType ; skos:prefLabel "Wedding greeting"@en ; skos:definition "A greeting to a couple on their wedding."@en ; rdfs:comment "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms." .
 pc:subtype_engagement_greeting a skos:Concept, rico:DocumentaryFormType ; skos:prefLabel "Engagement greeting"@en ; skos:definition "A greeting on an engagement."@en ; rdfs:comment "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms." .

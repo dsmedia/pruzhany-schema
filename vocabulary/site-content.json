@@ -1,7 +1,7 @@
 {
-	"version": "0.1.0",
-	"status": "proposed",
-	"scope": "Proposed site content subtypes, subjects and title types, with site shape bindings; released life-event parts, memorial and supplied names belong to sourced-entities 1.2.0.",
+	"version": "1.0.0",
+	"status": "released",
+	"scope": "Site content subtypes and subjects approved on 2026-10-25; existing title types remain proposed and site shape bindings are retained. Released life-event parts, memorial and supplied names belong to sourced-entities 1.2.0.",
 	"impresso_types": [
 		"article",
 		"ad",
@@ -489,7 +489,8 @@
 				"mapping": {
 					"local": "pc:title_type_printed",
 					"reason": "Distinguishes words printed in the source from a supplied name; RiC-O defines TitleType but not this controlled value."
-				}
+				},
+				"status": "proposed"
 			},
 			{
 				"id": "supplied",
@@ -500,7 +501,8 @@
 				"mapping": {
 					"local": "pc:title_type_supplied",
 					"reason": "Distinguishes an attributed English name from printed words; RiC-O defines TitleType but not this controlled value."
-				}
+				},
+				"status": "proposed"
 			}
 		]
 	},
@@ -1106,5 +1108,14 @@
 				"reason": "Neither pinned ontology encodes this project's publication condition."
 			}
 		}
+	],
+	"released_on": "2026-10-25",
+	"approved_by": "Owner, 2026-10-25: pruzhany-steps decision 164, item 1; release the proposed subtypes and subjects as they stand. The 38 unresolved values stay other with their proposed_type.",
+	"compatible_versions": [
+		"0.1.0"
+	],
+	"released_groups": [
+		"content_item_subtypes",
+		"subjects"
 	]
 }

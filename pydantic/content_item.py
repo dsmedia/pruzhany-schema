@@ -3,7 +3,7 @@ from typing import Annotated, Literal
 from pydantic import BeforeValidator, Field, model_validator
 from .sourced_entities import Strict, Text, Day
 from .site_common import CrossReference, ContentItemBlockRef, PrintedTitle, SuppliedTitle, Translation, unique_ids
-from .site_content_vocabulary import ImpressoTypes, ContentItemSubtypes, Subjects, SUBTYPE_PARENTS
+from .site_content_vocabulary import ImpressoTypes, ContentItemSubtypes, Subjects, SiteVocabularyVersion, SUBTYPE_PARENTS
 
 
 def integer_offset(value):
@@ -12,6 +12,15 @@ def integer_offset(value):
 
 
 Offset = Annotated[int, BeforeValidator(integer_offset), Field(ge=0, le=9007199254740991)]
+
+
+ReadingStatusValue = Literal['machine', 'session_checked', 'person_corrected']
+
+
+class ReadingStatus(Strict):
+    """Field-level provenance; null means unrecorded, not human review."""
+    text: ReadingStatusValue | None
+    english: ReadingStatusValue | None
 
 
 class ContentItem(Strict):
@@ -24,6 +33,7 @@ class ContentItem(Strict):
     section_id: Text | None = None
     full_text: str  # Copy made for the site from the physical source's lines.
     translation: Translation | None = None
+    reading_status: ReadingStatus | None = None
     block_breaks: list[Offset]
     page_blocks: list[ContentItemBlockRef] = Field(min_length=1)
     location_ids: list[Text]  # Places in the shared record; site spelling retained.
@@ -64,7 +74,7 @@ class PrintedSection(Strict):
 
 class ContentItemsData(Strict):
     issue_date: Day
-    vocabulary_version: Literal['0.1.0']
+    vocabulary_version: SiteVocabularyVersion
     content_items: list[ContentItem]
     sections: list[PrintedSection]
 

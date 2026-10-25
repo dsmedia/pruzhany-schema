@@ -164,7 +164,7 @@ ISWC 2023 paper, RiC-CM and RiC-AG on ica.org (their GitHub copies were read).
   RiC-O's `IdentifierType` gives "old identifier" as its example ([G7]; [R]). *Inference*: an id of ours, once
   published, is never renamed, reused or deleted; a merge keeps one and redirects the other for ever (the round-2 maps
   already do this); a split keeps the old id on the person with the most of its evidence and mints a new one. Ids are
-  never parsed for meaning, though today's `person-<slug>-<date>` form stays (the owner's "keep existing site IDs", #16).
+  never parsed for meaning, though today's `person-<slug>-<date>` form stays (the owner's "keep existing site IDs", [approval record](../vocabulary-approvals.md)).
 - **Outside ids** (an EHRI ARK, Yad Vashem, Arolsen, Wikidata) are carried as identifiers only on evidence, with their
   source and standing, never from a name match (EHRI's own VIAF trial above). A record that describes a person is a
   source about them, not the same thing; `sameAs` is kept for an adjudicated equivalence (the correction of 20 October in
@@ -270,7 +270,7 @@ Each of the owner's answers in brief 09 against what was read. "Holds" means con
 
 - **The owner's, answered:** RiC-O 1.1's axioms are pinned (`standards/rico-1.1-axioms.json`, the owner's "yes, pin the
   rules" of 23 October 2026; §6).
-- **The owner's batch (#16), answered and released in 1.2.0 on 2026-10-23:** after seeing two or three real printed
+- **The owner's batch ([approval record](../vocabulary-approvals.md)), answered and released in 1.2.0 on 2026-10-23:** after seeing two or three real printed
   notices and their English for each new term on the private batch page, the owner answered **"Yes"** to **"yes to all"**.
   The seven parts are released as §2 proposed them: `parent` under `rico:hasOrHadParticipant`; `baby`, `bride`,
   `groom`, `boy`, `deceased` and `remembered` under `rico:affectsOrAffected`. `memorial` covers annual and 30-day remembrance, never the death; `supplied` marks our attributed
