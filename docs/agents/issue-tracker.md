@@ -23,7 +23,7 @@ or the GitHub MCP tools (`mcp__github__issue_read`, `issue_write`, `list_issues`
 `add_issue_comment`). Every comment or issue body written by an agent ends with the
 Claude Code attribution footer.
 
-New vocabulary types are proposed in batches for the owner's approval (#16), each with
+New vocabulary types are proposed in batches for the owner's approval ([approval record](../vocabulary-approvals.md)), each with
 two or three real examples and its EHRI / RiC-O mapping.
 
 ## Pull requests as a triage surface

@@ -97,7 +97,7 @@ Kept: `id`, `kind`, `title`, `editor`, `published`, `work_id` (never published w
 | `quotes_cleared` | quotes from a private document may be published (the owner's word, with its day) | — |
 | `private` | the document itself is never shown (the family's papers, letters, privately obtained copies) | — |
 
-**Kinds.** Two new kinds go to the owner's batch (#16), each with real examples and its mapping:
+**Kinds.** Two new kinds go to the owner's batch ([approval record](../vocabulary-approvals.md)), each with real examples and its mapping:
 `archival_record`, a document held by an archive and cited by its reference code (the RGVA arrival list, the transport
 list in the FSB archive, the Ohrdruf Nordlager list), mapped to `rico:Record`; and `provenance`, the project's own record
 of where a value came from (the 476 or 477 `issue/<date>` and old-file entries), never exported as evidence nor named to
