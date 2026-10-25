@@ -29,6 +29,9 @@ class VocabularyTests(unittest.TestCase):
         self.root = Path(temp.name)
         shutil.copytree(HERE, self.root / 'vocabulary', ignore=shutil.ignore_patterns('__pycache__'))
         shutil.copytree(HERE.parent / 'standards', self.root / 'standards', ignore=shutil.ignore_patterns('__pycache__'))
+        # The one authored width list the generator makes a Zod module of.
+        (self.root / 'zod').mkdir()
+        shutil.copy(HERE.parent / 'zod/media-widths.json', self.root / 'zod/media-widths.json')
         self.path = self.root / 'vocabulary/sourced-entities.json'
         self.data = json.loads(self.path.read_text(encoding='utf-8'))
         # The released version these tests start from, and the next one a proposal takes.

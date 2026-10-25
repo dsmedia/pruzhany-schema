@@ -2,11 +2,11 @@ import { z } from 'zod/v4';
 import { siteDay, siteText, uniqueIds } from './site-common.schema';
 import { SourceLanguageSchema } from './sourced-entities.schema';
 import type { Source } from './sourced-entities.schema';
-import widths from './media-widths.json';
+import { MEDIA_WIDTH_LIST } from './media-widths.table';
 import { MEDIA_RIGHTS, COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
 export { MEDIA_RIGHTS, COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
 
-export const MEDIA_WIDTHS: readonly number[] = Object.freeze(widths);
+export const MEDIA_WIDTHS: readonly number[] = MEDIA_WIDTH_LIST;
 // Local RepresentationType concepts, linked by rico:hasRepresentationType.
 export const MediaKindSchema = z.enum(['image', 'audio', 'video', 'document']);
 export const MediaDecisionSchema = z.strictObject({
