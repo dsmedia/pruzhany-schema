@@ -2,6 +2,11 @@
 
 > Historical design note, 2026-10-24: the owner approved the switch to four issue documents and one shared record; the old persisted models described below are retired (see [current contracts](../../README.md#current-site-files)).
 
+> Release update, 2026-10-25: the owner approved the subtypes and subjects as
+> proposed (steps decision 164, item 1), released as site-content 1.0.0. Title
+> types remain proposed. The contracts accept the existing 0.1.0 stamp and the
+> released 1.0.0 stamp; new writers use 1.0.0. See the [release record](2026-10-25-site-content-release.md).
+
 The existing schemas, enums and exports keep their meanings. These new exports
 are for the later site-writer/site switch. No data is migrated or published here.
 The four issue documents hold pages, content items and sections, mentions, and

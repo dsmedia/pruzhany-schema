@@ -1,9 +1,9 @@
 """Content items and printed sections in the current site documents."""
-from typing import Annotated, Literal
+from typing import Annotated
 from pydantic import BeforeValidator, Field, model_validator
 from .sourced_entities import Strict, Text, Day
 from .site_common import CrossReference, ContentItemBlockRef, PrintedTitle, SuppliedTitle, Translation, unique_ids
-from .site_content_vocabulary import ImpressoTypes, ContentItemSubtypes, Subjects, SUBTYPE_PARENTS
+from .site_content_vocabulary import ImpressoTypes, ContentItemSubtypes, Subjects, SiteVocabularyVersion, SUBTYPE_PARENTS
 
 
 def integer_offset(value):
@@ -64,7 +64,7 @@ class PrintedSection(Strict):
 
 class ContentItemsData(Strict):
     issue_date: Day
-    vocabulary_version: Literal['0.1.0']
+    vocabulary_version: SiteVocabularyVersion
     content_items: list[ContentItem]
     sections: list[PrintedSection]
 

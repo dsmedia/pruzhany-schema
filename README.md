@@ -46,8 +46,10 @@ life-event, enrichment and edition-bundle persisted models and exports are retir
 the mixed `pydantic/project_output.py` module is gone. Released sourced vocabulary,
 its compatibility helpers, `llm_output.py` and `bbox_review.py` remain available.
 
-`vocabulary/site-content.json` is **proposed, unreleased 0.1.0**, separate from released
-sourced-entities 1.2.0. See the [contract and preservation notes](docs/design/2026-10-22-site-files.md).
+`vocabulary/site-content.json` is **1.0.0, released 2026-10-25** for the owner's
+approved subtypes and subjects, separate from released sourced-entities 1.2.0.
+Title types remain proposed. See the [release record](docs/design/2026-10-25-site-content-release.md)
+and [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.
 
 The [sources contract](docs/design/2026-10-24-sources-implementation.md) adds holders,

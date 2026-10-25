@@ -28,6 +28,7 @@ bin/verify standards
 Output is sorted, UTF-8 with LF, and deterministic. `check_alignment.py` scans pilot RDF profiles, exporter literals, generated review JSON-LD, and vocabulary mappings (also future `vocabulary/*.json`). Local mapping objects require a declared profile term and a one-line reason. Existing pilot enum arrays are identifiers, not mapping entries. Arbitrary computed exporter IRI expressions need an explicit, statically checked mapping.
 
 All `vocabulary/**/*.ttl` profiles are checked, including the released
-`profile.ttl` and proposed `site-content.profile.ttl`. Local mappings use the
+`profile.ttl` and `site-content.profile.ttl` (subtypes and subjects released
+2026-10-25; title types remain proposed). Local mappings use the
 vocabulary's matching `<name>.profile.ttl` when present, otherwise its directory's
 `profile.ttl`. Tests check terms and local declarations in the separate proposed profile.
