@@ -46,6 +46,7 @@ def generated(root=ROOT):
             json.dumps(vocabulary, ensure_ascii=False, indent=2) + '\n')
     outputs.update(generated_site_content(root))
     outputs.update(generated_citation_requirements(root))
+    outputs.update(generated_media_rights(root))
     return outputs
 
 
@@ -79,6 +80,15 @@ def generated_site_content(root=ROOT):
     py += f'SUBTYPE_PARENTS: dict[str, str] = {parents!r}\n'
     return {root / 'zod/site-content.vocabulary.ts': format_ts(ts, 'site-content.vocabulary.ts'),
             root / 'pydantic/site_content_vocabulary.py': py}
+
+
+def generated_media_rights(root=ROOT):
+    """Keep the vendored Zod tree self-contained; standards remains the authored list."""
+    rights = json.loads((root / 'standards/media-rights.json').read_text(encoding='utf-8'))
+    ts = '// Generated from standards/media-rights.json by vocabulary/generate.py; do not edit.\n'
+    ts += f'export const MEDIA_RIGHTS = Object.freeze({json.dumps(rights["uris"])} as const);\n'
+    ts += f'export const COPYRIGHT_NOT_EVALUATED = {json.dumps(rights["default"])} as const;\n'
+    return {root / 'zod/media-rights.table.ts': format_ts(ts, 'media-rights.table.ts')}
 
 
 def main():

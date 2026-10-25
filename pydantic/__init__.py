@@ -64,3 +64,6 @@ __all__ += ["Holder", "SourceDerivation"]
 from .citation_requirements import statement_citation_shortfalls, shared_record_citation_shortfalls
 from .quote_publication import quote_shown, corroborated
 __all__ += ['statement_citation_shortfalls', 'shared_record_citation_shortfalls']
+
+from .media import MediaRegion, MediaDepicted, MediaPortrait, MediaWithdrawal, MediaConsentScope, MediaConsent, MediaFamilyWords, MediaFixity
+__all__ += ['MediaRegion', 'MediaDepicted', 'MediaPortrait', 'MediaWithdrawal', 'MediaConsentScope', 'MediaConsent', 'MediaFamilyWords', 'MediaFixity']
