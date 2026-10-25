@@ -1,0 +1,8 @@
+@prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+pc:site_reading_status a owl:NamedIndividual ; rdfs:comment "Neither EHRI 0.2.0 nor its imported RiC-O 1.1 encodes independent text and English machine, AI-session-checked or human-corrected states; history and productionTechnique do not express these field-level distinctions." ; rdfs:label "Optional per-field reading provenance. Null is unrecorded. A session check may cover particular words only."@en .
+pc:site_reading_machine a owl:NamedIndividual ; rdfs:comment "Application-specific reading provenance state, not a state defined in either pinned ontology." ; rdfs:label "A machine reading without a recorded qualifying check."@en .
+pc:site_reading_session_checked a owl:NamedIndividual ; rdfs:comment "Application-specific reading provenance state, not a state defined in either pinned ontology." ; rdfs:label "An AI session checked or corrected the field, possibly particular words only."@en .
+pc:site_reading_person_corrected a owl:NamedIndividual ; rdfs:comment "Application-specific reading provenance state, not a state defined in either pinned ontology." ; rdfs:label "A recorded human author corrected the field; AI drafts and approvals alone do not qualify."@en .

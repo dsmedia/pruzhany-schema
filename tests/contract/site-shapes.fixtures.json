@@ -8487,6 +8487,126 @@
 					"value": ["unresolved_subject"]
 				}
 			]
+		},
+		{
+			"name": "ContentItem reading status: unrecorded",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "ContentItem reading status: machine",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": {
+						"text": "machine",
+						"english": "machine"
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem reading status: session is distinct from human",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": {
+						"text": "machine",
+						"english": "session_checked"
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem reading status: human correction",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": {
+						"text": "person_corrected",
+						"english": "person_corrected"
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem reading status: unknown fields",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": {
+						"text": null,
+						"english": null
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem reading status: unknown state refused",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": {
+						"text": "machine",
+						"english": "human"
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem reading status: both fields required",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": {
+						"text": "machine"
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem reading status: private nested provenance refused",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": {
+						"text": "machine",
+						"english": "machine",
+						"by": "private"
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem reading status: boolean is not provenance",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["reading_status"],
+					"value": true
+				}
+			]
 		}
 	]
 }

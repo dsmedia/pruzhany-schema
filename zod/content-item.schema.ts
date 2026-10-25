@@ -17,6 +17,14 @@ import {
 	subtypeParents,
 } from './site-content.vocabulary';
 
+// Local field-level provenance, not a claim that every word was checked.
+export const ReadingStatusValueSchema = z.enum(['machine', 'session_checked', 'person_corrected']);
+export const ReadingStatusSchema = z.strictObject({
+	text: ReadingStatusValueSchema.nullable(),
+	english: ReadingStatusValueSchema.nullable(),
+});
+export type ReadingStatus = z.infer<typeof ReadingStatusSchema>;
+
 // Content item: the logical shape in the current site documents.
 export const ContentItemSchema = z
 	.strictObject({
@@ -29,6 +37,7 @@ export const ContentItemSchema = z
 		section_id: siteText.nullish(),
 		full_text: z.string(), // Copy made for the site from the physical source's lines.
 		translation: TranslationSchema.nullish(),
+		reading_status: ReadingStatusSchema.nullish(), // null/omission means unrecorded.
 		block_breaks: z.array(z.number().int().nonnegative()),
 		page_blocks: z.array(ContentItemBlockRefSchema).min(1),
 		location_ids: z.array(siteText), // Places in the shared record; site spelling retained.

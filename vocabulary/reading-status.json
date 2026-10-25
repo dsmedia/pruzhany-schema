@@ -1,0 +1,30 @@
+{
+	"reading_status": {
+		"definition": "Optional per-field reading provenance. Null is unrecorded. A session check may cover particular words only.",
+		"mapping": {
+			"local": "pc:site_reading_status",
+			"reason": "Neither EHRI 0.2.0 nor its imported RiC-O 1.1 encodes independent text and English machine, AI-session-checked or human-corrected states; history and productionTechnique do not express these field-level distinctions."
+		}
+	},
+	"machine": {
+		"definition": "A machine reading without a recorded qualifying check.",
+		"mapping": {
+			"local": "pc:site_reading_machine",
+			"reason": "Application-specific reading provenance state, not a state defined in either pinned ontology."
+		}
+	},
+	"session_checked": {
+		"definition": "An AI session checked or corrected the field, possibly particular words only.",
+		"mapping": {
+			"local": "pc:site_reading_session_checked",
+			"reason": "Application-specific reading provenance state, not a state defined in either pinned ontology."
+		}
+	},
+	"person_corrected": {
+		"definition": "A recorded human author corrected the field; AI drafts and approvals alone do not qualify.",
+		"mapping": {
+			"local": "pc:site_reading_person_corrected",
+			"reason": "Application-specific reading provenance state, not a state defined in either pinned ontology."
+		}
+	}
+}

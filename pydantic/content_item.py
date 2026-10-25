@@ -1,5 +1,5 @@
 """Content items and printed sections in the current site documents."""
-from typing import Annotated
+from typing import Annotated, Literal
 from pydantic import BeforeValidator, Field, model_validator
 from .sourced_entities import Strict, Text, Day
 from .site_common import CrossReference, ContentItemBlockRef, PrintedTitle, SuppliedTitle, Translation, unique_ids
@@ -14,6 +14,15 @@ def integer_offset(value):
 Offset = Annotated[int, BeforeValidator(integer_offset), Field(ge=0, le=9007199254740991)]
 
 
+ReadingStatusValue = Literal['machine', 'session_checked', 'person_corrected']
+
+
+class ReadingStatus(Strict):
+    """Field-level provenance; null means unrecorded, not human review."""
+    text: ReadingStatusValue | None
+    english: ReadingStatusValue | None
+
+
 class ContentItem(Strict):
     id: Text
     type: ImpressoTypes
@@ -24,6 +33,7 @@ class ContentItem(Strict):
     section_id: Text | None = None
     full_text: str  # Copy made for the site from the physical source's lines.
     translation: Translation | None = None
+    reading_status: ReadingStatus | None = None
     block_breaks: list[Offset]
     page_blocks: list[ContentItemBlockRef] = Field(min_length=1)
     location_ids: list[Text]  # Places in the shared record; site spelling retained.
