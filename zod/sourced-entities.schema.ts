@@ -85,6 +85,7 @@ export const SourceDerivationSchema = z.strictObject({
 });
 export type SourceDerivation = z.infer<typeof SourceDerivationSchema>;
 export const SourceSchema = z.strictObject({
+	made_by: z.enum(['family', 'studio', 'institution', 'perpetrator', 'unknown']).nullish(),
 	id: text,
 	kind: SourceKindsSchema,
 	title: text,

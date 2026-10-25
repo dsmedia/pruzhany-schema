@@ -84,8 +84,11 @@ def check_site_shapes(package):
     medium = package.Media.model_validate_json(json.dumps(next(
         c['value'] for c in cases if c['name'] == 'valid Media')))
     public = package.public_media(medium).model_dump()
-    assert not {'master', 'key', 'sha256', 'mime', 'bytes'} & public.keys()
+    assert not {'master', 'bucket', 'checked', 'key', 'sha256', 'mime', 'bytes', 'consent'} & public.keys()
     assert medium.master is not None
+    grant = next(c['value'] for c in cases if c['name'] == 'private consent kept')
+    consent_public = package.public_media(package.Media.model_validate_json(json.dumps(grant))).model_dump_json()
+    assert 'PRIVATE' not in consent_public and '"consent"' not in consent_public
     rich = next(c for c in cases if c['name'] == 'all hand-written forms remain sourced and pending')
     record = package.SharedRecord.model_validate_json(json.dumps(rich['value']))
     prose = [f for f in record.facts if f.representation == 'prose']

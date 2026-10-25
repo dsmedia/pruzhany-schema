@@ -34,8 +34,9 @@ class MediaMeaning(unittest.TestCase):
             self.assertEqual(self.axiom(field)['domain'], [RICO + 'Thing'])
             self.assertIn(RICO + 'Thing', self.axioms[medium]['superclasses'])
 
-    def test_presentation_kind_does_not_claim_a_record_content_type(self):
-        mapping = self.bindings['media_kind']['mapping']
-        self.assertEqual(mapping['local'], 'pc:media_kind')
-        self.assertIn('has not been read', mapping['reason'])
+    def test_presentation_kind_is_an_instantiation_representation_type(self):
+        axiom = self.axiom('media_kind')
+        self.assertEqual(axiom['domain'], [RICO + 'Instantiation'])
+        self.assertEqual(axiom['range'], [RICO + 'RepresentationType'])
         self.assertNotIn(RICO + 'Instantiation', self.axioms[RICO + 'hasContentOfType']['domain'])
+        self.assertIn(RICO + 'Instantiation', self.axiom('media_conditions_of_access')['domain'])

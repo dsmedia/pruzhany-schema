@@ -1,9 +1,9 @@
 @prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
 
-pc:media_kind a owl:NamedIndividual ; rdfs:comment "These are presentation kinds of an instantiation, not released ContentType concepts. RiC-O hasContentOfType belongs to Record or RecordPart; its ContentType list has not been read." .
-pc:media_caption a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines this application's caption text and its reviewed by/on value." .
+pc:media_caption a owl:NamedIndividual ; rdfs:comment "The application records caption language and review day/role; the pinned ontologies do not define that composite." .
 pc:media_alt a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines the application's accessibility text and its human review." .
 pc:media_duration a owl:NamedIndividual ; rdfs:comment "This design claims no pinned duration mapping; seconds remain a local display measurement." .
 pc:media_rights a owl:NamedIndividual ; rdfs:comment "This URI identifies terms, not the owner's permission to publish this particular copy." .
@@ -11,3 +11,17 @@ pc:media_clearance a owl:NamedIndividual ; rdfs:comment "Rights and text review 
 pc:media_link a owl:NamedIndividual ; rdfs:comment "This link is a referral to the holder's page, not a served media file or clearance." .
 pc:media_master a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines this application's content-addressed private storage descriptor; it never enters the public projection." .
 pc:media_derived a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology defines this application's responsive WebP delivery manifest." .
+pc:media_credit a owl:NamedIndividual ; rdfs:comment "IIIF requiredStatement is a future delivery crosswalk; no IIIF ontology is pinned here." .
+pc:media_depicted a owl:NamedIndividual ; rdfs:comment "Source subjects use RiC-O; this per-picture identification and rectangle are application data." .
+pc:media_shows_unidentified a owl:NamedIndividual ; rdfs:comment "This publication safeguard is local, not a record subject inference." .
+pc:media_inscription a owl:NamedIndividual ; rdfs:comment "The text and review composite is local; the object remains the cited record." .
+pc:media_family_words a owl:NamedIndividual ; rdfs:comment "This is a Citation subset, not a second caption or an invented source." .
+pc:media_transcript a owl:NamedIndividual ; rdfs:comment "The transcript text and its review are application data, not an inferred RiC-O relationship." .
+pc:media_consent a owl:NamedIndividual ; rdfs:comment "Permission evidence is private and must not be represented as public creator or holder metadata." .
+pc:media_withdrawn a owl:NamedIndividual ; rdfs:comment "Withdrawal is a publication state; it does not delete the cited record." .
+pc:media_portrait a owl:NamedIndividual ; rdfs:comment "This is a presentation selection; it does not change the photograph or its source." .
+pc:source_made_by a owl:NamedIndividual ; rdfs:comment "A category is not a creator Agent, so made_by must not be asserted as rico:hasCreator." .
+pc:media_image a rico:RepresentationType ; rdfs:label "image" .
+pc:media_audio a rico:RepresentationType ; rdfs:label "audio" .
+pc:media_video a rico:RepresentationType ; rdfs:label "video" .
+pc:media_document a rico:RepresentationType ; rdfs:label "document" .

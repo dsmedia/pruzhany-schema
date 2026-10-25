@@ -18,7 +18,7 @@ import {
 	vocabularyVersion,
 } from './sourced-entities.vocabulary';
 import { PrintedAddressSchema, siteText, siteDay, uniqueIds } from './site-common.schema';
-import { MediaSchema, mediaReferenceErrors } from './media.schema';
+import { MediaSchema, MediaPortraitSchema, mediaReferenceErrors } from './media.schema';
 
 // Located notice evidence written by the site writer. An older Citation without
 // addresses retains its locator and quote verbatim, even after a rereading.
@@ -131,6 +131,7 @@ export type SourcedRelation = z.infer<typeof SourcedRelationSchema>;
 
 const identity = { id: siteText, name: siteText, names: z.array(NameSchema) };
 export const SharedPersonSchema = z.strictObject({
+	portrait: MediaPortraitSchema.nullish(),
 	...identity,
 	names: z.array(SharedNameSchema),
 	gender: GenderSchema,
@@ -253,7 +254,12 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 	);
 	const ids = (xs: { id: string }[]) => new Set(xs.map((x) => x.id));
 	errors.push(
-		...mediaReferenceErrors(v.media ?? [], v.sources, ids([...v.persons, ...v.places, ...v.events]))
+		...mediaReferenceErrors(
+			v.media ?? [],
+			v.sources,
+			ids([...v.persons, ...v.places, ...v.events]),
+			v.persons
+		)
 	);
 	const persons = ids(v.persons),
 		places = ids(v.places),

@@ -63,10 +63,12 @@
 					"source_id": "source-fixture",
 					"kind": "image",
 					"caption": {
-						"text": "A fictional photograph."
+						"text": "A fictional photograph.",
+						"lang": "en"
 					},
 					"alt": {
-						"text": "A drawn square."
+						"text": "A drawn square.",
+						"lang": "en"
 					},
 					"width": 1200,
 					"height": 600,
@@ -74,8 +76,12 @@
 						"key": "private/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 						"sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 						"mime": "image/png",
-						"bytes": 128
-					}
+						"bytes": 128,
+						"bucket": "fixture-private-masters"
+					},
+					"depicted": [],
+					"shows_unidentified": false,
+					"credit": "Courtesy of the fixture family"
 				}
 			]
 		},
@@ -84,22 +90,86 @@
 			"source_id": "source-fixture",
 			"kind": "image",
 			"caption": {
-				"text": "A fictional photograph."
+				"text": "A fictional photograph.",
+				"lang": "en"
 			},
 			"alt": {
-				"text": "A drawn square."
+				"text": "A drawn square.",
+				"lang": "en"
 			},
 			"width": 1200,
-			"height": 600
+			"height": 600,
+			"depicted": [],
+			"shows_unidentified": false,
+			"credit": "Courtesy of the fixture family"
 		},
 		"decision": {
-			"by": "Fixture owner",
-			"on": "2026-10-24"
+			"on": "2026-10-24",
+			"role": "owner"
 		},
 		"derivative": {
-			"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+			"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
 			"width": 400,
-			"height": 200
+			"height": 200,
+			"process": "resize"
+		},
+		"MediaRegion": {
+			"x": 0,
+			"y": 0,
+			"w": 100,
+			"h": 100
+		},
+		"MediaDepicted": {
+			"person_id": "person-fixture",
+			"region": {
+				"x": 0,
+				"y": 0,
+				"w": 100,
+				"h": 100
+			},
+			"identified_by": "family"
+		},
+		"MediaPortrait": {
+			"media_id": "media-fixture",
+			"region": {
+				"x": 0,
+				"y": 0,
+				"w": 100,
+				"h": 100
+			},
+			"reviewed": {
+				"role": "owner",
+				"on": "2026-10-24"
+			}
+		},
+		"MediaWithdrawal": {
+			"on": "2026-10-24",
+			"reason": "family"
+		},
+		"MediaConsentScope": {
+			"use": "site",
+			"person_ids": ["person-fixture"],
+			"unidentified": false
+		},
+		"MediaConsent": {
+			"basis": "family-permission",
+			"granted_by": "family",
+			"scope": {
+				"use": "site",
+				"person_ids": ["person-fixture"],
+				"unidentified": false
+			},
+			"ref": "PRIVATE EMAIL REFERENCE"
+		},
+		"MediaFamilyWords": {
+			"source_id": "source-fixture",
+			"page": "back",
+			"quote": "Our aunt beside the gate.",
+			"quote_language": "en"
+		},
+		"MediaFixity": {
+			"on": "2026-10-24",
+			"sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 		}
 	},
 	"models": {
@@ -109,7 +179,15 @@
 		"MediaMaster": ["shared", "media", 0, "master"],
 		"MediaText": ["shared", "media", 0, "alt"],
 		"MediaDecision": ["decision"],
-		"MediaDerivative": ["derivative"]
+		"MediaDerivative": ["derivative"],
+		"MediaRegion": ["MediaRegion"],
+		"MediaDepicted": ["MediaDepicted"],
+		"MediaPortrait": ["MediaPortrait"],
+		"MediaWithdrawal": ["MediaWithdrawal"],
+		"MediaConsentScope": ["MediaConsentScope"],
+		"MediaConsent": ["MediaConsent"],
+		"MediaFamilyWords": ["MediaFamilyWords"],
+		"MediaFixity": ["MediaFixity"]
 	},
 	"cases": [
 		{
@@ -164,7 +242,7 @@
 					"remove": true
 				}
 			],
-			"error": "image needs alt"
+			"error": "image or document needs alt"
 		},
 		{
 			"name": "blank alt",
@@ -196,8 +274,8 @@
 				{
 					"path": ["caption", "reviewed"],
 					"value": {
-						"by": "Fixture owner",
-						"on": "2026-10-24"
+						"on": "2026-10-24",
+						"role": "owner"
 					}
 				}
 			]
@@ -210,8 +288,8 @@
 				{
 					"path": ["cleared"],
 					"value": {
-						"by": "Fixture owner",
-						"on": "2026-10-24"
+						"on": "2026-10-24",
+						"role": "owner"
 					}
 				}
 			]
@@ -224,17 +302,18 @@
 				{
 					"path": ["cleared"],
 					"value": {
-						"by": "Fixture owner",
-						"on": "2026-10-24"
+						"on": "2026-10-24",
+						"role": "owner"
 					}
 				},
 				{
 					"path": ["derived"],
 					"value": [
 						{
-							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
 							"width": 400,
-							"height": 200
+							"height": 200,
+							"process": "resize"
 						}
 					]
 				}
@@ -249,9 +328,10 @@
 					"path": ["derived"],
 					"value": [
 						{
-							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
 							"width": 400,
-							"height": 200
+							"height": 200,
+							"process": "resize"
 						}
 					]
 				}
@@ -266,17 +346,18 @@
 				{
 					"path": ["caption", "reviewed"],
 					"value": {
-						"by": "Fixture owner",
-						"on": "2026-10-24"
+						"on": "2026-10-24",
+						"role": "owner"
 					}
 				},
 				{
 					"path": ["derived"],
 					"value": [
 						{
-							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
 							"width": 400,
-							"height": 200
+							"height": 200,
+							"process": "resize"
 						}
 					]
 				}
@@ -296,9 +377,10 @@
 					"path": ["derived"],
 					"value": [
 						{
-							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
 							"width": 400,
-							"height": 200
+							"height": 200,
+							"process": "resize"
 						}
 					]
 				}
@@ -320,17 +402,18 @@
 				{
 					"path": ["cleared"],
 					"value": {
-						"by": "Fixture owner",
-						"on": "2026-10-24"
+						"on": "2026-10-24",
+						"role": "owner"
 					}
 				},
 				{
 					"path": ["derived"],
 					"value": [
 						{
-							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
 							"width": 400,
-							"height": 200
+							"height": 200,
+							"process": "resize"
 						}
 					]
 				}
@@ -510,7 +593,8 @@
 						"key": "private/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 						"sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 						"mime": "image/png",
-						"bytes": 128
+						"bytes": 128,
+						"bucket": "fixture-private-masters"
 					}
 				}
 			]
@@ -535,9 +619,10 @@
 					"path": ["derived"],
 					"value": [
 						{
-							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
 							"width": 400,
-							"height": 200
+							"height": 200,
+							"process": "resize"
 						}
 					]
 				}
@@ -553,17 +638,18 @@
 					"path": ["derived"],
 					"value": [
 						{
-							"url": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp",
+							"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
 							"width": 400,
-							"height": 200
+							"height": 200,
+							"process": "resize"
 						}
 					]
 				},
 				{
 					"path": ["cleared"],
 					"value": {
-						"by": "Fixture owner",
-						"on": "2026-10-24"
+						"on": "2026-10-24",
+						"role": "owner"
 					}
 				}
 			]
@@ -579,7 +665,8 @@
 						"key": "private/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 						"sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 						"mime": "image/png",
-						"bytes": 128
+						"bytes": 128,
+						"bucket": "fixture-private-masters"
 					}
 				}
 			]
@@ -681,7 +768,7 @@
 				{
 					"path": ["reviewed"],
 					"value": {
-						"by": "Fixture reader"
+						"role": "owner"
 					}
 				}
 			]
@@ -740,7 +827,7 @@
 			"changes": [
 				{
 					"path": ["url"],
-					"value": "https://pictures.pruzhanychronicles.org/media/fixture-w400.jpg"
+					"value": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.jpg"
 				}
 			]
 		},
@@ -751,7 +838,7 @@
 			"changes": [
 				{
 					"path": ["url"],
-					"value": "https://archive.example/media/fixture-w400.webp"
+					"value": "https://archive.example/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp"
 				}
 			]
 		},
@@ -825,7 +912,7 @@
 			"changes": [
 				{
 					"path": ["url"],
-					"value": "https://pictures.pruzhanychronicles.org/media/fixture-w400.webp\n"
+					"value": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp\n"
 				}
 			]
 		},
@@ -870,6 +957,924 @@
 				}
 			],
 			"error": "media link must be on its holder host"
+		},
+		{
+			"name": "valid MediaRegion",
+			"model": "MediaRegion",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaDepicted",
+			"model": "MediaDepicted",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaPortrait",
+			"model": "MediaPortrait",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaWithdrawal",
+			"model": "MediaWithdrawal",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaConsentScope",
+			"model": "MediaConsentScope",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaConsent",
+			"model": "MediaConsent",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "consent giver is a role, never a name",
+			"model": "MediaConsent",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["granted_by"],
+					"value": "A Living Person"
+				}
+			]
+		},
+		{
+			"name": "valid MediaFamilyWords",
+			"model": "MediaFamilyWords",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "valid MediaFixity",
+			"model": "MediaFixity",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "public bucket refused",
+			"model": "MediaMaster",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["bucket"],
+					"value": "pruzhany-page-pictures"
+				}
+			],
+			"error": "master needs its own private bucket"
+		},
+		{
+			"name": "hash check mismatch",
+			"model": "MediaMaster",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked"],
+					"value": {
+						"on": "2026-10-24",
+						"sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+					}
+				}
+			],
+			"error": "master check must match its sha256"
+		},
+		{
+			"name": "recorded matching hash check",
+			"model": "MediaMaster",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["checked"],
+					"value": {
+						"on": "2026-10-24",
+						"sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+					}
+				}
+			]
+		},
+		{
+			"name": "withdrawal tombstone",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["withdrawn"],
+					"value": {
+						"on": "2026-10-24",
+						"reason": "family"
+					}
+				}
+			]
+		},
+		{
+			"name": "withdrawn cannot serve",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["withdrawn"],
+					"value": {
+						"on": "2026-10-24",
+						"reason": "family"
+					}
+				},
+				{
+					"path": ["cleared"],
+					"value": {
+						"role": "owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["derived"],
+					"value": [
+						{
+							"url": "https://pictures.pruzhanychronicles.org/media/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-w400.webp",
+							"width": 400,
+							"height": 200,
+							"process": "resize"
+						}
+					]
+				}
+			],
+			"error": "withdrawn media cannot be served or linked"
+		},
+		{
+			"name": "no computer identification",
+			"model": "MediaDepicted",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identified_by"],
+					"value": "computer"
+				}
+			]
+		},
+		{
+			"name": "unknown depicted person",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "depicted"],
+					"value": [
+						{
+							"person_id": "absent",
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				}
+			],
+			"error": "depicted person must resolve to a person"
+		},
+		{
+			"name": "place cannot be depicted person",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "depicted"],
+					"value": [
+						{
+							"person_id": "place-fixture",
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				}
+			],
+			"error": "depicted person must resolve to a person"
+		},
+		{
+			"name": "region within master",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["depicted"],
+					"value": [
+						{
+							"person_id": "person-fixture",
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "region exceeds master",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["depicted"],
+					"value": [
+						{
+							"person_id": "person-fixture",
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 1300,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				}
+			],
+			"error": "depicted region must fit master pixels"
+		},
+		{
+			"name": "no percentage regions",
+			"model": "MediaRegion",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["x"],
+					"value": 0.1
+				}
+			]
+		},
+		{
+			"name": "unidentified must be declared",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["depicted"],
+					"value": [
+						{
+							"person_id": null,
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				}
+			],
+			"error": "unidentified depiction needs shows_unidentified"
+		},
+		{
+			"name": "unidentified declared",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["depicted"],
+					"value": [
+						{
+							"person_id": null,
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				},
+				{
+					"path": ["shows_unidentified"],
+					"value": true
+				}
+			]
+		},
+		{
+			"name": "document needs its words",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "document"
+				}
+			],
+			"error": "document needs transcript"
+		},
+		{
+			"name": "document with transcript",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "document"
+				},
+				{
+					"path": ["transcript"],
+					"value": {
+						"text": "The letter in full.",
+						"lang": "en"
+					}
+				}
+			]
+		},
+		{
+			"name": "inscription own language",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["inscription"],
+					"value": {
+						"text": "לזכרון",
+						"lang": "yi",
+						"reviewed": {
+							"role": "owner",
+							"on": "2026-10-24"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "family words cited",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["media", 0, "family_words"],
+					"value": {
+						"source_id": "source-fixture",
+						"page": "back",
+						"quote": "Our aunt beside the gate.",
+						"quote_language": "en"
+					}
+				}
+			]
+		},
+		{
+			"name": "family words source resolves",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "family_words"],
+					"value": {
+						"source_id": "absent",
+						"page": "back",
+						"quote": "Our aunt beside the gate.",
+						"quote_language": "en"
+					}
+				}
+			],
+			"error": "unknown family words source"
+		},
+		{
+			"name": "family words never private locator",
+			"model": "MediaFamilyWords",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["locator"],
+					"value": "PRIVATE"
+				}
+			]
+		},
+		{
+			"name": "caption has language",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["caption", "lang"],
+					"value": "not_a_language"
+				}
+			]
+		},
+		{
+			"name": "alt is short",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["alt", "text"],
+					"value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+				}
+			],
+			"error": "alt must be at most 150 characters"
+		},
+		{
+			"name": "unicode alt codepoints",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["alt", "text"],
+					"value": "🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂🙂"
+				}
+			]
+		},
+		{
+			"name": "alt not duplicated",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["alt", "text"],
+					"value": "A fictional photograph."
+				}
+			],
+			"error": "alt must not repeat caption"
+		},
+		{
+			"name": "visible not hindsight",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["alt", "text"],
+					"value": "A doomed Holocaust victim."
+				}
+			],
+			"error": "alt must describe only what is visible"
+		},
+		{
+			"name": "alt names only depicted",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "alt", "text"],
+					"value": "Fictional person beside a gate."
+				}
+			],
+			"error": "alt names must come from depicted people"
+		},
+		{
+			"name": "alt may name depicted",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["media", 0, "alt", "text"],
+					"value": "Fictional person beside a gate."
+				},
+				{
+					"path": ["media", 0, "depicted"],
+					"value": [
+						{
+							"person_id": "person-fixture",
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "no living name in decision role",
+			"model": "MediaDecision",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["role"],
+					"value": "PRIVATE NAME"
+				}
+			]
+		},
+		{
+			"name": "no living name in decision by",
+			"model": "MediaDecision",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["by"],
+					"value": "PRIVATE NAME"
+				}
+			]
+		},
+		{
+			"name": "closed rights https://rightsstatements.org/vocab/InC/1.0/",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "https://rightsstatements.org/vocab/InC/1.0/"
+				}
+			]
+		},
+		{
+			"name": "closed rights http://rightsstatements.org/page/InC/1.0/",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "http://rightsstatements.org/page/InC/1.0/"
+				}
+			]
+		},
+		{
+			"name": "closed rights http://rightsstatements.org/vocab/Imaginary/1.0/",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "http://rightsstatements.org/vocab/Imaginary/1.0/"
+				}
+			]
+		},
+		{
+			"name": "closed rights https://creativecommons.org/licenses/by/9.0/",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "https://creativecommons.org/licenses/by/9.0/"
+				}
+			]
+		},
+		{
+			"name": "canonical rights",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "http://rightsstatements.org/vocab/InC/1.0/"
+				}
+			]
+		},
+		{
+			"name": "orphan photography excluded",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": "http://rightsstatements.org/vocab/InC-OW-EU/1.0/"
+				}
+			],
+			"error": "EU orphan-work statement excludes photographs"
+		},
+		{
+			"name": "public consent refused",
+			"model": "PublicMedia",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["consent"],
+					"value": {
+						"basis": "family-permission",
+						"granted_by": "family",
+						"scope": {
+							"use": "site",
+							"person_ids": ["person-fixture"],
+							"unidentified": false
+						},
+						"ref": "PRIVATE EMAIL REFERENCE"
+					}
+				}
+			]
+		},
+		{
+			"name": "public null consent refused",
+			"model": "PublicMedia",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["consent"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "private consent kept",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["consent"],
+					"value": {
+						"basis": "family-permission",
+						"granted_by": "family",
+						"scope": {
+							"use": "site",
+							"person_ids": ["person-fixture"],
+							"unidentified": false
+						},
+						"ref": "PRIVATE EMAIL REFERENCE"
+					}
+				}
+			]
+		},
+		{
+			"name": "withdrawn consent has state",
+			"model": "Media",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["consent"],
+					"value": {
+						"basis": "family-permission",
+						"granted_by": "family",
+						"scope": {
+							"use": "site",
+							"person_ids": ["person-fixture"],
+							"unidentified": false
+						},
+						"ref": "PRIVATE EMAIL REFERENCE",
+						"withdrawn_on": "2026-10-24"
+					}
+				}
+			],
+			"error": "withdrawn consent needs withdrawn media state"
+		},
+		{
+			"name": "withdrawn consent tombstone",
+			"model": "Media",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["consent"],
+					"value": {
+						"basis": "family-permission",
+						"granted_by": "family",
+						"scope": {
+							"use": "site",
+							"person_ids": ["person-fixture"],
+							"unidentified": false
+						},
+						"ref": "PRIVATE EMAIL REFERENCE",
+						"withdrawn_on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["withdrawn"],
+					"value": {
+						"on": "2026-10-24",
+						"reason": "family"
+					}
+				}
+			]
+		},
+		{
+			"name": "consent cannot cover others",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["media", 0, "consent"],
+					"value": {
+						"basis": "family-permission",
+						"granted_by": "family",
+						"scope": {
+							"use": "site",
+							"person_ids": ["person-fixture"],
+							"unidentified": false
+						},
+						"ref": "PRIVATE EMAIL REFERENCE"
+					}
+				}
+			],
+			"error": "consent person must be depicted"
+		},
+		{
+			"name": "resize only",
+			"model": "MediaDerivative",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["process"],
+					"value": "restore"
+				}
+			]
+		},
+		{
+			"name": "hash not identity filename",
+			"model": "MediaDerivative",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "https://pictures.pruzhanychronicles.org/media/person-fixture-w400.webp"
+				}
+			]
+		},
+		{
+			"name": "source perpetrator classification",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["sources", 0, "made_by"],
+					"value": "perpetrator"
+				}
+			]
+		},
+		{
+			"name": "source maker closed",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "made_by"],
+					"value": "computer"
+				}
+			]
+		},
+		{
+			"name": "reviewed portrait",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["persons", 0, "portrait"],
+					"value": {
+						"media_id": "media-fixture",
+						"region": {
+							"x": 0,
+							"y": 0,
+							"w": 100,
+							"h": 100
+						},
+						"reviewed": {
+							"role": "owner",
+							"on": "2026-10-24"
+						}
+					}
+				},
+				{
+					"path": ["media", 0, "depicted"],
+					"value": [
+						{
+							"person_id": "person-fixture",
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				},
+				{
+					"path": ["media", 0, "cleared"],
+					"value": {
+						"role": "owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["media", 0, "caption", "reviewed"],
+					"value": {
+						"role": "owner",
+						"on": "2026-10-24"
+					}
+				}
+			]
+		},
+		{
+			"name": "portrait missing medium",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "portrait"],
+					"value": {
+						"media_id": "media-fixture",
+						"region": {
+							"x": 0,
+							"y": 0,
+							"w": 100,
+							"h": 100
+						},
+						"reviewed": {
+							"role": "owner",
+							"on": "2026-10-24"
+						}
+					}
+				},
+				{
+					"path": ["media", 0, "depicted"],
+					"value": [
+						{
+							"person_id": "person-fixture",
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				},
+				{
+					"path": ["media", 0, "cleared"],
+					"value": {
+						"role": "owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["media", 0, "caption", "reviewed"],
+					"value": {
+						"role": "owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["persons", 0, "portrait", "media_id"],
+					"value": "absent"
+				}
+			],
+			"error": "portrait needs a cleared reviewed image depicting this person and a region in master pixels"
+		},
+		{
+			"name": "portrait cannot use unreviewed caption",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "portrait"],
+					"value": {
+						"media_id": "media-fixture",
+						"region": {
+							"x": 0,
+							"y": 0,
+							"w": 100,
+							"h": 100
+						},
+						"reviewed": {
+							"role": "owner",
+							"on": "2026-10-24"
+						}
+					}
+				},
+				{
+					"path": ["media", 0, "depicted"],
+					"value": [
+						{
+							"person_id": "person-fixture",
+							"region": {
+								"x": 0,
+								"y": 0,
+								"w": 100,
+								"h": 100
+							},
+							"identified_by": "family"
+						}
+					]
+				},
+				{
+					"path": ["media", 0, "cleared"],
+					"value": {
+						"role": "owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["media", 0, "caption", "reviewed"],
+					"value": {
+						"role": "owner",
+						"on": "2026-10-24"
+					}
+				},
+				{
+					"path": ["media", 0, "caption", "reviewed"],
+					"value": null
+				}
+			],
+			"error": "portrait needs a cleared reviewed image depicting this person and a region in master pixels"
 		}
 	]
 }

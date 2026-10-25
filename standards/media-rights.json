@@ -1,0 +1,28 @@
+{
+  "read_on": "2026-10-24",
+  "sources": ["https://rightsstatements.org/page/1.0/", "https://creativecommons.org/cc-licenses/"],
+  "scope": "RightsStatements 1.0, CC international 4.0, CC0 and Public Domain Mark 1.0; other versions need a reviewed addition.",
+  "default": "http://rightsstatements.org/vocab/CNE/1.0/",
+  "uris": [
+    "http://rightsstatements.org/vocab/InC/1.0/",
+    "http://rightsstatements.org/vocab/InC-OW-EU/1.0/",
+    "http://rightsstatements.org/vocab/InC-EDU/1.0/",
+    "http://rightsstatements.org/vocab/InC-NC/1.0/",
+    "http://rightsstatements.org/vocab/InC-RUU/1.0/",
+    "http://rightsstatements.org/vocab/NoC-CR/1.0/",
+    "http://rightsstatements.org/vocab/NoC-NC/1.0/",
+    "http://rightsstatements.org/vocab/NoC-OKLR/1.0/",
+    "http://rightsstatements.org/vocab/NoC-US/1.0/",
+    "http://rightsstatements.org/vocab/CNE/1.0/",
+    "http://rightsstatements.org/vocab/UND/1.0/",
+    "http://rightsstatements.org/vocab/NKC/1.0/",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://creativecommons.org/licenses/by-sa/4.0/",
+    "https://creativecommons.org/licenses/by-nd/4.0/",
+    "https://creativecommons.org/licenses/by-nc/4.0/",
+    "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    "https://creativecommons.org/publicdomain/zero/1.0/",
+    "https://creativecommons.org/publicdomain/mark/1.0/"
+  ]
+}

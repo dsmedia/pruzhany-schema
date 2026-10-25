@@ -5,7 +5,7 @@ from pydantic import Field, TypeAdapter, ValidationError, model_validator
 from .sourced_entities import Strict, Text, Date, Day, Fact, Name, Fate, Source, Attribution, Citation, SourceHost
 from .sourced_entities_vocabulary import Gender, LocationTypes, EventTypes, EventParts, EVENT_PART_KINDS, VocabularyVersion
 from .site_common import PrintedAddress, unique_ids
-from .media import Media, media_reference_errors
+from .media import Media, MediaPortrait, media_reference_errors
 
 _DAY = TypeAdapter(Day)
 
@@ -113,6 +113,7 @@ class SourcedRelation(Fact):
 
 
 class SharedPerson(Strict):
+    portrait: MediaPortrait | None = None
     id: Text
     name: Text
     names: list[SharedName]
@@ -223,7 +224,7 @@ class SharedRecord(Strict):
         all_values = [*identities, *self.events, *self.sources, *self.holders, *self.facts, *self.relations, *(self.media or [])]
         errors = unique_ids([x.id for x in all_values], 'shared id')
         errors += media_reference_errors(self.media or [], self.sources,
-                                         {x.id for x in [*self.persons, *self.places, *self.events]})
+                                         {x.id for x in [*self.persons, *self.places, *self.events]}, self.persons)
         persons = {p.id for p in self.persons}
         places = {p.id for p in self.places}
         organizations = {o.id for o in self.organizations}
