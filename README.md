@@ -25,8 +25,9 @@ Zod and Pydantic models are kept in lock-step. When you change a type on one sid
 
 TBD.
 
-The [2026-04-25 cross-edition design](docs/design/2026-04-25-cross-edition-entities.md) records the identity conventions.
+The [2026-04-25 cross-edition design](docs/design/2026-04-25-cross-edition-entities.md) is historical; [ADR 0001](docs/adr/0001-which-standard-governs-what.md) settles identity across issues.
 The [2026-10-19 people, facts and sources proposal](docs/design/2026-10-19-people-facts-and-sources.md) includes the decisions and changes of 20 October.
+The [vocabulary approval record](docs/vocabulary-approvals.md) is the continuing channel for the owner's batches and keeps the release approval history.
 
 ## Current site files
 

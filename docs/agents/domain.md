@@ -34,7 +34,7 @@ decision is actually settled.
 The owner's rule (`CLAUDE.md`): prefer an EHRI class, else a RiC-O term in EHRI's RiC-O
 version, else a local term with a reason. A glossary entry for a concept those standards
 name uses their term and cites the `standards/` file it was read in. `/domain-modeling`
-does not add vocabulary types; those are approved by the owner in batches (#16).
+does not add vocabulary types; those are approved by the owner in batches ([approval record](../vocabulary-approvals.md)).
 
 ## Use the glossary's vocabulary
 

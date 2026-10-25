@@ -487,7 +487,7 @@ The design keeps that road and changes what travels on it, in this order. Each s
 | 3 | — | — | the projection publishes accepted facts whose citations are on allowed hosts; the person view shows a fate's source and its confidence, and a fact list; leak tests for the new fields | "probable" shown as such, with its record; dated facts (emigration, offices) |
 | 4 | a corpus-wide `people` file and the edition bundle's people as a projection of it | `write_site` writes `people/` once and mentions per edition | loads people once; a page per person across editions (`/people/[id]`) | following a person through the paper |
 
-[corrected 2026-10-20: person pages already exist downstream according to #16; stage 4 adds the corpus storage/loading architecture, not the first person page.]
+[corrected 2026-10-20: person pages already exist downstream according to the [stage-1 record](../vocabulary-approvals.md#stage-1-plan-and-review-retained-as-history); stage 4 adds the corpus storage/loading architecture, not the first person page.]
 
 The vocabulary reaches `pruzhany-steps` as a copy by commit, as the site's shapes already do: steps never
 imports another checkout. A new type harvested after a round therefore goes through three steps: a
@@ -521,12 +521,10 @@ The [pilot, #15](https://github.com/dsmedia/pruzhany-schema/pull/15), merged as
 `96fa579`, is an isolated executable slice, not stage 1 or a production migration.
 Its [review and limits](../../pilots/sourced-entities/README.md) distinguish evidence,
 identity confidence and editorial approval; all real assertions and joins remain pending.
-The [stage-1 plan, #16](https://github.com/dsmedia/pruzhany-schema/issues/16), its
-[review](https://github.com/dsmedia/pruzhany-schema/issues/16#issuecomment-6281076205)
-and the owner's [decisions](https://github.com/dsmedia/pruzhany-schema/issues/16#issuecomment-6281227920)
+The [stage-1 plan, accepted review and owner's decisions](../vocabulary-approvals.md#stage-1-plan-and-review-retained-as-history)
 supersede the rollout details above where they differ.
 [#17](https://github.com/dsmedia/pruzhany-schema/pull/17) brings the pinned standards
-and alignment gate onto this branch; this document is ticket 1 of #16.
+and alignment gate onto this branch; this document was the design ticket of that completed plan.
 
 The owner's decisions are to stay close to EHRI and RiC-O, enforced by
 [`standards/check_alignment.py`](../../standards/check_alignment.py): prefer an EHRI
@@ -537,7 +535,7 @@ presumed deceased by now for display. That is permission to display, never evide
 of a death or fate. The owner approves vocabulary additions in batches, each with
 two or three real examples and its mapping; until approval, keep `other` and
 `proposed_type`. On 20 October the owner approved in advance the types of vocabulary 1.0.0 as
-recommended, and allowed merging under the gates recorded on #16.
+recommended, and allowed merging under the gates recorded in the [approval record](../vocabulary-approvals.md).
 
 The review's four changes are accepted:
 
@@ -572,7 +570,7 @@ collection, and the timing of EHRI/GeoNames authority links. The plan proposes
 confirmed authority links only, with candidates private; stage 1 does not settle
 that storage or reconciliation policy.
 
-Other changes in #16: `left_before` stays out of `Fate.outcome`; dated emigration
+Other decisions in the [stage-1 record](../vocabulary-approvals.md#stage-1-plan-and-review-retained-as-history): `left_before` stays out of `Fate.outcome`; dated emigration
 facts establish neither survival nor death. Evidence confidence, identity confidence
 and editorial approval are separate. Stage 1 adds only the contract and publishes
 nothing new; relationships, narrative citations, positional mentions and corpus

@@ -36,11 +36,11 @@ heading and its address; it cannot create a section by itself.
 
 `sourced-entities.json` is the released production application vocabulary, now
 **1.2.0, released 2026-10-23**. The owner approved 1.0.0's recommended types in advance on
-2026-10-20, as recorded on #16. `approved_by` records the decisions. Version 1.1.0,
+2026-10-20, as recorded in the [approval record](../docs/vocabulary-approvals.md). `approved_by` records the decisions. Version 1.1.0,
 released 2026-10-22 at the owner's word, adds one claim status, `proposed`: an
 assertion put forward and not yet accepted, disputed or rejected, never published
 (the site shows only `accepted` facts, and folds some `disputed`). Version 1.2.0
-releases the owner's batch (#16): seven `event_parts`, `event_types.memorial`,
+releases the owner's batch ([approval record](../docs/vocabulary-approvals.md)): seven `event_parts`, `event_types.memorial`,
 `name_kinds.supplied`, the `parenthood` deprecation, and the grandparent/great-grandparent
 descent mappings including their inverses. The owner answered **"Yes"** to **"yes to all"**
 on 23 October 2026 after reviewing two or three printed notices and their English
@@ -49,9 +49,11 @@ The same answer keeps a son's bris greeting with the birth event; no new term.
 The generator
 writes `released/<version>.json`; validation requires the current release snapshot to
 equal the current vocabulary and preserves every identifier from every snapshot.
-Future changes belong in a new version; historical release snapshots remain
-unchanged. A future `status: proposed` version has not yet been released and has
-no release date.
+Future vocabulary changes belong in a new version; historical release snapshots remain
+unchanged apart from the citation-only maintenance of 25 October 2026: their
+`approved_by` pointers now name [`docs/vocabulary-approvals.md`](../docs/vocabulary-approvals.md).
+All other snapshot fields are unchanged. A future `status: proposed` version has
+not yet been released and has no release date.
 
 This directory contains definitions and mappings only. Real examples and the
 owner's approval sheet stay private, outside this public repository. The

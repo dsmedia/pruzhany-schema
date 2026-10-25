@@ -30,3 +30,6 @@ Thumbs.db
 .claude/worktrees/
 .claude/projects/
 .claude/scheduled_tasks.lock
+
+# Prepared by a build helper for the reviewing session to commit.
+/.codex-commit-message.txt
