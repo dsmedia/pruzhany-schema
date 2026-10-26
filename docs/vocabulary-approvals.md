@@ -50,6 +50,19 @@ approve publication of evidence or private notes.
   inverses. A son's bris greeting stays with his birth; it adds no kind.
   See the [standards vetting](design/2026-10-23-standards-foundation-vetting.md)
   and [`released/1.2.0.json`](../vocabulary/released/1.2.0.json).
+- **26 October 2026 — vocabulary 1.3.0.** The session asked the owner:
+  "Should a condolence count on a death's page as a voice from the community, as greetings do at a wedding, rather than as the death notice itself? Yes: I add the word 'condolence' to the site's vocabulary and move about 1,300 condolences."
+  The owner answered that day: **"The other two points on husband and wife and the condolences, your suggestions are accepted"**.
+  This release adds only `content_unit_roles.condolence`, a notice of sympathy
+  sent to the mourners by friends or a society, responding to a death as a
+  congratulation does to a wedding or birth. The corpus notices and private
+  discussion remain outside this public repository; the approval was recorded
+  in [the session](https://claude.ai/code/session_01PD6Qzn7cCzwXCWhkmSYE5Y).
+  Reading the pinned EHRI 0.2.0 and its imported RiC-O 1.1 term lists establishes
+  no precise counterpart for this content-unit role. It maps to the local
+  `pc:content_unit_roles_condolence`, declared with that reason in
+  [`profile.ttl`](../vocabulary/profile.ttl). See
+  [`released/1.3.0.json`](../vocabulary/released/1.3.0.json).
 
 Later proposals, including the two source kinds in the
 [sources-and-citations design](design/2026-10-24-sources-and-citations.md),

@@ -5,7 +5,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 <https://pruzhany.org/ns/sourced-entities> a owl:Ontology ;
-  owl:versionInfo "1.2.0 released" ;
+  owl:versionInfo "1.3.0 released" ;
   rdfs:comment "Production application profile; local categories are not ontology equivalence assertions. Namespace is an identifier, not a claim of hosted content." .
 
 pc:fact_types_education a owl:NamedIndividual ; rdfs:label "education" ; rdfs:comment "TeachingRelation identifies teaching rather than establishing school attendance; retain attendance without asserting a teacher relationship." .
@@ -85,6 +85,7 @@ pc:event_types_holocaust_event a owl:NamedIndividual ; rdfs:label "holocaust_eve
 pc:event_types_other a owl:NamedIndividual ; rdfs:label "other" ; rdfs:comment "Application-specific event types category; no exact pinned ontology value is established." .
 pc:content_unit_roles_primary_announcement a owl:NamedIndividual ; rdfs:label "primary_announcement" ; rdfs:comment "Application-specific content unit roles category; no exact pinned ontology value is established." .
 pc:content_unit_roles_congratulation a owl:NamedIndividual ; rdfs:label "congratulation" ; rdfs:comment "Application-specific content unit roles category; no exact pinned ontology value is established." .
+pc:content_unit_roles_condolence a owl:NamedIndividual ; rdfs:label "condolence" ; rdfs:comment "Neither EHRI 0.2.0 nor its imported RiC-O 1.1 enumerates a content unit's role as a condolence responding to a death." .
 pc:content_unit_roles_mention a owl:NamedIndividual ; rdfs:label "mention" ; rdfs:comment "Application-specific content unit roles category; no exact pinned ontology value is established." .
 pc:content_unit_roles_advertisement a owl:NamedIndividual ; rdfs:label "advertisement" ; rdfs:comment "Application-specific content unit roles category; no exact pinned ontology value is established." .
 pc:life_event_types_wedding a owl:NamedIndividual ; rdfs:label "wedding" ; rdfs:comment "Application-specific life event types category; no exact pinned ontology value is established." .

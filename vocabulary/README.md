@@ -41,7 +41,7 @@ An English heading label is only a lead for recovering the original printed
 heading and its address; it cannot create a section by itself.
 
 `sourced-entities.json` is the released production application vocabulary, now
-**1.2.0, released 2026-10-23**. The owner approved 1.0.0's recommended types in advance on
+**1.3.0, released 2026-10-26**. The owner approved 1.0.0's recommended types in advance on
 2026-10-20, as recorded in the [approval record](../docs/vocabulary-approvals.md). `approved_by` records the decisions. Version 1.1.0,
 released 2026-10-22 at the owner's word, adds one claim status, `proposed`: an
 assertion put forward and not yet accepted, disputed or rejected, never published
@@ -52,6 +52,12 @@ descent mappings including their inverses. The owner answered **"Yes"** to **"ye
 on 23 October 2026 after reviewing two or three printed notices and their English
 for each new term on the private approval page. Engagement was already released.
 The same answer keeps a son's bris greeting with the birth event; no new term.
+Version 1.3.0 adds `content_unit_roles.condolence`, approved on 26 October 2026
+in the [approval record](../docs/vocabulary-approvals.md): a notice of sympathy
+sent to the mourners, responding to a death as a congratulation does to a wedding
+or birth. Its local `pc:content_unit_roles_condolence` mapping is declared and
+explained in `profile.ttl`; neither pinned EHRI 0.2.0 nor RiC-O 1.1 has a precise
+counterpart for this role.
 The generator
 writes `released/<version>.json`; validation requires the current release snapshot to
 equal the current vocabulary and preserves every identifier from every snapshot.
@@ -114,8 +120,9 @@ and a mention role. There is no marriage, name, or parent-name fact type.
 never a fate outcome or proof of survival.
 
 `fate_outcomes`, `location_types`, `compatibility_event_types`,
-`content_unit_roles`, `life_event_types`, and `gender` preserve today's production
-values exactly. The released `event_types` also includes engagement. Existing
+`life_event_types`, and `gender` preserve the original production values exactly.
+`content_unit_roles` retains those values and adds `condolence` in 1.3.0.
+The released `event_types` also includes engagement. Existing
 compatibility enums remain unchanged. Compatibility categories
 with no precise pinned ontology value use declared local terms rather than
 asserting equivalence to a broader class.
