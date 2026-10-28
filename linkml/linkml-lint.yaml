@@ -12,3 +12,12 @@ rules:
     # pinned term lists.
     prefixmaps_contexts:
       - linked_data
+  standard_naming:
+    # MediaRegion's keys are x, y, w and h, a box's corner and size as the stored files and the
+    # twins print them; the rule's slot pattern ([a-z][_a-z0-9]+) asks for two characters at
+    # least, so these four names are excepted rather than renamed (slot names stay the JSON keys).
+    exclude:
+      - x
+      - y
+      - w
+      - h

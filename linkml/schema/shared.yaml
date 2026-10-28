@@ -1,0 +1,52 @@
+# The shared compatibility shapes of zod/shared.schema.ts and pydantic/shared.py that the
+# record's twins pair: ExternalReference. No site document holds one today, so this module has
+# no top class and gives no JSON Schema; it is defined so the twins' pair has its definition.
+# The module's other Zod exports are not defined here: HolocaustFate is the vocabulary's
+# HolocaustFateTypes (vocabulary.yaml), and Bbox and ContentType have no Pydantic twin and no
+# document that uses them.
+#
+# The twins differ: Zod refuses null in record_id, notes and verified, Pydantic accepts it, and
+# Zod's object drops a key it does not know where LinkML's class refuses one. The definition
+# follows LinkML's own rule, which is Pydantic's for null and stricter than both for an unknown
+# key. No binding names a term for it, so it is left unmapped.
+id: https://pruzhany.org/ns/shared
+name: pruzhany_shared
+title: Shared compatibility shapes of the Pruzhany record
+description: >-
+  A reference to a record in an outside database, kept from the earlier research files.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+
+classes:
+  ExternalReference:
+    description: >-
+      A reference to a record in an outside database or resource, such as a page of testimony
+      at Yad Vashem.
+    attributes:
+      source:
+        range: string
+        required: true
+        description: >-
+          The database or resource, by name, such as yad_vashem or jri_poland.
+      url:
+        range: string
+        description: >-
+          The record's address; null for a citation of evidence that was looked for and not
+          found.
+      record_id:
+        range: string
+        description: >-
+          The record's identifier in that database.
+      notes:
+        range: string
+        description: >-
+          Notes on the record.
+      verified:
+        range: boolean
+        description: >-
+          True when a person has reviewed and confirmed the reference.

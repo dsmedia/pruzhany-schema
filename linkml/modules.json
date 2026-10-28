@@ -1,6 +1,10 @@
 {
 	"modules": [
 		{ "schema": "schema/types.yaml", "name": "types", "top_class": null },
-		{ "schema": "schema/vocabulary.yaml", "name": "vocabulary", "top_class": null }
+		{ "schema": "schema/vocabulary.yaml", "name": "vocabulary", "top_class": null },
+		{ "schema": "schema/sourced_entities.yaml", "name": "sourced-entities", "top_class": null },
+		{ "schema": "schema/media.yaml", "name": "media", "top_class": null },
+		{ "schema": "schema/shared_record.yaml", "name": "shared-record", "top_class": "SharedRecord" },
+		{ "schema": "schema/shared.yaml", "name": "shared", "top_class": null }
 	]
 }

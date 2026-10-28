@@ -108,6 +108,17 @@ checks every row against `tests/fixtures/house-style.yaml`, which uses the real 
 | a map of text to text (`additionalProperties` and `propertyNames` of type string) | a class with no slots and `extra_slots: {range_expression: {range: string, required: true}}`, written in block style | `"additionalProperties": {"type": "string"}`; without `required: true` the values would also accept null |
 | `additionalProperties: false` | nothing: classes are closed by default | `"additionalProperties": false` on every class |
 | `number` / `integer` / `boolean` | `range: float` / `integer` / `boolean` | `"number"` / `"integer"` / `"boolean"` |
+| a list of allowed texts (`enum`) of a vocabulary group, or whose values `linkml lint`'s naming rule accepts | a LinkML enum; a value with a standard term takes it as `meaning` | `"$ref"` to the enum; an optional key keeps its null branch |
+| a list whose values the naming rule refuses (`site+download`, `institution-terms`) or that are addresses (media rights) | the slot's `equals_string_in` | `"enum": [...]` on the property, which refuses null even on an optional key (media `rights` is then not looser than the export) |
+| a vocabulary enum narrowed to some of its values (a relation's `type`: kinship or other) | `range:` the enum and `equals_string_in` | `"$ref"` and `"enum"` together |
+| a slot of one letter (MediaRegion's `x`, `y`, `w`, `h`) | the key as it is; `linkml-lint.yaml` excepts the four from the naming rule's two-letter floor | the key |
+| an address that must begin `https://` (Zod's `z.url({protocol})`, Pydantic's pattern) | `range: HttpsUri`, `typeof: uri` with the Pydantic twin's pattern | `"format": "uri"` and `"pattern"` together; stricter than the export, which keeps only the format |
+| coordinates, latitude then longitude | `range: Coordinate` (-180 to 180), `minimum_cardinality: 2`, `maximum_cardinality: 2` | `"items"` bounded -180 to 180, `"minItems": 2, "maxItems": 2`; the latitude's ±90 is lost (known-looser) |
+| a twin's check "if this, then that" within one object | a `rules:` entry with `preconditions`, `postconditions` (and `elseconditions`), whose conditions use only `required`, `value_presence`, `equals_string`, `equals_string_in` and `pattern`, at most one `value_presence: ABSENT` a condition | `"if"`/`"then"`/`"else"`, gathered in `"allOf"` when a class has several; a present null counts as present, except for a list; a child class takes its ancestors' rules |
+| a twin's check "at least one of these" | the class's `any_of`, each branch `required: true` | `"anyOf"` on the class; a child class does not take it, so it is written again there |
+| a twin's check "never this", or "none of these" in a rule | the class's `none_of`, or `none_of` in a rule's condition | `"not": {"anyOf": [...]}`; never two `value_presence: ABSENT` in one condition, which come out as "not both" |
+| a twin's check on a list's length or items, a range, or a nested object's field, inside a condition | nothing in LinkML: a rule for pruzhany-steps `record/rules.yaml` (`checks/record.yaml` names it) | the generator drops `range`, `minimum_cardinality`, `maximum_cardinality`, `has_member` and `all_members` in a condition without a word (`tests/test_record_rules.py`) |
+| a standard term for a class, a slot or a value | `class_uri`, `slot_uri`, a permissible value's `meaning`; a term naming a whole made of several fields as `related_mappings` on each; a qualification as `annotations: {via: rico:...Relation}` | nothing: meaning does not reach the JSON Schema |
 
 Also:
 
@@ -125,6 +136,11 @@ Also:
   LinkML's own meaning does not (known-looser.yaml says how), so the next release may undo it.
 - **Prose in block style** (`description: >-` and an indented paragraph, `comments:` as an
   indented list), and every YAML word that YAML 1.1 reads as a boolean quoted (`'on'`, `'no'`).
+- **Every term the definition names is pinned or declared.** `standards/check_alignment.py`
+  (`bin/verify standards`) reads `linkml/**/*.yaml` but `linkml/tests/`: every `rico:` or `ehri:` term
+  and namespace IRI must be in the pinned lists, every `pc:` term used as a `meaning`, `class_uri`,
+  `slot_uri`, mapping or `via` must be declared in a `vocabulary/*.ttl`, and every `via` must be a
+  RiC-O Relation class.
 - **No new prefix or namespace.** `pc` (`https://pruzhany.org/ns/sourced-entities#`, as in
   `vocabulary/profile.ttl`) is the default prefix, and a schema's `id` lies under
   `https://pruzhany.org/ns/`. `linkml lint`'s canonical-prefix rule reads a prefix list without

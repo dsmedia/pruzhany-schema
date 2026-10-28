@@ -1,0 +1,897 @@
+# The sourced entities: what a statement about a person rests on (sources, citations, dates,
+# review and attribution), and the statements themselves (facts, names, fates and the older
+# mention), as zod/sourced-entities.schema.ts and pydantic/sourced_entities.py define them.
+# Each class and slot is named as its twin and its JSON key are; the shared record
+# (shared_record.yaml) builds on these.
+#
+# Meaning: a class or slot takes a term only where the record already names one, in
+# vocabulary/site-content.json's bindings or in docs/design/2026-10-24-sources-and-citations.md
+# (agreed and built on 24 October 2026), sections 3.2 and 3.3; each such place is cited in a
+# comment beside the term. ADR 0001 governs dates (rico:Date, rico:expressedDate). A term that
+# names a whole made of several fields is written as a related mapping on each field. Every
+# other class and slot is left unmapped: no binding names a term for it.
+#
+# The twins' own checks within one object are written as rules here where the generated JSON
+# Schema can hold them; checks/record.yaml says where every one of the twins' checks is held.
+id: https://pruzhany.org/ns/sourced_entities
+name: pruzhany_sourced_entities
+title: The sourced entities of the Pruzhany record
+description: >-
+  Sources, citations, dates, review and attribution, and the facts, names and fates that rest
+  on them: the parts of the record that say who stated what about a person, and on what
+  evidence.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  rico: https://www.ica.org/standards/RiC/ontology#
+  ehri: http://lod.ehri-project-test.eu/ontology#
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+  - vocabulary
+
+types:
+  HttpsUri:
+    typeof: uri
+    pattern: '^https://[^\s/?#]+[^\s]*$'
+    description: >-
+      A web address that begins https:// and holds no white space, as the Pydantic twin's
+      pattern says; the Zod twin asks for a URL whose protocol is https.
+
+enums:
+  SourceDerivationRelation:
+    description: >-
+      How a source we hold was made from another: a copy of it, or a transcription of it.
+    permissible_values:
+      copy:
+        description: >-
+          A copy of the original record.
+        # vocabulary/site-content.json, binding source_copy.
+        meaning: ehri:isCopyOf
+      transcription:
+        description: >-
+          A transcription of the original record, which describes it and is not a copy of it.
+        # vocabulary/site-content.json, binding source_transcription.
+        meaning: rico:describesOrDescribed
+  SourcedDatePrecision:
+    description: >-
+      How much of a sourced date is known: its year, its month, its day, or a range.
+    permissible_values:
+      year:
+        description: >-
+          Only the year is known; the start is written YYYY.
+      month:
+        description: >-
+          The year and month are known; the start is written YYYY-MM.
+      day:
+        description: >-
+          The day is known; the start is written YYYY-MM-DD.
+      range:
+        description: >-
+          The date lies between a start and an end.
+  PrintedCalendar:
+    description: >-
+      The calendar a date was printed or written in.
+    permissible_values:
+      gregorian:
+        description: >-
+          The Gregorian calendar.
+      hebrew:
+        description: >-
+          The Hebrew calendar; its words are kept as printed and never converted.
+  SourceMadeBy:
+    description: >-
+      Who made a source, as a category: never an agent, so never its creator.
+    permissible_values:
+      family:
+        description: >-
+          The family.
+      studio:
+        description: >-
+          A photographer's studio.
+      institution:
+        description: >-
+          An institution.
+      perpetrator:
+        description: >-
+          The perpetrators.
+      unknown:
+        description: >-
+          Not known.
+  SourceQuoteCondition:
+    description: >-
+      The owner's condition on a private source's cleared quotes.
+    permissible_values:
+      unique_information:
+        description: >-
+          A quote is shown only where no other record states the same (the owner's word of
+          24 October 2026).
+
+classes:
+  SourcedDate:
+    # ADR 0001: dates are governed by RiC-O's Date, its printed words kept as expressedDate.
+    class_uri: rico:Date
+    description: >-
+      A date a source gives: a normalized start (and end, for a range) with how precise it is,
+      or the words as printed with their calendar, or both.
+    attributes:
+      start:
+        range: IsoYearMonthOrDay
+        description: >-
+          The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.
+      end:
+        range: IsoYearMonthOrDay
+        description: >-
+          The end of a range of dates, written as the start is.
+      precision:
+        range: SourcedDatePrecision
+        description: >-
+          How much of the date is known: year, month, day or range.
+      printed:
+        # ADR 0001: the printed words of a date are rico:expressedDate.
+        slot_uri: rico:expressedDate
+        range: NonBlankText
+        description: >-
+          The date's words as the source prints or writes them.
+      printed_calendar:
+        range: PrintedCalendar
+        description: >-
+          The calendar of the printed words.
+      inferred:
+        range: boolean
+        description: >-
+          True when the date was worked out rather than read.
+    rules:
+      - description: >-
+          A sourced date without a start has printed words.
+        preconditions:
+          slot_conditions:
+            start:
+              value_presence: ABSENT
+        postconditions:
+          slot_conditions:
+            printed:
+              required: true
+      - description: >-
+          A sourced date with a calendar has printed words.
+        preconditions:
+          slot_conditions:
+            printed_calendar:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            printed:
+              required: true
+      - description: >-
+          A sourced date with an end is a range.
+        preconditions:
+          slot_conditions:
+            end:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            precision:
+              equals_string: range
+      - description: >-
+          A range has a start and an end.
+        preconditions:
+          slot_conditions:
+            precision:
+              equals_string: range
+        postconditions:
+          slot_conditions:
+            start:
+              required: true
+            end:
+              required: true
+      - description: >-
+          A date known to the year has a start of a year.
+        preconditions:
+          slot_conditions:
+            precision:
+              equals_string: year
+        postconditions:
+          slot_conditions:
+            start:
+              required: true
+              pattern: '^\d{4}$'
+      - description: >-
+          A date known to the month has a start of a month.
+        preconditions:
+          slot_conditions:
+            precision:
+              equals_string: month
+        postconditions:
+          slot_conditions:
+            start:
+              required: true
+              pattern: '^\d{4}-\d{2}$'
+      - description: >-
+          A date known to the day has a start of a day.
+        preconditions:
+          slot_conditions:
+            precision:
+              equals_string: day
+        postconditions:
+          slot_conditions:
+            start:
+              required: true
+              pattern: '^\d{4}-\d{2}-\d{2}$'
+
+  Review:
+    description: >-
+      Whether a person has reviewed a statement, who and on what day.
+    attributes:
+      state:
+        range: ReviewStates
+        required: true
+        description: >-
+          Pending, or approved by a reviewer.
+      by:
+        range: NonBlankText
+        description: >-
+          Who reviewed it.
+      'on':
+        range: IsoDay
+        description: >-
+          The day it was reviewed.
+    rules:
+      - description: >-
+          An approval names its reviewer and its day.
+        preconditions:
+          slot_conditions:
+            state:
+              equals_string: approved
+        postconditions:
+          slot_conditions:
+            by:
+              required: true
+            'on':
+              required: true
+
+  Attribution:
+    description: >-
+      Who made or allowed something, on what day, with an optional note.
+    attributes:
+      by:
+        range: NonBlankText
+        required: true
+        description: >-
+          Who made it or allowed it: a person, a session or a program.
+      'on':
+        range: IsoDay
+        required: true
+        description: >-
+          The day it was made or allowed.
+      note:
+        range: string
+        description: >-
+          A note on how or why.
+
+  SourceDerivation:
+    description: >-
+      The record a source we hold was made from, and how: a copy or a transcription of it.
+    attributes:
+      source_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The original source, by its id in the record's sources.
+      relation:
+        range: SourceDerivationRelation
+        required: true
+        description: >-
+          Whether this source is a copy or a transcription of the original.
+
+  Source:
+    # vocabulary/site-content.json, binding source: a source is a record resource.
+    class_uri: ehri:RecordResource
+    description: >-
+      A record the statements rest on: a book, an archive's database, a family document, the
+      paper itself and the like, registered once and cited by its id.
+    attributes:
+      made_by:
+        # vocabulary/media.json, binding source_made_by.
+        slot_uri: pc:source_made_by
+        range: SourceMadeBy
+        description: >-
+          Who made the source, as a category (family, studio, institution, perpetrator,
+          unknown); never its creator.
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The source's id in the record, which citations name.
+      kind:
+        range: SourceKinds
+        required: true
+        description: >-
+          What kind of source it is: a book, a memorial book, an archive's database, the paper
+          and so on.
+      title:
+        range: NonBlankText
+        required: true
+        description: >-
+          The source's title.
+      short_name:
+        # vocabulary/site-content.json, binding source_display.
+        slot_uri: pc:site_source_display
+        range: NonBlankText
+        description: >-
+          A short name the site shows for the source.
+      holder_id:
+        # vocabulary/site-content.json, binding source_holder.
+        slot_uri: rico:hasOrHadHolder
+        range: NonBlankText
+        description: >-
+          Who holds the source, by its id in the record's holders.
+      reference_code:
+        # vocabulary/site-content.json, binding source_reference_code.
+        slot_uri: rico:hasOrHadIdentifier
+        range: NonBlankText
+        description: >-
+          The holder's own reference for the record, as the holder writes it.
+      language:
+        # vocabulary/site-content.json, binding source_language.
+        slot_uri: rico:hasOrHadLanguage
+        range: LanguageTag
+        multivalued: true
+        minimum_cardinality: 1
+        description: >-
+          The languages of the record, as BCP 47 tags.
+      derived_from:
+        range: SourceDerivation
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          For a copy or a transcription we hold: the original it was made from, and how.
+      dated:
+        # vocabulary/site-content.json, binding source_dated.
+        slot_uri: rico:hasCreationDate
+        range: SourcedDate
+        inlined: true
+        description: >-
+          The record's own date, apart from when it was published or consulted.
+      quotes_cleared:
+        # vocabulary/site-content.json, binding source_privacy (a private document and the
+        # attributed permission to quote it).
+        related_mappings:
+          - pc:site_source_privacy
+        range: Attribution
+        inlined: true
+        description: >-
+          Who allowed quotes from this private document to be published, and on what day.
+      quote_condition:
+        # vocabulary/site-content.json, binding source_quote_condition.
+        slot_uri: pc:site_source_quote_condition
+        range: SourceQuoteCondition
+        description: >-
+          The owner's condition on the cleared quotes: shown only where no other record says
+          the same.
+      private:
+        # vocabulary/site-content.json, binding source_privacy.
+        related_mappings:
+          - pc:site_source_privacy
+        range: boolean
+        description: >-
+          True when the document itself is never shown.
+      work_id:
+        range: string
+        description: >-
+          The id of the work in the project's files; never published where it is a file name.
+      author:
+        # docs/design/2026-10-24-sources-and-citations.md, section 3.2: author maps to
+        # rico:hasCreator.
+        slot_uri: rico:hasCreator
+        range: string
+        description: >-
+          Who wrote the source: an institution, never a member of its staff.
+      editor:
+        range: string
+        description: >-
+          Who edited the source.
+      published:
+        range: string
+        description: >-
+          When or where the source was published, as written.
+      repository:
+        range: string
+        description: >-
+          The old free-text holder, read for one release; holder_id replaces it.
+      url_pattern:
+        range: string
+        description: >-
+          How an address of one of the source's records is formed.
+      host:
+        # vocabulary/site-content.json, binding source_host.
+        slot_uri: pc:site_source_host
+        range: HostName
+        description: >-
+          The web host the source's records are served from, without www: every address cited
+          from it is on that host or a subdomain of it.
+      subjects:
+        # vocabulary/media.json, binding source_subjects.
+        slot_uri: rico:hasOrHadSubject
+        range: NonBlankText
+        multivalued: true
+        minimum_cardinality: 1
+        description: >-
+          The persons, places or events the source shows or speaks of, by their ids.
+    rules:
+      - description: >-
+          A source's host is written without www.
+        preconditions:
+          slot_conditions:
+            host:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            host:
+              pattern: '^(?!www\.)'
+
+  Citation:
+    description: >-
+      Where in one source a statement's evidence lies: the source, and the record, page, scan,
+      time, piece of the paper, address or pointer within it, with the quoted words.
+    attributes:
+      source_id:
+        # docs/design/2026-10-24-sources-and-citations.md, section 3.3, and
+        # vocabulary/site-content.json, binding fact_source: the record a statement rests on is
+        # its evidence.
+        slot_uri: rico:isEvidencedBy
+        range: NonBlankText
+        required: true
+        description: >-
+          The record the statement rests on (the original where it is known), by its id in the
+          record's sources.
+      via:
+        range: NonBlankText
+        description: >-
+          The one source actually read, a copy or a transcription of the original, by its id.
+      reference_code:
+        # vocabulary/site-content.json, binding source_reference_code.
+        slot_uri: rico:hasOrHadIdentifier
+        range: NonBlankText
+        description: >-
+          The holder's reference of the document cited, where the source is a set of many.
+      record_type:
+        # vocabulary/site-content.json, binding citation_record_type.
+        slot_uri: rico:hasDocumentaryFormType
+        range: NonBlankText
+        description: >-
+          The holder's own type of the record, such as Page of Testimony.
+      quote_language:
+        # vocabulary/site-content.json, binding source_language.
+        slot_uri: rico:hasOrHadLanguage
+        range: LanguageTag
+        description: >-
+          The quote's language, where it is not the source's (a translation).
+      public_note:
+        # vocabulary/site-content.json, binding citation_public_note.
+        slot_uri: pc:site_citation_public_note
+        range: NonBlankText
+        description: >-
+          Our reviewed words for the page about this evidence, apart from the record's quote.
+      locator:
+        # vocabulary/site-content.json, binding citation_locator.
+        slot_uri: pc:site_citation_locator
+        range: NonBlankText
+        description: >-
+          An internal pointer into the project's files; never published and never a holder's
+          record number.
+      record_id:
+        # docs/design/2026-10-24-sources-and-citations.md, section 3.3: the holder's own number
+        # for the record maps to rico:hasOrHadIdentifier.
+        slot_uri: rico:hasOrHadIdentifier
+        range: string
+        description: >-
+          The holder's own number for the record, such as a Yad Vashem record number.
+      page:
+        range: string
+        description: >-
+          The page, folio or entry cited.
+      scan:
+        range: string
+        description: >-
+          The scan or image cited.
+      time:
+        range: string
+        description: >-
+          The time in a recording.
+      edition_date:
+        range: string
+        description: >-
+          The day of the paper's issue cited, written YYYY-MM-DD.
+      unit_id:
+        range: string
+        description: >-
+          The piece of the paper cited, by its content item id.
+      url:
+        range: HttpsUri
+        description: >-
+          The record's web address.
+      quote:
+        range: string
+        description: >-
+          The record's own words, exactly.
+      note:
+        range: string
+        description: >-
+          Our private note on the evidence; never published.
+      accessed:
+        range: IsoDay
+        description: >-
+          The day a person read the record.
+    any_of:
+      - description: >-
+          A citation names where in its source the evidence is.
+        slot_conditions:
+          record_id:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          page:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          scan:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          time:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          unit_id:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          url:
+            required: true
+      - slot_conditions:
+          locator:
+            required: true
+      - slot_conditions:
+          reference_code:
+            required: true
+
+  FactQualifiers:
+    description: >-
+      More about a fact, as named texts: how many children a notice names, how a statement
+      is supported and the like.
+    extra_slots:
+      range_expression:
+        range: string
+        required: true
+
+  Fact:
+    description: >-
+      One source's statement about a person, a family or a relation, kept as that source gives
+      it, with its evidence, its confidence, its standing and who recorded it. What it means
+      depends on its type (see FactTypes).
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The fact's id in the record.
+      type:
+        range: FactTypes
+        required: true
+        description: >-
+          What the statement is about: a birth, a death, a residence, an occupation and so on.
+      proposed_type:
+        range: NonBlankText
+        description: >-
+          For a statement of type other: the type proposed for it, awaiting the owner's
+          approval.
+      value:
+        range: NonBlankText
+        description: >-
+          The statement's words or value, such as an occupation.
+      date:
+        range: SourcedDate
+        inlined: true
+        description: >-
+          When, as the source gives it.
+      place_id:
+        range: NonBlankText
+        description: >-
+          Where, by the place's id in the record.
+      organization_id:
+        range: NonBlankText
+        description: >-
+          The organisation the statement concerns, by its id in the record.
+      event_id:
+        range: NonBlankText
+        description: >-
+          The life event the statement concerns, by its id in the record.
+      related_person_id:
+        range: NonBlankText
+        description: >-
+          For kinship: the relative, by the person's id in the record.
+      relationship_type:
+        range: RelationshipTypes
+        description: >-
+          For kinship: how the relative is related, from the subject to the relative.
+      related_name:
+        range: NonBlankText
+        description: >-
+          For kinship: the relative's name, where the relative has no person of their own.
+      qualifiers:
+        range: FactQualifiers
+        inlined: true
+        description: >-
+          More about the statement, as named texts.
+      holocaust_related:
+        range: boolean
+        description: >-
+          True when the statement concerns the Holocaust.
+      citations:
+        range: Citation
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          The evidence: where in which sources the statement is found.
+      evidence_confidence:
+        # vocabulary/site-content.json, binding fact_certainty.
+        slot_uri: rico:relationCertainty
+        range: Confidence
+        required: true
+        description: >-
+          How sure the evidence makes the statement.
+      identity_confidence:
+        range: Confidence
+        required: true
+        description: >-
+          How sure it is that the statement is about this person.
+      status:
+        # vocabulary/site-content.json, binding standing (claim status and review together).
+        related_mappings:
+          - pc:site_standing
+        range: ClaimStatus
+        required: true
+        description: >-
+          The statement's standing: proposed, accepted, disputed or rejected.
+      review:
+        # vocabulary/site-content.json, binding standing.
+        related_mappings:
+          - pc:site_standing
+        range: Review
+        inlined: true
+        required: true
+        description: >-
+          Whether a person has reviewed the statement.
+      attribution:
+        range: Attribution
+        inlined: true
+        required: true
+        description: >-
+          Who recorded the statement, and on what day.
+    rules:
+      - description: >-
+          A fact of type other has a proposed type, and only such a fact has one.
+        preconditions:
+          slot_conditions:
+            type:
+              equals_string: other
+        postconditions:
+          slot_conditions:
+            proposed_type:
+              required: true
+        elseconditions:
+          slot_conditions:
+            proposed_type:
+              value_presence: ABSENT
+      - description: >-
+          A kinship fact names the relationship and the relative.
+        preconditions:
+          slot_conditions:
+            type:
+              equals_string: kinship
+        postconditions:
+          slot_conditions:
+            relationship_type:
+              required: true
+          any_of:
+            - slot_conditions:
+                related_name:
+                  required: true
+            - slot_conditions:
+                related_person_id:
+                  required: true
+      - description: >-
+          An occupation fact has its value.
+        preconditions:
+          slot_conditions:
+            type:
+              equals_string: occupation
+        postconditions:
+          slot_conditions:
+            value:
+              required: true
+      - description: >-
+          A residence fact has a place or a value.
+        preconditions:
+          slot_conditions:
+            type:
+              equals_string: residence
+        postconditions:
+          any_of:
+            - slot_conditions:
+                place_id:
+                  required: true
+            - slot_conditions:
+                value:
+                  required: true
+      - description: >-
+          A fact of taking part names its event.
+        preconditions:
+          slot_conditions:
+            type:
+              equals_string: event_participation
+        postconditions:
+          slot_conditions:
+            event_id:
+              required: true
+      - description: >-
+          A birth or death fact has a date, a place or a value.
+        preconditions:
+          slot_conditions:
+            type:
+              equals_string_in:
+                - birth
+                - death
+        postconditions:
+          any_of:
+            - slot_conditions:
+                date:
+                  required: true
+            - slot_conditions:
+                place_id:
+                  required: true
+            - slot_conditions:
+                value:
+                  required: true
+
+  Name:
+    description: >-
+      One name of a person, a family, an organisation or a place, of one kind (printed, birth,
+      married, supplied and so on), in one script. A person's, a family's and an
+      organisation's names are agent names and a place's are place names (vocabulary/
+      site-content.json, bindings agent_name and place_name), so the class itself names no
+      single term.
+    attributes:
+      value:
+        range: NonBlankText
+        required: true
+        description: >-
+          The name, as written.
+      kind:
+        range: NameKinds
+        required: true
+        description: >-
+          What kind of name it is: printed, birth, married, supplied and so on.
+      script:
+        range: ScriptCode
+        required: true
+        description: >-
+          The script it is written in, as a four-letter ISO 15924 code such as Hebr or Latn.
+      lang:
+        range: SimpleLanguageTag
+        description: >-
+          Its language, as a language tag such as yi or en.
+      citations:
+        range: Citation
+        multivalued: true
+        inlined_as_list: true
+        description: >-
+          Where the name is found.
+      attribution:
+        range: Attribution
+        inlined: true
+        description: >-
+          For a supplied name only: who wrote the description, and on what day.
+    rules:
+      - description: >-
+          A supplied name has its attribution and its citations.
+        preconditions:
+          slot_conditions:
+            kind:
+              equals_string: supplied
+        postconditions:
+          slot_conditions:
+            attribution:
+              required: true
+            citations:
+              required: true
+      - description: >-
+          Only a supplied name has an attribution.
+        preconditions:
+          slot_conditions:
+            attribution:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            kind:
+              equals_string: supplied
+
+  Fate:
+    description: >-
+      What became of a person in the Holocaust, as far as the record shows, the facts it rests
+      on and its review.
+    attributes:
+      outcome:
+        range: FateOutcomes
+        required: true
+        description: >-
+          What became of the person: unknown, perished, survived, died before, or not
+          applicable.
+      confidence:
+        range: Confidence
+        required: true
+        description: >-
+          How sure the outcome is.
+      rests_on:
+        range: string
+        multivalued: true
+        required: true
+        description: >-
+          The facts the outcome rests on, by their ids in the record.
+      review:
+        range: Review
+        inlined: true
+        required: true
+        description: >-
+          Whether a person has reviewed the outcome.
+      summary:
+        range: string
+        description: >-
+          A short summary in words.
+
+  Mention:
+    description: >-
+      The older form of a person's mention in a piece of the paper: the person, the piece, the
+      name as printed and the person's role there. The site's current mention is IssueMention.
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The mention's id.
+      person_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The person mentioned, by the person's id.
+      unit_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The piece of the paper the person is mentioned in, by its id.
+      printed_name:
+        range: NonBlankText
+        required: true
+        description: >-
+          The name as printed.
+      role:
+        range: MentionRoles
+        description: >-
+          The person's role in the piece.
+      title:
+        range: string
+        description: >-
+          A title printed with the name.
+      function:
+        range: string
+        description: >-
+          A function printed with the name.
+      wkd_id:
+        range: string
+        description: >-
+          The person's Wikidata id, where one is linked.

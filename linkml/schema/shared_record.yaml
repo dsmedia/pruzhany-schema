@@ -1,0 +1,874 @@
+# The shared record: one store, across every issue, of the persons, families, places,
+# organisations and life events the paper names, the sources and holders the record cites, the
+# sourced facts and relations about them, and the media beside them, as
+# zod/shared-record.schema.ts and pydantic/shared_record.py define it. The site keeps it in 256
+# shards (pruzhany-svelte static/data/private/shared-record/), each of this same shape, which a
+# reader joins into one record before checking it.
+#
+# Meaning, after ADR 0001 (docs/adr/0001-which-standard-governs-what.md): persons and families
+# are EHRI's (ehri:Person, ehri:Family), life events RiC-O's (rico:Event, typed through
+# rico:hasEventType), a main person's part one of the declared local subproperties of
+# rico:affectsOrAffected or rico:hasOrHadParticipant (each EventParts value's meaning), dates
+# rico:Date, identifiers rico:Identifier, evidence rico:isEvidencedBy (on Citation.source_id).
+# Every other term is the one a binding of vocabulary/site-content.json names, cited beside it;
+# a term naming a whole made of several fields is a related mapping on each. What no binding
+# names is left unmapped. Mapped to RiC-O 1.1 as EHRI 0.2.0 imports it; no conformance is
+# claimed.
+#
+# The twins' own checks within one object are rules here where the generated JSON Schema can
+# hold them; checks/record.yaml says where every one of the twins' checks is held, those that
+# compare records with one another among them.
+id: https://pruzhany.org/ns/shared_record
+name: pruzhany_shared_record
+title: The shared record of the Pruzhany record
+description: >-
+  One store, across every issue, of the persons, families, places, organisations and life
+  events the paper names, the sources and holders cited, the sourced facts and relations about
+  them, and the media beside them.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  rico: https://www.ica.org/standards/RiC/ontology#
+  ehri: http://lod.ehri-project-test.eu/ontology#
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+  - vocabulary
+  - sourced_entities
+  - media
+  # Stand-in until ticket 02 merges: becomes `site_common`.
+  - site_common_address
+
+types:
+  Coordinate:
+    typeof: float
+    minimum_value: -180
+    maximum_value: 180
+    description: >-
+      One coordinate of a place, in degrees from -180 to 180. The twins bound the latitude,
+      the first, to -90 to 90; a bound by position in a list cannot be said here
+      (known-looser.yaml).
+
+enums:
+  HolderKind:
+    description: >-
+      What kind of holder keeps a source.
+    permissible_values:
+      institution:
+        description: >-
+          An institution, such as an archive or a library.
+        # vocabulary/site-content.json, binding holder_institution.
+        meaning: ehri:Institution
+      family:
+        description: >-
+          A family holding papers.
+        # vocabulary/site-content.json, binding holder_family.
+        meaning: ehri:Family
+      private:
+        description: >-
+          A private person holding papers; the name is never published.
+        # vocabulary/site-content.json, binding holder_private.
+        meaning: rico:Person
+  SharedFactRepresentation:
+    description: >-
+      The form a fact is kept in: a structured statement, retained prose, or an image path.
+    permissible_values:
+      structured:
+        description: >-
+          A structured statement of a released type.
+      prose:
+        description: >-
+          Retained prose, kept as other with a proposed type until it is reviewed.
+      image:
+        description: >-
+          An image path, kept as other with a proposed type.
+
+classes:
+  SiteCitation:
+    is_a: Citation
+    description: >-
+      A citation as the shared record keeps it: an older one as it was written, or one the
+      site writer locates on the printed page, with the addresses of the words it quotes.
+    attributes:
+      addresses:
+        range: PrintedAddress
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          Where on the page pictures the quoted words are printed.
+    # The generated JSON Schema does not carry a parent's any_of to a child class (measured,
+    # linkml/README.md), so Citation's is written again here.
+    any_of:
+      - description: >-
+          A citation names where in its source the evidence is.
+        slot_conditions:
+          record_id:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          page:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          scan:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          time:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          unit_id:
+            required: true
+            pattern: '\S'
+      - slot_conditions:
+          url:
+            required: true
+      - slot_conditions:
+          locator:
+            required: true
+      - slot_conditions:
+          reference_code:
+            required: true
+    rules:
+      - description: >-
+          A located citation names its piece, its issue's day and its quote.
+        preconditions:
+          slot_conditions:
+            addresses:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            unit_id:
+              required: true
+              pattern: '\S'
+            edition_date:
+              required: true
+              pattern: '^\d{4}-\d{2}-\d{2}$'
+            quote:
+              required: true
+              pattern: '\S'
+
+  SharedName:
+    # vocabulary/site-content.json, bindings agent_name ("A printed or supplied name of a
+    # person") and person_name.
+    class_uri: rico:AgentName
+    is_a: Name
+    description: >-
+      One name of a person in the shared record, with its evidence located on the printed page
+      where the site writer found it.
+    attributes:
+      citations:
+        range: SiteCitation
+        multivalued: true
+        inlined_as_list: true
+        description: >-
+          Where the name is found.
+
+  LifeEventDate:
+    # vocabulary/site-content.json, binding event_date.
+    class_uri: rico:Date
+    description: >-
+      One date of a life event: the words printed with their calendar, or, where no date is
+      printed, the day of the first issue that reported it, or the preferred record
+      statement's date for a death known from records alone.
+    attributes:
+      record_fact_id:
+        # vocabulary/site-content.json, binding event_record_date.
+        slot_uri: pc:site_event_record_date
+        range: NonBlankText
+        description: >-
+          For a death known from records: the accepted death fact whose date and place describe
+          it, by the fact's id.
+      printed:
+        # vocabulary/site-content.json, binding event_date_printed.
+        slot_uri: rico:expressedDate
+        range: NonBlankText
+        description: >-
+          The date's words as printed.
+      printed_calendar:
+        # vocabulary/site-content.json, binding event_date_printed (the words with their
+        # calendar).
+        related_mappings:
+          - rico:expressedDate
+        range: PrintedCalendar
+        description: >-
+          The calendar the date was printed in.
+      start:
+        # vocabulary/site-content.json, binding event_date_normalized.
+        slot_uri: rico:normalizedDateValue
+        range: IsoYearMonthOrDay
+        description: >-
+          The printed date normalized, for a date printed in the Gregorian calendar only.
+      qualifier:
+        # vocabulary/site-content.json, binding event_date_qualifier.
+        slot_uri: rico:dateQualifier
+        range: string
+        equals_string: reported_in
+        description: >-
+          reported_in: the day is the first issue's that reported the event, not the day it
+          happened.
+      reported_in:
+        range: IsoDay
+        description: >-
+          The day of the first issue that reported the event, where no date is printed.
+    rules:
+      - description: >-
+          A record date names its fact and nothing else.
+        preconditions:
+          slot_conditions:
+            record_fact_id:
+              value_presence: PRESENT
+        postconditions:
+          none_of:
+            - slot_conditions:
+                printed:
+                  required: true
+            - slot_conditions:
+                printed_calendar:
+                  required: true
+            - slot_conditions:
+                start:
+                  required: true
+            - slot_conditions:
+                qualifier:
+                  required: true
+            - slot_conditions:
+                reported_in:
+                  required: true
+      - description: >-
+          Any other date is printed words with their calendar, or the day it was first reported.
+        preconditions:
+          slot_conditions:
+            record_fact_id:
+              value_presence: ABSENT
+        postconditions:
+          any_of:
+            - slot_conditions:
+                qualifier:
+                  required: true
+                  equals_string: reported_in
+                reported_in:
+                  required: true
+              none_of:
+                - slot_conditions:
+                    printed:
+                      required: true
+                - slot_conditions:
+                    printed_calendar:
+                      required: true
+                - slot_conditions:
+                    start:
+                      required: true
+            - slot_conditions:
+                printed:
+                  required: true
+                printed_calendar:
+                  required: true
+              none_of:
+                - slot_conditions:
+                    qualifier:
+                      required: true
+                - slot_conditions:
+                    reported_in:
+                      required: true
+      - description: >-
+          A date printed in the Hebrew calendar is not normalized.
+        preconditions:
+          slot_conditions:
+            printed_calendar:
+              equals_string: hebrew
+        postconditions:
+          slot_conditions:
+            start:
+              value_presence: ABSENT
+
+  LifeEventMainPerson:
+    description: >-
+      One main person of a life event and their part in it (the baby, a parent, the bride, the
+      groom, the boy, the one who died, the one remembered); each part means a declared local
+      subproperty of rico:affectsOrAffected or rico:hasOrHadParticipant (EventParts).
+    attributes:
+      person_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The person, by the person's id in the record.
+      part:
+        range: EventParts
+        required: true
+        description: >-
+          The person's part in the event.
+
+  SharedFact:
+    is_a: Fact
+    description: >-
+      One source's statement as the shared record keeps it: a fact with its subject, its form
+      and its evidence located on the printed page where the site writer found it.
+    attributes:
+      citations:
+        range: SiteCitation
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          The evidence: where in which sources the statement is found.
+      subject_id:
+        # vocabulary/site-content.json, binding fact_subject.
+        slot_uri: pc:site_fact_subject
+        range: NonBlankText
+        required: true
+        description: >-
+          Whose statement it is: a person, a family, a place, an organisation, an event or a
+          relation, by its id.
+      family_id:
+        # vocabulary/site-content.json, binding family_membership: on a membership fact, the
+        # family is the group the subject is or was a member of.
+        slot_uri: rico:isOrWasMemberOf
+        annotations:
+          via: rico:MembershipRelation
+        range: NonBlankText
+        description: >-
+          The family the statement concerns, by its id; on a membership fact, the family the
+          person belongs to.
+      representation:
+        # vocabulary/site-content.json, binding fact_representation.
+        slot_uri: pc:site_fact_representation
+        range: SharedFactRepresentation
+        required: true
+        description: >-
+          The form the statement is kept in: structured, prose or an image path.
+    none_of:
+      - description: >-
+          A shared fact is never a parenthood, which is a parent_of relation to the child as a
+          person.
+        slot_conditions:
+          type:
+            equals_string: parenthood
+      - slot_conditions:
+          proposed_type:
+            equals_string: parenthood
+    rules:
+      - description: >-
+          A prose or image fact has its value.
+        preconditions:
+          slot_conditions:
+            representation:
+              equals_string_in:
+                - prose
+                - image
+        postconditions:
+          slot_conditions:
+            value:
+              required: true
+      - description: >-
+          A prose or image fact is of type other.
+        preconditions:
+          slot_conditions:
+            representation:
+              equals_string_in:
+                - prose
+                - image
+        postconditions:
+          slot_conditions:
+            type:
+              equals_string: other
+
+  SourcedRelation:
+    # vocabulary/site-content.json, binding relation.
+    class_uri: rico:Relation
+    is_a: Fact
+    description: >-
+      One source's statement that a person is related to another, from the subject to the
+      relative, of a released kinship type, or of type other with a proposed type.
+    attributes:
+      type:
+        range: FactTypes
+        equals_string_in:
+          - kinship
+          - other
+        required: true
+        description: >-
+          kinship for a released relationship type; other, with a proposed type, for one not
+          yet released.
+      citations:
+        range: SiteCitation
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          The evidence: where in which sources the relation is found.
+      subject_id:
+        # vocabulary/site-content.json, binding fact_subject.
+        slot_uri: pc:site_fact_subject
+        range: NonBlankText
+        required: true
+        description: >-
+          The person the relation goes from, by the person's id.
+      family_id:
+        range: NonBlankText
+        description: >-
+          The family the relation concerns, by its id.
+      shown:
+        # vocabulary/site-content.json, binding display_permission.
+        slot_uri: pc:site_display_permission
+        range: Attribution
+        inlined: true
+        description: >-
+          Who allowed the relative to be shown on the person's page, and on what day; never
+          evidence of a death.
+    any_of:
+      - description: >-
+          A relation names the relative as a person or by an unresolved name.
+        slot_conditions:
+          related_person_id:
+            required: true
+      - slot_conditions:
+          related_name:
+            required: true
+    rules:
+      - description: >-
+          A relation of type other has no released relationship type.
+        preconditions:
+          slot_conditions:
+            type:
+              equals_string: other
+        postconditions:
+          slot_conditions:
+            relationship_type:
+              value_presence: ABSENT
+
+  SharedPerson:
+    # vocabulary/site-content.json, binding person; ADR 0001: persons are EHRI's.
+    class_uri: ehri:Person
+    description: >-
+      One person of the record, across every issue: their id, the name shown, every name they
+      are known by, their gender, what became of them, and their portrait.
+    attributes:
+      portrait:
+        # vocabulary/media.json, binding media_portrait.
+        slot_uri: pc:media_portrait
+        range: MediaPortrait
+        inlined: true
+        description: >-
+          The reviewed picture and region the person's page shows.
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The person's id, kept for ever: never renamed, reused or deleted.
+      name:
+        range: NonBlankText
+        required: true
+        description: >-
+          The name the site shows.
+      names:
+        # vocabulary/site-content.json, binding person_name.
+        slot_uri: rico:hasOrHadAgentName
+        range: SharedName
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every name the person is known by, printed or supplied, with where it is found.
+      gender:
+        range: Gender
+        required: true
+        description: >-
+          The person's gender, or unknown.
+      fate:
+        range: Fate
+        inlined: true
+        description: >-
+          What became of the person in the Holocaust, as far as the record shows.
+
+  SharedFamily:
+    # vocabulary/site-content.json, binding family; ADR 0001: families are EHRI's.
+    class_uri: ehri:Family
+    description: >-
+      One family of the record: its id, the name shown and its names.
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The family's id.
+      name:
+        range: NonBlankText
+        required: true
+        description: >-
+          The name the site shows.
+      names:
+        range: Name
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The family's names.
+
+  PlaceIdentifier:
+    # vocabulary/site-content.json, binding identifier.
+    class_uri: rico:Identifier
+    description: >-
+      One outside identifier of a place or a holder, read on its authority's own pages and
+      carried only on that evidence, never from a match of names.
+    attributes:
+      source_id:
+        # vocabulary/site-content.json, binding identifier_authority.
+        slot_uri: rico:hasIdentifierType
+        range: NonBlankText
+        required: true
+        description: >-
+          The authority the identifier comes from, a registered source, by its id.
+      value:
+        # vocabulary/site-content.json, binding identifier_value.
+        slot_uri: rico:textualValue
+        range: NonBlankText
+        required: true
+        description: >-
+          The identifier as its authority writes it.
+      url:
+        range: HttpsUri
+        description: >-
+          The identifier's page on the authority's host.
+      accessed:
+        # vocabulary/site-content.json, binding identifier_reading (who added it and the day
+        # it was read).
+        related_mappings:
+          - pc:site_identifier_reading
+        range: IsoDay
+        required: true
+        description: >-
+          The day it was read on its authority's own pages.
+      attribution:
+        # vocabulary/site-content.json, binding identifier_reading.
+        related_mappings:
+          - pc:site_identifier_reading
+        range: Attribution
+        inlined: true
+        required: true
+        description: >-
+          Who added it, and on what day.
+
+  Holder:
+    description: >-
+      Who holds a source: an institution, a family or a private person, with its outside
+      identifiers and its web host. A private holder's name is never published.
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The holder's id, which sources name.
+      name:
+        # vocabulary/site-content.json, binding holder_name.
+        slot_uri: rico:hasOrHadName
+        range: NonBlankText
+        required: true
+        description: >-
+          The holder's name.
+      short_name:
+        # vocabulary/site-content.json, binding holder_name (the name and the display name).
+        slot_uri: rico:hasOrHadName
+        range: NonBlankText
+        description: >-
+          The name the site shows.
+      kind:
+        range: HolderKind
+        required: true
+        description: >-
+          An institution, a family or a private person.
+      identifiers:
+        # vocabulary/site-content.json, binding holder_identifier.
+        slot_uri: rico:hasOrHadIdentifier
+        range: PlaceIdentifier
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          The holder's outside identifiers, each with its evidence: EHRI's institution id
+          first.
+      host:
+        range: HostName
+        description: >-
+          The holder's web host, without www.
+    rules:
+      - description: >-
+          A holder's host is written without www.
+        preconditions:
+          slot_conditions:
+            host:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            host:
+              pattern: '^(?!www\.)'
+
+  SharedPlace:
+    # vocabulary/site-content.json, binding place: a place without a more specific EHRI class
+    # (a city, region or country is EHRI's, by its LocationTypes value).
+    class_uri: rico:Place
+    description: >-
+      One place of the record: its names, its kind, the place it lies in, its coordinates and
+      its outside identifiers.
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The place's id.
+      name:
+        range: NonBlankText
+        required: true
+        description: >-
+          The name the site shows.
+      names:
+        # vocabulary/site-content.json, binding place_name: a place's names are place names.
+        range: Name
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The place's names.
+      type:
+        range: LocationTypes
+        required: true
+        description: >-
+          What kind of place it is: a city, a town, a street, a camp and so on.
+      parent_id:
+        # vocabulary/site-content.json, binding place_parent.
+        slot_uri: rico:isOrWasPartOf
+        range: NonBlankText
+        description: >-
+          The place it lies in, by its id.
+      coordinates:
+        # vocabulary/site-content.json, binding place_coordinates.
+        slot_uri: rico:geographicalCoordinates
+        range: Coordinate
+        multivalued: true
+        minimum_cardinality: 2
+        maximum_cardinality: 2
+        description: >-
+          Where it lies: latitude then longitude, in degrees.
+      identifiers:
+        # vocabulary/site-content.json, binding place_identifier.
+        slot_uri: rico:hasOrHadIdentifier
+        range: PlaceIdentifier
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          The place's outside identifiers, each with its evidence.
+
+  SharedOrganization:
+    # vocabulary/site-content.json, binding organization.
+    class_uri: ehri:CorporateBody
+    description: >-
+      One organisation of the record: its id, the name shown and its names; its offices and
+      members are sourced facts.
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The organisation's id.
+      name:
+        range: NonBlankText
+        required: true
+        description: >-
+          The name the site shows.
+      names:
+        range: Name
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The organisation's names.
+
+  SharedEvent:
+    # vocabulary/site-content.json, binding life_event; ADR 0001: life events are RiC-O's.
+    class_uri: rico:Event
+    description: >-
+      One life event, once for each happening across every issue (a birth, a wedding, a death,
+      a memorial and so on): its kind, its main people and their parts, its dates and its
+      place.
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The event's id, which each issue's life events name.
+      name:
+        range: NonBlankText
+        required: true
+        description: >-
+          The event's name.
+      type:
+        # vocabulary/site-content.json, binding event_type.
+        slot_uri: rico:hasEventType
+        range: EventTypes
+        required: true
+        description: >-
+          The one kind of the event.
+      proposed_type:
+        range: NonBlankText
+        description: >-
+          For an event of kind other: the kind proposed for it, awaiting the owner's approval.
+      main_people:
+        # vocabulary/site-content.json, binding life_event_main_person.
+        slot_uri: rico:hasOrHadParticipant
+        range: LifeEventMainPerson
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The people the event is about, each with their part; empty while unresolved.
+      evidence_basis:
+        # vocabulary/site-content.json, binding event_evidence_basis.
+        slot_uri: pc:site_event_evidence_basis
+        range: string
+        equals_string: records_only
+        description: >-
+          records_only: a death known from records alone, which no issue prints.
+      dates:
+        range: LifeEventDate
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          The event's dates: as printed (in either calendar), or the first report's day, or the
+          preferred record statement's.
+      location_id:
+        range: NonBlankText
+        description: >-
+          Where the event happened, by the place's id.
+      description:
+        range: string
+        description: >-
+          A short description in words.
+    none_of:
+      - description: >-
+          An event's proposed kind is never a released kind.
+        slot_conditions:
+          proposed_type:
+            equals_string_in:
+              - engagement
+              - wedding
+              - birth
+              - death
+              - bar_mitzvah
+              - celebration
+              - community_event
+              - holocaust_event
+              - other
+              - memorial
+    rules:
+      - description: >-
+          An event of kind other has a proposed kind, and only such an event has one.
+        preconditions:
+          slot_conditions:
+            type:
+              equals_string: other
+        postconditions:
+          slot_conditions:
+            proposed_type:
+              required: true
+        elseconditions:
+          slot_conditions:
+            proposed_type:
+              value_presence: ABSENT
+
+  SharedRecord:
+    # vocabulary/site-content.json, binding shared_record.
+    class_uri: pc:site_shared_record
+    description: >-
+      The shared record whole: its version, the vocabulary version it uses, and every person,
+      family, place, organisation, event, source, holder, fact, relation and medium.
+    attributes:
+      version:
+        range: string
+        equals_string: '1'
+        required: true
+        description: >-
+          The version of the record's shape.
+      vocabulary_version:
+        range: string
+        equals_string: '1.3.0'
+        required: true
+        description: >-
+          The version of the sourced-entities vocabulary the record uses.
+      persons:
+        range: SharedPerson
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every person.
+      families:
+        range: SharedFamily
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every family.
+      places:
+        range: SharedPlace
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every place.
+      organizations:
+        range: SharedOrganization
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every organisation.
+      events:
+        range: SharedEvent
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every life event, once for each happening.
+      sources:
+        range: Source
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every registered source.
+      holders:
+        # known-looser.yaml: the twins let the key be left out but refuse null.
+        range: Holder
+        multivalued: true
+        inlined_as_list: true
+        description: >-
+          Every holder of a source.
+      facts:
+        range: SharedFact
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every sourced fact.
+      relations:
+        range: SourcedRelation
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every sourced relation between people.
+      media:
+        range: Media
+        multivalued: true
+        inlined_as_list: true
+        description: >-
+          Every medium held or linked beside a person.

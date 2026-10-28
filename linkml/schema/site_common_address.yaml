@@ -1,0 +1,46 @@
+# STAND-IN UNTIL TICKET 02 MERGES. PrintedAddress belongs to ticket 02's site_common.yaml (the
+# twins keep it in zod/site-common.schema.ts and pydantic/site_common.py). This file lets
+# shared_record.yaml be checked on its own branch; at the merge the file is deleted and the
+# import `site_common_address` in shared_record.yaml becomes `site_common`. Its shape is read
+# from both twins on 28 October 2026: image_uri non-blank text, required; bbox four numbers,
+# x and y at least 0, width and height above 0 (the last two bounds are position-wise and
+# listed in known-looser.yaml); text any text, required, possibly empty.
+id: https://pruzhany.org/ns/site_common_address
+name: pruzhany_site_common_address
+title: Stand-in for the printed address (until ticket 02 merges)
+description: >-
+  A stand-in for PrintedAddress, which ticket 02 defines in site_common.yaml: where on a page
+  picture some printed words stand, and the words read there.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+
+classes:
+  PrintedAddress:
+    description: >-
+      Where some printed words stand: the page picture they are on, a box in that picture's own
+      pixels, and the words read inside it.
+    attributes:
+      image_uri:
+        range: NonBlankText
+        required: true
+        description: >-
+          The page picture the words are on, by its key or address.
+      bbox:
+        range: NonNegativeNumber
+        multivalued: true
+        required: true
+        minimum_cardinality: 4
+        maximum_cardinality: 4
+        description: >-
+          The box around the words, in the picture's own pixels: x, y, width and height.
+      text:
+        range: string
+        required: true
+        description: >-
+          The words read inside the box, exactly; empty for a patch with no readable line.
