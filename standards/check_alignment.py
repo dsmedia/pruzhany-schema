@@ -14,6 +14,11 @@ RICO_LIST, EHRI_LIST = "rico-1.1.json", "ehri-0.2.0.json"
 # cardinalities), pinned from the same file as its terms: the owner's word of 2026-10-23.
 RICO_AXIOMS = "rico-1.1-axioms.json"
 PROVENANCE = ("repo", "commit", "path", "sha256")
+# The LinkML definition (linkml/README.md): every schema file and the generated vocabulary.yaml
+# under linkml/, read as text since this checker needs nothing beyond Python itself. Its planted
+# files, under linkml/tests/, are not the definition and are left to their own tests.
+LINKML_MAPPING_KEYS = {"meaning", "class_uri", "slot_uri", "mappings", "exact_mappings", "close_mappings",
+                       "related_mappings", "narrow_mappings", "broad_mappings", "via"}
 
 
 def check_axioms(standards):
@@ -26,6 +31,82 @@ def check_axioms(standards):
     for iri in sorted(set(re.findall(re.escape(RICO) + r'[A-Za-z_][\w-]*', json.dumps(axioms["axioms"]))) - known):
         errors.append(f"standards/{RICO_AXIOMS}: {iri} is not a pinned term")
     return errors
+
+
+def linkml_scalars(text):
+    """Yield (line number, key, value) for every scalar of a block-style YAML file.
+
+    The key is the nearest mapping key holding the value: its own for `key: value`, a list's for
+    an item `- value` or a flow list `key: [a, b]`. Comments and the lines of a block scalar
+    (`>-`, `|`) are passed over. It reads what the LinkML files hold (block style, the generated
+    vocabulary's JSON scalars), not every form YAML allows.
+    """
+    keys, block = [], None
+    for number, line in enumerate(text.splitlines(), 1):
+        content = line.strip()
+        indent = len(line) - len(line.lstrip(" "))
+        if block is not None:
+            if not content or indent > block:
+                continue
+            block = None
+        if not content or content.startswith("#"):
+            continue
+        content = strip_comment(content)
+        if content.startswith("- ") or content == "-":
+            content, indent = content[1:].strip(), indent + 2
+            while keys and keys[-1][0] >= indent:
+                keys.pop()
+            item = re.match(r"^([\w'\"-]+):(?:\s+(.*))?$", content)
+            if not item:
+                if keys and content:
+                    yield number, keys[-1][1], unquote(content)
+                continue
+        else:
+            item = re.match(r"^([\w'\"-]+):(?:\s+(.*))?$", content)
+            if not item:
+                continue
+            while keys and keys[-1][0] >= indent:
+                keys.pop()
+        key, value = item.group(1).strip("'\""), (item.group(2) or "").strip()
+        keys.append((indent, key))
+        if value in (">", ">-", ">+", "|", "|-", "|+"):
+            block = indent
+        elif value.startswith("[") and value.endswith("]"):
+            for part in value[1:-1].split(","):
+                yield number, key, unquote(part.strip())
+        elif value:
+            yield number, key, unquote(value)
+
+
+def strip_comment(content):
+    """The line without its comment: a # after white space and outside quotes."""
+    quote, previous, skip = None, " ", False
+    for index, char in enumerate(content):
+        if skip:
+            skip, previous = False, "escaped"
+            continue
+        if (quote == '"' and char == "\\") or (quote == "'" and content[index:index + 2] == "''"):
+            skip = True
+            continue
+        if quote and char == quote:
+            quote = None
+        elif not quote and char in "'\"" and previous in " :[,-":
+            quote = char
+        elif not quote and char == "#" and previous.isspace():
+            return content[:index].rstrip()
+        previous = char
+    return content
+
+
+def unquote(value):
+    try:
+        if value.startswith('"') and value.endswith('"') and len(value) > 1:
+            return json.loads(value)
+    except ValueError:
+        return value
+    if value.startswith("'") and value.endswith("'") and len(value) > 1:
+        return value[1:-1].replace("''", "'")
+    return value
 
 
 def check(root):
@@ -101,6 +182,29 @@ def check(root):
                 for i, child in enumerate(value):
                     walk(child, f"{location}[{i}]")
         walk(json.loads(path.read_text(encoding="utf-8")), "root")
+    # The LinkML definition: every RiC-O or EHRI term it names anywhere is pinned; every local
+    # term it maps to (a meaning, a class or slot URI, a mapping, a via) is declared in a
+    # vocabulary profile; every via names a RiC-O Relation class.
+    declared = set()
+    for profile in sorted(root.glob("vocabulary/*.ttl")):
+        declared |= set(re.findall(r"(?m)^(pc:[A-Za-z_][\w-]*)\s+a\s", profile.read_text(encoding="utf-8")))
+    relation_classes = {t["iri"] for t in json.loads((standards / RICO_LIST).read_text(encoding="utf-8"))["terms"]
+                        if t.get("kind") == "class" and t["iri"].endswith("Relation")}
+    linkml = root / "linkml"
+    for path in sorted(p for p in linkml.glob("**/*.yaml") if "tests" not in p.relative_to(linkml).parts):
+        text = path.read_text(encoding="utf-8")
+        for prefix, namespace in (("rico", RICO), ("ehri", EHRI)):
+            for term in sorted(set(re.findall(r'\b' + prefix + r':([A-Za-z_][\w-]*)', text) + re.findall(re.escape(namespace) + r'([A-Za-z_][\w-]*)', text))):
+                validate(prefix, term, path)
+        for number, key, value in linkml_scalars(text):
+            if key not in LINKML_MAPPING_KEYS:
+                continue
+            for term in re.findall(r"(?<![\w:/])pc:[A-Za-z_][\w-]*", value):
+                if term not in declared:
+                    errors.append(f"{path.relative_to(root)}:{number}: local term {term} is not declared in vocabulary/*.ttl")
+            if key == "via" and not (value.startswith("rico:") and value.endswith("Relation")
+                                     and RICO + value.removeprefix("rico:") in relation_classes):
+                errors.append(f"{path.relative_to(root)}:{number}: via must be a RiC-O Relation class")
     return errors
 
 
