@@ -1,0 +1,41 @@
+{
+	"edition_date": "1938-12-16",
+	"pages": [
+		{
+			"id": "page-1938-12-16-1",
+			"issue_date": "1938-12-16",
+			"page_number": 1,
+			"image_uri": "pruzst19381216-01.1.1.png",
+			"dimensions": [
+				3200,
+				4794
+			],
+			"blocks": [
+				{
+					"id": "blk-p1-001",
+					"bbox": [
+						100,
+						120,
+						900,
+						60
+					],
+					"transcription": "heading words",
+					"unit_id": null
+				},
+				{
+					"id": "blk-p1-002",
+					"bbox": [
+						100,
+						200,
+						900,
+						400
+					],
+					"transcription": "first line\nsecond line",
+					"confidence": 0.9,
+					"image_crop": null,
+					"unit_id": "cu-1"
+				}
+			]
+		}
+	]
+}

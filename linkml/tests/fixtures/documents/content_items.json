@@ -1,0 +1,166 @@
+{
+	"issue_date": "1938-12-16",
+	"vocabulary_version": "1.0.0",
+	"content_items": [
+		{
+			"id": "cu-1",
+			"type": "ad",
+			"subtype": "wedding_greeting",
+			"printed_title": {
+				"text": "first line",
+				"addresses": [
+					{
+						"image_uri": "pruzst19381216-01.1.1.png",
+						"bbox": [
+							100,
+							200,
+							400,
+							30
+						],
+						"text": "first line"
+					}
+				]
+			},
+			"supplied_title": {
+				"text": "A wedding greeting",
+				"language": "en",
+				"based_on": {
+					"source_text": "first line",
+					"addresses": [
+						{
+							"image_uri": "pruzst19381216-01.1.1.png",
+							"bbox": [
+								100,
+								200,
+								400,
+								30
+							],
+							"text": "first line"
+						}
+					]
+				},
+				"attribution": {
+					"by": "translator",
+					"on": "2026-10-13",
+					"kind": "model"
+				},
+				"checked_against": {
+					"reading_id": "reading-1",
+					"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+					"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+					"judgement_id": "judgement-1:title",
+					"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+					"attribution": {
+						"by": "checker",
+						"on": "2026-10-20",
+						"note": "checked word by word",
+						"kind": "person"
+					}
+				}
+			},
+			"subject_ids": [
+				"culture"
+			],
+			"section_id": "sec-1",
+			"full_text": "first line\nsecond line",
+			"translation": {
+				"text": "First line. Second line.",
+				"language": "en",
+				"based_on": {
+					"source_text": "first line\nsecond line",
+					"addresses": [
+						{
+							"image_uri": "pruzst19381216-01.1.1.png",
+							"bbox": [
+								100,
+								200,
+								900,
+								400
+							],
+							"text": "first line\nsecond line"
+						}
+					]
+				},
+				"attribution": {
+					"by": "translator",
+					"on": "2026-10-13",
+					"note": null,
+					"kind": "model"
+				},
+				"checked_against": {
+					"reading_id": "reading-1",
+					"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+					"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+					"judgement_id": "judgement-1:text",
+					"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+					"attribution": {
+						"by": "checker",
+						"on": "2026-10-20",
+						"note": "checked word by word",
+						"kind": "person"
+					}
+				}
+			},
+			"reading_status": {
+				"text": "machine",
+				"english": null
+			},
+			"block_breaks": [
+				0
+			],
+			"page_blocks": [
+				{
+					"page_id": "page-1938-12-16-1",
+					"block_ids": [
+						"blk-p1-002"
+					]
+				}
+			],
+			"location_ids": [
+				"place-pruzhany"
+			],
+			"organization_ids": [],
+			"cross_references": [
+				{
+					"target_id": "cu-1",
+					"confidence": 0.5,
+					"relationship": "continues",
+					"evidence": "same names"
+				}
+			],
+			"event_id": null
+		}
+	],
+	"sections": [
+		{
+			"id": "sec-1",
+			"printed_title": {
+				"text": "heading words",
+				"addresses": [
+					{
+						"image_uri": "pruzst19381216-01.1.1.png",
+						"bbox": [
+							100,
+							120,
+							900,
+							60
+						],
+						"text": "heading words"
+					}
+				]
+			},
+			"supplied_title": null,
+			"content_item_ids": [
+				"cu-1"
+			],
+			"heading_blocks": [
+				{
+					"page_id": "page-1938-12-16-1",
+					"block_ids": [
+						"blk-p1-001"
+					]
+				}
+			]
+		}
+	]
+}

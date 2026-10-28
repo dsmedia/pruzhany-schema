@@ -1,0 +1,14 @@
+{
+	"issue_date": "1938-12-16",
+	"life_events": [
+		{
+			"id": "event-1",
+			"content_items": [
+				{
+					"content_item_id": "cu-1",
+					"role": "congratulation"
+				}
+			]
+		}
+	]
+}

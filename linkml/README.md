@@ -19,6 +19,7 @@ of the plan in pruzhany-steps `.scratch/linkml/plan.md`: **LinkML describes; `zo
 | `export_zod.ts` | Makes the five Zod exports again from this checkout, as pruzhany-steps' `site_shapes refresh` does. |
 | `requirements.in`, `requirements.lock` | The locked environment: LinkML and everything it brings, by hash. |
 | `build-constraints.in`, `build-constraints.txt` | The one build tool, setuptools, by hash. |
+| `checks/documents.yaml` | Each check the twins of the issue documents and the catalog make beyond their shapes (every Zod refinement and Pydantic validator), and how the definition holds it: a LinkML rule, a rule of pruzhany-steps' `record/rules.yaml` (cited or proposed), or the twins alone; `tests/test_documents_checks.py` counts them. |
 | `tests/` | The canaries (`canary_*.py`), the tests (`test_*.py`) and their planted files (`fixtures/`). |
 
 ## Running it
@@ -108,6 +109,16 @@ checks every row against `tests/fixtures/house-style.yaml`, which uses the real 
 | a map of text to text (`additionalProperties` and `propertyNames` of type string) | a class with no slots and `extra_slots: {range_expression: {range: string, required: true}}`, written in block style | `"additionalProperties": {"type": "string"}`; without `required: true` the values would also accept null |
 | `additionalProperties: false` | nothing: classes are closed by default | `"additionalProperties": false` on every class |
 | `number` / `integer` / `boolean` | `range: float` / `integer` / `boolean` | `"number"` / `"integer"` / `"boolean"` |
+| one object inside another (`z.strictObject` as a field) | `range:` its class, `inlined: true` | `"$ref"` to its `$defs` entry; when optional, `"anyOf": [{"$ref": ...}, {"type": "null"}]` |
+| a list of objects | `range:` their class, `multivalued: true`, `inlined_as_list: true` | `"type": "array", "items": {"$ref": ...}` |
+| an object's `id` | a required slot (`range: NonBlankText` where the export has `\S`), never `identifier: true` | the key in `required`; `identifier: true` would make the id the object's IRI under `pc:`, a namespace choice left to stage 3, and claim a uniqueness no generator enforces |
+| a key written in camelCase (the editions catalog) | a slot in snake_case with `alias:` the key, which `linkml lint`'s naming rule accepts | the property is named by the alias, as the file writes it |
+| a subclass that narrows one field (`TitleCheck` extends `EnglishCheck` with its own pattern) | `is_a:` the parent, the field again under `slot_usage:` | the subclass's own `$defs` entry, with every inherited property and the narrowed one |
+| a version stamp from a short list (`z.enum(['0.1.0', '1.0.0'])`) | `pattern:` of the exact values, `'^(0\.1\.0\|1\.0\.0)$(?![\s\S])'`; `linkml lint` refuses `1.0.0` as an enum value | `"pattern"` as written; a test holds its alternatives to the generated Pydantic `Literal` |
+| a check of two fields of one object (`superRefine`) that LinkML can say | `rules:` on the class, `preconditions` and `postconditions` with `equals_string` or `equals_string_in` | `"allOf"` of `"if"`/`"then"`; the `if` puts the key in `required`, so a left-out or null value does not trigger it; every slot of the `postconditions` goes in the `then`'s `required` unless its condition says `required: false` |
+| no value, in a rule's postconditions | `required: false` and `pattern: '^$'` on a slot whose range refuses empty text | `"then": {"properties": {"x": {"pattern": "^$"}}}`: null and absence pass, any text fails; `value_presence: ABSENT` gives `"not": {"required": [...]}`, which refuses the null the files hold |
+| items of a list that must all differ (Zod's `uniqueIds`) | nothing: the check goes to the rule catalog (`checks/documents.yaml`) | `list_elements_unique: true` gives no `uniqueItems` (measured), so it is not written |
+| the meaning of a class or a field | `class_uri` or `slot_uri`: the RiC-O or EHRI term a vocabulary binding names; `exact_mappings`: a `pc:` term a profile declares as a placeholder; `related_mappings`: one that covers several fields; `annotations: {impresso: ...}`: Impresso's field, in words, written in block style | nothing: a JSON Schema carries no mapping; `tests/test_documents.py` checks each term against `standards/` and `vocabulary/*.ttl` |
 
 Also:
 

@@ -1,0 +1,448 @@
+# Every check the twins of the four issue documents and the catalog make beyond their shapes,
+# and how the LinkML definition holds it: each Zod refinement (.refine, .superRefine, .check)
+# and each Pydantic validator (@model_validator, @field_validator, and the validators given in
+# a type, BeforeValidator and the like) of the modules under `twins`, one entry each, a Zod
+# refinement and the Pydantic validator that makes the same check sharing one entry.
+# linkml/tests/test_documents_checks.py counts them in the modules and fails when the count
+# differs from the entries here, or when an entry names a place that is not there.
+#
+# Each entry lists the parts of what it checks, and each part says how it is held:
+#   linkml_rule   a `rules:` entry of the LinkML class named compares fields of one object, and
+#                 the generated JSON Schema refuses a planted failure (the test named in
+#                 `planted`); `rules` is how many of that class's rules hold this part.
+#   rule_catalog  it compares records of a list, objects or files, which LinkML does not say
+#                 (unique_keys and list_elements_unique are enforced by no generator); `rule`
+#                 is the id in pruzhany-steps record/rules.yaml that already cites the check,
+#                 or `proposed` an id and `statement` its one line, for ticket 06 to add.
+#   twin_only     the twins alone can hold it, and `why` says why.
+#
+# The Pydantic field validator that refuses null on a key the twins leave optional but not
+# nullable (_AttributedEnglish.check_is_not_null) is the place where the definition is looser
+# than the twins, which linkml/known-looser.yaml lists (kind optional-key-not-nullable); it is
+# listed here as twin_only. The calendar check of every issue_date (a real day, not 1938-02-30:
+# validDate in zod/sourced-entities.schema.ts, valid_date in pydantic/sourced_entities.py) is
+# made by the shared day type of the sourced entities, accounted for with that module; the
+# definition's IsoDay holds the pattern alone.
+
+twins:
+  zod:
+    - zod/page.schema.ts
+    - zod/content-item.schema.ts
+    - zod/site-common.schema.ts
+    - zod/site-issue.schema.ts
+    - zod/editions.schema.ts
+    - zod/site-content.vocabulary.ts
+  pydantic:
+    - pydantic/page.py
+    - pydantic/content_item.py
+    - pydantic/site_common.py
+    - pydantic/site_issue.py
+
+checks:
+  - id: printed-title
+    holds: >-
+      A printed title's text is the words at its addresses, joined by line breaks.
+    zod:
+      file: zod/site-common.schema.ts
+      schema: PrintedTitleSchema
+    pydantic:
+      file: pydantic/site_common.py
+      validator: PrintedTitle.printed_words
+    parts:
+      - holds: >-
+          The title's text equals its addresses' texts joined by newlines.
+        how: rule_catalog
+        rule: printed-title-joins-its-addresses
+
+  - id: english-check-not-null
+    holds: >-
+      A supplied title's or translation's checked_against is left out when there is no
+      check, never written as null.
+    pydantic:
+      file: pydantic/site_common.py
+      validator: _AttributedEnglish.check_is_not_null
+    parts:
+      - holds: >-
+          checked_against, when present, is not null.
+        how: twin_only
+        why: >-
+          LinkML has no null apart from absence, and its generated JSON Schema lets every
+          optional slot be null; known-looser.yaml lists this key (optional-key-not-nullable),
+          and Zod refuses null by .optional() alone, with no refinement.
+
+  - id: block-break-offset
+    holds: >-
+      A block break written 3.0 is read as the whole number 3.
+    pydantic:
+      file: pydantic/content_item.py
+      validator: integer_offset
+    parts:
+      - holds: >-
+          A JSON number with no fraction is a whole number, as Zod reads it.
+        how: twin_only
+        why: >-
+          It turns a value into another for Pydantic's strict mode and refuses nothing; the
+          definition's NonNegativeInteger already accepts 3.0, since JSON Schema counts any
+          number without a fraction as an integer.
+
+  - id: content-item
+    holds: >-
+      A content item's subtype fits its type, its subjects are distinct, and its block breaks
+      are ordered offsets within its text.
+    zod:
+      file: zod/content-item.schema.ts
+      schema: ContentItemSchema
+    pydantic:
+      file: pydantic/content_item.py
+      validator: ContentItem.content_contract
+    parts:
+      - holds: >-
+          A subtype's Impresso parent is the content item's type (a wedding greeting is an ad).
+        how: linkml_rule
+        class: ContentItem
+        rules: 4
+        planted: test_documents_checks.LinkMLRules.test_a_subtype_under_another_type_is_refused
+      - holds: >-
+          No subject is listed twice.
+        how: rule_catalog
+        proposed: subject-ids-distinct
+        statement: >-
+          A content item lists each of its subjects once.
+      - holds: >-
+          Each block break is at most the length of the full text in code points, and each is
+          greater than the one before.
+        how: rule_catalog
+        proposed: block-breaks-ordered-within-text
+        statement: >-
+          A content item's block breaks rise and none is beyond the end of its full text.
+
+  - id: printed-section
+    holds: >-
+      A printed section lists each of its content items once.
+    zod:
+      file: zod/content-item.schema.ts
+      schema: PrintedSectionSchema
+    pydantic:
+      file: pydantic/content_item.py
+      validator: PrintedSection.members
+    parts:
+      - holds: >-
+          No content item id is listed twice under one section.
+        how: rule_catalog
+        proposed: section-members-distinct
+        statement: >-
+          A printed section lists each content item beneath it once.
+
+  - id: content-items-document
+    holds: >-
+      Ids are unique within the document, sections and content items name each other both
+      ways, and cross-references point at content items of the document.
+    zod:
+      file: zod/content-item.schema.ts
+      schema: ContentItemsDataSchema
+    pydantic:
+      file: pydantic/content_item.py
+      validator: ContentItemsData.content_references
+    parts:
+      - holds: >-
+          No two content items share an id.
+        how: rule_catalog
+        proposed: content-item-ids-unique
+        statement: >-
+          Each content item of an issue has an id of its own.
+      - holds: >-
+          No two sections share an id.
+        how: rule_catalog
+        proposed: section-ids-unique
+        statement: >-
+          Each printed section of an issue has an id of its own.
+      - holds: >-
+          A content item's section lists it, and every content item a section lists names
+          that section.
+        how: rule_catalog
+        rule: section-membership-both-ways
+      - holds: >-
+          Every cross-reference's target is a content item of the same document.
+        how: rule_catalog
+        proposed: cross-reference-target-is-known
+        statement: >-
+          A content item's cross-reference points at a content item of the same issue.
+
+  - id: issue-mention
+    holds: >-
+      A mention's roles are distinct, its printed name is null exactly when it is pinned to
+      whole regions, and a printed name stands at its addresses.
+    zod:
+      file: zod/site-issue.schema.ts
+      schema: IssueMentionSchema
+    pydantic:
+      file: pydantic/site_issue.py
+      validator: IssueMention.mention_contract
+    parts:
+      - holds: >-
+          No role is listed twice.
+        how: rule_catalog
+        proposed: mention-roles-distinct
+        statement: >-
+          A mention lists each of the person's roles once.
+      - holds: >-
+          The printed name is null exactly when the address grain is regions.
+        how: linkml_rule
+        class: IssueMention
+        rules: 2
+        planted: test_documents_checks.LinkMLRules.test_a_printed_name_that_does_not_fit_the_grain_is_refused
+        comments:
+          - >-
+            The generated JSON Schema refuses a words mention without the printed_name key and
+            a regions mention with a name. A words mention whose printed_name is null passes
+            it: LinkML has no null apart from absence, and the key is there. That half stays
+            with the twins.
+      - holds: >-
+          A printed name occurs in the words at the mention's addresses, joined by newlines.
+        how: rule_catalog
+        proposed: mention-name-at-its-address
+        statement: >-
+          A mention's printed name stands in the words read at its addresses.
+
+  - id: mentions-document
+    holds: >-
+      Mention ids are unique within the document.
+    zod:
+      file: zod/site-issue.schema.ts
+      schema: IssueMentionsDataSchema
+    pydantic:
+      file: pydantic/site_issue.py
+      validator: IssueMentionsData.mention_ids
+    parts:
+      - holds: >-
+          No two mentions share an id.
+        how: rule_catalog
+        proposed: mention-ids-unique
+        statement: >-
+          Each mention of an issue has an id of its own.
+
+  - id: issue-life-event
+    holds: >-
+      A life event lists each content item once.
+    zod:
+      file: zod/site-issue.schema.ts
+      schema: IssueLifeEventSchema
+    pydantic:
+      file: pydantic/site_issue.py
+      validator: IssueLifeEvent.content_item_ids
+    parts:
+      - holds: >-
+          No content item is listed twice under one life event.
+        how: rule_catalog
+        proposed: event-content-items-distinct
+        statement: >-
+          A life event of an issue lists each content item that prints it once.
+
+  - id: life-events-document
+    holds: >-
+      Life event ids are unique within the document, and a content item prints at most one
+      of its life events.
+    zod:
+      file: zod/site-issue.schema.ts
+      schema: IssueLifeEventsDataSchema
+    pydantic:
+      file: pydantic/site_issue.py
+      validator: IssueLifeEventsData.life_event_ids
+    parts:
+      - holds: >-
+          No two life events share an id.
+        how: rule_catalog
+        proposed: life-event-ids-unique
+        statement: >-
+          Each life event of an issue is listed once.
+      - holds: >-
+          No content item is listed under two life events.
+        how: rule_catalog
+        proposed: content-item-in-one-life-event
+        statement: >-
+          A content item prints at most one life event of its issue.
+
+  - id: site-issue
+    holds: >-
+      The four documents of one issue agree with each other: dates, page and region ids,
+      which content item or heading owns each region, the text of each content item, and
+      every address, mention and life event against the regions and content items.
+    zod:
+      file: zod/site-issue.schema.ts
+      schema: SiteIssueSchema
+    pydantic:
+      file: pydantic/site_issue.py
+      validator: SiteIssue.issue_references
+    parts:
+      - holds: >-
+          The four documents and every page give the same issue date.
+        how: rule_catalog
+        rule: issue-dates-agree
+      - holds: >-
+          No two pages of the pages document share an id.
+        how: rule_catalog
+        proposed: page-ids-unique
+        statement: >-
+          Each page of an issue has an id of its own.
+      - holds: >-
+          No two regions of one page share an id.
+        how: rule_catalog
+        proposed: block-ids-unique
+        statement: >-
+          Each region of a page has an id of its own.
+      - holds: >-
+          Every region a content item or a section heading names is a region of that page.
+        how: rule_catalog
+        proposed: block-reference-is-known
+        statement: >-
+          A region named by a content item or a heading exists on the page named.
+      - holds: >-
+          Every region belongs to exactly one content item or section heading.
+        how: rule_catalog
+        rule: region-has-one-owner
+      - holds: >-
+          A region's unit_id is the content item that owns it, and null for a heading's
+          region.
+        how: rule_catalog
+        proposed: region-unit-is-its-owner
+        statement: >-
+          A region names as its content item the content item that owns it, and none when a
+          heading owns it.
+      - holds: >-
+          A content item's full text and block breaks follow its regions' lines and broken-word
+          joins.
+        how: rule_catalog
+        rule: full-text-is-its-lines
+      - holds: >-
+          Each address of a printed title lies within a region of its content item or heading,
+          and its words are in that region's text.
+        how: rule_catalog
+        rule: title-is-its-addresses
+      - holds: >-
+          Each address a supplied title or translation was made from lies within a region of
+          its content item or heading.
+        how: rule_catalog
+        proposed: basis-address-within-its-regions
+        statement: >-
+          The printed addresses an English title or translation was made from lie within the
+          regions of what it names.
+      - holds: >-
+          A mention's content item is a content item of the issue.
+        how: rule_catalog
+        proposed: mention-content-item-is-known
+        statement: >-
+          A mention names a content item of the same issue.
+      - holds: >-
+          A words mention's addresses lie within its content item's regions with their words
+          there; a regions mention's address is one of its content item's regions, whole.
+        how: rule_catalog
+        proposed: mention-address-within-its-item
+        statement: >-
+          A mention's addresses lie in its content item's regions, whole regions when it is
+          pinned to regions.
+      - holds: >-
+          A life event's content item is a content item of the issue.
+        how: rule_catalog
+        proposed: life-event-content-item-is-known
+        statement: >-
+          A life event of an issue names content items of the same issue.
+      - holds: >-
+          A content item listed under a life event names that event, when it names one.
+        how: rule_catalog
+        proposed: content-item-event-agrees
+        statement: >-
+          A content item listed under a life event of its issue names no other event.
+
+  - id: site-archive
+    holds: >-
+      Every issue agrees with the shared record: each issue once, every person, place,
+      organisation and event named is in the shared record, deaths known from records alone
+      are kept apart, located citations stand in the content items they cite, and a child
+      named only by description is evidenced by its birth notice.
+    zod:
+      file: zod/site-issue.schema.ts
+      schema: SiteArchiveSchema
+    pydantic:
+      file: pydantic/site_issue.py
+      validator: SiteArchive.shared_references
+    parts:
+      - holds: >-
+          No two issues share a date.
+        how: rule_catalog
+        proposed: issue-dates-unique
+        statement: >-
+          The archive holds each issue date once.
+      - holds: >-
+          A mention's person is a person of the shared record.
+        how: rule_catalog
+        rule: mention-person-is-known
+      - holds: >-
+          A content item's places are places of the shared record.
+        how: rule_catalog
+        proposed: content-item-place-is-known
+        statement: >-
+          A content item names only places of the shared record.
+      - holds: >-
+          A content item's organisations are organisations of the shared record.
+        how: rule_catalog
+        proposed: content-item-organisation-is-known
+        statement: >-
+          A content item names only organisations of the shared record.
+      - holds: >-
+          A content item's event is an event of the shared record or of its issue.
+        how: rule_catalog
+        rule: piece-event-is-known
+      - holds: >-
+          An issue's life event is an event of the shared record.
+        how: rule_catalog
+        rule: life-event-in-shared-events
+      - holds: >-
+          A death known from records alone is selected by no issue, neither as a content
+          item's event nor as a life event.
+        how: rule_catalog
+        proposed: records-only-death-not-selected
+        statement: >-
+          No issue selects a death the shared record says is known from records alone.
+      - holds: >-
+          A death dated from a record and selected by no issue says it is known from records
+          alone.
+        how: rule_catalog
+        proposed: record-death-says-records-only
+        statement: >-
+          A shared death with a record's date and no issue that prints it is marked records
+          only.
+      - holds: >-
+          An event date qualified as reported in an issue gives the first issue that prints
+          the event.
+        how: rule_catalog
+        proposed: reported-in-is-first-issue
+        statement: >-
+          A date reported in an issue names the earliest issue that prints the event.
+      - holds: >-
+          A located citation cites a content item of an issue in the archive.
+        how: rule_catalog
+        proposed: cited-content-item-is-known
+        statement: >-
+          A citation with addresses names an issue's content item that exists.
+      - holds: >-
+          A located citation's quote occurs in the cited content item's full text.
+        how: rule_catalog
+        proposed: citation-quote-in-content-item
+        statement: >-
+          A located citation's quote stands in the text of the content item it cites.
+      - holds: >-
+          A located citation's addresses lie within the cited content item's regions, with
+          their words there.
+        how: rule_catalog
+        proposed: citation-address-within-its-item
+        statement: >-
+          A located citation's addresses lie in the regions of the content item it cites.
+      - holds: >-
+          A person named by a supplied description has a single-child birth fact whose event
+          has exactly one baby, a cited mention designating them in the birth notice, a
+          supplied name citing that notice, and each parent's relation citing it.
+        how: rule_catalog
+        proposed: described-child-is-evidenced
+        statement: >-
+          A child named only by description rests on one birth notice, cited by the birth
+          fact, the supplied name, a designating mention and every parent's relation.
