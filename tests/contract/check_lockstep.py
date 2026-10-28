@@ -204,7 +204,8 @@ def problems(zod_schemas: dict, package: ModuleType) -> list[str]:
 
 def main() -> None:
     package = load_pydantic(ROOT)
-    found = problems(dump_zod(ROOT), package)
+    zod_schemas = dump_zod(ROOT)
+    found = problems(zod_schemas, package)
     if found:
         sys.exit("Zod<->Pydantic contract drift:\n" + "\n".join(f"  - {p}" for p in found))
     print(f"contract: {len(MODEL_PAIRS)} Zod/Pydantic twins in lockstep")
@@ -213,6 +214,10 @@ def main() -> None:
     cases = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(cases)
     cases.check_site_shapes(package)
+    spec = importlib.util.spec_from_file_location('linkml_lockstep', ROOT / 'tests/contract/check_linkml.py')
+    definition = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(definition)
+    definition.check(zod_schemas)
 
 
 if __name__ == "__main__":

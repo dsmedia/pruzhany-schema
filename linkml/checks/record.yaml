@@ -18,11 +18,11 @@
 #                 changes to the class's base instance below (a key given ~ is left out), and
 #                 the test validates both against the generated JSON Schema.
 #   rule_catalog  a rule for pruzhany-steps record/rules.yaml: `rule:` an id it holds, or
-#                 `proposed:` an id with its statement and tier for ticket 06 to write there.
+#                 its statement and tier, adopted into that catalog by ticket 09.
 #                 Tier schema: it compares values within one object, which the twins hold and
 #                 LinkML cannot say (`why:` says what is missing); tier rule: it compares
-#                 records with one another. None of these checks is cited in record/rules.yaml
-#                 today (read 28 October 2026).
+#                 records with one another. All these checks are cited in record/rules.yaml
+#                 after stage-one integration (28 October 2026).
 #   twin_only     held by the twins alone, with why. None is today.
 #
 # What a LinkML rule can say was measured on 28 October 2026 (LinkML 1.12.1, linkml/README.md
@@ -163,7 +163,7 @@ checks:
           The written date exists: a month from 1 to 12, a day within its month, 29 February
           only in a leap year, a year from 1.
         how: rule_catalog
-        proposed: written-date-exists
+        rule: written-date-exists
         tier: schema
         statement: >-
           Every date and day the record writes as YYYY, YYYY-MM or YYYY-MM-DD names one that
@@ -188,7 +188,7 @@ checks:
       - holds: >-
           The written day exists.
         how: rule_catalog
-        proposed: written-date-exists
+        rule: written-date-exists
         tier: schema
         statement: >-
           Every date and day the record writes as YYYY, YYYY-MM or YYYY-MM-DD names one that
@@ -255,7 +255,7 @@ checks:
       - holds: >-
           A range's start is not after its end.
         how: rule_catalog
-        proposed: date-range-in-order
+        rule: date-range-in-order
         tier: schema
         statement: >-
           In a sourced date of precision range, the first day of its start is not after the
@@ -402,7 +402,7 @@ checks:
       - holds: >-
           A source read through (via) is not also cited as an original of the same statement.
         how: rule_catalog
-        proposed: citation-via-not-an-original
+        rule: citation-via-not-an-original
         tier: schema
         statement: >-
           Within one fact or relation, no citation's via is the source_id of any of its
@@ -512,7 +512,7 @@ checks:
       - holds: >-
           A supplied name's citations are not empty.
         how: rule_catalog
-        proposed: supplied-name-cites-evidence
+        rule: supplied-name-cites-evidence
         tier: schema
         statement: >-
           A name of kind supplied has at least one citation.
@@ -563,7 +563,7 @@ checks:
       - holds: >-
           A fate other than unknown names the facts it rests on.
         how: rule_catalog
-        proposed: known-fate-rests-on-facts
+        rule: known-fate-rests-on-facts
         tier: schema
         statement: >-
           A fate whose outcome is not unknown rests on at least one fact.
@@ -608,7 +608,7 @@ checks:
       - holds: >-
           The issue's day exists.
         how: rule_catalog
-        proposed: written-date-exists
+        rule: written-date-exists
         tier: schema
         statement: >-
           Every date and day the record writes as YYYY, YYYY-MM or YYYY-MM-DD names one that
@@ -619,7 +619,7 @@ checks:
       - holds: >-
           The quote occurs in the words at its addresses, joined by newlines.
         how: rule_catalog
-        proposed: located-quote-is-at-its-addresses
+        rule: located-quote-is-at-its-addresses
         tier: schema
         statement: >-
           A located citation's quote occurs within the texts of its addresses joined by
@@ -776,7 +776,7 @@ checks:
       - holds: >-
           A relation with a located citation is not child_of, as its type or its proposed type.
         how: rule_catalog
-        proposed: notice-relation-runs-parent-to-child
+        rule: notice-relation-runs-parent-to-child
         tier: schema
         statement: >-
           A relation any of whose citations has addresses is neither of relationship type
@@ -824,7 +824,7 @@ checks:
       - holds: >-
           Each main person is named once.
         how: rule_catalog
-        proposed: event-main-people-unique
+        rule: event-main-people-unique
         tier: schema
         statement: >-
           No person is named twice among one event's main people.
@@ -834,7 +834,7 @@ checks:
       - holds: >-
           Each main person's part fits the event's kind (its proposed kind for other).
         how: rule_catalog
-        proposed: event-part-fits-kind
+        rule: event-part-fits-kind
         tier: schema
         statement: >-
           Every main person's part is one the vocabulary allows for the event's kind (the
@@ -845,7 +845,7 @@ checks:
       - holds: >-
           A first report's day is the event's only date.
         how: rule_catalog
-        proposed: reported-date-stands-alone
+        rule: reported-date-stands-alone
         tier: schema
         statement: >-
           An event with a date qualified reported_in has that one date and no other.
@@ -856,7 +856,7 @@ checks:
           A date from a record statement belongs to a death, comes first and is the only such
           date.
         how: rule_catalog
-        proposed: record-date-is-first-and-only
+        rule: record-date-is-first-and-only
         tier: schema
         statement: >-
           An event with a date naming a record fact is a death, its first date names that
@@ -866,7 +866,7 @@ checks:
       - holds: >-
           A death dated from records has one main person, the one who died.
         how: rule_catalog
-        proposed: record-death-has-one-deceased
+        rule: record-death-has-one-deceased
         tier: schema
         statement: >-
           An event with a date naming a record fact has exactly one main person, whose part is
@@ -877,7 +877,7 @@ checks:
       - holds: >-
           A death known from records alone takes its one date from its preferred record fact.
         how: rule_catalog
-        proposed: records-only-death-dated-by-its-fact
+        rule: records-only-death-dated-by-its-fact
         tier: schema
         statement: >-
           An event whose evidence basis is records_only has one date, and it names a record
@@ -904,7 +904,7 @@ checks:
           No id is used twice across persons, families, places, organisations, events, sources,
           holders, facts, relations and media.
         how: rule_catalog
-        proposed: shared-ids-unique
+        rule: shared-ids-unique
         tier: rule
         statement: >-
           Every id in the shared record names one record only, across all its lists.
@@ -912,7 +912,7 @@ checks:
           A source's subjects are each named once and each a person, place or event of the
           record.
         how: rule_catalog
-        proposed: source-subjects-resolve
+        rule: source-subjects-resolve
         tier: rule
         statement: >-
           A source names each of its subjects once, and each is a person, a place or an event
@@ -921,7 +921,7 @@ checks:
           A medium's source, the people it shows, the people its permission covers and its
           family words' source all resolve; the permission covers only people it shows.
         how: rule_catalog
-        proposed: media-references-resolve
+        rule: media-references-resolve
         tier: rule
         statement: >-
           Every medium's source and family words' source is a source of the record, every
@@ -930,14 +930,14 @@ checks:
       - holds: >-
           A medium's link is on its source's host.
         how: rule_catalog
-        proposed: media-link-on-source-host
+        rule: media-link-on-source-host
         tier: rule
         statement: >-
           A medium's link is on the web host of its source, or a subdomain of it.
       - holds: >-
           A description for screen readers names only people the picture shows.
         how: rule_catalog
-        proposed: alt-names-only-shown-people
+        rule: alt-names-only-shown-people
         tier: rule
         statement: >-
           No medium's description for screen readers names a person of the record whom it
@@ -946,7 +946,7 @@ checks:
           A portrait is a cleared, reviewed, not withdrawn image that shows the person, and its
           region lies within the image.
         how: rule_catalog
-        proposed: portrait-is-a-cleared-picture-of-the-person
+        rule: portrait-is-a-cleared-picture-of-the-person
         tier: rule
         statement: >-
           A person's portrait names an image medium of the record that is cleared, not
@@ -955,14 +955,14 @@ checks:
       - holds: >-
           A source's holder is a holder of the record.
         how: rule_catalog
-        proposed: source-holder-resolves
+        rule: source-holder-resolves
         tier: rule
         statement: >-
           Every source's holder is a holder of the shared record.
       - holds: >-
           A source is derived only from sources of the record, never in a loop.
         how: rule_catalog
-        proposed: source-derivations-resolve-without-a-loop
+        rule: source-derivations-resolve-without-a-loop
         tier: rule
         statement: >-
           Every source a source is derived from is a source of the record, and no chain of
@@ -971,7 +971,7 @@ checks:
           A citation's address is on its source's host, and a source read through (via)
           exists and is derived from the source cited; for facts, relations and names alike.
         how: rule_catalog
-        proposed: citation-agrees-with-its-sources
+        rule: citation-agrees-with-its-sources
         tier: rule
         statement: >-
           Every citation's address is on its source's web host or a subdomain of it, and a
@@ -979,21 +979,21 @@ checks:
       - holds: >-
           A life event's place is a place of the record.
         how: rule_catalog
-        proposed: event-place-resolves
+        rule: event-place-resolves
         tier: rule
         statement: >-
           Every life event's place is a place of the shared record.
       - holds: >-
           Every main person is a person of the record.
         how: rule_catalog
-        proposed: main-person-is-a-person
+        rule: main-person-is-a-person
         tier: rule
         statement: >-
           Every main person of a life event is a person of the shared record, never a family.
       - holds: >-
           A person is the baby of one birth at most and the one who died in one death at most.
         how: rule_catalog
-        proposed: one-birth-one-death
+        rule: one-birth-one-death
         tier: rule
         statement: >-
           No person is the baby of two birth events, or the one who died in two death events
@@ -1002,7 +1002,7 @@ checks:
           A record date names an accepted death fact of this event's person, supported by a
           record and citing no piece of the paper, and the event's place is that statement's.
         how: rule_catalog
-        proposed: record-date-names-its-statement
+        rule: record-date-names-its-statement
         tier: rule
         statement: >-
           A death event's record date names an accepted death fact, supported by a record and
@@ -1011,7 +1011,7 @@ checks:
       - holds: >-
           A death fact naming an event names its person's death event.
         how: rule_catalog
-        proposed: death-fact-names-its-death-event
+        rule: death-fact-names-its-death-event
         tier: rule
         statement: >-
           A death fact that names an event names the death event in which its subject is the
@@ -1020,7 +1020,7 @@ checks:
           A fact's or relation's subject, place, organisation, event, relative, family and
           cited sources all resolve, each to its own kind.
         how: rule_catalog
-        proposed: fact-references-resolve
+        rule: fact-references-resolve
         tier: rule
         statement: >-
           Every fact's and relation's subject is a person, family, place, organisation, event
@@ -1029,7 +1029,7 @@ checks:
       - holds: >-
           A relation runs from a person, never to the same person.
         how: rule_catalog
-        proposed: relation-joins-two-people
+        rule: relation-joins-two-people
         tier: rule
         statement: >-
           Every relation's subject is a person of the record, and no relation joins a person
@@ -1037,7 +1037,7 @@ checks:
       - holds: >-
           A relation evidenced by a located notice is stored once.
         how: rule_catalog
-        proposed: notice-relation-stored-once
+        rule: notice-relation-stored-once
         tier: rule
         statement: >-
           No two relations with located citations have the same subject, relationship (or
@@ -1046,7 +1046,7 @@ checks:
           A name's citations name sources of the record, on their hosts and through their
           derivations.
         how: rule_catalog
-        proposed: citation-agrees-with-its-sources
+        rule: citation-agrees-with-its-sources
         tier: rule
         statement: >-
           Every citation's address is on its source's web host or a subdomain of it, and a
@@ -1054,7 +1054,7 @@ checks:
       - holds: >-
           A person's fate rests only on facts about that person.
         how: rule_catalog
-        proposed: fate-rests-on-own-facts
+        rule: fate-rests-on-own-facts
         tier: rule
         statement: >-
           Every fact a person's fate rests on is a fact of the record whose subject is that
@@ -1063,7 +1063,7 @@ checks:
           A place's or holder's identifiers are each given once, from a registered source, on
           its host, and no identifier is given to two places or two holders.
         how: rule_catalog
-        proposed: outside-identifier-names-one-record
+        rule: outside-identifier-names-one-record
         tier: rule
         statement: >-
           Every outside identifier of a place or holder comes from a source of the record and
@@ -1073,7 +1073,7 @@ checks:
           A place's parent is a place of the record, and no chain of parents comes back to
           where it began.
         how: rule_catalog
-        proposed: place-parents-resolve-without-a-loop
+        rule: place-parents-resolve-without-a-loop
         tier: rule
         statement: >-
           Every place's parent is a place of the record, and no chain of parents is a loop.
@@ -1093,7 +1093,7 @@ checks:
       - holds: >-
           No person is named twice in a permission's scope.
         how: rule_catalog
-        proposed: consent-people-unique
+        rule: consent-people-unique
         tier: schema
         statement: >-
           No person is named twice among the people one permission covers.
@@ -1125,7 +1125,7 @@ checks:
       - holds: >-
           The key's last part is the master's digest.
         how: rule_catalog
-        proposed: master-key-is-its-digest
+        rule: master-key-is-its-digest
         tier: schema
         statement: >-
           A master file's key ends in its SHA-256 digest.
@@ -1135,7 +1135,7 @@ checks:
       - holds: >-
           The last check found the master's digest.
         how: rule_catalog
-        proposed: master-check-matches-digest
+        rule: master-check-matches-digest
         tier: schema
         statement: >-
           A master file's last check found its SHA-256 digest.
@@ -1240,7 +1240,7 @@ checks:
       - holds: >-
           A picture showing someone not identified says so.
         how: rule_catalog
-        proposed: unidentified-depiction-is-declared
+        rule: unidentified-depiction-is-declared
         tier: schema
         statement: >-
           A medium showing a person with no person id has shows_unidentified true.
@@ -1250,7 +1250,7 @@ checks:
       - holds: >-
           Each person shown is placed within the master's pixels.
         how: rule_catalog
-        proposed: depicted-region-fits-picture
+        rule: depicted-region-fits-picture
         tier: schema
         statement: >-
           Every region of a person shown lies within the medium's master width and height,
@@ -1260,7 +1260,7 @@ checks:
       - holds: >-
           Each identified person is shown once.
         how: rule_catalog
-        proposed: depicted-people-unique
+        rule: depicted-people-unique
         tier: schema
         statement: >-
           No person id is given twice among the people one medium shows.
@@ -1286,7 +1286,7 @@ checks:
       - holds: >-
           A description for screen readers is at most 150 characters.
         how: rule_catalog
-        proposed: alt-text-is-short
+        rule: alt-text-is-short
         tier: schema
         statement: >-
           A medium's description for screen readers is at most 150 characters (code points).
@@ -1296,7 +1296,7 @@ checks:
       - holds: >-
           A description for screen readers does not repeat the caption.
         how: rule_catalog
-        proposed: alt-differs-from-caption
+        rule: alt-differs-from-caption
         tier: schema
         statement: >-
           A medium's description for screen readers differs from its caption, ignoring case
@@ -1306,7 +1306,7 @@ checks:
       - holds: >-
           An English description for screen readers describes only what is visible.
         how: rule_catalog
-        proposed: alt-describes-only-what-is-seen
+        rule: alt-describes-only-what-is-seen
         tier: schema
         statement: >-
           An English description for screen readers neither begins "image of" nor uses the
@@ -1404,7 +1404,7 @@ checks:
       - holds: >-
           Each served copy has its own address.
         how: rule_catalog
-        proposed: derived-addresses-unique
+        rule: derived-addresses-unique
         tier: schema
         statement: >-
           No address is given twice among one medium's served copies.
@@ -1413,7 +1413,7 @@ checks:
       - holds: >-
           A served copy is no wider than its nominal width, nor wider or taller than the master.
         how: rule_catalog
-        proposed: derived-copy-within-its-width-and-master
+        rule: derived-copy-within-its-width-and-master
         tier: schema
         statement: >-
           Every served copy's width is at most the width its address names and at most the
@@ -1449,7 +1449,7 @@ checks:
       - holds: >-
           A medium whose permission was withdrawn is itself withdrawn.
         how: rule_catalog
-        proposed: withdrawn-consent-withdraws-media
+        rule: withdrawn-consent-withdraws-media
         tier: schema
         statement: >-
           A medium whose permission has a withdrawal day is withdrawn.

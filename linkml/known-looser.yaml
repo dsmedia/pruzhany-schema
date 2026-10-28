@@ -1,12 +1,12 @@
 # What the shapes of the site's documents refuse that the LinkML definition cannot say, so
 # that its generated JSON Schema accepts it: each kind of difference, every place it occurs,
-# and what refuses it instead. The shapes are the JSON Schema that Zod exports for the five
+# and what refuses it instead. The shapes are the JSON Schema that Zod exports for the six
 # documents pruzhany-steps checks (its schemas/site/pages.schema.json and
 # schemas/site-next/*.schema.json); linkml/export_zod.ts makes them again from this
 # checkout's zod/, byte for byte the same as those copies on 28 October 2026.
 #
 # Measured on 28 October 2026 with LinkML 1.12.1 (metamodel 1.12.0): every JSON Schema
-# keyword the five exports use was tried in a LinkML schema, generated and compared. Only
+# keyword the exports use was tried in a LinkML schema, generated and compared. Only
 # what LinkML cannot express is listed here; how to write what it can is in README.md
 # ("House style"). linkml/tests/test_known_looser.py finds every place of each kind in the
 # exports afresh and fails when a listed place is gone or a new one is not listed.
@@ -17,6 +17,7 @@ measured: '2026-10-28'
 linkml: '1.12.1'
 exports:
   - schemas/site/pages.schema.json
+  - schemas/site/editions.schema.json
   - schemas/site-next/content-items.schema.json
   - schemas/site-next/mentions.schema.json
   - schemas/site-next/life-events.schema.json
@@ -42,9 +43,8 @@ entries:
     linkml_says: >-
       LinkML has no null apart from absence. A required slot must hold a value, and its JSON
       Schema refuses null; an optional slot may be left out, and its JSON Schema accepts
-      null. The real files hold null in these keys (803 mentions' printed_name, in 155 of the
-      238 mention files, and 667 blocks' unit_id, counted in pruzhany-svelte static/data on
-      28 October 2026), so the definition marks them optional and
+      null. The twins require these keys while permitting null values, so the definition
+      marks them optional to retain that nullable shape, and
       its JSON Schema accepts a document that leaves the key out. value_presence PRESENT
       makes gen-json-schema put the key in required and still allow null, but the metamodel
       says PRESENT has "the same effect as required=true" (status unstable) and the Pydantic
@@ -60,8 +60,14 @@ entries:
       - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'
 
   - kind: optional-key-not-nullable
-    count: 5
+    count: 8
     where:
+      - file: schemas/site/editions.schema.json
+        pointer: /properties/editions/items/properties/holiday
+      - file: schemas/site/editions.schema.json
+        pointer: /properties/holidays/items/properties/hebrewName
+      - file: schemas/site/editions.schema.json
+        pointer: /properties/historicalEvents/items/properties/endDate
       - file: schemas/site/pages.schema.json
         pointer: /properties/pages/items/properties/blocks/items/properties/confidence
       - file: schemas/site-next/content-items.schema.json
@@ -86,6 +92,7 @@ entries:
     why: >-
       Present-and-null is a distinction LinkML's data model does not make.
     enforced_by:
+      - 'zod/editions.schema.ts: Edition.holiday, Holiday.hebrewName and HistoricalEvent.endDate are optional, not nullable; measured by record compare linkml on the catalog and synthetic fixtures'
       - 'zod/page.schema.ts: Block.confidence is z.number().optional()'
       - 'zod/site-common.schema.ts: checked_against is .optional(), not nullable'
       - 'zod/shared-record.schema.ts: SharedRecord.holders is z.array(...).optional()'

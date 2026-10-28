@@ -7,7 +7,7 @@
 #   bin/verify            run every step below
 #   bin/verify <step>...  run only the named steps (scan, zod, pydantic, contract, pilot, standards, vocabulary, entities, linkml)
 #
-# Steps (all self-contained: nothing outside this checkout is read):
+# Steps (self-contained by default; LinkML also checks available sibling data and catalogs):
 #   scan      gitleaks over the full git history, secrets redacted.
 #   zod       bun install --frozen-lockfile (package.json pins the same zod, prettier,
 #             vitest and typescript versions as pruzhany-svelte's bun.lock),
@@ -16,8 +16,8 @@
 #   pydantic  loads the pydantic/ package (under a non-shadowing name) with
 #             the pinned pydantic version, and generates the JSON Schema of
 #             every model it defines.
-#   contract  the Zod<->Pydantic lockstep: every twin's field names and enum
-#             values agree (tests/contract/; moved here from pruzhany-press
+#   contract  the Zod<->Pydantic lockstep and mapped LinkML agreement: fields,
+#             requiredness and enum values (tests/contract/; moved here from pruzhany-press
 #             when that repository was retired on 2026-10-22).
 #   entities  checks sourced-entity parity in the current SiteArchive carrier and its JSON Schema.
 #   vocabulary validates production vocabulary, history, crosswalk and generated contracts.
@@ -155,6 +155,8 @@ step_contract() {
 	bun install --frozen-lockfile
 	uv run --no-project --python "$PYTHON_VERSION" --with "pydantic==$PYDANTIC_VERSION" \
 		python -P tests/contract/check_lockstep.py
+	uv run --no-project --python "$PYTHON_VERSION" --with "pydantic==$PYDANTIC_VERSION" \
+		python -P -m unittest discover -s tests/contract -p 'test_linkml*.py'
 }
 
 step_linkml() {

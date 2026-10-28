@@ -4,6 +4,11 @@ Shared data schemas for the [Pruzhany Digital Archive](https://pruzhanychronicle
 
 Consumed by the SvelteKit frontend through its pinned git submodule and by pruzhany-steps through exports recorded from a clean schema commit. Zod and Pydantic define the two language contracts in the same repository.
 
+Stage one defines shape and meaning in [LinkML](linkml/README.md), with a generated
+[data dictionary](linkml/generated/docs/data-dictionary.md). Zod and Pydantic remain the
+runtime validators. The contract gate checks agreement with the definition; generated Python
+models and RDF exports remain later stages.
+
 ## Layout
 
 ```

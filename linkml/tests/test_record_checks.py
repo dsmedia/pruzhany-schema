@@ -268,8 +268,8 @@ class TheCatalogRules(unittest.TestCase):
         for part in self.parts:
             with self.subTest(part=part['holds']):
                 self.assertEqual(('rule' in part) + ('proposed' in part), 1)
-                if 'proposed' in part:
-                    self.assertRegex(part['proposed'], r'^[a-z0-9]+(-[a-z0-9]+)*$')
+                if 'statement' in part:
+                    self.assertRegex(part.get('rule') or part['proposed'], r'^[a-z0-9]+(-[a-z0-9]+)*$')
                     self.assertTrue(part['statement'].strip())
                     self.assertIn(part['tier'], ('schema', 'rule'))
                     if part['tier'] == 'schema':
@@ -278,12 +278,12 @@ class TheCatalogRules(unittest.TestCase):
     def test_a_proposed_id_has_one_statement(self):
         statements = collections.defaultdict(set)
         for part in self.parts:
-            if 'proposed' in part:
-                statements[part['proposed']].add((words(part['statement']), part['tier']))
+            if 'statement' in part:
+                statements[part.get('rule') or part['proposed']].add((words(part['statement']), part['tier']))
         self.assertEqual({rule: found for rule, found in statements.items() if len(found) > 1}, {})
 
     @unittest.skipUnless(STEPS_RULES.is_file(), f'pruzhany-steps is not at {STEPS_RULES.parent.parent}')
-    def test_against_the_catalog_a_named_rule_exists_and_a_proposed_one_does_not(self):
+    def test_against_the_catalog_each_named_rule_exists(self):
         catalog = {rule['id'] for rule in yaml.safe_load(STEPS_RULES.read_text(encoding='utf-8'))['rules']}
         for part in self.parts:
             with self.subTest(part=part['holds']):

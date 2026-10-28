@@ -27,7 +27,10 @@ class SharedTypes(unittest.TestCase):
     def test_the_whole_number_bounds_are_the_exports(self):
         maxima = {node['maximum'] for document in zod_exports().values()
                   for _, node in walk(document) if node.get('type') == 'integer' and 'maximum' in node}
-        self.assertEqual(maxima, {9007199254740991})
+        # The sixth export adds the calendar's Hebrew month, bounded to 13.
+        self.assertEqual(maxima, {13, 9007199254740991})
+        month = zod_exports()['schemas/site/editions.schema.json']['properties']['editions']['items']['properties']['hebrewMonth']
+        self.assertEqual((month['minimum'], month['maximum']), (1, 13))
         for name in ('NonNegativeInteger', 'PositiveInteger'):
             with self.subTest(type=name):
                 self.assertEqual(OWN[name].maximum_value, 9007199254740991)

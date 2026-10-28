@@ -114,8 +114,8 @@ class TheAccount(unittest.TestCase):
                         self.assertEqual(('rule' in part) + ('proposed' in part), 1)
                         rule = part.get('rule') or part['proposed']
                         self.assertRegex(rule, KEBAB)
-                        if 'proposed' in part:
-                            proposed.append(part['proposed'])
+                        if 'statement' in part:
+                            proposed.append(part.get('rule') or part['proposed'])
                             self.assertTrue(part['statement'].strip())
                     elif part['how'] == 'twin_only':
                         self.assertTrue(part['why'].strip())
@@ -132,13 +132,13 @@ class TheAccount(unittest.TestCase):
                     tally['existing' if 'rule' in part else 'proposed'] += 1
                 else:
                     tally[part['how']] += 1
-        self.assertEqual(tally, {'linkml_rule': 2, 'existing': 9, 'proposed': 31, 'twin_only': 2})
+        self.assertEqual(tally, {'linkml_rule': 2, 'existing': 40, 'proposed': 0, 'twin_only': 2})
 
     def test_it_passes_the_house_lint(self):
         self.assertEqual(load('lint').lint(CHECKS_FILE), [])
 
     @unittest.skipIf(steps_checkout() is None, 'pruzhany-steps (its record/rules.yaml) is not at hand; set PRUZHANY_STEPS')
-    def test_cited_rules_are_in_the_rule_catalog_and_proposed_ones_are_new(self):
+    def test_cited_rules_are_in_the_rule_catalog(self):
         catalog = yaml.safe_load((steps_checkout() / 'record' / 'rules.yaml').read_text(encoding='utf-8'))
         existing = {rule['id'] for rule in catalog['rules']}
         for entry in CHECKS['checks']:

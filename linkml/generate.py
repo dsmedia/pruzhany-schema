@@ -16,6 +16,7 @@ machine; so a second run, or a run on Windows, gives the same bytes.
 """
 
 import argparse
+import hashlib
 import json
 import shutil
 import sys
@@ -24,6 +25,8 @@ from pathlib import Path
 
 from linkml.generators.docgen import DocGenerator
 from linkml.generators.jsonschemagen import JsonSchemaGenerator
+from linkml_runtime.utils.schemaview import SchemaView
+import yaml
 
 LINKML = Path(__file__).resolve().parent
 
@@ -61,6 +64,157 @@ def build(linkml_dir, destination):
                 if made.is_file():
                     target = destination / 'docs' / entry['name'] / made.relative_to(scratch)
                     write_text(target, made.read_text(encoding='utf-8'))
+    build_index_and_dictionary(linkml_dir, destination)
+
+
+def schema_index(linkml_dir, destination):
+    """All owned classes, including classes used only as maps or outside document roots."""
+    views = [(entry, SchemaView(str(linkml_dir / entry['schema']))) for entry in modules(linkml_dir)]
+    definitions = {}
+    for path in sorted((destination / 'json-schema').glob('*.json')):
+        for name, definition in json.loads(path.read_text(encoding='utf-8')).get('$defs', {}).items():
+            if name in definitions and definitions[name] != definition:
+                raise ValueError(f'{name}: generated definitions differ between document roots')
+            definitions[name] = definition
+    owned = {name: entry['schema'] for entry, view in views for name in view.all_classes(imports=False)}
+    for name, source in sorted(owned.items()):
+        if name not in definitions:
+            made = json.loads(JsonSchemaGenerator(str(linkml_dir / source), top_class=name,
+                                                   not_closed=False).serialize())
+            for extra, definition in made['$defs'].items():
+                if extra in definitions and definitions[extra] != definition:
+                    raise ValueError(f'{extra}: generated definitions differ for standalone {name}')
+                definitions[extra] = definition
+    known_path = linkml_dir / 'known-looser.yaml'
+    known = yaml.safe_load(known_path.read_text(encoding='utf-8')) if known_path.exists() else {'entries': []}
+    index = {'$schema': 'https://json-schema.org/draft/2019-09/schema', '$defs': definitions,
+             'classes': owned, 'known_looser': known['entries']}
+    write_text(destination / 'contract.json', json.dumps(index, ensure_ascii=False, indent=2, sort_keys=True))
+    return views, index
+
+
+def prose(value):
+    return ' '.join(str(value or '').split()).replace('|', r'\|')
+
+
+def mappings(element):
+    found = []
+    for key in ('class_uri', 'slot_uri', 'meaning', 'exact_mappings', 'close_mappings',
+                'related_mappings', 'narrow_mappings', 'broad_mappings'):
+        value = getattr(element, key, None)
+        if value:
+            values = value if isinstance(value, list) else [value]
+            found.extend(f'{prose(v)} ({key.replace("_", " ")})' for v in values)
+    annotations = getattr(element, 'annotations', {}) or {}
+    if 'via' in annotations:
+        found.append('via ' + prose(annotations['via'].value))
+    return '; '.join(found) or 'No direct mapping recorded'
+
+
+def value_shape(slot):
+    parts = [str(getattr(slot, 'range', None) or getattr(slot, 'typeof', None) or 'string')]
+    if getattr(slot, 'multivalued', False):
+        parts[0] = 'list of ' + parts[0]
+    for key, label in (
+        ('minimum_cardinality', 'minimum items'), ('maximum_cardinality', 'maximum items'),
+        ('minimum_value', 'minimum'), ('maximum_value', 'maximum'),
+        ('pattern', 'pattern'), ('equals_string', 'fixed value'), ('equals_string_in', 'one of'),
+    ):
+        value = getattr(slot, key, None)
+        if value is not None and value != []:
+            parts.append(f'{label}: {value}')
+    return prose('; '.join(parts))
+
+
+def read_planned(linkml_dir):
+    path = linkml_dir / 'planned.yaml'
+    if not path.exists():
+        return []
+    entries = yaml.safe_load(path.read_text(encoding='utf-8'))['items']
+    seen = set()
+    for entry in entries:
+        if entry['id'] in seen or not entry.get('summary'):
+            raise ValueError('planned requirements need distinct IDs and a summary')
+        seen.add(entry['id'])
+        source = entry['source']
+        if not source.get('file') or not source.get('quote') or not isinstance(source.get('line'), int):
+            raise ValueError(f"{entry['id']}: planned requirement needs a source line and quote")
+    return entries
+
+
+def build_index_and_dictionary(linkml_dir, destination):
+    views, index = schema_index(linkml_dir, destination)
+    planned = read_planned(linkml_dir)  # Never passed to SchemaView or a schema generator.
+    sources = sorted((linkml_dir / 'schema').glob('*.yaml'))
+    sources += [p for p in (linkml_dir / 'planned.yaml', linkml_dir / 'known-looser.yaml') if p.exists()]
+    digest = hashlib.sha256(b''.join(p.name.encode() + b'\0' + p.read_bytes() for p in sources)).hexdigest()
+    lines = [
+        '# The Pruzhany data dictionary', '',
+        'This is the guide to the data behind the Pruzhany newspaper: its pages and pieces, '
+        'the people and events it names, and the evidence for what we say about them.', '',
+        'LinkML defines the kinds and fields below. Zod and Pydantic remain the working '
+        'validators. Passing a schema checks the form of a record, not whether a reading or '
+        'historical claim is correct. Identity, trust, rights and release readiness have their '
+        'own requirements in the record catalog.', '',
+        'The four issue documents, the editions catalog and the shared record each have a '
+        'generated JSON Schema. The shared record is checked after its 256 storage shards '
+        'have been joined. Stored identifiers and file shapes are unchanged.', '',
+        '“Required” in the tables means required by LinkML. Some runtime validators require '
+        'a key while accepting null; those differences are listed under “Validator responsibilities”. '
+        'An optional LinkML field generally also accepts null. Value ranges named in the '
+        'tables are defined in “Types and vocabularies”. Mappings describe alignment with '
+        'the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.', '',
+        f'Definition fingerprint: `{digest}`.', '',
+    ]
+    for entry, view in views:
+        classes = view.all_classes(imports=False)
+        if not classes:
+            continue
+        lines += [f"## {prose(view.schema.title or entry['name'].replace('_', ' '))}", '']
+        for name, cls in sorted(classes.items()):
+            lines += [f'### {name}', '', prose(cls.description), '',
+                      f'Meaning: {mappings(cls)}.', '',
+                      '| Field | What it holds | Value | Required | Standard mapping |',
+                      '| --- | --- | --- | --- | --- |']
+            for slot in sorted(view.class_induced_slots(name), key=lambda s: s.alias or s.name):
+                lines.append(f'| `{slot.alias or slot.name}` | {prose(slot.description)} | '
+                             f'{value_shape(slot)} | {"Yes" if slot.required else "No"} | {mappings(slot)} |')
+            if not view.class_induced_slots(name):
+                lines.append('| Arbitrary keys | A dictionary of named text values | string values | No fixed keys | No direct mapping recorded |')
+            lines += ['', f"Source: `linkml/{entry['schema']}`.", '']
+    lines += ['## Types and vocabularies', '']
+    for entry, view in views:
+        for name, typ in sorted(view.all_types(imports=False).items()):
+            lines += [f'### {name}', '', prose(typ.description), '', value_shape(typ), '']
+        for name, enum in sorted(view.all_enums(imports=False).items()):
+            lines += [f'### {name}', '', prose(enum.description), '',
+                      '| Value | Meaning | Standard mapping |', '| --- | --- | --- |']
+            for value, term in enum.permissible_values.items():
+                lines.append(f'| `{prose(value)}` | {prose(term.description)} | {mappings(term)} |')
+            lines.append('')
+    lines += ['## Validator responsibilities', '',
+              'The following measured differences are checked by `record compare linkml`. '
+              'Its report must exercise every listed place, accept every real document and '
+              'pass the bundled Zod archive and catalog checks.', '']
+    for entry in index['known_looser']:
+        lines += [f"### {entry['kind'].replace('-', ' ').capitalize()}", '', prose(entry['why']), '',
+                  prose(entry['linkml_says']), '', 'Enforced by:', '']
+        lines += ['- ' + prose(source) for source in entry['enforced_by']]
+        lines += ['', 'Exact places:', '']
+        lines += [f"- `{p['file']}#{p['pointer']}`" for p in entry['where']]
+        lines.append('')
+    lines += ['The complete refinement inventory is in `linkml/checks/documents.yaml` and '
+              '`linkml/checks/record.yaml`. Rules about uniqueness, agreement between files, '
+              'citation content and identity remain with the validators and record rule catalog.', '',
+              '## Requirements still planned', '',
+              'These are requirements recorded by the project, not extra fields accepted by '
+              'the schemas. Existing family records, word boxes and corrections are not being '
+              'declared absent; the gaps below describe what remains to complete their contracts.', '']
+    for entry in planned:
+        source = entry['source']
+        lines += [f"### {entry['title']}", '', prose(entry['summary']), '',
+                  f"Source: `{source['root']}:{source['file']}:{source['line']}` — “{prose(source['quote'])}”.", '']
+    write_text(destination / 'docs' / 'data-dictionary.md', '\n'.join(lines))
 
 
 def files(folder):

@@ -86,6 +86,25 @@ class Generate(unittest.TestCase):
         with self.assertRaises(SystemExit):
             generate.modules(self.root)
 
+    def test_planned_requirements_change_docs_but_never_the_document_schema(self):
+        target = self.made / 'json-schema' / 'boxes.schema.json'
+        before = target.read_bytes()
+        planned = {'items': [{'id': 'future', 'title': 'Future field',
+                              'summary': 'A phantom field planned for later.',
+                              'source': {'root': 'steps', 'file': 'plan.md', 'line': 1,
+                                         'quote': 'A future requirement'}}]}
+        (self.root / 'planned.yaml').write_text(json.dumps(planned), encoding='utf-8')
+        generate.regenerate(self.root)
+        self.assertEqual(target.read_bytes(), before)
+        dictionary = (self.made / 'docs/data-dictionary.md').read_text(encoding='utf-8')
+        self.assertIn('A phantom field planned for later.', dictionary)
+        self.assertNotIn('phantom', target.read_text(encoding='utf-8'))
+
+    def test_every_owned_class_is_indexed_even_when_it_is_not_a_document_root(self):
+        index = json.loads((self.made / 'contract.json').read_text(encoding='utf-8'))
+        self.assertEqual(set(index['classes']), {'Box', 'Boxes'})
+        self.assertTrue(set(index['classes']) <= index['$defs'].keys())
+
 
 if __name__ == '__main__':
     unittest.main()

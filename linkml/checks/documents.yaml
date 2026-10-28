@@ -13,7 +13,7 @@
 #   rule_catalog  it compares records of a list, objects or files, which LinkML does not say
 #                 (unique_keys and list_elements_unique are enforced by no generator); `rule`
 #                 is the id in pruzhany-steps record/rules.yaml that already cites the check,
-#                 or `proposed` an id and `statement` its one line, for ticket 06 to add.
+#                 with `statement` its adopted one-line statement (ticket 09).
 #   twin_only     the twins alone can hold it, and `why` says why.
 #
 # The Pydantic field validator that refuses null on a key the twins leave optional but not
@@ -105,14 +105,14 @@ checks:
       - holds: >-
           No subject is listed twice.
         how: rule_catalog
-        proposed: subject-ids-distinct
+        rule: subject-ids-distinct
         statement: >-
           A content item lists each of its subjects once.
       - holds: >-
           Each block break is at most the length of the full text in code points, and each is
           greater than the one before.
         how: rule_catalog
-        proposed: block-breaks-ordered-within-text
+        rule: block-breaks-ordered-within-text
         statement: >-
           A content item's block breaks rise and none is beyond the end of its full text.
 
@@ -129,7 +129,7 @@ checks:
       - holds: >-
           No content item id is listed twice under one section.
         how: rule_catalog
-        proposed: section-members-distinct
+        rule: section-members-distinct
         statement: >-
           A printed section lists each content item beneath it once.
 
@@ -147,13 +147,13 @@ checks:
       - holds: >-
           No two content items share an id.
         how: rule_catalog
-        proposed: content-item-ids-unique
+        rule: content-item-ids-unique
         statement: >-
           Each content item of an issue has an id of its own.
       - holds: >-
           No two sections share an id.
         how: rule_catalog
-        proposed: section-ids-unique
+        rule: section-ids-unique
         statement: >-
           Each printed section of an issue has an id of its own.
       - holds: >-
@@ -164,7 +164,7 @@ checks:
       - holds: >-
           Every cross-reference's target is a content item of the same document.
         how: rule_catalog
-        proposed: cross-reference-target-is-known
+        rule: cross-reference-target-is-known
         statement: >-
           A content item's cross-reference points at a content item of the same issue.
 
@@ -182,7 +182,7 @@ checks:
       - holds: >-
           No role is listed twice.
         how: rule_catalog
-        proposed: mention-roles-distinct
+        rule: mention-roles-distinct
         statement: >-
           A mention lists each of the person's roles once.
       - holds: >-
@@ -200,7 +200,7 @@ checks:
       - holds: >-
           A printed name occurs in the words at the mention's addresses, joined by newlines.
         how: rule_catalog
-        proposed: mention-name-at-its-address
+        rule: mention-name-at-its-address
         statement: >-
           A mention's printed name stands in the words read at its addresses.
 
@@ -217,7 +217,7 @@ checks:
       - holds: >-
           No two mentions share an id.
         how: rule_catalog
-        proposed: mention-ids-unique
+        rule: mention-ids-unique
         statement: >-
           Each mention of an issue has an id of its own.
 
@@ -234,7 +234,7 @@ checks:
       - holds: >-
           No content item is listed twice under one life event.
         how: rule_catalog
-        proposed: event-content-items-distinct
+        rule: event-content-items-distinct
         statement: >-
           A life event of an issue lists each content item that prints it once.
 
@@ -252,13 +252,13 @@ checks:
       - holds: >-
           No two life events share an id.
         how: rule_catalog
-        proposed: life-event-ids-unique
+        rule: life-event-ids-unique
         statement: >-
           Each life event of an issue is listed once.
       - holds: >-
           No content item is listed under two life events.
         how: rule_catalog
-        proposed: content-item-in-one-life-event
+        rule: content-item-in-one-life-event
         statement: >-
           A content item prints at most one life event of its issue.
 
@@ -281,19 +281,19 @@ checks:
       - holds: >-
           No two pages of the pages document share an id.
         how: rule_catalog
-        proposed: page-ids-unique
+        rule: page-ids-unique
         statement: >-
           Each page of an issue has an id of its own.
       - holds: >-
           No two regions of one page share an id.
         how: rule_catalog
-        proposed: block-ids-unique
+        rule: block-ids-unique
         statement: >-
           Each region of a page has an id of its own.
       - holds: >-
           Every region a content item or a section heading names is a region of that page.
         how: rule_catalog
-        proposed: block-reference-is-known
+        rule: block-reference-is-known
         statement: >-
           A region named by a content item or a heading exists on the page named.
       - holds: >-
@@ -304,7 +304,7 @@ checks:
           A region's unit_id is the content item that owns it, and null for a heading's
           region.
         how: rule_catalog
-        proposed: region-unit-is-its-owner
+        rule: region-unit-is-its-owner
         statement: >-
           A region names as its content item the content item that owns it, and none when a
           heading owns it.
@@ -322,34 +322,34 @@ checks:
           Each address a supplied title or translation was made from lies within a region of
           its content item or heading.
         how: rule_catalog
-        proposed: basis-address-within-its-regions
+        rule: basis-address-within-its-regions
         statement: >-
           The printed addresses an English title or translation was made from lie within the
           regions of what it names.
       - holds: >-
           A mention's content item is a content item of the issue.
         how: rule_catalog
-        proposed: mention-content-item-is-known
+        rule: mention-content-item-is-known
         statement: >-
           A mention names a content item of the same issue.
       - holds: >-
           A words mention's addresses lie within its content item's regions with their words
           there; a regions mention's address is one of its content item's regions, whole.
         how: rule_catalog
-        proposed: mention-address-within-its-item
+        rule: mention-address-within-its-item
         statement: >-
           A mention's addresses lie in its content item's regions, whole regions when it is
           pinned to regions.
       - holds: >-
           A life event's content item is a content item of the issue.
         how: rule_catalog
-        proposed: life-event-content-item-is-known
+        rule: life-event-content-item-is-known
         statement: >-
           A life event of an issue names content items of the same issue.
       - holds: >-
           A content item listed under a life event names that event, when it names one.
         how: rule_catalog
-        proposed: content-item-event-agrees
+        rule: content-item-event-agrees
         statement: >-
           A content item listed under a life event of its issue names no other event.
 
@@ -369,7 +369,7 @@ checks:
       - holds: >-
           No two issues share a date.
         how: rule_catalog
-        proposed: issue-dates-unique
+        rule: issue-dates-unique
         statement: >-
           The archive holds each issue date once.
       - holds: >-
@@ -379,13 +379,13 @@ checks:
       - holds: >-
           A content item's places are places of the shared record.
         how: rule_catalog
-        proposed: content-item-place-is-known
+        rule: content-item-place-is-known
         statement: >-
           A content item names only places of the shared record.
       - holds: >-
           A content item's organisations are organisations of the shared record.
         how: rule_catalog
-        proposed: content-item-organisation-is-known
+        rule: content-item-organisation-is-known
         statement: >-
           A content item names only organisations of the shared record.
       - holds: >-
@@ -400,14 +400,14 @@ checks:
           A death known from records alone is selected by no issue, neither as a content
           item's event nor as a life event.
         how: rule_catalog
-        proposed: records-only-death-not-selected
+        rule: records-only-death-not-selected
         statement: >-
           No issue selects a death the shared record says is known from records alone.
       - holds: >-
           A death dated from a record and selected by no issue says it is known from records
           alone.
         how: rule_catalog
-        proposed: record-death-says-records-only
+        rule: record-death-says-records-only
         statement: >-
           A shared death with a record's date and no issue that prints it is marked records
           only.
@@ -415,26 +415,26 @@ checks:
           An event date qualified as reported in an issue gives the first issue that prints
           the event.
         how: rule_catalog
-        proposed: reported-in-is-first-issue
+        rule: reported-in-is-first-issue
         statement: >-
           A date reported in an issue names the earliest issue that prints the event.
       - holds: >-
           A located citation cites a content item of an issue in the archive.
         how: rule_catalog
-        proposed: cited-content-item-is-known
+        rule: cited-content-item-is-known
         statement: >-
           A citation with addresses names an issue's content item that exists.
       - holds: >-
           A located citation's quote occurs in the cited content item's full text.
         how: rule_catalog
-        proposed: citation-quote-in-content-item
+        rule: citation-quote-in-content-item
         statement: >-
           A located citation's quote stands in the text of the content item it cites.
       - holds: >-
           A located citation's addresses lie within the cited content item's regions, with
           their words there.
         how: rule_catalog
-        proposed: citation-address-within-its-item
+        rule: citation-address-within-its-item
         statement: >-
           A located citation's addresses lie in the regions of the content item it cites.
       - holds: >-
@@ -442,7 +442,7 @@ checks:
           has exactly one baby, a cited mention designating them in the birth notice, a
           supplied name citing that notice, and each parent's relation citing it.
         how: rule_catalog
-        proposed: described-child-is-evidenced
+        rule: described-child-is-evidenced
         statement: >-
           A child named only by description rests on one birth notice, cited by the birth
           fact, the supplied name, a designating mention and every parent's relation.

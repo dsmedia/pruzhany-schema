@@ -16,7 +16,10 @@ of the plan in pruzhany-steps `.scratch/linkml/plan.md`: **LinkML describes; `zo
 | `lint.py` | The house lint (below). |
 | `linkml-lint.yaml` | How `linkml lint` is run: every recommended rule, no warning allowed. |
 | `known-looser.yaml` | What the Zod exports refuse that the definition cannot: kind, places, why, and what refuses it. |
-| `export_zod.ts` | Makes the five Zod exports again from this checkout, as pruzhany-steps' `site_shapes refresh` does. |
+| `export_zod.ts` | Makes the six Zod exports again from this checkout, as pruzhany-steps' `site_shapes refresh` does. |
+| `model-map.json`, `generated/contract.json` | Explicit model mapping and generated class inventory used by the LinkML–Zod contract gate. |
+| `generated/docs/data-dictionary.md` | One readable page of classes, fields, descriptions, requirements, vocabulary, mappings and remaining validator duties. |
+| `planned.yaml` | Source-cited future requirements for the dictionary only; never imported by document schemas. |
 | `requirements.in`, `requirements.lock` | The locked environment: LinkML and everything it brings, by hash. |
 | `build-constraints.in`, `build-constraints.txt` | The one build tool, setuptools, by hash. |
 | `checks/documents.yaml` | Each check the twins of the issue documents and the catalog make beyond their shapes (every Zod refinement and Pydantic validator), and how the definition holds it: a LinkML rule, a rule of pruzhany-steps' `record/rules.yaml` (cited or proposed), or the twins alone; `tests/test_documents_checks.py` counts them. |
@@ -51,6 +54,23 @@ To add a module: write `schema/<module>.yaml` (importing `types` where it needs 
 it to `modules.json` with its top class, run the generator and commit what it makes with the
 schema. A document's JSON Schema is made with that one top class: one JSON Schema with several
 roots merges their top-level rules.
+
+`bin/verify contract` retains the Zod–Pydantic checks and compares LinkML with Zod for every
+mapped model's fields, requiredness and enum values. Mapping coverage is checked in both
+directions; the two runtime archive carriers are explicitly excluded. Required-null
+exceptions must be exact, still differ, and name a live place in `known-looser.yaml`.
+
+In the private steps checkout, run `record compare linkml --root schema=<candidate> --root
+site=<site>` for all real documents, all shards, the bundled Zod archive and catalog validators,
+and bounded constraint mutations. Every exception needs a witness. Missing categories,
+unsupported coverage, undocumented differences and newly rejected real files fail the check.
+URI formats are enabled. This complements the contract gate; it is not a general proof of
+schema equivalence. Keep real-data diagnostics private and synthetic fixtures here.
+
+The check inventories' former proposals are adopted into the private rule catalog. The
+record gate checks their source citations and inventory, but does not claim to execute this
+repository's tests. The source-backed planned list stays exclusively in documentation, and
+its private source quotations are checked by `record check --catalog` with both roots present.
 
 ## The locked environment
 
