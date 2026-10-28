@@ -1,3 +1,6 @@
 {
-	"modules": [{ "schema": "schema/types.yaml", "name": "types", "top_class": null }]
+	"modules": [
+		{ "schema": "schema/types.yaml", "name": "types", "top_class": null },
+		{ "schema": "schema/vocabulary.yaml", "name": "vocabulary", "top_class": null }
+	]
 }

@@ -173,7 +173,10 @@ python3 -I -B standards/check_alignment.py
 ```
 
 `generate.py --check` checks exact UTF-8/LF bytes. It generates a Zod enum per
-group and Python Literals plus the vocabulary version. The production contracts
+group and Python Literals plus the vocabulary version, and `linkml/schema/vocabulary.yaml`:
+a LinkML enum per group, Impresso's types and the reading states, named as the other
+contracts name them, each value with its definition, its `meaning` (the `rico:`, `ehri:`
+or declared `pc:` term) and a RiC-O mapping's `via` as an annotation. The production contracts
 consume these modules; the released module also owns the parts' allowed kinds
 and the life-event kind list. `check.py` validates
 mapping forms, local declarations and reasons, replacement targets, relationship

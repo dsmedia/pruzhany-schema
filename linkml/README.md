@@ -8,7 +8,8 @@ of the plan in pruzhany-steps `.scratch/linkml/plan.md`: **LinkML describes; `zo
 
 | File | What it is |
 | --- | --- |
-| `schema/*.yaml` | The definition. Today `types.yaml`, the types the documents share; the documents come in later tickets. |
+| `schema/*.yaml` | The definition. Today `types.yaml`, the types the documents share, and `vocabulary.yaml`, the vocabulary's enums; the documents come in later tickets. |
+| `schema/vocabulary.yaml` | Written by `vocabulary/generate.py` from `vocabulary/*.json`, one enum a group, never edited by hand: change the JSON, run that generator, then `linkml/generate.py` for its docs. That generator's `--check` (`bin/verify vocabulary`) fails on a hand edit. |
 | `modules.json` | The manifest: each schema file, its top class (or `null`) and the name its outputs take. |
 | `generated/` | What `generate.py` makes from the manifest, committed: `json-schema/<name>.schema.json` for a module with a top class, `docs/<name>/` (gen-doc) for every module. Never edited by hand. |
 | `generate.py` | Makes `generated/` afresh, or with `--check` compares it byte for byte. |
