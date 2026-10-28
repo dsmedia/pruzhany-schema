@@ -1,5 +1,7 @@
 """Current site contracts and LLM extraction schemas."""
 
+from .editions import Edition, EditionsCatalog, HistoricalEvent, Holiday
+
 from .llm_output import (
     LlmBlock,
     LlmContentUnit,
@@ -16,6 +18,7 @@ from .shared import ExternalReference
 from .site_common import CrossReference
 
 __all__ = [
+    'Edition', 'EditionsCatalog', 'HistoricalEvent', 'Holiday',
     # LLM Output Schemas
     "LlmBlock",
     "LlmContentUnit",

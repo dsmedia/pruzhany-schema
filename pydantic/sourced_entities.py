@@ -1,4 +1,5 @@
 """Optional stage-1 sourced assertions. All models are closed and strict."""
+from .generated.models import Attribution, Citation, Fact, Fate, Mention, Name, Review, Source, SourceDerivation, SourcedDate, Strict
 from typing import Literal, Annotated
 from datetime import date as calendar_date
 from calendar import monthrange
@@ -6,10 +7,6 @@ import json
 from pathlib import Path
 from pydantic import BaseModel, ConfigDict, Field, AfterValidator, model_validator
 from .sourced_entities_vocabulary import FactTypes, RelationshipTypes, NameKinds, MentionRoles, SourceKinds, Confidence, ClaimStatus, ReviewStates, FateOutcomes, HolocaustFateTypes
-
-class Strict(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-
 
 def valid_date(v):
     calendar_date.fromisoformat(v + {4: "-01-01", 7: "-01", 10: ""}[len(v)])
@@ -23,35 +20,14 @@ CITATION_REQUIREMENTS = json.loads((Path(__file__).resolve().parents[1] / 'vocab
 SourceLanguage = Annotated[str, Field(pattern=CITATION_REQUIREMENTS['language_tag_pattern'])]
 
 
-class SourcedDate(Strict):
-    start: Date | None = None
-    end: Date | None = None
-    precision: Literal["year", "month", "day", "range"] | None = None
-    printed: Text | None = None
-    printed_calendar: Literal["gregorian", "hebrew"] | None = None
-    inferred: bool | None = None
-
-    @model_validator(mode="after")
-    def validate_contract(self):
-        validate_SourcedDate(self)
-        return self
+def _SourcedDate__validate_contract(self):
+    validate_SourcedDate(self)
+    return self
 
 
-class Review(Strict):
-    state: ReviewStates
-    by: Text | None = None
-    on: Day | None = None
-
-    @model_validator(mode="after")
-    def validate_contract(self):
-        validate_Review(self)
-        return self
-
-
-class Attribution(Strict):
-    by: Text
-    on: Day
-    note: str | None = None
+def _Review__validate_contract(self):
+    validate_Review(self)
+    return self
 
 
 def _bare_host(value: str) -> str:
@@ -62,128 +38,27 @@ def _bare_host(value: str) -> str:
 SourceHost = Annotated[str, Field(pattern=r"^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"), AfterValidator(_bare_host)]
 
 
-class SourceDerivation(Strict):
-    source_id: Text
-    relation: Literal['copy', 'transcription']
+def _Citation__validate_contract(self):
+    validate_Citation(self)
+    return self
 
 
-class Source(Strict):
-    made_by: Literal['family', 'studio', 'institution', 'perpetrator', 'unknown'] | None = None
-    id: Text
-    kind: SourceKinds
-    title: Text
-    short_name: Text | None = None
-    holder_id: Text | None = None
-    reference_code: Text | None = None
-    language: Annotated[list[SourceLanguage], Field(min_length=1)] | None = None
-    derived_from: Annotated[list[SourceDerivation], Field(min_length=1)] | None = None
-    dated: SourcedDate | None = None
-    quotes_cleared: Attribution | None = None
-    # The owner's condition on cleared quotes (24 October 2026): shown only where no other record says it.
-    quote_condition: Literal['unique_information'] | None = None
-    private: bool | None = None
-    work_id: str | None = None
-    author: str | None = None
-    editor: str | None = None
-    published: str | None = None
-    repository: str | None = None  # One-release reader: site projection and retained research.
-    url_pattern: str | None = None
-    # A bare lowercase host name: the source's addresses are on it or a subdomain of it.
-    host: SourceHost | None = None
-    subjects: Annotated[list[Text], Field(min_length=1)] | None = None
+def _Fact__validate_contract(self):
+    validate_Fact(self)
+    return self
 
 
-class Citation(Strict):
-    source_id: Text
-    via: Text | None = None
-    reference_code: Text | None = None
-    record_type: Text | None = None
-    quote_language: SourceLanguage | None = None
-    public_note: Text | None = None
-    locator: Text | None = None
-    record_id: str | None = None
-    page: str | None = None
-    scan: str | None = None
-    time: str | None = None
-    edition_date: str | None = None
-    unit_id: str | None = None
-    url: Annotated[str, Field(pattern=r"^https://[^\s/?#]+[^\s]*$")] | None = None
-    quote: str | None = None
-    note: str | None = None
-    accessed: Day | None = None
-
-    @model_validator(mode="after")
-    def validate_contract(self):
-        validate_Citation(self)
-        return self
+def _Name__supplied_name(self):
+    if self.kind == 'supplied' and (not self.attribution or not self.citations):
+        raise ValueError('supplied name needs attribution and citations')
+    if self.attribution and self.kind != 'supplied':
+        raise ValueError('supplied attribution needs the supplied name kind')
+    return self
 
 
-class Fact(Strict):
-    id: Text
-    type: FactTypes
-    proposed_type: Text | None = None
-    value: Text | None = None
-    date: SourcedDate | None = None
-    place_id: Text | None = None
-    organization_id: Text | None = None
-    event_id: Text | None = None
-    related_person_id: Text | None = None
-    relationship_type: RelationshipTypes | None = None
-    related_name: Text | None = None
-    qualifiers: dict[str, str] | None = None
-    holocaust_related: bool | None = None
-    citations: list[Citation] = Field(min_length=1)
-    evidence_confidence: Confidence
-    identity_confidence: Confidence
-    status: ClaimStatus
-    review: Review
-    attribution: Attribution
-
-    @model_validator(mode="after")
-    def validate_contract(self):
-        validate_Fact(self)
-        return self
-
-
-class Name(Strict):
-    value: Text
-    kind: NameKinds
-    script: Annotated[str, Field(pattern=r"^[A-Za-z]{4}$")]
-    lang: Annotated[str, Field(pattern=r"^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$")] | None = None
-    citations: list[Citation] | None = None
-    attribution: Attribution | None = None
-
-    @model_validator(mode='after')
-    def supplied_name(self):
-        if self.kind == 'supplied' and (not self.attribution or not self.citations):
-            raise ValueError('supplied name needs attribution and citations')
-        if self.attribution and self.kind != 'supplied':
-            raise ValueError('supplied attribution needs the supplied name kind')
-        return self
-
-
-class Fate(Strict):
-    outcome: FateOutcomes
-    confidence: Confidence
-    rests_on: list[str]
-    review: Review
-    summary: str | None = None
-
-    @model_validator(mode="after")
-    def validate_contract(self):
-        validate_Fate(self)
-        return self
-
-
-class Mention(Strict):
-    id: Text
-    person_id: Text
-    unit_id: Text
-    printed_name: Text
-    role: MentionRoles | None = None
-    title: str | None = None
-    function: str | None = None
-    wkd_id: str | None = None
+def _Fate__validate_contract(self):
+    validate_Fate(self)
+    return self
 
 
 def validate_SourcedDate(v):

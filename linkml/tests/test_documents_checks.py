@@ -23,6 +23,7 @@ from test_documents import fixture, generated, refusals
 
 CHECKS_FILE = LINKML / 'checks' / 'documents.yaml'
 CHECKS = yaml.safe_load(CHECKS_FILE.read_text(encoding='utf-8'))
+python_inventory = load('python_inventory')
 HOW = {'linkml_rule', 'rule_catalog', 'twin_only'}
 ZOD_REFINEMENT = re.compile(r'\.(?:refine|superRefine|check)\(')
 PYDANTIC_VALIDATOR = re.compile(r'@(?:model_validator|field_validator)\b|\b(?:Before|After|Plain|Wrap)Validator\(')
@@ -51,6 +52,8 @@ def pydantic_validators(file, place):
     tree = ast.parse((ROOT / file).read_text(encoding='utf-8'))
     if '.' in place:
         cls_name, method = place.split('.')
+        if any(isinstance(n, ast.FunctionDef) and n.name == f'_{cls_name}__{method}' for n in tree.body):
+            return 1
         cls = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == cls_name)
         function = next(node for node in cls.body if isinstance(node, ast.FunctionDef) and node.name == method)
         return sum(bool(re.match(r'(?:model|field)_validator\b', ast.unparse(d))) for d in function.decorator_list)
@@ -72,7 +75,9 @@ class TheAccount(unittest.TestCase):
     def test_every_refinement_and_validator_of_the_twins_is_an_entry(self):
         zod = sum(len(ZOD_REFINEMENT.findall((ROOT / f).read_text(encoding='utf-8'))) for f in CHECKS['twins']['zod'])
         pydantic = sum(len(PYDANTIC_VALIDATOR.findall((ROOT / f).read_text(encoding='utf-8')))
+                       + len(list(python_inventory.retained_checks((ROOT / f).read_text(encoding='utf-8'))))
                        for f in CHECKS['twins']['pydantic'])
+        self.assertEqual(python_inventory.binding_problems(ROOT), [])
         entries = CHECKS['checks']
         self.assertEqual(zod, sum('zod' in entry for entry in entries), 'Zod refinements and entries differ')
         self.assertEqual(pydantic, sum('pydantic' in entry for entry in entries),

@@ -41,8 +41,8 @@ DOCUMENTS = {
     'editions': ('EditionsCatalog', None, 'zod/editions.schema.ts', 'EditionsCatalogSchema'),
 }
 MODULES = ['site_common', *DOCUMENTS]
-# The catalog has no Pydantic twin.
-NO_PYDANTIC_TWIN = {'EditionsCatalog', 'Edition', 'Holiday', 'HistoricalEvent'}
+# Stage two includes the catalog's generated Python models.
+NO_PYDANTIC_TWIN = set()
 KNOWN = yaml.safe_load((LINKML / 'known-looser.yaml').read_text(encoding='utf-8'))
 NAMESPACES = {
     'rico': 'https://www.ica.org/standards/RiC/ontology#',
@@ -302,7 +302,7 @@ class Manifest(unittest.TestCase):
 class TheTwinsNames(unittest.TestCase):
     def test_every_class_is_a_class_of_the_twins_by_its_name(self):
         zod = '\n'.join(path.read_text(encoding='utf-8') for path in (ROOT / 'zod').glob('*.ts'))
-        pydantic = '\n'.join(path.read_text(encoding='utf-8') for path in (ROOT / 'pydantic').glob('*.py'))
+        pydantic = '\n'.join(path.read_text(encoding='utf-8') for path in (ROOT / 'pydantic').rglob('*.py'))
         for module in MODULES:
             for name in view(module).all_classes(imports=False):
                 with self.subTest(module=module, cls=name):

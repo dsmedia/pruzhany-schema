@@ -1,0 +1,3500 @@
+{
+	"baseline_commit": "182eb478bf22bed0e312457fdc082730515d297c",
+	"baseline_pydantic": "2.13.5",
+	"description": "Python API compatibility only. Fields and constraints are generated from LinkML; each difference below is exact and source-backed.",
+	"models": {
+		"Attribution": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["by", "on", "note"],
+			"fields": {
+				"on": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"Authorship": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["by", "on", "note", "kind"],
+			"parent": "Attribution",
+			"fields": {
+				"on": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"Block": {
+			"module": "page",
+			"config": {},
+			"order": ["id", "bbox", "transcription", "confidence", "image_crop", "unit_id"],
+			"fields": {
+				"unit_id": {
+					"required": true,
+					"source": "pydantic/page.py:Block.unit_id at 182eb478bf22bed0e312457fdc082730515d297c"
+				}
+			}
+		},
+		"Citation": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"source_id",
+				"via",
+				"reference_code",
+				"record_type",
+				"quote_language",
+				"public_note",
+				"locator",
+				"record_id",
+				"page",
+				"scan",
+				"time",
+				"edition_date",
+				"unit_id",
+				"url",
+				"quote",
+				"note",
+				"accessed"
+			],
+			"validators": [
+				{
+					"name": "validate_contract",
+					"module": "sourced_entities",
+					"function": "_Citation__validate_contract",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"accessed": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			},
+			"conditions": {
+				"anyOf": [
+					{
+						"properties": {
+							"record_id": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["record_id"]
+					},
+					{
+						"properties": {
+							"page": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["page"]
+					},
+					{
+						"properties": {
+							"scan": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["scan"]
+					},
+					{
+						"properties": {
+							"time": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["time"]
+					},
+					{
+						"properties": {
+							"unit_id": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["unit_id"]
+					},
+					{
+						"properties": {
+							"url": {}
+						},
+						"required": ["url"]
+					},
+					{
+						"properties": {
+							"locator": {}
+						},
+						"required": ["locator"]
+					},
+					{
+						"properties": {
+							"reference_code": {}
+						},
+						"required": ["reference_code"]
+					}
+				]
+			}
+		},
+		"ContentItem": {
+			"module": "content_item",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"id",
+				"type",
+				"subtype",
+				"printed_title",
+				"supplied_title",
+				"subject_ids",
+				"section_id",
+				"full_text",
+				"translation",
+				"reading_status",
+				"block_breaks",
+				"page_blocks",
+				"location_ids",
+				"organization_ids",
+				"cross_references",
+				"event_id"
+			],
+			"validators": [
+				{
+					"name": "content_contract",
+					"module": "content_item",
+					"function": "_ContentItem__content_contract",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"block_breaks": {
+					"type_hooks": [
+						{
+							"mode": "Before",
+							"module": "content_item",
+							"function": "integer_offset",
+							"path": ["items"]
+						}
+					]
+				}
+			},
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"subtype": {
+									"enum": [
+										"announcement",
+										"appeal",
+										"bar_mitzvah_greeting",
+										"birth_greeting",
+										"commercial_advertisement",
+										"departure_greeting",
+										"engagement_greeting",
+										"greeting",
+										"meeting_notice",
+										"new_year_greeting",
+										"thanks",
+										"wedding_greeting"
+									]
+								}
+							},
+							"required": ["subtype"]
+						},
+						"then": {
+							"properties": {
+								"type": {
+									"enum": ["ad"]
+								}
+							},
+							"required": ["type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"subtype": {
+									"enum": ["condolence", "death_announcement", "memorial_notice"]
+								}
+							},
+							"required": ["subtype"]
+						},
+						"then": {
+							"properties": {
+								"type": {
+									"enum": ["death_notice"]
+								}
+							},
+							"required": ["type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"subtype": {
+									"enum": ["editorial", "letter", "opinion", "poem", "sketch"]
+								}
+							},
+							"required": ["subtype"]
+						},
+						"then": {
+							"properties": {
+								"type": {
+									"enum": ["article"]
+								}
+							},
+							"required": ["type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"subtype": {
+									"enum": ["humour"]
+								}
+							},
+							"required": ["subtype"]
+						},
+						"then": {
+							"properties": {
+								"type": {
+									"enum": ["entertainment"]
+								}
+							},
+							"required": ["type"]
+						}
+					}
+				]
+			}
+		},
+		"ContentItemBlockRef": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["page_id", "block_ids"]
+		},
+		"ContentItemRef": {
+			"module": "site_issue",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["content_item_id", "role"]
+		},
+		"ContentItemsData": {
+			"module": "content_item",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["issue_date", "vocabulary_version", "content_items", "sections"],
+			"validators": [
+				{
+					"name": "content_references",
+					"module": "content_item",
+					"function": "_ContentItemsData__content_references",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"issue_date": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"CrossReference": {
+			"module": "site_common",
+			"config": {},
+			"order": ["target_id", "confidence", "relationship", "evidence"]
+		},
+		"Edition": {
+			"module": "editions",
+			"config": {
+				"strict": true,
+				"extra": "forbid"
+			},
+			"order": ["date", "hebrewDate", "hebrewMonth", "hebrewYear", "holiday"],
+			"fields": {
+				"holiday": {
+					"exclude_none": true,
+					"type_hooks": [
+						{
+							"mode": "Before",
+							"module": "editions",
+							"function": "present_value",
+							"path": []
+						}
+					]
+				},
+				"hebrewMonth": {
+					"type_hooks": [
+						{
+							"mode": "Before",
+							"module": "content_item",
+							"function": "integer_offset",
+							"path": []
+						}
+					]
+				},
+				"hebrewYear": {
+					"type_hooks": [
+						{
+							"mode": "Before",
+							"module": "content_item",
+							"function": "integer_offset",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"EditionsCatalog": {
+			"module": "editions",
+			"config": {
+				"strict": true,
+				"extra": "forbid"
+			},
+			"order": ["availableDates", "editions", "historicalEvents", "holidays"]
+		},
+		"EnglishCheck": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"reading_id",
+				"reading_sha256",
+				"english_sha256",
+				"judgement_id",
+				"judgement_sha256",
+				"attribution"
+			]
+		},
+		"ExternalReference": {
+			"module": "shared",
+			"config": {},
+			"order": ["source", "url", "record_id", "notes", "verified"]
+		},
+		"Fact": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"id",
+				"type",
+				"proposed_type",
+				"value",
+				"date",
+				"place_id",
+				"organization_id",
+				"event_id",
+				"related_person_id",
+				"relationship_type",
+				"related_name",
+				"qualifiers",
+				"holocaust_related",
+				"citations",
+				"evidence_confidence",
+				"identity_confidence",
+				"status",
+				"review",
+				"attribution"
+			],
+			"validators": [
+				{
+					"name": "validate_contract",
+					"module": "sourced_entities",
+					"function": "_Fact__validate_contract",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"allOf": [
+					{
+						"else": {
+							"not": {
+								"required": ["proposed_type"]
+							},
+							"properties": {
+								"proposed_type": {}
+							}
+						},
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["other"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"proposed_type": {}
+							},
+							"required": ["proposed_type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["kinship"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"related_name": {}
+									},
+									"required": ["related_name"]
+								},
+								{
+									"properties": {
+										"related_person_id": {}
+									},
+									"required": ["related_person_id"]
+								}
+							],
+							"properties": {
+								"relationship_type": {}
+							},
+							"required": ["relationship_type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["occupation"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"value": {}
+							},
+							"required": ["value"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["residence"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"place_id": {}
+									},
+									"required": ["place_id"]
+								},
+								{
+									"properties": {
+										"value": {}
+									},
+									"required": ["value"]
+								}
+							]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["event_participation"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"event_id": {}
+							},
+							"required": ["event_id"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["birth", "death"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"date": {}
+									},
+									"required": ["date"]
+								},
+								{
+									"properties": {
+										"place_id": {}
+									},
+									"required": ["place_id"]
+								},
+								{
+									"properties": {
+										"value": {}
+									},
+									"required": ["value"]
+								}
+							]
+						}
+					}
+				]
+			}
+		},
+		"FactQualifiers": {
+			"module": "editions",
+			"config": {
+				"strict": true,
+				"extra": "forbid"
+			},
+			"order": []
+		},
+		"Fate": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["outcome", "confidence", "rests_on", "review", "summary"],
+			"validators": [
+				{
+					"name": "validate_contract",
+					"module": "sourced_entities",
+					"function": "_Fate__validate_contract",
+					"mode": "after"
+				}
+			]
+		},
+		"HistoricalEvent": {
+			"module": "editions",
+			"config": {
+				"strict": true,
+				"extra": "forbid"
+			},
+			"order": ["date", "description", "endDate", "name"],
+			"fields": {
+				"endDate": {
+					"exclude_none": true,
+					"type_hooks": [
+						{
+							"mode": "Before",
+							"module": "editions",
+							"function": "present_value",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"Holder": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["id", "name", "short_name", "kind", "identifiers", "host"],
+			"fields": {
+				"host": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "_bare_host",
+							"path": []
+						}
+					]
+				}
+			},
+			"conditions": {
+				"if": {
+					"properties": {
+						"host": {}
+					},
+					"required": ["host"]
+				},
+				"then": {
+					"properties": {
+						"host": {
+							"pattern": "^(?!www\\.)"
+						}
+					},
+					"required": ["host"]
+				}
+			}
+		},
+		"Holiday": {
+			"module": "editions",
+			"config": {
+				"strict": true,
+				"extra": "forbid"
+			},
+			"order": ["date", "hebrewName", "name"],
+			"fields": {
+				"hebrewName": {
+					"exclude_none": true,
+					"type_hooks": [
+						{
+							"mode": "Before",
+							"module": "editions",
+							"function": "present_value",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"IssueLifeEvent": {
+			"module": "site_issue",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["id", "content_items"],
+			"validators": [
+				{
+					"name": "content_item_ids",
+					"module": "site_issue",
+					"function": "_IssueLifeEvent__content_item_ids",
+					"mode": "after"
+				}
+			]
+		},
+		"IssueLifeEventsData": {
+			"module": "site_issue",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["issue_date", "life_events"],
+			"validators": [
+				{
+					"name": "life_event_ids",
+					"module": "site_issue",
+					"function": "_IssueLifeEventsData__life_event_ids",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"issue_date": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"IssueMention": {
+			"module": "site_issue",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"id",
+				"person_id",
+				"content_item_id",
+				"address_grain",
+				"printed_name",
+				"roles",
+				"addresses",
+				"title",
+				"function",
+				"wkd_id"
+			],
+			"validators": [
+				{
+					"name": "mention_contract",
+					"module": "site_issue",
+					"function": "_IssueMention__mention_contract",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"printed_name": {
+					"required": true,
+					"source": "pydantic/site_issue.py:IssueMention.printed_name at 182eb478bf22bed0e312457fdc082730515d297c"
+				}
+			},
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"address_grain": {
+									"enum": ["words"]
+								}
+							},
+							"required": ["address_grain"]
+						},
+						"then": {
+							"properties": {
+								"printed_name": {}
+							},
+							"required": ["printed_name"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"address_grain": {
+									"enum": ["regions"]
+								}
+							},
+							"required": ["address_grain"]
+						},
+						"then": {
+							"properties": {
+								"printed_name": {
+									"pattern": "^$"
+								}
+							}
+						}
+					}
+				]
+			}
+		},
+		"IssueMentionsData": {
+			"module": "site_issue",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["issue_date", "mentions"],
+			"validators": [
+				{
+					"name": "mention_ids",
+					"module": "site_issue",
+					"function": "_IssueMentionsData__mention_ids",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"issue_date": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"LifeEventDate": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"record_fact_id",
+				"printed",
+				"printed_calendar",
+				"start",
+				"qualifier",
+				"reported_in"
+			],
+			"validators": [
+				{
+					"name": "event_date",
+					"module": "shared_record",
+					"function": "_LifeEventDate__event_date",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"start": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				},
+				"reported_in": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			},
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"record_fact_id": {}
+							},
+							"required": ["record_fact_id"]
+						},
+						"then": {
+							"not": {
+								"anyOf": [
+									{
+										"properties": {
+											"printed": {}
+										},
+										"required": ["printed"]
+									},
+									{
+										"properties": {
+											"printed_calendar": {}
+										},
+										"required": ["printed_calendar"]
+									},
+									{
+										"properties": {
+											"qualifier": {}
+										},
+										"required": ["qualifier"]
+									},
+									{
+										"properties": {
+											"reported_in": {}
+										},
+										"required": ["reported_in"]
+									},
+									{
+										"properties": {
+											"start": {}
+										},
+										"required": ["start"]
+									}
+								]
+							}
+						}
+					},
+					{
+						"if": {
+							"not": {
+								"required": ["record_fact_id"]
+							},
+							"properties": {
+								"record_fact_id": {}
+							}
+						},
+						"then": {
+							"anyOf": [
+								{
+									"not": {
+										"anyOf": [
+											{
+												"properties": {
+													"printed": {}
+												},
+												"required": ["printed"]
+											},
+											{
+												"properties": {
+													"printed_calendar": {}
+												},
+												"required": ["printed_calendar"]
+											},
+											{
+												"properties": {
+													"start": {}
+												},
+												"required": ["start"]
+											}
+										]
+									},
+									"properties": {
+										"qualifier": {
+											"enum": ["reported_in"]
+										},
+										"reported_in": {}
+									},
+									"required": ["qualifier", "reported_in"]
+								},
+								{
+									"not": {
+										"anyOf": [
+											{
+												"properties": {
+													"qualifier": {}
+												},
+												"required": ["qualifier"]
+											},
+											{
+												"properties": {
+													"reported_in": {}
+												},
+												"required": ["reported_in"]
+											}
+										]
+									},
+									"properties": {
+										"printed": {},
+										"printed_calendar": {}
+									},
+									"required": ["printed", "printed_calendar"]
+								}
+							]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"printed_calendar": {
+									"enum": ["hebrew"]
+								}
+							},
+							"required": ["printed_calendar"]
+						},
+						"then": {
+							"not": {
+								"required": ["start"]
+							},
+							"properties": {
+								"start": {}
+							}
+						}
+					}
+				]
+			}
+		},
+		"LifeEventMainPerson": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["person_id", "part"]
+		},
+		"Media": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"id",
+				"source_id",
+				"kind",
+				"caption",
+				"alt",
+				"inscription",
+				"transcript",
+				"family_words",
+				"depicted",
+				"shows_unidentified",
+				"width",
+				"height",
+				"duration",
+				"credit",
+				"conditions_of_access",
+				"conditions_of_use",
+				"rights",
+				"cleared",
+				"withdrawn",
+				"link",
+				"derived",
+				"master",
+				"consent"
+			],
+			"parent": "PublicMedia",
+			"validators": [
+				{
+					"name": "consent_state",
+					"module": "media",
+					"function": "_Media__consent_state",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"rights": {
+					"default": "http://rightsstatements.org/vocab/CNE/1.0/"
+				}
+			},
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"kind": {
+									"enum": ["document", "image"]
+								}
+							},
+							"required": ["kind"]
+						},
+						"then": {
+							"properties": {
+								"alt": {}
+							},
+							"required": ["alt"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"kind": {
+									"enum": ["document"]
+								}
+							},
+							"required": ["kind"]
+						},
+						"then": {
+							"properties": {
+								"transcript": {}
+							},
+							"required": ["transcript"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"width": {}
+							},
+							"required": ["width"]
+						},
+						"then": {
+							"properties": {
+								"height": {}
+							},
+							"required": ["height"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"height": {}
+							},
+							"required": ["height"]
+						},
+						"then": {
+							"properties": {
+								"width": {}
+							},
+							"required": ["width"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"link": {}
+							},
+							"required": ["link"]
+						},
+						"then": {
+							"properties": {
+								"kind": {
+									"enum": ["audio", "video"]
+								}
+							},
+							"required": ["kind"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"withdrawn": {}
+							},
+							"required": ["withdrawn"]
+						},
+						"then": {
+							"not": {
+								"anyOf": [
+									{
+										"properties": {
+											"derived": {
+												"items": {},
+												"type": "array"
+											}
+										},
+										"required": ["derived"]
+									},
+									{
+										"properties": {
+											"link": {}
+										},
+										"required": ["link"]
+									}
+								]
+							}
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"kind": {
+									"enum": ["image"]
+								}
+							},
+							"required": ["kind"]
+						},
+						"then": {
+							"not": {
+								"anyOf": [
+									{
+										"properties": {
+											"rights": {
+												"enum": ["http://rightsstatements.org/vocab/InC-OW-EU/1.0/"]
+											}
+										},
+										"required": ["rights"]
+									}
+								]
+							}
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"derived": {
+									"items": {},
+									"type": "array"
+								}
+							},
+							"required": ["derived"]
+						},
+						"then": {
+							"properties": {
+								"cleared": {}
+							},
+							"required": ["cleared"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"derived": {
+									"items": {},
+									"type": "array"
+								}
+							},
+							"required": ["derived"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"duration": {}
+									},
+									"required": ["duration"]
+								},
+								{
+									"properties": {
+										"height": {},
+										"width": {}
+									},
+									"required": ["width", "height"]
+								}
+							]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"derived": {
+									"items": {},
+									"type": "array"
+								},
+								"kind": {
+									"enum": ["document", "image"]
+								}
+							},
+							"required": ["kind", "derived"]
+						},
+						"then": {
+							"properties": {
+								"height": {},
+								"width": {}
+							},
+							"required": ["width", "height"]
+						}
+					}
+				]
+			}
+		},
+		"MediaConsent": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["basis", "granted_by", "scope", "ref", "withdrawn_on"],
+			"fields": {
+				"withdrawn_on": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"MediaConsentScope": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["use", "person_ids", "unidentified"],
+			"validators": [
+				{
+					"name": "unique_people",
+					"module": "media",
+					"function": "_MediaConsentScope__unique_people",
+					"mode": "after"
+				}
+			]
+		},
+		"MediaDecision": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["role", "on"],
+			"fields": {
+				"on": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"MediaDepicted": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["person_id", "region", "identified_by"],
+			"fields": {
+				"person_id": {
+					"required": true,
+					"source": "pydantic/media.py:MediaDepicted.person_id at 182eb478bf22bed0e312457fdc082730515d297c"
+				}
+			}
+		},
+		"MediaDerivative": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["url", "width", "height", "process"]
+		},
+		"MediaFamilyWords": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_id", "page", "quote", "quote_language"]
+		},
+		"MediaFixity": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["on", "sha256"],
+			"fields": {
+				"on": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"MediaMaster": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["bucket", "key", "sha256", "mime", "bytes", "checked"],
+			"validators": [
+				{
+					"name": "named_by_digest",
+					"module": "media",
+					"function": "_MediaMaster__named_by_digest",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"not": {
+					"anyOf": [
+						{
+							"properties": {
+								"bucket": {
+									"enum": ["pruzhany-page-pictures"]
+								}
+							},
+							"required": ["bucket"]
+						}
+					]
+				}
+			}
+		},
+		"MediaPortrait": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["media_id", "region", "reviewed"]
+		},
+		"MediaRegion": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["x", "y", "w", "h"]
+		},
+		"MediaText": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["text", "lang", "reviewed"]
+		},
+		"MediaWithdrawal": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["on", "reason"],
+			"fields": {
+				"on": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"Mention": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["id", "person_id", "unit_id", "printed_name", "role", "title", "function", "wkd_id"]
+		},
+		"Name": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["value", "kind", "script", "lang", "citations", "attribution"],
+			"validators": [
+				{
+					"name": "supplied_name",
+					"module": "sourced_entities",
+					"function": "_Name__supplied_name",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"kind": {
+									"enum": ["supplied"]
+								}
+							},
+							"required": ["kind"]
+						},
+						"then": {
+							"properties": {
+								"attribution": {},
+								"citations": {}
+							},
+							"required": ["attribution", "citations"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"attribution": {}
+							},
+							"required": ["attribution"]
+						},
+						"then": {
+							"properties": {
+								"kind": {
+									"enum": ["supplied"]
+								}
+							},
+							"required": ["kind"]
+						}
+					}
+				]
+			}
+		},
+		"Page": {
+			"module": "page",
+			"config": {},
+			"order": ["id", "issue_date", "page_number", "image_uri", "dimensions", "blocks"]
+		},
+		"PagesData": {
+			"module": "page",
+			"config": {},
+			"order": ["edition_date", "pages"]
+		},
+		"PlaceIdentifier": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_id", "value", "url", "accessed", "attribution"],
+			"fields": {
+				"accessed": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			}
+		},
+		"PrintedAddress": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["image_uri", "bbox", "text"]
+		},
+		"PrintedSection": {
+			"module": "content_item",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["id", "printed_title", "supplied_title", "content_item_ids", "heading_blocks"],
+			"validators": [
+				{
+					"name": "members",
+					"module": "content_item",
+					"function": "_PrintedSection__members",
+					"mode": "after"
+				}
+			]
+		},
+		"PrintedTitle": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["text", "addresses"],
+			"validators": [
+				{
+					"name": "printed_words",
+					"module": "site_common",
+					"function": "_PrintedTitle__printed_words",
+					"mode": "after"
+				}
+			]
+		},
+		"PublicMedia": {
+			"module": "media",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"id",
+				"source_id",
+				"kind",
+				"caption",
+				"alt",
+				"inscription",
+				"transcript",
+				"family_words",
+				"depicted",
+				"shows_unidentified",
+				"width",
+				"height",
+				"duration",
+				"credit",
+				"conditions_of_access",
+				"conditions_of_use",
+				"rights",
+				"cleared",
+				"withdrawn",
+				"link",
+				"derived"
+			],
+			"validators": [
+				{
+					"name": "media_contract",
+					"module": "media",
+					"function": "_PublicMedia__media_contract",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"rights": {
+					"default": "http://rightsstatements.org/vocab/CNE/1.0/"
+				}
+			},
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"kind": {
+									"enum": ["document", "image"]
+								}
+							},
+							"required": ["kind"]
+						},
+						"then": {
+							"properties": {
+								"alt": {}
+							},
+							"required": ["alt"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"kind": {
+									"enum": ["document"]
+								}
+							},
+							"required": ["kind"]
+						},
+						"then": {
+							"properties": {
+								"transcript": {}
+							},
+							"required": ["transcript"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"width": {}
+							},
+							"required": ["width"]
+						},
+						"then": {
+							"properties": {
+								"height": {}
+							},
+							"required": ["height"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"height": {}
+							},
+							"required": ["height"]
+						},
+						"then": {
+							"properties": {
+								"width": {}
+							},
+							"required": ["width"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"link": {}
+							},
+							"required": ["link"]
+						},
+						"then": {
+							"properties": {
+								"kind": {
+									"enum": ["audio", "video"]
+								}
+							},
+							"required": ["kind"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"withdrawn": {}
+							},
+							"required": ["withdrawn"]
+						},
+						"then": {
+							"not": {
+								"anyOf": [
+									{
+										"properties": {
+											"derived": {
+												"items": {},
+												"type": "array"
+											}
+										},
+										"required": ["derived"]
+									},
+									{
+										"properties": {
+											"link": {}
+										},
+										"required": ["link"]
+									}
+								]
+							}
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"kind": {
+									"enum": ["image"]
+								}
+							},
+							"required": ["kind"]
+						},
+						"then": {
+							"not": {
+								"anyOf": [
+									{
+										"properties": {
+											"rights": {
+												"enum": ["http://rightsstatements.org/vocab/InC-OW-EU/1.0/"]
+											}
+										},
+										"required": ["rights"]
+									}
+								]
+							}
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"derived": {
+									"items": {},
+									"type": "array"
+								}
+							},
+							"required": ["derived"]
+						},
+						"then": {
+							"properties": {
+								"cleared": {}
+							},
+							"required": ["cleared"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"derived": {
+									"items": {},
+									"type": "array"
+								}
+							},
+							"required": ["derived"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"duration": {}
+									},
+									"required": ["duration"]
+								},
+								{
+									"properties": {
+										"height": {},
+										"width": {}
+									},
+									"required": ["width", "height"]
+								}
+							]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"derived": {
+									"items": {},
+									"type": "array"
+								},
+								"kind": {
+									"enum": ["document", "image"]
+								}
+							},
+							"required": ["kind", "derived"]
+						},
+						"then": {
+							"properties": {
+								"height": {},
+								"width": {}
+							},
+							"required": ["width", "height"]
+						}
+					}
+				]
+			}
+		},
+		"ReadingStatus": {
+			"module": "content_item",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["text", "english"],
+			"fields": {
+				"text": {
+					"required": true,
+					"source": "pydantic/content_item.py:ReadingStatus.text at 182eb478bf22bed0e312457fdc082730515d297c"
+				},
+				"english": {
+					"required": true,
+					"source": "pydantic/content_item.py:ReadingStatus.english at 182eb478bf22bed0e312457fdc082730515d297c"
+				}
+			}
+		},
+		"Review": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["state", "by", "on"],
+			"validators": [
+				{
+					"name": "validate_contract",
+					"module": "sourced_entities",
+					"function": "_Review__validate_contract",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"on": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			},
+			"conditions": {
+				"if": {
+					"properties": {
+						"state": {
+							"enum": ["approved"]
+						}
+					},
+					"required": ["state"]
+				},
+				"then": {
+					"properties": {
+						"by": {},
+						"on": {}
+					},
+					"required": ["by", "on"]
+				}
+			}
+		},
+		"SharedEvent": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"id",
+				"name",
+				"type",
+				"proposed_type",
+				"main_people",
+				"evidence_basis",
+				"dates",
+				"location_id",
+				"description"
+			],
+			"validators": [
+				{
+					"name": "event_contract",
+					"module": "shared_record",
+					"function": "_SharedEvent__event_contract",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"not": {
+					"anyOf": [
+						{
+							"properties": {
+								"proposed_type": {
+									"enum": [
+										"bar_mitzvah",
+										"birth",
+										"celebration",
+										"community_event",
+										"death",
+										"engagement",
+										"holocaust_event",
+										"memorial",
+										"other",
+										"wedding"
+									]
+								}
+							},
+							"required": ["proposed_type"]
+						}
+					]
+				},
+				"if": {
+					"properties": {
+						"type": {
+							"enum": ["other"]
+						}
+					},
+					"required": ["type"]
+				},
+				"then": {
+					"properties": {
+						"proposed_type": {}
+					},
+					"required": ["proposed_type"]
+				},
+				"else": {
+					"not": {
+						"required": ["proposed_type"]
+					},
+					"properties": {
+						"proposed_type": {}
+					}
+				}
+			}
+		},
+		"SharedFact": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"id",
+				"type",
+				"proposed_type",
+				"value",
+				"date",
+				"place_id",
+				"organization_id",
+				"event_id",
+				"related_person_id",
+				"relationship_type",
+				"related_name",
+				"qualifiers",
+				"holocaust_related",
+				"citations",
+				"evidence_confidence",
+				"identity_confidence",
+				"status",
+				"review",
+				"attribution",
+				"subject_id",
+				"family_id",
+				"representation"
+			],
+			"parent": "Fact",
+			"validators": [
+				{
+					"name": "representation_contract",
+					"module": "shared_record",
+					"function": "_SharedFact__representation_contract",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"representation": {
+									"enum": ["image", "prose"]
+								}
+							},
+							"required": ["representation"]
+						},
+						"then": {
+							"properties": {
+								"value": {}
+							},
+							"required": ["value"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"representation": {
+									"enum": ["image", "prose"]
+								}
+							},
+							"required": ["representation"]
+						},
+						"then": {
+							"properties": {
+								"type": {
+									"enum": ["other"]
+								}
+							},
+							"required": ["type"]
+						}
+					},
+					{
+						"else": {
+							"not": {
+								"required": ["proposed_type"]
+							},
+							"properties": {
+								"proposed_type": {}
+							}
+						},
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["other"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"proposed_type": {}
+							},
+							"required": ["proposed_type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["kinship"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"related_name": {}
+									},
+									"required": ["related_name"]
+								},
+								{
+									"properties": {
+										"related_person_id": {}
+									},
+									"required": ["related_person_id"]
+								}
+							],
+							"properties": {
+								"relationship_type": {}
+							},
+							"required": ["relationship_type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["occupation"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"value": {}
+							},
+							"required": ["value"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["residence"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"place_id": {}
+									},
+									"required": ["place_id"]
+								},
+								{
+									"properties": {
+										"value": {}
+									},
+									"required": ["value"]
+								}
+							]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["event_participation"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"event_id": {}
+							},
+							"required": ["event_id"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["birth", "death"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"date": {}
+									},
+									"required": ["date"]
+								},
+								{
+									"properties": {
+										"place_id": {}
+									},
+									"required": ["place_id"]
+								},
+								{
+									"properties": {
+										"value": {}
+									},
+									"required": ["value"]
+								}
+							]
+						}
+					}
+				],
+				"not": {
+					"anyOf": [
+						{
+							"properties": {
+								"proposed_type": {
+									"enum": ["parenthood"]
+								}
+							},
+							"required": ["proposed_type"]
+						},
+						{
+							"properties": {
+								"type": {
+									"enum": ["parenthood"]
+								}
+							},
+							"required": ["type"]
+						}
+					]
+				}
+			}
+		},
+		"SharedFamily": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["id", "name", "names"]
+		},
+		"SharedName": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["value", "kind", "script", "lang", "citations", "attribution"],
+			"parent": "Name",
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"kind": {
+									"enum": ["supplied"]
+								}
+							},
+							"required": ["kind"]
+						},
+						"then": {
+							"properties": {
+								"attribution": {},
+								"citations": {}
+							},
+							"required": ["attribution", "citations"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"attribution": {}
+							},
+							"required": ["attribution"]
+						},
+						"then": {
+							"properties": {
+								"kind": {
+									"enum": ["supplied"]
+								}
+							},
+							"required": ["kind"]
+						}
+					}
+				]
+			}
+		},
+		"SharedOrganization": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["id", "name", "names"],
+			"parent": "SharedFamily"
+		},
+		"SharedPerson": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["portrait", "id", "name", "names", "gender", "fate"]
+		},
+		"SharedPlace": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["id", "name", "names", "type", "parent_id", "coordinates", "identifiers"],
+			"parent": "SharedFamily"
+		},
+		"SharedRecord": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"version",
+				"vocabulary_version",
+				"persons",
+				"families",
+				"places",
+				"organizations",
+				"events",
+				"sources",
+				"holders",
+				"facts",
+				"relations",
+				"media"
+			],
+			"validators": [
+				{
+					"name": "record_references",
+					"module": "shared_record",
+					"function": "_SharedRecord__record_references",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"holders": {
+					"default_factory": "list"
+				}
+			}
+		},
+		"SiteCitation": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"source_id",
+				"via",
+				"reference_code",
+				"record_type",
+				"quote_language",
+				"public_note",
+				"locator",
+				"record_id",
+				"page",
+				"scan",
+				"time",
+				"edition_date",
+				"unit_id",
+				"url",
+				"quote",
+				"note",
+				"accessed",
+				"addresses"
+			],
+			"parent": "Citation",
+			"validators": [
+				{
+					"name": "located_notice",
+					"module": "shared_record",
+					"function": "_SiteCitation__located_notice",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"accessed": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			},
+			"conditions": {
+				"anyOf": [
+					{
+						"properties": {
+							"record_id": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["record_id"]
+					},
+					{
+						"properties": {
+							"page": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["page"]
+					},
+					{
+						"properties": {
+							"scan": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["scan"]
+					},
+					{
+						"properties": {
+							"time": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["time"]
+					},
+					{
+						"properties": {
+							"unit_id": {
+								"pattern": "\\S"
+							}
+						},
+						"required": ["unit_id"]
+					},
+					{
+						"properties": {
+							"url": {}
+						},
+						"required": ["url"]
+					},
+					{
+						"properties": {
+							"locator": {}
+						},
+						"required": ["locator"]
+					},
+					{
+						"properties": {
+							"reference_code": {}
+						},
+						"required": ["reference_code"]
+					}
+				],
+				"if": {
+					"properties": {
+						"addresses": {}
+					},
+					"required": ["addresses"]
+				},
+				"then": {
+					"properties": {
+						"edition_date": {
+							"pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+						},
+						"quote": {
+							"pattern": "\\S"
+						},
+						"unit_id": {
+							"pattern": "\\S"
+						}
+					},
+					"required": ["unit_id", "edition_date", "quote"]
+				}
+			}
+		},
+		"Source": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"made_by",
+				"id",
+				"kind",
+				"title",
+				"short_name",
+				"holder_id",
+				"reference_code",
+				"language",
+				"derived_from",
+				"dated",
+				"quotes_cleared",
+				"quote_condition",
+				"private",
+				"work_id",
+				"author",
+				"editor",
+				"published",
+				"repository",
+				"url_pattern",
+				"host",
+				"subjects"
+			],
+			"fields": {
+				"host": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "_bare_host",
+							"path": []
+						}
+					]
+				}
+			},
+			"conditions": {
+				"if": {
+					"properties": {
+						"host": {}
+					},
+					"required": ["host"]
+				},
+				"then": {
+					"properties": {
+						"host": {
+							"pattern": "^(?!www\\.)"
+						}
+					},
+					"required": ["host"]
+				}
+			}
+		},
+		"SourceDerivation": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_id", "relation"]
+		},
+		"SourcedDate": {
+			"module": "sourced_entities",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["start", "end", "precision", "printed", "printed_calendar", "inferred"],
+			"validators": [
+				{
+					"name": "validate_contract",
+					"module": "sourced_entities",
+					"function": "_SourcedDate__validate_contract",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"start": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				},
+				"end": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
+				}
+			},
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"not": {
+								"required": ["start"]
+							},
+							"properties": {
+								"start": {}
+							}
+						},
+						"then": {
+							"properties": {
+								"printed": {}
+							},
+							"required": ["printed"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"printed_calendar": {}
+							},
+							"required": ["printed_calendar"]
+						},
+						"then": {
+							"properties": {
+								"printed": {}
+							},
+							"required": ["printed"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"end": {}
+							},
+							"required": ["end"]
+						},
+						"then": {
+							"properties": {
+								"precision": {
+									"enum": ["range"]
+								}
+							},
+							"required": ["precision"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"precision": {
+									"enum": ["range"]
+								}
+							},
+							"required": ["precision"]
+						},
+						"then": {
+							"properties": {
+								"end": {},
+								"start": {}
+							},
+							"required": ["start", "end"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"precision": {
+									"enum": ["year"]
+								}
+							},
+							"required": ["precision"]
+						},
+						"then": {
+							"properties": {
+								"start": {
+									"pattern": "^\\d{4}$"
+								}
+							},
+							"required": ["start"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"precision": {
+									"enum": ["month"]
+								}
+							},
+							"required": ["precision"]
+						},
+						"then": {
+							"properties": {
+								"start": {
+									"pattern": "^\\d{4}-\\d{2}$"
+								}
+							},
+							"required": ["start"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"precision": {
+									"enum": ["day"]
+								}
+							},
+							"required": ["precision"]
+						},
+						"then": {
+							"properties": {
+								"start": {
+									"pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+								}
+							},
+							"required": ["start"]
+						}
+					}
+				]
+			}
+		},
+		"SourcedRelation": {
+			"module": "shared_record",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"id",
+				"type",
+				"proposed_type",
+				"value",
+				"date",
+				"place_id",
+				"organization_id",
+				"event_id",
+				"related_person_id",
+				"relationship_type",
+				"related_name",
+				"qualifiers",
+				"holocaust_related",
+				"citations",
+				"evidence_confidence",
+				"identity_confidence",
+				"status",
+				"review",
+				"attribution",
+				"subject_id",
+				"family_id",
+				"shown"
+			],
+			"parent": "Fact",
+			"validators": [
+				{
+					"name": "relation_contract",
+					"module": "shared_record",
+					"function": "_SourcedRelation__relation_contract",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["other"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"not": {
+								"required": ["relationship_type"]
+							},
+							"properties": {
+								"relationship_type": {}
+							}
+						}
+					},
+					{
+						"else": {
+							"not": {
+								"required": ["proposed_type"]
+							},
+							"properties": {
+								"proposed_type": {}
+							}
+						},
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["other"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"proposed_type": {}
+							},
+							"required": ["proposed_type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["kinship"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"related_name": {}
+									},
+									"required": ["related_name"]
+								},
+								{
+									"properties": {
+										"related_person_id": {}
+									},
+									"required": ["related_person_id"]
+								}
+							],
+							"properties": {
+								"relationship_type": {}
+							},
+							"required": ["relationship_type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["occupation"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"value": {}
+							},
+							"required": ["value"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["residence"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"place_id": {}
+									},
+									"required": ["place_id"]
+								},
+								{
+									"properties": {
+										"value": {}
+									},
+									"required": ["value"]
+								}
+							]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["event_participation"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"properties": {
+								"event_id": {}
+							},
+							"required": ["event_id"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"type": {
+									"enum": ["birth", "death"]
+								}
+							},
+							"required": ["type"]
+						},
+						"then": {
+							"anyOf": [
+								{
+									"properties": {
+										"date": {}
+									},
+									"required": ["date"]
+								},
+								{
+									"properties": {
+										"place_id": {}
+									},
+									"required": ["place_id"]
+								},
+								{
+									"properties": {
+										"value": {}
+									},
+									"required": ["value"]
+								}
+							]
+						}
+					}
+				],
+				"anyOf": [
+					{
+						"properties": {
+							"related_person_id": {}
+						},
+						"required": ["related_person_id"]
+					},
+					{
+						"properties": {
+							"related_name": {}
+						},
+						"required": ["related_name"]
+					}
+				]
+			}
+		},
+		"SuppliedTitle": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["text", "language", "based_on", "attribution", "checked_against"],
+			"field_validators": [
+				{
+					"name": "check_is_not_null",
+					"module": "site_common",
+					"function": "__AttributedEnglish__check_is_not_null",
+					"mode": "before",
+					"fields": ["checked_against"]
+				}
+			],
+			"fields": {
+				"checked_against": {
+					"exclude_none": true
+				}
+			}
+		},
+		"TextBasis": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_text", "addresses"]
+		},
+		"TitleCheck": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"reading_id",
+				"reading_sha256",
+				"english_sha256",
+				"judgement_id",
+				"judgement_sha256",
+				"attribution"
+			],
+			"parent": "EnglishCheck"
+		},
+		"Translation": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["text", "language", "based_on", "attribution", "checked_against"],
+			"field_validators": [
+				{
+					"name": "check_is_not_null",
+					"module": "site_common",
+					"function": "__AttributedEnglish__check_is_not_null",
+					"mode": "before",
+					"fields": ["checked_against"]
+				}
+			],
+			"fields": {
+				"checked_against": {
+					"exclude_none": true
+				}
+			}
+		},
+		"TranslationCheck": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"reading_id",
+				"reading_sha256",
+				"english_sha256",
+				"judgement_id",
+				"judgement_sha256",
+				"attribution"
+			],
+			"parent": "EnglishCheck"
+		}
+	},
+	"adjustments": [
+		{
+			"model": "Block",
+			"field": "bbox",
+			"definition": {
+				"items": {
+					"maximum": 9007199254740991,
+					"minimum": 0,
+					"type": "integer"
+				},
+				"maxItems": 4,
+				"minItems": 4,
+				"type": "array"
+			},
+			"python": {
+				"maxItems": 4,
+				"minItems": 4,
+				"prefixItems": [
+					{
+						"type": "integer"
+					},
+					{
+						"type": "integer"
+					},
+					{
+						"type": "integer"
+					},
+					{
+						"type": "integer"
+					}
+				],
+				"type": "array"
+			},
+			"reason": "Preserve Python fixed tuples and the released bounds of each position. The old page Block accepts unbounded integers; PrintedAddress requires nonnegative origins and positive dimensions.",
+			"source": "pydantic/page.py:Block.bbox at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "Citation",
+			"field": "url",
+			"definition": {
+				"anyOf": [
+					{
+						"type": "string",
+						"format": "uri",
+						"pattern": "^https://[^\\s/?#]+[^\\s]*$"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"python": {
+				"anyOf": [
+					{
+						"pattern": "^https://[^\\s/?#]+[^\\s]*$",
+						"type": "string"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"reason": "The released Python validator uses its HTTPS pattern. URI syntax is additionally checked by Zod and generated JSON Schema; this migration does not tighten Python URL parsing.",
+			"source": "pydantic/sourced_entities.py:Citation.url at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "ContentItemsData",
+			"field": "vocabulary_version",
+			"definition": {
+				"pattern": "^(0\\.1\\.0|1\\.0\\.0)$",
+				"type": "string"
+			},
+			"python": {
+				"enum": ["0.1.0", "1.0.0"],
+				"type": "string"
+			},
+			"reason": "Expose the vocabulary release stamp as its existing Python Literal values instead of a regular expression; both spellings accept the same versions.",
+			"source": "pydantic/content_item.py:ContentItemsData.vocabulary_version at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "EnglishCheck",
+			"field": "reading_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:EnglishCheck.reading_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "EnglishCheck",
+			"field": "english_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:EnglishCheck.english_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "EnglishCheck",
+			"field": "judgement_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:EnglishCheck.judgement_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "Media",
+			"field": "duration",
+			"definition": {
+				"anyOf": [
+					{
+						"type": "number",
+						"minimum": 0
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"python": {
+				"anyOf": [
+					{
+						"exclusiveMinimum": 0,
+						"type": "number"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"reason": "Preserve the released strictly positive duration; LinkML holds the common nonnegative range and lists the exclusive bound separately.",
+			"source": "pydantic/media.py:Media.duration at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "Page",
+			"field": "dimensions",
+			"definition": {
+				"items": {
+					"type": "integer"
+				},
+				"maxItems": 2,
+				"minItems": 2,
+				"type": "array"
+			},
+			"python": {
+				"maxItems": 2,
+				"minItems": 2,
+				"prefixItems": [
+					{
+						"type": "integer"
+					},
+					{
+						"type": "integer"
+					}
+				],
+				"type": "array"
+			},
+			"reason": "Preserve the released fixed Python tuple; a homogeneous LinkML array has the same length but a different Python value type.",
+			"source": "pydantic/page.py:Page.dimensions at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "PlaceIdentifier",
+			"field": "url",
+			"definition": {
+				"anyOf": [
+					{
+						"type": "string",
+						"format": "uri",
+						"pattern": "^https://[^\\s/?#]+[^\\s]*$"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"python": {
+				"anyOf": [
+					{
+						"pattern": "^https://[^\\s/?#]+[^\\s]*$",
+						"type": "string"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"reason": "The released Python validator uses its HTTPS pattern. URI syntax is additionally checked by Zod and generated JSON Schema; this migration does not tighten Python URL parsing.",
+			"source": "pydantic/shared_record.py:PlaceIdentifier.url at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "PrintedAddress",
+			"field": "bbox",
+			"definition": {
+				"items": {
+					"minimum": 0,
+					"type": "number"
+				},
+				"maxItems": 4,
+				"minItems": 4,
+				"type": "array"
+			},
+			"python": {
+				"maxItems": 4,
+				"minItems": 4,
+				"prefixItems": [
+					{
+						"minimum": 0,
+						"type": "number"
+					},
+					{
+						"minimum": 0,
+						"type": "number"
+					},
+					{
+						"exclusiveMinimum": 0,
+						"type": "number"
+					},
+					{
+						"exclusiveMinimum": 0,
+						"type": "number"
+					}
+				],
+				"type": "array"
+			},
+			"reason": "Preserve Python fixed tuples and the released bounds of each position. The old page Block accepts unbounded integers; PrintedAddress requires nonnegative origins and positive dimensions.",
+			"source": "pydantic/site_common.py:PrintedAddress.bbox at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "PublicMedia",
+			"field": "duration",
+			"definition": {
+				"anyOf": [
+					{
+						"type": "number",
+						"minimum": 0
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"python": {
+				"anyOf": [
+					{
+						"exclusiveMinimum": 0,
+						"type": "number"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"reason": "Preserve the released strictly positive duration; LinkML holds the common nonnegative range and lists the exclusive bound separately.",
+			"source": "pydantic/media.py:PublicMedia.duration at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "SharedPlace",
+			"field": "coordinates",
+			"definition": {
+				"anyOf": [
+					{
+						"type": "array",
+						"items": {
+							"maximum": 180,
+							"minimum": -180,
+							"type": "number"
+						},
+						"maxItems": 2,
+						"minItems": 2
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"python": {
+				"anyOf": [
+					{
+						"maxItems": 2,
+						"minItems": 2,
+						"prefixItems": [
+							{
+								"maximum": 90,
+								"minimum": -90,
+								"type": "number"
+							},
+							{
+								"maximum": 180,
+								"minimum": -180,
+								"type": "number"
+							}
+						],
+						"type": "array"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"reason": "Preserve the coordinate tuple and latitude limit of 90 degrees, which the homogeneous LinkML array cannot distinguish from longitude.",
+			"source": "pydantic/shared_record.py:SharedPlace.coordinates at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "SharedRecord",
+			"field": "holders",
+			"definition": {
+				"anyOf": [
+					{
+						"type": "array",
+						"items": {
+							"$ref": "#/$defs/Holder"
+						}
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"python": {
+				"items": {
+					"$ref": "#/$defs/Holder"
+				},
+				"type": "array"
+			},
+			"reason": "An omitted holders list defaults to an empty list; an explicit null is refused by the released Python model.",
+			"source": "pydantic/shared_record.py:SharedRecord.holders at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "SiteCitation",
+			"field": "url",
+			"definition": {
+				"anyOf": [
+					{
+						"type": "string",
+						"format": "uri",
+						"pattern": "^https://[^\\s/?#]+[^\\s]*$"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"python": {
+				"anyOf": [
+					{
+						"pattern": "^https://[^\\s/?#]+[^\\s]*$",
+						"type": "string"
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"reason": "The released Python validator uses its HTTPS pattern. URI syntax is additionally checked by Zod and generated JSON Schema; this migration does not tighten Python URL parsing.",
+			"source": "pydantic/shared_record.py:SiteCitation.url at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "TitleCheck",
+			"field": "reading_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:TitleCheck.reading_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "TitleCheck",
+			"field": "english_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:TitleCheck.english_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "TitleCheck",
+			"field": "judgement_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:TitleCheck.judgement_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "TranslationCheck",
+			"field": "reading_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:TranslationCheck.reading_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "TranslationCheck",
+			"field": "english_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:TranslationCheck.english_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "TranslationCheck",
+			"field": "judgement_sha256",
+			"definition": {
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"python": {
+				"maxLength": 64,
+				"minLength": 64,
+				"pattern": "^[0-9a-f]{64}$",
+				"type": "string"
+			},
+			"reason": "Preserve explicit digest length metadata in the Python API; the LinkML pattern already requires the same 64 characters.",
+			"source": "pydantic/site_common.py:TranslationCheck.judgement_sha256 at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "LifeEventDate",
+			"field": "qualifier",
+			"definition": {
+				"type": "string",
+				"enum": ["reported_in"]
+			},
+			"python": {
+				"anyOf": [
+					{
+						"type": "string",
+						"enum": ["reported_in"]
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"reason": "Preserve the released optional literal accepting explicit null; a LinkML equals_string constraint also applies when its key is null.",
+			"source": "pydantic/shared_record.py:LifeEventDate.qualifier at 182eb478bf22bed0e312457fdc082730515d297c"
+		},
+		{
+			"model": "SharedEvent",
+			"field": "evidence_basis",
+			"definition": {
+				"type": "string",
+				"enum": ["records_only"]
+			},
+			"python": {
+				"anyOf": [
+					{
+						"type": "string",
+						"enum": ["records_only"]
+					},
+					{
+						"type": "null"
+					}
+				]
+			},
+			"reason": "Preserve the released optional literal accepting explicit null; a LinkML equals_string constraint also applies when its key is null.",
+			"source": "pydantic/shared_record.py:SharedEvent.evidence_basis at 182eb478bf22bed0e312457fdc082730515d297c"
+		}
+	]
+}

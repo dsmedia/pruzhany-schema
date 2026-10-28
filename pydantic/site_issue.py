@@ -1,4 +1,5 @@
 """Per-issue site documents and their joins to the shared record."""
+from .generated.models import ContentItemRef, IssueLifeEvent, IssueLifeEventsData, IssueMention, IssueMentionsData
 from typing import Annotated, Literal
 from pydantic import Field, model_validator
 from .sourced_entities import Strict, Text, Day
@@ -9,74 +10,40 @@ from .content_item import ContentItemsData
 from .shared_record import SharedRecord
 
 
-class IssueMention(Strict):
-    """Located words or whole regions; content_item_id is the current derived join."""
-    id: Text
-    person_id: Text
-    content_item_id: Text
-    address_grain: Literal['words', 'regions']
-    printed_name: Text | None
-    roles: list[MentionRoles] = Field(min_length=1)
-    addresses: list[PrintedAddress] = Field(min_length=1)
-    title: str | None = None
-    function: str | None = None
-    wkd_id: str | None = None
-
-    @model_validator(mode='after')
-    def mention_contract(self):
-        errors = unique_ids(self.roles, 'mention role')
-        if (self.address_grain == 'regions') != (self.printed_name is None):
-            errors.append('printed name must be null exactly when address grain is regions')
-        if (self.printed_name is not None and
-                self.printed_name not in '\n'.join(a.text for a in self.addresses)):
-            errors.append('printed name must occur at the mention address')
-        if errors:
-            raise ValueError('; '.join(errors))
-        return self
+def _IssueMention__mention_contract(self):
+    errors = unique_ids(self.roles, 'mention role')
+    if (self.address_grain == 'regions') != (self.printed_name is None):
+        errors.append('printed name must be null exactly when address grain is regions')
+    if (self.printed_name is not None and
+            self.printed_name not in '\n'.join(a.text for a in self.addresses)):
+        errors.append('printed name must occur at the mention address')
+    if errors:
+        raise ValueError('; '.join(errors))
+    return self
 
 
-class IssueMentionsData(Strict):
-    issue_date: Day
-    mentions: list[IssueMention]
-
-    @model_validator(mode='after')
-    def mention_ids(self):
-        if errors := unique_ids([m.id for m in self.mentions], 'mention id'):
-            raise ValueError('; '.join(errors))
-        return self
+def _IssueMentionsData__mention_ids(self):
+    if errors := unique_ids([m.id for m in self.mentions], 'mention id'):
+        raise ValueError('; '.join(errors))
+    return self
 
 
-class ContentItemRef(Strict):
-    content_item_id: Text
-    role: ContentUnitRoles  # Content item's role, not the person's role.
+def _IssueLifeEvent__content_item_ids(self):
+    if errors := unique_ids([c.content_item_id for c in self.content_items], 'event content item'):
+        raise ValueError('; '.join(errors))
+    return self
 
 
-class IssueLifeEvent(Strict):
-    id: Text
-    content_items: Annotated[list[ContentItemRef], Field(min_length=1)]
-
-    @model_validator(mode='after')
-    def content_item_ids(self):
-        if errors := unique_ids([c.content_item_id for c in self.content_items], 'event content item'):
-            raise ValueError('; '.join(errors))
-        return self
-
-
-class IssueLifeEventsData(Strict):
-    issue_date: Day
-    life_events: list[IssueLifeEvent]
-
-    @model_validator(mode='after')
-    def life_event_ids(self):
-        if errors := unique_ids([e.id for e in self.life_events], 'life event id'):
-            raise ValueError('; '.join(errors))
-        assigned = set()
-        for event in self.life_events:
-            for ref in event.content_items:
-                if ref.content_item_id in assigned:
-                    raise ValueError('content item belongs to more than one life event')
-                assigned.add(ref.content_item_id)
-        return self
+def _IssueLifeEventsData__life_event_ids(self):
+    if errors := unique_ids([e.id for e in self.life_events], 'life event id'):
+        raise ValueError('; '.join(errors))
+    assigned = set()
+    for event in self.life_events:
+        for ref in event.content_items:
+            if ref.content_item_id in assigned:
+                raise ValueError('content item belongs to more than one life event')
+            assigned.add(ref.content_item_id)
+    return self
 
 
 class SiteIssue(Strict):
