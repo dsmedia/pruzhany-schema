@@ -15,6 +15,10 @@
 			"name": "life_events",
 			"top_class": "IssueLifeEventsData"
 		},
-		{ "schema": "schema/editions.yaml", "name": "editions", "top_class": "EditionsCatalog" }
+		{ "schema": "schema/editions.yaml", "name": "editions", "top_class": "EditionsCatalog" },
+		{ "schema": "schema/sourced_entities.yaml", "name": "sourced_entities", "top_class": null },
+		{ "schema": "schema/media.yaml", "name": "media", "top_class": null },
+		{ "schema": "schema/shared_record.yaml", "name": "shared_record", "top_class": "SharedRecord" },
+		{ "schema": "schema/shared.yaml", "name": "shared", "top_class": null }
 	]
 }

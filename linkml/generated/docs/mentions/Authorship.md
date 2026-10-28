@@ -61,9 +61,9 @@ URI: [pc:Authorship](https://pruzhany.org/ns/sourced-entities#Authorship)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [kind](kind.md) | 1 <br/> [AuthorshipKind](AuthorshipKind.md) | Whether a person or a model wrote it. | direct |
-| [by](by.md) | 1 <br/> [NonBlankText](NonBlankText.md) | Who it was: a person's name or the name of the program or model that did it. | [Attribution](Attribution.md) |
-| [on](on.md) | 1 <br/> [IsoDay](IsoDay.md) | The day it was done, written YYYY-MM-DD. | [Attribution](Attribution.md) |
-| [note](note.md) | 0..1 <br/> [String](String.md) | A remark in words about how it was done, where one was kept. | [Attribution](Attribution.md) |
+| [by](by.md) | 1 <br/> [NonBlankText](NonBlankText.md) | Who made it or allowed it: a person, a session or a program. | [Attribution](Attribution.md) |
+| [on](on.md) | 1 <br/> [IsoDay](IsoDay.md) | The day it was made or allowed. | [Attribution](Attribution.md) |
+| [note](note.md) | 0..1 <br/> [String](String.md) | A note on how or why. | [Attribution](Attribution.md) |
 
 
 
@@ -138,8 +138,9 @@ attributes:
     name: kind
     description: Whether a person or a model wrote it.
     from_schema: https://pruzhany.org/ns/site_common
-    rank: 1000
     domain_of:
+    - Source
+    - Name
     - Authorship
     range: AuthorshipKind
     required: true
@@ -164,41 +165,42 @@ attributes:
     name: kind
     description: Whether a person or a model wrote it.
     from_schema: https://pruzhany.org/ns/site_common
-    rank: 1000
     owner: Authorship
     domain_of:
+    - Source
+    - Name
     - Authorship
     range: AuthorshipKind
     required: true
   by:
     name: by
-    description: 'Who it was: a person''s name or the name of the program or model
-      that did it.'
-    from_schema: https://pruzhany.org/ns/sourced_entities_attribution
-    rank: 1000
+    description: 'Who made it or allowed it: a person, a session or a program.'
+    from_schema: https://pruzhany.org/ns/sourced_entities
     owner: Authorship
     domain_of:
+    - Review
     - Attribution
     range: NonBlankText
     required: true
   'on':
     name: 'on'
-    description: The day it was done, written YYYY-MM-DD.
-    from_schema: https://pruzhany.org/ns/sourced_entities_attribution
-    rank: 1000
+    description: The day it was made or allowed.
+    from_schema: https://pruzhany.org/ns/sourced_entities
     owner: Authorship
     domain_of:
+    - Review
     - Attribution
     range: IsoDay
     required: true
   note:
     name: note
-    description: A remark in words about how it was done, where one was kept.
-    from_schema: https://pruzhany.org/ns/sourced_entities_attribution
+    description: A note on how or why.
+    from_schema: https://pruzhany.org/ns/sourced_entities
     rank: 1000
     owner: Authorship
     domain_of:
     - Attribution
+    - Citation
     range: string
 
 ```

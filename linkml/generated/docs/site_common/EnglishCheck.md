@@ -193,6 +193,8 @@ attributes:
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Authorship
     required: true
     inlined: true
@@ -276,6 +278,8 @@ attributes:
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Authorship
     required: true
     inlined: true

@@ -186,6 +186,9 @@ attributes:
     rank: 1000
     domain_of:
     - IssueMention
+    - Source
+    - Fact
+    - Mention
     range: NonBlankText
     required: true
   person_id:
@@ -195,6 +198,7 @@ attributes:
     rank: 1000
     domain_of:
     - IssueMention
+    - Mention
     range: NonBlankText
     required: true
   content_item_id:
@@ -226,6 +230,7 @@ attributes:
     rank: 1000
     domain_of:
     - IssueMention
+    - Mention
     range: NonBlankText
   roles:
     name: roles
@@ -262,6 +267,8 @@ attributes:
     rank: 1000
     domain_of:
     - IssueMention
+    - Source
+    - Mention
   function:
     name: function
     description: The person's occupation or part in the content item, in a few words,
@@ -270,6 +277,7 @@ attributes:
     rank: 1000
     domain_of:
     - IssueMention
+    - Mention
   wkd_id:
     name: wkd_id
     annotations:
@@ -282,6 +290,7 @@ attributes:
     rank: 1000
     domain_of:
     - IssueMention
+    - Mention
 rules:
 - preconditions:
     slot_conditions:
@@ -332,6 +341,9 @@ attributes:
     owner: IssueMention
     domain_of:
     - IssueMention
+    - Source
+    - Fact
+    - Mention
     range: NonBlankText
     required: true
   person_id:
@@ -342,6 +354,7 @@ attributes:
     owner: IssueMention
     domain_of:
     - IssueMention
+    - Mention
     range: NonBlankText
     required: true
   content_item_id:
@@ -376,6 +389,7 @@ attributes:
     owner: IssueMention
     domain_of:
     - IssueMention
+    - Mention
     range: NonBlankText
   roles:
     name: roles
@@ -416,6 +430,8 @@ attributes:
     owner: IssueMention
     domain_of:
     - IssueMention
+    - Source
+    - Mention
     range: string
   function:
     name: function
@@ -426,6 +442,7 @@ attributes:
     owner: IssueMention
     domain_of:
     - IssueMention
+    - Mention
     range: string
   wkd_id:
     name: wkd_id
@@ -440,6 +457,7 @@ attributes:
     owner: IssueMention
     domain_of:
     - IssueMention
+    - Mention
     range: string
 rules:
 - preconditions:

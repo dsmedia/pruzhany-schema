@@ -5,11 +5,6 @@ search:
 
 # Slot: note 
 
-
-_A remark in words about how it was done, where one was kept._
-
-
-
 <div data-search-exclude markdown="1">
 
 
@@ -25,7 +20,8 @@ URI: [pc:note](https://pruzhany.org/ns/sourced-entities#note)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Attribution](Attribution.md) | Who wrote or decided something, and on which day. |  no  |
+| [Attribution](Attribution.md) | Who made or allowed something, on what day, with an optional note. |  no  |
+| [Citation](Citation.md) | Where in one source a statement's evidence lies: the source, and the record, page, scan, time, piece of the paper, address or pointer within it, with the quoted words. |  no  |
 | [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
 
 
@@ -40,14 +36,7 @@ URI: [pc:note](https://pruzhany.org/ns/sourced-entities#note)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [Attribution](Attribution.md) |
-### Slot Characteristics
-
-| Property | Value |
-| --- | --- |
-| Owner | [Attribution](Attribution.md) |
-
-
+| Domain Of | [Attribution](Attribution.md), [Citation](Citation.md) |
 
 
 
@@ -61,13 +50,6 @@ URI: [pc:note](https://pruzhany.org/ns/sourced-entities#note)
 ## Identifier and Mapping Information
 
 
-
-
-
-### Schema Source
-
-
-* from schema: https://pruzhany.org/ns/mentions
 
 
 
@@ -87,12 +69,9 @@ URI: [pc:note](https://pruzhany.org/ns/sourced-entities#note)
 <details>
 ```yaml
 name: note
-description: A remark in words about how it was done, where one was kept.
-from_schema: https://pruzhany.org/ns/mentions
-rank: 1000
-owner: Attribution
 domain_of:
 - Attribution
+- Citation
 range: string
 
 ```

@@ -36,6 +36,12 @@ URI: [pc:MentionRoles](https://pruzhany.org/ns/sourced-entities#MentionRoles)
 
 
 
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [role](role.md) | The person's role in the piece. |
+
 
 
 

@@ -1,0 +1,729 @@
+# Media: a photograph, document, recording or film held or linked beside a person, with its
+# captions, its review, its clearance and its private storage, as zod/media.schema.ts and
+# pydantic/media.py define them (docs/design/2026-10-24-media.md). Each class and slot is named
+# as its twin and its JSON key are.
+#
+# Meaning: every field vocabulary/media.json binds takes that binding's term (a RiC-O term, or
+# a local term declared in vocabulary/media.profile.ttl with its reason); the binding is named
+# beside each. Every other class and slot is left unmapped: no binding names a term for it.
+#
+# Lists of allowed texts are LinkML enums (the media kinds' values each mean their declared
+# RepresentationType concept), except where linkml lint's naming rule refuses the values ('+' or
+# '-' in them) or they are addresses: those stay the slot's equals_string_in (linkml/README.md,
+# "House style").
+id: https://pruzhany.org/ns/media
+name: pruzhany_media
+title: Media of the Pruzhany record
+description: >-
+  Photographs, documents, sound and film beside a person: each held or linked copy of a
+  registered source, what it shows and says, who reviewed and cleared it, and where its private
+  master and its served copies are.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  rico: https://www.ica.org/standards/RiC/ontology#
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+
+enums:
+  MediaKind:
+    description: >-
+      What a medium is: an image, a sound recording, a film or a document.
+    permissible_values:
+      image:
+        description: >-
+          A still picture, such as a photograph.
+        meaning: pc:media_image
+      audio:
+        description: >-
+          A sound recording.
+        meaning: pc:media_audio
+      video:
+        description: >-
+          A film or video.
+        meaning: pc:media_video
+      document:
+        description: >-
+          A document, with its transcript.
+        meaning: pc:media_document
+
+  MediaDecisionRole:
+    description: >-
+      Whose role made a decision about a medium.
+    permissible_values:
+      owner:
+        description: >-
+          The owner.
+      project:
+        description: >-
+          The project.
+  MediaIdentifiedBy:
+    description: >-
+      What identifies a person shown in a picture.
+    permissible_values:
+      family:
+        description: >-
+          The family.
+      record:
+        description: >-
+          A record.
+      inscription:
+        description: >-
+          The picture's own inscription.
+  MediaWithdrawalReason:
+    description: >-
+      Why a medium was withdrawn.
+    permissible_values:
+      family:
+        description: >-
+          At the family's request.
+      holder:
+        description: >-
+          At the holder's request.
+      error:
+        description: >-
+          For an error.
+  MediaGrantedBy:
+    description: >-
+      Who gave the permission to show a medium, by role; never a person's name.
+    permissible_values:
+      owner:
+        description: >-
+          The owner.
+      family:
+        description: >-
+          The family.
+      holder:
+        description: >-
+          The holder.
+      institution:
+        description: >-
+          An institution.
+
+classes:
+  MediaDecision:
+    description: >-
+      A review or a clearance: whose role made it (the owner or the project) and on what day.
+    attributes:
+      role:
+        range: MediaDecisionRole
+        required: true
+        description: >-
+          Who decided, by role: the owner or the project; never a person's name.
+      'on':
+        range: IsoDay
+        required: true
+        description: >-
+          The day of the decision.
+
+  MediaText:
+    description: >-
+      Words about or on a medium (a caption, a description for screen readers, an inscription,
+      a transcript), their language and their review.
+    attributes:
+      text:
+        range: NonBlankText
+        required: true
+        description: >-
+          The words.
+      lang:
+        range: LanguageTag
+        required: true
+        description: >-
+          Their language, as a BCP 47 tag.
+      reviewed:
+        range: MediaDecision
+        inlined: true
+        description: >-
+          Who reviewed the words, by role, and on what day.
+
+  MediaRegion:
+    description: >-
+      A rectangle in a medium's master picture, in its own pixels after orientation.
+    attributes:
+      x:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The left edge, in pixels from the picture's left.
+      'y':
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The top edge, in pixels from the picture's top.
+      w:
+        range: PositiveInteger
+        required: true
+        description: >-
+          The width, in pixels.
+      h:
+        range: PositiveInteger
+        required: true
+        description: >-
+          The height, in pixels.
+
+  MediaDepicted:
+    description: >-
+      One person a picture shows, identified or not, where in the picture, and on whose
+      identification.
+    attributes:
+      person_id:
+        # known-looser.yaml: the twins require the key and allow null; LinkML cannot say both,
+        # so the key is optional here.
+        range: NonBlankText
+        description: >-
+          The person shown, by the person's id; null for a person not identified.
+      region:
+        range: MediaRegion
+        inlined: true
+        required: true
+        description: >-
+          Where in the picture the person is.
+      identified_by:
+        range: MediaIdentifiedBy
+        required: true
+        description: >-
+          What identifies the person: the family, a record, or the picture's inscription.
+
+  MediaPortrait:
+    description: >-
+      The picture a person's page shows as their portrait: a reviewed medium and the region of
+      it to show.
+    attributes:
+      media_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The medium, by its id in the record's media.
+      region:
+        range: MediaRegion
+        inlined: true
+        required: true
+        description: >-
+          The part of the picture to show, in its master pixels.
+      reviewed:
+        range: MediaDecision
+        inlined: true
+        required: true
+        description: >-
+          Who chose the portrait, by role, and on what day.
+
+  MediaWithdrawal:
+    description: >-
+      That a medium was withdrawn from the site, on what day and why; its record stays.
+    attributes:
+      'on':
+        range: IsoDay
+        required: true
+        description: >-
+          The day it was withdrawn.
+      reason:
+        range: MediaWithdrawalReason
+        required: true
+        description: >-
+          Why: at the family's or the holder's request, or for an error.
+
+  MediaConsentScope:
+    description: >-
+      What a permission covers: the use, the people shown, and whether people not identified
+      are covered.
+    attributes:
+      use:
+        range: string
+        equals_string_in:
+          - site
+          - site+download
+        required: true
+        description: >-
+          The use allowed: shown on the site, or shown and downloaded.
+      person_ids:
+        range: NonBlankText
+        multivalued: true
+        required: true
+        description: >-
+          The people the permission covers, by their ids; each must be shown in the medium.
+      unidentified:
+        range: boolean
+        required: true
+        description: >-
+          True when the permission also covers people shown and not identified.
+
+  MediaConsent:
+    description: >-
+      The private record of the permission to show a medium: its basis, who gave it by role,
+      what it covers, the document that holds it and any withdrawal. Never public.
+    attributes:
+      basis:
+        range: string
+        equals_string_in:
+          - institution-terms
+          - holder-licence
+          - family-permission
+          - public-domain
+          - owner-family-papers
+        required: true
+        description: >-
+          What the permission rests on: an institution's terms, the holder's licence, the
+          family's permission, the public domain, or the owner's family papers.
+      granted_by:
+        range: MediaGrantedBy
+        required: true
+        description: >-
+          Who gave the permission, by role; never a person's name.
+      scope:
+        range: MediaConsentScope
+        inlined: true
+        required: true
+        description: >-
+          What the permission covers.
+      ref:
+        range: NonBlankText
+        required: true
+        description: >-
+          The private reference of the document that holds the permission.
+      withdrawn_on:
+        range: IsoDay
+        description: >-
+          The day the permission was withdrawn.
+
+  MediaFamilyWords:
+    description: >-
+      The family's own words about a medium, quoted from a registered source with the page or
+      part they are on: a public part of a citation, with no private note.
+    attributes:
+      source_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The source the words are quoted from, by its id in the record's sources.
+      page:
+        range: NonBlankText
+        required: true
+        description: >-
+          The page or recorded part the words are on.
+      quote:
+        range: NonBlankText
+        required: true
+        description: >-
+          The words, exactly.
+      quote_language:
+        range: LanguageTag
+        required: true
+        description: >-
+          Their language, as a BCP 47 tag.
+
+  MediaFixity:
+    description: >-
+      A dated check that a master file still has its digest.
+    attributes:
+      'on':
+        range: IsoDay
+        required: true
+        description: >-
+          The day of the check.
+      sha256:
+        range: Sha256Hex
+        required: true
+        description: >-
+          The SHA-256 digest found on that day.
+
+  MediaMaster:
+    description: >-
+      Where a medium's private master file is kept: its bucket, its key named by its digest,
+      its digest, its type, its size and its last check. Never public.
+    attributes:
+      bucket:
+        range: string
+        pattern: '^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$(?![\s\S])'
+        required: true
+        description: >-
+          The private storage bucket, apart from the page pictures' bucket.
+      key:
+        range: string
+        pattern: '^(?:[a-z0-9_-]+/)*[0-9a-f]{64}$(?![\s\S])'
+        required: true
+        description: >-
+          The file's key in the bucket, whose last part is its SHA-256 digest.
+      sha256:
+        range: Sha256Hex
+        required: true
+        description: >-
+          The SHA-256 digest of the file.
+      mime:
+        range: string
+        pattern: '^(?:image|audio|video|application)/[a-z0-9][a-z0-9.+-]*$(?![\s\S])'
+        required: true
+        description: >-
+          The file's media type, such as image/tiff.
+      bytes:
+        range: PositiveInteger
+        required: true
+        description: >-
+          The file's size in bytes.
+      checked:
+        range: MediaFixity
+        inlined: true
+        description: >-
+          The last dated check of the file's digest.
+    none_of:
+      - description: >-
+          A master is not kept in the page pictures' bucket.
+        slot_conditions:
+          bucket:
+            equals_string: pruzhany-page-pictures
+
+  MediaDerivative:
+    description: >-
+      One served copy of a picture: a WebP file at one of the exported widths, named by the
+      master's digest, made by resizing alone.
+    attributes:
+      url:
+        range: string
+        pattern: '^https://pictures\.pruzhanychronicles\.org/media/[0-9a-f]{64}-w(?:100|400|800|1200)\.webp$(?![\s\S])'
+        required: true
+        description: >-
+          The copy's address, ending in its nominal width (zod/media-widths.json).
+      width:
+        range: PositiveInteger
+        required: true
+        description: >-
+          The copy's actual width in pixels.
+      height:
+        range: PositiveInteger
+        required: true
+        description: >-
+          The copy's actual height in pixels.
+      process:
+        range: string
+        equals_string: resize
+        required: true
+        description: >-
+          How the copy was made: resizing alone.
+
+  PublicMedia:
+    # vocabulary/media.json, binding medium.
+    class_uri: rico:Instantiation
+    description: >-
+      One held or linked copy of a registered source (a photograph, document, recording or
+      film), as the public may see it: what it is, what it shows and says, its review, its
+      terms and its served copies.
+    attributes:
+      id:
+        range: string
+        pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$(?![\s\S])'
+        required: true
+        description: >-
+          The medium's id: lowercase letters and digits in parts joined by hyphens.
+      source_id:
+        # vocabulary/media.json, binding media_source.
+        slot_uri: rico:isOrWasInstantiationOf
+        range: NonBlankText
+        required: true
+        description: >-
+          The source this medium is a copy of, by its id; never the person shown.
+      kind:
+        # vocabulary/media.json, binding media_kind.
+        slot_uri: rico:hasRepresentationType
+        range: MediaKind
+        required: true
+        description: >-
+          What the medium is: image, audio, video or document.
+      caption:
+        # vocabulary/media.json, binding media_caption.
+        slot_uri: pc:media_caption
+        range: MediaText
+        inlined: true
+        required: true
+        description: >-
+          The caption the site shows, with its language and review.
+      alt:
+        # vocabulary/media.json, binding media_alt.
+        slot_uri: pc:media_alt
+        range: MediaText
+        inlined: true
+        description: >-
+          The description for screen readers of what is visible; required for images and
+          documents.
+      inscription:
+        # vocabulary/media.json, binding media_inscription.
+        slot_uri: pc:media_inscription
+        range: MediaText
+        inlined: true
+        description: >-
+          The object's own words, such as writing on the back of a photograph.
+      transcript:
+        # vocabulary/media.json, binding media_transcript.
+        slot_uri: pc:media_transcript
+        range: MediaText
+        inlined: true
+        description: >-
+          A document's full text; required for documents.
+      family_words:
+        # vocabulary/media.json, binding media_family_words.
+        slot_uri: pc:media_family_words
+        range: MediaFamilyWords
+        inlined: true
+        description: >-
+          The family's words about the medium, quoted from a source.
+      depicted:
+        # vocabulary/media.json, binding media_depicted.
+        slot_uri: pc:media_depicted
+        range: MediaDepicted
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The people the picture shows, identified or not, and where.
+      shows_unidentified:
+        # vocabulary/media.json, binding media_shows_unidentified.
+        slot_uri: pc:media_shows_unidentified
+        range: boolean
+        required: true
+        description: >-
+          True when the picture shows people not identified.
+      width:
+        # vocabulary/media.json, binding media_width.
+        slot_uri: rico:width
+        range: PositiveInteger
+        description: >-
+          The master's width in pixels, after orientation.
+      height:
+        # vocabulary/media.json, binding media_height.
+        slot_uri: rico:height
+        range: PositiveInteger
+        description: >-
+          The master's height in pixels, after orientation.
+      duration:
+        # vocabulary/media.json, binding media_duration. The twins say above 0; LinkML's bound
+        # is inclusive (known-looser.yaml).
+        slot_uri: pc:media_duration
+        range: NonNegativeNumber
+        description: >-
+          The master's length in seconds, for sound and film.
+      credit:
+        # vocabulary/media.json, binding media_credit.
+        slot_uri: pc:media_credit
+        range: NonBlankText
+        required: true
+        description: >-
+          The holder's or the family's credit, as they word it.
+      conditions_of_access:
+        # vocabulary/media.json, binding media_conditions_of_access.
+        slot_uri: rico:conditionsOfAccess
+        range: NonBlankText
+        description: >-
+          The holder's terms of access, as written.
+      conditions_of_use:
+        # vocabulary/media.json, binding media_conditions_of_use.
+        slot_uri: rico:conditionsOfUse
+        range: NonBlankText
+        description: >-
+          The holder's terms of use, as written, with no permission inferred from them.
+      rights:
+        # vocabulary/media.json, binding media_rights. The allowed addresses are
+        # standards/media-rights.json's (read 24 October 2026), which a test compares.
+        slot_uri: pc:media_rights
+        range: string
+        equals_string_in:
+          - http://rightsstatements.org/vocab/InC/1.0/
+          - http://rightsstatements.org/vocab/InC-OW-EU/1.0/
+          - http://rightsstatements.org/vocab/InC-EDU/1.0/
+          - http://rightsstatements.org/vocab/InC-NC/1.0/
+          - http://rightsstatements.org/vocab/InC-RUU/1.0/
+          - http://rightsstatements.org/vocab/NoC-CR/1.0/
+          - http://rightsstatements.org/vocab/NoC-NC/1.0/
+          - http://rightsstatements.org/vocab/NoC-OKLR/1.0/
+          - http://rightsstatements.org/vocab/NoC-US/1.0/
+          - http://rightsstatements.org/vocab/CNE/1.0/
+          - http://rightsstatements.org/vocab/UND/1.0/
+          - http://rightsstatements.org/vocab/NKC/1.0/
+          - https://creativecommons.org/licenses/by/4.0/
+          - https://creativecommons.org/licenses/by-sa/4.0/
+          - https://creativecommons.org/licenses/by-nd/4.0/
+          - https://creativecommons.org/licenses/by-nc/4.0/
+          - https://creativecommons.org/licenses/by-nc-sa/4.0/
+          - https://creativecommons.org/licenses/by-nc-nd/4.0/
+          - https://creativecommons.org/publicdomain/zero/1.0/
+          - https://creativecommons.org/publicdomain/mark/1.0/
+        description: >-
+          The rights statement or licence that applies, by its address; when absent, copyright
+          not evaluated.
+      cleared:
+        # vocabulary/media.json, binding media_clearance.
+        slot_uri: pc:media_clearance
+        range: MediaDecision
+        inlined: true
+        description: >-
+          Who cleared the medium for the site, by role, and on what day.
+      withdrawn:
+        # vocabulary/media.json, binding media_withdrawn.
+        slot_uri: pc:media_withdrawn
+        range: MediaWithdrawal
+        inlined: true
+        description: >-
+          That the medium was withdrawn, on what day and why.
+      link:
+        # vocabulary/media.json, binding media_link.
+        slot_uri: pc:media_link
+        range: string
+        pattern: '^https://[a-z0-9]+(?:[.-][a-z0-9]+)*(?:/[^\s\\]*)?$(?![\s\S])'
+        description: >-
+          For sound or film: the page on the holder's own host where it can be heard or seen.
+      derived:
+        # vocabulary/media.json, binding media_derived.
+        slot_uri: pc:media_derived
+        range: MediaDerivative
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          The served copies of the picture, one for each exported width.
+    rules:
+      - description: >-
+          An image or a document has a description for screen readers.
+        preconditions:
+          slot_conditions:
+            kind:
+              equals_string_in:
+                - image
+                - document
+        postconditions:
+          slot_conditions:
+            alt:
+              required: true
+      - description: >-
+          A document has its transcript.
+        preconditions:
+          slot_conditions:
+            kind:
+              equals_string: document
+        postconditions:
+          slot_conditions:
+            transcript:
+              required: true
+      - description: >-
+          A medium with a width has a height.
+        preconditions:
+          slot_conditions:
+            width:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            height:
+              required: true
+      - description: >-
+          A medium with a height has a width.
+        preconditions:
+          slot_conditions:
+            height:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            width:
+              required: true
+      - description: >-
+          Only sound or film has a link to the holder's page.
+        preconditions:
+          slot_conditions:
+            link:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            kind:
+              equals_string_in:
+                - audio
+                - video
+      - description: >-
+          A withdrawn medium has no served copies and no link.
+        preconditions:
+          slot_conditions:
+            withdrawn:
+              value_presence: PRESENT
+        postconditions:
+          none_of:
+            - slot_conditions:
+                derived:
+                  required: true
+            - slot_conditions:
+                link:
+                  required: true
+      - description: >-
+          A photograph or other image never takes the EU orphan-work statement.
+        preconditions:
+          slot_conditions:
+            kind:
+              equals_string: image
+        postconditions:
+          none_of:
+            - slot_conditions:
+                rights:
+                  required: true
+                  equals_string: http://rightsstatements.org/vocab/InC-OW-EU/1.0/
+      - description: >-
+          A medium with served copies is cleared.
+        preconditions:
+          slot_conditions:
+            derived:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            cleared:
+              required: true
+      - description: >-
+          A medium with served copies has its master's width and height, or its duration.
+        preconditions:
+          slot_conditions:
+            derived:
+              value_presence: PRESENT
+        postconditions:
+          any_of:
+            - slot_conditions:
+                width:
+                  required: true
+                height:
+                  required: true
+            - slot_conditions:
+                duration:
+                  required: true
+      - description: >-
+          An image or a document with served copies has its master's width and height.
+        preconditions:
+          slot_conditions:
+            kind:
+              equals_string_in:
+                - image
+                - document
+            derived:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            width:
+              required: true
+            height:
+              required: true
+
+  Media:
+    # vocabulary/media.json, binding medium.
+    class_uri: rico:Instantiation
+    is_a: PublicMedia
+    description: >-
+      One held or linked copy of a registered source, as the shared record keeps it: all that
+      the public may see, with the private master file and the private permission besides.
+    attributes:
+      master:
+        # vocabulary/media.json, binding media_master.
+        slot_uri: pc:media_master
+        range: MediaMaster
+        inlined: true
+        description: >-
+          Where the private master file is kept; never public.
+      consent:
+        # vocabulary/media.json, binding media_consent.
+        slot_uri: pc:media_consent
+        range: MediaConsent
+        inlined: true
+        description: >-
+          The private record of the permission to show the medium; never public.

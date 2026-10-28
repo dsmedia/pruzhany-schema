@@ -33,10 +33,26 @@ def required_key_nullable(document):
     return [p for p, schema, required in properties(document) if required and nullable(schema)]
 
 
+NAMING_RULE = re.compile(r'^[a-z][_a-z0-9]+$')
+
+
+def written_as_equals_string_in(schema):
+    """An enum whose values `linkml lint`'s naming rule refuses, or that are addresses.
+
+    The house style (README.md) writes such a list as the slot's `equals_string_in`, whose
+    generated `enum` refuses null as the export's does; a list of plain names is a LinkML enum,
+    which keeps an optional key's null branch.
+    """
+    values = schema.get('enum')
+    return bool(values) and any(not isinstance(v, str) or not NAMING_RULE.match(v) for v in values)
+
+
 def optional_key_not_nullable(document):
-    # A const refuses null by itself, as LinkML's equals_string does, so it is no difference.
+    # A const refuses null by itself, as LinkML's equals_string does, so it is no difference;
+    # nor is an enum the house style writes as equals_string_in.
     return [p for p, schema, required in properties(document)
-            if not required and not nullable(schema) and 'const' not in schema]
+            if not required and not nullable(schema) and 'const' not in schema
+            and not written_as_equals_string_in(schema)]
 
 
 def position_wise_bounds(document):
@@ -118,6 +134,11 @@ class Finders(unittest.TestCase):
             'pair': {'type': 'array', 'prefixItems': [{'type': 'number'}, {'type': 'number'}]},
             'duration': {'type': 'number', 'exclusiveMinimum': 0},
             'pixels': {'type': 'integer', 'exclusiveMinimum': 0},
+            # An optional enum of addresses is written as equals_string_in and refuses null (house
+            # style), so it is not of the kind; an optional enum of plain names is a LinkML enum
+            # that keeps its null branch, so it is.
+            'optional_address_list': {'type': 'string', 'enum': ['https://a.example/x', 'https://b.example/y']},
+            'optional_names_list': {'type': 'string', 'enum': ['one', 'two']},
         },
         'required': ['required_null', 'box', 'pair', 'duration', 'pixels'],
     }
@@ -125,7 +146,7 @@ class Finders(unittest.TestCase):
     def test_each_finds_its_planted_place_and_only_that(self):
         expected = {
             'required-key-nullable': ['/properties/required_null'],
-            'optional-key-not-nullable': ['/properties/optional_plain'],
+            'optional-key-not-nullable': ['/properties/optional_plain', '/properties/optional_names_list'],
             'position-wise-bounds': ['/properties/box'],
             'exclusive-minimum-on-a-number': ['/properties/duration'],
         }

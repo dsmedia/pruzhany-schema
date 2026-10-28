@@ -82,6 +82,94 @@ class AlignmentTests(unittest.TestCase):
         self.assertTrue(any('Typo is not a pinned term' in e for e in check(self.root)))
 
 
+class LinkMLAlignmentTests(unittest.TestCase):
+    """The LinkML definition under linkml/ is held to the same pins and declarations."""
+
+    SCHEMA = """id: https://pruzhany.org/ns/fixture
+name: fixture
+prefixes:
+  rico: https://www.ica.org/standards/RiC/ontology#
+  ehri: http://lod.ehri-project-test.eu/ontology#
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+classes:
+  Thing:
+    # A comment may name rico:Person.
+    class_uri: {class_uri}
+    description: >-
+      Prose may say meaning: pc:not_a_mapping_here, which is not read as a mapping.
+    attributes:
+      part:
+        slot_uri: {slot_uri}
+        related_mappings:
+          - {mapping}
+        annotations:
+          via: {via}
+enums:
+  Kinds:
+    permissible_values:
+      one:
+        meaning: "{meaning}"
+"""
+    GOOD = {'class_uri': 'ehri:Person', 'slot_uri': 'rico:NewTerm', 'mapping': 'pc:declared',
+            'via': 'rico:MembershipRelation', 'meaning': 'pc:declared'}
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        (self.root / 'standards').mkdir()
+        rico = [{'iri': RICO + 'Person', 'kind': 'class'}, {'iri': RICO + 'NewTerm', 'kind': 'property'},
+                {'iri': RICO + 'MembershipRelation', 'kind': 'class'}, {'iri': RICO + 'hasChild', 'kind': 'property'}]
+        for name, terms in [('rico-1.1.json', rico), ('ehri-0.2.0.json', [{'iri': EHRI + 'Person', 'kind': 'class'}])]:
+            (self.root / 'standards' / name).write_text(json.dumps({'terms': terms}))
+        (self.root / 'standards' / 'rico-1.1-axioms.json').write_text(json.dumps({'axioms': []}))
+        (self.root / 'vocabulary').mkdir()
+        (self.root / 'vocabulary' / 'site-content.profile.ttl').write_text('pc:declared a owl:NamedIndividual .\n')
+        (self.root / 'linkml' / 'schema').mkdir(parents=True)
+
+    def schema(self, folder='linkml/schema', **changes):
+        path = self.root / folder / 'fixture.yaml'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(self.SCHEMA.format(**dict(self.GOOD, **changes)))
+        return check(self.root)
+
+    def test_control_passes(self):
+        self.assertEqual(self.schema(), [])
+
+    def test_an_unpinned_rico_term_fails(self):
+        self.assertTrue(any('unapproved rico term Typo' in e for e in self.schema(slot_uri='rico:Typo')))
+
+    def test_an_unpinned_ehri_term_fails(self):
+        self.assertTrue(any('unapproved ehri term Typo' in e for e in self.schema(class_uri='ehri:Typo')))
+
+    def test_an_unpinned_term_written_as_an_iri_fails(self):
+        errors = self.schema(class_uri=f"'{RICO}Typo'")
+        self.assertTrue(any('unapproved rico term' in e and 'Typo' in e for e in errors))
+
+    def test_an_unpinned_term_in_the_generated_vocabulary_s_json_scalar_fails(self):
+        errors = self.schema(meaning='rico:Typo')
+        self.assertTrue(any('unapproved rico term Typo' in e for e in errors))
+
+    def test_an_undeclared_local_term_fails_in_every_mapping_place(self):
+        for place in ('class_uri', 'slot_uri', 'mapping', 'meaning'):
+            with self.subTest(place=place):
+                errors = self.schema(**{place: 'pc:undeclared'})
+                self.assertTrue(any('local term pc:undeclared is not declared' in e for e in errors), errors)
+
+    def test_a_via_that_is_not_a_relation_class_fails(self):
+        self.assertTrue(any('via must be a RiC-O Relation class' in e for e in self.schema(via='rico:hasChild')))
+
+    def test_an_unpinned_term_in_a_comment_fails_and_local_words_in_prose_do_not(self):
+        path = self.root / 'linkml/schema/fixture.yaml'
+        self.assertEqual(self.schema(), [])
+        path.write_text(path.read_text().replace('name rico:Person', 'name rico:Typo'))
+        self.assertTrue(any('unapproved rico term Typo' in e for e in check(self.root)))
+
+    def test_planted_files_under_linkml_tests_are_not_the_definition(self):
+        self.assertEqual(self.schema(folder='linkml/tests/fixtures', slot_uri='rico:Typo'), [])
+
+
 class PinnedAxiomsTests(unittest.TestCase):
     """The rules the vetting of 2026-10-23 cites, read from the pinned list itself."""
 

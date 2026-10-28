@@ -20,6 +20,8 @@ URI: [pc:attribution](https://pruzhany.org/ns/sourced-entities#attribution)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [Fact](Fact.md) | One source's statement about a person, a family or a relation, kept as that source gives it, with its evidence, its confidence, its standing and who recorded it. What it means depends on its type (see FactTypes). |  no  |
+| [Name](Name.md) | One name of a person, a family, an organisation or a place, of one kind (printed, birth, married, supplied and so on), in one script. A person's, a family's and an organisation's names are agent names and a place's are place names (vocabulary/ site-content.json, bindings agent_name and place_name), so the class itself names no single term. |  no  |
 | [EnglishCheck](EnglishCheck.md) | A later, separate check of one English field against one exact reading of the printed text, bound to both and to the judgement kept by their digests. |  no  |
 | [TitleCheck](TitleCheck.md) | A check of a supplied title's English. |  no  |
 | [TranslationCheck](TranslationCheck.md) | A check of a translation's English. |  no  |
@@ -38,7 +40,7 @@ URI: [pc:attribution](https://pruzhany.org/ns/sourced-entities#attribution)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [EnglishCheck](EnglishCheck.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
+| Domain Of | [Fact](Fact.md), [Name](Name.md), [EnglishCheck](EnglishCheck.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
 
 
 
@@ -72,6 +74,8 @@ URI: [pc:attribution](https://pruzhany.org/ns/sourced-entities#attribution)
 ```yaml
 name: attribution
 domain_of:
+- Fact
+- Name
 - EnglishCheck
 - SuppliedTitle
 - Translation

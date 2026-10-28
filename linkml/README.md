@@ -8,7 +8,7 @@ of the plan in pruzhany-steps `.scratch/linkml/plan.md`: **LinkML describes; `zo
 
 | File | What it is |
 | --- | --- |
-| `schema/*.yaml` | The definition. Today `types.yaml`, the types the documents share, and `vocabulary.yaml`, the vocabulary's enums; the documents come in later tickets. |
+| `schema/*.yaml` | The definition: `types.yaml` (the shared types), `vocabulary.yaml` (the vocabulary's enums, generated), `site_common.yaml`, `pages.yaml`, `content_items.yaml`, `mentions.yaml`, `life_events.yaml`, `editions.yaml` (the issue documents and the catalog), `sourced_entities.yaml`, `media.yaml`, `shared.yaml`, `shared_record.yaml` (the shared record). Imports run types and vocabulary <- sourced_entities <- site_common <- shared_record. |
 | `schema/vocabulary.yaml` | Written by `vocabulary/generate.py` from `vocabulary/*.json`, one enum a group, never edited by hand: change the JSON, run that generator, then `linkml/generate.py` for its docs. That generator's `--check` (`bin/verify vocabulary`) fails on a hand edit. |
 | `modules.json` | The manifest: each schema file, its top class (or `null`) and the name its outputs take. |
 | `generated/` | What `generate.py` makes from the manifest, committed: `json-schema/<name>.schema.json` for a module with a top class, `docs/<name>/` (gen-doc) for every module. Never edited by hand. |
@@ -20,6 +20,7 @@ of the plan in pruzhany-steps `.scratch/linkml/plan.md`: **LinkML describes; `zo
 | `requirements.in`, `requirements.lock` | The locked environment: LinkML and everything it brings, by hash. |
 | `build-constraints.in`, `build-constraints.txt` | The one build tool, setuptools, by hash. |
 | `checks/documents.yaml` | Each check the twins of the issue documents and the catalog make beyond their shapes (every Zod refinement and Pydantic validator), and how the definition holds it: a LinkML rule, a rule of pruzhany-steps' `record/rules.yaml` (cited or proposed), or the twins alone; `tests/test_documents_checks.py` counts them. |
+| `checks/record.yaml` | The same for the twins of the shared record, the sourced entities and media; `tests/test_record_checks.py` counts them. |
 | `tests/` | The canaries (`canary_*.py`), the tests (`test_*.py`) and their planted files (`fixtures/`). |
 
 ## Running it
@@ -88,7 +89,7 @@ without one.
 ## House style
 
 Each construct the Zod exports use, written the one way it is written here, and the JSON Schema
-gen-json-schema 1.12.1 makes of it (observed on 28 October 2026; `tests/test_house_style.py`
+gen-json-schema 1.12.1 makes of it (observed on 28 October 2026; `tests/test_house_style.py`, `tests/test_documents_house_style.py`, `tests/test_record_shape.py` and `tests/test_record_rules.py`
 checks every row against `tests/fixtures/house-style.yaml`, which uses the real shared types).
 
 | The shape says | Write | Generated JSON Schema |
@@ -119,6 +120,17 @@ checks every row against `tests/fixtures/house-style.yaml`, which uses the real 
 | no value, in a rule's postconditions | `required: false` and `pattern: '^$'` on a slot whose range refuses empty text | `"then": {"properties": {"x": {"pattern": "^$"}}}`: null and absence pass, any text fails; `value_presence: ABSENT` gives `"not": {"required": [...]}`, which refuses the null the files hold |
 | items of a list that must all differ (Zod's `uniqueIds`) | nothing: the check goes to the rule catalog (`checks/documents.yaml`) | `list_elements_unique: true` gives no `uniqueItems` (measured), so it is not written |
 | the meaning of a class or a field | `class_uri` or `slot_uri`: the RiC-O or EHRI term a vocabulary binding names; `exact_mappings`: a `pc:` term a profile declares as a placeholder; `related_mappings`: one that covers several fields; `annotations: {impresso: ...}`: Impresso's field, in words, written in block style | nothing: a JSON Schema carries no mapping; `tests/test_documents.py` checks each term against `standards/` and `vocabulary/*.ttl` |
+| a list of allowed texts (`enum`) of a vocabulary group, or whose values `linkml lint`'s naming rule accepts | a LinkML enum; a value with a standard term takes it as `meaning` | `"$ref"` to the enum; an optional key keeps its null branch |
+| a list whose values the naming rule refuses (`site+download`, `institution-terms`) or that are addresses (media rights) | the slot's `equals_string_in` | `"enum": [...]` on the property, which refuses null even on an optional key (media `rights` is then not looser than the export) |
+| a vocabulary enum narrowed to some of its values (a relation's `type`: kinship or other) | `range:` the enum and `equals_string_in` | `"$ref"` and `"enum"` together |
+| a slot of one letter (MediaRegion's `x`, `y`, `w`, `h`) | the key as it is; `linkml-lint.yaml` excepts the four from the naming rule's two-letter floor | the key |
+| an address that must begin `https://` (Zod's `z.url({protocol})`, Pydantic's pattern) | `range: HttpsUri`, `typeof: uri` with the Pydantic twin's pattern | `"format": "uri"` and `"pattern"` together; stricter than the export, which keeps only the format |
+| coordinates, latitude then longitude | `range: Coordinate` (-180 to 180), `minimum_cardinality: 2`, `maximum_cardinality: 2` | `"items"` bounded -180 to 180, `"minItems": 2, "maxItems": 2`; the latitude's ±90 is lost (known-looser) |
+| a twin's check "if this, then that" within one object | a `rules:` entry with `preconditions`, `postconditions` (and `elseconditions`), whose conditions use only `required`, `value_presence`, `equals_string`, `equals_string_in` and `pattern`, at most one `value_presence: ABSENT` a condition | `"if"`/`"then"`/`"else"`, gathered in `"allOf"` when a class has several; a present null counts as present, except for a list; a child class takes its ancestors' rules |
+| a twin's check "at least one of these" | the class's `any_of`, each branch `required: true` | `"anyOf"` on the class; a child class does not take it, so it is written again there |
+| a twin's check "never this", or "none of these" in a rule | the class's `none_of`, or `none_of` in a rule's condition | `"not": {"anyOf": [...]}`; never two `value_presence: ABSENT` in one condition, which come out as "not both" |
+| a twin's check on a list's length or items, a range, or a nested object's field, inside a condition | nothing in LinkML: a rule for pruzhany-steps `record/rules.yaml` (`checks/record.yaml` names it) | the generator drops `range`, `minimum_cardinality`, `maximum_cardinality`, `has_member` and `all_members` in a condition without a word (`tests/test_record_rules.py`) |
+| a standard term for a class, a slot or a value | `class_uri`, `slot_uri`, a permissible value's `meaning`; a term naming a whole made of several fields as `related_mappings` on each; a qualification as `annotations: {via: rico:...Relation}` | nothing: meaning does not reach the JSON Schema |
 
 Also:
 
@@ -136,6 +148,11 @@ Also:
   LinkML's own meaning does not (known-looser.yaml says how), so the next release may undo it.
 - **Prose in block style** (`description: >-` and an indented paragraph, `comments:` as an
   indented list), and every YAML word that YAML 1.1 reads as a boolean quoted (`'on'`, `'no'`).
+- **Every term the definition names is pinned or declared.** `standards/check_alignment.py`
+  (`bin/verify standards`) reads `linkml/**/*.yaml` but `linkml/tests/`: every `rico:` or `ehri:` term
+  and namespace IRI must be in the pinned lists, every `pc:` term used as a `meaning`, `class_uri`,
+  `slot_uri`, mapping or `via` must be declared in a `vocabulary/*.ttl`, and every `via` must be a
+  RiC-O Relation class.
 - **No new prefix or namespace.** `pc` (`https://pruzhany.org/ns/sourced-entities#`, as in
   `vocabulary/profile.ttl`) is the default prefix, and a schema's `id` lies under
   `https://pruzhany.org/ns/`. `linkml lint`'s canonical-prefix rule reads a prefix list without

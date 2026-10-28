@@ -26,12 +26,6 @@ URI: [pc:AuthorshipKind](https://pruzhany.org/ns/sourced-entities#AuthorshipKind
 
 
 
-## Slots
-
-| Name | Description |
-| ---  | --- |
-| [kind](kind.md) | Whether a person or a model wrote it. |
-
 
 
 

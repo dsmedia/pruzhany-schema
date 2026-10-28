@@ -34,6 +34,12 @@ URI: [pc:SourceKinds](https://pruzhany.org/ns/sourced-entities#SourceKinds)
 
 
 
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [kind](kind.md) | What kind of source it is: a book, a memorial book, an archive's database, the paper and so on. |
+
 
 
 

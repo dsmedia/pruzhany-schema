@@ -118,6 +118,7 @@ attributes:
     rank: 1000
     domain_of:
     - CrossReference
+    - Fate
     range: float
     required: true
   relationship:
@@ -168,6 +169,7 @@ attributes:
     owner: CrossReference
     domain_of:
     - CrossReference
+    - Fate
     range: float
     required: true
   relationship:

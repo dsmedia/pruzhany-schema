@@ -165,8 +165,8 @@ attributes:
     name: language
     description: The title's language, always English (en).
     from_schema: https://pruzhany.org/ns/site_common
-    rank: 1000
     domain_of:
+    - Source
     - SuppliedTitle
     - Translation
     required: true
@@ -187,6 +187,8 @@ attributes:
     description: Who wrote the title, and on which day.
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
+    - Fact
+    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
@@ -238,9 +240,9 @@ attributes:
     name: language
     description: The title's language, always English (en).
     from_schema: https://pruzhany.org/ns/site_common
-    rank: 1000
     owner: SuppliedTitle
     domain_of:
+    - Source
     - SuppliedTitle
     - Translation
     range: string
@@ -264,6 +266,8 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: SuppliedTitle
     domain_of:
+    - Fact
+    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation

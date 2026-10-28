@@ -52,9 +52,8 @@ URI: [xsd:date](http://www.w3.org/2001/XMLSchema#date)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | xsd:date |
-| native | pc:Date |
-| exact | schema:Date |
+| self | pc:date |
+| native | pc:date |
 
 
 

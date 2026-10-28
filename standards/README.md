@@ -25,7 +25,7 @@ uv run --no-project --python 3.11 --with rdflib==7.1.4 python standards/extract_
 bin/verify standards
 ```
 
-Output is sorted, UTF-8 with LF, and deterministic. `check_alignment.py` scans pilot RDF profiles, exporter literals, generated review JSON-LD, and vocabulary mappings (also future `vocabulary/*.json`). Local mapping objects require a declared profile term and a one-line reason. Existing pilot enum arrays are identifiers, not mapping entries. Arbitrary computed exporter IRI expressions need an explicit, statically checked mapping.
+Output is sorted, UTF-8 with LF, and deterministic. `check_alignment.py` scans pilot RDF profiles, exporter literals, generated review JSON-LD, and vocabulary mappings (also future `vocabulary/*.json`). Since 28 October 2026 it also reads the LinkML definition, `linkml/**/*.yaml` outside `linkml/tests/`: every `rico:` or `ehri:` CURIE or namespace IRI must be pinned, every `pc:` term used as a `meaning`, `class_uri`, `slot_uri`, mapping or `via` must be declared in a `vocabulary/*.ttl` profile, and every `via` must be a RiC-O Relation class. Local mapping objects require a declared profile term and a one-line reason. Existing pilot enum arrays are identifiers, not mapping entries. Arbitrary computed exporter IRI expressions need an explicit, statically checked mapping.
 
 All `vocabulary/**/*.ttl` profiles are checked, including the released
 `profile.ttl` and `site-content.profile.ttl` (subtypes and subjects released

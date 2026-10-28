@@ -24,7 +24,7 @@ default_range: string
 imports:
   - linkml:types
   - types
-  - sourced_entities_attribution
+  - sourced_entities
 
 enums:
   AuthorshipKind:

@@ -44,6 +44,12 @@ URI: [pc:RelationshipTypes](https://pruzhany.org/ns/sourced-entities#Relationshi
 
 
 
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [relationship_type](relationship_type.md) | For kinship: how the relative is related, from the subject to the relative. |
+
 
 
 

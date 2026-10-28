@@ -28,6 +28,12 @@ URI: [pc:ClaimStatus](https://pruzhany.org/ns/sourced-entities#ClaimStatus)
 
 
 
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [status](status.md) | The statement's standing: proposed, accepted, disputed or rejected. |
+
 
 
 

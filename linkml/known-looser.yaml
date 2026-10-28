@@ -60,7 +60,7 @@ entries:
       - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'
 
   - kind: optional-key-not-nullable
-    count: 6
+    count: 5
     where:
       - file: schemas/site/pages.schema.json
         pointer: /properties/pages/items/properties/blocks/items/properties/confidence
@@ -72,8 +72,6 @@ entries:
         pointer: /properties/sections/items/properties/supplied_title/anyOf/0/properties/checked_against
       - file: schemas/site-next/shared-record.schema.json
         pointer: /properties/holders
-      - file: schemas/site-next/shared-record.schema.json
-        pointer: /properties/media/anyOf/0/items/properties/rights
     export_says: >-
       The key may be left out, but when it is there its value may not be null: the key is
       not in required and its schema has no null branch.
@@ -82,16 +80,17 @@ entries:
       default). --no-include-null is one switch for a whole schema and would refuse the null
       that the 248 optional keys which do allow it accept, so the definition keeps the
       default and its JSON Schema accepts null here. An optional slot with equals_string
-      needs no entry: const refuses null by itself.
+      needs no entry: const refuses null by itself; so does equals_string_in, which the house
+      style uses for a list of values the naming rule refuses or that are addresses (media
+      rights), and whose enum refuses null too.
     why: >-
       Present-and-null is a distinction LinkML's data model does not make.
     enforced_by:
       - 'zod/page.schema.ts: Block.confidence is z.number().optional()'
       - 'zod/site-common.schema.ts: checked_against is .optional(), not nullable'
       - 'zod/shared-record.schema.ts: SharedRecord.holders is z.array(...).optional()'
-      - 'zod/media.schema.ts: Media.rights is z.enum(...).default(...).optional()'
       - 'pydantic/site_common.py: checked_against refuses null in a field validator (check_is_not_null)'
-      - 'pydantic/shared_record.py and pydantic/media.py: holders and rights have a default and no None; Block.confidence in pydantic/page.py accepts null, so only Zod refuses it'
+      - 'pydantic/shared_record.py: holders has a default and no None; Block.confidence in pydantic/page.py accepts null, so only Zod refuses it'
       - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'
 
   - kind: position-wise-bounds
