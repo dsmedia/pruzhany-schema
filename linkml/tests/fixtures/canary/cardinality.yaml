@@ -1,0 +1,28 @@
+id: https://pruzhany.org/ns/canary-cardinality
+name: canary_cardinality
+description: >-
+  Two lists of two numbers: one says so with exact_cardinality, one with minimum_cardinality
+  and maximum_cardinality (plan section 3, item 1).
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+classes:
+  Pairs:
+    tree_root: true
+    description: Holds the two lists.
+    attributes:
+      exact_pair:
+        range: integer
+        multivalued: true
+        exact_cardinality: 2
+        description: Two numbers, by exact_cardinality.
+      bounded_pair:
+        range: integer
+        multivalued: true
+        minimum_cardinality: 2
+        maximum_cardinality: 2
+        description: Two numbers, by minimum_cardinality and maximum_cardinality.

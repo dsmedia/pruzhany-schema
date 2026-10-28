@@ -1,0 +1,25 @@
+id: https://pruzhany.org/ns/fixture-bound-in-slot-usage
+name: fixture_bound_in_slot_usage
+description: >-
+  A bound added in slot_usage to a slot made multivalued elsewhere, found only by working out
+  the class's slots as LinkML does.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+slots:
+  numbers:
+    range: integer
+    multivalued: true
+    description: Some numbers.
+classes:
+  Block:
+    description: A block.
+    slots:
+      - numbers
+    slot_usage:
+      numbers:  # refused here
+        maximum_value: 100

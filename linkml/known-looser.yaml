@@ -1,0 +1,165 @@
+# What the shapes of the site's documents refuse that the LinkML definition cannot say, so
+# that its generated JSON Schema accepts it: each kind of difference, every place it occurs,
+# and what refuses it instead. The shapes are the JSON Schema that Zod exports for the six
+# documents pruzhany-steps checks (its schemas/site/pages.schema.json and
+# schemas/site-next/*.schema.json); linkml/export_zod.ts makes them again from this
+# checkout's zod/, byte for byte the same as those copies on 28 October 2026.
+#
+# Measured on 28 October 2026 with LinkML 1.12.1 (metamodel 1.12.0): every JSON Schema
+# keyword the exports use was tried in a LinkML schema, generated and compared. Only
+# what LinkML cannot express is listed here; how to write what it can is in README.md
+# ("House style"). linkml/tests/test_known_looser.py finds every place of each kind in the
+# exports afresh and fails when a listed place is gone or a new one is not listed.
+#
+# A pointer is a JSON Pointer into the export named by file.
+
+measured: '2026-10-28'
+linkml: '1.12.1'
+exports:
+  - schemas/site/pages.schema.json
+  - schemas/site/editions.schema.json
+  - schemas/site-next/content-items.schema.json
+  - schemas/site-next/mentions.schema.json
+  - schemas/site-next/life-events.schema.json
+  - schemas/site-next/shared-record.schema.json
+
+entries:
+  - kind: required-key-nullable
+    count: 5
+    where:
+      - file: schemas/site/pages.schema.json
+        pointer: /properties/pages/items/properties/blocks/items/properties/unit_id
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/content_items/items/properties/reading_status/anyOf/0/properties/text
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/content_items/items/properties/reading_status/anyOf/0/properties/english
+      - file: schemas/site-next/mentions.schema.json
+        pointer: /properties/mentions/items/properties/printed_name
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/media/anyOf/0/items/properties/depicted/items/properties/person_id
+    export_says: >-
+      The key must be there, and its value may be null: the key is in required and its
+      schema is anyOf with a null branch.
+    linkml_says: >-
+      LinkML has no null apart from absence. A required slot must hold a value, and its JSON
+      Schema refuses null; an optional slot may be left out, and its JSON Schema accepts
+      null. The twins require these keys while permitting null values, so the definition
+      marks them optional to retain that nullable shape, and
+      its JSON Schema accepts a document that leaves the key out. value_presence PRESENT
+      makes gen-json-schema put the key in required and still allow null, but the metamodel
+      says PRESENT has "the same effect as required=true" (status unstable) and the Pydantic
+      validation plugin ignores it, so it is not used.
+    why: >-
+      Present-and-null is a distinction LinkML's data model does not make.
+    enforced_by:
+      - 'zod/page.schema.ts: Block.unit_id is z.string().nullable(), not optional'
+      - 'zod/content-item.schema.ts: ReadingStatus.text and .english are nullable, not optional'
+      - 'zod/site-issue.schema.ts: IssueMention.printed_name is nullable, not optional'
+      - 'zod/media.schema.ts: MediaDepicted.person_id is nullable, not optional'
+      - 'pydantic/page.py, pydantic/content_item.py, pydantic/site_issue.py, pydantic/media.py: the same fields typed X | None with no default'
+      - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'
+
+  - kind: optional-key-not-nullable
+    count: 8
+    where:
+      - file: schemas/site/editions.schema.json
+        pointer: /properties/editions/items/properties/holiday
+      - file: schemas/site/editions.schema.json
+        pointer: /properties/holidays/items/properties/hebrewName
+      - file: schemas/site/editions.schema.json
+        pointer: /properties/historicalEvents/items/properties/endDate
+      - file: schemas/site/pages.schema.json
+        pointer: /properties/pages/items/properties/blocks/items/properties/confidence
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/content_items/items/properties/supplied_title/properties/checked_against
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/content_items/items/properties/translation/anyOf/0/properties/checked_against
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/sections/items/properties/supplied_title/anyOf/0/properties/checked_against
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/holders
+    export_says: >-
+      The key may be left out, but when it is there its value may not be null: the key is
+      not in required and its schema has no null branch.
+    linkml_says: >-
+      gen-json-schema gives every optional slot a null branch (its --include-null, the
+      default). --no-include-null is one switch for a whole schema and would refuse the null
+      that the 248 optional keys which do allow it accept, so the definition keeps the
+      default and its JSON Schema accepts null here. An optional slot with equals_string
+      needs no entry: const refuses null by itself; so does equals_string_in, which the house
+      style uses for a list of values the naming rule refuses or that are addresses (media
+      rights), and whose enum refuses null too.
+    why: >-
+      Present-and-null is a distinction LinkML's data model does not make.
+    enforced_by:
+      - 'zod/editions.schema.ts: Edition.holiday, Holiday.hebrewName and HistoricalEvent.endDate are optional, not nullable; measured by record compare linkml on the catalog and synthetic fixtures'
+      - 'zod/page.schema.ts: Block.confidence is z.number().optional()'
+      - 'zod/site-common.schema.ts: checked_against is .optional(), not nullable'
+      - 'zod/shared-record.schema.ts: SharedRecord.holders is z.array(...).optional()'
+      - 'pydantic/site_common.py: checked_against refuses null in a field validator (check_is_not_null)'
+      - 'pydantic/shared_record.py: holders has a default and no None; Block.confidence in pydantic/page.py accepts null, so only Zod refuses it'
+      - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'
+
+  - kind: position-wise-bounds
+    count: 10
+    where:
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/content_items/items/properties/printed_title/anyOf/0/properties/addresses/items/properties/bbox
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/content_items/items/properties/supplied_title/properties/based_on/properties/addresses/items/properties/bbox
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/content_items/items/properties/translation/anyOf/0/properties/based_on/properties/addresses/items/properties/bbox
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/sections/items/properties/printed_title/properties/addresses/items/properties/bbox
+      - file: schemas/site-next/content-items.schema.json
+        pointer: /properties/sections/items/properties/supplied_title/anyOf/0/properties/based_on/properties/addresses/items/properties/bbox
+      - file: schemas/site-next/mentions.schema.json
+        pointer: /properties/mentions/items/properties/addresses/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/places/items/properties/coordinates/anyOf/0
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/facts/items/properties/citations/items/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/relations/items/properties/citations/items/properties/addresses/anyOf/0/items/properties/bbox
+    export_says: >-
+      Each position of the array has its own bound (prefixItems): a box's x and y are at
+      least 0 and its width and height above 0; a place's latitude lies from -90 to 90 and
+      its longitude from -180 to 180.
+    linkml_says: >-
+      A multivalued slot has one range and one bound for every item. The definition bounds
+      each of a box's four numbers at least 0 (NonNegativeNumber), so it accepts a width or a
+      height of 0, and each coordinate from -180 to 180, so it accepts a latitude beyond 90.
+      A class with named parts would hold every bound but change the stored shape of a box
+      and of coordinates, which the plan rules out (section 10).
+    why: >-
+      LinkML has no constraint by position within a list, which is what JSON Schema's
+      prefixItems is.
+    enforced_by:
+      - 'zod/site-common.schema.ts: pixelBox, a z.tuple of nonnegative, nonnegative, positive, positive'
+      - 'zod/shared-record.schema.ts: Place.coordinates, a z.tuple of min(-90).max(90) and min(-180).max(180)'
+      - 'pydantic/site_common.py: PrintedAddress.bbox, a tuple with ge=0, ge=0, gt=0, gt=0'
+      - 'pydantic/shared_record.py: Place.coordinates, a tuple with ge=-90, le=90 and ge=-180, le=180'
+      - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'
+
+  - kind: exclusive-minimum-on-a-number
+    count: 1
+    where:
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/media/anyOf/0/items/properties/duration/anyOf/0
+    export_says: >-
+      A medium's duration is a number above 0 (exclusiveMinimum 0).
+    linkml_says: >-
+      minimum_value is inclusive and metamodel 1.12.0 has no exclusive bound, so the
+      definition says at least 0 and accepts a duration of 0. none_of with equals_number 0
+      does refuse 0 in the generated JSON Schema (minimum 0 and not const 0), but the
+      generator then drops the null branch the export allows on this optional key (measured),
+      so it is not used. A whole number above 0 needs no entry: minimum_value 1 says the same
+      (PositiveInteger).
+    why: >-
+      LinkML's bounds are inclusive only.
+    enforced_by:
+      - 'zod/media.schema.ts: Media.duration is z.number().positive().nullish()'
+      - 'pydantic/media.py: Media.duration is Field(gt=0) or None'
+      - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'

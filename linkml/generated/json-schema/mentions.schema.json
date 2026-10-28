@@ -1,0 +1,2284 @@
+{
+    "$defs": {
+        "AddressGrain": {
+            "description": "How a mention is pinned to the page: to the words of the printed name, or only to whole regions where the words are not located.",
+            "enum": [
+                "words",
+                "regions"
+            ],
+            "title": "AddressGrain",
+            "type": "string"
+        },
+        "Attribution": {
+            "additionalProperties": false,
+            "description": "Who made or allowed something, on what day, with an optional note.",
+            "properties": {
+                "by": {
+                    "description": "Who made it or allowed it: a person, a session or a program.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "note": {
+                    "description": "A note on how or why.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "on": {
+                    "description": "The day it was made or allowed.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "by",
+                "on"
+            ],
+            "title": "Attribution",
+            "type": "object"
+        },
+        "Authorship": {
+            "additionalProperties": false,
+            "description": "Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day.",
+            "properties": {
+                "by": {
+                    "description": "Who made it or allowed it: a person, a session or a program.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "kind": {
+                    "$ref": "#/$defs/AuthorshipKind",
+                    "description": "Whether a person or a model wrote it."
+                },
+                "note": {
+                    "description": "A note on how or why.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "on": {
+                    "description": "The day it was made or allowed.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "kind",
+                "by",
+                "on"
+            ],
+            "title": "Authorship",
+            "type": "object"
+        },
+        "AuthorshipKind": {
+            "description": "Whether a person or a program wrote a supplied title or a translation.",
+            "enum": [
+                "person",
+                "model"
+            ],
+            "title": "AuthorshipKind",
+            "type": "string"
+        },
+        "Citation": {
+            "additionalProperties": false,
+            "anyOf": [
+                {
+                    "properties": {
+                        "record_id": {
+                            "pattern": "\\S"
+                        }
+                    },
+                    "required": [
+                        "record_id"
+                    ]
+                },
+                {
+                    "properties": {
+                        "page": {
+                            "pattern": "\\S"
+                        }
+                    },
+                    "required": [
+                        "page"
+                    ]
+                },
+                {
+                    "properties": {
+                        "scan": {
+                            "pattern": "\\S"
+                        }
+                    },
+                    "required": [
+                        "scan"
+                    ]
+                },
+                {
+                    "properties": {
+                        "time": {
+                            "pattern": "\\S"
+                        }
+                    },
+                    "required": [
+                        "time"
+                    ]
+                },
+                {
+                    "properties": {
+                        "unit_id": {
+                            "pattern": "\\S"
+                        }
+                    },
+                    "required": [
+                        "unit_id"
+                    ]
+                },
+                {
+                    "properties": {
+                        "url": {}
+                    },
+                    "required": [
+                        "url"
+                    ]
+                },
+                {
+                    "properties": {
+                        "locator": {}
+                    },
+                    "required": [
+                        "locator"
+                    ]
+                },
+                {
+                    "properties": {
+                        "reference_code": {}
+                    },
+                    "required": [
+                        "reference_code"
+                    ]
+                }
+            ],
+            "description": "Where in one source a statement's evidence lies: the source, and the record, page, scan, time, piece of the paper, address or pointer within it, with the quoted words.",
+            "properties": {
+                "accessed": {
+                    "description": "The day a person read the record.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "edition_date": {
+                    "description": "The day of the paper's issue cited, written YYYY-MM-DD.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "locator": {
+                    "description": "An internal pointer into the project's files; never published and never a holder's record number.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "note": {
+                    "description": "Our private note on the evidence; never published.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "page": {
+                    "description": "The page, folio or entry cited.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "public_note": {
+                    "description": "Our reviewed words for the page about this evidence, apart from the record's quote.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "quote": {
+                    "description": "The record's own words, exactly.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "quote_language": {
+                    "description": "The quote's language, where it is not the source's (a translation).",
+                    "pattern": "^(?:[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[A-Za-z]{4,8}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[xX](?:-[A-Za-z0-9]{1,8})+|[eE][nN]-[gG][bB]-[oO][eE][dD]|[iI]-(?:[aA][mM][iI]|[bB][nN][nN]|[dD][eE][fF][aA][uU][lL][tT]|[eE][nN][oO][cC][hH][iI][aA][nN]|[hH][aA][kK]|[kK][lL][iI][nN][gG][oO][nN]|[lL][uU][xX]|[mM][iI][nN][gG][oO]|[nN][aA][vV][aA][jJ][oO]|[pP][wW][nN]|[tT][aA][oO]|[tT][aA][yY]|[tT][sS][uU])|[sS][gG][nN]-(?:[bB][eE]-[fF][rR]|[bB][eE]-[nN][lL]|[cC][hH]-[dD][eE])|[aA][rR][tT]-[lL][oO][jJ][bB][aA][nN]|[cC][eE][lL]-[gG][aA][uU][lL][iI][sS][hH]|[nN][oO]-[bB][oO][kK]|[nN][oO]-[nN][yY][nN]|[zZ][hH]-[gG][uU][oO][yY][uU]|[zZ][hH]-[hH][aA][kK][kK][aA]|[zZ][hH]-[mM][iI][nN]|[zZ][hH]-[mM][iI][nN]-[nN][aA][nN]|[zZ][hH]-[xX][iI][aA][nN][gG])$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "record_id": {
+                    "description": "The holder's own number for the record, such as a Yad Vashem record number.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "record_type": {
+                    "description": "The holder's own type of the record, such as Page of Testimony.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "reference_code": {
+                    "description": "The holder's reference of the document cited, where the source is a set of many.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "scan": {
+                    "description": "The scan or image cited.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_id": {
+                    "description": "The record the statement rests on (the original where it is known), by its id in the record's sources.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "time": {
+                    "description": "The time in a recording.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "unit_id": {
+                    "description": "The piece of the paper cited, by its content item id.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "description": "The record's web address.",
+                    "format": "uri",
+                    "pattern": "^https://[^\\s/?#]+[^\\s]*$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "via": {
+                    "description": "The one source actually read, a copy or a transcription of the original, by its id.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "source_id"
+            ],
+            "title": "Citation",
+            "type": "object"
+        },
+        "CitationRemarkKinds": {
+            "description": "Citation remark kinds: the values of citation_remark_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "private_source_remark"
+            ],
+            "title": "CitationRemarkKinds",
+            "type": "string"
+        },
+        "ClaimStatus": {
+            "description": "Claim status: the values of claim_status in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "proposed",
+                "accepted",
+                "disputed",
+                "rejected"
+            ],
+            "title": "ClaimStatus",
+            "type": "string"
+        },
+        "CompatibilityEventTypes": {
+            "description": "Compatibility event types: the values of compatibility_event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "wedding",
+                "birth",
+                "death",
+                "bar_mitzvah",
+                "celebration",
+                "community_event",
+                "holocaust_event",
+                "other"
+            ],
+            "title": "CompatibilityEventTypes",
+            "type": "string"
+        },
+        "Confidence": {
+            "description": "Confidence: the values of confidence in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "confirmed",
+                "probable",
+                "possible"
+            ],
+            "title": "Confidence",
+            "type": "string"
+        },
+        "ContentItemBlockRef": {
+            "additionalProperties": false,
+            "description": "The regions of one page that a content item or a section heading covers, in reading order.",
+            "properties": {
+                "block_ids": {
+                    "description": "The regions on that page, by their ids in the pages document, in reading order.",
+                    "items": {
+                        "pattern": "\\S",
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "page_id": {
+                    "description": "The page, by its id in the pages document.",
+                    "pattern": "\\S",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "page_id",
+                "block_ids"
+            ],
+            "title": "ContentItemBlockRef",
+            "type": "object"
+        },
+        "ContentItemSubtypes": {
+            "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.0.0.",
+            "enum": [
+                "wedding_greeting",
+                "engagement_greeting",
+                "birth_greeting",
+                "bar_mitzvah_greeting",
+                "new_year_greeting",
+                "departure_greeting",
+                "greeting",
+                "thanks",
+                "meeting_notice",
+                "announcement",
+                "appeal",
+                "commercial_advertisement",
+                "condolence",
+                "memorial_notice",
+                "death_announcement",
+                "editorial",
+                "opinion",
+                "letter",
+                "poem",
+                "sketch",
+                "humour"
+            ],
+            "title": "ContentItemSubtypes",
+            "type": "string"
+        },
+        "ContentUnitRoles": {
+            "description": "Content unit roles: the values of content_unit_roles in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "primary_announcement",
+                "congratulation",
+                "condolence",
+                "mention",
+                "advertisement"
+            ],
+            "title": "ContentUnitRoles",
+            "type": "string"
+        },
+        "CrossReference": {
+            "additionalProperties": false,
+            "description": "A link from one content item to another in the same issue, with how sure it is and why.",
+            "properties": {
+                "confidence": {
+                    "description": "How sure the link is, from 0 to 1.",
+                    "type": "number"
+                },
+                "evidence": {
+                    "description": "What shows the link, in words.",
+                    "type": "string"
+                },
+                "relationship": {
+                    "description": "What kind of link it is, in words.",
+                    "type": "string"
+                },
+                "target_id": {
+                    "description": "The id of the content item linked to.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "target_id",
+                "confidence",
+                "relationship",
+                "evidence"
+            ],
+            "title": "CrossReference",
+            "type": "object"
+        },
+        "EnglishCheck": {
+            "additionalProperties": false,
+            "description": "A later, separate check of one English field against one exact reading of the printed text, bound to both and to the judgement kept by their digests.",
+            "properties": {
+                "attribution": {
+                    "$ref": "#/$defs/Authorship",
+                    "description": "Who checked it, and on which day."
+                },
+                "english_sha256": {
+                    "description": "The SHA-256 digest of the checked English field's exact UTF-8 bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "judgement_id": {
+                    "description": "The kept judgement, by an id without spaces followed by the field it judged, :title or :text.",
+                    "pattern": "^[^\\s\\u0085\\uFEFF]+:(title|text)$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "judgement_sha256": {
+                    "description": "The SHA-256 digest of the kept judgement file's exact bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "reading_id": {
+                    "description": "The reading of the printed text that the English was checked against.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "reading_sha256": {
+                    "description": "The SHA-256 digest of that reading's exact UTF-8 bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "reading_id",
+                "reading_sha256",
+                "english_sha256",
+                "judgement_id",
+                "judgement_sha256",
+                "attribution"
+            ],
+            "title": "EnglishCheck",
+            "type": "object"
+        },
+        "EventParts": {
+            "description": "Event parts: the values of event_parts in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "baby",
+                "parent",
+                "bride",
+                "groom",
+                "boy",
+                "deceased",
+                "remembered"
+            ],
+            "title": "EventParts",
+            "type": "string"
+        },
+        "EventTypes": {
+            "description": "Event types: the values of event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "engagement",
+                "wedding",
+                "birth",
+                "death",
+                "bar_mitzvah",
+                "celebration",
+                "community_event",
+                "holocaust_event",
+                "other",
+                "memorial"
+            ],
+            "title": "EventTypes",
+            "type": "string"
+        },
+        "ExternalSourceTypes": {
+            "description": "External source types: the values of external_source_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "arolsen_archives",
+                "familysearch",
+                "findagrave",
+                "geni",
+                "jewishgen",
+                "jri_poland",
+                "wikipedia",
+                "yad_vashem"
+            ],
+            "title": "ExternalSourceTypes",
+            "type": "string"
+        },
+        "Fact": {
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "else": {
+                        "not": {
+                            "required": [
+                                "proposed_type"
+                            ]
+                        },
+                        "properties": {
+                            "proposed_type": {}
+                        }
+                    },
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "other"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "proposed_type": {}
+                        },
+                        "required": [
+                            "proposed_type"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "kinship"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "anyOf": [
+                            {
+                                "properties": {
+                                    "related_name": {}
+                                },
+                                "required": [
+                                    "related_name"
+                                ]
+                            },
+                            {
+                                "properties": {
+                                    "related_person_id": {}
+                                },
+                                "required": [
+                                    "related_person_id"
+                                ]
+                            }
+                        ],
+                        "properties": {
+                            "relationship_type": {}
+                        },
+                        "required": [
+                            "relationship_type"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "occupation"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "value": {}
+                        },
+                        "required": [
+                            "value"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "residence"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "anyOf": [
+                            {
+                                "properties": {
+                                    "place_id": {}
+                                },
+                                "required": [
+                                    "place_id"
+                                ]
+                            },
+                            {
+                                "properties": {
+                                    "value": {}
+                                },
+                                "required": [
+                                    "value"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "event_participation"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "event_id": {}
+                        },
+                        "required": [
+                            "event_id"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": [
+                                    "birth",
+                                    "death"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "anyOf": [
+                            {
+                                "properties": {
+                                    "date": {}
+                                },
+                                "required": [
+                                    "date"
+                                ]
+                            },
+                            {
+                                "properties": {
+                                    "place_id": {}
+                                },
+                                "required": [
+                                    "place_id"
+                                ]
+                            },
+                            {
+                                "properties": {
+                                    "value": {}
+                                },
+                                "required": [
+                                    "value"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ],
+            "description": "One source's statement about a person, a family or a relation, kept as that source gives it, with its evidence, its confidence, its standing and who recorded it. What it means depends on its type (see FactTypes).",
+            "properties": {
+                "attribution": {
+                    "$ref": "#/$defs/Attribution",
+                    "description": "Who recorded the statement, and on what day."
+                },
+                "citations": {
+                    "description": "The evidence: where in which sources the statement is found.",
+                    "items": {
+                        "$ref": "#/$defs/Citation"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "date": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourcedDate"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "When, as the source gives it."
+                },
+                "event_id": {
+                    "description": "The life event the statement concerns, by its id in the record.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "evidence_confidence": {
+                    "$ref": "#/$defs/Confidence",
+                    "description": "How sure the evidence makes the statement."
+                },
+                "holocaust_related": {
+                    "description": "True when the statement concerns the Holocaust.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The fact's id in the record.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "identity_confidence": {
+                    "$ref": "#/$defs/Confidence",
+                    "description": "How sure it is that the statement is about this person."
+                },
+                "organization_id": {
+                    "description": "The organisation the statement concerns, by its id in the record.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "place_id": {
+                    "description": "Where, by the place's id in the record.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "proposed_type": {
+                    "description": "For a statement of type other: the type proposed for it, awaiting the owner's approval.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualifiers": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/FactQualifiers"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "More about the statement, as named texts."
+                },
+                "related_name": {
+                    "description": "For kinship: the relative's name, where the relative has no person of their own.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "related_person_id": {
+                    "description": "For kinship: the relative, by the person's id in the record.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "relationship_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/RelationshipTypes"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "For kinship: how the relative is related, from the subject to the relative."
+                },
+                "review": {
+                    "$ref": "#/$defs/Review",
+                    "description": "Whether a person has reviewed the statement."
+                },
+                "status": {
+                    "$ref": "#/$defs/ClaimStatus",
+                    "description": "The statement's standing: proposed, accepted, disputed or rejected."
+                },
+                "type": {
+                    "$ref": "#/$defs/FactTypes",
+                    "description": "What the statement is about: a birth, a death, a residence, an occupation and so on."
+                },
+                "value": {
+                    "description": "The statement's words or value, such as an occupation.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "type",
+                "citations",
+                "evidence_confidence",
+                "identity_confidence",
+                "status",
+                "review",
+                "attribution"
+            ],
+            "title": "Fact",
+            "type": "object"
+        },
+        "FactQualifiers": {
+            "additionalProperties": {
+                "type": "string"
+            },
+            "description": "More about a fact, as named texts: how many children a notice names, how a statement is supported and the like.",
+            "title": "FactQualifiers",
+            "type": "object"
+        },
+        "FactTypes": {
+            "description": "Fact types: the values of fact_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "birth",
+                "death",
+                "residence",
+                "occupation",
+                "office",
+                "membership",
+                "education",
+                "emigration",
+                "survival",
+                "parenthood",
+                "ghetto_role",
+                "partisan_service",
+                "deportation",
+                "burial",
+                "commemoration",
+                "event_participation",
+                "other",
+                "kinship"
+            ],
+            "title": "FactTypes",
+            "type": "string"
+        },
+        "Fate": {
+            "additionalProperties": false,
+            "description": "What became of a person in the Holocaust, as far as the record shows, the facts it rests on and its review.",
+            "properties": {
+                "confidence": {
+                    "$ref": "#/$defs/Confidence",
+                    "description": "How sure the outcome is."
+                },
+                "outcome": {
+                    "$ref": "#/$defs/FateOutcomes",
+                    "description": "What became of the person: unknown, perished, survived, died before, or not applicable."
+                },
+                "rests_on": {
+                    "description": "The facts the outcome rests on, by their ids in the record.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "review": {
+                    "$ref": "#/$defs/Review",
+                    "description": "Whether a person has reviewed the outcome."
+                },
+                "summary": {
+                    "description": "A short summary in words.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "outcome",
+                "confidence",
+                "rests_on",
+                "review"
+            ],
+            "title": "Fate",
+            "type": "object"
+        },
+        "FateOutcomes": {
+            "description": "Fate outcomes: the values of fate_outcomes in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "unknown",
+                "perished",
+                "survived",
+                "died_before",
+                "not_applicable"
+            ],
+            "title": "FateOutcomes",
+            "type": "string"
+        },
+        "Gender": {
+            "description": "Gender: the values of gender in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "male",
+                "female",
+                "unknown"
+            ],
+            "title": "Gender",
+            "type": "string"
+        },
+        "HolocaustFateTypes": {
+            "description": "Holocaust fate types: the values of holocaust_fate_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "unknown",
+                "perished",
+                "likely_perished",
+                "survived",
+                "likely_survived",
+                "died_before",
+                "not_applicable"
+            ],
+            "title": "HolocaustFateTypes",
+            "type": "string"
+        },
+        "ImpressoTypes": {
+            "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+            "enum": [
+                "article",
+                "ad",
+                "image",
+                "table",
+                "death_notice",
+                "weather",
+                "page",
+                "radio_bulletin",
+                "radio_broadcast_episode",
+                "chronicle",
+                "chapter",
+                "discussion",
+                "entertainment"
+            ],
+            "title": "ImpressoTypes",
+            "type": "string"
+        },
+        "IssueMention": {
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "address_grain": {
+                                "const": "words"
+                            }
+                        },
+                        "required": [
+                            "address_grain"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "printed_name": {}
+                        },
+                        "required": [
+                            "printed_name"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "address_grain": {
+                                "const": "regions"
+                            }
+                        },
+                        "required": [
+                            "address_grain"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "printed_name": {
+                                "pattern": "^$"
+                            }
+                        }
+                    }
+                }
+            ],
+            "description": "A person of the shared record named in a content item, pinned to the printed words of the name or to whole regions, with the person's roles there. A mention alone does not say the content item is about the person.",
+            "properties": {
+                "address_grain": {
+                    "$ref": "#/$defs/AddressGrain",
+                    "description": "Whether the mention is pinned to the name's words or only to whole regions."
+                },
+                "addresses": {
+                    "description": "Where the name stands: the words of the name, or the whole regions it is in.",
+                    "items": {
+                        "$ref": "#/$defs/PrintedAddress"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "content_item_id": {
+                    "description": "The content item the name stands in, by its id in the content items document.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "function": {
+                    "description": "The person's occupation or part in the content item, in a few words, such as bride, mourner or well-wisher.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The mention's id within the issue.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "person_id": {
+                    "description": "The person named, by their id in the shared record.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "printed_name": {
+                    "description": "The name as printed, found at the mention's addresses; null when the mention is pinned only to whole regions.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "roles": {
+                    "description": "The person's roles in the content item, such as the deceased or a mourner.",
+                    "items": {
+                        "$ref": "#/$defs/MentionRoles"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "title": {
+                    "description": "An honorific printed with the name, such as Rabbi or Dr., where one is kept.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "wkd_id": {
+                    "description": "The person's Wikidata id, where one is known.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "person_id",
+                "content_item_id",
+                "address_grain",
+                "roles",
+                "addresses"
+            ],
+            "title": "IssueMention",
+            "type": "object"
+        },
+        "IssueMentionsData": {
+            "additionalProperties": false,
+            "description": "One issue's mentions document: the issue's date and its mentions.",
+            "properties": {
+                "issue_date": {
+                    "description": "The issue's date, written YYYY-MM-DD.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": "string"
+                },
+                "mentions": {
+                    "description": "The issue's mentions.",
+                    "items": {
+                        "$ref": "#/$defs/IssueMention"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "issue_date",
+                "mentions"
+            ],
+            "title": "IssueMentionsData",
+            "type": "object"
+        },
+        "LifeEventTypes": {
+            "description": "Life event types: the values of life_event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "wedding",
+                "birth",
+                "death",
+                "bar_mitzvah",
+                "celebration",
+                "community_event",
+                "other"
+            ],
+            "title": "LifeEventTypes",
+            "type": "string"
+        },
+        "LocationTypes": {
+            "description": "Location types: the values of location_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "city",
+                "town",
+                "village",
+                "shtetl",
+                "street",
+                "address",
+                "landmark",
+                "country",
+                "region",
+                "district",
+                "ghetto",
+                "camp",
+                "massacre_site",
+                "deportation_point",
+                "forest"
+            ],
+            "title": "LocationTypes",
+            "type": "string"
+        },
+        "Mention": {
+            "additionalProperties": false,
+            "description": "The older form of a person's mention in a piece of the paper: the person, the piece, the name as printed and the person's role there. The site's current mention is IssueMention.",
+            "properties": {
+                "function": {
+                    "description": "A function printed with the name.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The mention's id.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "person_id": {
+                    "description": "The person mentioned, by the person's id.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "printed_name": {
+                    "description": "The name as printed.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "role": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/MentionRoles"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The person's role in the piece."
+                },
+                "title": {
+                    "description": "A title printed with the name.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "unit_id": {
+                    "description": "The piece of the paper the person is mentioned in, by its id.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "wkd_id": {
+                    "description": "The person's Wikidata id, where one is linked.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "person_id",
+                "unit_id",
+                "printed_name"
+            ],
+            "title": "Mention",
+            "type": "object"
+        },
+        "MentionRoles": {
+            "description": "Mention roles: the values of mention_roles in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "subject",
+                "deceased",
+                "honoree",
+                "signer",
+                "mourner",
+                "advertiser",
+                "author",
+                "office_holder",
+                "donor",
+                "named",
+                "betrothed",
+                "parent"
+            ],
+            "title": "MentionRoles",
+            "type": "string"
+        },
+        "Name": {
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "kind": {
+                                "const": "supplied"
+                            }
+                        },
+                        "required": [
+                            "kind"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "attribution": {},
+                            "citations": {}
+                        },
+                        "required": [
+                            "attribution",
+                            "citations"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "attribution": {}
+                        },
+                        "required": [
+                            "attribution"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "kind": {
+                                "const": "supplied"
+                            }
+                        },
+                        "required": [
+                            "kind"
+                        ]
+                    }
+                }
+            ],
+            "description": "One name of a person, a family, an organisation or a place, of one kind (printed, birth, married, supplied and so on), in one script. A person's, a family's and an organisation's names are agent names and a place's are place names (vocabulary/ site-content.json, bindings agent_name and place_name), so the class itself names no single term.",
+            "properties": {
+                "attribution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Attribution"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "For a supplied name only: who wrote the description, and on what day."
+                },
+                "citations": {
+                    "description": "Where the name is found.",
+                    "items": {
+                        "$ref": "#/$defs/Citation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "kind": {
+                    "$ref": "#/$defs/NameKinds",
+                    "description": "What kind of name it is: printed, birth, married, supplied and so on."
+                },
+                "lang": {
+                    "description": "Its language, as a language tag such as yi or en.",
+                    "pattern": "^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "script": {
+                    "description": "The script it is written in, as a four-letter ISO 15924 code such as Hebr or Latn.",
+                    "pattern": "^[A-Za-z]{4}$",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "The name, as written.",
+                    "pattern": "\\S",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "value",
+                "kind",
+                "script"
+            ],
+            "title": "Name",
+            "type": "object"
+        },
+        "NameKinds": {
+            "description": "Name kinds: the values of name_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "printed",
+                "birth",
+                "married",
+                "later",
+                "nickname",
+                "alias",
+                "religious",
+                "spelling",
+                "supplied"
+            ],
+            "title": "NameKinds",
+            "type": "string"
+        },
+        "PrintedAddress": {
+            "additionalProperties": false,
+            "description": "Where some printed words stand: the page picture, a box on it in the picture's own pixels, and the words read in that box.",
+            "properties": {
+                "bbox": {
+                    "description": "The box on the picture: left, top, width and height, in the picture's pixels.",
+                    "items": {
+                        "minimum": 0,
+                        "type": "number"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                },
+                "image_uri": {
+                    "description": "The page picture the box is on, by its name or address.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "The words read in the box, exactly as read; empty for a patch with no readable line.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "image_uri",
+                "bbox",
+                "text"
+            ],
+            "title": "PrintedAddress",
+            "type": "object"
+        },
+        "PrintedCalendar": {
+            "description": "The calendar a date was printed or written in.",
+            "enum": [
+                "gregorian",
+                "hebrew"
+            ],
+            "title": "PrintedCalendar",
+            "type": "string"
+        },
+        "PrintedTitle": {
+            "additionalProperties": false,
+            "description": "A title as printed in the paper: its words and where each line of them stands.",
+            "properties": {
+                "addresses": {
+                    "description": "Where each line of the title is printed, in order.",
+                    "items": {
+                        "$ref": "#/$defs/PrintedAddress"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "text": {
+                    "description": "The printed words, its lines joined by line breaks.",
+                    "pattern": "\\S",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "text",
+                "addresses"
+            ],
+            "title": "PrintedTitle",
+            "type": "object"
+        },
+        "ReadingStatusValue": {
+            "description": "Reading states: the values of a content item's reading_status, from vocabulary/reading-status.json, whose entry reading_status describes the field: Optional per-field reading provenance. Null is unrecorded. A session check may cover particular words only.",
+            "enum": [
+                "machine",
+                "session_checked",
+                "person_corrected"
+            ],
+            "title": "ReadingStatusValue",
+            "type": "string"
+        },
+        "RelationshipTypes": {
+            "description": "Relationship types: the values of relationship_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "child_in_law",
+                "child_of",
+                "colleague",
+                "cousin",
+                "family_member",
+                "friend",
+                "grandchild_of",
+                "grandparent_of",
+                "in_law",
+                "nephew_niece_of",
+                "parent_in_law",
+                "parent_of",
+                "sibling",
+                "sibling_in_law",
+                "spouse",
+                "student_of",
+                "teacher_of",
+                "uncle_aunt_of",
+                "great_grandparent_of",
+                "great_grandchild_of"
+            ],
+            "title": "RelationshipTypes",
+            "type": "string"
+        },
+        "Review": {
+            "additionalProperties": false,
+            "description": "Whether a person has reviewed a statement, who and on what day.",
+            "if": {
+                "properties": {
+                    "state": {
+                        "const": "approved"
+                    }
+                },
+                "required": [
+                    "state"
+                ]
+            },
+            "properties": {
+                "by": {
+                    "description": "Who reviewed it.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "on": {
+                    "description": "The day it was reviewed.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "state": {
+                    "$ref": "#/$defs/ReviewStates",
+                    "description": "Pending, or approved by a reviewer."
+                }
+            },
+            "required": [
+                "state"
+            ],
+            "then": {
+                "properties": {
+                    "by": {},
+                    "on": {}
+                },
+                "required": [
+                    "by",
+                    "on"
+                ]
+            },
+            "title": "Review",
+            "type": "object"
+        },
+        "ReviewStates": {
+            "description": "Review states: the values of review_states in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "pending",
+                "approved"
+            ],
+            "title": "ReviewStates",
+            "type": "string"
+        },
+        "Source": {
+            "additionalProperties": false,
+            "description": "A record the statements rest on: a book, an archive's database, a family document, the paper itself and the like, registered once and cited by its id.",
+            "if": {
+                "properties": {
+                    "host": {}
+                },
+                "required": [
+                    "host"
+                ]
+            },
+            "properties": {
+                "author": {
+                    "description": "Who wrote the source: an institution, never a member of its staff.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "dated": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourcedDate"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The record's own date, apart from when it was published or consulted."
+                },
+                "derived_from": {
+                    "description": "For a copy or a transcription we hold: the original it was made from, and how.",
+                    "items": {
+                        "$ref": "#/$defs/SourceDerivation"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "editor": {
+                    "description": "Who edited the source.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "holder_id": {
+                    "description": "Who holds the source, by its id in the record's holders.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "host": {
+                    "description": "The web host the source's records are served from, without www: every address cited from it is on that host or a subdomain of it.",
+                    "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The source's id in the record, which citations name.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "kind": {
+                    "$ref": "#/$defs/SourceKinds",
+                    "description": "What kind of source it is: a book, a memorial book, an archive's database, the paper and so on."
+                },
+                "language": {
+                    "description": "The languages of the record, as BCP 47 tags.",
+                    "items": {
+                        "pattern": "^(?:[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[A-Za-z]{4,8}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[xX](?:-[A-Za-z0-9]{1,8})+|[eE][nN]-[gG][bB]-[oO][eE][dD]|[iI]-(?:[aA][mM][iI]|[bB][nN][nN]|[dD][eE][fF][aA][uU][lL][tT]|[eE][nN][oO][cC][hH][iI][aA][nN]|[hH][aA][kK]|[kK][lL][iI][nN][gG][oO][nN]|[lL][uU][xX]|[mM][iI][nN][gG][oO]|[nN][aA][vV][aA][jJ][oO]|[pP][wW][nN]|[tT][aA][oO]|[tT][aA][yY]|[tT][sS][uU])|[sS][gG][nN]-(?:[bB][eE]-[fF][rR]|[bB][eE]-[nN][lL]|[cC][hH]-[dD][eE])|[aA][rR][tT]-[lL][oO][jJ][bB][aA][nN]|[cC][eE][lL]-[gG][aA][uU][lL][iI][sS][hH]|[nN][oO]-[bB][oO][kK]|[nN][oO]-[nN][yY][nN]|[zZ][hH]-[gG][uU][oO][yY][uU]|[zZ][hH]-[hH][aA][kK][kK][aA]|[zZ][hH]-[mM][iI][nN]|[zZ][hH]-[mM][iI][nN]-[nN][aA][nN]|[zZ][hH]-[xX][iI][aA][nN][gG])$",
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "made_by": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMadeBy"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Who made the source, as a category (family, studio, institution, perpetrator, unknown); never its creator."
+                },
+                "private": {
+                    "description": "True when the document itself is never shown.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "published": {
+                    "description": "When or where the source was published, as written.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "quote_condition": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceQuoteCondition"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The owner's condition on the cleared quotes: shown only where no other record says the same."
+                },
+                "quotes_cleared": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Attribution"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Who allowed quotes from this private document to be published, and on what day."
+                },
+                "reference_code": {
+                    "description": "The holder's own reference for the record, as the holder writes it.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "repository": {
+                    "description": "The old free-text holder, read for one release; holder_id replaces it.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "short_name": {
+                    "description": "A short name the site shows for the source.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "subjects": {
+                    "description": "The persons, places or events the source shows or speaks of, by their ids.",
+                    "items": {
+                        "pattern": "\\S",
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "description": "The source's title.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "url_pattern": {
+                    "description": "How an address of one of the source's records is formed.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "work_id": {
+                    "description": "The id of the work in the project's files; never published where it is a file name.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "kind",
+                "title"
+            ],
+            "then": {
+                "properties": {
+                    "host": {
+                        "pattern": "^(?!www\\.)"
+                    }
+                },
+                "required": [
+                    "host"
+                ]
+            },
+            "title": "Source",
+            "type": "object"
+        },
+        "SourceDerivation": {
+            "additionalProperties": false,
+            "description": "The record a source we hold was made from, and how: a copy or a transcription of it.",
+            "properties": {
+                "relation": {
+                    "$ref": "#/$defs/SourceDerivationRelation",
+                    "description": "Whether this source is a copy or a transcription of the original."
+                },
+                "source_id": {
+                    "description": "The original source, by its id in the record's sources.",
+                    "pattern": "\\S",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "source_id",
+                "relation"
+            ],
+            "title": "SourceDerivation",
+            "type": "object"
+        },
+        "SourceDerivationRelation": {
+            "description": "How a source we hold was made from another: a copy of it, or a transcription of it.",
+            "enum": [
+                "copy",
+                "transcription"
+            ],
+            "title": "SourceDerivationRelation",
+            "type": "string"
+        },
+        "SourceKinds": {
+            "description": "Source kinds: the values of source_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "archive_database",
+                "book",
+                "memorial_book",
+                "oral_history",
+                "memoir",
+                "photograph",
+                "press",
+                "family_document",
+                "web_page",
+                "the_paper"
+            ],
+            "title": "SourceKinds",
+            "type": "string"
+        },
+        "SourceMadeBy": {
+            "description": "Who made a source, as a category: never an agent, so never its creator.",
+            "enum": [
+                "family",
+                "studio",
+                "institution",
+                "perpetrator",
+                "unknown"
+            ],
+            "title": "SourceMadeBy",
+            "type": "string"
+        },
+        "SourceQuoteCondition": {
+            "description": "The owner's condition on a private source's cleared quotes.",
+            "enum": [
+                "unique_information"
+            ],
+            "title": "SourceQuoteCondition",
+            "type": "string"
+        },
+        "SourcedDate": {
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "not": {
+                            "required": [
+                                "start"
+                            ]
+                        },
+                        "properties": {
+                            "start": {}
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "printed": {}
+                        },
+                        "required": [
+                            "printed"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "printed_calendar": {}
+                        },
+                        "required": [
+                            "printed_calendar"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "printed": {}
+                        },
+                        "required": [
+                            "printed"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "end": {}
+                        },
+                        "required": [
+                            "end"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "precision": {
+                                "const": "range"
+                            }
+                        },
+                        "required": [
+                            "precision"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "precision": {
+                                "const": "range"
+                            }
+                        },
+                        "required": [
+                            "precision"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "end": {},
+                            "start": {}
+                        },
+                        "required": [
+                            "start",
+                            "end"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "precision": {
+                                "const": "year"
+                            }
+                        },
+                        "required": [
+                            "precision"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "start": {
+                                "pattern": "^\\d{4}$"
+                            }
+                        },
+                        "required": [
+                            "start"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "precision": {
+                                "const": "month"
+                            }
+                        },
+                        "required": [
+                            "precision"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "start": {
+                                "pattern": "^\\d{4}-\\d{2}$"
+                            }
+                        },
+                        "required": [
+                            "start"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "precision": {
+                                "const": "day"
+                            }
+                        },
+                        "required": [
+                            "precision"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "start": {
+                                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                            }
+                        },
+                        "required": [
+                            "start"
+                        ]
+                    }
+                }
+            ],
+            "description": "A date a source gives: a normalized start (and end, for a range) with how precise it is, or the words as printed with their calendar, or both.",
+            "properties": {
+                "end": {
+                    "description": "The end of a range of dates, written as the start is.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "inferred": {
+                    "description": "True when the date was worked out rather than read.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "precision": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourcedDatePrecision"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "How much of the date is known: year, month, day or range."
+                },
+                "printed": {
+                    "description": "The date's words as the source prints or writes them.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "printed_calendar": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/PrintedCalendar"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The calendar of the printed words."
+                },
+                "start": {
+                    "description": "The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SourcedDate",
+            "type": "object"
+        },
+        "SourcedDatePrecision": {
+            "description": "How much of a sourced date is known: its year, its month, its day, or a range.",
+            "enum": [
+                "year",
+                "month",
+                "day",
+                "range"
+            ],
+            "title": "SourcedDatePrecision",
+            "type": "string"
+        },
+        "Subjects": {
+            "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.0.0.",
+            "enum": [
+                "education",
+                "culture",
+                "health",
+                "palestine",
+                "jewish_world",
+                "literature",
+                "sport",
+                "economy",
+                "community_affairs",
+                "zionism",
+                "international_affairs"
+            ],
+            "title": "Subjects",
+            "type": "string"
+        },
+        "SuppliedTitle": {
+            "additionalProperties": false,
+            "description": "A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check.",
+            "properties": {
+                "attribution": {
+                    "$ref": "#/$defs/Authorship",
+                    "description": "Who wrote the title, and on which day."
+                },
+                "based_on": {
+                    "$ref": "#/$defs/TextBasis",
+                    "description": "The exact printed text the title was made from, and where it is printed."
+                },
+                "checked_against": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TitleCheck"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A later check of this title against the reading, where one was made."
+                },
+                "language": {
+                    "const": "en",
+                    "description": "The title's language, always English (en).",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "The English title.",
+                    "pattern": "\\S",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "text",
+                "language",
+                "based_on",
+                "attribution"
+            ],
+            "title": "SuppliedTitle",
+            "type": "object"
+        },
+        "TextBasis": {
+            "additionalProperties": false,
+            "description": "The exact text a translation or supplied title was made from, and where it is printed, kept even after the text is read again.",
+            "properties": {
+                "addresses": {
+                    "description": "Where that text is printed, one address a line or patch.",
+                    "items": {
+                        "$ref": "#/$defs/PrintedAddress"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "source_text": {
+                    "description": "The text used, exactly, never normalised or replaced by a later reading.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "source_text",
+                "addresses"
+            ],
+            "title": "TextBasis",
+            "type": "object"
+        },
+        "TitleCheck": {
+            "additionalProperties": false,
+            "description": "A check of a supplied title's English.",
+            "properties": {
+                "attribution": {
+                    "$ref": "#/$defs/Authorship",
+                    "description": "Who checked it, and on which day."
+                },
+                "english_sha256": {
+                    "description": "The SHA-256 digest of the checked English field's exact UTF-8 bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "judgement_id": {
+                    "description": "The kept judgement, by an id without spaces followed by the field it judged, :title or :text.",
+                    "pattern": "^[^\\s\\u0085\\uFEFF]+:title$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "judgement_sha256": {
+                    "description": "The SHA-256 digest of the kept judgement file's exact bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "reading_id": {
+                    "description": "The reading of the printed text that the English was checked against.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "reading_sha256": {
+                    "description": "The SHA-256 digest of that reading's exact UTF-8 bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "reading_id",
+                "reading_sha256",
+                "english_sha256",
+                "judgement_id",
+                "judgement_sha256",
+                "attribution"
+            ],
+            "title": "TitleCheck",
+            "type": "object"
+        },
+        "TitleTypes": {
+            "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.0.0.",
+            "enum": [
+                "printed",
+                "supplied"
+            ],
+            "title": "TitleTypes",
+            "type": "string"
+        },
+        "Translation": {
+            "additionalProperties": false,
+            "description": "An English translation of a content item's printed text, with the exact text it was made from, who made it and, where one was made, its later check.",
+            "properties": {
+                "attribution": {
+                    "$ref": "#/$defs/Authorship",
+                    "description": "Who translated it, and on which day."
+                },
+                "based_on": {
+                    "$ref": "#/$defs/TextBasis",
+                    "description": "The exact printed text translated, and where it is printed."
+                },
+                "checked_against": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TranslationCheck"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A later check of this translation against the reading, where one was made."
+                },
+                "language": {
+                    "const": "en",
+                    "description": "The translation's language, always English (en).",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "The English text.",
+                    "pattern": "\\S",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "text",
+                "language",
+                "based_on",
+                "attribution"
+            ],
+            "title": "Translation",
+            "type": "object"
+        },
+        "TranslationCheck": {
+            "additionalProperties": false,
+            "description": "A check of a translation's English.",
+            "properties": {
+                "attribution": {
+                    "$ref": "#/$defs/Authorship",
+                    "description": "Who checked it, and on which day."
+                },
+                "english_sha256": {
+                    "description": "The SHA-256 digest of the checked English field's exact UTF-8 bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "judgement_id": {
+                    "description": "The kept judgement, by an id without spaces followed by the field it judged, :title or :text.",
+                    "pattern": "^[^\\s\\u0085\\uFEFF]+:text$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "judgement_sha256": {
+                    "description": "The SHA-256 digest of the kept judgement file's exact bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "reading_id": {
+                    "description": "The reading of the printed text that the English was checked against.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "reading_sha256": {
+                    "description": "The SHA-256 digest of that reading's exact UTF-8 bytes.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "reading_id",
+                "reading_sha256",
+                "english_sha256",
+                "judgement_id",
+                "judgement_sha256",
+                "attribution"
+            ],
+            "title": "TranslationCheck",
+            "type": "object"
+        }
+    },
+    "$id": "https://pruzhany.org/ns/mentions",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": false,
+    "description": "One issue's mentions document: the issue's date and its mentions.",
+    "metamodel_version": "1.12.0",
+    "properties": {
+        "issue_date": {
+            "description": "The issue's date, written YYYY-MM-DD.",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+        },
+        "mentions": {
+            "description": "The issue's mentions.",
+            "items": {
+                "$ref": "#/$defs/IssueMention"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "issue_date",
+        "mentions"
+    ],
+    "title": "pruzhany_mentions",
+    "type": "object",
+    "version": null
+}

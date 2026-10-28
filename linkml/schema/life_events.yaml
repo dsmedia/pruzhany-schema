@@ -1,0 +1,78 @@
+# The life events document of one issue (pruzhany-svelte static/data/<date>-life-events.json),
+# as zod/site-issue.schema.ts (IssueLifeEventSchema, IssueLifeEventsDataSchema) and
+# pydantic/site_issue.py shape it: which of the shared record's events this issue prints, and in
+# which content items. Its JSON Schema is made with the top class IssueLifeEventsData
+# (modules.json). The event itself (its kind, date and people) is the shared record's; an event
+# here is named by the same id. RiC-O governs life events
+# (docs/adr/0001-which-standard-governs-what.md).
+id: https://pruzhany.org/ns/life_events
+name: pruzhany_life_events
+title: The life events document of a Pruzhany issue
+description: >-
+  One issue's life events: each birth, wedding, death or other happening in a person's life
+  that the issue prints, and the content items that print it, each with its part.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+  rico: https://www.ica.org/standards/RiC/ontology#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+  - vocabulary
+
+classes:
+  IssueLifeEventsData:
+    tree_root: true
+    description: >-
+      One issue's life events document: the issue's date and the life events it prints.
+    attributes:
+      issue_date:
+        range: IsoDay
+        required: true
+        description: >-
+          The issue's date, written YYYY-MM-DD.
+      life_events:
+        range: IssueLifeEvent
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The life events the issue prints.
+
+  IssueLifeEvent:
+    description: >-
+      A life event of the shared record as this issue prints it: the content items that print
+      it, each with its part.
+    class_uri: rico:Event
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The life event, by its id in the shared record.
+      content_items:
+        range: ContentItemRef
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          The content items of the issue that print the event.
+
+  ContentItemRef:
+    description: >-
+      A content item that prints a life event, and the part it plays: the announcement itself,
+      a greeting, a condolence, a mention or an advertisement.
+    attributes:
+      content_item_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The content item, by its id in the content items document.
+      role:
+        range: ContentUnitRoles
+        required: true
+        description: >-
+          The part the content item plays for the event, not any person's role.

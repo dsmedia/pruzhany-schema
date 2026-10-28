@@ -1,0 +1,108 @@
+id: https://pruzhany.org/ns/fixture-documents-house-style
+name: fixture_documents_house_style
+description: >-
+  One element for each row README.md ("House style") gained with the issue documents;
+  tests/test_documents_house_style.py checks the JSON Schema LinkML generates for each.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+  rico: https://www.ica.org/standards/RiC/ontology#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - ../../../schema/types
+enums:
+  Grain:
+    description: How a mention is pinned.
+    permissible_values:
+      words:
+        description: To words.
+      regions:
+        description: To regions.
+classes:
+  Check:
+    description: A check whose judgement is of a title or a text.
+    attributes:
+      judgement_id:
+        required: true
+        pattern: '^[^\s]+:(title|text)$'
+        description: The judgement and its field.
+  TitleCheck:
+    is_a: Check
+    description: A check of a title.
+    slot_usage:
+      judgement_id:
+        pattern: '^[^\s]+:title$'
+  Document:
+    tree_root: true
+    description: One element for each row.
+    class_uri: rico:Event
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: An object's id.
+      hebrew_date:
+        alias: hebrewDate
+        required: true
+        description: A key written in camelCase.
+      version:
+        required: true
+        pattern: '^(0\.1\.0|1\.0\.0)$(?![\s\S])'
+        description: A version stamp.
+      check:
+        range: TitleCheck
+        inlined: true
+        required: true
+        description: One object inside another.
+      optional_check:
+        range: TitleCheck
+        inlined: true
+        description: One object inside another, optional.
+      checks:
+        range: TitleCheck
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: A list of objects.
+      roles:
+        range: Grain
+        multivalued: true
+        required: true
+        list_elements_unique: true
+        description: A list whose items must differ, which LinkML says and the JSON Schema does not.
+      grain:
+        range: Grain
+        required: true
+        slot_uri: rico:hasEventType
+        description: The kind of pinning.
+      printed_name:
+        range: NonBlankText
+        exact_mappings:
+          - pc:site_mention
+        annotations:
+          impresso: >-
+            An annotation, in words.
+        description: A name, never empty.
+    rules:
+      - description: Words have a name.
+        preconditions:
+          slot_conditions:
+            grain:
+              equals_string: words
+        postconditions:
+          slot_conditions:
+            printed_name:
+              required: true
+      - description: Regions have none.
+        preconditions:
+          slot_conditions:
+            grain:
+              equals_string_in:
+                - regions
+        postconditions:
+          slot_conditions:
+            printed_name:
+              required: false
+              pattern: '^$'

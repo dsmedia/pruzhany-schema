@@ -1,0 +1,138 @@
+# The pages document of one issue (pruzhany-svelte static/data/<date>-pages.json), as
+# zod/page.schema.ts and pydantic/page.py shape it. Its JSON Schema is made with the top class
+# PagesData (modules.json). The twins keep this document's older, looser shape: plain text for
+# ids and dates, with no pattern; where Zod says a number and Pydantic a whole number (a page's
+# number, its size, a region's box), the definition says a whole number, as the real files hold.
+# Impresso governs pages and regions (docs/adr/0001-which-standard-governs-what.md); its field
+# is named in an `impresso` annotation, in words.
+id: https://pruzhany.org/ns/pages
+name: pruzhany_pages
+title: The pages document of a Pruzhany issue
+description: >-
+  One issue's pages: each page's picture and size, and the regions of print on it with the words
+  read in each and the content item each belongs to.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+  schema: http://schema.org/
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+
+classes:
+  PagesData:
+    tree_root: true
+    description: >-
+      One issue's pages document: the issue's date and its pages in order.
+    annotations:
+      impresso: >-
+        The page files of one issue (page.schema.json), and the issue file's list of its pages
+        (issue.schema.json pp).
+    attributes:
+      edition_date:
+        required: true
+        description: >-
+          The issue's date, written YYYY-MM-DD.
+      pages:
+        range: Page
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The issue's pages.
+
+  Page:
+    description: >-
+      One printed page of the issue: its picture, its size and its regions of print.
+    close_mappings:
+      - schema:CreativeWork
+    annotations:
+      impresso: >-
+        A page file (page.schema.json).
+    attributes:
+      id:
+        required: true
+        description: >-
+          The page's id, such as page-1938-12-16-4.
+        annotations:
+          impresso: >-
+            The page file's id.
+      issue_date:
+        required: true
+        description: >-
+          The date of the issue the page belongs to, written YYYY-MM-DD.
+      page_number:
+        range: integer
+        required: true
+        description: >-
+          The page's number within the issue, from 1.
+      image_uri:
+        required: true
+        description: >-
+          The page's picture, by its name or address.
+      dimensions:
+        range: integer
+        multivalued: true
+        required: true
+        minimum_cardinality: 2
+        maximum_cardinality: 2
+        description: >-
+          The picture's width and height, in its pixels.
+        annotations:
+          impresso: >-
+            The page file's fw and fh, the width and height of the facsimile.
+      blocks:
+        range: Block
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The regions of print on the page.
+        annotations:
+          impresso: >-
+            The page file's regions (r).
+
+  Block:
+    description: >-
+      One region of print on a page, its box and the words read in it, belonging to one
+      content item, or to no item when it is a section heading.
+    annotations:
+      impresso: >-
+        A page region (page.schema.json r[]).
+    attributes:
+      id:
+        required: true
+        description: >-
+          The region's id, such as blk-p4-001.
+      bbox:
+        range: NonNegativeInteger
+        multivalued: true
+        required: true
+        minimum_cardinality: 4
+        maximum_cardinality: 4
+        description: >-
+          The region's box on the page picture: left, top, width and height, in the picture's
+          pixels.
+        annotations:
+          impresso: >-
+            The region's coordinates (r[].c).
+      transcription:
+        required: true
+        description: >-
+          The words read in the region, its lines separated by line breaks.
+      confidence:
+        range: float
+        description: >-
+          How sure the reading is, from 0 to 1, where it was recorded.
+      image_crop:
+        description: >-
+          A picture of the region alone, by its path, where one was made.
+      unit_id:
+        description: >-
+          The content item the region belongs to, by its id; null for a region that is a
+          section's heading.
+        annotations:
+          impresso: >-
+            The content item a region belongs to (r[].pOf).

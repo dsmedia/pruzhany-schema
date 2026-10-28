@@ -1,0 +1,101 @@
+id: https://pruzhany.org/ns/fixture-house-style
+name: fixture_house_style
+description: >-
+  One slot for each way README.md ("House style") says to write a construct of the shapes;
+  tests/test_house_style.py checks the JSON Schema LinkML generates for each, so the README's
+  examples stay what LinkML 1.12.1 does. It uses the real shared types.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - ../../schema/types
+enums:
+  AddressGrain:
+    description: How a mention is addressed, as the mentions shape says.
+    permissible_values:
+      words:
+        description: By its words.
+      regions:
+        description: By its regions.
+classes:
+  Qualifiers:
+    description: A map of text to text, as a fact's qualifiers are.
+    extra_slots:
+      range_expression:
+        range: string
+        required: true
+  Check:
+    description: A small object, inlined.
+    attributes:
+      reading_id:
+        range: NonBlankText
+        required: true
+        description: Required text that is not blank.
+  Document:
+    tree_root: true
+    description: One slot for each construct.
+    attributes:
+      required_text:
+        range: NonBlankText
+        required: true
+        description: A key that must be there, never null.
+      optional_text:
+        range: NonBlankText
+        description: A key that may be left out or null.
+      issue_date:
+        range: IsoDay
+        required: true
+        description: A day by the shared pattern.
+      digest:
+        range: Sha256Hex
+        description: A digest by the shared pattern.
+      language:
+        equals_string: en
+        required: true
+        description: A constant.
+      url:
+        range: uri
+        description: A URI, which JSON Schema marks with format uri.
+      grain:
+        range: AddressGrain
+        required: true
+        description: An enumeration.
+      roles:
+        range: AddressGrain
+        multivalued: true
+        required: true
+        minimum_cardinality: 1
+        description: A list of at least one.
+      bbox:
+        range: NonNegativeNumber
+        multivalued: true
+        required: true
+        minimum_cardinality: 4
+        maximum_cardinality: 4
+        description: A box, four numbers each at least 0.
+      block_breaks:
+        range: NonNegativeInteger
+        multivalued: true
+        description: A list whose items are bounded through their type.
+      width:
+        range: PositiveInteger
+        description: A whole number above 0.
+      confidence:
+        range: float
+        description: Any number.
+      required_check:
+        range: Check
+        inlined: true
+        required: true
+        description: An object that must be there.
+      optional_check:
+        range: Check
+        inlined: true
+        description: An object that may be left out or null.
+      qualifiers:
+        range: Qualifiers
+        inlined: true
+        description: A map of text to text.

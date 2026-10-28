@@ -1,0 +1,17 @@
+id: https://pruzhany.org/ns/fixture-boolean-value
+name: fixture_boolean_value
+description: A slot made required with yes, which YAML 1.1 reads as true.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+classes:
+  Page:
+    description: A page.
+    attributes:
+      id:
+        required: yes  # refused here
+        description: The page's id.

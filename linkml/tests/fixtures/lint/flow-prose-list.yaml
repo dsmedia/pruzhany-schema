@@ -1,0 +1,14 @@
+id: https://pruzhany.org/ns/fixture-flow-prose-list
+name: fixture_flow_prose_list
+description: Comments as a flow list, where a comma makes two of one.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+classes:
+  Block:
+    description: A block.
+    comments: [Counted by hand, twice]  # refused here

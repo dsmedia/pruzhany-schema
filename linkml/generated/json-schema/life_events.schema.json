@@ -1,0 +1,472 @@
+{
+    "$defs": {
+        "CitationRemarkKinds": {
+            "description": "Citation remark kinds: the values of citation_remark_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "private_source_remark"
+            ],
+            "title": "CitationRemarkKinds",
+            "type": "string"
+        },
+        "ClaimStatus": {
+            "description": "Claim status: the values of claim_status in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "proposed",
+                "accepted",
+                "disputed",
+                "rejected"
+            ],
+            "title": "ClaimStatus",
+            "type": "string"
+        },
+        "CompatibilityEventTypes": {
+            "description": "Compatibility event types: the values of compatibility_event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "wedding",
+                "birth",
+                "death",
+                "bar_mitzvah",
+                "celebration",
+                "community_event",
+                "holocaust_event",
+                "other"
+            ],
+            "title": "CompatibilityEventTypes",
+            "type": "string"
+        },
+        "Confidence": {
+            "description": "Confidence: the values of confidence in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "confirmed",
+                "probable",
+                "possible"
+            ],
+            "title": "Confidence",
+            "type": "string"
+        },
+        "ContentItemRef": {
+            "additionalProperties": false,
+            "description": "A content item that prints a life event, and the part it plays: the announcement itself, a greeting, a condolence, a mention or an advertisement.",
+            "properties": {
+                "content_item_id": {
+                    "description": "The content item, by its id in the content items document.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "role": {
+                    "$ref": "#/$defs/ContentUnitRoles",
+                    "description": "The part the content item plays for the event, not any person's role."
+                }
+            },
+            "required": [
+                "content_item_id",
+                "role"
+            ],
+            "title": "ContentItemRef",
+            "type": "object"
+        },
+        "ContentItemSubtypes": {
+            "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.0.0.",
+            "enum": [
+                "wedding_greeting",
+                "engagement_greeting",
+                "birth_greeting",
+                "bar_mitzvah_greeting",
+                "new_year_greeting",
+                "departure_greeting",
+                "greeting",
+                "thanks",
+                "meeting_notice",
+                "announcement",
+                "appeal",
+                "commercial_advertisement",
+                "condolence",
+                "memorial_notice",
+                "death_announcement",
+                "editorial",
+                "opinion",
+                "letter",
+                "poem",
+                "sketch",
+                "humour"
+            ],
+            "title": "ContentItemSubtypes",
+            "type": "string"
+        },
+        "ContentUnitRoles": {
+            "description": "Content unit roles: the values of content_unit_roles in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "primary_announcement",
+                "congratulation",
+                "condolence",
+                "mention",
+                "advertisement"
+            ],
+            "title": "ContentUnitRoles",
+            "type": "string"
+        },
+        "EventParts": {
+            "description": "Event parts: the values of event_parts in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "baby",
+                "parent",
+                "bride",
+                "groom",
+                "boy",
+                "deceased",
+                "remembered"
+            ],
+            "title": "EventParts",
+            "type": "string"
+        },
+        "EventTypes": {
+            "description": "Event types: the values of event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "engagement",
+                "wedding",
+                "birth",
+                "death",
+                "bar_mitzvah",
+                "celebration",
+                "community_event",
+                "holocaust_event",
+                "other",
+                "memorial"
+            ],
+            "title": "EventTypes",
+            "type": "string"
+        },
+        "ExternalSourceTypes": {
+            "description": "External source types: the values of external_source_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "arolsen_archives",
+                "familysearch",
+                "findagrave",
+                "geni",
+                "jewishgen",
+                "jri_poland",
+                "wikipedia",
+                "yad_vashem"
+            ],
+            "title": "ExternalSourceTypes",
+            "type": "string"
+        },
+        "FactTypes": {
+            "description": "Fact types: the values of fact_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "birth",
+                "death",
+                "residence",
+                "occupation",
+                "office",
+                "membership",
+                "education",
+                "emigration",
+                "survival",
+                "parenthood",
+                "ghetto_role",
+                "partisan_service",
+                "deportation",
+                "burial",
+                "commemoration",
+                "event_participation",
+                "other",
+                "kinship"
+            ],
+            "title": "FactTypes",
+            "type": "string"
+        },
+        "FateOutcomes": {
+            "description": "Fate outcomes: the values of fate_outcomes in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "unknown",
+                "perished",
+                "survived",
+                "died_before",
+                "not_applicable"
+            ],
+            "title": "FateOutcomes",
+            "type": "string"
+        },
+        "Gender": {
+            "description": "Gender: the values of gender in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "male",
+                "female",
+                "unknown"
+            ],
+            "title": "Gender",
+            "type": "string"
+        },
+        "HolocaustFateTypes": {
+            "description": "Holocaust fate types: the values of holocaust_fate_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "unknown",
+                "perished",
+                "likely_perished",
+                "survived",
+                "likely_survived",
+                "died_before",
+                "not_applicable"
+            ],
+            "title": "HolocaustFateTypes",
+            "type": "string"
+        },
+        "ImpressoTypes": {
+            "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+            "enum": [
+                "article",
+                "ad",
+                "image",
+                "table",
+                "death_notice",
+                "weather",
+                "page",
+                "radio_bulletin",
+                "radio_broadcast_episode",
+                "chronicle",
+                "chapter",
+                "discussion",
+                "entertainment"
+            ],
+            "title": "ImpressoTypes",
+            "type": "string"
+        },
+        "IssueLifeEvent": {
+            "additionalProperties": false,
+            "description": "A life event of the shared record as this issue prints it: the content items that print it, each with its part.",
+            "properties": {
+                "content_items": {
+                    "description": "The content items of the issue that print the event.",
+                    "items": {
+                        "$ref": "#/$defs/ContentItemRef"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "id": {
+                    "description": "The life event, by its id in the shared record.",
+                    "pattern": "\\S",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "content_items"
+            ],
+            "title": "IssueLifeEvent",
+            "type": "object"
+        },
+        "IssueLifeEventsData": {
+            "additionalProperties": false,
+            "description": "One issue's life events document: the issue's date and the life events it prints.",
+            "properties": {
+                "issue_date": {
+                    "description": "The issue's date, written YYYY-MM-DD.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": "string"
+                },
+                "life_events": {
+                    "description": "The life events the issue prints.",
+                    "items": {
+                        "$ref": "#/$defs/IssueLifeEvent"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "issue_date",
+                "life_events"
+            ],
+            "title": "IssueLifeEventsData",
+            "type": "object"
+        },
+        "LifeEventTypes": {
+            "description": "Life event types: the values of life_event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "wedding",
+                "birth",
+                "death",
+                "bar_mitzvah",
+                "celebration",
+                "community_event",
+                "other"
+            ],
+            "title": "LifeEventTypes",
+            "type": "string"
+        },
+        "LocationTypes": {
+            "description": "Location types: the values of location_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "city",
+                "town",
+                "village",
+                "shtetl",
+                "street",
+                "address",
+                "landmark",
+                "country",
+                "region",
+                "district",
+                "ghetto",
+                "camp",
+                "massacre_site",
+                "deportation_point",
+                "forest"
+            ],
+            "title": "LocationTypes",
+            "type": "string"
+        },
+        "MentionRoles": {
+            "description": "Mention roles: the values of mention_roles in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "subject",
+                "deceased",
+                "honoree",
+                "signer",
+                "mourner",
+                "advertiser",
+                "author",
+                "office_holder",
+                "donor",
+                "named",
+                "betrothed",
+                "parent"
+            ],
+            "title": "MentionRoles",
+            "type": "string"
+        },
+        "NameKinds": {
+            "description": "Name kinds: the values of name_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "printed",
+                "birth",
+                "married",
+                "later",
+                "nickname",
+                "alias",
+                "religious",
+                "spelling",
+                "supplied"
+            ],
+            "title": "NameKinds",
+            "type": "string"
+        },
+        "ReadingStatusValue": {
+            "description": "Reading states: the values of a content item's reading_status, from vocabulary/reading-status.json, whose entry reading_status describes the field: Optional per-field reading provenance. Null is unrecorded. A session check may cover particular words only.",
+            "enum": [
+                "machine",
+                "session_checked",
+                "person_corrected"
+            ],
+            "title": "ReadingStatusValue",
+            "type": "string"
+        },
+        "RelationshipTypes": {
+            "description": "Relationship types: the values of relationship_types in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "child_in_law",
+                "child_of",
+                "colleague",
+                "cousin",
+                "family_member",
+                "friend",
+                "grandchild_of",
+                "grandparent_of",
+                "in_law",
+                "nephew_niece_of",
+                "parent_in_law",
+                "parent_of",
+                "sibling",
+                "sibling_in_law",
+                "spouse",
+                "student_of",
+                "teacher_of",
+                "uncle_aunt_of",
+                "great_grandparent_of",
+                "great_grandchild_of"
+            ],
+            "title": "RelationshipTypes",
+            "type": "string"
+        },
+        "ReviewStates": {
+            "description": "Review states: the values of review_states in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "pending",
+                "approved"
+            ],
+            "title": "ReviewStates",
+            "type": "string"
+        },
+        "SourceKinds": {
+            "description": "Source kinds: the values of source_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+            "enum": [
+                "archive_database",
+                "book",
+                "memorial_book",
+                "oral_history",
+                "memoir",
+                "photograph",
+                "press",
+                "family_document",
+                "web_page",
+                "the_paper"
+            ],
+            "title": "SourceKinds",
+            "type": "string"
+        },
+        "Subjects": {
+            "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.0.0.",
+            "enum": [
+                "education",
+                "culture",
+                "health",
+                "palestine",
+                "jewish_world",
+                "literature",
+                "sport",
+                "economy",
+                "community_affairs",
+                "zionism",
+                "international_affairs"
+            ],
+            "title": "Subjects",
+            "type": "string"
+        },
+        "TitleTypes": {
+            "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.0.0.",
+            "enum": [
+                "printed",
+                "supplied"
+            ],
+            "title": "TitleTypes",
+            "type": "string"
+        }
+    },
+    "$id": "https://pruzhany.org/ns/life_events",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": false,
+    "description": "One issue's life events document: the issue's date and the life events it prints.",
+    "metamodel_version": "1.12.0",
+    "properties": {
+        "issue_date": {
+            "description": "The issue's date, written YYYY-MM-DD.",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+        },
+        "life_events": {
+            "description": "The life events the issue prints.",
+            "items": {
+                "$ref": "#/$defs/IssueLifeEvent"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "issue_date",
+        "life_events"
+    ],
+    "title": "pruzhany_life_events",
+    "type": "object",
+    "version": null
+}

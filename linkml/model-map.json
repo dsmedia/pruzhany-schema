@@ -1,0 +1,283 @@
+{
+	"models": {
+		"Attribution": {
+			"zod": "Attribution",
+			"pointer": ""
+		},
+		"Authorship": {
+			"zod": "Authorship",
+			"pointer": ""
+		},
+		"Block": {
+			"zod": "Block",
+			"pointer": ""
+		},
+		"Citation": {
+			"zod": "Citation",
+			"pointer": ""
+		},
+		"ContentItem": {
+			"zod": "ContentItem",
+			"pointer": ""
+		},
+		"ContentItemBlockRef": {
+			"zod": "ContentItemBlockRef",
+			"pointer": ""
+		},
+		"ContentItemRef": {
+			"zod": "ContentItemRef",
+			"pointer": ""
+		},
+		"ContentItemsData": {
+			"zod": "ContentItemsData",
+			"pointer": ""
+		},
+		"CrossReference": {
+			"zod": "CrossReference",
+			"pointer": ""
+		},
+		"Edition": {
+			"zod": "Edition",
+			"pointer": ""
+		},
+		"EditionsCatalog": {
+			"zod": "EditionsCatalog",
+			"pointer": ""
+		},
+		"EnglishCheck": {
+			"zod": "EnglishCheck",
+			"pointer": ""
+		},
+		"ExternalReference": {
+			"zod": "ExternalReference",
+			"pointer": ""
+		},
+		"Fact": {
+			"zod": "Fact",
+			"pointer": ""
+		},
+		"FactQualifiers": {
+			"zod": "Fact",
+			"pointer": "/properties/qualifiers/anyOf/0"
+		},
+		"Fate": {
+			"zod": "Fate",
+			"pointer": ""
+		},
+		"HistoricalEvent": {
+			"zod": "HistoricalEvent",
+			"pointer": ""
+		},
+		"Holder": {
+			"zod": "Holder",
+			"pointer": ""
+		},
+		"Holiday": {
+			"zod": "Holiday",
+			"pointer": ""
+		},
+		"IssueLifeEvent": {
+			"zod": "IssueLifeEvent",
+			"pointer": ""
+		},
+		"IssueLifeEventsData": {
+			"zod": "IssueLifeEventsData",
+			"pointer": ""
+		},
+		"IssueMention": {
+			"zod": "IssueMention",
+			"pointer": ""
+		},
+		"IssueMentionsData": {
+			"zod": "IssueMentionsData",
+			"pointer": ""
+		},
+		"LifeEventDate": {
+			"zod": "LifeEventDate",
+			"pointer": ""
+		},
+		"LifeEventMainPerson": {
+			"zod": "LifeEventMainPerson",
+			"pointer": ""
+		},
+		"Media": {
+			"zod": "Media",
+			"pointer": ""
+		},
+		"MediaConsent": {
+			"zod": "MediaConsent",
+			"pointer": ""
+		},
+		"MediaConsentScope": {
+			"zod": "MediaConsentScope",
+			"pointer": ""
+		},
+		"MediaDecision": {
+			"zod": "MediaDecision",
+			"pointer": ""
+		},
+		"MediaDepicted": {
+			"zod": "MediaDepicted",
+			"pointer": ""
+		},
+		"MediaDerivative": {
+			"zod": "MediaDerivative",
+			"pointer": ""
+		},
+		"MediaFamilyWords": {
+			"zod": "MediaFamilyWords",
+			"pointer": ""
+		},
+		"MediaFixity": {
+			"zod": "MediaFixity",
+			"pointer": ""
+		},
+		"MediaMaster": {
+			"zod": "MediaMaster",
+			"pointer": ""
+		},
+		"MediaPortrait": {
+			"zod": "MediaPortrait",
+			"pointer": ""
+		},
+		"MediaRegion": {
+			"zod": "MediaRegion",
+			"pointer": ""
+		},
+		"MediaText": {
+			"zod": "MediaText",
+			"pointer": ""
+		},
+		"MediaWithdrawal": {
+			"zod": "MediaWithdrawal",
+			"pointer": ""
+		},
+		"Mention": {
+			"zod": "Mention",
+			"pointer": ""
+		},
+		"Name": {
+			"zod": "Name",
+			"pointer": ""
+		},
+		"Page": {
+			"zod": "Page",
+			"pointer": ""
+		},
+		"PagesData": {
+			"zod": "PagesData",
+			"pointer": ""
+		},
+		"PlaceIdentifier": {
+			"zod": "PlaceIdentifier",
+			"pointer": ""
+		},
+		"PrintedAddress": {
+			"zod": "PrintedAddress",
+			"pointer": ""
+		},
+		"PrintedSection": {
+			"zod": "PrintedSection",
+			"pointer": ""
+		},
+		"PrintedTitle": {
+			"zod": "PrintedTitle",
+			"pointer": ""
+		},
+		"PublicMedia": {
+			"zod": "PublicMedia",
+			"pointer": ""
+		},
+		"ReadingStatus": {
+			"zod": "ReadingStatus",
+			"pointer": ""
+		},
+		"Review": {
+			"zod": "Review",
+			"pointer": ""
+		},
+		"SharedEvent": {
+			"zod": "SharedEvent",
+			"pointer": ""
+		},
+		"SharedFact": {
+			"zod": "SharedFact",
+			"pointer": ""
+		},
+		"SharedFamily": {
+			"zod": "SharedFamily",
+			"pointer": ""
+		},
+		"SharedName": {
+			"zod": "SharedName",
+			"pointer": ""
+		},
+		"SharedOrganization": {
+			"zod": "SharedOrganization",
+			"pointer": ""
+		},
+		"SharedPerson": {
+			"zod": "SharedPerson",
+			"pointer": ""
+		},
+		"SharedPlace": {
+			"zod": "SharedPlace",
+			"pointer": ""
+		},
+		"SharedRecord": {
+			"zod": "SharedRecord",
+			"pointer": ""
+		},
+		"SiteCitation": {
+			"zod": "SiteCitation",
+			"pointer": ""
+		},
+		"Source": {
+			"zod": "Source",
+			"pointer": ""
+		},
+		"SourceDerivation": {
+			"zod": "SourceDerivation",
+			"pointer": ""
+		},
+		"SourcedDate": {
+			"zod": "SourcedDate",
+			"pointer": ""
+		},
+		"SourcedRelation": {
+			"zod": "SourcedRelation",
+			"pointer": ""
+		},
+		"SuppliedTitle": {
+			"zod": "SuppliedTitle",
+			"pointer": ""
+		},
+		"TextBasis": {
+			"zod": "TextBasis",
+			"pointer": ""
+		},
+		"TitleCheck": {
+			"zod": "TitleCheck",
+			"pointer": ""
+		},
+		"Translation": {
+			"zod": "Translation",
+			"pointer": ""
+		},
+		"TranslationCheck": {
+			"zod": "TranslationCheck",
+			"pointer": ""
+		}
+	},
+	"required_exceptions": {
+		"Block.unit_id": "schemas/site/pages.schema.json#/properties/pages/items/properties/blocks/items/properties/unit_id",
+		"ReadingStatus.text": "schemas/site-next/content-items.schema.json#/properties/content_items/items/properties/reading_status/anyOf/0/properties/text",
+		"ReadingStatus.english": "schemas/site-next/content-items.schema.json#/properties/content_items/items/properties/reading_status/anyOf/0/properties/english",
+		"IssueMention.printed_name": "schemas/site-next/mentions.schema.json#/properties/mentions/items/properties/printed_name",
+		"MediaDepicted.person_id": "schemas/site-next/shared-record.schema.json#/properties/media/anyOf/0/items/properties/depicted/items/properties/person_id"
+	},
+	"runtime_carriers": {
+		"SiteIssue": "A runtime carrier for the four independently described issue documents.",
+		"SiteArchive": "A runtime carrier of issues and shared record; bundled Zod enforces the joins."
+	}
+}

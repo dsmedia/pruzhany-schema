@@ -1,10 +1,29 @@
-"""Generate standalone production vocabulary contracts; no package exports yet."""
+"""Generate standalone production vocabulary contracts; no package exports yet.
+
+One source, three forms: the Zod enums (zod/*.vocabulary.ts), the Python Literals
+(pydantic/*_vocabulary.py) and the LinkML enums (linkml/schema/vocabulary.yaml), with the
+release snapshots. `--check` compares each of them byte for byte and changes nothing.
+"""
 import argparse
 import json
+import re
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+LINKML_VOCABULARY = Path('linkml/schema/vocabulary.yaml')
+# The namespaces standards/check_alignment.py expands rico: and ehri: to, and the project's one
+# local prefix, pc: (vocabulary/profile.ttl, line 1). The LinkML enums name no other.
+NAMESPACES = {
+    'rico': 'https://www.ica.org/standards/RiC/ontology#',
+    'ehri': 'http://lod.ehri-project-test.eu/ontology#',
+    'pc': 'https://pruzhany.org/ns/sourced-entities#',
+}
+
+
+def contract_name(group):
+    """The name a group's enum takes in every generated form: fact_types gives FactTypes."""
+    return ''.join(word.capitalize() for word in group.split('_'))
 
 
 def format_ts(text, name='generated.ts'):
@@ -28,7 +47,7 @@ def generated(root=ROOT):
     py += f'VOCABULARY_VERSION = {vocabulary["version"]!r}\n'
     py += f'VocabularyVersion = Literal[{vocabulary["version"]!r}]\n'
     for group, entries in vocabulary['groups'].items():
-        name = ''.join(word.capitalize() for word in group.split('_'))
+        name = contract_name(group)
         values = [entry['id'] for entry in entries]
         ts += f'export const {name}Schema = z.enum({json.dumps(values, ensure_ascii=False)});\n'
         ts += f'export type {name} = z.infer<typeof {name}Schema>;\n'
@@ -45,6 +64,7 @@ def generated(root=ROOT):
         outputs[root / 'vocabulary/released' / (vocabulary['version'] + '.json')] = (
             json.dumps(vocabulary, ensure_ascii=False, indent=2) + '\n')
     outputs.update(generated_site_content(root))
+    outputs[root / LINKML_VOCABULARY] = to_yaml(linkml_vocabulary(root))
     outputs.update(generated_citation_requirements(root))
     outputs.update(generated_media_rights(root))
     outputs.update(generated_media_widths(root))
@@ -72,9 +92,8 @@ def generated_site_content(root=ROOT):
     versions = [*vocabulary.get('compatible_versions', []), vocabulary['version']]
     ts += f'export const SiteVocabularyVersionSchema = z.enum({json.dumps(versions)});\n'
     py += f'SiteVocabularyVersion = Literal[{", ".join(repr(v) for v in versions)}]\n'
-    groups = {'impresso_types': [{'id': value} for value in vocabulary['impresso_types']], **vocabulary['groups']}
-    for group, entries in groups.items():
-        name = ''.join(word.capitalize() for word in group.split('_'))
+    for group, entries in site_content_groups(vocabulary).items():
+        name = contract_name(group)
         values = [entry['id'] for entry in entries]
         ts += f'export const {name}Schema = z.enum({json.dumps(values)});\n'
         ts += f'export type {name} = z.infer<typeof {name}Schema>;\n'
@@ -88,6 +107,202 @@ def generated_site_content(root=ROOT):
         outputs[root / 'vocabulary/released' / ('site-content-' + vocabulary['version'] + '.json')] = (
             json.dumps(vocabulary, ensure_ascii=False, indent=2) + '\n')
     return outputs
+
+
+def site_content_groups(vocabulary):
+    """The site-content groups as the contracts name them: Impresso's types first, as bare ids."""
+    return {'impresso_types': [{'id': value} for value in vocabulary['impresso_types']], **vocabulary['groups']}
+
+
+def curie(prefix, term, where):
+    """A rico: or ehri: term as a CURIE, from a bare name, a CURIE or an IRI in that namespace."""
+    namespace = NAMESPACES[prefix]
+    if not isinstance(term, str) or not term:
+        raise SystemExit(f'{where}: a {prefix} term must be a nonempty string')
+    if term.startswith(namespace):
+        term = term[len(namespace):]
+    elif term.startswith(prefix + ':'):
+        term = term[len(prefix) + 1:]
+    if not re.fullmatch(r'[A-Za-z_][\w-]*', term):
+        raise SystemExit(f'{where}: {term!r} is not a {prefix} term name')
+    return f'{prefix}:{term}'
+
+
+def meaning(mapping, where):
+    """What a value means, as a CURIE: its pinned RiC-O or EHRI term, or its declared local pc: term.
+
+    The forms are vocabulary/check.py's; a form the generator does not know stops it rather than
+    being written half right.
+    """
+    form = set(mapping) if isinstance(mapping, dict) else None
+    if form == {'local', 'reason'}:
+        local = mapping['local']
+        if not isinstance(local, str) or not re.fullmatch(r'pc:[A-Za-z_][\w-]*', local):
+            raise SystemExit(f'{where}: a local mapping must name a pc: term')
+        return local
+    if form in ({'rico'}, {'rico', 'via'}):
+        return curie('rico', mapping['rico'], where)
+    if form == {'ehri'}:
+        return curie('ehri', mapping['ehri'], where)
+    raise SystemExit(f'{where}: no LinkML meaning for the mapping form {sorted(form or [])}')
+
+
+def permissible_value(entry, where, fallback=None):
+    """One vocabulary entry as a LinkML permissible value.
+
+    LinkML "Semantic Enumerations", https://linkml.io/linkml/schemas/enums.html, read 28 October
+    2026: a permissible value carries a description and a `meaning`, the CURIE of the term it
+    stands for. The metamodel of linkml-runtime 1.12.1 (meta.yaml) gives `title`, `status` and
+    `deprecated` (a string: its presence marks the value deprecated) as text, `comments` as a
+    list of text and `annotations` as tag and value. The local term's reason is kept as a
+    comment; a RiC-O mapping's `via` Relation class as the annotation `via`, a CURIE, for
+    standards/check_alignment.py to read once it scans linkml/.
+    """
+    value = {}
+    if entry.get('label'):
+        value['title'] = entry['label']
+    value['description'] = entry.get('definition') or entry.get('label') or fallback
+    if not value['description']:
+        raise SystemExit(f'{where}: no definition or label to describe it')
+    mapping = entry.get('mapping')
+    if mapping is not None:
+        value['meaning'] = meaning(mapping, where)
+    if entry.get('status'):
+        value['status'] = entry['status']
+    if entry.get('deprecated_in'):
+        replacement = entry.get('replaced_by')
+        if isinstance(replacement, dict):
+            replacement = f"{replacement['id']} in {replacement['group']}: {replacement['reason']}"
+        value['deprecated'] = f"Deprecated in {entry['deprecated_in']}; replaced by {replacement}"
+    if mapping is not None and mapping.get('reason'):
+        value['comments'] = [mapping['reason']]
+    if mapping is not None and mapping.get('via'):
+        value['annotations'] = {'via': curie('rico', mapping['via'], where)}
+    return value
+
+
+def enum(description, entries, where, fallback=None):
+    """A LinkML enum of the entries, in their order, each id a permissible value."""
+    values = {}
+    for entry in entries:
+        if entry['id'] in values:
+            raise SystemExit(f'{where}: {entry["id"]} is there twice')
+        values[entry['id']] = permissible_value(
+            entry, f'{where}.{entry["id"]}', fallback(entry) if fallback else None)
+    return {'description': description, 'permissible_values': values}
+
+
+def linkml_vocabulary(root=ROOT):
+    """The LinkML module of the vocabulary: one enum a group, named as the other contracts name it.
+
+    Read from vocabulary/sourced-entities.json, vocabulary/site-content.json (Impresso's types
+    and the groups) and vocabulary/reading-status.json (the states of a content item's
+    reading_status, which the Zod and Pydantic twins call ReadingStatusValue). The bindings of
+    site-content.json and media.json map fields of the shapes, not values, and stay with the
+    shapes that hold those fields.
+    """
+    entities = json.loads((root / 'vocabulary/sourced-entities.json').read_text(encoding='utf-8'))
+    site = json.loads((root / 'vocabulary/site-content.json').read_text(encoding='utf-8'))
+    reading = json.loads((root / 'vocabulary/reading-status.json').read_text(encoding='utf-8'))
+    enums = {}
+
+    def add(group, value):
+        name = contract_name(group)
+        if name in enums:
+            raise SystemExit(f'linkml vocabulary: two groups are both named {name}')
+        enums[name] = value
+
+    for group, entries in entities['groups'].items():
+        add(group, enum(f"{group.replace('_', ' ').capitalize()}: the values of {group} in "
+                        f"vocabulary/sourced-entities.json, version {entities['version']}.",
+                        entries, f'sourced-entities.{group}'))
+    for group, entries in site_content_groups(site).items():
+        if group == 'impresso_types':
+            description = (f"Impresso types: the content-item types of Impresso as "
+                           f"vocabulary/site-content.json, version {site['version']}, lists them "
+                           f"in impresso_types. Impresso defines them in a JSON Schema, not an "
+                           f"ontology, so they carry no meaning here.")
+            add(group, enum(description, entries, f'site-content.{group}',
+                            lambda entry: f"The Impresso type {entry['id']}."))
+        else:
+            add(group, enum(f"{group.replace('_', ' ').capitalize()}: the values of {group} in "
+                            f"vocabulary/site-content.json, version {site['version']}.",
+                            entries, f'site-content.{group}'))
+    # The entry named after the file describes the field itself; every other entry is a state.
+    field = 'reading_status'
+    if field not in reading:
+        raise SystemExit(f'vocabulary/reading-status.json: no entry {field} describes the field')
+    states = [{'id': key, **entry} for key, entry in reading.items() if key != field]
+    add('reading_status_value', enum(
+        f"Reading states: the values of a content item's reading_status, from "
+        f"vocabulary/reading-status.json, whose entry {field} describes the field: "
+        f"{reading[field]['definition']}", states, 'reading-status'))
+    return {
+        'id': 'https://pruzhany.org/ns/vocabulary',
+        'name': 'pruzhany_vocabulary',
+        'title': 'The vocabulary of the Pruzhany record',
+        'description': (
+            'The vocabulary of the record as LinkML enums, one a group, each value with its '
+            'definition and the RiC-O, EHRI or declared local term it means. Generated by '
+            'vocabulary/generate.py from vocabulary/sourced-entities.json '
+            f"({entities['version']}, {entities['status']}), vocabulary/site-content.json "
+            f"({site['version']}, {site['status']}) and vocabulary/reading-status.json; "
+            'never edited by hand.'),
+        'version': f"sourced-entities {entities['version']}, site-content {site['version']}",
+        'prefixes': {'linkml': 'https://w3id.org/linkml/', **NAMESPACES},
+        'default_prefix': 'pc',
+        'enums': enums,
+    }
+
+
+# A key YAML reads as itself when written bare: a plain identifier that YAML 1.1 does not read as
+# a boolean or null. Anything else is written quoted.
+PLAIN_KEY = re.compile(r'[A-Za-z_][A-Za-z0-9_]*')
+YAML_WORDS = {'true', 'false', 'yes', 'no', 'on', 'off', 'y', 'n', 'null'}
+
+
+def yaml_scalar(value):
+    """A value as JSON, which is a YAML double-quoted scalar or a plain true, false, null or integer.
+
+    A string is quoted whatever it holds, so YAML 1.1 cannot read `on`, `no`, `1.0` or a day as
+    anything but text. A character Python counts unprintable is written as an escape too: inside
+    quotes YAML folds U+0085, U+2028 and U+2029 into a space, and refuses U+007F.
+    """
+    if value is None or isinstance(value, (bool, int)):
+        return json.dumps(value)
+    if not isinstance(value, str):
+        raise TypeError(f'no YAML scalar for {type(value).__name__}')
+    return ''.join(c if c.isprintable() else
+                   (f'\\u{ord(c):04x}' if ord(c) <= 0xFFFF else f'\\U{ord(c):08x}')
+                   for c in json.dumps(value, ensure_ascii=False))
+
+
+def yaml_key(key):
+    if not isinstance(key, str):
+        raise TypeError(f'a YAML key here is text, not {type(key).__name__}')
+    return key if PLAIN_KEY.fullmatch(key) and key.lower() not in YAML_WORDS else yaml_scalar(key)
+
+
+def yaml_lines(node, depth=0):
+    """Block-style YAML: every mapping and list indented, no flow style but an empty {} or []."""
+    pad = '  ' * depth
+    items = node.items() if isinstance(node, dict) else ((None, item) for item in node)
+    for key, value in items:
+        head = f'{pad}{yaml_key(key)}:' if isinstance(node, dict) else f'{pad}-'
+        if isinstance(value, (dict, list)) and value:
+            yield head
+            yield from yaml_lines(value, depth + 1)
+        elif isinstance(value, (dict, list)):
+            yield f'{head} {"{}" if isinstance(value, dict) else "[]"}'
+        else:
+            yield f'{head} {yaml_scalar(value)}'
+
+
+def to_yaml(data):
+    """The LinkML module as YAML, on the standard library alone (bin/verify's vocabulary step)."""
+    header = ('# Generated by vocabulary/generate.py from vocabulary/*.json; do not edit.\n'
+              '# Every value is written as JSON, which YAML reads as written.\n')
+    return header + '\n'.join(yaml_lines(data)) + '\n'
 
 
 def generated_media_rights(root=ROOT):
@@ -107,17 +322,25 @@ def generated_media_widths(root=ROOT):
     return {root / 'zod/media-widths.table.ts': format_ts(ts, 'media-widths.table.ts')}
 
 
-def main():
+def stale(root=ROOT):
+    """Each generated file that is missing or differs by a byte from what the generator makes now."""
+    return [path for path, content in generated(root).items()
+            if not path.exists() or path.read_bytes() != content.encode('utf-8')]
+
+
+def main(argv=None, root=ROOT):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
-    args = parser.parse_args()
-    for path, content in generated().items():
-        if args.check:
-            if not path.exists() or path.read_bytes() != content.encode('utf-8'):
-                raise SystemExit(f'stale generated vocabulary: {path.relative_to(ROOT)}')
-        else:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content, encoding='utf-8', newline='\n')
+    args = parser.parse_args(argv)
+    if args.check:
+        paths = stale(root)
+        if paths:
+            raise SystemExit('\n'.join(f'stale generated vocabulary: {path.relative_to(root).as_posix()}'
+                                       for path in paths))
+        return
+    for path, content in generated(root).items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding='utf-8', newline='\n')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,1458 @@
+# Where each of the twins' own checks on the shared record, the sourced entities and media is
+# held by the LinkML definition. The twins are zod/sourced-entities.schema.ts,
+# zod/shared-record.schema.ts, zod/media.schema.ts, zod/shared.schema.ts and
+# zod/citation-requirements.ts, and pydantic/sourced_entities.py, shared_record.py, media.py,
+# shared.py and citation_requirements.py. A check is a Zod .refine(, .superRefine( or .check(
+# call, or a Pydantic @model_validator, @field_validator or AfterValidator. There is one entry
+# for each check, pairing the Zod call and the Pydantic validator that hold the same thing;
+# linkml/tests/test_record_checks.py finds every check in those files afresh and fails when
+# any is not here, or is here and no longer in the twins. (Neither citation-requirements
+# module refines anything: its shortfalls are advice, never a refusal.)
+#
+# Each entry holds what the check refuses, in parts, and how each part is held:
+#
+#   linkml_rule   a rule of the definition on the class named: a `rules:` entry (if this,
+#                 then that), or the class's own `any_of` (at least one of) or `none_of` (never
+#                 this), found by its description. The generated JSON Schema enforces it; the
+#                 part gives an instance that passes and one that fails, each written as
+#                 changes to the class's base instance below (a key given ~ is left out), and
+#                 the test validates both against the generated JSON Schema.
+#   rule_catalog  a rule for pruzhany-steps record/rules.yaml: `rule:` an id it holds, or
+#                 its statement and tier, adopted into that catalog by ticket 09.
+#                 Tier schema: it compares values within one object, which the twins hold and
+#                 LinkML cannot say (`why:` says what is missing); tier rule: it compares
+#                 records with one another. All these checks are cited in record/rules.yaml
+#                 after stage-one integration (28 October 2026).
+#   twin_only     held by the twins alone, with why. None is today.
+#
+# What a LinkML rule can say was measured on 28 October 2026 (LinkML 1.12.1, linkml/README.md
+# "House style"): a key's presence or absence, a fixed text or one of a list, and a pattern,
+# alone or as any_of and none_of of these. In a rule's condition the generator drops a range,
+# a list's length and a condition on some or all of a list's items, so those checks are rules
+# for the catalog. A condition on a key's presence counts a present null as present, except
+# for a list; the record's real files hold no null in the shared record.
+
+bases:
+  SourcedDate:
+    start: '1938'
+  Review:
+    state: pending
+  Source:
+    id: source-a
+    kind: book
+    title: A book
+  Citation:
+    source_id: source-a
+    page: '12'
+  SiteCitation:
+    source_id: source-a
+    page: '12'
+  Fact:
+    id: fact-a
+    type: occupation
+    value: tailor
+    citations:
+      - source_id: source-a
+        page: '1'
+    evidence_confidence: probable
+    identity_confidence: probable
+    status: accepted
+    review:
+      state: pending
+    attribution:
+      by: site_writer
+      'on': '2026-10-28'
+  Name:
+    value: Rivtche
+    kind: printed
+    script: Latn
+  SharedName:
+    value: Rivtche
+    kind: printed
+    script: Latn
+  LifeEventDate:
+    printed: 16 December 1938
+    printed_calendar: gregorian
+  SharedFact:
+    id: fact-a
+    type: occupation
+    value: tailor
+    citations:
+      - source_id: source-a
+        page: '1'
+    evidence_confidence: probable
+    identity_confidence: probable
+    status: accepted
+    review:
+      state: pending
+    attribution:
+      by: site_writer
+      'on': '2026-10-28'
+    subject_id: person-a
+    representation: structured
+  SourcedRelation:
+    id: relation-a
+    type: kinship
+    relationship_type: parent_of
+    related_person_id: person-b
+    citations:
+      - source_id: source-a
+        page: '1'
+    evidence_confidence: probable
+    identity_confidence: probable
+    status: accepted
+    review:
+      state: pending
+    attribution:
+      by: site_writer
+      'on': '2026-10-28'
+    subject_id: person-a
+  SharedEvent:
+    id: event-a
+    name: A birth
+    type: birth
+    main_people: []
+    dates:
+      - qualifier: reported_in
+        reported_in: '1938-12-16'
+  Holder:
+    id: holder-a
+    name: An archive
+    kind: institution
+  MediaMaster:
+    bucket: pruzhany-media-masters
+    key: masters/0000000000000000000000000000000000000000000000000000000000000000
+    sha256: '0000000000000000000000000000000000000000000000000000000000000000'
+    mime: image/tiff
+    bytes: 10
+  PublicMedia:
+    id: medium-a
+    source_id: source-a
+    kind: audio
+    caption:
+      text: A song
+      lang: yi
+    depicted: []
+    shows_unidentified: false
+    credit: The family
+  Media:
+    id: medium-a
+    source_id: source-a
+    kind: audio
+    caption:
+      text: A song
+      lang: yi
+    depicted: []
+    shows_unidentified: false
+    credit: The family
+
+checks:
+  - id: written-date
+    holds: >-
+      A year, month or day written YYYY, YYYY-MM or YYYY-MM-DD exists in the calendar.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: date
+        call: refine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: Date
+        call: AfterValidator
+    parts:
+      - holds: >-
+          The written date exists: a month from 1 to 12, a day within its month, 29 February
+          only in a leap year, a year from 1.
+        how: rule_catalog
+        rule: written-date-exists
+        tier: schema
+        statement: >-
+          Every date and day the record writes as YYYY, YYYY-MM or YYYY-MM-DD names one that
+          exists in the Gregorian calendar, from year 1.
+        why: >-
+          The definition's types give the shape by a pattern (IsoYearMonthOrDay, IsoDay); the
+          length of each month and the leap years are arithmetic that no LinkML constraint
+          states.
+
+  - id: written-day
+    holds: >-
+      A day written YYYY-MM-DD exists in the calendar.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: day
+        call: refine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: Day
+        call: AfterValidator
+    parts:
+      - holds: >-
+          The written day exists.
+        how: rule_catalog
+        rule: written-date-exists
+        tier: schema
+        statement: >-
+          Every date and day the record writes as YYYY, YYYY-MM or YYYY-MM-DD names one that
+          exists in the Gregorian calendar, from year 1.
+        why: >-
+          The definition's types give the shape by a pattern (IsoYearMonthOrDay, IsoDay); the
+          length of each month and the leap years are arithmetic that no LinkML constraint
+          states.
+
+  - id: sourced-date
+    holds: >-
+      A sourced date has a start or printed words; a calendar only with printed words; an end
+      only in a range, whose bounds are both there and in order; and a start as long as its
+      precision says.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: SourcedDateSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: SourcedDate.validate_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          A date has a start or printed words.
+        how: linkml_rule
+        class: SourcedDate
+        rule: A sourced date without a start has printed words.
+        passes:
+          start: ~
+          printed: 'Chanukah 5699'
+        fails:
+          start: ~
+      - holds: >-
+          A calendar comes only with printed words.
+        how: linkml_rule
+        class: SourcedDate
+        rule: A sourced date with a calendar has printed words.
+        passes:
+          printed: 16 December 1938
+          printed_calendar: gregorian
+        fails:
+          printed_calendar: gregorian
+      - holds: >-
+          An end comes only in a range.
+        how: linkml_rule
+        class: SourcedDate
+        rule: A sourced date with an end is a range.
+        passes:
+          end: '1939'
+          precision: range
+        fails:
+          end: '1939'
+      - holds: >-
+          A range has both its bounds.
+        how: linkml_rule
+        class: SourcedDate
+        rule: A range has a start and an end.
+        passes:
+          end: '1939'
+          precision: range
+        fails:
+          precision: range
+      - holds: >-
+          A range's start is not after its end.
+        how: rule_catalog
+        rule: date-range-in-order
+        tier: schema
+        statement: >-
+          In a sourced date of precision range, the first day of its start is not after the
+          last day of its end.
+        why: >-
+          It compares two values of one date; LinkML's rules compare a value with a fixed
+          one, never with another value.
+      - holds: >-
+          A date known to the year has a start of four digits.
+        how: linkml_rule
+        class: SourcedDate
+        rule: A date known to the year has a start of a year.
+        passes:
+          precision: year
+        fails:
+          start: '1938-12'
+          precision: year
+      - holds: >-
+          A date known to the month has a start of a month.
+        how: linkml_rule
+        class: SourcedDate
+        rule: A date known to the month has a start of a month.
+        passes:
+          start: '1938-12'
+          precision: month
+        fails:
+          precision: month
+      - holds: >-
+          A date known to the day has a start of a day.
+        how: linkml_rule
+        class: SourcedDate
+        rule: A date known to the day has a start of a day.
+        passes:
+          start: '1938-12-16'
+          precision: day
+        fails:
+          start: '1938-12'
+          precision: day
+
+  - id: review
+    holds: >-
+      An approval names its reviewer and its day.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: ReviewSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: Review.validate_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          An approved review has who and when.
+        how: linkml_rule
+        class: Review
+        rule: An approval names its reviewer and its day.
+        passes:
+          state: approved
+          by: the owner
+          'on': '2026-10-28'
+        fails:
+          state: approved
+          by: the owner
+
+  - id: source-host
+    holds: >-
+      A source's or a holder's web host is written without www.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: SourceHostSchema
+        call: refine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: SourceHost
+        call: AfterValidator
+    parts:
+      - holds: >-
+          A source's host has no www.
+        how: linkml_rule
+        class: Source
+        rule: A source's host is written without www.
+        passes:
+          host: yadvashem.org
+        fails:
+          host: www.yadvashem.org
+      - holds: >-
+          A holder's host has no www.
+        how: linkml_rule
+        class: Holder
+        rule: A holder's host is written without www.
+        passes:
+          host: arolsen-archives.org
+        fails:
+          host: www.arolsen-archives.org
+
+  - id: citation
+    holds: >-
+      A citation names where in its source the evidence is.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: CitationSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: Citation.validate_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          At least one of a record id, a page, a scan, a time, a piece of the paper, an
+          address, a locator or a reference code is given and not blank.
+        how: linkml_rule
+        class: Citation
+        rule: A citation names where in its source the evidence is.
+        passes:
+          page: ~
+          record_id: '1234567'
+        fails:
+          page: '  '
+      - holds: >-
+          The same, for a citation the shared record keeps.
+        how: linkml_rule
+        class: SiteCitation
+        rule: A citation names where in its source the evidence is.
+        passes:
+          page: ~
+          locator: register/12
+        fails:
+          page: ~
+
+  - id: fact
+    holds: >-
+      A fact's evidence names no copy that is also an original; a type of other has a proposed
+      type and no other type does; and a kinship, occupation, residence, taking part, birth or
+      death has what its type needs.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: FactSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: Fact.validate_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          A source read through (via) is not also cited as an original of the same statement.
+        how: rule_catalog
+        rule: citation-via-not-an-original
+        tier: schema
+        statement: >-
+          Within one fact or relation, no citation's via is the source_id of any of its
+          citations.
+        why: >-
+          It compares values across the items of one list; LinkML says nothing across a
+          list's items.
+      - holds: >-
+          A fact of type other has a proposed type, and no other fact has one.
+        how: linkml_rule
+        class: Fact
+        rule: A fact of type other has a proposed type, and only such a fact has one.
+        passes:
+          type: other
+          proposed_type: apprenticeship
+        fails:
+          proposed_type: apprenticeship
+      - holds: >-
+          A kinship fact names the relationship and the relative.
+        how: linkml_rule
+        class: Fact
+        rule: A kinship fact names the relationship and the relative.
+        passes:
+          type: kinship
+          value: ~
+          relationship_type: sibling
+          related_name: Moshe
+        fails:
+          type: kinship
+          value: ~
+          relationship_type: sibling
+      - holds: >-
+          An occupation fact has its value.
+        how: linkml_rule
+        class: Fact
+        rule: An occupation fact has its value.
+        passes: {}
+        fails:
+          value: ~
+      - holds: >-
+          A residence fact has a place or a value.
+        how: linkml_rule
+        class: Fact
+        rule: A residence fact has a place or a value.
+        passes:
+          type: residence
+          value: ~
+          place_id: place-pruzhany
+        fails:
+          type: residence
+          value: ~
+      - holds: >-
+          A fact of taking part names its event.
+        how: linkml_rule
+        class: Fact
+        rule: A fact of taking part names its event.
+        passes:
+          type: event_participation
+          event_id: event-a
+        fails:
+          type: event_participation
+      - holds: >-
+          A birth or death fact has a date, a place or a value.
+        how: linkml_rule
+        class: Fact
+        rule: A birth or death fact has a date, a place or a value.
+        passes:
+          type: death
+          value: ~
+          date:
+            start: '1942'
+        fails:
+          type: death
+          value: ~
+
+  - id: name
+    holds: >-
+      A supplied name has its attribution and at least one citation; only a supplied name has
+      an attribution.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: NameSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: Name.supplied_name
+        call: model_validator
+    parts:
+      - holds: >-
+          A supplied name has its attribution and its citations.
+        how: linkml_rule
+        class: Name
+        rule: A supplied name has its attribution and its citations.
+        passes:
+          kind: supplied
+          attribution:
+            by: site_writer
+            'on': '2026-10-28'
+          citations:
+            - source_id: source-a
+              page: '1'
+        fails:
+          kind: supplied
+          citations:
+            - source_id: source-a
+              page: '1'
+      - holds: >-
+          A supplied name's citations are not empty.
+        how: rule_catalog
+        rule: supplied-name-cites-evidence
+        tier: schema
+        statement: >-
+          A name of kind supplied has at least one citation.
+        why: >-
+          In a rule's condition the generator drops a list's length (measured), so the rule
+          above asks only that the citations be there.
+      - holds: >-
+          Only a supplied name has an attribution.
+        how: linkml_rule
+        class: Name
+        rule: Only a supplied name has an attribution.
+        passes: {}
+        fails:
+          attribution:
+            by: site_writer
+            'on': '2026-10-28'
+      - holds: >-
+          The same two rules, for a name the shared record keeps.
+        how: linkml_rule
+        class: SharedName
+        rule: A supplied name has its attribution and its citations.
+        passes:
+          kind: supplied
+          attribution:
+            by: site_writer
+            'on': '2026-10-28'
+          citations:
+            - source_id: source-a
+              page: '1'
+        fails:
+          kind: supplied
+          attribution:
+            by: site_writer
+            'on': '2026-10-28'
+
+  - id: fate
+    holds: >-
+      A known fate rests on at least one fact.
+    zod:
+      - file: zod/sourced-entities.schema.ts
+        at: FateSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/sourced_entities.py
+        at: Fate.validate_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          A fate other than unknown names the facts it rests on.
+        how: rule_catalog
+        rule: known-fate-rests-on-facts
+        tier: schema
+        statement: >-
+          A fate whose outcome is not unknown rests on at least one fact.
+        why: >-
+          In a rule's condition the generator drops a list's length (measured).
+
+  - id: site-citation
+    holds: >-
+      A citation located on the printed page names its piece, its issue's day (a day that
+      exists) and a quote, and the quote is among the words at its addresses.
+    zod:
+      - file: zod/shared-record.schema.ts
+        at: SiteCitationSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/shared_record.py
+        at: SiteCitation.located_notice
+        call: model_validator
+    parts:
+      - holds: >-
+          A located citation names its piece, its issue's day and a quote that is not blank.
+        how: linkml_rule
+        class: SiteCitation
+        rule: A located citation names its piece, its issue's day and its quote.
+        passes:
+          page: ~
+          unit_id: cu-1
+          edition_date: '1938-12-16'
+          quote: זייער טעכטערל
+          addresses:
+            - image_uri: pruzst19381216-01.1.1.png
+              bbox: [10, 20, 30, 40]
+              text: זייער טעכטערל
+        fails:
+          page: ~
+          unit_id: cu-1
+          quote: זייער טעכטערל
+          addresses:
+            - image_uri: pruzst19381216-01.1.1.png
+              bbox: [10, 20, 30, 40]
+              text: זייער טעכטערל
+      - holds: >-
+          The issue's day exists.
+        how: rule_catalog
+        rule: written-date-exists
+        tier: schema
+        statement: >-
+          Every date and day the record writes as YYYY, YYYY-MM or YYYY-MM-DD names one that
+          exists in the Gregorian calendar, from year 1.
+        why: >-
+          The rule above gives the day's shape by a pattern; whether it exists is arithmetic
+          that no LinkML constraint states.
+      - holds: >-
+          The quote occurs in the words at its addresses, joined by newlines.
+        how: rule_catalog
+        rule: located-quote-is-at-its-addresses
+        tier: schema
+        statement: >-
+          A located citation's quote occurs within the texts of its addresses joined by
+          newlines.
+        why: >-
+          It compares two values of one citation; LinkML's rules compare a value with a fixed
+          one only.
+
+  - id: life-event-date
+    holds: >-
+      A life event's date is the preferred record statement alone; or printed words with their
+      calendar; or the first report's day, qualified, with nothing printed; and a date printed
+      in the Hebrew calendar is never normalized.
+    zod:
+      - file: zod/shared-record.schema.ts
+        at: LifeEventDateSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/shared_record.py
+        at: LifeEventDate.event_date
+        call: model_validator
+    parts:
+      - holds: >-
+          A record date names only its fact.
+        how: linkml_rule
+        class: LifeEventDate
+        rule: A record date names its fact and nothing else.
+        passes:
+          printed: ~
+          printed_calendar: ~
+          record_fact_id: fact-a
+        fails:
+          printed_calendar: ~
+          record_fact_id: fact-a
+      - holds: >-
+          Any other date is printed with its calendar and unqualified, or the first report's
+          day, qualified, with no printed words, calendar or start.
+        how: linkml_rule
+        class: LifeEventDate
+        rule: Any other date is printed words with their calendar, or the day it was first reported.
+        passes:
+          printed: ~
+          printed_calendar: ~
+          qualifier: reported_in
+          reported_in: '1938-12-16'
+        fails:
+          printed_calendar: ~
+          qualifier: reported_in
+          reported_in: '1938-12-16'
+      - holds: >-
+          A Hebrew date has no normalized start.
+        how: linkml_rule
+        class: LifeEventDate
+        rule: A date printed in the Hebrew calendar is not normalized.
+        passes:
+          printed: כ"ב כסלו תרצ"ט
+          printed_calendar: hebrew
+        fails:
+          printed: כ"ב כסלו תרצ"ט
+          printed_calendar: hebrew
+          start: '1938-12-16'
+
+  - id: shared-fact
+    holds: >-
+      A shared fact is never a parenthood; a prose or image fact has its value and is of type
+      other.
+    zod:
+      - file: zod/shared-record.schema.ts
+        at: SharedFactSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/shared_record.py
+        at: SharedFact.representation_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          Neither the type nor the proposed type is parenthood.
+        how: linkml_rule
+        class: SharedFact
+        rule: >-
+          A shared fact is never a parenthood, which is a parent_of relation to the child as a
+          person.
+        passes: {}
+        fails:
+          type: other
+          proposed_type: parenthood
+      - holds: >-
+          A prose or image fact has its value.
+        how: linkml_rule
+        class: SharedFact
+        rule: A prose or image fact has its value.
+        passes:
+          type: other
+          proposed_type: note
+          representation: prose
+        fails:
+          type: other
+          proposed_type: note
+          value: ~
+          representation: prose
+      - holds: >-
+          A prose or image fact is of type other.
+        how: linkml_rule
+        class: SharedFact
+        rule: A prose or image fact is of type other.
+        passes:
+          type: other
+          proposed_type: picture
+          representation: image
+        fails:
+          representation: image
+
+  - id: sourced-relation
+    holds: >-
+      A relation names the relative; one of type other has no released relationship type; and
+      a relation evidenced by a located notice runs from parent to child, never child_of.
+    zod:
+      - file: zod/shared-record.schema.ts
+        at: SourcedRelationSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/shared_record.py
+        at: SourcedRelation.relation_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          The relative is a person or an unresolved name.
+        how: linkml_rule
+        class: SourcedRelation
+        rule: A relation names the relative as a person or by an unresolved name.
+        passes:
+          type: other
+          relationship_type: ~
+          related_person_id: ~
+          proposed_type: neighbour
+          related_name: Chaim
+        fails:
+          type: other
+          relationship_type: ~
+          related_person_id: ~
+          proposed_type: neighbour
+      - holds: >-
+          A relation of type other has no released relationship type.
+        how: linkml_rule
+        class: SourcedRelation
+        rule: A relation of type other has no released relationship type.
+        passes:
+          type: other
+          relationship_type: ~
+          proposed_type: neighbour
+        fails:
+          type: other
+          proposed_type: neighbour
+      - holds: >-
+          A relation with a located citation is not child_of, as its type or its proposed type.
+        how: rule_catalog
+        rule: notice-relation-runs-parent-to-child
+        tier: schema
+        statement: >-
+          A relation any of whose citations has addresses is neither of relationship type
+          child_of nor proposed as child_of.
+        why: >-
+          Its condition is on some item of a list, which the generator drops in a rule's
+          condition (measured).
+
+  - id: shared-event
+    holds: >-
+      An event of kind other has a proposed kind that is not a released kind, and no other
+      event has one; its main people are each named once, in a part that fits its kind; a
+      first report's day is its only date; a death known from records takes its one date from
+      its preferred record statement, first, and has one main person, the one who died.
+    zod:
+      - file: zod/shared-record.schema.ts
+        at: SharedEventSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/shared_record.py
+        at: SharedEvent.event_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          An event of kind other has a proposed kind, and no other event has one.
+        how: linkml_rule
+        class: SharedEvent
+        rule: An event of kind other has a proposed kind, and only such an event has one.
+        passes:
+          type: other
+          proposed_type: anniversary
+        fails:
+          type: other
+      - holds: >-
+          A proposed kind is never a released kind.
+        how: linkml_rule
+        class: SharedEvent
+        rule: An event's proposed kind is never a released kind.
+        passes:
+          type: other
+          proposed_type: anniversary
+        fails:
+          type: other
+          proposed_type: wedding
+      - holds: >-
+          Each main person is named once.
+        how: rule_catalog
+        rule: event-main-people-unique
+        tier: schema
+        statement: >-
+          No person is named twice among one event's main people.
+        why: >-
+          It compares the items of one list; LinkML's unique_keys is enforced by neither its
+          JSON Schema nor its validator (plan section 3, item 3).
+      - holds: >-
+          Each main person's part fits the event's kind (its proposed kind for other).
+        how: rule_catalog
+        rule: event-part-fits-kind
+        tier: schema
+        statement: >-
+          Every main person's part is one the vocabulary allows for the event's kind (the
+          proposed kind where the kind is other).
+        why: >-
+          It asks a condition of every item of a list, which the generator drops in a rule
+          (measured).
+      - holds: >-
+          A first report's day is the event's only date.
+        how: rule_catalog
+        rule: reported-date-stands-alone
+        tier: schema
+        statement: >-
+          An event with a date qualified reported_in has that one date and no other.
+        why: >-
+          Its condition is on some item of a list and its consequence a list's length, both
+          dropped in a rule (measured).
+      - holds: >-
+          A date from a record statement belongs to a death, comes first and is the only such
+          date.
+        how: rule_catalog
+        rule: record-date-is-first-and-only
+        tier: schema
+        statement: >-
+          An event with a date naming a record fact is a death, its first date names that
+          fact, and no other of its dates names one.
+        why: >-
+          It asks about a list's first item and counts its items; LinkML has neither.
+      - holds: >-
+          A death dated from records has one main person, the one who died.
+        how: rule_catalog
+        rule: record-death-has-one-deceased
+        tier: schema
+        statement: >-
+          An event with a date naming a record fact has exactly one main person, whose part is
+          deceased.
+        why: >-
+          Its condition is on some item of a list and its consequence a list's length and its
+          items, all dropped in a rule (measured).
+      - holds: >-
+          A death known from records alone takes its one date from its preferred record fact.
+        how: rule_catalog
+        rule: records-only-death-dated-by-its-fact
+        tier: schema
+        statement: >-
+          An event whose evidence basis is records_only has one date, and it names a record
+          fact.
+        why: >-
+          Its consequence is a list's length and its first item, which LinkML cannot say in a
+          rule (measured).
+
+  - id: shared-record
+    holds: >-
+      Every id is used once across the record, every reference resolves to the right kind of
+      record, and the record's evidence, events, people, places, identifiers and media agree
+      with one another.
+    zod:
+      - file: zod/shared-record.schema.ts
+        at: SharedRecordSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/shared_record.py
+        at: SharedRecord.record_references
+        call: model_validator
+    parts:
+      - holds: >-
+          No id is used twice across persons, families, places, organisations, events, sources,
+          holders, facts, relations and media.
+        how: rule_catalog
+        rule: shared-ids-unique
+        tier: rule
+        statement: >-
+          Every id in the shared record names one record only, across all its lists.
+      - holds: >-
+          A source's subjects are each named once and each a person, place or event of the
+          record.
+        how: rule_catalog
+        rule: source-subjects-resolve
+        tier: rule
+        statement: >-
+          A source names each of its subjects once, and each is a person, a place or an event
+          of the shared record.
+      - holds: >-
+          A medium's source, the people it shows, the people its permission covers and its
+          family words' source all resolve; the permission covers only people it shows.
+        how: rule_catalog
+        rule: media-references-resolve
+        tier: rule
+        statement: >-
+          Every medium's source and family words' source is a source of the record, every
+          person it shows is a person of the record, and every person its permission covers is
+          one it shows.
+      - holds: >-
+          A medium's link is on its source's host.
+        how: rule_catalog
+        rule: media-link-on-source-host
+        tier: rule
+        statement: >-
+          A medium's link is on the web host of its source, or a subdomain of it.
+      - holds: >-
+          A description for screen readers names only people the picture shows.
+        how: rule_catalog
+        rule: alt-names-only-shown-people
+        tier: rule
+        statement: >-
+          No medium's description for screen readers names a person of the record whom it
+          does not show.
+      - holds: >-
+          A portrait is a cleared, reviewed, not withdrawn image that shows the person, and its
+          region lies within the image.
+        how: rule_catalog
+        rule: portrait-is-a-cleared-picture-of-the-person
+        tier: rule
+        statement: >-
+          A person's portrait names an image medium of the record that is cleared, not
+          withdrawn, has a reviewed caption and shows that person, and the portrait's region
+          lies within the image's master pixels.
+      - holds: >-
+          A source's holder is a holder of the record.
+        how: rule_catalog
+        rule: source-holder-resolves
+        tier: rule
+        statement: >-
+          Every source's holder is a holder of the shared record.
+      - holds: >-
+          A source is derived only from sources of the record, never in a loop.
+        how: rule_catalog
+        rule: source-derivations-resolve-without-a-loop
+        tier: rule
+        statement: >-
+          Every source a source is derived from is a source of the record, and no chain of
+          derivations comes back to where it began.
+      - holds: >-
+          A citation's address is on its source's host, and a source read through (via)
+          exists and is derived from the source cited; for facts, relations and names alike.
+        how: rule_catalog
+        rule: citation-agrees-with-its-sources
+        tier: rule
+        statement: >-
+          Every citation's address is on its source's web host or a subdomain of it, and a
+          citation's via is a source of the record derived from the source it cites.
+      - holds: >-
+          A life event's place is a place of the record.
+        how: rule_catalog
+        rule: event-place-resolves
+        tier: rule
+        statement: >-
+          Every life event's place is a place of the shared record.
+      - holds: >-
+          Every main person is a person of the record.
+        how: rule_catalog
+        rule: main-person-is-a-person
+        tier: rule
+        statement: >-
+          Every main person of a life event is a person of the shared record, never a family.
+      - holds: >-
+          A person is the baby of one birth at most and the one who died in one death at most.
+        how: rule_catalog
+        rule: one-birth-one-death
+        tier: rule
+        statement: >-
+          No person is the baby of two birth events, or the one who died in two death events
+          (RiC-CM R070 and R072).
+      - holds: >-
+          A record date names an accepted death fact of this event's person, supported by a
+          record and citing no piece of the paper, and the event's place is that statement's.
+        how: rule_catalog
+        rule: record-date-names-its-statement
+        tier: rule
+        statement: >-
+          A death event's record date names an accepted death fact, supported by a record and
+          citing no piece of the paper, whose event is this event and whose subject is its one
+          main person; the event's place is that fact's place.
+      - holds: >-
+          A death fact naming an event names its person's death event.
+        how: rule_catalog
+        rule: death-fact-names-its-death-event
+        tier: rule
+        statement: >-
+          A death fact that names an event names the death event in which its subject is the
+          one who died.
+      - holds: >-
+          A fact's or relation's subject, place, organisation, event, relative, family and
+          cited sources all resolve, each to its own kind.
+        how: rule_catalog
+        rule: fact-references-resolve
+        tier: rule
+        statement: >-
+          Every fact's and relation's subject is a person, family, place, organisation, event
+          or relation of the record, and its place, organisation, event, relative, family and
+          citations' sources each name one of their kind.
+      - holds: >-
+          A relation runs from a person, never to the same person.
+        how: rule_catalog
+        rule: relation-joins-two-people
+        tier: rule
+        statement: >-
+          Every relation's subject is a person of the record, and no relation joins a person
+          to themselves.
+      - holds: >-
+          A relation evidenced by a located notice is stored once.
+        how: rule_catalog
+        rule: notice-relation-stored-once
+        tier: rule
+        statement: >-
+          No two relations with located citations have the same subject, relationship (or
+          proposed relationship) and relative.
+      - holds: >-
+          A name's citations name sources of the record, on their hosts and through their
+          derivations.
+        how: rule_catalog
+        rule: citation-agrees-with-its-sources
+        tier: rule
+        statement: >-
+          Every citation's address is on its source's web host or a subdomain of it, and a
+          citation's via is a source of the record derived from the source it cites.
+      - holds: >-
+          A person's fate rests only on facts about that person.
+        how: rule_catalog
+        rule: fate-rests-on-own-facts
+        tier: rule
+        statement: >-
+          Every fact a person's fate rests on is a fact of the record whose subject is that
+          person.
+      - holds: >-
+          A place's or holder's identifiers are each given once, from a registered source, on
+          its host, and no identifier is given to two places or two holders.
+        how: rule_catalog
+        rule: outside-identifier-names-one-record
+        tier: rule
+        statement: >-
+          Every outside identifier of a place or holder comes from a source of the record and
+          is on its host, is given once to its place or holder, and is given to no other place
+          or holder.
+      - holds: >-
+          A place's parent is a place of the record, and no chain of parents comes back to
+          where it began.
+        how: rule_catalog
+        rule: place-parents-resolve-without-a-loop
+        tier: rule
+        statement: >-
+          Every place's parent is a place of the record, and no chain of parents is a loop.
+
+  - id: media-consent-scope
+    holds: >-
+      A permission covers each person once.
+    zod:
+      - file: zod/media.schema.ts
+        at: MediaConsentScopeSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/media.py
+        at: MediaConsentScope.unique_people
+        call: model_validator
+    parts:
+      - holds: >-
+          No person is named twice in a permission's scope.
+        how: rule_catalog
+        rule: consent-people-unique
+        tier: schema
+        statement: >-
+          No person is named twice among the people one permission covers.
+        why: >-
+          It compares the items of one list; JSON Schema's uniqueItems is not generated by
+          LinkML.
+
+  - id: media-master
+    holds: >-
+      A master is kept apart from the page pictures, its key is named by its digest, and its
+      last check found that digest.
+    zod:
+      - file: zod/media.schema.ts
+        at: MediaMasterSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/media.py
+        at: MediaMaster.named_by_digest
+        call: model_validator
+    parts:
+      - holds: >-
+          A master is not in the page pictures' bucket.
+        how: linkml_rule
+        class: MediaMaster
+        rule: A master is not kept in the page pictures' bucket.
+        passes: {}
+        fails:
+          bucket: pruzhany-page-pictures
+      - holds: >-
+          The key's last part is the master's digest.
+        how: rule_catalog
+        rule: master-key-is-its-digest
+        tier: schema
+        statement: >-
+          A master file's key ends in its SHA-256 digest.
+        why: >-
+          It compares two values of one object; LinkML's rules compare a value with a fixed
+          one only.
+      - holds: >-
+          The last check found the master's digest.
+        how: rule_catalog
+        rule: master-check-matches-digest
+        tier: schema
+        statement: >-
+          A master file's last check found its SHA-256 digest.
+        why: >-
+          It compares two values of one object.
+
+  - id: public-media
+    holds: >-
+      A medium is described, measured, linked, served and withdrawn consistently: what its kind
+      needs, its width and height together, its people shown declared and placed, its rights
+      fit for its kind, its description for screen readers short and plain, and its served
+      copies cleared and within its master.
+    zod:
+      - file: zod/media.schema.ts
+        at: PublicMediaSchema
+        call: superRefine
+      - file: zod/media.schema.ts
+        at: MediaSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/media.py
+        at: PublicMedia.media_contract
+        call: model_validator
+    parts:
+      - holds: >-
+          An image or a document has a description for screen readers.
+        how: linkml_rule
+        class: PublicMedia
+        rule: An image or a document has a description for screen readers.
+        passes:
+          kind: image
+          alt:
+            text: A family of five on a bench
+            lang: en
+        fails:
+          kind: image
+      - holds: >-
+          A document has its transcript.
+        how: linkml_rule
+        class: PublicMedia
+        rule: A document has its transcript.
+        passes:
+          kind: document
+          alt:
+            text: A typed letter
+            lang: en
+          transcript:
+            text: Dear Rivtche
+            lang: en
+        fails:
+          kind: document
+          alt:
+            text: A typed letter
+            lang: en
+      - holds: >-
+          A width comes with a height.
+        how: linkml_rule
+        class: PublicMedia
+        rule: A medium with a width has a height.
+        passes:
+          width: 1200
+          height: 800
+        fails:
+          width: 1200
+      - holds: >-
+          A height comes with a width.
+        how: linkml_rule
+        class: PublicMedia
+        rule: A medium with a height has a width.
+        passes:
+          width: 1200
+          height: 800
+        fails:
+          height: 800
+      - holds: >-
+          Only sound or film links to the holder's page.
+        how: linkml_rule
+        class: PublicMedia
+        rule: Only sound or film has a link to the holder's page.
+        passes:
+          link: https://collections.example.org/recording/1
+        fails:
+          kind: image
+          alt:
+            text: A family of five on a bench
+            lang: en
+          link: https://collections.example.org/picture/1
+      - holds: >-
+          A withdrawn medium is neither served nor linked.
+        how: linkml_rule
+        class: PublicMedia
+        rule: A withdrawn medium has no served copies and no link.
+        passes:
+          withdrawn:
+            'on': '2026-10-28'
+            reason: family
+        fails:
+          withdrawn:
+            'on': '2026-10-28'
+            reason: family
+          link: https://collections.example.org/recording/1
+      - holds: >-
+          A picture showing someone not identified says so.
+        how: rule_catalog
+        rule: unidentified-depiction-is-declared
+        tier: schema
+        statement: >-
+          A medium showing a person with no person id has shows_unidentified true.
+        why: >-
+          Its condition is on some item of a list, which the generator drops in a rule
+          (measured).
+      - holds: >-
+          Each person shown is placed within the master's pixels.
+        how: rule_catalog
+        rule: depicted-region-fits-picture
+        tier: schema
+        statement: >-
+          Every region of a person shown lies within the medium's master width and height,
+          which are both there.
+        why: >-
+          It adds and compares values of one object; LinkML has no arithmetic.
+      - holds: >-
+          Each identified person is shown once.
+        how: rule_catalog
+        rule: depicted-people-unique
+        tier: schema
+        statement: >-
+          No person id is given twice among the people one medium shows.
+        why: >-
+          It compares the items of one list.
+      - holds: >-
+          A photograph or other image never takes the EU orphan-work statement.
+        how: linkml_rule
+        class: PublicMedia
+        rule: A photograph or other image never takes the EU orphan-work statement.
+        passes:
+          kind: image
+          alt:
+            text: A family of five on a bench
+            lang: en
+          rights: http://rightsstatements.org/vocab/InC/1.0/
+        fails:
+          kind: image
+          alt:
+            text: A family of five on a bench
+            lang: en
+          rights: http://rightsstatements.org/vocab/InC-OW-EU/1.0/
+      - holds: >-
+          A description for screen readers is at most 150 characters.
+        how: rule_catalog
+        rule: alt-text-is-short
+        tier: schema
+        statement: >-
+          A medium's description for screen readers is at most 150 characters (code points).
+        why: >-
+          It bounds a field of a nested object used here only; LinkML has no length of text,
+          and a rule cannot reach into a nested object.
+      - holds: >-
+          A description for screen readers does not repeat the caption.
+        how: rule_catalog
+        rule: alt-differs-from-caption
+        tier: schema
+        statement: >-
+          A medium's description for screen readers differs from its caption, ignoring case
+          and surrounding white space.
+        why: >-
+          It compares two values of one object.
+      - holds: >-
+          An English description for screen readers describes only what is visible.
+        how: rule_catalog
+        rule: alt-describes-only-what-is-seen
+        tier: schema
+        statement: >-
+          An English description for screen readers neither begins "image of" nor uses the
+          words the twins list (holocaust victim, before the war, unaware, doomed, happy,
+          little did they know).
+        why: >-
+          Its condition is on a field of a nested object (the description's language), which a
+          rule cannot reach.
+      - holds: >-
+          A medium with served copies is cleared.
+        how: linkml_rule
+        class: PublicMedia
+        rule: A medium with served copies is cleared.
+        passes:
+          duration: 30
+          cleared:
+            role: owner
+            'on': '2026-10-28'
+          derived:
+            - url: https://pictures.pruzhanychronicles.org/media/0000000000000000000000000000000000000000000000000000000000000000-w100.webp
+              width: 100
+              height: 80
+              process: resize
+        fails:
+          duration: 30
+          derived:
+            - url: https://pictures.pruzhanychronicles.org/media/0000000000000000000000000000000000000000000000000000000000000000-w100.webp
+              width: 100
+              height: 80
+              process: resize
+      - holds: >-
+          A medium with served copies has its master's width and height, or its duration.
+        how: linkml_rule
+        class: PublicMedia
+        rule: A medium with served copies has its master's width and height, or its duration.
+        passes:
+          duration: 30
+          cleared:
+            role: owner
+            'on': '2026-10-28'
+          derived:
+            - url: https://pictures.pruzhanychronicles.org/media/0000000000000000000000000000000000000000000000000000000000000000-w100.webp
+              width: 100
+              height: 80
+              process: resize
+        fails:
+          cleared:
+            role: owner
+            'on': '2026-10-28'
+          derived:
+            - url: https://pictures.pruzhanychronicles.org/media/0000000000000000000000000000000000000000000000000000000000000000-w100.webp
+              width: 100
+              height: 80
+              process: resize
+      - holds: >-
+          An image or a document with served copies has its master's width and height.
+        how: linkml_rule
+        class: PublicMedia
+        rule: An image or a document with served copies has its master's width and height.
+        passes:
+          kind: document
+          alt:
+            text: A typed letter
+            lang: en
+          transcript:
+            text: Dear Rivtche
+            lang: en
+          width: 1200
+          height: 800
+          cleared:
+            role: owner
+            'on': '2026-10-28'
+          derived:
+            - url: https://pictures.pruzhanychronicles.org/media/0000000000000000000000000000000000000000000000000000000000000000-w100.webp
+              width: 100
+              height: 80
+              process: resize
+        fails:
+          kind: document
+          alt:
+            text: A typed letter
+            lang: en
+          transcript:
+            text: Dear Rivtche
+            lang: en
+          duration: 30
+          cleared:
+            role: owner
+            'on': '2026-10-28'
+          derived:
+            - url: https://pictures.pruzhanychronicles.org/media/0000000000000000000000000000000000000000000000000000000000000000-w100.webp
+              width: 100
+              height: 80
+              process: resize
+      - holds: >-
+          Each served copy has its own address.
+        how: rule_catalog
+        rule: derived-addresses-unique
+        tier: schema
+        statement: >-
+          No address is given twice among one medium's served copies.
+        why: >-
+          It compares the items of one list.
+      - holds: >-
+          A served copy is no wider than its nominal width, nor wider or taller than the master.
+        how: rule_catalog
+        rule: derived-copy-within-its-width-and-master
+        tier: schema
+        statement: >-
+          Every served copy's width is at most the width its address names and at most the
+          master's width, and its height at most the master's height.
+        why: >-
+          It compares values of one object with each other and with a number read from an
+          address.
+      - holds: >-
+          The same rules hold for a medium as the shared record keeps it.
+        how: linkml_rule
+        class: Media
+        rule: An image or a document has a description for screen readers.
+        passes:
+          kind: image
+          alt:
+            text: A family of five on a bench
+            lang: en
+        fails:
+          kind: image
+
+  - id: media-consent-state
+    holds: >-
+      A withdrawn permission withdraws the medium.
+    zod:
+      - file: zod/media.schema.ts
+        at: MediaSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/media.py
+        at: Media.consent_state
+        call: model_validator
+    parts:
+      - holds: >-
+          A medium whose permission was withdrawn is itself withdrawn.
+        how: rule_catalog
+        rule: withdrawn-consent-withdraws-media
+        tier: schema
+        statement: >-
+          A medium whose permission has a withdrawal day is withdrawn.
+        why: >-
+          Its condition is on a field of a nested object (the permission's withdrawal day),
+          which a rule cannot reach.

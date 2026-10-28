@@ -14,8 +14,14 @@ import { z } from 'zod/v4';
 import * as shared from '../../zod/shared.schema';
 import * as sourced from '../../zod/sourced-entities.schema';
 import * as site from '../../zod/index';
+import { ReadingStatusSchema } from '../../zod/content-item.schema';
 
 const targets: Record<string, unknown> = {
+	ReadingStatus: ReadingStatusSchema,
+	EditionsCatalog: site.EditionsCatalogSchema,
+	Edition: site.EditionSchema,
+	Holiday: site.HolidaySchema,
+	HistoricalEvent: site.HistoricalEventSchema,
 	MediaRegion: site.MediaRegionSchema,
 	MediaDepicted: site.MediaDepictedSchema,
 	MediaPortrait: site.MediaPortraitSchema,

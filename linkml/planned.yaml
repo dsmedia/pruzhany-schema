@@ -1,0 +1,53 @@
+# Documentation only. Never imported by a document schema or added to modules.json.
+items:
+  - id: line-and-word-identifiers
+    title: Stable line and word identifiers
+    summary: >-
+      Lines and word boxes already exist in rebuilt Impresso editions. Their stable
+      identifiers and redirect or tombstone behavior remain to be defined.
+    source:
+      root: steps
+      file: docs/record/end-state.md
+      line: 204
+      quote: ids exist for pages, blocks, pieces and people, but not for lines and words
+  - id: word-check-level
+    title: Trust recorded for each word
+    summary: >-
+      Record a word's own check level, so correcting it does not mark the entire line
+      or piece as checked. Existing piece-level checks remain useful evidence.
+    source:
+      root: steps
+      file: docs/record/end-state.md
+      line: 60
+      quote: Correcting a word marks that word as person-checked, not its line or piece.
+  - id: identity-decisions
+    title: Evidence for joins and non-joins
+    summary: >-
+      Make existing identity decisions complete and consistent, retaining evidence,
+      attribution and date for joins and decisions that two records are different.
+      Uncertain identity remains an allowed outcome.
+    source:
+      root: steps
+      file: docs/record/end-state.md
+      line: 97
+      quote: Joins and "these are different" rulings are both recorded, each with its evidence, who made it and when.
+  - id: evidenced-families
+    title: Family relationships supported by evidence
+    summary: >-
+      Family records already have a shape. Complete the evidence and reconstruction
+      of their relationships where the sources allow it; no target count is imposed.
+    source:
+      root: steps
+      file: docs/record/end-state.md
+      line: 239
+      quote: Families are reconstructed where evidence allows, with no count target.
+  - id: works-and-organization-types
+    title: Works and typed organizations
+    summary: >-
+      Define works and finish organization typing, resolving local entities and
+      recording outside links or explicit lack of a link for world entities.
+    source:
+      root: steps
+      file: docs/record/end-state.md
+      line: 242
+      quote: "Organizations and works:** typed; local ones resolved; world ones linked or marked unlinkable."

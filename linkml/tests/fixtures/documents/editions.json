@@ -1,0 +1,45 @@
+{
+	"editions": [
+		{
+			"date": "1938-12-16",
+			"hebrewDate": "ב׳ טֵבֵת תרצ״ט",
+			"hebrewMonth": 10,
+			"hebrewYear": 5699
+		},
+		{
+			"date": "1938-12-23",
+			"hebrewDate": "ט׳ טֵבֵת תרצ״ט",
+			"hebrewMonth": 10,
+			"hebrewYear": 5699,
+			"holiday": "Fast of Tevet"
+		}
+	],
+	"holidays": [
+		{
+			"date": "1938-12-18",
+			"name": "Chanukah"
+		},
+		{
+			"date": "1938-12-25",
+			"name": "Chanukah",
+			"hebrewName": "חֲנֻכָּה"
+		}
+	],
+	"historicalEvents": [
+		{
+			"date": "1938-11-09",
+			"endDate": "1938-11-10",
+			"name": "Kristallnacht",
+			"description": "Pogrom across Germany and Austria"
+		},
+		{
+			"date": "1939-09-01",
+			"name": "Invasion of Poland",
+			"description": "Germany invades Poland"
+		}
+	],
+	"availableDates": [
+		"1938-12-16",
+		"1938-12-23"
+	]
+}

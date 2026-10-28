@@ -1,0 +1,54 @@
+{
+	"issue_date": "1938-12-16",
+	"mentions": [
+		{
+			"id": "m-1",
+			"person_id": "person-1",
+			"printed_name": "second",
+			"content_item_id": "cu-1",
+			"address_grain": "words",
+			"roles": [
+				"subject",
+				"honoree"
+			],
+			"addresses": [
+				{
+					"image_uri": "pruzst19381216-01.1.1.png",
+					"bbox": [
+						100,
+						240,
+						200,
+						30
+					],
+					"text": "second line"
+				}
+			],
+			"function": "bride"
+		},
+		{
+			"id": "m-2",
+			"person_id": "person-2",
+			"printed_name": null,
+			"title": null,
+			"function": "well-wisher",
+			"wkd_id": null,
+			"content_item_id": "cu-1",
+			"address_grain": "regions",
+			"roles": [
+				"named"
+			],
+			"addresses": [
+				{
+					"image_uri": "pruzst19381216-01.1.1.png",
+					"bbox": [
+						100,
+						200,
+						900,
+						400
+					],
+					"text": "first line\nsecond line"
+				}
+			]
+		}
+	]
+}

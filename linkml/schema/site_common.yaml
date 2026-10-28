@@ -1,0 +1,295 @@
+# The parts the issue documents share, as zod/site-common.schema.ts and
+# pydantic/site_common.py shape them: where words stand on a page picture, a title as printed
+# or as supplied in English, a translation and its later check, and a content item's regions.
+# Class and slot names are the twins' names and the files' keys. A module with no top class:
+# content_items.yaml and mentions.yaml import it.
+#
+# Mappings: a binding of vocabulary/site-content.json that names a RiC-O or EHRI class is the
+# class's class_uri; one that names a property is the slot's slot_uri; one that names a local
+# term declared in vocabulary/site-content.profile.ttl as a placeholder (owl:NamedIndividual)
+# is an exact mapping. An element no binding names is left unmapped.
+id: https://pruzhany.org/ns/site_common
+name: pruzhany_site_common
+title: What the Pruzhany issue documents share
+description: >-
+  The printed address of words on a page picture, printed and supplied titles, translations,
+  the checks of their English, and the regions a content item covers: the parts the content
+  items and mentions documents share.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+  rico: https://www.ica.org/standards/RiC/ontology#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+  - sourced_entities
+
+enums:
+  AuthorshipKind:
+    description: >-
+      Whether a person or a program wrote a supplied title or a translation.
+    permissible_values:
+      person:
+        description: >-
+          A person wrote it.
+      model:
+        description: >-
+          A language model wrote it.
+
+classes:
+  CrossReference:
+    description: >-
+      A link from one content item to another in the same issue, with how sure it is and why.
+    attributes:
+      target_id:
+        required: true
+        description: >-
+          The id of the content item linked to.
+      confidence:
+        range: float
+        required: true
+        description: >-
+          How sure the link is, from 0 to 1.
+      relationship:
+        required: true
+        description: >-
+          What kind of link it is, in words.
+      evidence:
+        required: true
+        description: >-
+          What shows the link, in words.
+
+  PrintedAddress:
+    description: >-
+      Where some printed words stand: the page picture, a box on it in the picture's own
+      pixels, and the words read in that box.
+    exact_mappings:
+      - pc:site_printed_address
+    attributes:
+      image_uri:
+        range: NonBlankText
+        required: true
+        description: >-
+          The page picture the box is on, by its name or address.
+      bbox:
+        range: NonNegativeNumber
+        multivalued: true
+        required: true
+        minimum_cardinality: 4
+        maximum_cardinality: 4
+        description: >-
+          The box on the picture: left, top, width and height, in the picture's pixels.
+      text:
+        required: true
+        description: >-
+          The words read in the box, exactly as read; empty for a patch with no readable line.
+
+  TextBasis:
+    description: >-
+      The exact text a translation or supplied title was made from, and where it is printed,
+      kept even after the text is read again.
+    exact_mappings:
+      - pc:site_text_basis
+    attributes:
+      source_text:
+        required: true
+        description: >-
+          The text used, exactly, never normalised or replaced by a later reading.
+      addresses:
+        range: PrintedAddress
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          Where that text is printed, one address a line or patch.
+
+  Authorship:
+    is_a: Attribution
+    description: >-
+      Who wrote a supplied title, a translation or a check of one, a person or a model, and on
+      which day.
+    exact_mappings:
+      - pc:site_authorship
+    attributes:
+      kind:
+        range: AuthorshipKind
+        required: true
+        description: >-
+          Whether a person or a model wrote it.
+
+  EnglishCheck:
+    description: >-
+      A later, separate check of one English field against one exact reading of the printed
+      text, bound to both and to the judgement kept by their digests.
+    class_uri: rico:Activity
+    attributes:
+      reading_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The reading of the printed text that the English was checked against.
+      reading_sha256:
+        range: Sha256Hex
+        required: true
+        slot_uri: pc:site_reading_sha256
+        description: >-
+          The SHA-256 digest of that reading's exact UTF-8 bytes.
+      english_sha256:
+        range: Sha256Hex
+        required: true
+        slot_uri: pc:site_english_sha256
+        description: >-
+          The SHA-256 digest of the checked English field's exact UTF-8 bytes.
+      judgement_id:
+        required: true
+        pattern: '^[^\s\u0085\uFEFF]+:(title|text)$(?![\s\S])'
+        description: >-
+          The kept judgement, by an id without spaces followed by the field it judged, :title
+          or :text.
+      judgement_sha256:
+        range: Sha256Hex
+        required: true
+        slot_uri: pc:site_judgement_sha256
+        description: >-
+          The SHA-256 digest of the kept judgement file's exact bytes.
+      attribution:
+        range: Authorship
+        inlined: true
+        required: true
+        description: >-
+          Who checked it, and on which day.
+
+  TitleCheck:
+    is_a: EnglishCheck
+    description: >-
+      A check of a supplied title's English.
+    slot_usage:
+      judgement_id:
+        pattern: '^[^\s\u0085\uFEFF]+:title$(?![\s\S])'
+
+  TranslationCheck:
+    is_a: EnglishCheck
+    description: >-
+      A check of a translation's English.
+    slot_usage:
+      judgement_id:
+        pattern: '^[^\s\u0085\uFEFF]+:text$(?![\s\S])'
+
+  PrintedTitle:
+    description: >-
+      A title as printed in the paper: its words and where each line of them stands.
+    class_uri: rico:Title
+    annotations:
+      impresso: >-
+        A content item's title (paper_contentitem.schema.json title), or a section's printed
+        heading (section_title.title_text).
+    attributes:
+      text:
+        range: NonBlankText
+        required: true
+        slot_uri: rico:textualValue
+        description: >-
+          The printed words, its lines joined by line breaks.
+      addresses:
+        range: PrintedAddress
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          Where each line of the title is printed, in order.
+
+  SuppliedTitle:
+    description: >-
+      A title supplied in English for a content item or section, with what it was made from,
+      who made it and, where one was made, its later check.
+    class_uri: rico:Title
+    attributes:
+      text:
+        range: NonBlankText
+        required: true
+        slot_uri: rico:textualValue
+        description: >-
+          The English title.
+      language:
+        equals_string: en
+        required: true
+        description: >-
+          The title's language, always English (en).
+      based_on:
+        range: TextBasis
+        inlined: true
+        required: true
+        description: >-
+          The exact printed text the title was made from, and where it is printed.
+      attribution:
+        range: Authorship
+        inlined: true
+        required: true
+        description: >-
+          Who wrote the title, and on which day.
+      checked_against:
+        range: TitleCheck
+        inlined: true
+        exact_mappings:
+          - pc:site_checked_against_text
+        description: >-
+          A later check of this title against the reading, where one was made.
+
+  Translation:
+    description: >-
+      An English translation of a content item's printed text, with the exact text it was
+      made from, who made it and, where one was made, its later check.
+    exact_mappings:
+      - pc:site_translation
+    attributes:
+      text:
+        range: NonBlankText
+        required: true
+        description: >-
+          The English text.
+      language:
+        equals_string: en
+        required: true
+        description: >-
+          The translation's language, always English (en).
+      based_on:
+        range: TextBasis
+        inlined: true
+        required: true
+        description: >-
+          The exact printed text translated, and where it is printed.
+      attribution:
+        range: Authorship
+        inlined: true
+        required: true
+        description: >-
+          Who translated it, and on which day.
+      checked_against:
+        range: TranslationCheck
+        inlined: true
+        exact_mappings:
+          - pc:site_checked_against_text
+        description: >-
+          A later check of this translation against the reading, where one was made.
+
+  ContentItemBlockRef:
+    description: >-
+      The regions of one page that a content item or a section heading covers, in reading
+      order.
+    attributes:
+      page_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The page, by its id in the pages document.
+      block_ids:
+        range: NonBlankText
+        multivalued: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          The regions on that page, by their ids in the pages document, in reading order.
