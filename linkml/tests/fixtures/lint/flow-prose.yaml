@@ -1,0 +1,15 @@
+id: https://pruzhany.org/ns/fixture-flow-prose
+name: fixture_flow_prose
+description: A description inside a flow mapping, where its comma splits it.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+classes:
+  Block:
+    description: A block.
+    attributes:
+      bbox: {range: integer, description: The box, in pixels}  # refused here

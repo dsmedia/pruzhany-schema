@@ -1,0 +1,18 @@
+id: https://pruzhany.org/ns/fixture-wrong-skos
+name: fixture_wrong_skos
+description: A schema that maps skos to the wrong namespace.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+  skos: http://example.org/not-skos#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+classes:
+  Page:
+    description: A page.
+    attributes:
+      label:
+        description: A label.
+        slot_uri: skos:prefLabel

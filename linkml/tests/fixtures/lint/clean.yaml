@@ -1,0 +1,48 @@
+id: https://pruzhany.org/ns/fixture-clean
+name: fixture_clean
+description: >-
+  A schema the house lint accepts: prose in block style, a boolean word quoted, the items of
+  a list bounded through a type and an exact length as a pair of cardinalities.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+types:
+  NonNegativeNumber:
+    typeof: float
+    minimum_value: 0
+    description: A number at least 0.
+enums:
+  Switch:
+    description: Words that YAML 1.1 would read as booleans, quoted.
+    permissible_values:
+      'on':
+        description: Switched on.
+      'off':
+        description: Switched off.
+classes:
+  Page:
+    description: A page.
+    comments:
+      - A comment, with a comma, in block style.
+    attributes:
+      box:
+        range: NonNegativeNumber
+        multivalued: true
+        minimum_cardinality: 4
+        maximum_cardinality: 4
+        description: Four numbers, each at least 0.
+      count:
+        range: integer
+        minimum_value: 0
+        description: A bound on a single value.
+      state:
+        range: Switch
+        description: 'The answer: no, as text.'
+      flag:
+        range: boolean
+        ifabsent: 'false'
+        description: A boolean slot.

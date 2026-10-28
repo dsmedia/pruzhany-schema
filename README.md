@@ -9,6 +9,7 @@ Consumed by the SvelteKit frontend through its pinned git submodule and by pruzh
 ```
 zod/       TypeScript Zod schemas (frontend model)
 pydantic/  Python Pydantic schemas (pipeline model)
+linkml/    the record's data defined in LinkML, its generated JSON Schema and docs (linkml/README.md)
 ```
 
 Schema modules cover the four issue documents (pages, content items, mentions and life events), one shared record of people, families, places, organizations, events and sourced assertions, shared reference types, and the multi-edition catalog. LLM extraction contracts remain separate from persisted site documents.
@@ -19,7 +20,7 @@ Zod and Pydantic models are kept in lock-step. When you change a type on one sid
 
 ## Verify
 
-`bin/verify` is the one verify entry point, and CI runs all eight steps (`gitleaks.yml` runs `scan`, `ci.yml` the rest): history secret scanning; Zod tests, strict typechecking and formatting; Pydantic model loading and JSON Schema emission; the cross-language contract; the isolated pilot; standards alignment; released vocabulary and generation checks; and sourced-entity parity in the current `SiteArchive` carrier, including its exported JSON Schema. The toolchain is pinned in `package.json`/`bun.lock` to pruzhany-svelte's versions. The Zod↔Pydantic lockstep check moved here from pruzhany-press on 2026-10-22.
+`bin/verify` is the one verify entry point, and CI runs all nine steps (`gitleaks.yml` runs `scan`, `ci.yml` the rest): history secret scanning; Zod tests, strict typechecking and formatting; Pydantic model loading and JSON Schema emission; the cross-language contract; the isolated pilot; standards alignment; released vocabulary and generation checks; sourced-entity parity in the current `SiteArchive` carrier, including its exported JSON Schema; and the LinkML definition, in a locked environment of its own. The toolchain is pinned in `package.json`/`bun.lock` to pruzhany-svelte's versions. The Zod↔Pydantic lockstep check moved here from pruzhany-press on 2026-10-22.
 
 ## License
 

@@ -1,0 +1,27 @@
+id: https://pruzhany.org/ns/fixture-boxes
+name: fixture_boxes
+description: A small module the generation command's test makes a JSON Schema and docs from.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+classes:
+  Boxes:
+    tree_root: true
+    description: A document of boxes.
+    attributes:
+      boxes:
+        range: Box
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: The boxes.
+  Box:
+    description: One box.
+    attributes:
+      label:
+        required: true
+        description: What the box holds.

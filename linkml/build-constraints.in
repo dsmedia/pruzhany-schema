@@ -1,0 +1,4 @@
+# What uv builds the three packages of requirements.lock that PyPI holds only as source
+# (antlr4-python3-runtime, cfgraph, pytest-logging) with: their setup.py asks for setuptools.
+# Compile it into build-constraints.txt with the command at the top of that file.
+setuptools==84.2.1

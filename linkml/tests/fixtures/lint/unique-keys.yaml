@@ -1,0 +1,21 @@
+id: https://pruzhany.org/ns/fixture-unique-keys
+name: fixture_unique_keys
+description: A class with unique_keys, which neither gen-json-schema nor linkml-validate enforces.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+classes:
+  Item:
+    description: An item.
+    unique_keys:  # refused here
+      key:
+        unique_key_slots:
+          - key
+        description: No two items share a key.
+    attributes:
+      key:
+        description: The key.

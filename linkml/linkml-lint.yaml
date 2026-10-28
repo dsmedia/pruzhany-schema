@@ -1,0 +1,14 @@
+# How bin/verify runs `linkml lint` on linkml/schema/ (LinkML "Schema Linter",
+# https://linkml.io/linkml/schemas/linter.html, read 28 October 2026): every recommended
+# rule, and no warning allowed (its exit status is 1 on any warning).
+extends: recommended
+rules:
+  canonical_prefixes:
+    # The merged prefix list the rule reads by default gives `pc` to the Public Contracts
+    # Ontology (http://purl.org/procurement/public-contracts#). Here `pc` is the project's one
+    # local prefix (vocabulary/profile.ttl, line 1), so the rule reads the linked-data list
+    # instead, which holds the common web prefixes (linkml, skos, schema, xsd, dcterms and
+    # the like) and not `pc`. RiC-O and EHRI prefixes are checked by standards/, against the
+    # pinned term lists.
+    prefixmaps_contexts:
+      - linked_data

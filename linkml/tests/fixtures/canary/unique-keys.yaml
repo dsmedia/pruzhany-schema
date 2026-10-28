@@ -1,0 +1,32 @@
+id: https://pruzhany.org/ns/canary-unique-keys
+name: canary_unique_keys
+description: A container whose items declare a unique key (plan section 3, item 3).
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+classes:
+  Container:
+    tree_root: true
+    description: Holds the items.
+    attributes:
+      items:
+        range: Item
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: The items, each with its own key.
+  Item:
+    description: One item.
+    unique_keys:
+      key:
+        unique_key_slots:
+          - key
+        description: No two items share a key.
+    attributes:
+      key:
+        required: true
+        description: The item's key.

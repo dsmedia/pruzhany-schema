@@ -1,0 +1,3 @@
+# The one direct requirement of the linkml step. Compile it into requirements.lock
+# with the command named at the top of that file; never edit the lock by hand.
+linkml==1.12.1

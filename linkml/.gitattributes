@@ -1,0 +1,4 @@
+# Every file under linkml/ is checked out with "\n" line ends, on Windows too: bin/verify
+# linkml compares linkml/generated/ byte for byte with what generate.py writes, which is
+# always "\n", and the house lint reads lines as written.
+* text eol=lf
