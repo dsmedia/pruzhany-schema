@@ -1,4 +1,5 @@
 """Media council contract; storage and consent never enter the public projection."""
+from .generated.models import Media, MediaConsent, MediaConsentScope, MediaDecision, MediaDepicted, MediaDerivative, MediaFamilyWords, MediaFixity, MediaMaster, MediaPortrait, MediaRegion, MediaText, MediaWithdrawal, PublicMedia
 import json
 import re
 from pathlib import Path
@@ -17,180 +18,74 @@ Coordinate = Annotated[int, Field(ge=0, le=9007199254740991)]
 Digest = Annotated[str, Field(pattern=r'^[0-9a-f]{64}$')]
 
 
-class MediaDecision(Strict):
-    role: Literal['owner', 'project']
-    on: Day
-
-
-class MediaText(Strict):
-    text: Text
-    lang: SourceLanguage
-    reviewed: MediaDecision | None = None
-
-
-class MediaRegion(Strict):
-    x: Coordinate
-    y: Coordinate
-    w: Pixels
-    h: Pixels
-
-
 def region_fits(region, width, height):
     return bool(width and height and region.x + region.w <= width and region.y + region.h <= height)
 
 
-class MediaDepicted(Strict):
-    person_id: Text | None
-    region: MediaRegion
-    identified_by: Literal['family', 'record', 'inscription']
+def _MediaConsentScope__unique_people(self):
+    errors = unique_ids(self.person_ids, 'consent person')
+    if errors:
+        raise ValueError('; '.join(errors))
+    return self
 
 
-class MediaPortrait(Strict):
-    media_id: Text
-    region: MediaRegion
-    reviewed: MediaDecision
+def _MediaMaster__named_by_digest(self):
+    if self.bucket == 'pruzhany-page-pictures':
+        raise ValueError('master needs its own private bucket')
+    if self.key.rsplit('/', 1)[-1] != self.sha256:
+        raise ValueError('master key must be named by its sha256')
+    if self.checked and self.checked.sha256 != self.sha256:
+        raise ValueError('master check must match its sha256')
+    return self
 
 
-class MediaWithdrawal(Strict):
-    on: Day
-    reason: Literal['family', 'holder', 'error']
+def _PublicMedia__media_contract(self):
+    errors = []
+    if self.kind in {'image', 'document'} and not self.alt:
+        errors.append('image or document needs alt')
+    if self.kind == 'document' and not self.transcript:
+        errors.append('document needs transcript')
+    if bool(self.width) != bool(self.height):
+        errors.append('media width and height must occur together')
+    if self.link and self.kind not in {'audio', 'video'}:
+        errors.append('holder link is only for audio or video')
+    if self.withdrawn and (self.derived or self.link):
+        errors.append('withdrawn media cannot be served or linked')
+    if any(p.person_id is None for p in self.depicted) and not self.shows_unidentified:
+        errors.append('unidentified depiction needs shows_unidentified')
+    if any(not region_fits(p.region, self.width, self.height) for p in self.depicted):
+        errors.append('depicted region must fit master pixels')
+    errors += unique_ids([p.person_id for p in self.depicted if p.person_id], 'depicted person')
+    if self.kind == 'image' and self.rights == 'http://rightsstatements.org/vocab/InC-OW-EU/1.0/':
+        errors.append('EU orphan-work statement excludes photographs')
+    if self.alt:
+        if len(self.alt.text) > 150:
+            errors.append('alt must be at most 150 characters')
+        if self.alt.text.strip().lower() == self.caption.text.strip().lower():
+            errors.append('alt must not repeat caption')
+        if self.alt.lang.lower().startswith('en') and re.search(r'(^image of\b|\b(?:holocaust victim|before the war|unaware|doomed|happy|little did they know)\b)', self.alt.text.strip(), re.I):
+            errors.append('alt must describe only what is visible')
+    if self.derived:
+        if not self.cleared:
+            errors.append('derived media needs clearance')
+        if not (self.width and self.height) and not self.duration:
+            errors.append('derived media needs dimensions or duration')
+        if self.kind in {'image', 'document'} and not (self.width and self.height):
+            errors.append('derived picture needs master dimensions')
+        errors += unique_ids([d.url for d in self.derived], 'derived address')
+        for d in self.derived:
+            nominal = int(d.url.rsplit('-w', 1)[-1].removesuffix('.webp'))
+            if d.width > nominal or (self.width and d.width > self.width) or (self.height and d.height > self.height):
+                errors.append('derived picture cannot exceed its width or master')
+    if errors:
+        raise ValueError('; '.join(errors))
+    return self
 
 
-class MediaConsentScope(Strict):
-    use: Literal['site', 'site+download']
-    person_ids: list[Text]
-    unidentified: bool
-
-    @model_validator(mode='after')
-    def unique_people(self):
-        errors = unique_ids(self.person_ids, 'consent person')
-        if errors:
-            raise ValueError('; '.join(errors))
-        return self
-
-
-class MediaConsent(Strict):
-    basis: Literal['institution-terms', 'holder-licence', 'family-permission', 'public-domain', 'owner-family-papers']
-    granted_by: Literal['owner', 'family', 'holder', 'institution']  # a role, never a person's name
-    scope: MediaConsentScope
-    ref: Text
-    withdrawn_on: Day | None = None
-
-
-class MediaFamilyWords(Strict):
-    source_id: Text
-    page: Text
-    quote: Text
-    quote_language: SourceLanguage
-
-
-class MediaFixity(Strict):
-    on: Day
-    sha256: Digest
-
-
-class MediaMaster(Strict):
-    bucket: Annotated[str, Field(pattern=r'^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$')]
-    key: Annotated[str, Field(pattern=r'^(?:[a-z0-9_-]+/)*[0-9a-f]{64}$')]
-    sha256: Digest
-    mime: Annotated[str, Field(pattern=r'^(?:image|audio|video|application)/[a-z0-9][a-z0-9.+-]*$')]
-    bytes: Pixels
-    checked: MediaFixity | None = None
-
-    @model_validator(mode='after')
-    def named_by_digest(self):
-        if self.bucket == 'pruzhany-page-pictures':
-            raise ValueError('master needs its own private bucket')
-        if self.key.rsplit('/', 1)[-1] != self.sha256:
-            raise ValueError('master key must be named by its sha256')
-        if self.checked and self.checked.sha256 != self.sha256:
-            raise ValueError('master check must match its sha256')
-        return self
-
-
-class MediaDerivative(Strict):
-    url: Annotated[str, Field(pattern=r'^https://pictures\.pruzhanychronicles\.org/media/[0-9a-f]{64}-w(?:' + '|'.join(map(str, MEDIA_WIDTHS)) + r')\.webp$')]
-    width: Pixels
-    height: Pixels
-    process: Literal['resize']
-
-
-class PublicMedia(Strict):
-    id: Annotated[str, Field(pattern=r'^[a-z0-9]+(?:-[a-z0-9]+)*$')]
-    source_id: Text
-    kind: Literal['image', 'audio', 'video', 'document']
-    caption: MediaText
-    alt: MediaText | None = None
-    inscription: MediaText | None = None
-    transcript: MediaText | None = None
-    family_words: MediaFamilyWords | None = None
-    depicted: list[MediaDepicted]
-    shows_unidentified: bool
-    width: Pixels | None = None
-    height: Pixels | None = None
-    duration: Annotated[float, Field(gt=0, allow_inf_nan=False)] | None = None
-    credit: Text
-    conditions_of_access: Text | None = None
-    conditions_of_use: Text | None = None
-    rights: MediaRights = RIGHTS['default']
-    cleared: MediaDecision | None = None
-    withdrawn: MediaWithdrawal | None = None
-    link: Annotated[str, Field(pattern=r'^https://[a-z0-9]+(?:[.-][a-z0-9]+)*(?:/[^\s\\]*)?$')] | None = None
-    derived: Annotated[list[MediaDerivative], Field(min_length=1)] | None = None
-
-    @model_validator(mode='after')
-    def media_contract(self):
-        errors = []
-        if self.kind in {'image', 'document'} and not self.alt:
-            errors.append('image or document needs alt')
-        if self.kind == 'document' and not self.transcript:
-            errors.append('document needs transcript')
-        if bool(self.width) != bool(self.height):
-            errors.append('media width and height must occur together')
-        if self.link and self.kind not in {'audio', 'video'}:
-            errors.append('holder link is only for audio or video')
-        if self.withdrawn and (self.derived or self.link):
-            errors.append('withdrawn media cannot be served or linked')
-        if any(p.person_id is None for p in self.depicted) and not self.shows_unidentified:
-            errors.append('unidentified depiction needs shows_unidentified')
-        if any(not region_fits(p.region, self.width, self.height) for p in self.depicted):
-            errors.append('depicted region must fit master pixels')
-        errors += unique_ids([p.person_id for p in self.depicted if p.person_id], 'depicted person')
-        if self.kind == 'image' and self.rights == 'http://rightsstatements.org/vocab/InC-OW-EU/1.0/':
-            errors.append('EU orphan-work statement excludes photographs')
-        if self.alt:
-            if len(self.alt.text) > 150:
-                errors.append('alt must be at most 150 characters')
-            if self.alt.text.strip().lower() == self.caption.text.strip().lower():
-                errors.append('alt must not repeat caption')
-            if self.alt.lang.lower().startswith('en') and re.search(r'(^image of\b|\b(?:holocaust victim|before the war|unaware|doomed|happy|little did they know)\b)', self.alt.text.strip(), re.I):
-                errors.append('alt must describe only what is visible')
-        if self.derived:
-            if not self.cleared:
-                errors.append('derived media needs clearance')
-            if not (self.width and self.height) and not self.duration:
-                errors.append('derived media needs dimensions or duration')
-            if self.kind in {'image', 'document'} and not (self.width and self.height):
-                errors.append('derived picture needs master dimensions')
-            errors += unique_ids([d.url for d in self.derived], 'derived address')
-            for d in self.derived:
-                nominal = int(d.url.rsplit('-w', 1)[-1].removesuffix('.webp'))
-                if d.width > nominal or (self.width and d.width > self.width) or (self.height and d.height > self.height):
-                    errors.append('derived picture cannot exceed its width or master')
-        if errors:
-            raise ValueError('; '.join(errors))
-        return self
-
-
-class Media(PublicMedia):
-    master: MediaMaster | None = None
-    consent: MediaConsent | None = None
-
-    @model_validator(mode='after')
-    def consent_state(self):
-        if self.consent and self.consent.withdrawn_on and not self.withdrawn:
-            raise ValueError('withdrawn consent needs withdrawn media state')
-        return self
+def _Media__consent_state(self):
+    if self.consent and self.consent.withdrawn_on and not self.withdrawn:
+        raise ValueError('withdrawn consent needs withdrawn media state')
+    return self
 
 
 def public_media(value: Media) -> PublicMedia:

@@ -56,6 +56,8 @@ def zod_checks(text):
 
 def pydantic_checks(text):
     """(name, kind) for each validator: Class.method for a decorator, the alias for a call."""
+    from test_documents_checks import python_inventory
+    yield from python_inventory.retained_checks(text)
     for node in ast.parse(text).body:
         if isinstance(node, ast.ClassDef):
             for item in node.body:

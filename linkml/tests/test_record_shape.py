@@ -67,9 +67,10 @@ class VersionStamps(unittest.TestCase):
                           DEFS['SharedRecord']['properties']['vocabulary_version']['const']}, {released})
 
     def test_the_record_version_is_the_twins(self):
+        from test_python_generation import models
         zod = re.search(r"version: z\.literal\('([^']+)'\)", text('zod/shared-record.schema.ts'))
-        python = re.search(r"version: Literal\['([^']+)'\]", text('pydantic/shared_record.py'))
-        self.assertEqual({zod.group(1), python.group(1), attribute('SharedRecord', 'version').equals_string,
+        python = models().SharedRecord.model_json_schema()['properties']['version']['const']
+        self.assertEqual({zod.group(1), python, attribute('SharedRecord', 'version').equals_string,
                           DEFS['SharedRecord']['properties']['version']['const']}, {'1'})
 
     def test_another_stamp_is_refused(self):
@@ -131,11 +132,12 @@ class HouseStyleRows(unittest.TestCase):
 class Patterns(unittest.TestCase):
     def test_an_https_address_is_the_pydantic_twin_s_pattern(self):
         pattern = VIEW.get_type('HttpsUri').pattern
-        for path, model in (('pydantic/sourced_entities.py', 'Citation'), ('pydantic/shared_record.py', 'PlaceIdentifier')):
+        from test_python_generation import models
+        for model in ('Citation', 'PlaceIdentifier'):
             with self.subTest(model=model):
-                body = text(path).split(f'class {model}(', 1)[1]
-                found = re.search(r'url: Annotated\[str, Field\(pattern=r"([^"]+)"\)\]', body)
-                self.assertEqual(found.group(1), pattern)
+                shape = getattr(models(), model).model_json_schema()['properties']['url']
+                branch = next(v for v in shape['anyOf'] if v.get('type') == 'string')
+                self.assertEqual(branch['pattern'], pattern)
         self.assertEqual(attribute('Citation', 'url').range, 'HttpsUri')
         self.assertEqual(attribute('PlaceIdentifier', 'url').range, 'HttpsUri')
         self.assertTrue(refused('Citation', {'source_id': 'source-a', 'url': 'http://example.org/a'}))

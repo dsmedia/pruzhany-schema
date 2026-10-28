@@ -39,7 +39,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # The Python and pydantic every Python step runs with.
-PYDANTIC_VERSION="2.12.5"
+PYDANTIC_VERSION="2.13.5"
 PYTHON_VERSION="3.11"
 
 step_scan() {
@@ -85,10 +85,11 @@ sys.modules[PKG] = package
 spec.loader.exec_module(package)
 
 count = 0
-for path in sorted(root.glob("*.py")):
+for path in sorted(root.rglob("*.py")):
     if path.name == "__init__.py":
         continue
-    module = importlib.import_module(f"{PKG}.{path.stem}")
+    relative_module = '.'.join(path.relative_to(root).with_suffix('').parts)
+    module = importlib.import_module(f"{PKG}.{relative_module}")
     for _, obj in inspect.getmembers(module, inspect.isclass):
         if issubclass(obj, BaseModel) and obj.__module__ == module.__name__:
             obj.model_json_schema()

@@ -62,6 +62,29 @@ class Generate(unittest.TestCase):
             'linkml/generated/docs/boxes/Stale.md: extra; generate.py makes no such file',
         ])
 
+    def test_python_check_refuses_changed_missing_and_extra_outputs(self):
+        profile = {'models': {
+            'Box': {'config': {'extra': 'forbid'}, 'order': ['label']},
+            'Boxes': {'config': {'extra': 'forbid'}, 'order': ['boxes']},
+        }, 'adjustments': []}
+        (self.root / 'python-compatibility.json').write_text(json.dumps(profile))
+        generate.regenerate(self.root)
+        target = self.root.parent / 'pydantic/generated'
+        self.assertEqual(generate.differences(self.root), [])
+        original = (target / 'models.py').read_text()
+        for changed in ('# changed\n' + original, None):
+            with self.subTest(changed=changed is not None):
+                if changed is None:
+                    (target / 'models.py').unlink()
+                else:
+                    (target / 'models.py').write_text(changed)
+                self.assertEqual(generate.differences(self.root),
+                                 ['pydantic/generated/models.py: missing, extra or differs from generation'])
+                (target / 'models.py').write_text(original)
+        (target / 'stale.py').write_text('# stale\n')
+        self.assertEqual(generate.differences(self.root),
+                         ['pydantic/generated/stale.py: missing, extra or differs from generation'])
+
     def test_regenerating_removes_a_stale_file_and_restores_a_changed_one(self):
         (self.made / 'docs' / 'boxes' / 'Stale.md').write_text('# Stale\n', encoding='utf-8')
         (self.made / 'docs' / 'boxes' / 'index.md').write_text('changed\n', encoding='utf-8')

@@ -2,7 +2,7 @@
 
 This is the guide to the data behind the Pruzhany newspaper: its pages and pieces, the people and events it names, and the evidence for what we say about them.
 
-LinkML defines the kinds and fields below. Zod and Pydantic remain the working validators. Passing a schema checks the form of a record, not whether a reading or historical claim is correct. Identity, trust, rights and release readiness have their own requirements in the record catalog.
+LinkML defines the kinds and fields below and generates the Python models. The website’s Zod validators and the retained Python checks still enforce the rules about evidence, dates, relationships and publication. Passing a schema checks the form of a record, not whether a reading or historical claim is correct. Identity, trust, rights and release readiness have their own requirements in the record catalog.
 
 The four issue documents, the editions catalog and the shared record each have a generated JSON Schema. The shared record is checked after its 256 storage shards have been joined. Stored identifiers and file shapes are unchanged.
 
@@ -1787,7 +1787,7 @@ The form a fact is kept in: a structured statement, retained prose, or an image 
 
 ## Validator responsibilities
 
-The following measured differences are checked by `record compare linkml`. Its report must exercise every listed place, accept every real document and pass the bundled Zod archive and catalog checks.
+The following measured differences are checked by `record compare linkml`. Its report must exercise every listed place, accept every real document and pass the bundled Zod archive and catalog checks. The generated Python models also validate every document and the complete archive. Python-specific API adjustments are recorded in `linkml/python-compatibility.json`, each with synthetic witnesses; retained rules still check dates, uniqueness and agreement between records.
 
 ### Required key nullable
 

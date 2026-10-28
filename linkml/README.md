@@ -1,9 +1,9 @@
 # linkml/: the record's data, defined once in LinkML
 
 This folder is the written definition of the record's data in [LinkML](https://linkml.io), from
-which the project generates a JSON Schema for each document and a data dictionary. It is stage 1
-of the plan in pruzhany-steps `.scratch/linkml/plan.md`: **LinkML describes; `zod/` and
-`pydantic/` still validate.** What LinkML cannot say about the shapes is listed in
+which the project generates a JSON Schema for each document, the Python models and a data dictionary.
+Stage two generates the field declarations; **the hand-written Zod validators and retained Python
+rules still validate.** What LinkML cannot say about the shapes is listed in
 `known-looser.yaml`, each with what enforces it instead.
 
 | File | What it is |
@@ -27,6 +27,41 @@ of the plan in pruzhany-steps `.scratch/linkml/plan.md`: **LinkML describes; `zo
 | `tests/` | The canaries (`canary_*.py`), the tests (`test_*.py`) and their planted files (`fixtures/`). |
 
 ## Running it
+
+### Generated Python and retained rules
+
+`pydantic/generated/models.py` is one canonical class graph. The previous Python modules re-export
+those classes and retain their validation functions and public helpers. `SiteIssue` and `SiteArchive`
+remain hand-written carriers for cross-document checks. Extraction models and the isolated pilot
+remain separate. The catalog now has Python models as well.
+
+The pinned LinkML JSON Schema generator supplies the complete class index. `python_generator.py`
+adapts that index to Pydantic: the native LinkML Python generator drops inherited type bounds,
+uses lists for tuples, and cannot preserve the released null and coercion behavior. This backend
+handles only the supported field constructs and refuses unknown ones. It normalizes equivalent
+schema spellings, including absolute regex endings, without dropping constraints. A change to
+class conditions requires explicit review of the retained Python enforcement.
+
+`python-compatibility.json` maps every owned class, preserves public field order/configuration and
+binds retained validators. Its exact field adjustments preserve the released Python API, including
+tuple positions, null/absence and serialization. Each adjustment names its immutable source and
+has synthetic witnesses in `tests/fixtures/python-adjustments.json`; duplicates, stale and untested
+entries fail. The migration baseline is the merged stage-one commit recorded in that manifest.
+These adjustments are distinct from `known-looser.yaml`, which compares the generated JSON Schemas
+with the production Zod exports. Neither list grants a general exemption.
+
+Generation emits no LinkML runtime dependency. The Python gate uses Pydantic **2.13.5**, matching
+the private steps environment; LinkML keeps its separate locked environment. The generation check
+covers both `linkml/generated/` and `pydantic/generated/`. Regenerate through `linkml/generate.py`,
+never by editing emitted classes. `bin/verify pydantic` visits generated subpackages as well.
+
+The original behavior corpus remains in the contract gate. The Python generation tests additionally
+compare every previous field contract and public import, exercise every retained validator with a
+rejecting example, and check the new catalog. The private `record compare linkml` now runs Python
+on every original JSON document and on the complete archive assembled from every shard. It does
+not treat an individual shard as a self-contained record with complete references.
+
+### Commands
 
 `bin/verify linkml` runs everything, in this order: `linkml lint` on every schema file, the house
 lint, every generated file made again in a temporary folder and compared byte for byte with
@@ -93,7 +128,7 @@ uv pip compile linkml/build-constraints.in --universal --python-version 3.11 --g
 ```
 
 It is an environment of its own: linkml 1.12.1 needs pydantic 2.13.5 or later, and the other
-Python steps pin `PYDANTIC_VERSION` (2.12.5). `bin/verify linkml` makes it afresh in a temporary
+Python steps pin `PYDANTIC_VERSION` (2.13.5). `bin/verify linkml` makes it afresh in a temporary
 folder each run with `uv pip sync --require-hashes` (a fraction of a second from uv's cache).
 Measured on 28 October 2026 with uv 0.11.32: `uv pip sync --require-hashes` refuses a lock with a
 planted wrong hash, and refuses a wrong hash in `--build-constraints`; `uv run --with-requirements`
@@ -197,9 +232,10 @@ guard here:
 
 - **`exact_cardinality` is dropped.** Write `minimum_cardinality` with `maximum_cardinality`.
   Guard: the house lint, and `canary_linkml.ExactCardinalityIsDropped`.
-- **Generated Pydantic bounds the whole list.** Bound the items through a type. Guard: the house
-  lint, and `canary_linkml.PydanticBoundsTheWholeList`. Also measured: gen-pydantic drops a bound
-  on a type altogether (`list[int]` with no bound), which matters in stage 2 and not here.
+- **Native generated Pydantic bounds the whole list.** Bound the items through a type. Guard: the
+  house lint and `canary_linkml.PydanticBoundsTheWholeList`. The native generator also drops a bound
+  on a type altogether (`list[int]` with no bound); the project's Python backend retains those
+  item bounds from the JSON Schema class index, with rejecting fixtures in its generation tests.
 - **`unique_keys` is not enforced.** Guard: the house lint, and
   `canary_linkml.UniqueKeysAreNotEnforced`.
 - **Null is not absence, and LinkML has only absence.** A required slot refuses null and an

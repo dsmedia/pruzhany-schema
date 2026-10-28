@@ -28,6 +28,12 @@ from linkml.generators.jsonschemagen import JsonSchemaGenerator
 from linkml_runtime.utils.schemaview import SchemaView
 import yaml
 
+# Loaded by path because this command deliberately runs with python -I.
+import importlib.util
+_python_spec = importlib.util.spec_from_file_location('python_generator', Path(__file__).with_name('python_generator.py'))
+_python_backend = importlib.util.module_from_spec(_python_spec)
+_python_spec.loader.exec_module(_python_backend)
+
 LINKML = Path(__file__).resolve().parent
 
 
@@ -152,8 +158,10 @@ def build_index_and_dictionary(linkml_dir, destination):
         '# The Pruzhany data dictionary', '',
         'This is the guide to the data behind the Pruzhany newspaper: its pages and pieces, '
         'the people and events it names, and the evidence for what we say about them.', '',
-        'LinkML defines the kinds and fields below. Zod and Pydantic remain the working '
-        'validators. Passing a schema checks the form of a record, not whether a reading or '
+        'LinkML defines the kinds and fields below and generates the Python models. '
+        'The website’s Zod validators and the retained Python checks still enforce the '
+        'rules about evidence, dates, relationships and publication. Passing a schema checks '
+        'the form of a record, not whether a reading or '
         'historical claim is correct. Identity, trust, rights and release readiness have their '
         'own requirements in the record catalog.', '',
         'The four issue documents, the editions catalog and the shared record each have a '
@@ -195,7 +203,11 @@ def build_index_and_dictionary(linkml_dir, destination):
     lines += ['## Validator responsibilities', '',
               'The following measured differences are checked by `record compare linkml`. '
               'Its report must exercise every listed place, accept every real document and '
-              'pass the bundled Zod archive and catalog checks.', '']
+              'pass the bundled Zod archive and catalog checks. The generated Python models '
+              'also validate every document and the complete archive. Python-specific API '
+              'adjustments are recorded in `linkml/python-compatibility.json`, each with '
+              'synthetic witnesses; retained rules still check dates, uniqueness and agreement '
+              'between records.', '']
     for entry in index['known_looser']:
         lines += [f"### {entry['kind'].replace('-', ' ').capitalize()}", '', prose(entry['why']), '',
                   prose(entry['linkml_says']), '', 'Enforced by:', '']
@@ -229,6 +241,7 @@ def differences(linkml_dir):
     with tempfile.TemporaryDirectory() as scratch:
         build(linkml_dir, Path(scratch))
         fresh = files(Path(scratch))
+        python = _python_backend.build_python(linkml_dir, json.loads(fresh['contract.json'])) if (linkml_dir / 'python-compatibility.json').exists() else None
     committed = files(linkml_dir / 'generated')
     shown = 'linkml/generated/'
     problems = []
@@ -239,6 +252,13 @@ def differences(linkml_dir):
             problems.append(f'{shown}{name}: extra; generate.py makes no such file')
         elif fresh[name] != committed[name]:
             problems.append(f'{shown}{name}: differs from what generate.py makes now')
+    if python is not None:
+        actual = {name: data for name, data in files(linkml_dir.parent / 'pydantic' / 'generated').items()
+                  if '__pycache__' not in name.split('/')}
+        expected = {name: text.encode('utf-8') for name, text in python.items()}
+        for name in sorted(expected.keys() | actual.keys()):
+            if expected.get(name) != actual.get(name):
+                problems.append(f'pydantic/generated/{name}: missing, extra or differs from generation')
     return problems
 
 
@@ -246,10 +266,17 @@ def regenerate(linkml_dir):
     """Replace linkml/generated/ with what the definition makes now, removing stale files."""
     with tempfile.TemporaryDirectory() as scratch:
         build(linkml_dir, Path(scratch))
+        python = _python_backend.build_python(linkml_dir, json.loads((Path(scratch) / 'contract.json').read_text())) if (linkml_dir / 'python-compatibility.json').exists() else None
         target = linkml_dir / 'generated'
         if target.exists():
             shutil.rmtree(target)
         shutil.copytree(scratch, target)
+        if python is not None:
+            target = linkml_dir.parent / 'pydantic' / 'generated'
+            if target.exists():
+                shutil.rmtree(target)
+            for name, content in python.items():
+                write_text(target / name, content)
 
 
 def main(argv):

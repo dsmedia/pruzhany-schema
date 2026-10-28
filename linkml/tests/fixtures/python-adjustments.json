@@ -1,0 +1,431 @@
+[
+  {
+    "model": "Block",
+    "field": "bbox",
+    "cases": [
+      {
+        "value": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "valid": true,
+        "python_type": "tuple"
+      },
+      {
+        "value": [
+          0,
+          0,
+          1
+        ],
+        "valid": false
+      },
+      {
+        "value": [
+          -1,
+          0,
+          1,
+          1
+        ],
+        "valid": true,
+        "python_type": "tuple"
+      },
+      {
+        "value": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "valid": true,
+        "python_type": "tuple"
+      }
+    ]
+  },
+  {
+    "model": "Citation",
+    "field": "url",
+    "cases": [
+      {
+        "value": "https://example.org/record",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "https://example.org/%zz",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "http://example.org/record",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "ContentItemsData",
+    "field": "vocabulary_version",
+    "cases": [
+      {
+        "value": "1.0.0",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "1.1.0",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "EnglishCheck",
+    "field": "reading_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "EnglishCheck",
+    "field": "english_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "EnglishCheck",
+    "field": "judgement_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "Media",
+    "field": "duration",
+    "cases": [
+      {
+        "value": 1.5,
+        "valid": true,
+        "python_type": "float"
+      },
+      {
+        "value": 0,
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "Page",
+    "field": "dimensions",
+    "cases": [
+      {
+        "value": [
+          100,
+          200
+        ],
+        "valid": true,
+        "python_type": "tuple"
+      },
+      {
+        "value": [
+          100
+        ],
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "PlaceIdentifier",
+    "field": "url",
+    "cases": [
+      {
+        "value": "https://example.org/record",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "https://example.org/%zz",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "http://example.org/record",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "PrintedAddress",
+    "field": "bbox",
+    "cases": [
+      {
+        "value": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "valid": true,
+        "python_type": "tuple"
+      },
+      {
+        "value": [
+          0,
+          0,
+          1
+        ],
+        "valid": false
+      },
+      {
+        "value": [
+          -1,
+          0,
+          1,
+          1
+        ],
+        "valid": false
+      },
+      {
+        "value": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "PublicMedia",
+    "field": "duration",
+    "cases": [
+      {
+        "value": 1.5,
+        "valid": true,
+        "python_type": "float"
+      },
+      {
+        "value": 0,
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "SharedPlace",
+    "field": "coordinates",
+    "cases": [
+      {
+        "value": [
+          50,
+          25
+        ],
+        "valid": true,
+        "python_type": "tuple"
+      },
+      {
+        "value": [
+          91,
+          25
+        ],
+        "valid": false
+      },
+      {
+        "value": [
+          50,
+          181
+        ],
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "SharedRecord",
+    "field": "holders",
+    "cases": [
+      {
+        "value": [],
+        "valid": true,
+        "python_type": "list"
+      },
+      {
+        "value": null,
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "SiteCitation",
+    "field": "url",
+    "cases": [
+      {
+        "value": "https://example.org/record",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "https://example.org/%zz",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "http://example.org/record",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "TitleCheck",
+    "field": "reading_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "TitleCheck",
+    "field": "english_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "TitleCheck",
+    "field": "judgement_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "TranslationCheck",
+    "field": "reading_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "TranslationCheck",
+    "field": "english_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "TranslationCheck",
+    "field": "judgement_sha256",
+    "cases": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "LifeEventDate",
+    "field": "qualifier",
+    "cases": [
+      {
+        "value": null,
+        "valid": true,
+        "python_type": "NoneType"
+      },
+      {
+        "value": "reported_in",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "other",
+        "valid": false
+      }
+    ]
+  },
+  {
+    "model": "SharedEvent",
+    "field": "evidence_basis",
+    "cases": [
+      {
+        "value": null,
+        "valid": true,
+        "python_type": "NoneType"
+      },
+      {
+        "value": "records_only",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "other",
+        "valid": false
+      }
+    ]
+  }
+]
