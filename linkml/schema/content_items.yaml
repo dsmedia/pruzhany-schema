@@ -1,0 +1,320 @@
+# The content items document of one issue (pruzhany-svelte static/data/<date>-content-items.json),
+# as zod/content-item.schema.ts and pydantic/content_item.py shape it. Its JSON Schema is made
+# with the top class ContentItemsData (modules.json). Impresso governs content items and their
+# types (docs/adr/0001-which-standard-governs-what.md); its field is named in an `impresso`
+# annotation, in words. The other mappings follow the bindings of vocabulary/site-content.json
+# and vocabulary/reading-status.json, as site_common.yaml says.
+id: https://pruzhany.org/ns/content_items
+name: pruzhany_content_items
+title: The content items document of a Pruzhany issue
+description: >-
+  One issue's content items (articles, notices, greetings, advertisements) with their titles,
+  text, English and regions, and the printed sections that group them under a heading.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+  rico: https://www.ica.org/standards/RiC/ontology#
+  ehri: http://lod.ehri-project-test.eu/ontology#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+  - vocabulary
+  - site_common
+
+classes:
+  ContentItemsData:
+    tree_root: true
+    description: >-
+      One issue's content items document: the issue's date, the vocabulary version its values
+      are from, its content items and its printed sections.
+    annotations:
+      impresso: >-
+        The content item files of one issue (paper_contentitem.schema.json), and the issue
+        file's list of its items (issue.schema.json i).
+    attributes:
+      issue_date:
+        range: IsoDay
+        required: true
+        description: >-
+          The issue's date, written YYYY-MM-DD.
+      vocabulary_version:
+        required: true
+        pattern: '^(0\.1\.0|1\.0\.0)$(?![\s\S])'
+        description: >-
+          The version of the site-content vocabulary whose values the document uses: one of
+          the versions the current vocabulary accepts as compatible.
+      content_items:
+        range: ContentItem
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The issue's content items.
+      sections:
+        range: PrintedSection
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The issue's printed sections.
+
+  ContentItem:
+    description: >-
+      One article, notice, greeting or advertisement of the issue: its kind, its titles, its
+      text and English, the regions it is printed in and what it names.
+    class_uri: ehri:RecordResource
+    annotations:
+      impresso: >-
+        A content item file (paper_contentitem.schema.json).
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The content item's id within the issue.
+        annotations:
+          impresso: >-
+            The content item's id.
+      type:
+        range: ImpressoTypes
+        required: true
+        description: >-
+          The content item's kind, one of Impresso's content item types.
+        annotations:
+          impresso: >-
+            The content item's type (tp).
+      subtype:
+        range: ContentItemSubtypes
+        slot_uri: rico:hasDocumentaryFormType
+        description: >-
+          The narrower form the content item takes within its kind, such as a wedding
+          greeting within advertisements, where one is known.
+      printed_title:
+        range: PrintedTitle
+        inlined: true
+        slot_uri: rico:hasOrHadTitle
+        description: >-
+          The title as printed above the content item, where it has one.
+        annotations:
+          impresso: >-
+            The content item's title.
+      supplied_title:
+        range: SuppliedTitle
+        inlined: true
+        required: true
+        slot_uri: rico:hasOrHadTitle
+        description: >-
+          A title in English supplied for the content item.
+      subject_ids:
+        range: Subjects
+        multivalued: true
+        required: true
+        slot_uri: rico:hasOrHadSubject
+        description: >-
+          What the content item is about, as subjects of the site-content vocabulary.
+      section_id:
+        range: NonBlankText
+        description: >-
+          The printed section the content item stands under, by the section's id, where it
+          stands under one.
+      full_text:
+        required: true
+        related_mappings:
+          - pc:site_site_copy
+        description: >-
+          The content item's printed text, a copy made for the site from the lines of its
+          regions.
+        annotations:
+          impresso: >-
+            The content item's rebuilt full text (ft).
+      translation:
+        range: Translation
+        inlined: true
+        description: >-
+          The content item's text in English, where it has been translated.
+      reading_status:
+        range: ReadingStatus
+        inlined: true
+        exact_mappings:
+          - pc:site_reading_status
+        description: >-
+          How far the text and the English have been checked; left out or null where it is
+          not recorded.
+      block_breaks:
+        range: NonNegativeInteger
+        multivalued: true
+        required: true
+        related_mappings:
+          - pc:site_site_copy
+        description: >-
+          Where each region's text begins in the full text, counted in Unicode code points.
+        annotations:
+          impresso: >-
+            The text offsets of page regions (rb).
+      page_blocks:
+        range: ContentItemBlockRef
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        related_mappings:
+          - pc:site_site_copy
+        description: >-
+          The regions the content item is printed in, page by page, in reading order.
+      location_ids:
+        range: NonBlankText
+        multivalued: true
+        required: true
+        description: >-
+          The places the content item names, by their ids in the shared record.
+      organization_ids:
+        range: NonBlankText
+        multivalued: true
+        required: true
+        description: >-
+          The organisations the content item names, by their ids in the shared record.
+      cross_references:
+        range: CrossReference
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Links from this content item to others in the issue.
+      event_id:
+        range: NonBlankText
+        description: >-
+          The life event the content item prints, by the event's id, where it prints one.
+    rules:
+      - description: >-
+          A greeting, thanks, notice, announcement, appeal or commercial advertisement is an
+          advertisement (ad).
+        preconditions:
+          slot_conditions:
+            subtype:
+              equals_string_in:
+                - wedding_greeting
+                - engagement_greeting
+                - birth_greeting
+                - bar_mitzvah_greeting
+                - new_year_greeting
+                - departure_greeting
+                - greeting
+                - thanks
+                - meeting_notice
+                - announcement
+                - appeal
+                - commercial_advertisement
+        postconditions:
+          slot_conditions:
+            type:
+              equals_string: ad
+      - description: >-
+          A condolence, memorial notice or death announcement is a death notice (death_notice).
+        preconditions:
+          slot_conditions:
+            subtype:
+              equals_string_in:
+                - condolence
+                - memorial_notice
+                - death_announcement
+        postconditions:
+          slot_conditions:
+            type:
+              equals_string: death_notice
+      - description: >-
+          An editorial, opinion, letter, poem or sketch is an article.
+        preconditions:
+          slot_conditions:
+            subtype:
+              equals_string_in:
+                - editorial
+                - opinion
+                - letter
+                - poem
+                - sketch
+        postconditions:
+          slot_conditions:
+            type:
+              equals_string: article
+      - description: >-
+          A humorous piece (humour) is entertainment.
+        preconditions:
+          slot_conditions:
+            subtype:
+              equals_string_in:
+                - humour
+        postconditions:
+          slot_conditions:
+            type:
+              equals_string: entertainment
+
+  ReadingStatus:
+    description: >-
+      How far a content item's text and its English have been checked, each recorded on its
+      own; null for either means it is not recorded, not that it was reviewed.
+    exact_mappings:
+      - pc:site_reading_status
+    attributes:
+      text:
+        range: ReadingStatusValue
+        description: >-
+          How far the printed text has been checked; null where not recorded.
+      english:
+        range: ReadingStatusValue
+        description: >-
+          How far the English has been checked; null where not recorded.
+
+  PrintedSection:
+    description: >-
+      A printed heading and the content items that stand beneath it, such as the title
+      "What is heard in town?" over the town's news.
+    class_uri: ehri:RecordSet
+    annotations:
+      impresso: >-
+        A section title (section_title in the issue and content item files).
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The section's id within the issue.
+        annotations:
+          impresso: >-
+            The section's id (section_title.section_id).
+      printed_title:
+        range: PrintedTitle
+        inlined: true
+        required: true
+        slot_uri: rico:hasOrHadTitle
+        description: >-
+          The heading as printed.
+        annotations:
+          impresso: >-
+            The section's heading text (section_title.title_text).
+      supplied_title:
+        range: SuppliedTitle
+        inlined: true
+        slot_uri: rico:hasOrHadTitle
+        description: >-
+          A title in English supplied for the heading, where one was made.
+      content_item_ids:
+        range: NonBlankText
+        multivalued: true
+        required: true
+        minimum_cardinality: 1
+        slot_uri: rico:includesOrIncluded
+        description: >-
+          The content items beneath the heading, by their ids.
+        annotations:
+          impresso: >-
+            The content items that make up the section (section_title.composing_ci_ids).
+      heading_blocks:
+        range: ContentItemBlockRef
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          The regions the heading is printed in, page by page.

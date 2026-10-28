@@ -1,0 +1,153 @@
+{
+    "$defs": {
+        "Block": {
+            "additionalProperties": false,
+            "description": "One region of print on a page, its box and the words read in it, belonging to one content item, or to no item when it is a section heading.",
+            "properties": {
+                "bbox": {
+                    "description": "The region's box on the page picture: left, top, width and height, in the picture's pixels.",
+                    "items": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                },
+                "confidence": {
+                    "description": "How sure the reading is, from 0 to 1, where it was recorded.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The region's id, such as blk-p4-001.",
+                    "type": "string"
+                },
+                "image_crop": {
+                    "description": "A picture of the region alone, by its path, where one was made.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "transcription": {
+                    "description": "The words read in the region, its lines separated by line breaks.",
+                    "type": "string"
+                },
+                "unit_id": {
+                    "description": "The content item the region belongs to, by its id; null for a region that is a section's heading.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "bbox",
+                "transcription"
+            ],
+            "title": "Block",
+            "type": "object"
+        },
+        "Page": {
+            "additionalProperties": false,
+            "description": "One printed page of the issue: its picture, its size and its regions of print.",
+            "properties": {
+                "blocks": {
+                    "description": "The regions of print on the page.",
+                    "items": {
+                        "$ref": "#/$defs/Block"
+                    },
+                    "type": "array"
+                },
+                "dimensions": {
+                    "description": "The picture's width and height, in its pixels.",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                },
+                "id": {
+                    "description": "The page's id, such as page-1938-12-16-4.",
+                    "type": "string"
+                },
+                "image_uri": {
+                    "description": "The page's picture, by its name or address.",
+                    "type": "string"
+                },
+                "issue_date": {
+                    "description": "The date of the issue the page belongs to, written YYYY-MM-DD.",
+                    "type": "string"
+                },
+                "page_number": {
+                    "description": "The page's number within the issue, from 1.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "id",
+                "issue_date",
+                "page_number",
+                "image_uri",
+                "dimensions",
+                "blocks"
+            ],
+            "title": "Page",
+            "type": "object"
+        },
+        "PagesData": {
+            "additionalProperties": false,
+            "description": "One issue's pages document: the issue's date and its pages in order.",
+            "properties": {
+                "edition_date": {
+                    "description": "The issue's date, written YYYY-MM-DD.",
+                    "type": "string"
+                },
+                "pages": {
+                    "description": "The issue's pages.",
+                    "items": {
+                        "$ref": "#/$defs/Page"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "edition_date",
+                "pages"
+            ],
+            "title": "PagesData",
+            "type": "object"
+        }
+    },
+    "$id": "https://pruzhany.org/ns/pages",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": false,
+    "description": "One issue's pages document: the issue's date and its pages in order.",
+    "metamodel_version": "1.12.0",
+    "properties": {
+        "edition_date": {
+            "description": "The issue's date, written YYYY-MM-DD.",
+            "type": "string"
+        },
+        "pages": {
+            "description": "The issue's pages.",
+            "items": {
+                "$ref": "#/$defs/Page"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "edition_date",
+        "pages"
+    ],
+    "title": "pruzhany_pages",
+    "type": "object",
+    "version": null
+}

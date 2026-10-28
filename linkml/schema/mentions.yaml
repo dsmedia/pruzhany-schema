@@ -1,0 +1,143 @@
+# The mentions document of one issue (pruzhany-svelte static/data/<date>-mentions.json), as
+# zod/site-issue.schema.ts (IssueMentionSchema, IssueMentionsDataSchema) and
+# pydantic/site_issue.py shape it. Its JSON Schema is made with the top class IssueMentionsData
+# (modules.json). A mention names its person by id: the person is the shared record's, never
+# copied here. Impresso governs mentions (docs/adr/0001-which-standard-governs-what.md), but the
+# Impresso schemas pinned in pruzhany-steps (issue, page and content item) have no mention; only
+# the Wikidata id is named, from Impresso's entity linking as the standards vetting of 23 October
+# 2026 read it.
+id: https://pruzhany.org/ns/mentions
+name: pruzhany_mentions
+title: The mentions document of a Pruzhany issue
+description: >-
+  One issue's mentions: each place a content item names a person of the shared record, with the
+  printed words or regions where the name stands and the person's roles there.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+  - vocabulary
+  - site_common
+
+enums:
+  AddressGrain:
+    description: >-
+      How a mention is pinned to the page: to the words of the printed name, or only to whole
+      regions where the words are not located.
+    permissible_values:
+      words:
+        description: >-
+          The mention is pinned to the printed name's words.
+      regions:
+        description: >-
+          The mention is pinned to whole regions of print; its printed name is not located.
+
+classes:
+  IssueMentionsData:
+    tree_root: true
+    description: >-
+      One issue's mentions document: the issue's date and its mentions.
+    attributes:
+      issue_date:
+        range: IsoDay
+        required: true
+        description: >-
+          The issue's date, written YYYY-MM-DD.
+      mentions:
+        range: IssueMention
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The issue's mentions.
+
+  IssueMention:
+    description: >-
+      A person of the shared record named in a content item, pinned to the printed words of
+      the name or to whole regions, with the person's roles there. A mention alone does not
+      say the content item is about the person.
+    exact_mappings:
+      - pc:site_mention
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The mention's id within the issue.
+      person_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The person named, by their id in the shared record.
+      content_item_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The content item the name stands in, by its id in the content items document.
+      address_grain:
+        range: AddressGrain
+        required: true
+        slot_uri: pc:site_mention_address_grain
+        description: >-
+          Whether the mention is pinned to the name's words or only to whole regions.
+      printed_name:
+        range: NonBlankText
+        description: >-
+          The name as printed, found at the mention's addresses; null when the mention is
+          pinned only to whole regions.
+      roles:
+        range: MentionRoles
+        multivalued: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          The person's roles in the content item, such as the deceased or a mourner.
+      addresses:
+        range: PrintedAddress
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+        description: >-
+          Where the name stands: the words of the name, or the whole regions it is in.
+      title:
+        description: >-
+          An honorific printed with the name, such as Rabbi or Dr., where one is kept.
+      function:
+        description: >-
+          The person's occupation or part in the content item, in a few words, such as bride,
+          mourner or well-wisher.
+      wkd_id:
+        description: >-
+          The person's Wikidata id, where one is known.
+        annotations:
+          impresso: >-
+            The Wikidata id of a linked entity mention (wkd_id) in Impresso's entity linking,
+            which Impresso-2 names wkdata_qid (docs/design/2026-10-23-standards-foundation-vetting.md).
+    rules:
+      - description: >-
+          A mention pinned to the name's words has its printed name.
+        preconditions:
+          slot_conditions:
+            address_grain:
+              equals_string: words
+        postconditions:
+          slot_conditions:
+            printed_name:
+              required: true
+      - description: >-
+          A mention pinned only to whole regions has no printed name: its printed name, if
+          given, would have to be empty, which a name never is.
+        preconditions:
+          slot_conditions:
+            address_grain:
+              equals_string: regions
+        postconditions:
+          slot_conditions:
+            printed_name:
+              required: false
+              pattern: '^$'

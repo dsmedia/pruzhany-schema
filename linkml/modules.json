@@ -1,6 +1,20 @@
 {
 	"modules": [
 		{ "schema": "schema/types.yaml", "name": "types", "top_class": null },
-		{ "schema": "schema/vocabulary.yaml", "name": "vocabulary", "top_class": null }
+		{ "schema": "schema/vocabulary.yaml", "name": "vocabulary", "top_class": null },
+		{ "schema": "schema/site_common.yaml", "name": "site_common", "top_class": null },
+		{ "schema": "schema/pages.yaml", "name": "pages", "top_class": "PagesData" },
+		{
+			"schema": "schema/content_items.yaml",
+			"name": "content_items",
+			"top_class": "ContentItemsData"
+		},
+		{ "schema": "schema/mentions.yaml", "name": "mentions", "top_class": "IssueMentionsData" },
+		{
+			"schema": "schema/life_events.yaml",
+			"name": "life_events",
+			"top_class": "IssueLifeEventsData"
+		},
+		{ "schema": "schema/editions.yaml", "name": "editions", "top_class": "EditionsCatalog" }
 	]
 }

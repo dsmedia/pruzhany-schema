@@ -1,0 +1,196 @@
+{
+    "$defs": {
+        "Edition": {
+            "additionalProperties": false,
+            "description": "One edition of the paper: its date in the common calendar and in the Hebrew one, and the holiday it falls on, if any.",
+            "properties": {
+                "date": {
+                    "description": "The edition's date, written YYYY-MM-DD.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": "string"
+                },
+                "hebrewDate": {
+                    "description": "The edition's date in the Hebrew calendar, written in Hebrew letters.",
+                    "type": "string"
+                },
+                "hebrewMonth": {
+                    "description": "The Hebrew month, by its number from 1 to 13, counted from Nisan.",
+                    "maximum": 13,
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "hebrewYear": {
+                    "description": "The Hebrew year, such as 5699.",
+                    "maximum": 9007199254740991,
+                    "minimum": -9007199254740991,
+                    "type": "integer"
+                },
+                "holiday": {
+                    "description": "The holiday the edition falls on or near, where there is one.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "date",
+                "hebrewDate",
+                "hebrewMonth",
+                "hebrewYear"
+            ],
+            "title": "Edition",
+            "type": "object"
+        },
+        "EditionsCatalog": {
+            "additionalProperties": false,
+            "description": "The catalog of editions: every edition, the holidays and historical events beside them, and the dates available on the site.",
+            "properties": {
+                "availableDates": {
+                    "description": "The dates of the editions whose pages are on the site.",
+                    "items": {
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "editions": {
+                    "description": "Every edition of the paper, with its Hebrew date.",
+                    "items": {
+                        "$ref": "#/$defs/Edition"
+                    },
+                    "type": "array"
+                },
+                "historicalEvents": {
+                    "description": "Events in the world outside the town that the calendar marks.",
+                    "items": {
+                        "$ref": "#/$defs/HistoricalEvent"
+                    },
+                    "type": "array"
+                },
+                "holidays": {
+                    "description": "The Jewish holidays of the paper's years.",
+                    "items": {
+                        "$ref": "#/$defs/Holiday"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "editions",
+                "holidays",
+                "historicalEvents",
+                "availableDates"
+            ],
+            "title": "EditionsCatalog",
+            "type": "object"
+        },
+        "HistoricalEvent": {
+            "additionalProperties": false,
+            "description": "An event in the world outside the town, such as Kristallnacht, on a day or over a span of days.",
+            "properties": {
+                "date": {
+                    "description": "The day the event began, written YYYY-MM-DD.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "What happened, in a sentence or two.",
+                    "type": "string"
+                },
+                "endDate": {
+                    "description": "The day the event ended, where it lasted more than a day.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "The event's name in English.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "date",
+                "name",
+                "description"
+            ],
+            "title": "HistoricalEvent",
+            "type": "object"
+        },
+        "Holiday": {
+            "additionalProperties": false,
+            "description": "A Jewish holiday on a given day.",
+            "properties": {
+                "date": {
+                    "description": "The holiday's day, written YYYY-MM-DD.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": "string"
+                },
+                "hebrewName": {
+                    "description": "The holiday's name in Hebrew letters, where it is given.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "The holiday's name in Latin letters, such as Purim or Pesach.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "date",
+                "name"
+            ],
+            "title": "Holiday",
+            "type": "object"
+        }
+    },
+    "$id": "https://pruzhany.org/ns/editions",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": false,
+    "description": "The catalog of editions: every edition, the holidays and historical events beside them, and the dates available on the site.",
+    "metamodel_version": "1.12.0",
+    "properties": {
+        "availableDates": {
+            "description": "The dates of the editions whose pages are on the site.",
+            "items": {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "editions": {
+            "description": "Every edition of the paper, with its Hebrew date.",
+            "items": {
+                "$ref": "#/$defs/Edition"
+            },
+            "type": "array"
+        },
+        "historicalEvents": {
+            "description": "Events in the world outside the town that the calendar marks.",
+            "items": {
+                "$ref": "#/$defs/HistoricalEvent"
+            },
+            "type": "array"
+        },
+        "holidays": {
+            "description": "The Jewish holidays of the paper's years.",
+            "items": {
+                "$ref": "#/$defs/Holiday"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "editions",
+        "holidays",
+        "historicalEvents",
+        "availableDates"
+    ],
+    "title": "pruzhany_editions",
+    "type": "object",
+    "version": null
+}

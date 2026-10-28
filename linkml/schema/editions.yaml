@@ -1,0 +1,139 @@
+# The editions catalog (pruzhany-svelte static/data/editions-catalog.json), as
+# zod/editions.schema.ts shapes it; it has no Pydantic twin. Its JSON Schema is made with the
+# top class EditionsCatalog (modules.json). Its keys are written in camelCase, which LinkML's
+# lint refuses as slot names, so each such slot is named in snake_case and carries the key as
+# its alias, which is the property name in the generated JSON Schema.
+id: https://pruzhany.org/ns/editions
+name: pruzhany_editions
+title: The catalog of Pruzhany editions
+description: >-
+  Every edition of the paper with its Hebrew date, the Jewish holidays and the outside
+  historical events the site's calendar shows, and the dates whose editions are on the site.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+  rico: https://www.ica.org/standards/RiC/ontology#
+  schema: http://schema.org/
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+
+classes:
+  EditionsCatalog:
+    tree_root: true
+    description: >-
+      The catalog of editions: every edition, the holidays and historical events beside them,
+      and the dates available on the site.
+    attributes:
+      editions:
+        range: Edition
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Every edition of the paper, with its Hebrew date.
+      holidays:
+        range: Holiday
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          The Jewish holidays of the paper's years.
+      historical_events:
+        alias: historicalEvents
+        range: HistoricalEvent
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Events in the world outside the town that the calendar marks.
+      available_dates:
+        alias: availableDates
+        range: IsoDay
+        multivalued: true
+        required: true
+        description: >-
+          The dates of the editions whose pages are on the site.
+
+  Edition:
+    description: >-
+      One edition of the paper: its date in the common calendar and in the Hebrew one, and
+      the holiday it falls on, if any.
+    close_mappings:
+      - schema:PublicationIssue
+    attributes:
+      date:
+        range: IsoDay
+        required: true
+        description: >-
+          The edition's date, written YYYY-MM-DD.
+      hebrew_date:
+        alias: hebrewDate
+        required: true
+        description: >-
+          The edition's date in the Hebrew calendar, written in Hebrew letters.
+      hebrew_month:
+        alias: hebrewMonth
+        range: integer
+        required: true
+        minimum_value: 1
+        maximum_value: 13
+        description: >-
+          The Hebrew month, by its number from 1 to 13, counted from Nisan.
+      hebrew_year:
+        alias: hebrewYear
+        range: integer
+        required: true
+        minimum_value: -9007199254740991
+        maximum_value: 9007199254740991
+        description: >-
+          The Hebrew year, such as 5699.
+      holiday:
+        description: >-
+          The holiday the edition falls on or near, where there is one.
+
+  Holiday:
+    description: >-
+      A Jewish holiday on a given day.
+    attributes:
+      date:
+        range: IsoDay
+        required: true
+        description: >-
+          The holiday's day, written YYYY-MM-DD.
+      name:
+        required: true
+        description: >-
+          The holiday's name in Latin letters, such as Purim or Pesach.
+      hebrew_name:
+        alias: hebrewName
+        description: >-
+          The holiday's name in Hebrew letters, where it is given.
+
+  HistoricalEvent:
+    description: >-
+      An event in the world outside the town, such as Kristallnacht, on a day or over a span
+      of days.
+    close_mappings:
+      - rico:Event
+    attributes:
+      date:
+        range: IsoDay
+        required: true
+        description: >-
+          The day the event began, written YYYY-MM-DD.
+      end_date:
+        alias: endDate
+        range: IsoDay
+        description: >-
+          The day the event ended, where it lasted more than a day.
+      name:
+        required: true
+        description: >-
+          The event's name in English.
+      description:
+        required: true
+        description: >-
+          What happened, in a sentence or two.
