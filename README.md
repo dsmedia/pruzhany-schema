@@ -1,27 +1,30 @@
 # pruzhany-schema
 
-Shared data schemas for the [Pruzhany Digital Archive](https://pruzhanychronicles.org) — an interactive archive of the Yiddish weekly *Pruzaner Sztyme* (1935–1939).
+Shared data schemas for the [Pruzhany Digital Archive](https://pruzhanychronicles.org) — an interactive archive of the Yiddish weekly *Pruzaner Sztyme* (1934–1939).
 
-Consumed by the SvelteKit frontend through its pinned git submodule and by pruzhany-steps through exports recorded from a clean schema commit. Zod and Pydantic define the two language contracts in the same repository.
+Consumed by the SvelteKit frontend through its pinned git submodule and by pruzhany-steps through exports recorded from a clean schema commit. The LinkML definition is the one definition of the data; the Zod and Pydantic contracts, in the same repository, are held to it.
 
-Stage one defines shape and meaning in [LinkML](linkml/README.md), with a generated
-[data dictionary](linkml/generated/docs/data-dictionary.md). Zod and Pydantic remain the
-runtime validators. The contract gate checks agreement with the definition; generated Python
-models and RDF exports remain later stages.
+[LinkML](linkml/README.md) defines shape and meaning. Three stages are merged: the definition,
+its JSON Schemas and a generated [data dictionary](linkml/generated/docs/data-dictionary.md)
+(stage one, #29); Python field models generated from it, with the validation rules retained by
+hand (stage two, #30); and a checked public RDF view, generated as a JSON-LD context, OWL
+declarations and SHACL shapes (stage three, #32). The hand-written Zod schemas and the retained
+Python rules remain the runtime validators; the contract gate checks their agreement with the
+definition.
 
 ## Layout
 
 ```
 zod/       TypeScript Zod schemas (frontend model)
-pydantic/  Python Pydantic schemas (pipeline model)
-linkml/    the record's data defined in LinkML, its generated JSON Schema and docs (linkml/README.md)
+pydantic/  Python Pydantic schemas (pipeline model): fields generated in pydantic/generated/, rules by hand
+linkml/    the record's data defined in LinkML, its generated JSON Schema, docs and RDF view (linkml/README.md)
 ```
 
 Schema modules cover the four issue documents (pages, content items, mentions and life events), one shared record of people, families, places, organizations, events and sourced assertions, shared reference types, and the multi-edition catalog. LLM extraction contracts remain separate from persisted site documents.
 
 ## Cross-language contract
 
-Zod and Pydantic models are kept in lock-step. When you change a type on one side, update its counterpart on the other — a contract test compares the two via JSON Schema to catch drift.
+A type is changed in the LinkML definition first (an enum in `vocabulary/*.json`, through its generator), then `linkml/generate.py` makes the JSON Schemas, the Python fields in `pydantic/generated/` and the RDF view again; generated files are never edited by hand. The hand-written Zod schema and any retained Python rule are then brought into step with the definition, and Zod and Pydantic models are kept in lock-step with each other — a contract test compares the two via JSON Schema, and compares LinkML with Zod for every mapped model, to catch drift.
 
 ## Verify
 

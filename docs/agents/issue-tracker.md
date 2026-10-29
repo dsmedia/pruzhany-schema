@@ -2,6 +2,11 @@
 
 Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
 
+This repository and its issues are public. During the build-out an issue names the type, the
+field and its mapping, never a real person: working notes, examples and evidence about real
+people go to pruzhany-steps, in its `.scratch/<slug>/` notes (the owner, 29 October 2026;
+pruzhany-steps decision 214, decisions 10 and 23 of its map). Existing issues stay as they are.
+
 ## Conventions
 
 - **Create an issue**: `gh issue create --title "..." --body "..."`. Use a heredoc for multi-line bodies.
@@ -24,7 +29,8 @@ or the GitHub MCP tools (`mcp__github__issue_read`, `issue_write`, `list_issues`
 Claude Code attribution footer.
 
 New vocabulary types are proposed in batches for the owner's approval ([approval record](../vocabulary-approvals.md)), each with
-two or three real examples and its EHRI / RiC-O mapping.
+its EHRI / RiC-O mapping. The two or three real examples each type needs are kept in pruzhany-steps and shown to the
+owner privately, never put in an issue here.
 
 ## Pull requests as a triage surface
 

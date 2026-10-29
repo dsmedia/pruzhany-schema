@@ -7,8 +7,11 @@ domain documentation. The layout is single-context.
 
 - **`GLOSSARY.md`** at the repo root.
 - **`docs/adr/`**: decision records that touch the area about to be worked in.
+- **`linkml/`**: the definition, the rulebook every contract here is generated from or held
+  to (`linkml/README.md`, and its generated data dictionary).
 - The dated design docs in **`docs/design/`**: the existing record of the contract's
-  decisions.
+  decisions. A new one names types, fields and mappings only; working notes about real
+  people go to pruzhany-steps (decision 214 there). What is already here stays as it is.
 - **`standards/`**: the pinned EHRI and RiC-O vocabularies. Read the term there before
   naming or mapping anything; never from memory.
 
@@ -25,6 +28,7 @@ decision is actually settled.
 │   └── 0001-<decision>.md
 ├── docs/design/
 ├── standards/
+├── linkml/
 ├── zod/
 └── pydantic/
 ```
