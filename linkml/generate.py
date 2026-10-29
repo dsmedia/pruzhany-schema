@@ -54,7 +54,7 @@ def modules(linkml_dir):
     if len(set(names)) != len(names):
         raise SystemExit('linkml/modules.json: an output name is used twice')
     for entry in entries:
-        if 'external_contract' in entry and (entry['external_contract'] != 'impresso-page'
+        if 'external_contract' in entry and (entry['external_contract'] not in {'impresso-page', 'model-exchanges'}
                                               or not entry['top_class']):
             raise ValueError('unsupported external contract or missing top class')
     return entries

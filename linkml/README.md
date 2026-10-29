@@ -26,6 +26,7 @@ rules still validate.** What LinkML cannot say about the shapes is listed in
 | `checks/record.yaml` | The same for the twins of the shared record, the sourced entities and media; `tests/test_record_checks.py` counts them. |
 | `schema/physical.yaml` | Impresso's stored physical page contract, separate from the website's pages: page, region, paragraph, line, word and the shared array-valued box slot, with the computed identifier rule. |
 | `external_schema.py`, `generated/external/physical/` | Explicit-null JSON Schema adapter and the physical contract's own class inventory and learning index. The external contract is checked against Impresso rather than the site's Zod/Pydantic twins. |
+| `schema/exchanges.yaml`, `generated/external/exchanges/` | Prompt-version metadata and references to kept answers in steps, with their own external inventory and learning index; prompt text and answer payloads stay outside this repository. |
 | `tests/` | The canaries (`canary_*.py`), the tests (`test_*.py`) and their planted files (`fixtures/`). |
 
 ## Running it
@@ -205,6 +206,93 @@ Pages read **29 October 2026** for this module and its generation settings:
   The installed locked LinkML **1.12.1** `generators/jsonschemagen.py` was also read for
   `include_null`, `extra_slots.allowed`, `handle_class_slot`, `after_generate_class_slot`,
   and anonymous class expressions; the generated behavior is tested here.
+
+## The exchanges contract
+
+`schema/exchanges.yaml` is the external contract `model-exchanges` in `modules.json`.
+`generated/json-schema/exchanges.schema.json` has **PromptVersion as its one document
+root**, so the steps check can validate a prompt metadata file directly, without a
+wrapper. The same document's `$defs/KeptAsking` describes an index entry referencing
+a kept answer; it does not replace the heterogeneous readings payloads. To validate
+such an entry, use the same `$schema` and `$defs` with `$ref: '#/$defs/KeptAsking'`,
+as `tests/test_exchanges.py` does. Select the validator using `$schema` and enable its
+format checker, including `date`. Generated external inventory and learning metadata
+live under `generated/external/exchanges/`; both classes also appear in the data
+dictionary. The site twins, generated Python classes and public RDF view have their
+own inventory.
+
+Prompt metadata fields are `code`, `asking`, `model`, optional `effort`, `budget_usd`,
+`shape_name`, `first_commit`, `first_day`, `last_commit`, `last_day` and
+`shape_recovered`. All except effort are required. Commit ids are full forty-character
+lowercase Git SHA-1 ids in steps; days refer to presence in code history, not dates
+of calls. The shape name can be known while its exact JSON Schema is unrecoverable:
+`shape_recovered: false` records that distinction. Effort is omitted when no explicit
+setting is known. Names and selectors are nonblank strings, not new controlled
+vocabularies. A budget is a nonnegative number in US dollars.
+
+Kept-answer entries require `prompt_code`, `model` and `answer_file`; `day`,
+`input_fingerprint` and `cost_usd` are optional. Unknown fields are omitted, never
+filled with a fabricated day, digest or cost. Both classes are closed; optional
+fields reject explicit null, using the same `json_schema_nulls: explicit` adapter
+as the physical module. Prompt codes and input fingerprints are sixteen lowercase
+hexadecimal characters, including English's **xxh3_64** input digests, not full
+SHA-256 values. A code's lexical form does not establish its algorithm or scope.
+Some historical codes cover expanded whole requests. Such a code may identify a
+recovered stored version, but the registry must establish that association from
+the exact text and its recipe; an index must not assume an instructions-only hash.
+
+The stored formats were inspected on **29 October 2026**, taking several examples
+of each form and reading their writers. Only field names and types are recorded here;
+no private answer, personal data or real prompt text was copied. This table is a
+projection guide for the steps index, not an assertion that these payloads share
+one root schema:
+
+| Kept form | Prompt association | Input fingerprint | Day and accounting scope |
+| --- | --- | --- | --- |
+| `readings/pruzst*/english-*.json` (`english_kept.Kept`, `write_english`) | `prompt` is the prompt code | Each `pieces` key is an xxh3_64 digest of that piece's input text | `answered_on` has some individual days; older entries omit them. `cost_usd` sums calls for the page. |
+| `readings/pruzst*/structure-*.json` (`find_items.Asked`) | Recover the associated stored version from history; `request` covers the whole request | `request` fingerprints the instructions and page request | No asking day field; cost can include a faulty answer and its retry. |
+| `readings/pruzst*/latin-*.json` (`read_latin.Looked`) | `request` is the prompt code | No separate input digest | No asking day field; cost accumulates calls for the page. |
+| `readings/issues/*/` (`english_kept.KeptGroups`, `join_people`) | Recover the prompt from history | `request` fingerprints the system text and whole joining request | No asking day field; recorded file cost. |
+| Structure trial answers (`measures/trial_structure.PageAsked`) | Companion `setting.json` keeps system, instructions, model, effort and shape | `request` fingerprints the page input; `sent` fingerprints the candidate's sent text; the index must specify which scope it uses | Day is in the trial directory name; cost includes retries. |
+| Row trial answers (`measures/trial_rows.Asked`) | Companion `setting.json` keeps the prompt, shape and model | No separate stored digest; `pictures` holds the inputs and answers | Day is in the trial directory name; recorded asking cost. |
+
+`answer_file` names the existing file relative to steps. Multiple entries for inputs
+in one accumulated file must not count that file's cost more than once. A first Git
+commit date is not an observed asking day. The steps check owns prompt byte hashing,
+matching codes and histories, resolving the `PromptVersion.code` reference, date
+ordering, existence of the text/shape/answer files, and answer validation against
+the associated recovered shape. Unresolved histories must be reported rather than
+filled with invented commits. Answer shape generation from LinkML is a later slice.
+
+PROV-O correspondences use `see_also` and explanatory comments only. Versioned
+instructions correspond to [Plan](https://www.w3.org/TR/prov-o/#Plan); an asking
+to [Activity](https://www.w3.org/TR/prov-o/#Activity), and its kept file to
+[Entity](https://www.w3.org/TR/prov-o/#Entity). Model association, input use and
+answer generation have see-also links on the relevant fields. A plan link would
+use a qualified association; `hadPlan` is not a direct Activity property. A day
+does not supply a PROV timestamp. Costs, effort, hashes and code-history bounds
+remain application metadata. PROV-O is unpinned, so these are documented
+correspondences, not ontology bindings. The existing EHRI 0.2.0 and RiC-O 1.1
+term lists were read; no prefix, ontology pin or vocabulary value was added.
+
+`test_exchanges.py` validates invented metadata and references, including missing
+and null fields, short digests, full commits, calendar dates, costs, shape recovery,
+unknown properties, the external inventory and the learning reference. It needs
+neither private data nor prompt text. The steps implementation owns its separate
+`record exchanges` and `measures asking` checks.
+
+Pages read **29 October 2026** for this module and its generation settings:
+
+- W3C, [PROV-O Recommendation, 30 April 2013](https://www.w3.org/TR/prov-o/),
+  sections 3.1 and 4.3, especially Plan and hadPlan.
+- LinkML, [JSON Schema generator](https://linkml.io/linkml/generators/json-schema.html),
+  [slots](https://linkml.io/linkml/schemas/slots.html) and
+  [constraints and rules](https://linkml.io/linkml/schemas/constraints.html).
+  The installed locked LinkML **1.12.1** `generators/jsonschemagen.py` was read for
+  type formats, `include_null` and slot constraints; date behavior is tested here.
+- uv, [CLI reference](https://docs.astral.sh/uv/reference/cli/), `uv venv --python`
+  and `uv pip sync --python --require-hashes --build-constraints`, used with the
+  existing lock and build constraints. Local uv is **0.11.32**; CI pins **0.11.13**.
 
 ## House style
 

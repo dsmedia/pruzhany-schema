@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `126ed2c4f9b5dde490a94b5773abd57d46b69fca0f7e7d536749406c1e19aaa1`.
+Definition fingerprint: `a4cdd258a0d688a824c008b6df5ccf37abdf9fdc8116c22a238def600d4ce4d9`.
 
 ## What the Pruzhany issue documents share
 
@@ -1277,6 +1277,47 @@ Meaning: No direct mapping recorded.
 
 Source: `linkml/schema/physical.yaml`.
 
+## Kept exchanges with models
+
+### KeptAsking
+
+A reference to a kept answer file or an identified input within an accumulated file. Model and prompt metadata can come from a companion trial setting or history; fields absent from storage are not invented. This is not a promise that one file is one paid call. Payloads retain their existing steps formats.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `answer_file` | The kept answer's file path relative to the steps repository. The path locates an existing payload; it is not that payload or a public download URI. | NonBlankText | Yes | No direct mapping recorded |
+| `cost_usd` | The cost in US dollars where kept, including zero. It retains the stored file's accounting scope: English and Latin accumulate calls, and structure may include retries. Do not sum the same file's cost again for every input or interpret it as a measured per-call cost. Omit when unavailable. | NonNegativeNumber | No | No direct mapping recorded |
+| `day` | An asking day where actually kept: English answered_on for the indexed input or the trial directory's day. Omit when unknown; a first committed day is not an observed asking day and must not be silently substituted. | ExchangeDay | No | No direct mapping recorded |
+| `input_fingerprint` | An input fingerprint where kept: English pieces keys are xxh3_64 text digests; structure and joining request values are truncated SHA-256 fingerprints of whole requests. Structure trials also keep request and sent fingerprints with different scopes; an index must choose and document its input scope. Latin request is a prompt code, not an input fingerprint. Omit when no input fingerprint was kept, including trial rows. | ExchangeCode | No | No direct mapping recorded |
+| `model` | The stored model selector, or the companion setting's model for trial rows. | NonBlankText | Yes | No direct mapping recorded |
+| `prompt_code` | The associated PromptVersion.code, resolved by steps from the stored prompt code, companion setting or recovered history. English stores the code as prompt and Latin as request. Structure and joining request values include inputs; their association requires recovery, not an assumption that they hash only instructions. A recovered version may retain a whole-request code. | ExchangeCode | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/exchanges.yaml`.
+
+### PromptVersion
+
+One prompt version's metadata, kept beside its exact text and recovered answer shape. First and last refer to its presence in code history, not paid-call dates. A shape may be unrecoverable even when the prompt text and its history are known.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `asking` | The asking served by these instructions, such as find_items, read_latin, write_english or join_people. Trial variants are registered by steps; this field is not a new controlled vocabulary. | NonBlankText | Yes | No direct mapping recorded |
+| `budget_usd` | The configured maximum budget in US dollars, separate from an answer's recorded cost. Zero is allowed; no undocumented upper bound is imposed. | NonNegativeNumber | Yes | No direct mapping recorded |
+| `code` | The sixteen-character code naming this stored version and its directory. Some historical codes cover an expanded whole request rather than only instructions; the steps registry must establish the recipe and scope. | ExchangeCode | Yes | No direct mapping recorded |
+| `effort` | The explicit effort setting when known; omit when no setting was supplied or recovered. Model-dependent effort values are not enumerated here. | NonBlankText | No | No direct mapping recorded |
+| `first_commit` | The first steps commit known to contain this prompt version in code. | ExchangeCommit | Yes | No direct mapping recorded |
+| `first_day` | The day of first_commit, as established by steps' history recovery. | ExchangeDay | Yes | No direct mapping recorded |
+| `last_commit` | The last steps commit known to contain this prompt version in code, not necessarily the latest kept answer or the commit removing the version. | ExchangeCommit | Yes | No direct mapping recorded |
+| `last_day` | The day of last_commit. Agreement with history and first_day ordering are checked in steps, not by this single-document shape. | ExchangeDay | Yes | No direct mapping recorded |
+| `model` | The model selector used with this version. It is recorded configuration, not an assertion that two selectors denote the same model release. | NonBlankText | Yes | No direct mapping recorded |
+| `shape_name` | The answer shape's name, qualified by its module when needed. Knowing this name does not imply that the exact schema bytes were recovered. | NonBlankText | Yes | No direct mapping recorded |
+| `shape_recovered` | Whether the exact answer JSON Schema was recovered reproducibly and kept beside the prompt. False explicitly records the limit on answer validation; a shape name by itself is not recovery. | boolean | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/exchanges.yaml`.
+
 ## Types and vocabularies
 
 ### HostName
@@ -1866,6 +1907,24 @@ The form a fact is kept in: a structured statement, retained prose, or an image 
 | `structured` | A structured statement of a released type. | No direct mapping recorded |
 | `prose` | Retained prose, kept as other with a proposed type until it is reviewed. | No direct mapping recorded |
 | `image` | An image path, kept as other with a proposed type. | No direct mapping recorded |
+
+### ExchangeCode
+
+Exactly sixteen lowercase hexadecimal characters. Prompt codes and the stored short input fingerprints share this lexical form; it does not identify the hash algorithm or what is covered. The steps registry owns the byte-level rule.
+
+string; pattern: ^[0-9a-f]{16}$(?![\s\S])
+
+### ExchangeCommit
+
+A full forty-character Git SHA-1 commit id in the steps repository, not an abbreviated id, branch or a claim that this commit exists in the schema repository.
+
+string; pattern: ^[0-9a-f]{40}$(?![\s\S])
+
+### ExchangeDay
+
+A calendar day as YYYY-MM-DD, with JSON Schema date format validation enabled by the consumer. No time of day or timezone is inferred.
+
+date; pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$(?![\s\S])
 
 ## Validator responsibilities
 

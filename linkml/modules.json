@@ -7,6 +7,12 @@
 			"top_class": "PhysicalPage",
 			"external_contract": "impresso-page"
 		},
+		{
+			"schema": "schema/exchanges.yaml",
+			"name": "exchanges",
+			"top_class": "PromptVersion",
+			"external_contract": "model-exchanges"
+		},
 		{ "schema": "schema/types.yaml", "name": "types", "top_class": null },
 		{ "schema": "schema/vocabulary.yaml", "name": "vocabulary", "top_class": null },
 		{ "schema": "schema/site_common.yaml", "name": "site_common", "top_class": null },

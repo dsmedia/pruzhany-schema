@@ -116,10 +116,11 @@ class Generate(unittest.TestCase):
         (self.root / 'modules.json').write_text(json.dumps(manifest), encoding='utf-8')
         with self.assertRaises(ValueError):
             generate.modules(self.root)
-        entry['external_contract'], entry['top_class'] = 'impresso-page', None
-        (self.root / 'modules.json').write_text(json.dumps(manifest), encoding='utf-8')
-        with self.assertRaises(ValueError):
-            generate.modules(self.root)
+        for contract in ('impresso-page', 'model-exchanges'):
+            entry['external_contract'], entry['top_class'] = contract, None
+            (self.root / 'modules.json').write_text(json.dumps(manifest), encoding='utf-8')
+            with self.subTest(contract=contract), self.assertRaises(ValueError):
+                generate.modules(self.root)
 
     def test_planned_requirements_change_docs_but_never_the_document_schema(self):
         target = self.made / 'json-schema' / 'boxes.schema.json'
