@@ -287,3 +287,22 @@ measure again, and change the canary, the house lint rule it guards, this README
 - uv, "Locking environments": https://docs.astral.sh/uv/pip/compile/ (build constraints with
   hashes) and the command reference https://docs.astral.sh/uv/reference/cli/ (`--require-hashes`;
   `uv run` has no such switch)
+
+## Metadata for learning tools
+
+`generated/docs/model-index.json` is a reproducible documentation index of every owned
+class, its resolved inherited fields, field constraints, descriptions, vocabulary values,
+standard mappings and exact class YAML. It includes source hashes and the generated
+contract hash so a consumer can refuse stale metadata. It contains no archive records.
+
+A field may have the documentation-only annotation `references: TargetClass.field`
+(or comma-separated targets). The generator checks that each target exists and is unique.
+This describes an identifier link; containment is derived separately from the field range.
+These annotations currently cover the notice-to-evidence learning trail. Unannotated
+identifier fields must not be interpreted as proof that no reference exists. An annotation
+does not add a validation rule or change the document's wire format.
+
+The private steps repository uses this index with `docs/learn/notice-to-evidence/lesson.yaml`
+to build its offline guided journey. Questions and source selectors live in that private
+teaching layer; definitions and vocabulary continue to come from this repository. Historical
+examples, crops, personal notes and real-data diagnostics must stay out of this public tree.

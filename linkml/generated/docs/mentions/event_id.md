@@ -61,6 +61,13 @@ URI: [pc:event_id](https://pruzhany.org/ns/sourced-entities#event_id)
 
 
 
+### Annotations
+
+| property | value |
+| --- | --- |
+| references | SharedEvent.id |
+
+
 
 
 ### Schema Source
@@ -86,6 +93,10 @@ URI: [pc:event_id](https://pruzhany.org/ns/sourced-entities#event_id)
 <details>
 ```yaml
 name: event_id
+annotations:
+  references:
+    tag: references
+    value: SharedEvent.id
 description: The life event the statement concerns, by its id in the record.
 from_schema: https://pruzhany.org/ns/mentions
 rank: 1000

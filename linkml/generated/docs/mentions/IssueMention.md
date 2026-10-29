@@ -193,6 +193,10 @@ attributes:
     required: true
   person_id:
     name: person_id
+    annotations:
+      references:
+        tag: references
+        value: SharedPerson.id
     description: The person named, by their id in the shared record.
     from_schema: https://pruzhany.org/ns/mentions
     rank: 1000
@@ -203,6 +207,10 @@ attributes:
     required: true
   content_item_id:
     name: content_item_id
+    annotations:
+      references:
+        tag: references
+        value: ContentItem.id
     description: The content item the name stands in, by its id in the content items
       document.
     from_schema: https://pruzhany.org/ns/mentions
@@ -348,6 +356,10 @@ attributes:
     required: true
   person_id:
     name: person_id
+    annotations:
+      references:
+        tag: references
+        value: SharedPerson.id
     description: The person named, by their id in the shared record.
     from_schema: https://pruzhany.org/ns/mentions
     rank: 1000
@@ -359,6 +371,10 @@ attributes:
     required: true
   content_item_id:
     name: content_item_id
+    annotations:
+      references:
+        tag: references
+        value: ContentItem.id
     description: The content item the name stands in, by its id in the content items
       document.
     from_schema: https://pruzhany.org/ns/mentions

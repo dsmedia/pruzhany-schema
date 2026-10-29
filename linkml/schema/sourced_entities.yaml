@@ -444,6 +444,8 @@ classes:
         slot_uri: rico:isEvidencedBy
         range: NonBlankText
         required: true
+        annotations:
+          references: Source.id
         description: >-
           The record the statement rests on (the original where it is known), by its id in the
           record's sources.
@@ -607,6 +609,8 @@ classes:
           The organisation the statement concerns, by its id in the record.
       event_id:
         range: NonBlankText
+        annotations:
+          references: SharedEvent.id
         description: >-
           The life event the statement concerns, by its id in the record.
       related_person_id:

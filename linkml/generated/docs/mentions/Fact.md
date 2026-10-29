@@ -360,6 +360,10 @@ attributes:
     range: NonBlankText
   event_id:
     name: event_id
+    annotations:
+      references:
+        tag: references
+        value: SharedEvent.id
     description: The life event the statement concerns, by its id in the record.
     from_schema: https://pruzhany.org/ns/sourced_entities
     rank: 1000
@@ -665,6 +669,10 @@ attributes:
     range: NonBlankText
   event_id:
     name: event_id
+    annotations:
+      references:
+        tag: references
+        value: SharedEvent.id
     description: The life event the statement concerns, by its id in the record.
     from_schema: https://pruzhany.org/ns/sourced_entities
     rank: 1000
