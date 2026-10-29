@@ -248,8 +248,9 @@ guard here:
   in any file stays out of the documents' schemas (plan section 4.2).
 - **YAML 1.1 booleans and commas in flow style.** Guard: the house lint; `linkml lint` also reports
   a slot named `True`.
-- **Flat RDF loses the order of a list, and an RDF export needs IRIs.** Not generated in stage 1;
-  the RDF outputs come in stage 3, with `@list` or `xywh=` and the ids' namespace.
+- **Flat RDF loses the order of a list, and an RDF export needs IRIs.** Guard (stage 3):
+  `rdf_generator.py` writes a list as a JSON-LD `@list`, checked for order, length and position
+  (`generated/rdf/coverage.md`); predicates are in the `https://pruzhany.org/ns/` namespace.
 - **Several roots in one JSON Schema merge their rules.** Guard: one `top_class` a module in
   `modules.json`.
 - **Windows writes `\r\n`.** Guard: `generate.py` writes `\n`; `.gitattributes` checks out `\n`;
@@ -267,7 +268,8 @@ measure again, and change the canary, the house lint rule it guards, this README
 - LinkML's GitHub issues (whether the faults above are reported upstream): GitHub outside
   `dsmedia` is not reachable from the cloud session that built this.
 - gen-pydantic's reading of `pattern` (whether `\S` means "contains" there, as in JSON Schema),
-  and the other generators (SHACL, OWL, JSON-LD context, TypeScript): not used in stage 1.
+  and LinkML's other generators (SHACL, OWL, JSON-LD context, TypeScript): not used; stage 3
+  writes its SHACL, OWL and JSON-LD context with its own `rdf_generator.py` (rdflib).
 
 ## Pages read, 28 October 2026
 
