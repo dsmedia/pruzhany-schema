@@ -68,6 +68,13 @@ URI: [pc:content_item_id](https://pruzhany.org/ns/sourced-entities#content_item_
 
 
 
+### Annotations
+
+| property | value |
+| --- | --- |
+| references | ContentItem.id |
+
+
 
 
 ### Schema Source
@@ -93,6 +100,10 @@ URI: [pc:content_item_id](https://pruzhany.org/ns/sourced-entities#content_item_
 <details>
 ```yaml
 name: content_item_id
+annotations:
+  references:
+    tag: references
+    value: ContentItem.id
 description: The content item the name stands in, by its id in the content items document.
 from_schema: https://pruzhany.org/ns/mentions
 rank: 1000

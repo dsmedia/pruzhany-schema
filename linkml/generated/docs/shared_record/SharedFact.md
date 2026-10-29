@@ -325,6 +325,11 @@ attributes:
     minimum_cardinality: 1
   subject_id:
     name: subject_id
+    annotations:
+      references:
+        tag: references
+        value: SharedPerson.id, SharedFamily.id, SharedPlace.id, SharedOrganization.id,
+          SharedEvent.id, SourcedRelation.id
     description: 'Whose statement it is: a person, a family, a place, an organisation,
       an event or a relation, by its id.'
     from_schema: https://pruzhany.org/ns/shared_record
@@ -434,6 +439,11 @@ attributes:
     minimum_cardinality: 1
   subject_id:
     name: subject_id
+    annotations:
+      references:
+        tag: references
+        value: SharedPerson.id, SharedFamily.id, SharedPlace.id, SharedOrganization.id,
+          SharedEvent.id, SourcedRelation.id
     description: 'Whose statement it is: a person, a family, a place, an organisation,
       an event or a relation, by its id.'
     from_schema: https://pruzhany.org/ns/shared_record
@@ -554,6 +564,10 @@ attributes:
     range: NonBlankText
   event_id:
     name: event_id
+    annotations:
+      references:
+        tag: references
+        value: SharedEvent.id
     description: The life event the statement concerns, by its id in the record.
     from_schema: https://pruzhany.org/ns/sourced_entities
     rank: 1000

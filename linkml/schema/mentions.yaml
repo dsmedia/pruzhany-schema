@@ -71,11 +71,15 @@ classes:
       person_id:
         range: NonBlankText
         required: true
+        annotations:
+          references: SharedPerson.id
         description: >-
           The person named, by their id in the shared record.
       content_item_id:
         range: NonBlankText
         required: true
+        annotations:
+          references: ContentItem.id
         description: >-
           The content item the name stands in, by its id in the content items document.
       address_grain:

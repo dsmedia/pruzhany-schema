@@ -321,6 +321,10 @@ attributes:
     minimum_cardinality: 1
   source_id:
     name: source_id
+    annotations:
+      references:
+        tag: references
+        value: Source.id
     description: The record the statement rests on (the original where it is known),
       by its id in the record's sources.
     from_schema: https://pruzhany.org/ns/sourced_entities

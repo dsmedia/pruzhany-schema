@@ -33,6 +33,9 @@ import importlib.util
 _python_spec = importlib.util.spec_from_file_location('python_generator', Path(__file__).with_name('python_generator.py'))
 _python_backend = importlib.util.module_from_spec(_python_spec)
 _python_spec.loader.exec_module(_python_backend)
+_learning_spec = importlib.util.spec_from_file_location('learning_index', Path(__file__).with_name('learning_index.py'))
+_learning_backend = importlib.util.module_from_spec(_learning_spec)
+_learning_spec.loader.exec_module(_learning_backend)
 
 LINKML = Path(__file__).resolve().parent
 
@@ -150,6 +153,7 @@ def read_planned(linkml_dir):
 
 def build_index_and_dictionary(linkml_dir, destination):
     views, index = schema_index(linkml_dir, destination)
+    _learning_backend.write_index(linkml_dir, destination, views, index, write_text)
     planned = read_planned(linkml_dir)  # Never passed to SchemaView or a schema generator.
     sources = sorted((linkml_dir / 'schema').glob('*.yaml'))
     sources += [p for p in (linkml_dir / 'planned.yaml', linkml_dir / 'known-looser.yaml') if p.exists()]
