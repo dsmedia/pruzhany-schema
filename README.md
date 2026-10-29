@@ -22,6 +22,13 @@ linkml/    the record's data defined in LinkML, its generated JSON Schema, docs 
 
 Schema modules cover the four issue documents (pages, content items, mentions and life events), one shared record of people, families, places, organizations, events and sourced assertions, shared reference types, and the multi-edition catalog. LLM extraction contracts remain separate from persisted site documents.
 
+The [physical module](linkml/schema/physical.yaml) separately defines the stored Impresso page
+files, including lines, words and their boxes, and the rule for computed positional identifiers.
+Its [generated JSON Schema](linkml/generated/json-schema/physical.schema.json) is checked against
+Impresso's own schema on invented fixtures and every available sibling edition page. See the
+[physical contract notes](linkml/README.md#the-physical-page-contract) for source readings,
+ALTO correspondences and data discovery through `PRUZHANY_STEPS`.
+
 ## Cross-language contract
 
 A type is changed in the LinkML definition first (an enum in `vocabulary/*.json`, through its generator), then `linkml/generate.py` makes the JSON Schemas, the Python fields in `pydantic/generated/` and the RDF view again; generated files are never edited by hand. The hand-written Zod schema and any retained Python rule are then brought into step with the definition, and Zod and Pydantic models are kept in lock-step with each other — a contract test compares the two via JSON Schema, and compares LinkML with Zod for every mapped model, to catch drift.

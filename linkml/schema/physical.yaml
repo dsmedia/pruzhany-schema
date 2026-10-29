@@ -1,0 +1,444 @@
+# Impresso's published page.schema.json and ALTO 4.4 XSD, read 29 October 2026;
+# source pages and generation details are recorded in linkml/README.md.
+id: https://pruzhany.org/ns/physical
+name: pruzhany_physical
+title: The physical page in Impresso's stored format
+description: >-
+  The physical layer is a page picture and its ordered regions, paragraphs, lines and words,
+  with boxes in that picture's pixels. This module describes every field in Impresso's page
+  schema, including deprecated fields; it adds no stored field. The semantic content items
+  remain separate. Computed identifiers name positions in the last written segmentation:
+  region <page id>-r<RRR>, where RRR is its 1-based place in r; line <region id>-l<LLL>,
+  where LLL counts lines across all the region's paragraphs in order; word <line id>-w<WWW>,
+  where WWW is its 1-based place in t. Each suffix is three zero-padded digits, from 001 to
+  999; an identifier producer must refuse any count above 999. These ids are computed,
+  never stored in the Impresso page file. Identical segmentation gives identical ids;
+  changed segmentation may put another word at the same id. Identity lifecycle work
+  (record-book-two ticket 05) must handle matching, tombstones and redirects across such
+  changes. The 999 limit is an identifier-production rule, not an Impresso shape constraint.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+see_also:
+  - https://impresso.github.io/impresso-schemas/json/canonical/page.schema.json
+  - https://www.loc.gov/standards/alto/v4/alto-4-4.xsd
+annotations:
+  json_schema_nulls: explicit
+  sources_read: >-
+    29 October 2026: Impresso canonical page.schema.json (master 329323c;
+    local steps copy compared byte for byte); Library of Congress ALTO 4.4 XSD,
+    PageType, BlockType, TextBlockType, StringType and MeasurementUnitType.
+  mapping_policy: >-
+    Impresso governs this physical layer under ADR 0001. Impresso and ALTO are documented
+    correspondence annotations and see-also references, not ontology equivalences or new
+    prefixes. No EHRI or RiC-O version or term is added. An ALTO correspondence describes
+    an export choice, not an assertion that the JSON file is ALTO-conformant.
+
+slots:
+  physical_box:
+    alias: c
+    range: integer
+    multivalued: true
+    minimum_cardinality: 4
+    maximum_cardinality: 4
+    description: >-
+      A box [x, y, width, height] in pixels of this page's picture, with origin at its
+      upper left. Impresso requires exactly four integers, without a nonnegative or
+      positive bound. It is an array, not an object with invented coordinate fields.
+    annotations:
+      impresso: >-
+        page.schema.json $defs/coordinates; c on region, paragraph, line and token.
+      alto: >-
+        ALTO 4.4 HPOS, VPOS, WIDTH, HEIGHT respectively on TextBlock, TextLine or String;
+        Description/MeasurementUnit must be pixel and the image frame must agree. ALTO
+        accepts floating-point measurements; this Impresso contract requires integers.
+
+classes:
+  PhysicalPage:
+    tree_root: true
+    extra_slots:
+      allowed: true
+    description: >-
+      One Impresso page file, with its picture metadata and physical text hierarchy.
+      Impresso allows unknown properties at every object level; no such properties are
+      defined here. Exactly one image key and at least one timestamp key must be present.
+    annotations:
+      impresso: >-
+        page.schema.json root, Printed Page.
+      alto: >-
+        ALTO 4.4 Layout/Page (PageType). A full ALTO document also needs Description,
+        MeasurementUnit and PHYSICAL_IMG_NR, which this file does not directly store.
+    attributes:
+      id:
+        required: true
+        pattern: '^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$'
+        description: >-
+          Impresso's canonical page identifier; for example FABLE-1900-01-01-a-p0001.
+        annotations:
+          impresso: >-
+            page.schema.json id, with its exact pattern.
+          alto: >-
+            Page/@ID after ensuring the ALTO XML ID lexical constraints.
+      iiif:
+        description: >-
+          Deprecated IIIF manifest URI, retained for compatibility; Impresso validates
+          plain text, not URI syntax. Exactly one of this and iiif_img_base_uri is present.
+        annotations:
+          impresso: >-
+            page.schema.json iiif.
+          alto: >-
+            No direct equivalent: a manifest is not sourceImageInformation/fileName.
+      iiif_img_base_uri:
+        description: >-
+          Base IIIF image URI without a suffix; Impresso validates plain text, not URI syntax.
+        annotations:
+          impresso: >-
+            page.schema.json iiif_img_base_uri.
+          alto: >-
+            Description/sourceImageInformation/fileName can identify the source picture;
+            an image-service base URI needs an export policy to select the actual image.
+      fw:
+        range: integer
+        description: >-
+          Facsimile width in pixels; present together with fh, with no bound in Impresso.
+        annotations:
+          impresso: >-
+            page.schema.json fw.
+          alto: >-
+            Page/@WIDTH with MeasurementUnit pixel.
+      fh:
+        range: integer
+        description: >-
+          Facsimile height in pixels; present together with fw, with no bound in Impresso.
+        annotations:
+          impresso: >-
+            page.schema.json fh.
+          alto: >-
+            Page/@HEIGHT with MeasurementUnit pixel.
+      st:
+        equals_string_in:
+          - newspaper
+          - radio_broadcast
+          - radio_magazine
+          - radio_schedule
+          - monograph
+          - encyclopedia
+        description: >-
+          Media source type; present together with sm. Newspaper requires print;
+          radio_broadcast requires typescript.
+        annotations:
+          impresso: >-
+            page.schema.json st, SourceType values.
+          alto: >-
+            No direct ALTO page attribute for this source classification.
+      sm:
+        equals_string_in:
+          - print
+          - typescript
+        description: >-
+          Original source medium; present together with st.
+        annotations:
+          impresso: >-
+            page.schema.json sm.
+          alto: >-
+            No direct equivalent; Page/@PAGECLASS is user-defined, not this enumeration.
+      cc:
+        range: boolean
+        description: >-
+          Whether legacy coordinates were converted or rescaled to the IIIF picture frame.
+        annotations:
+          impresso: >-
+            page.schema.json cc.
+          alto: >-
+            No direct flag; an export must resolve coordinates in its MeasurementUnit
+            and source picture frame before writing HPOS, VPOS, WIDTH and HEIGHT.
+      cdt:
+        description: >-
+          Legacy JSON creation timestamp; Impresso validates a string without a date format.
+        annotations:
+          impresso: >-
+            page.schema.json cdt.
+          alto: >-
+            Processing/processingStep/processingDateTime only if that step created this file;
+            a JSON file timestamp is not necessarily an OCR processing time.
+      ts:
+        description: >-
+          JSON creation timestamp, intended as YYYY-MM-DDTHH:MM:SSZ; Impresso imposes no
+          format constraint. At least one of ts and cdt is present; both are allowed.
+        annotations:
+          impresso: >-
+            page.schema.json ts.
+          alto: >-
+            Processing/processingStep/processingDateTime only for the corresponding creation
+            step, with export-time conversion if needed.
+      regions:
+        alias: r
+        range: PhysicalRegion
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Regions in page order; an empty list is accepted by Impresso.
+        annotations:
+          impresso: >-
+            page.schema.json r.
+          alto: >-
+            Page/PrintSpace/TextBlock in order; this module adds no ALTO ReadingOrder field.
+    exactly_one_of:
+      - slot_conditions:
+          iiif:
+            required: true
+      - slot_conditions:
+          iiif_img_base_uri:
+            required: true
+    any_of:
+      - slot_conditions:
+          ts:
+            required: true
+      - slot_conditions:
+          cdt:
+            required: true
+    rules:
+      - preconditions:
+          slot_conditions:
+            fw:
+              required: true
+        postconditions:
+          slot_conditions:
+            fh:
+              required: true
+      - preconditions:
+          slot_conditions:
+            fh:
+              required: true
+        postconditions:
+          slot_conditions:
+            fw:
+              required: true
+      - preconditions:
+          slot_conditions:
+            st:
+              required: true
+        postconditions:
+          slot_conditions:
+            sm:
+              required: true
+      - preconditions:
+          slot_conditions:
+            sm:
+              required: true
+        postconditions:
+          slot_conditions:
+            st:
+              required: true
+      - preconditions:
+          slot_conditions:
+            st:
+              required: false
+              equals_string: newspaper
+        postconditions:
+          slot_conditions:
+            sm:
+              required: false
+              equals_string: print
+      - preconditions:
+          slot_conditions:
+            st:
+              required: false
+              equals_string: radio_broadcast
+        postconditions:
+          slot_conditions:
+            sm:
+              required: false
+              equals_string: typescript
+
+  PhysicalRegion:
+    extra_slots:
+      allowed: true
+    description: >-
+      One region of the page, with a box, ordered paragraphs and optional semantic links.
+    annotations:
+      impresso: >-
+        page.schema.json r[].
+      alto: >-
+        ALTO 4.4 TextBlock (TextBlockType), normally inside PrintSpace.
+      computed_id: >-
+        <page id>-r<RRR>; RRR is the 1-based r position, zero-padded to three digits.
+        See the module description for the 999 limit and segmentation lifecycle.
+    slots:
+      - physical_box
+    slot_usage:
+      physical_box:
+        required: true
+    attributes:
+      paragraphs:
+        alias: p
+        range: PhysicalParagraph
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Paragraphs in region order; Impresso permits zero, one or several.
+        annotations:
+          impresso: >-
+            page.schema.json r[].p.
+          alto: >-
+            No intermediate paragraph element between TextBlock and TextLine; flatten
+            the paragraphs' lines in order when exporting this region as a TextBlock.
+      part_of:
+        alias: pOf
+        description: >-
+          Canonical content-item id, absent or null when no item is assigned.
+        annotations:
+          nullable: true
+          impresso: >-
+            page.schema.json r[].pOf.
+          alto: >-
+            No direct semantic content-item property on TextBlock; linking belongs to
+            a companion logical structure such as METS, outside this module.
+      section_part_of:
+        alias: section_pOf
+        multivalued: true
+        description: >-
+          Content-item ids grouped by this section-heading region. The list may be absent
+          or null; Impresso also permits null members and empty lists.
+        annotations:
+          nullable: true
+          nullable_items: true
+          impresso: >-
+            page.schema.json r[].section_pOf.
+          alto: >-
+            No direct ALTO equivalent for a section's semantic content-item membership.
+
+  PhysicalParagraph:
+    extra_slots:
+      allowed: true
+    description: >-
+      One ordered group of lines in a region, optionally with its own box; no computed id
+      is assigned to paragraphs by this contract.
+    annotations:
+      impresso: >-
+        page.schema.json r[].p[].
+      alto: >-
+        ALTO 4.4 has no paragraph wrapper between TextBlock and TextLine; its lines are
+        flattened into their region's TextBlock. A paragraph box has no separate target.
+    slots:
+      - physical_box
+    attributes:
+      lines:
+        alias: l
+        range: PhysicalLine
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Lines in paragraph order, including an empty list if stored that way.
+        annotations:
+          impresso: >-
+            page.schema.json r[].p[].l.
+          alto: >-
+            TextBlock/TextLine in the paragraphs' combined order.
+
+  PhysicalLine:
+    extra_slots:
+      allowed: true
+    description: >-
+      One line with a box and ordered OCR tokens.
+    annotations:
+      impresso: >-
+        page.schema.json r[].p[].l[].
+      alto: >-
+        ALTO 4.4 TextLine inside TextBlock.
+      computed_id: >-
+        <region id>-l<LLL>; LLL is the 1-based line position across all paragraphs of
+        the region in order, zero-padded to three digits. See the module description.
+    slots:
+      - physical_box
+    slot_usage:
+      physical_box:
+        required: true
+    attributes:
+      tokens:
+        alias: t
+        range: PhysicalWord
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          OCR tokens in line order; Impresso permits an empty list.
+        annotations:
+          impresso: >-
+            page.schema.json r[].p[].l[].t.
+          alto: >-
+            TextLine/String, with SP or HYP as appropriate for spacing and hyphenation.
+
+  PhysicalWord:
+    extra_slots:
+      allowed: true
+    description: >-
+      One OCR token (a word or word part), with its own box and surface text.
+    annotations:
+      impresso: >-
+        page.schema.json r[].p[].l[].t[].
+      alto: >-
+        ALTO 4.4 String (StringType).
+      computed_id: >-
+        <line id>-w<WWW>; WWW is the 1-based t position, zero-padded to three digits.
+        See the module description for the 999 limit and segmentation lifecycle.
+    slots:
+      - physical_box
+    slot_usage:
+      physical_box:
+        required: true
+    attributes:
+      tx:
+        required: true
+        description: >-
+          Token surface text, including empty text if stored that way.
+        annotations:
+          impresso: >-
+            page.schema.json r[].p[].l[].t[].tx.
+          alto: >-
+            String/@CONTENT.
+      style:
+        alias: s
+        range: integer
+        description: >-
+          Style id in the separate issue file's s list; no style fields are added here.
+        annotations:
+          impresso: >-
+            page.schema.json r[].p[].l[].t[].s; issue.schema.json s.
+          alto: >-
+            String/@STYLEREFS after mapping this numeric issue style id to an ALTO Styles ID.
+      gn:
+        range: boolean
+        description: >-
+          Glue next: true means no following whitespace. When absent readers assume false;
+          the schema inserts no default.
+        annotations:
+          impresso: >-
+            page.schema.json r[].p[].l[].t[].gn.
+          alto: >-
+            Omit the intervening SP when true; no equivalent boolean on String.
+      hy:
+        range: boolean
+        description: >-
+          Whether this token is the first part of a hyphenated word, including the hyphen.
+          Readers assume false when absent; the schema inserts no default.
+        annotations:
+          impresso: >-
+            page.schema.json r[].p[].l[].t[].hy.
+          alto: >-
+            String/@SUBS_TYPE HypPart1; an export must handle a trailing HYP consistently.
+      nf:
+        description: >-
+          Normalized dehyphenated form on the latter part or parts of a hyphenated word.
+        annotations:
+          impresso: >-
+            page.schema.json r[].p[].l[].t[].nf.
+          alto: >-
+            String/@SUBS_CONTENT with SUBS_TYPE HypPart2 for the latter part.

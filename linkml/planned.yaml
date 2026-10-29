@@ -3,8 +3,10 @@ items:
   - id: line-and-word-identifiers
     title: Stable line and word identifiers
     summary: >-
-      Lines and word boxes already exist in rebuilt Impresso editions. Their stable
-      identifiers and redirect or tombstone behavior remain to be defined.
+      Lines and word boxes already exist in rebuilt Impresso editions. The physical
+      module now defines computed positional region, line and word identifiers for the
+      last written segmentation. Matching across segmentation changes and redirect or
+      tombstone behavior remain the identity lifecycle's work (record-book-two ticket 05).
     source:
       root: steps
       file: docs/record/end-state.md

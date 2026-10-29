@@ -7,8 +7,8 @@
 Run it in the linkml step's locked environment (bin/verify linkml). Each module of the
 manifest gives its documentation under generated/docs/<name>/ (gen-doc) and, when it names a
 top class, generated/json-schema/<name>.schema.json (gen-json-schema with that one top class,
-closed to keys the schema does not declare). One top class a file, because one JSON Schema with
-several roots merges their top-level rules (the review package's traps).
+closed by default; explicit extra_slots controls external formats). One top class a file,
+because one JSON Schema with several roots merges their top-level rules (the review package's traps).
 
 Every file is written as UTF-8 with "\\n" line ends, whatever the machine, and LinkML 1.12.1
 stamps no date unless asked (its --generation-date is off by default) and no path of this
@@ -39,6 +39,9 @@ _learning_spec.loader.exec_module(_learning_backend)
 _rdf_spec = importlib.util.spec_from_file_location('rdf_generator', Path(__file__).with_name('rdf_generator.py'))
 _rdf_backend = importlib.util.module_from_spec(_rdf_spec)
 _rdf_spec.loader.exec_module(_rdf_backend)
+_external_spec = importlib.util.spec_from_file_location('external_schema', Path(__file__).with_name('external_schema.py'))
+_external_backend = importlib.util.module_from_spec(_external_spec)
+_external_spec.loader.exec_module(_external_backend)
 
 LINKML = Path(__file__).resolve().parent
 
@@ -50,6 +53,10 @@ def modules(linkml_dir):
     names = [entry['name'] for entry in entries]
     if len(set(names)) != len(names):
         raise SystemExit('linkml/modules.json: an output name is used twice')
+    for entry in entries:
+        if 'external_contract' in entry and (entry['external_contract'] != 'impresso-page'
+                                              or not entry['top_class']):
+            raise ValueError('unsupported external contract or missing top class')
     return entries
 
 
@@ -65,8 +72,9 @@ def build(linkml_dir, destination):
         schema = str(linkml_dir / entry['schema'])
         if entry['top_class']:
             # LinkML "JSON Schema" generator, https://linkml.io/linkml/generators/json-schema.html,
-            # read 28 October 2026: closed by default; optional slots also accept null.
-            text = JsonSchemaGenerator(schema, top_class=entry['top_class'], not_closed=False).serialize()
+            # read 28 October 2026, re-read 29 October: closed by default; optional slots
+            # accept null. The external adapter honors explicitly declared null policy.
+            text = _external_backend.generator(schema, entry['top_class']).serialize()
             write_text(destination / 'json-schema' / f"{entry['name']}.schema.json", text)
         # gen-doc writes its own files with the machine's line ends; they are made in a
         # scratch folder and written again here with "\n".
@@ -80,10 +88,15 @@ def build(linkml_dir, destination):
 
 
 def schema_index(linkml_dir, destination):
-    """All owned classes, including classes used only as maps or outside document roots."""
-    views = [(entry, SchemaView(str(linkml_dir / entry['schema']))) for entry in modules(linkml_dir)]
+    """Every owned site class, including maps and non-roots; external inventories are separate."""
+    # The site twins' contract remains complete for the site. An external wire contract
+    # has its own complete inventory and upstream comparison, rather than acquiring
+    # site Zod/Pydantic models the consumers do not use.
+    entries = [entry for entry in modules(linkml_dir) if 'external_contract' not in entry]
+    views = [(entry, SchemaView(str(linkml_dir / entry['schema']))) for entry in entries]
     definitions = {}
-    for path in sorted((destination / 'json-schema').glob('*.json')):
+    for path in sorted(destination / 'json-schema' / f"{entry['name']}.schema.json"
+                       for entry in entries if entry['top_class']):
         for name, definition in json.loads(path.read_text(encoding='utf-8')).get('$defs', {}).items():
             if name in definitions and definitions[name] != definition:
                 raise ValueError(f'{name}: generated definitions differ between document roots')
@@ -160,6 +173,18 @@ def build_index_and_dictionary(linkml_dir, destination):
     if json.loads((linkml_dir / 'modules.json').read_text(encoding='utf-8')).get('rdf_profile'):
         _rdf_backend.write_rdf(linkml_dir, destination,
                                _learning_backend.build_index(linkml_dir, views, index), index, write_text)
+    for entry in modules(linkml_dir):
+        if 'external_contract' not in entry:
+            continue
+        view = SchemaView(str(linkml_dir / entry['schema']))
+        document = json.loads((destination / 'json-schema' / f"{entry['name']}.schema.json").read_text())
+        external = {'$schema': document['$schema'], '$defs': document['$defs'],
+                    'classes': {name: entry['schema'] for name in view.all_classes(imports=False)},
+                    'known_looser': [], 'external_contract': entry['external_contract']}
+        external_dir = destination / 'external' / entry['name']
+        write_text(external_dir / 'contract.json', json.dumps(external, ensure_ascii=False, indent=2, sort_keys=True))
+        _learning_backend.write_index(linkml_dir, external_dir, [(entry, view)], external, write_text)
+        views.append((entry, view))  # All layers appear in the human data dictionary.
     planned = read_planned(linkml_dir)  # Never passed to SchemaView or a schema generator.
     sources = sorted((linkml_dir / 'schema').glob('*.yaml'))
     sources += [p for p in (linkml_dir / 'planned.yaml', linkml_dir / 'known-looser.yaml') if p.exists()]

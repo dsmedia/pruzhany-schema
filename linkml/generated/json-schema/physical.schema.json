@@ -1,0 +1,578 @@
+{
+    "$defs": {
+        "PhysicalLine": {
+            "additionalProperties": true,
+            "description": "One line with a box and ordered OCR tokens.",
+            "properties": {
+                "c": {
+                    "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                },
+                "t": {
+                    "description": "OCR tokens in line order; Impresso permits an empty list.",
+                    "items": {
+                        "$ref": "#/$defs/PhysicalWord"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "c",
+                "t"
+            ],
+            "title": "PhysicalLine",
+            "type": "object"
+        },
+        "PhysicalPage": {
+            "additionalProperties": true,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "fw": {}
+                        },
+                        "required": [
+                            "fw"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "fh": {}
+                        },
+                        "required": [
+                            "fh"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "fh": {}
+                        },
+                        "required": [
+                            "fh"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "fw": {}
+                        },
+                        "required": [
+                            "fw"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "st": {}
+                        },
+                        "required": [
+                            "st"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "sm": {}
+                        },
+                        "required": [
+                            "sm"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "sm": {}
+                        },
+                        "required": [
+                            "sm"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "st": {}
+                        },
+                        "required": [
+                            "st"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "st": {
+                                "const": "newspaper"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "sm": {
+                                "const": "print"
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "st": {
+                                "const": "radio_broadcast"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "sm": {
+                                "const": "typescript"
+                            }
+                        }
+                    }
+                }
+            ],
+            "anyOf": [
+                {
+                    "properties": {
+                        "ts": {}
+                    },
+                    "required": [
+                        "ts"
+                    ]
+                },
+                {
+                    "properties": {
+                        "cdt": {}
+                    },
+                    "required": [
+                        "cdt"
+                    ]
+                }
+            ],
+            "description": "One Impresso page file, with its picture metadata and physical text hierarchy. Impresso allows unknown properties at every object level; no such properties are defined here. Exactly one image key and at least one timestamp key must be present.",
+            "oneOf": [
+                {
+                    "properties": {
+                        "iiif": {}
+                    },
+                    "required": [
+                        "iiif"
+                    ]
+                },
+                {
+                    "properties": {
+                        "iiif_img_base_uri": {}
+                    },
+                    "required": [
+                        "iiif_img_base_uri"
+                    ]
+                }
+            ],
+            "properties": {
+                "cc": {
+                    "description": "Whether legacy coordinates were converted or rescaled to the IIIF picture frame.",
+                    "type": "boolean"
+                },
+                "cdt": {
+                    "description": "Legacy JSON creation timestamp; Impresso validates a string without a date format.",
+                    "type": "string"
+                },
+                "fh": {
+                    "description": "Facsimile height in pixels; present together with fw, with no bound in Impresso.",
+                    "type": "integer"
+                },
+                "fw": {
+                    "description": "Facsimile width in pixels; present together with fh, with no bound in Impresso.",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "Impresso's canonical page identifier; for example FABLE-1900-01-01-a-p0001.",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-p[0-9]{4}$",
+                    "type": "string"
+                },
+                "iiif": {
+                    "description": "Deprecated IIIF manifest URI, retained for compatibility; Impresso validates plain text, not URI syntax. Exactly one of this and iiif_img_base_uri is present.",
+                    "type": "string"
+                },
+                "iiif_img_base_uri": {
+                    "description": "Base IIIF image URI without a suffix; Impresso validates plain text, not URI syntax.",
+                    "type": "string"
+                },
+                "r": {
+                    "description": "Regions in page order; an empty list is accepted by Impresso.",
+                    "items": {
+                        "$ref": "#/$defs/PhysicalRegion"
+                    },
+                    "type": "array"
+                },
+                "sm": {
+                    "description": "Original source medium; present together with st.",
+                    "enum": [
+                        "print",
+                        "typescript"
+                    ],
+                    "type": "string"
+                },
+                "st": {
+                    "description": "Media source type; present together with sm. Newspaper requires print; radio_broadcast requires typescript.",
+                    "enum": [
+                        "newspaper",
+                        "radio_broadcast",
+                        "radio_magazine",
+                        "radio_schedule",
+                        "monograph",
+                        "encyclopedia"
+                    ],
+                    "type": "string"
+                },
+                "ts": {
+                    "description": "JSON creation timestamp, intended as YYYY-MM-DDTHH:MM:SSZ; Impresso imposes no format constraint. At least one of ts and cdt is present; both are allowed.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "r"
+            ],
+            "title": "PhysicalPage",
+            "type": "object"
+        },
+        "PhysicalParagraph": {
+            "additionalProperties": true,
+            "description": "One ordered group of lines in a region, optionally with its own box; no computed id is assigned to paragraphs by this contract.",
+            "properties": {
+                "c": {
+                    "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                },
+                "l": {
+                    "description": "Lines in paragraph order, including an empty list if stored that way.",
+                    "items": {
+                        "$ref": "#/$defs/PhysicalLine"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "l"
+            ],
+            "title": "PhysicalParagraph",
+            "type": "object"
+        },
+        "PhysicalRegion": {
+            "additionalProperties": true,
+            "description": "One region of the page, with a box, ordered paragraphs and optional semantic links.",
+            "properties": {
+                "c": {
+                    "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                },
+                "p": {
+                    "description": "Paragraphs in region order; Impresso permits zero, one or several.",
+                    "items": {
+                        "$ref": "#/$defs/PhysicalParagraph"
+                    },
+                    "type": "array"
+                },
+                "pOf": {
+                    "description": "Canonical content-item id, absent or null when no item is assigned.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "section_pOf": {
+                    "description": "Content-item ids grouped by this section-heading region. The list may be absent or null; Impresso also permits null members and empty lists.",
+                    "items": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "c",
+                "p"
+            ],
+            "title": "PhysicalRegion",
+            "type": "object"
+        },
+        "PhysicalWord": {
+            "additionalProperties": true,
+            "description": "One OCR token (a word or word part), with its own box and surface text.",
+            "properties": {
+                "c": {
+                    "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                },
+                "gn": {
+                    "description": "Glue next: true means no following whitespace. When absent readers assume false; the schema inserts no default.",
+                    "type": "boolean"
+                },
+                "hy": {
+                    "description": "Whether this token is the first part of a hyphenated word, including the hyphen. Readers assume false when absent; the schema inserts no default.",
+                    "type": "boolean"
+                },
+                "nf": {
+                    "description": "Normalized dehyphenated form on the latter part or parts of a hyphenated word.",
+                    "type": "string"
+                },
+                "s": {
+                    "description": "Style id in the separate issue file's s list; no style fields are added here.",
+                    "type": "integer"
+                },
+                "tx": {
+                    "description": "Token surface text, including empty text if stored that way.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "c",
+                "tx"
+            ],
+            "title": "PhysicalWord",
+            "type": "object"
+        }
+    },
+    "$id": "https://pruzhany.org/ns/physical",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "fw": {}
+                },
+                "required": [
+                    "fw"
+                ]
+            },
+            "then": {
+                "properties": {
+                    "fh": {}
+                },
+                "required": [
+                    "fh"
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "fh": {}
+                },
+                "required": [
+                    "fh"
+                ]
+            },
+            "then": {
+                "properties": {
+                    "fw": {}
+                },
+                "required": [
+                    "fw"
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "st": {}
+                },
+                "required": [
+                    "st"
+                ]
+            },
+            "then": {
+                "properties": {
+                    "sm": {}
+                },
+                "required": [
+                    "sm"
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "sm": {}
+                },
+                "required": [
+                    "sm"
+                ]
+            },
+            "then": {
+                "properties": {
+                    "st": {}
+                },
+                "required": [
+                    "st"
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "st": {
+                        "const": "newspaper"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "sm": {
+                        "const": "print"
+                    }
+                }
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "st": {
+                        "const": "radio_broadcast"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "sm": {
+                        "const": "typescript"
+                    }
+                }
+            }
+        }
+    ],
+    "anyOf": [
+        {
+            "properties": {
+                "ts": {}
+            },
+            "required": [
+                "ts"
+            ]
+        },
+        {
+            "properties": {
+                "cdt": {}
+            },
+            "required": [
+                "cdt"
+            ]
+        }
+    ],
+    "description": "One Impresso page file, with its picture metadata and physical text hierarchy. Impresso allows unknown properties at every object level; no such properties are defined here. Exactly one image key and at least one timestamp key must be present.",
+    "metamodel_version": "1.12.0",
+    "oneOf": [
+        {
+            "properties": {
+                "iiif": {}
+            },
+            "required": [
+                "iiif"
+            ]
+        },
+        {
+            "properties": {
+                "iiif_img_base_uri": {}
+            },
+            "required": [
+                "iiif_img_base_uri"
+            ]
+        }
+    ],
+    "properties": {
+        "cc": {
+            "description": "Whether legacy coordinates were converted or rescaled to the IIIF picture frame.",
+            "type": "boolean"
+        },
+        "cdt": {
+            "description": "Legacy JSON creation timestamp; Impresso validates a string without a date format.",
+            "type": "string"
+        },
+        "fh": {
+            "description": "Facsimile height in pixels; present together with fw, with no bound in Impresso.",
+            "type": "integer"
+        },
+        "fw": {
+            "description": "Facsimile width in pixels; present together with fh, with no bound in Impresso.",
+            "type": "integer"
+        },
+        "id": {
+            "description": "Impresso's canonical page identifier; for example FABLE-1900-01-01-a-p0001.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-p[0-9]{4}$",
+            "type": "string"
+        },
+        "iiif": {
+            "description": "Deprecated IIIF manifest URI, retained for compatibility; Impresso validates plain text, not URI syntax. Exactly one of this and iiif_img_base_uri is present.",
+            "type": "string"
+        },
+        "iiif_img_base_uri": {
+            "description": "Base IIIF image URI without a suffix; Impresso validates plain text, not URI syntax.",
+            "type": "string"
+        },
+        "r": {
+            "description": "Regions in page order; an empty list is accepted by Impresso.",
+            "items": {
+                "$ref": "#/$defs/PhysicalRegion"
+            },
+            "type": "array"
+        },
+        "sm": {
+            "description": "Original source medium; present together with st.",
+            "enum": [
+                "print",
+                "typescript"
+            ],
+            "type": "string"
+        },
+        "st": {
+            "description": "Media source type; present together with sm. Newspaper requires print; radio_broadcast requires typescript.",
+            "enum": [
+                "newspaper",
+                "radio_broadcast",
+                "radio_magazine",
+                "radio_schedule",
+                "monograph",
+                "encyclopedia"
+            ],
+            "type": "string"
+        },
+        "ts": {
+            "description": "JSON creation timestamp, intended as YYYY-MM-DDTHH:MM:SSZ; Impresso imposes no format constraint. At least one of ts and cdt is present; both are allowed.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "r"
+    ],
+    "title": "pruzhany_physical",
+    "type": "object",
+    "version": null
+}
