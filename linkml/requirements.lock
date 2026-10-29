@@ -319,6 +319,10 @@ hbreader==0.9.1 \
     #   jsonasobj2
     #   linkml
     #   linkml-runtime
+html5rdf==1.2.1 \
+    --hash=sha256:1f519121bc366af3e485310dc8041d2e86e5173c1a320fac3dc9d2604069b83e \
+    --hash=sha256:ace9b420ce52995bb4f05e7425eedf19e433c981dfe7a831ab391e2fa2e1a195
+    # via rdflib
 idna==3.20 \
     --hash=sha256:a7db850025b95ded1eae8a46181a1a6c56c92c96f0e2b005d9ff8dc0210cab44 \
     --hash=sha256:ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c
@@ -329,6 +333,10 @@ imagesize==2.0.1 \
     --hash=sha256:b2ba6a4dea487a7ebcd53248d3476aca449d30db12a2dde5e0c5ca9624fd77e5 \
     --hash=sha256:ea0c9a0384df69ed86a943a15cde37d0360b82491b3910dc2215e202e62b5b02
     # via sphinx
+importlib-metadata==10.1.0 ; python_full_version < '3.12' \
+    --hash=sha256:82b04047fa09792c1a8cfeddfe08bec79e4b13c29c8469b0d3949860f61017e8 \
+    --hash=sha256:cf45ce66a929c64e994185a809c04840d0501db17e663810d993d0f4829265c7
+    # via pyshacl
 iniconfig==2.3.1 \
     --hash=sha256:67f4b9c50da0dedf52af349e7749a80a9057a5031199791b906c3bb3ae878960 \
     --hash=sha256:9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7
@@ -624,10 +632,15 @@ openpyxl==3.1.5 \
     --hash=sha256:5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2 \
     --hash=sha256:cf0e3cf56142039133628b5acffe8ef0c12bc902d2aadd3e0fe5878dc08d1050
     # via linkml
+owlrl==7.6.2 \
+    --hash=sha256:83347bf7f133979e87b2b18695d51d25510b99cec3f6919b5df05d4fbf058ae0 \
+    --hash=sha256:c743f35c2d908396e77823852bb1ebbce88340cd49961493983bec42c93283a8
+    # via pyshacl
 packaging==26.3 \
     --hash=sha256:94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79 \
     --hash=sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c
     # via
+    #   pyshacl
     #   pytest
     #   sphinx
 parse==1.22.4 \
@@ -658,6 +671,10 @@ prefixmaps==0.2.6 \
     # via
     #   linkml
     #   linkml-runtime
+prettytable==3.18.0 \
+    --hash=sha256:439217116152244369caf3d9f1caf2f9fe29b03bd79e88d2928c8e718c95d680 \
+    --hash=sha256:b3346e0e6f79180833aebaac088ae926340586cf6d7d991b9eb125b65f72313a
+    # via pyshacl
 pydantic==2.14.1 \
     --hash=sha256:9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454 \
     --hash=sha256:94f478203dd03404682a1ada216965651dd74b1d2d5ffd62e00e0837caab5c26
@@ -866,6 +883,10 @@ pyparsing==3.3.3 \
     --hash=sha256:928ae7e20211f3b6f3915a72f06a0cfd29ab9d24279dd6346b6b1a7146397d36 \
     --hash=sha256:ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4
     # via rdflib
+pyshacl==0.30.1 \
+    --hash=sha256:d7e0c21b25e948bb643dbc5db6258da64a90a8ac89055c1fe562b469031072aa \
+    --hash=sha256:df712ac961b1ee7bcf0b27fa71ecab7785a135b2af69783ce30cb05fe41bcaf5
+    # via -r linkml/requirements.in
 pyshex==0.9.0 \
     --hash=sha256:87288b5e5613f734f55f0085334558218ff618fb1061aabdcee19841092b3eca \
     --hash=sha256:d81344deed686b7c169f23156221ae281225e2ba02b14fe9810335afdefffa9d
@@ -981,6 +1002,8 @@ rdflib==7.6.0 \
     #   cfgraph
     #   linkml
     #   linkml-runtime
+    #   owlrl
+    #   pyshacl
     #   rdflib-jsonld
     #   rdflib-shim
     #   sparqlslurper
@@ -1366,6 +1389,37 @@ watchdog==6.0.0 \
     --hash=sha256:e7631a77ffb1f7d2eefa4445ebbee491c720a5661ddf6df3498ebecae5ed375c \
     --hash=sha256:ef810fbf7b781a5a593894e4f439773830bdecb885e6880d957d5b9382a960d2
     # via linkml
+wcwidth==0.9.4 \
+    --hash=sha256:093469e01d881bff3db93ff3f56c364dc87c441ea01f9f41c22de0c0bdf5c6ef \
+    --hash=sha256:12786620375dc83fabf4b2b2aa52416fef2bc6094522ea29c8a53c75b0dfe9b6 \
+    --hash=sha256:14410eb73178cc492aa9bf22f7c12e3bf930e5470b7220cf6f530efbfa2e03f3 \
+    --hash=sha256:17619066f95c10f44d7ae08ee456602456bc66cc9d5e91966ec73d799acebc5f \
+    --hash=sha256:29c0685f5f5f8815b88308fdcbe2cd12a92996a21a5b1e18352d165174ef7a6d \
+    --hash=sha256:2b58fc8cf2de1bf9cdb68b8beaa5be198742414a7c8cd97aa51ec039783ffa49 \
+    --hash=sha256:2cca7b5d0b9d0ae49068d3ce806e965326a987f555b62eaa322223396e10d01b \
+    --hash=sha256:4831662c396dd4c59a016ec53c0ac96738006d653a00482777d9a2e2ea323d62 \
+    --hash=sha256:79e09e9824c88f5e275ca99e921685567a5c5c1bb6165c16e27ddd1adab33a95 \
+    --hash=sha256:87e4101789415a6cf55ec4c53eceeb4782c2654c88692941cb588f19dca1959f \
+    --hash=sha256:8f892713ab5795d3abae181e9c02db0eb24de4084f9ee080535369d3d98d7bb5 \
+    --hash=sha256:901eace6d2dd25ebb917d0ce5db18e5c537e1504c905cf32f0d006c12098b05d \
+    --hash=sha256:9c4b0dd04cca520792100f6110d10be262c94b285a281d1759c551f159214633 \
+    --hash=sha256:9e5090d253f5df99659cddfd3ed90dd21f6ff51989b0421331a63fb2681cbe27 \
+    --hash=sha256:a1526cd25c6420e5153bb7d764c7509e692215ee3ad9b725db1ad665d47eae09 \
+    --hash=sha256:a8c9ce14c6b4a499e61de6de7e9e456de11be8bc991554e2ab2ed4feb40b9664 \
+    --hash=sha256:ab1e5190fb82476e75fbf963e9d59b4fb1c1e1f4ced82069a0c989016aa959f7 \
+    --hash=sha256:b185c8b927b23af2721be1783499d1cfa5c028b098b0858951b4ae224477f1c2 \
+    --hash=sha256:b52f265a694dda6b3ad9050c8bd89158ad519109ef7c5eb110b906cc49f25763 \
+    --hash=sha256:b7969c9aa258d536df54c8ac8af5cad0c74a6268c9972e1fb60a5f29feffb66d \
+    --hash=sha256:befbf46467100e43fd8c8cc0c031a0105f13f5418c3be95fdcf0c47214487967 \
+    --hash=sha256:c36954849aafae1092d6f9de9548c5280c1d6841637a27ca288b2241c802c4ab \
+    --hash=sha256:d68f09093c9bec9226a52edc47487042ed4f64c5df91d06f00419495071c0279 \
+    --hash=sha256:d76b7c715c5ca0103b28915f699f1020ae21f06f1d22cdd85a7a97f7b1536eed \
+    --hash=sha256:d8905f1390d828d745fdd1904374c90386d902d3cfa9ee88e9875099f75a4e17 \
+    --hash=sha256:e05458491759aa42b7b85f36345b3e6df082d6d2d9bf616299668fd598e0209d \
+    --hash=sha256:f279f32c8e206a9092fa350e53ca0c2bd8072e45b1c9fd31bb6d476b59b591c4 \
+    --hash=sha256:f28d77153303450ee13ebbe888297e75cf532c754555b6cabafc9bdda16c421c \
+    --hash=sha256:fd8d57d3cdfe570e3265c8fab1885c24e34ef40889c0759c0c304a19e9835954
+    # via prettytable
 webcolors==25.10.0 \
     --hash=sha256:032c727334856fc0b968f63daa252a1ac93d33db2f5267756623c210e57a4f1d \
     --hash=sha256:62abae86504f66d0f6364c2a8520de4a0c47b80c03fc3a5f1815fedbef7c19bf
@@ -1473,3 +1527,7 @@ wrapt==2.5.1 \
     --hash=sha256:fcccaa1484f7dd1091602970988ab741491f9f974013c844f70e45ac1196b80d \
     --hash=sha256:fd3f878a4aac3c262447ddf43c5f4c18fc67dfc3ba69c4fb1c7a4c4af96abe7e
     # via deprecated
+zipp==4.1.2 ; python_full_version < '3.12' \
+    --hash=sha256:b30cb6cd253122169c47de245ca24a86bac2a5d3802ba15bf7ba6414eb9e144d \
+    --hash=sha256:cf474b90b07ea932637e17c6b9479de2b2882900b0d311bdaf4f5c000a15a97f
+    # via importlib-metadata

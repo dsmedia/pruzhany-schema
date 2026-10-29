@@ -1,0 +1,404 @@
+{
+  "models": {
+    "Attribution": {
+      "fields": [
+        "by",
+        "on"
+      ],
+      "omitted": {
+        "note": "Absent from this final public view; never recover it from private storage."
+      },
+      "reason": "A public view of Attribution; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {}
+    },
+    "Citation": {
+      "fields": [
+        "source_id",
+        "record_id",
+        "page",
+        "scan",
+        "time",
+        "edition_date",
+        "unit_id",
+        "url",
+        "quote",
+        "accessed"
+      ],
+      "omitted": {
+        "locator": "Absent from this final public view; never recover it from private storage.",
+        "note": "Absent from this final public view; never recover it from private storage.",
+        "public_note": "Absent from this final public view; never recover it from private storage.",
+        "quote_language": "Absent from this final public view; never recover it from private storage.",
+        "record_type": "Absent from this final public view; never recover it from private storage.",
+        "reference_code": "Absent from this final public view; never recover it from private storage.",
+        "via": "Absent from this final public view; never recover it from private storage."
+      },
+      "reason": "A public view of Citation; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {
+        "source_id": "Source",
+        "unit_id": "ContentItem"
+      }
+    },
+    "LifeEventDate": {
+      "fields": [
+        "printed",
+        "printed_calendar",
+        "start",
+        "qualifier",
+        "reported_in",
+        "record_fact_id"
+      ],
+      "omitted": {},
+      "predicates": {
+        "printed": "rico:expressedDate",
+        "qualifier": "rico:dateQualifier",
+        "start": "rico:normalizedDateValue"
+      },
+      "reason": "A public view of LifeEventDate; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {
+        "record_fact_id": "SharedFact"
+      }
+    },
+    "LifeEventMainPerson": {
+      "fields": [
+        "person_id",
+        "part"
+      ],
+      "omitted": {},
+      "reason": "A public view of LifeEventMainPerson; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {
+        "person_id": "SharedPerson"
+      }
+    },
+    "PlaceIdentifier": {
+      "fields": [
+        "source_id",
+        "value",
+        "url",
+        "accessed"
+      ],
+      "omitted": {
+        "attribution": "Absent from this final public view; never recover it from private storage."
+      },
+      "reason": "A public view of PlaceIdentifier; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {
+        "source_id": "Source"
+      }
+    },
+    "PrintedAddress": {
+      "fields": [
+        "image_uri",
+        "bbox",
+        "text"
+      ],
+      "omitted": {},
+      "positions": {
+        "bbox": [
+          {
+            "minimum": 0
+          },
+          {
+            "minimum": 0
+          },
+          {
+            "exclusiveMinimum": 0
+          },
+          {
+            "exclusiveMinimum": 0
+          }
+        ]
+      },
+      "reason": "A public view of PrintedAddress; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {}
+    },
+    "Review": {
+      "fields": [
+        "state",
+        "by",
+        "on"
+      ],
+      "omitted": {},
+      "reason": "A public view of Review; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {}
+    },
+    "SharedEvent": {
+      "fields": [
+        "id",
+        "name",
+        "type",
+        "proposed_type",
+        "location_id",
+        "main_people",
+        "dates",
+        "evidence_basis"
+      ],
+      "omitted": {
+        "description": "Absent from this final public view; never recover it from private storage."
+      },
+      "predicates": {
+        "name": "rdfs:label"
+      },
+      "reason": "A public view of SharedEvent; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {
+        "location_id": "SharedPlace"
+      }
+    },
+    "SharedFact": {
+      "fields": [
+        "id",
+        "subject_id",
+        "type",
+        "proposed_type",
+        "value",
+        "place_id",
+        "organization_id",
+        "event_id",
+        "related_person_id",
+        "relationship_type",
+        "related_name",
+        "holocaust_related",
+        "evidence_confidence",
+        "identity_confidence",
+        "status",
+        "date",
+        "qualifiers",
+        "citations",
+        "review",
+        "attribution"
+      ],
+      "json_fields": [
+        "qualifiers"
+      ],
+      "omitted": {
+        "family_id": "Absent from this final public view; never recover it from private storage.",
+        "representation": "Absent from this final public view; never recover it from private storage."
+      },
+      "predicates": {
+        "subject_id": "rdf:subject"
+      },
+      "ranges": {
+        "citations": "Citation"
+      },
+      "reason": "A public view of SharedFact; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {
+        "event_id": "SharedEvent",
+        "organization_id": "SharedOrganization",
+        "place_id": "SharedPlace",
+        "related_person_id": "SharedPerson",
+        "subject_id": "SharedPerson"
+      }
+    },
+    "SharedOrganization": {
+      "fields": [
+        "id",
+        "name"
+      ],
+      "omitted": {
+        "names": "Absent from this final public view; never recover it from private storage."
+      },
+      "predicates": {
+        "name": "rdfs:label"
+      },
+      "reason": "A public view of SharedOrganization; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {}
+    },
+    "SharedPerson": {
+      "fields": [
+        "id",
+        "name",
+        "gender"
+      ],
+      "omitted": {
+        "fate": "Absent from this final public view; never recover it from private storage.",
+        "names": "Absent from this final public view; never recover it from private storage.",
+        "portrait": "Absent from this final public view; never recover it from private storage."
+      },
+      "predicates": {
+        "name": "rdfs:label"
+      },
+      "reason": "A public view of SharedPerson; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {}
+    },
+    "SharedPlace": {
+      "fields": [
+        "id",
+        "name",
+        "type",
+        "coordinates",
+        "parent_id",
+        "identifiers"
+      ],
+      "omitted": {
+        "names": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {
+        "type": "Some final person-detail files publish only a place identifier and name."
+      },
+      "positions": {
+        "coordinates": [
+          {
+            "maximum": 90,
+            "minimum": -90
+          },
+          {
+            "maximum": 180,
+            "minimum": -180
+          }
+        ]
+      },
+      "predicates": {
+        "name": "rdfs:label"
+      },
+      "reason": "A public view of SharedPlace; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {
+        "parent_id": "SharedPlace"
+      }
+    },
+    "Source": {
+      "fields": [
+        "id",
+        "kind",
+        "title",
+        "work_id",
+        "author",
+        "editor",
+        "published",
+        "repository",
+        "url_pattern",
+        "host"
+      ],
+      "omitted": {
+        "dated": "Absent from this final public view; never recover it from private storage.",
+        "derived_from": "Absent from this final public view; never recover it from private storage.",
+        "holder_id": "Absent from this final public view; never recover it from private storage.",
+        "language": "Absent from this final public view; never recover it from private storage.",
+        "made_by": "Absent from this final public view; never recover it from private storage.",
+        "private": "Absent from this final public view; never recover it from private storage.",
+        "quote_condition": "Absent from this final public view; never recover it from private storage.",
+        "quotes_cleared": "Absent from this final public view; never recover it from private storage.",
+        "reference_code": "Absent from this final public view; never recover it from private storage.",
+        "short_name": "Absent from this final public view; never recover it from private storage.",
+        "subjects": "Absent from this final public view; never recover it from private storage."
+      },
+      "predicates": {
+        "title": "rdfs:label"
+      },
+      "reason": "A public view of Source; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {}
+    },
+    "SourcedDate": {
+      "fields": [
+        "start",
+        "end",
+        "precision",
+        "printed",
+        "printed_calendar",
+        "inferred"
+      ],
+      "omitted": {},
+      "predicates": {
+        "printed": "rico:expressedDate",
+        "start": "rico:normalizedDateValue"
+      },
+      "reason": "A public view of SourcedDate; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {}
+    },
+    "SourcedRelation": {
+      "fields": [
+        "subject_id",
+        "related_person_id",
+        "relationship_type",
+        "review"
+      ],
+      "omitted": {
+        "attribution": "Absent from this final public view; never recover it from private storage.",
+        "citations": "Absent from this final public view; never recover it from private storage.",
+        "date": "Absent from this final public view; never recover it from private storage.",
+        "event_id": "Absent from this final public view; never recover it from private storage.",
+        "evidence_confidence": "Absent from this final public view; never recover it from private storage.",
+        "family_id": "Absent from this final public view; never recover it from private storage.",
+        "holocaust_related": "Absent from this final public view; never recover it from private storage.",
+        "id": "Absent from this final public view; never recover it from private storage.",
+        "identity_confidence": "Absent from this final public view; never recover it from private storage.",
+        "organization_id": "Absent from this final public view; never recover it from private storage.",
+        "place_id": "Absent from this final public view; never recover it from private storage.",
+        "proposed_type": "Absent from this final public view; never recover it from private storage.",
+        "qualifiers": "Absent from this final public view; never recover it from private storage.",
+        "related_name": "Absent from this final public view; never recover it from private storage.",
+        "shown": "Absent from this final public view; never recover it from private storage.",
+        "status": "Absent from this final public view; never recover it from private storage.",
+        "type": "Absent from this final public view; never recover it from private storage.",
+        "value": "Absent from this final public view; never recover it from private storage."
+      },
+      "predicates": {
+        "related_person_id": "rdf:object",
+        "subject_id": "rdf:subject"
+      },
+      "reason": "A public view of SourcedRelation; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "references": {
+        "related_person_id": "SharedPerson",
+        "subject_id": "SharedPerson"
+      },
+      "required": {
+        "related_person_id": "A displayed confirmed relationship has two known public endpoints.",
+        "relationship_type": "The displayed direction must be explicit."
+      }
+    }
+  },
+  "omitted_models": {
+    "Authorship": "Outside the public shared-record export; this layer keeps its current format.",
+    "Block": "Outside the public shared-record export; this layer keeps its current format.",
+    "ContentItem": "Outside the public shared-record export; this layer keeps its current format.",
+    "ContentItemBlockRef": "Outside the public shared-record export; this layer keeps its current format.",
+    "ContentItemRef": "Outside the public shared-record export; this layer keeps its current format.",
+    "ContentItemsData": "Outside the public shared-record export; this layer keeps its current format.",
+    "CrossReference": "Outside the public shared-record export; this layer keeps its current format.",
+    "Edition": "Outside the public shared-record export; this layer keeps its current format.",
+    "EditionsCatalog": "Outside the public shared-record export; this layer keeps its current format.",
+    "EnglishCheck": "Outside the public shared-record export; this layer keeps its current format.",
+    "ExternalReference": "Outside the public shared-record export; this layer keeps its current format.",
+    "Fact": "Outside the public shared-record export; this layer keeps its current format.",
+    "FactQualifiers": "Outside the public shared-record export; this layer keeps its current format.",
+    "Fate": "Outside the public shared-record export; this layer keeps its current format.",
+    "HistoricalEvent": "Outside the public shared-record export; this layer keeps its current format.",
+    "Holder": "Outside the public shared-record export; this layer keeps its current format.",
+    "Holiday": "Outside the public shared-record export; this layer keeps its current format.",
+    "IssueLifeEvent": "Outside the public shared-record export; this layer keeps its current format.",
+    "IssueLifeEventsData": "Outside the public shared-record export; this layer keeps its current format.",
+    "IssueMention": "Outside the public shared-record export; this layer keeps its current format.",
+    "IssueMentionsData": "Outside the public shared-record export; this layer keeps its current format.",
+    "Media": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaConsent": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaConsentScope": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaDecision": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaDepicted": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaDerivative": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaFamilyWords": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaFixity": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaMaster": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaPortrait": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaRegion": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaText": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaWithdrawal": "Outside the public shared-record export; this layer keeps its current format.",
+    "Mention": "Outside the public shared-record export; this layer keeps its current format.",
+    "Name": "Outside the public shared-record export; this layer keeps its current format.",
+    "Page": "Outside the public shared-record export; this layer keeps its current format.",
+    "PagesData": "Outside the public shared-record export; this layer keeps its current format.",
+    "PrintedSection": "Outside the public shared-record export; this layer keeps its current format.",
+    "PrintedTitle": "Outside the public shared-record export; this layer keeps its current format.",
+    "PublicMedia": "Outside the public shared-record export; this layer keeps its current format.",
+    "ReadingStatus": "Outside the public shared-record export; this layer keeps its current format.",
+    "SharedFamily": "Outside the public shared-record export; this layer keeps its current format.",
+    "SharedName": "Outside the public shared-record export; this layer keeps its current format.",
+    "SharedRecord": "Outside the public shared-record export; this layer keeps its current format.",
+    "SiteCitation": "Outside the public shared-record export; this layer keeps its current format.",
+    "SourceDerivation": "Outside the public shared-record export; this layer keeps its current format.",
+    "SuppliedTitle": "Outside the public shared-record export; this layer keeps its current format.",
+    "TextBasis": "Outside the public shared-record export; this layer keeps its current format.",
+    "TitleCheck": "Outside the public shared-record export; this layer keeps its current format.",
+    "Translation": "Outside the public shared-record export; this layer keeps its current format.",
+    "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format."
+  },
+  "position_constraints_source": "zod/shared-record.schema.ts SharedPlaceSchema.coordinates and zod/site-common.schema.ts pixelBox; test_rdf_export checks their live Zod exports.",
+  "version": 1
+}

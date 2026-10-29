@@ -306,3 +306,60 @@ The private steps repository uses this index with `docs/learn/notice-to-evidence
 to build its offline guided journey. Questions and source selectors live in that private
 teaching layer; definitions and vocabulary continue to come from this repository. Historical
 examples, crops, personal notes and real-data diagnostics must stay out of this public tree.
+
+### Public RDF view (stage three)
+
+The manifest now also generates `generated/rdf/`: an inline JSON-LD 1.1 context,
+OWL vocabulary declarations, SHACL Core shapes, a machine-readable profile and
+[a field-by-field coverage report](generated/rdf/coverage.md). The sources remain
+LinkML; `rdf-profile.yaml` selects the public view and records every omitted model
+and field. Adding a field requires an explicit decision. Planned requirements do
+not enter this export. `rdf_generator.py` refuses unsupported scalar constraints,
+ambiguous scalar unions and stale field selections. Tuple position bounds are
+checked against live Zod exports, since LinkML JSON Schema loses those bounds.
+
+`rdf_runtime.py` encodes already-projected public records; it never reads archive
+storage. The private steps command `record export rdf` first validates all shards
+and invokes the website's final `buildPublicAssets` in a disposable root. It does
+**not** serialize `projectRecord`: its intermediate maps contain private data.
+The final public files determine both which identities and which evidence appear.
+Printed-only person displays, derived biography, navigation, images, families,
+holders and media without this public representation remain outside this view.
+PrintedAddress list support is tested with fictional boxes; public citations do
+not expose the private stored address lists.
+
+Persons use `ehri:Person`, events `rico:Event`, and approved event kinds and roles
+use the existing declared vocabulary (`rico:hasEventType`, `pc:part_*`). Ordered
+participant and citation records also remain available as RDF lists. A fact is a
+source-scoped `rdf:Statement` and `rico:Relation`, retaining its status, review,
+confidence, attribution and exact locators. `rico:isEvidencedBy` points to its
+Source resources, not to an RDF list or citation locator. The encoder cross-checks
+these derived edges against the preserved fields. It never asserts the underlying
+person–birth/death/kinship triple. Public confirmed relationships are separately
+reified and retain subject-to-object direction; their derived node IDs do not
+pretend to be the private stored relation IDs. They cannot supply citations that
+the website did not publish.
+
+Stored identifiers remain unchanged literals. The caller supplies an explicit
+HTTPS base; entity IRIs append `id/` and percent-encode the complete original ID.
+Nested objects use deterministic hashes under `node/`. A public reference without
+a description is marked `Reference` with its expected model and no private label.
+This does not establish identity, resolve names or mint an ARK. No `owl:sameAs`
+edges are inferred. The lasting public namespace is still an owner decision.
+
+Validation combines enabled JSON Schema format checking, generated closed SHACL,
+strict RDF-list structure checks and checks of the derived evidence/type/role
+edges. Unsupported formats fail. Source and generated artifact hashes are checked
+before export; generated profile fields are recomputed from their sources.
+SHACL verifies this project's bounded export profile. Private-object conditions,
+archive joins, evidence eligibility and publication remain with the authoritative
+Zod/Python gates and the existing public-assets builder. This is neither EHRI's
+ingestion SHACL nor an assertion of RiC-O conformance or EHRI acceptance.
+
+`bin/verify standards` checks mappings against the existing EHRI 0.2.0 / RiC-O 1.1
+pins and requires a declaration and reason for each new local export term.
+`bin/verify linkml` regenerates these files byte for byte and runs synthetic faults
+for values, formats, fixed values, tuple order/bounds, list cycles, references,
+reification, omitted/unknown fields, stale inputs and reproducibility. It installs
+pySHACL from the same hashed lock; the website gains no RDF dependency. Historical
+examples and export diagnostics belong only in private pruzhany-steps.

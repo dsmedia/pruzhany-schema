@@ -1,3 +1,6 @@
 # The one direct requirement of the linkml step. Compile it into requirements.lock
 # with the command named at the top of that file; never edit the lock by hand.
 linkml==1.12.1
+
+# Validate the generated project export profile, not EHRI ingestion shapes.
+pyshacl==0.30.1

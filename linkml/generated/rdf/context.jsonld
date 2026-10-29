@@ -1,0 +1,434 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "Attribution": {
+      "@context": {
+        "by": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Attribution_by"
+        },
+        "on": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Attribution_on"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_Attribution"
+    },
+    "Citation": {
+      "@context": {
+        "accessed": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_accessed"
+        },
+        "edition_date": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_edition_date"
+        },
+        "page": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_page"
+        },
+        "quote": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_quote"
+        },
+        "record_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_record_id"
+        },
+        "scan": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_scan"
+        },
+        "source_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_source_id",
+          "@type": "@id"
+        },
+        "time": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_time"
+        },
+        "unit_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_unit_id",
+          "@type": "@id"
+        },
+        "url": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation_url"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_Citation"
+    },
+    "LifeEventDate": {
+      "@context": {
+        "printed": {
+          "@id": "https://www.ica.org/standards/RiC/ontology#expressedDate"
+        },
+        "printed_calendar": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_LifeEventDate_printed_calendar"
+        },
+        "qualifier": {
+          "@id": "https://www.ica.org/standards/RiC/ontology#dateQualifier"
+        },
+        "record_fact_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_LifeEventDate_record_fact_id",
+          "@type": "@id"
+        },
+        "reported_in": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_LifeEventDate_reported_in"
+        },
+        "start": {
+          "@id": "https://www.ica.org/standards/RiC/ontology#normalizedDateValue"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_LifeEventDate"
+    },
+    "LifeEventMainPerson": {
+      "@context": {
+        "part": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_LifeEventMainPerson_part"
+        },
+        "person_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_LifeEventMainPerson_person_id",
+          "@type": "@id"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_LifeEventMainPerson"
+    },
+    "PlaceIdentifier": {
+      "@context": {
+        "accessed": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_accessed"
+        },
+        "source_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_source_id",
+          "@type": "@id"
+        },
+        "url": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_url"
+        },
+        "value": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_value"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier"
+    },
+    "PrintedAddress": {
+      "@context": {
+        "bbox": {
+          "@container": "@list",
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_PrintedAddress_bbox"
+        },
+        "image_uri": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_PrintedAddress_image_uri"
+        },
+        "text": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_PrintedAddress_text"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_PrintedAddress"
+    },
+    "Reference": {
+      "@context": {
+        "target_model": "https://pruzhany.org/ns/sourced-entities#export_target_model"
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_Reference"
+    },
+    "Review": {
+      "@context": {
+        "by": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Review_by"
+        },
+        "on": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Review_on"
+        },
+        "state": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Review_state"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_Review"
+    },
+    "SharedEvent": {
+      "@context": {
+        "dates": {
+          "@container": "@list",
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_dates"
+        },
+        "event_type": {
+          "@id": "https://www.ica.org/standards/RiC/ontology#hasEventType",
+          "@type": "@id"
+        },
+        "evidence_basis": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_evidence_basis"
+        },
+        "id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_id"
+        },
+        "location_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_location_id",
+          "@type": "@id"
+        },
+        "main_people": {
+          "@container": "@list",
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_main_people"
+        },
+        "name": {
+          "@id": "http://www.w3.org/2000/01/rdf-schema#label"
+        },
+        "proposed_type": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_proposed_type"
+        },
+        "role_baby": {
+          "@container": "@set",
+          "@id": "https://pruzhany.org/ns/sourced-entities#part_baby",
+          "@type": "@id"
+        },
+        "role_boy": {
+          "@container": "@set",
+          "@id": "https://pruzhany.org/ns/sourced-entities#part_boy",
+          "@type": "@id"
+        },
+        "role_bride": {
+          "@container": "@set",
+          "@id": "https://pruzhany.org/ns/sourced-entities#part_bride",
+          "@type": "@id"
+        },
+        "role_deceased": {
+          "@container": "@set",
+          "@id": "https://pruzhany.org/ns/sourced-entities#part_deceased",
+          "@type": "@id"
+        },
+        "role_groom": {
+          "@container": "@set",
+          "@id": "https://pruzhany.org/ns/sourced-entities#part_groom",
+          "@type": "@id"
+        },
+        "role_parent": {
+          "@container": "@set",
+          "@id": "https://pruzhany.org/ns/sourced-entities#part_parent",
+          "@type": "@id"
+        },
+        "role_remembered": {
+          "@container": "@set",
+          "@id": "https://pruzhany.org/ns/sourced-entities#part_remembered",
+          "@type": "@id"
+        },
+        "type": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_type"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent"
+    },
+    "SharedFact": {
+      "@context": {
+        "assertion_object": {
+          "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#object"
+        },
+        "assertion_predicate": {
+          "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate",
+          "@type": "@id"
+        },
+        "attribution": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_attribution"
+        },
+        "citations": {
+          "@container": "@list",
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_citations"
+        },
+        "date": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_date"
+        },
+        "event_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_event_id",
+          "@type": "@id"
+        },
+        "evidence_confidence": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_evidence_confidence"
+        },
+        "evidence_sources": {
+          "@container": "@set",
+          "@id": "https://www.ica.org/standards/RiC/ontology#isEvidencedBy",
+          "@type": "@id"
+        },
+        "holocaust_related": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_holocaust_related"
+        },
+        "id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_id"
+        },
+        "identity_confidence": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_identity_confidence"
+        },
+        "organization_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_organization_id",
+          "@type": "@id"
+        },
+        "place_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_place_id",
+          "@type": "@id"
+        },
+        "proposed_type": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_proposed_type"
+        },
+        "qualifiers": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_qualifiers"
+        },
+        "related_name": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_related_name"
+        },
+        "related_person_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_related_person_id",
+          "@type": "@id"
+        },
+        "relationship_type": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_relationship_type"
+        },
+        "review": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_review"
+        },
+        "status": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_status"
+        },
+        "subject_id": {
+          "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject",
+          "@type": "@id"
+        },
+        "type": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_type"
+        },
+        "value": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_value"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedFact"
+    },
+    "SharedOrganization": {
+      "@context": {
+        "id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedOrganization_id"
+        },
+        "name": {
+          "@id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedOrganization"
+    },
+    "SharedPerson": {
+      "@context": {
+        "gender": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPerson_gender"
+        },
+        "id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPerson_id"
+        },
+        "name": {
+          "@id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPerson"
+    },
+    "SharedPlace": {
+      "@context": {
+        "coordinates": {
+          "@container": "@list",
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_coordinates"
+        },
+        "id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_id"
+        },
+        "identifiers": {
+          "@container": "@list",
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_identifiers"
+        },
+        "name": {
+          "@id": "http://www.w3.org/2000/01/rdf-schema#label"
+        },
+        "parent_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_parent_id",
+          "@type": "@id"
+        },
+        "type": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_type"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace"
+    },
+    "Source": {
+      "@context": {
+        "author": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_author"
+        },
+        "editor": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_editor"
+        },
+        "host": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_host"
+        },
+        "id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_id"
+        },
+        "kind": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_kind"
+        },
+        "published": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_published"
+        },
+        "repository": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_repository"
+        },
+        "title": {
+          "@id": "http://www.w3.org/2000/01/rdf-schema#label"
+        },
+        "url_pattern": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_url_pattern"
+        },
+        "work_id": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_Source_work_id"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_Source"
+    },
+    "SourcedDate": {
+      "@context": {
+        "end": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate_end"
+        },
+        "inferred": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate_inferred"
+        },
+        "precision": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate_precision"
+        },
+        "printed": {
+          "@id": "https://www.ica.org/standards/RiC/ontology#expressedDate"
+        },
+        "printed_calendar": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate_printed_calendar"
+        },
+        "start": {
+          "@id": "https://www.ica.org/standards/RiC/ontology#normalizedDateValue"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate"
+    },
+    "SourcedRelation": {
+      "@context": {
+        "assertion_predicate": {
+          "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate",
+          "@type": "@id"
+        },
+        "related_person_id": {
+          "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#object",
+          "@type": "@id"
+        },
+        "relationship_type": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SourcedRelation_relationship_type"
+        },
+        "review": {
+          "@id": "https://pruzhany.org/ns/sourced-entities#export_SourcedRelation_review"
+        },
+        "subject_id": {
+          "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject",
+          "@type": "@id"
+        }
+      },
+      "@id": "https://pruzhany.org/ns/sourced-entities#export_SourcedRelation"
+    },
+    "ehri": "http://lod.ehri-project-test.eu/ontology#",
+    "pc": "https://pruzhany.org/ns/sourced-entities#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "rico": "https://www.ica.org/standards/RiC/ontology#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  }
+}
