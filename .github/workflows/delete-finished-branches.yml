@@ -1,0 +1,59 @@
+# One time: delete the 12 finished branches listed below, then remove this file.
+# The owner's word of 29 October 2026: "You have permission to remove finished branches",
+# and "Ok" to a button pressed once. A branch is deleted only if its tip is still the commit
+# listed and no open pull request uses it; any other is kept and named in the run's log.
+# Listed by pruzhany-steps .scratch/conception/research/finished-branches.md: merged into the
+# default branch, or the head of a merged or closed pull request at that same commit (a closed
+# pull request keeps its commits under refs/pull/<n>/head, so nothing is lost).
+name: Delete finished branches (one time)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: read
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Delete each listed branch that has not moved
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REMOTE: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          set -euo pipefail
+          open=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 500 \
+            --json headRefName,baseRefName --jq '.[] | .headRefName, .baseRefName')
+          deleted=0
+          kept=0
+          while read -r branch sha; do
+            [ -n "$branch" ] || continue
+            tip=$(git ls-remote "$REMOTE" "refs/heads/$branch" | cut -f1)
+            if [ -z "$tip" ]; then
+              echo "already gone: $branch"
+            elif [ "$tip" != "$sha" ]; then
+              echo "kept $branch: its tip moved to $tip"
+              kept=$((kept + 1))
+            elif grep -qxF "$branch" <<<"$open"; then
+              echo "kept $branch: an open pull request uses it"
+              kept=$((kept + 1))
+            else
+              gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/$branch"
+              echo "deleted $branch"
+              deleted=$((deleted + 1))
+            fi
+          done <<'LIST'
+          ccr-2995c063-ik7aen 6fb28552ff22086e765d3ddb06d7ac4fdf48aec9
+          ccr-3ab4d8e2-kzeep6 c7a2356eafad5669dd2ef12c78549cb3579b6528
+          ccr-60d71cb9-cag2pl 3ee5b6a01bc2ffb5f06bdf1958242ab87d2a964f
+          ccr-87f05bd4-47ulz3 e0a7a4dbe1c5ef08a19322dca611b9efc6a9f65b
+          ccr-87f05bd4-47ulz3-deaths 62697aa91b012a5b3484a545edd861d9c4208e45
+          ccr-a02e9f36-9gezn4 c0ac48848166a2c5665e8339276a3ac64c173851
+          ccr-be20bd94-lm0iae a9c770fe633b54067ea17e48511dd88c6ba88a56
+          chore/ignore-claude-worktrees 3cb7ec8aae1ab867cc2165a189b2d59095a41694
+          ci/verify-entry 93ac881a0ba812c59367aeb57d58973885c32dcc
+          claude/setup-matt-pocock-skills-i4yxh3 69ed7fca5835fb66717ab6f75c5d06138083eeed
+          feat/relationship-related-fate d095b7648dbc2bafa2f3efd687a80b44fe6daa2b
+          pilot/issue-14-sourced-entities 4a2c22c72b44c58ad53933374bd7323a296a536d
+          LIST
+          echo "Deleted $deleted branches; kept $kept." | tee -a "$GITHUB_STEP_SUMMARY"
