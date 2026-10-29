@@ -1,0 +1,5 @@
+# pruzhany_physical 
+
+The physical layer is a page picture and its ordered regions, paragraphs, lines and words, with boxes in that picture's pixels. This module describes every field in Impresso's page schema, including deprecated fields; it adds no stored field. The semantic content items remain separate. Computed identifiers name positions in the last written segmentation: region <page id>-r<RRR>, where RRR is its 1-based place in r; line <region id>-l<LLL>, where LLL counts lines across all the region's paragraphs in order; word <line id>-w<WWW>, where WWW is its 1-based place in t. Each suffix is three zero-padded digits, from 001 to 999; an identifier producer must refuse any count above 999. These ids are computed, never stored in the Impresso page file. Identical segmentation gives identical ids; changed segmentation may put another word at the same id. Identity lifecycle work (record-book-two ticket 05) must handle matching, tombstones and redirects across such changes. The 999 limit is an identifier-production rule, not an Impresso shape constraint.
+
+URI: https://pruzhany.org/ns/physical

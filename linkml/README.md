@@ -24,6 +24,8 @@ rules still validate.** What LinkML cannot say about the shapes is listed in
 | `build-constraints.in`, `build-constraints.txt` | The one build tool, setuptools, by hash. |
 | `checks/documents.yaml` | Each check the twins of the issue documents and the catalog make beyond their shapes (every Zod refinement and Pydantic validator), and how the definition holds it: a LinkML rule, a rule of pruzhany-steps' `record/rules.yaml` (cited or proposed), or the twins alone; `tests/test_documents_checks.py` counts them. |
 | `checks/record.yaml` | The same for the twins of the shared record, the sourced entities and media; `tests/test_record_checks.py` counts them. |
+| `schema/physical.yaml` | Impresso's stored physical page contract, separate from the website's pages: page, region, paragraph, line, word and the shared array-valued box slot, with the computed identifier rule. |
+| `external_schema.py`, `generated/external/physical/` | Explicit-null JSON Schema adapter and the physical contract's own class inventory and learning index. The external contract is checked against Impresso rather than the site's Zod/Pydantic twins. |
 | `tests/` | The canaries (`canary_*.py`), the tests (`test_*.py`) and their planted files (`fixtures/`). |
 
 ## Running it
@@ -140,6 +142,69 @@ pytest-logging 2015.11.4), so installing them builds them, with setuptools; `bui
 pins setuptools by hash. uv's `pip sync` has no switch that requires a hash for every build tool:
 a build tool these packages took up later, and that is not in that file, would be installed
 without one.
+
+## The physical page contract
+
+`schema/physical.yaml` defines the page file as Impresso writes it, including every
+legacy field. `modules.json` registers its `PhysicalPage` root and names its external
+contract, `impresso-page`. Generation writes `generated/json-schema/physical.schema.json`,
+the usual gen-doc pages, and `generated/external/physical/contract.json` with every owned
+physical class. Its resolved learning index is under that folder's `docs/model-index.json`.
+All physical classes also appear in the combined data dictionary. The site's twin contract,
+Python models and public RDF view keep their own inventory: they do not consume these
+stored files. This is an explicit external contract, not an exception to site field parity.
+The generator refuses an unknown external contract or one without a document root.
+
+Impresso's objects are open (`extra_slots: allowed: true`). Its optional fields generally
+refuse null, except `pOf` and `section_pOf`; the latter permits null members too. The schema
+annotation `json_schema_nulls: explicit` selects `external_schema.py`, which calls the pinned
+native generator with `include_null=False` and implements only the boolean slot annotations
+`nullable` and `nullable_items` through its `after_generate_class_slot` lifecycle hook.
+Unsupported annotation values or shapes fail generation. The native generator still handles
+aliases, requiredness, integer boxes, openness, enums and class conditions. LinkML rules
+express the paired fields; `exactly_one_of` expresses the image keys, and `any_of` the timestamps.
+No generated JSON is maintained by hand. No URI, timestamp format, numeric bound, nonempty
+list or 999-element limit is invented where Impresso imposes none. The positional-id producer
+must enforce 999, across all paragraphs for lines, as the module description specifies.
+
+`test_physical.py` compares both validators on the invented two-region page and mutations
+of every field, absent/null values, extra keys, boxes, nullable section members, all source
+type/medium pairs and all image/timestamp presence combinations. The oracle is the unmodified
+Impresso schema, pinned with its SHA-256, attribution and license in `tests/fixtures/physical/`.
+Both validators use their own declared JSON Schema draft. The test also reads **every**
+`editions/*/*-pNNNN.json` when `$PRUZHANY_STEPS` names a checkout, or `pruzhany-steps/editions`
+exists beside this checkout or any of its parents. An explicit path with missing data fails;
+without any sibling the optional real-data test reports a skip. Real-page diagnostics print
+only ordinal numbers and schema paths, and the success report prints aggregate counts.
+
+Impresso and ALTO correspondences are documented on every class and slot as `impresso` and
+`alto` annotations with source `see_also` links and a read date. The physical box is the shared
+`physical_box` slot (wire alias `c`), an array of exactly four integers; making it an object
+class would change the file. ALTO has no paragraph wrapper, so an export flattens the paragraphs'
+lines in order into a TextBlock. Semantic links, source classifications, conversion flags and
+JSON timestamps have no automatic ALTO equivalent; their annotations say so. These are
+documented export correspondences, not ontology equivalences. No prefix, EHRI/RiC-O version,
+ontology mapping or owner-approved vocabulary value is added; the alignment gate is unchanged.
+
+Pages read **29 October 2026** for this module and its generation settings:
+
+- Impresso, [canonical page schema](https://impresso.github.io/impresso-schemas/json/canonical/page.schema.json),
+  master `329323c` (13 August 2026), compared byte for byte with the steps copy;
+  SHA-256 `b6a6ca37167b30d318eb175a844dc50c80d245f9753ddc279a5e198b47f53b2c`.
+- Library of Congress, [ALTO home and version list](https://www.loc.gov/standards/alto/) and
+  [ALTO 4.4 XSD](https://www.loc.gov/standards/alto/v4/alto-4-4.xsd): PageType, BlockType,
+  TextBlockType/TextLine, StringType, MeasurementUnitType, sourceImageInformationType and
+  processingStepType. Measurements are HPOS, VPOS, WIDTH, HEIGHT, in the source picture's pixels
+  when MeasurementUnit is `pixel`. ALTO's floating-point coordinates are broader than Impresso's
+  integer boxes. XSD SHA-256 as downloaded with CRLF:
+  `5564fd29d2dd090d8102b8a0aa081906afd677cd5ecc632312e56f21ea14702b`.
+- LinkML, [JSON Schema generator](https://linkml.io/linkml/generators/json-schema.html),
+  [constraints](https://linkml.io/linkml/schemas/constraints.html),
+  [slots](https://linkml.io/linkml/schemas/slots.html) and
+  [advanced features](https://linkml.io/linkml/schemas/advanced.html).
+  The installed locked LinkML **1.12.1** `generators/jsonschemagen.py` was also read for
+  `include_null`, `extra_slots.allowed`, `handle_class_slot`, `after_generate_class_slot`,
+  and anonymous class expressions; the generated behavior is tested here.
 
 ## House style
 

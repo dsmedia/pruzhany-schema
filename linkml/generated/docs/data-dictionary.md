@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `cb039975038866654737b5729cd33d3975ea4f53b121291dc3b8325a5d82f35b`.
+Definition fingerprint: `126ed2c4f9b5dde490a94b5773abd57d46b69fca0f7e7d536749406c1e19aaa1`.
 
 ## What the Pruzhany issue documents share
 
@@ -1195,6 +1195,88 @@ Meaning: No direct mapping recorded.
 
 Source: `linkml/schema/shared.yaml`.
 
+## The physical page in Impresso's stored format
+
+### PhysicalLine
+
+One line with a box and ordered OCR tokens.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `c` | A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields. | list of integer; minimum items: 4; maximum items: 4 | Yes | No direct mapping recorded |
+| `t` | OCR tokens in line order; Impresso permits an empty list. | list of PhysicalWord | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/physical.yaml`.
+
+### PhysicalPage
+
+One Impresso page file, with its picture metadata and physical text hierarchy. Impresso allows unknown properties at every object level; no such properties are defined here. Exactly one image key and at least one timestamp key must be present.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `cc` | Whether legacy coordinates were converted or rescaled to the IIIF picture frame. | boolean | No | No direct mapping recorded |
+| `cdt` | Legacy JSON creation timestamp; Impresso validates a string without a date format. | string | No | No direct mapping recorded |
+| `fh` | Facsimile height in pixels; present together with fw, with no bound in Impresso. | integer | No | No direct mapping recorded |
+| `fw` | Facsimile width in pixels; present together with fh, with no bound in Impresso. | integer | No | No direct mapping recorded |
+| `id` | Impresso's canonical page identifier; for example FABLE-1900-01-01-a-p0001. | string; pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$ | Yes | No direct mapping recorded |
+| `iiif` | Deprecated IIIF manifest URI, retained for compatibility; Impresso validates plain text, not URI syntax. Exactly one of this and iiif_img_base_uri is present. | string | No | No direct mapping recorded |
+| `iiif_img_base_uri` | Base IIIF image URI without a suffix; Impresso validates plain text, not URI syntax. | string | No | No direct mapping recorded |
+| `r` | Regions in page order; an empty list is accepted by Impresso. | list of PhysicalRegion | Yes | No direct mapping recorded |
+| `sm` | Original source medium; present together with st. | string; one of: ['print', 'typescript'] | No | No direct mapping recorded |
+| `st` | Media source type; present together with sm. Newspaper requires print; radio_broadcast requires typescript. | string; one of: ['newspaper', 'radio_broadcast', 'radio_magazine', 'radio_schedule', 'monograph', 'encyclopedia'] | No | No direct mapping recorded |
+| `ts` | JSON creation timestamp, intended as YYYY-MM-DDTHH:MM:SSZ; Impresso imposes no format constraint. At least one of ts and cdt is present; both are allowed. | string | No | No direct mapping recorded |
+
+Source: `linkml/schema/physical.yaml`.
+
+### PhysicalParagraph
+
+One ordered group of lines in a region, optionally with its own box; no computed id is assigned to paragraphs by this contract.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `c` | A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields. | list of integer; minimum items: 4; maximum items: 4 | No | No direct mapping recorded |
+| `l` | Lines in paragraph order, including an empty list if stored that way. | list of PhysicalLine | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/physical.yaml`.
+
+### PhysicalRegion
+
+One region of the page, with a box, ordered paragraphs and optional semantic links.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `c` | A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields. | list of integer; minimum items: 4; maximum items: 4 | Yes | No direct mapping recorded |
+| `p` | Paragraphs in region order; Impresso permits zero, one or several. | list of PhysicalParagraph | Yes | No direct mapping recorded |
+| `pOf` | Canonical content-item id, absent or null when no item is assigned. | string | No | No direct mapping recorded |
+| `section_pOf` | Content-item ids grouped by this section-heading region. The list may be absent or null; Impresso also permits null members and empty lists. | list of string | No | No direct mapping recorded |
+
+Source: `linkml/schema/physical.yaml`.
+
+### PhysicalWord
+
+One OCR token (a word or word part), with its own box and surface text.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `c` | A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields. | list of integer; minimum items: 4; maximum items: 4 | Yes | No direct mapping recorded |
+| `gn` | Glue next: true means no following whitespace. When absent readers assume false; the schema inserts no default. | boolean | No | No direct mapping recorded |
+| `hy` | Whether this token is the first part of a hyphenated word, including the hyphen. Readers assume false when absent; the schema inserts no default. | boolean | No | No direct mapping recorded |
+| `nf` | Normalized dehyphenated form on the latter part or parts of a hyphenated word. | string | No | No direct mapping recorded |
+| `s` | Style id in the separate issue file's s list; no style fields are added here. | integer | No | No direct mapping recorded |
+| `tx` | Token surface text, including empty text if stored that way. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/physical.yaml`.
+
 ## Types and vocabularies
 
 ### HostName
@@ -1890,7 +1972,7 @@ These are requirements recorded by the project, not extra fields accepted by the
 
 ### Stable line and word identifiers
 
-Lines and word boxes already exist in rebuilt Impresso editions. Their stable identifiers and redirect or tombstone behavior remain to be defined.
+Lines and word boxes already exist in rebuilt Impresso editions. The physical module now defines computed positional region, line and word identifiers for the last written segmentation. Matching across segmentation changes and redirect or tombstone behavior remain the identity lifecycle's work (record-book-two ticket 05).
 
 Source: `steps:docs/record/end-state.md:204` — “ids exist for pages, blocks, pieces and people, but not for lines and words”.
 

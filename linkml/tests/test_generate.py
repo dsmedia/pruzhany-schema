@@ -109,6 +109,18 @@ class Generate(unittest.TestCase):
         with self.assertRaises(SystemExit):
             generate.modules(self.root)
 
+    def test_unknown_external_contract_and_external_contract_without_root_are_refused(self):
+        manifest = json.loads((self.root / 'modules.json').read_text(encoding='utf-8'))
+        entry = manifest['modules'][0]
+        entry['external_contract'] = 'unreviewed'
+        (self.root / 'modules.json').write_text(json.dumps(manifest), encoding='utf-8')
+        with self.assertRaises(ValueError):
+            generate.modules(self.root)
+        entry['external_contract'], entry['top_class'] = 'impresso-page', None
+        (self.root / 'modules.json').write_text(json.dumps(manifest), encoding='utf-8')
+        with self.assertRaises(ValueError):
+            generate.modules(self.root)
+
     def test_planned_requirements_change_docs_but_never_the_document_schema(self):
         target = self.made / 'json-schema' / 'boxes.schema.json'
         before = target.read_bytes()

@@ -1,0 +1,474 @@
+{
+  "contract_sha256": "a87011252f9d70d2b991a93da2a9c7b202957a313a571e3261caa14b1b28b5f9",
+  "inputs": {
+    "linkml/schema/content_items.yaml": "8200c92b412a4695becfafb8dafcdcdeda2114291d334efd5fa4c2ca82ea4b2c",
+    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
+    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
+    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
+    "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
+    "linkml/schema/shared_record.yaml": "cdc402c9a3dd90bfed5cda74c2a8cc4017b91ee4eb6913b58606b2215b62e029",
+    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
+    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
+    "linkml/schema/vocabulary.yaml": "1f6e7e08897da6811177a71ca4a70e3b9cd824cc1246a52f45de80b0ed796767"
+  },
+  "models": {
+    "PhysicalLine": {
+      "description": "One line with a box and ordered OCR tokens.",
+      "fields": [
+        {
+          "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "c",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 4,
+            "minItems": 4,
+            "type": "array"
+          }
+        },
+        {
+          "description": "OCR tokens in line order; Impresso permits an empty list.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "t",
+          "range": "PhysicalWord",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "description": "OCR tokens in line order; Impresso permits an empty list.",
+            "items": {
+              "$ref": "#/$defs/PhysicalWord"
+            },
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/physical.yaml",
+      "yaml": "  PhysicalLine:\n    extra_slots:\n      allowed: true\n    description: >-\n      One line with a box and ordered OCR tokens.\n    annotations:\n      impresso: >-\n        page.schema.json r[].p[].l[].\n      alto: >-\n        ALTO 4.4 TextLine inside TextBlock.\n      computed_id: >-\n        <region id>-l<LLL>; LLL is the 1-based line position across all paragraphs of\n        the region in order, zero-padded to three digits. See the module description.\n    slots:\n      - physical_box\n    slot_usage:\n      physical_box:\n        required: true\n    attributes:\n      tokens:\n        alias: t\n        range: PhysicalWord\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          OCR tokens in line order; Impresso permits an empty list.\n        annotations:\n          impresso: >-\n            page.schema.json r[].p[].l[].t.\n          alto: >-\n            TextLine/String, with SP or HYP as appropriate for spacing and hyphenation.\n"
+    },
+    "PhysicalPage": {
+      "description": "One Impresso page file, with its picture metadata and physical text hierarchy. Impresso allows unknown properties at every object level; no such properties are defined here. Exactly one image key and at least one timestamp key must be present.",
+      "fields": [
+        {
+          "description": "Whether legacy coordinates were converted or rescaled to the IIIF picture frame.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "cc",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Whether legacy coordinates were converted or rescaled to the IIIF picture frame.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Legacy JSON creation timestamp; Impresso validates a string without a date format.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "cdt",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Legacy JSON creation timestamp; Impresso validates a string without a date format.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Facsimile height in pixels; present together with fw, with no bound in Impresso.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "fh",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Facsimile height in pixels; present together with fw, with no bound in Impresso.",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Facsimile width in pixels; present together with fh, with no bound in Impresso.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "fw",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Facsimile width in pixels; present together with fh, with no bound in Impresso.",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Impresso's canonical page identifier; for example FABLE-1900-01-01-a-p0001.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Impresso's canonical page identifier; for example FABLE-1900-01-01-a-p0001.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-p[0-9]{4}$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Deprecated IIIF manifest URI, retained for compatibility; Impresso validates plain text, not URI syntax. Exactly one of this and iiif_img_base_uri is present.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "iiif",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Deprecated IIIF manifest URI, retained for compatibility; Impresso validates plain text, not URI syntax. Exactly one of this and iiif_img_base_uri is present.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Base IIIF image URI without a suffix; Impresso validates plain text, not URI syntax.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "iiif_img_base_uri",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Base IIIF image URI without a suffix; Impresso validates plain text, not URI syntax.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Regions in page order; an empty list is accepted by Impresso.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "r",
+          "range": "PhysicalRegion",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "description": "Regions in page order; an empty list is accepted by Impresso.",
+            "items": {
+              "$ref": "#/$defs/PhysicalRegion"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Original source medium; present together with st.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "sm",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Original source medium; present together with st.",
+            "enum": [
+              "print",
+              "typescript"
+            ],
+            "type": "string"
+          }
+        },
+        {
+          "description": "Media source type; present together with sm. Newspaper requires print; radio_broadcast requires typescript.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "st",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Media source type; present together with sm. Newspaper requires print; radio_broadcast requires typescript.",
+            "enum": [
+              "newspaper",
+              "radio_broadcast",
+              "radio_magazine",
+              "radio_schedule",
+              "monograph",
+              "encyclopedia"
+            ],
+            "type": "string"
+          }
+        },
+        {
+          "description": "JSON creation timestamp, intended as YYYY-MM-DDTHH:MM:SSZ; Impresso imposes no format constraint. At least one of ts and cdt is present; both are allowed.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "ts",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "JSON creation timestamp, intended as YYYY-MM-DDTHH:MM:SSZ; Impresso imposes no format constraint. At least one of ts and cdt is present; both are allowed.",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/physical.yaml",
+      "yaml": "  PhysicalPage:\n    tree_root: true\n    extra_slots:\n      allowed: true\n    description: >-\n      One Impresso page file, with its picture metadata and physical text hierarchy.\n      Impresso allows unknown properties at every object level; no such properties are\n      defined here. Exactly one image key and at least one timestamp key must be present.\n    annotations:\n      impresso: >-\n        page.schema.json root, Printed Page.\n      alto: >-\n        ALTO 4.4 Layout/Page (PageType). A full ALTO document also needs Description,\n        MeasurementUnit and PHYSICAL_IMG_NR, which this file does not directly store.\n    attributes:\n      id:\n        required: true\n        pattern: '^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-p[0-9]{4}$'\n        description: >-\n          Impresso's canonical page identifier; for example FABLE-1900-01-01-a-p0001.\n        annotations:\n          impresso: >-\n            page.schema.json id, with its exact pattern.\n          alto: >-\n            Page/@ID after ensuring the ALTO XML ID lexical constraints.\n      iiif:\n        description: >-\n          Deprecated IIIF manifest URI, retained for compatibility; Impresso validates\n          plain text, not URI syntax. Exactly one of this and iiif_img_base_uri is present.\n        annotations:\n          impresso: >-\n            page.schema.json iiif.\n          alto: >-\n            No direct equivalent: a manifest is not sourceImageInformation/fileName.\n      iiif_img_base_uri:\n        description: >-\n          Base IIIF image URI without a suffix; Impresso validates plain text, not URI syntax.\n        annotations:\n          impresso: >-\n            page.schema.json iiif_img_base_uri.\n          alto: >-\n            Description/sourceImageInformation/fileName can identify the source picture;\n            an image-service base URI needs an export policy to select the actual image.\n      fw:\n        range: integer\n        description: >-\n          Facsimile width in pixels; present together with fh, with no bound in Impresso.\n        annotations:\n          impresso: >-\n            page.schema.json fw.\n          alto: >-\n            Page/@WIDTH with MeasurementUnit pixel.\n      fh:\n        range: integer\n        description: >-\n          Facsimile height in pixels; present together with fw, with no bound in Impresso.\n        annotations:\n          impresso: >-\n            page.schema.json fh.\n          alto: >-\n            Page/@HEIGHT with MeasurementUnit pixel.\n      st:\n        equals_string_in:\n          - newspaper\n          - radio_broadcast\n          - radio_magazine\n          - radio_schedule\n          - monograph\n          - encyclopedia\n        description: >-\n          Media source type; present together with sm. Newspaper requires print;\n          radio_broadcast requires typescript.\n        annotations:\n          impresso: >-\n            page.schema.json st, SourceType values.\n          alto: >-\n            No direct ALTO page attribute for this source classification.\n      sm:\n        equals_string_in:\n          - print\n          - typescript\n        description: >-\n          Original source medium; present together with st.\n        annotations:\n          impresso: >-\n            page.schema.json sm.\n          alto: >-\n            No direct equivalent; Page/@PAGECLASS is user-defined, not this enumeration.\n      cc:\n        range: boolean\n        description: >-\n          Whether legacy coordinates were converted or rescaled to the IIIF picture frame.\n        annotations:\n          impresso: >-\n            page.schema.json cc.\n          alto: >-\n            No direct flag; an export must resolve coordinates in its MeasurementUnit\n            and source picture frame before writing HPOS, VPOS, WIDTH and HEIGHT.\n      cdt:\n        description: >-\n          Legacy JSON creation timestamp; Impresso validates a string without a date format.\n        annotations:\n          impresso: >-\n            page.schema.json cdt.\n          alto: >-\n            Processing/processingStep/processingDateTime only if that step created this file;\n            a JSON file timestamp is not necessarily an OCR processing time.\n      ts:\n        description: >-\n          JSON creation timestamp, intended as YYYY-MM-DDTHH:MM:SSZ; Impresso imposes no\n          format constraint. At least one of ts and cdt is present; both are allowed.\n        annotations:\n          impresso: >-\n            page.schema.json ts.\n          alto: >-\n            Processing/processingStep/processingDateTime only for the corresponding creation\n            step, with export-time conversion if needed.\n      regions:\n        alias: r\n        range: PhysicalRegion\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Regions in page order; an empty list is accepted by Impresso.\n        annotations:\n          impresso: >-\n            page.schema.json r.\n          alto: >-\n            Page/PrintSpace/TextBlock in order; this module adds no ALTO ReadingOrder field.\n    exactly_one_of:\n      - slot_conditions:\n          iiif:\n            required: true\n      - slot_conditions:\n          iiif_img_base_uri:\n            required: true\n    any_of:\n      - slot_conditions:\n          ts:\n            required: true\n      - slot_conditions:\n          cdt:\n            required: true\n    rules:\n      - preconditions:\n          slot_conditions:\n            fw:\n              required: true\n        postconditions:\n          slot_conditions:\n            fh:\n              required: true\n      - preconditions:\n          slot_conditions:\n            fh:\n              required: true\n        postconditions:\n          slot_conditions:\n            fw:\n              required: true\n      - preconditions:\n          slot_conditions:\n            st:\n              required: true\n        postconditions:\n          slot_conditions:\n            sm:\n              required: true\n      - preconditions:\n          slot_conditions:\n            sm:\n              required: true\n        postconditions:\n          slot_conditions:\n            st:\n              required: true\n      - preconditions:\n          slot_conditions:\n            st:\n              required: false\n              equals_string: newspaper\n        postconditions:\n          slot_conditions:\n            sm:\n              required: false\n              equals_string: print\n      - preconditions:\n          slot_conditions:\n            st:\n              required: false\n              equals_string: radio_broadcast\n        postconditions:\n          slot_conditions:\n            sm:\n              required: false\n              equals_string: typescript\n"
+    },
+    "PhysicalParagraph": {
+      "description": "One ordered group of lines in a region, optionally with its own box; no computed id is assigned to paragraphs by this contract.",
+      "fields": [
+        {
+          "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "c",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 4,
+            "minItems": 4,
+            "type": "array"
+          }
+        },
+        {
+          "description": "Lines in paragraph order, including an empty list if stored that way.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "l",
+          "range": "PhysicalLine",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "description": "Lines in paragraph order, including an empty list if stored that way.",
+            "items": {
+              "$ref": "#/$defs/PhysicalLine"
+            },
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/physical.yaml",
+      "yaml": "  PhysicalParagraph:\n    extra_slots:\n      allowed: true\n    description: >-\n      One ordered group of lines in a region, optionally with its own box; no computed id\n      is assigned to paragraphs by this contract.\n    annotations:\n      impresso: >-\n        page.schema.json r[].p[].\n      alto: >-\n        ALTO 4.4 has no paragraph wrapper between TextBlock and TextLine; its lines are\n        flattened into their region's TextBlock. A paragraph box has no separate target.\n    slots:\n      - physical_box\n    attributes:\n      lines:\n        alias: l\n        range: PhysicalLine\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Lines in paragraph order, including an empty list if stored that way.\n        annotations:\n          impresso: >-\n            page.schema.json r[].p[].l.\n          alto: >-\n            TextBlock/TextLine in the paragraphs' combined order.\n"
+    },
+    "PhysicalRegion": {
+      "description": "One region of the page, with a box, ordered paragraphs and optional semantic links.",
+      "fields": [
+        {
+          "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "c",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 4,
+            "minItems": 4,
+            "type": "array"
+          }
+        },
+        {
+          "description": "Paragraphs in region order; Impresso permits zero, one or several.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "p",
+          "range": "PhysicalParagraph",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "description": "Paragraphs in region order; Impresso permits zero, one or several.",
+            "items": {
+              "$ref": "#/$defs/PhysicalParagraph"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Canonical content-item id, absent or null when no item is assigned.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "pOf",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Canonical content-item id, absent or null when no item is assigned.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Content-item ids grouped by this section-heading region. The list may be absent or null; Impresso also permits null members and empty lists.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "section_pOf",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Content-item ids grouped by this section-heading region. The list may be absent or null; Impresso also permits null members and empty lists.",
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/physical.yaml",
+      "yaml": "  PhysicalRegion:\n    extra_slots:\n      allowed: true\n    description: >-\n      One region of the page, with a box, ordered paragraphs and optional semantic links.\n    annotations:\n      impresso: >-\n        page.schema.json r[].\n      alto: >-\n        ALTO 4.4 TextBlock (TextBlockType), normally inside PrintSpace.\n      computed_id: >-\n        <page id>-r<RRR>; RRR is the 1-based r position, zero-padded to three digits.\n        See the module description for the 999 limit and segmentation lifecycle.\n    slots:\n      - physical_box\n    slot_usage:\n      physical_box:\n        required: true\n    attributes:\n      paragraphs:\n        alias: p\n        range: PhysicalParagraph\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Paragraphs in region order; Impresso permits zero, one or several.\n        annotations:\n          impresso: >-\n            page.schema.json r[].p.\n          alto: >-\n            No intermediate paragraph element between TextBlock and TextLine; flatten\n            the paragraphs' lines in order when exporting this region as a TextBlock.\n      part_of:\n        alias: pOf\n        description: >-\n          Canonical content-item id, absent or null when no item is assigned.\n        annotations:\n          nullable: true\n          impresso: >-\n            page.schema.json r[].pOf.\n          alto: >-\n            No direct semantic content-item property on TextBlock; linking belongs to\n            a companion logical structure such as METS, outside this module.\n      section_part_of:\n        alias: section_pOf\n        multivalued: true\n        description: >-\n          Content-item ids grouped by this section-heading region. The list may be absent\n          or null; Impresso also permits null members and empty lists.\n        annotations:\n          nullable: true\n          nullable_items: true\n          impresso: >-\n            page.schema.json r[].section_pOf.\n          alto: >-\n            No direct ALTO equivalent for a section's semantic content-item membership.\n"
+    },
+    "PhysicalWord": {
+      "description": "One OCR token (a word or word part), with its own box and surface text.",
+      "fields": [
+        {
+          "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "c",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A box [x, y, width, height] in pixels of this page's picture, with origin at its upper left. Impresso requires exactly four integers, without a nonnegative or positive bound. It is an array, not an object with invented coordinate fields.",
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 4,
+            "minItems": 4,
+            "type": "array"
+          }
+        },
+        {
+          "description": "Glue next: true means no following whitespace. When absent readers assume false; the schema inserts no default.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "gn",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Glue next: true means no following whitespace. When absent readers assume false; the schema inserts no default.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Whether this token is the first part of a hyphenated word, including the hyphen. Readers assume false when absent; the schema inserts no default.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "hy",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Whether this token is the first part of a hyphenated word, including the hyphen. Readers assume false when absent; the schema inserts no default.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Normalized dehyphenated form on the latter part or parts of a hyphenated word.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "nf",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Normalized dehyphenated form on the latter part or parts of a hyphenated word.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Style id in the separate issue file's s list; no style fields are added here.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "s",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Style id in the separate issue file's s list; no style fields are added here.",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Token surface text, including empty text if stored that way.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "tx",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Token surface text, including empty text if stored that way.",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/physical.yaml",
+      "yaml": "  PhysicalWord:\n    extra_slots:\n      allowed: true\n    description: >-\n      One OCR token (a word or word part), with its own box and surface text.\n    annotations:\n      impresso: >-\n        page.schema.json r[].p[].l[].t[].\n      alto: >-\n        ALTO 4.4 String (StringType).\n      computed_id: >-\n        <line id>-w<WWW>; WWW is the 1-based t position, zero-padded to three digits.\n        See the module description for the 999 limit and segmentation lifecycle.\n    slots:\n      - physical_box\n    slot_usage:\n      physical_box:\n        required: true\n    attributes:\n      tx:\n        required: true\n        description: >-\n          Token surface text, including empty text if stored that way.\n        annotations:\n          impresso: >-\n            page.schema.json r[].p[].l[].t[].tx.\n          alto: >-\n            String/@CONTENT.\n      style:\n        alias: s\n        range: integer\n        description: >-\n          Style id in the separate issue file's s list; no style fields are added here.\n        annotations:\n          impresso: >-\n            page.schema.json r[].p[].l[].t[].s; issue.schema.json s.\n          alto: >-\n            String/@STYLEREFS after mapping this numeric issue style id to an ALTO Styles ID.\n      gn:\n        range: boolean\n        description: >-\n          Glue next: true means no following whitespace. When absent readers assume false;\n          the schema inserts no default.\n        annotations:\n          impresso: >-\n            page.schema.json r[].p[].l[].t[].gn.\n          alto: >-\n            Omit the intervening SP when true; no equivalent boolean on String.\n      hy:\n        range: boolean\n        description: >-\n          Whether this token is the first part of a hyphenated word, including the hyphen.\n          Readers assume false when absent; the schema inserts no default.\n        annotations:\n          impresso: >-\n            page.schema.json r[].p[].l[].t[].hy.\n          alto: >-\n            String/@SUBS_TYPE HypPart1; an export must handle a trailing HYP consistently.\n      nf:\n        description: >-\n          Normalized dehyphenated form on the latter part or parts of a hyphenated word.\n        annotations:\n          impresso: >-\n            page.schema.json r[].p[].l[].t[].nf.\n          alto: >-\n            String/@SUBS_CONTENT with SUBS_TYPE HypPart2 for the latter part.\n"
+    }
+  },
+  "types": {},
+  "version": 1
+}
