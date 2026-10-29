@@ -1,0 +1,4835 @@
+{
+  "artifacts_sha256": {
+    "context.jsonld": "a212e549e680de4a71b0601b94fbf5314e640ede8fe06d46a879ade811405ade",
+    "coverage.md": "567a76c4bd64acb679b7b42094b5b87d3b81e9501616d7bdf3cae4853dff0e66",
+    "ontology.ttl": "0ca0ff1d420a940e1dd57e217ffda9ff980a835b15b84c68492eb3102fff3975",
+    "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
+  },
+  "contract_sha256": "9a725ddd88ae2f447b58ffc8b7ce9f0b5dc831b563480c4763098c65afc0fc70",
+  "index_sha256": "1ed7920b021bd63ee5506ab9fb40d82a9c244a8d2a6bf91d161ca2083d756429",
+  "models": {
+    "Attribution": {
+      "description": "Who made or allowed something, on what day, with an optional note.",
+      "fields": {
+        "by": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "Who made it or allowed it: a person, a session or a program.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Attribution_by",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "on": {
+          "constraint": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "description": "The day it was made or allowed.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Attribution_on",
+          "required": true,
+          "source_range": "IsoDay",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_Attribution",
+      "omitted": {
+        "note": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of Attribution; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/sourced_entities.yaml",
+      "types": []
+    },
+    "Citation": {
+      "description": "Where in one source a statement's evidence lies: the source, and the record, page, scan, time, piece of the paper, address or pointer within it, with the quoted words.",
+      "fields": {
+        "accessed": {
+          "constraint": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The day a person read the record.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_accessed",
+          "required": false,
+          "source_range": "IsoDay",
+          "target": null
+        },
+        "edition_date": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The day of the paper's issue cited, written YYYY-MM-DD.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_edition_date",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "page": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The page, folio or entry cited.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_page",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "quote": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The record's own words, exactly.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_quote",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "record_id": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The holder's own number for the record, such as a Yad Vashem record number.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasOrHadIdentifier"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_record_id",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "scan": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The scan or image cited.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_scan",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "source_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The record the statement rests on (the original where it is known), by its id in the record's sources.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:isEvidencedBy"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_source_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": "Source"
+        },
+        "time": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The time in a recording.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_time",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "unit_id": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The piece of the paper cited, by its content item id.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_unit_id",
+          "required": false,
+          "source_range": "string",
+          "target": "ContentItem"
+        },
+        "url": {
+          "constraint": {
+            "format": "uri",
+            "pattern": "^https://[^\\s/?#]+[^\\s]*$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The record's web address.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Citation_url",
+          "required": false,
+          "source_range": "HttpsUri",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_Citation",
+      "omitted": {
+        "locator": "Absent from this final public view; never recover it from private storage.",
+        "note": "Absent from this final public view; never recover it from private storage.",
+        "public_note": "Absent from this final public view; never recover it from private storage.",
+        "quote_language": "Absent from this final public view; never recover it from private storage.",
+        "record_type": "Absent from this final public view; never recover it from private storage.",
+        "reference_code": "Absent from this final public view; never recover it from private storage.",
+        "via": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of Citation; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/sourced_entities.yaml",
+      "types": []
+    },
+    "LifeEventDate": {
+      "description": "One date of a life event: the words printed with their calendar, or, where no date is printed, the day of the first issue that reported it, or the preferred record statement's date for a death known from records alone.",
+      "fields": {
+        "printed": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The date's words as printed.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:expressedDate"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://www.ica.org/standards/RiC/ontology#expressedDate",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "printed_calendar": {
+          "constraint": {
+            "enum": [
+              "gregorian",
+              "hebrew"
+            ],
+            "type": "string"
+          },
+          "description": "The calendar the date was printed in.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "rico:expressedDate"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_LifeEventDate_printed_calendar",
+          "required": false,
+          "source_range": "PrintedCalendar",
+          "target": null
+        },
+        "qualifier": {
+          "constraint": {
+            "const": "reported_in",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "reported_in: the day is the first issue's that reported the event, not the day it happened.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:dateQualifier"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://www.ica.org/standards/RiC/ontology#dateQualifier",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "record_fact_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "For a death known from records: the accepted death fact whose date and place describe it, by the fact's id.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_event_record_date"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_LifeEventDate_record_fact_id",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": "SharedFact"
+        },
+        "reported_in": {
+          "constraint": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The day of the first issue that reported the event, where no date is printed.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_LifeEventDate_reported_in",
+          "required": false,
+          "source_range": "IsoDay",
+          "target": null
+        },
+        "start": {
+          "constraint": {
+            "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The printed date normalized, for a date printed in the Gregorian calendar only.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:normalizedDateValue"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://www.ica.org/standards/RiC/ontology#normalizedDateValue",
+          "required": false,
+          "source_range": "IsoYearMonthOrDay",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_LifeEventDate",
+      "omitted": {},
+      "optional": {},
+      "reason": "A public view of LifeEventDate; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/shared_record.yaml",
+      "types": [
+        "https://www.ica.org/standards/RiC/ontology#Date"
+      ]
+    },
+    "LifeEventMainPerson": {
+      "description": "One main person of a life event and their part in it (the baby, a parent, the bride, the groom, the boy, the one who died, the one remembered); each part means a declared local subproperty of rico:affectsOrAffected or rico:hasOrHadParticipant (EventParts).",
+      "fields": {
+        "part": {
+          "constraint": {
+            "enum": [
+              "baby",
+              "parent",
+              "bride",
+              "groom",
+              "boy",
+              "deceased",
+              "remembered"
+            ],
+            "type": "string"
+          },
+          "description": "The person's part in the event.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_LifeEventMainPerson_part",
+          "required": true,
+          "source_range": "EventParts",
+          "target": null
+        },
+        "person_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The person, by the person's id in the record.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_LifeEventMainPerson_person_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": "SharedPerson"
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_LifeEventMainPerson",
+      "omitted": {},
+      "optional": {},
+      "reason": "A public view of LifeEventMainPerson; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/shared_record.yaml",
+      "types": []
+    },
+    "PlaceIdentifier": {
+      "description": "One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names.",
+      "fields": {
+        "accessed": {
+          "constraint": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "description": "The day it was read on its authority's own pages.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "pc:site_identifier_reading"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_accessed",
+          "required": true,
+          "source_range": "IsoDay",
+          "target": null
+        },
+        "source_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The authority the identifier comes from, a registered source, by its id.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasIdentifierType"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_source_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": "Source"
+        },
+        "url": {
+          "constraint": {
+            "format": "uri",
+            "pattern": "^https://[^\\s/?#]+[^\\s]*$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The identifier's page on the authority's host.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_url",
+          "required": false,
+          "source_range": "HttpsUri",
+          "target": null
+        },
+        "value": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The identifier as its authority writes it.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:textualValue"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_value",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier",
+      "omitted": {
+        "attribution": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of PlaceIdentifier; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/shared_record.yaml",
+      "types": [
+        "https://www.ica.org/standards/RiC/ontology#Identifier"
+      ]
+    },
+    "PrintedAddress": {
+      "description": "Where some printed words stand: the page picture, a box on it in the picture's own pixels, and the words read in that box.",
+      "fields": {
+        "bbox": {
+          "constraint": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "description": "The box on the picture: left, top, width and height, in the picture's pixels.",
+          "json": false,
+          "list": true,
+          "mappings": [],
+          "maximum_items": 4,
+          "minimum_items": 4,
+          "nested": null,
+          "positions": [
+            {
+              "minimum": 0
+            },
+            {
+              "minimum": 0
+            },
+            {
+              "exclusiveMinimum": 0
+            },
+            {
+              "exclusiveMinimum": 0
+            }
+          ],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_PrintedAddress_bbox",
+          "required": true,
+          "source_range": "NonNegativeNumber",
+          "target": null
+        },
+        "image_uri": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The page picture the box is on, by its name or address.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_PrintedAddress_image_uri",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "text": {
+          "constraint": {
+            "type": "string"
+          },
+          "description": "The words read in the box, exactly as read; empty for a patch with no readable line.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_PrintedAddress_text",
+          "required": true,
+          "source_range": "string",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_PrintedAddress",
+      "omitted": {},
+      "optional": {},
+      "reason": "A public view of PrintedAddress; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/site_common.yaml",
+      "types": []
+    },
+    "Review": {
+      "description": "Whether a person has reviewed a statement, who and on what day.",
+      "fields": {
+        "by": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Who reviewed it.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Review_by",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "on": {
+          "constraint": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The day it was reviewed.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Review_on",
+          "required": false,
+          "source_range": "IsoDay",
+          "target": null
+        },
+        "state": {
+          "constraint": {
+            "enum": [
+              "pending",
+              "approved"
+            ],
+            "type": "string"
+          },
+          "description": "Pending, or approved by a reviewer.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Review_state",
+          "required": true,
+          "source_range": "ReviewStates",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_Review",
+      "omitted": {},
+      "optional": {},
+      "reason": "A public view of Review; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/sourced_entities.yaml",
+      "types": []
+    },
+    "SharedEvent": {
+      "description": "One life event, once for each happening across every issue (a birth, a wedding, a death, a memorial and so on): its kind, its main people and their parts, its dates and its place.",
+      "fields": {
+        "dates": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "The event's dates: as printed (in either calendar), or the first report's day, or the preferred record statement's.",
+          "json": false,
+          "list": true,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 1,
+          "nested": "LifeEventDate",
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_dates",
+          "required": true,
+          "source_range": "LifeEventDate",
+          "target": null
+        },
+        "evidence_basis": {
+          "constraint": {
+            "const": "records_only",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "records_only: a death known from records alone, which no issue prints.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_event_evidence_basis"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_evidence_basis",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The event's id, which each issue's life events name.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "location_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Where the event happened, by the place's id.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_location_id",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": "SharedPlace"
+        },
+        "main_people": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "The people the event is about, each with their part; empty while unresolved.",
+          "json": false,
+          "list": true,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasOrHadParticipant"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": "LifeEventMainPerson",
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_main_people",
+          "required": true,
+          "source_range": "LifeEventMainPerson",
+          "target": null
+        },
+        "name": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The event's name.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "http://www.w3.org/2000/01/rdf-schema#label",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "proposed_type": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "For an event of kind other: the kind proposed for it, awaiting the owner's approval.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_proposed_type",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "type": {
+          "constraint": {
+            "enum": [
+              "engagement",
+              "wedding",
+              "birth",
+              "death",
+              "bar_mitzvah",
+              "celebration",
+              "community_event",
+              "holocaust_event",
+              "other",
+              "memorial"
+            ],
+            "type": "string"
+          },
+          "description": "The one kind of the event.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasEventType"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent_type",
+          "required": true,
+          "source_range": "EventTypes",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_SharedEvent",
+      "omitted": {
+        "description": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of SharedEvent; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/shared_record.yaml",
+      "types": [
+        "https://www.ica.org/standards/RiC/ontology#Event"
+      ]
+    },
+    "SharedFact": {
+      "description": "One source's statement as the shared record keeps it: a fact with its subject, its form and its evidence located on the printed page where the site writer found it.",
+      "fields": {
+        "attribution": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "Who recorded the statement, and on what day.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": "Attribution",
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_attribution",
+          "required": true,
+          "source_range": "Attribution",
+          "target": null
+        },
+        "citations": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "The evidence: where in which sources the statement is found.",
+          "json": false,
+          "list": true,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 1,
+          "nested": "Citation",
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_citations",
+          "required": true,
+          "source_range": "SiteCitation",
+          "target": null
+        },
+        "date": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "When, as the source gives it.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": "SourcedDate",
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_date",
+          "required": false,
+          "source_range": "SourcedDate",
+          "target": null
+        },
+        "event_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The life event the statement concerns, by its id in the record.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_event_id",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": "SharedEvent"
+        },
+        "evidence_confidence": {
+          "constraint": {
+            "enum": [
+              "confirmed",
+              "probable",
+              "possible"
+            ],
+            "type": "string"
+          },
+          "description": "How sure the evidence makes the statement.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:relationCertainty"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_evidence_confidence",
+          "required": true,
+          "source_range": "Confidence",
+          "target": null
+        },
+        "holocaust_related": {
+          "constraint": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "description": "True when the statement concerns the Holocaust.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_holocaust_related",
+          "required": false,
+          "source_range": "boolean",
+          "target": null
+        },
+        "id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The fact's id in the record.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "identity_confidence": {
+          "constraint": {
+            "enum": [
+              "confirmed",
+              "probable",
+              "possible"
+            ],
+            "type": "string"
+          },
+          "description": "How sure it is that the statement is about this person.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_identity_confidence",
+          "required": true,
+          "source_range": "Confidence",
+          "target": null
+        },
+        "organization_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The organisation the statement concerns, by its id in the record.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_organization_id",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": "SharedOrganization"
+        },
+        "place_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Where, by the place's id in the record.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_place_id",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": "SharedPlace"
+        },
+        "proposed_type": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "For a statement of type other: the type proposed for it, awaiting the owner's approval.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_proposed_type",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "qualifiers": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "More about the statement, as named texts.",
+          "json": true,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_qualifiers",
+          "required": false,
+          "source_range": "FactQualifiers",
+          "target": null
+        },
+        "related_name": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "For kinship: the relative's name, where the relative has no person of their own.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_related_name",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "related_person_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "For kinship: the relative, by the person's id in the record.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_related_person_id",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": "SharedPerson"
+        },
+        "relationship_type": {
+          "constraint": {
+            "enum": [
+              "child_in_law",
+              "child_of",
+              "colleague",
+              "cousin",
+              "family_member",
+              "friend",
+              "grandchild_of",
+              "grandparent_of",
+              "in_law",
+              "nephew_niece_of",
+              "parent_in_law",
+              "parent_of",
+              "sibling",
+              "sibling_in_law",
+              "spouse",
+              "student_of",
+              "teacher_of",
+              "uncle_aunt_of",
+              "great_grandparent_of",
+              "great_grandchild_of"
+            ],
+            "type": "string"
+          },
+          "description": "For kinship: how the relative is related, from the subject to the relative.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_relationship_type",
+          "required": false,
+          "source_range": "RelationshipTypes",
+          "target": null
+        },
+        "review": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "Whether a person has reviewed the statement.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "pc:site_standing"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": "Review",
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_review",
+          "required": true,
+          "source_range": "Review",
+          "target": null
+        },
+        "status": {
+          "constraint": {
+            "enum": [
+              "proposed",
+              "accepted",
+              "disputed",
+              "rejected"
+            ],
+            "type": "string"
+          },
+          "description": "The statement's standing: proposed, accepted, disputed or rejected.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "pc:site_standing"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_status",
+          "required": true,
+          "source_range": "ClaimStatus",
+          "target": null
+        },
+        "subject_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "Whose statement it is: a person, a family, a place, an organisation, an event or a relation, by its id.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_fact_subject"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": "SharedPerson"
+        },
+        "type": {
+          "constraint": {
+            "enum": [
+              "birth",
+              "death",
+              "residence",
+              "occupation",
+              "office",
+              "membership",
+              "education",
+              "emigration",
+              "survival",
+              "parenthood",
+              "ghetto_role",
+              "partisan_service",
+              "deportation",
+              "burial",
+              "commemoration",
+              "event_participation",
+              "other",
+              "kinship"
+            ],
+            "type": "string"
+          },
+          "description": "What the statement is about: a birth, a death, a residence, an occupation and so on.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_type",
+          "required": true,
+          "source_range": "FactTypes",
+          "target": null
+        },
+        "value": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The statement's words or value, such as an occupation.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedFact_value",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_SharedFact",
+      "omitted": {
+        "family_id": "Absent from this final public view; never recover it from private storage.",
+        "representation": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of SharedFact; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/shared_record.yaml",
+      "types": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement",
+        "https://www.ica.org/standards/RiC/ontology#Relation"
+      ]
+    },
+    "SharedOrganization": {
+      "description": "One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts.",
+      "fields": {
+        "id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The organisation's id.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedOrganization_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "name": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The name the site shows.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "http://www.w3.org/2000/01/rdf-schema#label",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_SharedOrganization",
+      "omitted": {
+        "names": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of SharedOrganization; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/shared_record.yaml",
+      "types": [
+        "http://lod.ehri-project-test.eu/ontology#CorporateBody"
+      ]
+    },
+    "SharedPerson": {
+      "description": "One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait.",
+      "fields": {
+        "gender": {
+          "constraint": {
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "description": "The person's gender, or unknown.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedPerson_gender",
+          "required": true,
+          "source_range": "Gender",
+          "target": null
+        },
+        "id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The person's id, kept for ever: never renamed, reused or deleted.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedPerson_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "name": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The name the site shows.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "http://www.w3.org/2000/01/rdf-schema#label",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_SharedPerson",
+      "omitted": {
+        "fate": "Absent from this final public view; never recover it from private storage.",
+        "names": "Absent from this final public view; never recover it from private storage.",
+        "portrait": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of SharedPerson; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/shared_record.yaml",
+      "types": [
+        "http://lod.ehri-project-test.eu/ontology#Person"
+      ]
+    },
+    "SharedPlace": {
+      "description": "One place of the record: its names, its kind, the place it lies in, its coordinates and its outside identifiers.",
+      "fields": {
+        "coordinates": {
+          "constraint": {
+            "maximum": 180,
+            "minimum": -180,
+            "type": "number"
+          },
+          "description": "Where it lies: latitude then longitude, in degrees.",
+          "json": false,
+          "list": true,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:geographicalCoordinates"
+            }
+          ],
+          "maximum_items": 2,
+          "minimum_items": 2,
+          "nested": null,
+          "positions": [
+            {
+              "maximum": 90,
+              "minimum": -90
+            },
+            {
+              "maximum": 180,
+              "minimum": -180
+            }
+          ],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_coordinates",
+          "required": false,
+          "source_range": "Coordinate",
+          "target": null
+        },
+        "id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The place's id.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "identifiers": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "The place's outside identifiers, each with its evidence.",
+          "json": false,
+          "list": true,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasOrHadIdentifier"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 1,
+          "nested": "PlaceIdentifier",
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_identifiers",
+          "required": false,
+          "source_range": "PlaceIdentifier",
+          "target": null
+        },
+        "name": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The name the site shows.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "http://www.w3.org/2000/01/rdf-schema#label",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "parent_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The place it lies in, by its id.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:isOrWasPartOf"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_parent_id",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": "SharedPlace"
+        },
+        "type": {
+          "constraint": {
+            "enum": [
+              "city",
+              "town",
+              "village",
+              "shtetl",
+              "street",
+              "address",
+              "landmark",
+              "country",
+              "region",
+              "district",
+              "ghetto",
+              "camp",
+              "massacre_site",
+              "deportation_point",
+              "forest"
+            ],
+            "type": "string"
+          },
+          "description": "What kind of place it is: a city, a town, a street, a camp and so on.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace_type",
+          "required": false,
+          "source_range": "LocationTypes",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_SharedPlace",
+      "omitted": {
+        "names": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {
+        "type": "Some final person-detail files publish only a place identifier and name."
+      },
+      "reason": "A public view of SharedPlace; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/shared_record.yaml",
+      "types": [
+        "https://www.ica.org/standards/RiC/ontology#Place"
+      ]
+    },
+    "Source": {
+      "description": "A record the statements rest on: a book, an archive's database, a family document, the paper itself and the like, registered once and cited by its id.",
+      "fields": {
+        "author": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Who wrote the source: an institution, never a member of its staff.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasCreator"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_author",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "editor": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "Who edited the source.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_editor",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "host": {
+          "constraint": {
+            "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The web host the source's records are served from, without www: every address cited from it is on that host or a subdomain of it.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_source_host"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_host",
+          "required": false,
+          "source_range": "HostName",
+          "target": null
+        },
+        "id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The source's id in the record, which citations name.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_id",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "kind": {
+          "constraint": {
+            "enum": [
+              "archive_database",
+              "book",
+              "memorial_book",
+              "oral_history",
+              "memoir",
+              "photograph",
+              "press",
+              "family_document",
+              "web_page",
+              "the_paper"
+            ],
+            "type": "string"
+          },
+          "description": "What kind of source it is: a book, a memorial book, an archive's database, the paper and so on.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_kind",
+          "required": true,
+          "source_range": "SourceKinds",
+          "target": null
+        },
+        "published": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "When or where the source was published, as written.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_published",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "repository": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The old free-text holder, read for one release; holder_id replaces it.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_repository",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "title": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The source's title.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "http://www.w3.org/2000/01/rdf-schema#label",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "url_pattern": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "How an address of one of the source's records is formed.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_url_pattern",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        },
+        "work_id": {
+          "constraint": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The id of the work in the project's files; never published where it is a file name.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_Source_work_id",
+          "required": false,
+          "source_range": "string",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_Source",
+      "omitted": {
+        "dated": "Absent from this final public view; never recover it from private storage.",
+        "derived_from": "Absent from this final public view; never recover it from private storage.",
+        "holder_id": "Absent from this final public view; never recover it from private storage.",
+        "language": "Absent from this final public view; never recover it from private storage.",
+        "made_by": "Absent from this final public view; never recover it from private storage.",
+        "private": "Absent from this final public view; never recover it from private storage.",
+        "quote_condition": "Absent from this final public view; never recover it from private storage.",
+        "quotes_cleared": "Absent from this final public view; never recover it from private storage.",
+        "reference_code": "Absent from this final public view; never recover it from private storage.",
+        "short_name": "Absent from this final public view; never recover it from private storage.",
+        "subjects": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of Source; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/sourced_entities.yaml",
+      "types": [
+        "http://lod.ehri-project-test.eu/ontology#RecordResource"
+      ]
+    },
+    "SourcedDate": {
+      "description": "A date a source gives: a normalized start (and end, for a range) with how precise it is, or the words as printed with their calendar, or both.",
+      "fields": {
+        "end": {
+          "constraint": {
+            "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The end of a range of dates, written as the start is.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate_end",
+          "required": false,
+          "source_range": "IsoYearMonthOrDay",
+          "target": null
+        },
+        "inferred": {
+          "constraint": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "description": "True when the date was worked out rather than read.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate_inferred",
+          "required": false,
+          "source_range": "boolean",
+          "target": null
+        },
+        "precision": {
+          "constraint": {
+            "enum": [
+              "year",
+              "month",
+              "day",
+              "range"
+            ],
+            "type": "string"
+          },
+          "description": "How much of the date is known: year, month, day or range.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate_precision",
+          "required": false,
+          "source_range": "SourcedDatePrecision",
+          "target": null
+        },
+        "printed": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The date's words as the source prints or writes them.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:expressedDate"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://www.ica.org/standards/RiC/ontology#expressedDate",
+          "required": false,
+          "source_range": "NonBlankText",
+          "target": null
+        },
+        "printed_calendar": {
+          "constraint": {
+            "enum": [
+              "gregorian",
+              "hebrew"
+            ],
+            "type": "string"
+          },
+          "description": "The calendar of the printed words.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate_printed_calendar",
+          "required": false,
+          "source_range": "PrintedCalendar",
+          "target": null
+        },
+        "start": {
+          "constraint": {
+            "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://www.ica.org/standards/RiC/ontology#normalizedDateValue",
+          "required": false,
+          "source_range": "IsoYearMonthOrDay",
+          "target": null
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_SourcedDate",
+      "omitted": {},
+      "optional": {},
+      "reason": "A public view of SourcedDate; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {},
+      "source": "linkml/schema/sourced_entities.yaml",
+      "types": [
+        "https://www.ica.org/standards/RiC/ontology#Date"
+      ]
+    },
+    "SourcedRelation": {
+      "description": "One source's statement that a person is related to another, from the subject to the relative, of a released kinship type, or of type other with a proposed type.",
+      "fields": {
+        "related_person_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "For kinship: the relative, by the person's id in the record.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#object",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": "SharedPerson"
+        },
+        "relationship_type": {
+          "constraint": {
+            "enum": [
+              "child_in_law",
+              "child_of",
+              "colleague",
+              "cousin",
+              "family_member",
+              "friend",
+              "grandchild_of",
+              "grandparent_of",
+              "in_law",
+              "nephew_niece_of",
+              "parent_in_law",
+              "parent_of",
+              "sibling",
+              "sibling_in_law",
+              "spouse",
+              "student_of",
+              "teacher_of",
+              "uncle_aunt_of",
+              "great_grandparent_of",
+              "great_grandchild_of"
+            ],
+            "type": "string"
+          },
+          "description": "For kinship: how the relative is related, from the subject to the relative.",
+          "json": false,
+          "list": false,
+          "mappings": [],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SourcedRelation_relationship_type",
+          "required": true,
+          "source_range": "RelationshipTypes",
+          "target": null
+        },
+        "review": {
+          "constraint": {
+            "type": "object"
+          },
+          "description": "Whether a person has reviewed the statement.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "pc:site_standing"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": "Review",
+          "positions": [],
+          "predicate": "https://pruzhany.org/ns/sourced-entities#export_SourcedRelation_review",
+          "required": true,
+          "source_range": "Review",
+          "target": null
+        },
+        "subject_id": {
+          "constraint": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "The person the relation goes from, by the person's id.",
+          "json": false,
+          "list": false,
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_fact_subject"
+            }
+          ],
+          "maximum_items": null,
+          "minimum_items": 0,
+          "nested": null,
+          "positions": [],
+          "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject",
+          "required": true,
+          "source_range": "NonBlankText",
+          "target": "SharedPerson"
+        }
+      },
+      "iri": "https://pruzhany.org/ns/sourced-entities#export_SourcedRelation",
+      "omitted": {
+        "attribution": "Absent from this final public view; never recover it from private storage.",
+        "citations": "Absent from this final public view; never recover it from private storage.",
+        "date": "Absent from this final public view; never recover it from private storage.",
+        "event_id": "Absent from this final public view; never recover it from private storage.",
+        "evidence_confidence": "Absent from this final public view; never recover it from private storage.",
+        "family_id": "Absent from this final public view; never recover it from private storage.",
+        "holocaust_related": "Absent from this final public view; never recover it from private storage.",
+        "id": "Absent from this final public view; never recover it from private storage.",
+        "identity_confidence": "Absent from this final public view; never recover it from private storage.",
+        "organization_id": "Absent from this final public view; never recover it from private storage.",
+        "place_id": "Absent from this final public view; never recover it from private storage.",
+        "proposed_type": "Absent from this final public view; never recover it from private storage.",
+        "qualifiers": "Absent from this final public view; never recover it from private storage.",
+        "related_name": "Absent from this final public view; never recover it from private storage.",
+        "shown": "Absent from this final public view; never recover it from private storage.",
+        "status": "Absent from this final public view; never recover it from private storage.",
+        "type": "Absent from this final public view; never recover it from private storage.",
+        "value": "Absent from this final public view; never recover it from private storage."
+      },
+      "optional": {},
+      "reason": "A public view of SourcedRelation; source-scoped values are retained without asserting an unqualified historical relationship.",
+      "required": {
+        "related_person_id": "A displayed confirmed relationship has two known public endpoints.",
+        "relationship_type": "The displayed direction must be explicit."
+      },
+      "source": "linkml/schema/shared_record.yaml",
+      "types": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"
+      ]
+    }
+  },
+  "omitted_models": {
+    "Authorship": "Outside the public shared-record export; this layer keeps its current format.",
+    "Block": "Outside the public shared-record export; this layer keeps its current format.",
+    "ContentItem": "Outside the public shared-record export; this layer keeps its current format.",
+    "ContentItemBlockRef": "Outside the public shared-record export; this layer keeps its current format.",
+    "ContentItemRef": "Outside the public shared-record export; this layer keeps its current format.",
+    "ContentItemsData": "Outside the public shared-record export; this layer keeps its current format.",
+    "CrossReference": "Outside the public shared-record export; this layer keeps its current format.",
+    "Edition": "Outside the public shared-record export; this layer keeps its current format.",
+    "EditionsCatalog": "Outside the public shared-record export; this layer keeps its current format.",
+    "EnglishCheck": "Outside the public shared-record export; this layer keeps its current format.",
+    "ExternalReference": "Outside the public shared-record export; this layer keeps its current format.",
+    "Fact": "Outside the public shared-record export; this layer keeps its current format.",
+    "FactQualifiers": "Outside the public shared-record export; this layer keeps its current format.",
+    "Fate": "Outside the public shared-record export; this layer keeps its current format.",
+    "HistoricalEvent": "Outside the public shared-record export; this layer keeps its current format.",
+    "Holder": "Outside the public shared-record export; this layer keeps its current format.",
+    "Holiday": "Outside the public shared-record export; this layer keeps its current format.",
+    "IssueLifeEvent": "Outside the public shared-record export; this layer keeps its current format.",
+    "IssueLifeEventsData": "Outside the public shared-record export; this layer keeps its current format.",
+    "IssueMention": "Outside the public shared-record export; this layer keeps its current format.",
+    "IssueMentionsData": "Outside the public shared-record export; this layer keeps its current format.",
+    "Media": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaConsent": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaConsentScope": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaDecision": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaDepicted": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaDerivative": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaFamilyWords": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaFixity": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaMaster": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaPortrait": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaRegion": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaText": "Outside the public shared-record export; this layer keeps its current format.",
+    "MediaWithdrawal": "Outside the public shared-record export; this layer keeps its current format.",
+    "Mention": "Outside the public shared-record export; this layer keeps its current format.",
+    "Name": "Outside the public shared-record export; this layer keeps its current format.",
+    "Page": "Outside the public shared-record export; this layer keeps its current format.",
+    "PagesData": "Outside the public shared-record export; this layer keeps its current format.",
+    "PrintedSection": "Outside the public shared-record export; this layer keeps its current format.",
+    "PrintedTitle": "Outside the public shared-record export; this layer keeps its current format.",
+    "PublicMedia": "Outside the public shared-record export; this layer keeps its current format.",
+    "ReadingStatus": "Outside the public shared-record export; this layer keeps its current format.",
+    "SharedFamily": "Outside the public shared-record export; this layer keeps its current format.",
+    "SharedName": "Outside the public shared-record export; this layer keeps its current format.",
+    "SharedRecord": "Outside the public shared-record export; this layer keeps its current format.",
+    "SiteCitation": "Outside the public shared-record export; this layer keeps its current format.",
+    "SourceDerivation": "Outside the public shared-record export; this layer keeps its current format.",
+    "SuppliedTitle": "Outside the public shared-record export; this layer keeps its current format.",
+    "TextBasis": "Outside the public shared-record export; this layer keeps its current format.",
+    "TitleCheck": "Outside the public shared-record export; this layer keeps its current format.",
+    "Translation": "Outside the public shared-record export; this layer keeps its current format.",
+    "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format."
+  },
+  "profile_sha256": "9295ce72bde0f880ddff8fb6e1c14ade2f4f7bf7268d896bd0fd0db127e17c00",
+  "source_sha256": {
+    "linkml/schema/content_items.yaml": "8200c92b412a4695becfafb8dafcdcdeda2114291d334efd5fa4c2ca82ea4b2c",
+    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
+    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
+    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
+    "linkml/schema/shared_record.yaml": "cdc402c9a3dd90bfed5cda74c2a8cc4017b91ee4eb6913b58606b2215b62e029",
+    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
+    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
+    "linkml/schema/vocabulary.yaml": "1f6e7e08897da6811177a71ca4a70e3b9cd824cc1246a52f45de80b0ed796767",
+    "vocabulary/profile.ttl": "44fc01c3a5672de7152928466ec2221b029454679446dc5925bedaf7afd84778"
+  },
+  "version": 1,
+  "vocabularies": {
+    "AddressGrain": {
+      "description": "How a mention is pinned to the page: to the words of the printed name, or only to whole regions where the words are not located.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The mention is pinned to the printed name's words.",
+          "mappings": [],
+          "value": "words"
+        },
+        {
+          "description": "The mention is pinned to whole regions of print; its printed name is not located.",
+          "mappings": [],
+          "value": "regions"
+        }
+      ]
+    },
+    "AuthorshipKind": {
+      "description": "Whether a person or a program wrote a supplied title or a translation.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A person wrote it.",
+          "mappings": [],
+          "value": "person"
+        },
+        {
+          "description": "A language model wrote it.",
+          "mappings": [],
+          "value": "model"
+        }
+      ]
+    },
+    "CitationRemarkKinds": {
+      "description": "Citation remark kinds: the values of citation_remark_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Private citation remark about the record giver; never published.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:citation_remark_kinds_private_source_remark"
+            }
+          ],
+          "value": "private_source_remark"
+        }
+      ]
+    },
+    "ClaimStatus": {
+      "description": "Claim status: the values of claim_status in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "An assertion put forward and not yet accepted, disputed or rejected; never published.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:claim_status_proposed"
+            }
+          ],
+          "value": "proposed"
+        },
+        {
+          "description": "An assertion retained as accepted; this alone does not authorize publication.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:claim_status_accepted"
+            }
+          ],
+          "value": "accepted"
+        },
+        {
+          "description": "An assertion retained with an unresolved challenge.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:claim_status_disputed"
+            }
+          ],
+          "value": "disputed"
+        },
+        {
+          "description": "An assertion retained as rejected so it is not silently reintroduced.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:claim_status_rejected"
+            }
+          ],
+          "value": "rejected"
+        }
+      ]
+    },
+    "CompatibilityEventTypes": {
+      "description": "Compatibility event types: the values of compatibility_event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Compatibility value wedding: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_wedding"
+            }
+          ],
+          "value": "wedding"
+        },
+        {
+          "description": "Compatibility value birth: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_birth"
+            }
+          ],
+          "value": "birth"
+        },
+        {
+          "description": "Compatibility value death: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_death"
+            }
+          ],
+          "value": "death"
+        },
+        {
+          "description": "Compatibility value bar_mitzvah: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_bar_mitzvah"
+            }
+          ],
+          "value": "bar_mitzvah"
+        },
+        {
+          "description": "Compatibility value celebration: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_celebration"
+            }
+          ],
+          "value": "celebration"
+        },
+        {
+          "description": "Compatibility value community_event: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_community_event"
+            }
+          ],
+          "value": "community_event"
+        },
+        {
+          "description": "Compatibility value holocaust_event: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_holocaust_event"
+            }
+          ],
+          "value": "holocaust_event"
+        },
+        {
+          "description": "Compatibility value other: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_other"
+            }
+          ],
+          "value": "other"
+        }
+      ]
+    },
+    "Confidence": {
+      "description": "Confidence: the values of confidence in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The cited evidence directly supports the assertion at the confirmed level; separate from identity confidence and editorial approval.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:confidence_confirmed"
+            }
+          ],
+          "value": "confirmed"
+        },
+        {
+          "description": "The evidence supports the assertion with remaining uncertainty.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:confidence_probable"
+            }
+          ],
+          "value": "probable"
+        },
+        {
+          "description": "The evidence permits the assertion but does not establish it as probable.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:confidence_possible"
+            }
+          ],
+          "value": "possible"
+        }
+      ]
+    },
+    "ContentItemSubtypes": {
+      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.0.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A greeting to a couple on their wedding.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_wedding_greeting"
+            }
+          ],
+          "value": "wedding_greeting"
+        },
+        {
+          "description": "A greeting on an engagement.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_engagement_greeting"
+            }
+          ],
+          "value": "engagement_greeting"
+        },
+        {
+          "description": "A greeting on the birth of a child.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_birth_greeting"
+            }
+          ],
+          "value": "birth_greeting"
+        },
+        {
+          "description": "A greeting on a bar mitzvah.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_bar_mitzvah_greeting"
+            }
+          ],
+          "value": "bar_mitzvah_greeting"
+        },
+        {
+          "description": "A greeting for the New Year.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_new_year_greeting"
+            }
+          ],
+          "value": "new_year_greeting"
+        },
+        {
+          "description": "Good wishes on departure or settlement elsewhere.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_departure_greeting"
+            }
+          ],
+          "value": "departure_greeting"
+        },
+        {
+          "description": "A greeting whose occasion is not specified by a narrower form.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_greeting"
+            }
+          ],
+          "value": "greeting"
+        },
+        {
+          "description": "A public expression of thanks or acknowledgement.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_thanks"
+            }
+          ],
+          "value": "thanks"
+        },
+        {
+          "description": "A notice inviting people to a meeting.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_meeting_notice"
+            }
+          ],
+          "value": "meeting_notice"
+        },
+        {
+          "description": "A public announcement without a narrower established form.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_announcement"
+            }
+          ],
+          "value": "announcement"
+        },
+        {
+          "description": "A public request for support, contributions or participation.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_appeal"
+            }
+          ],
+          "value": "appeal"
+        },
+        {
+          "description": "An advertisement for goods, services or premises.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_commercial_advertisement"
+            }
+          ],
+          "value": "commercial_advertisement"
+        },
+        {
+          "description": "An expression of sympathy to mourners.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_condolence"
+            }
+          ],
+          "value": "condolence"
+        },
+        {
+          "description": "A notice commemorating someone who has died.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_memorial_notice"
+            }
+          ],
+          "value": "memorial_notice"
+        },
+        {
+          "description": "An announcement of a death or funeral.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_death_announcement"
+            }
+          ],
+          "value": "death_announcement"
+        },
+        {
+          "description": "An editorial statement by the newspaper.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_editorial"
+            }
+          ],
+          "value": "editorial"
+        },
+        {
+          "description": "An argument or commentary expressing a view.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_opinion"
+            }
+          ],
+          "value": "opinion"
+        },
+        {
+          "description": "A letter printed for readers, including letters to the editor.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_letter"
+            }
+          ],
+          "value": "letter"
+        },
+        {
+          "description": "A composition in verse.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_poem"
+            }
+          ],
+          "value": "poem"
+        },
+        {
+          "description": "A short literary sketch.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_sketch"
+            }
+          ],
+          "value": "sketch"
+        },
+        {
+          "description": "A joke or short humorous composition.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_humour"
+            }
+          ],
+          "value": "humour"
+        }
+      ]
+    },
+    "ContentUnitRoles": {
+      "description": "Content unit roles: the values of content_unit_roles in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Compatibility value primary_announcement: preserved unchanged from production content unit roles.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:content_unit_roles_primary_announcement"
+            }
+          ],
+          "value": "primary_announcement"
+        },
+        {
+          "description": "Compatibility value congratulation: preserved unchanged from production content unit roles.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:content_unit_roles_congratulation"
+            }
+          ],
+          "value": "congratulation"
+        },
+        {
+          "description": "A notice of sympathy sent to the mourners by friends or a society; a response to a death as a congratulation is to a wedding or birth.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:content_unit_roles_condolence"
+            }
+          ],
+          "value": "condolence"
+        },
+        {
+          "description": "Compatibility value mention: preserved unchanged from production content unit roles.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:content_unit_roles_mention"
+            }
+          ],
+          "value": "mention"
+        },
+        {
+          "description": "Compatibility value advertisement: preserved unchanged from production content unit roles.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:content_unit_roles_advertisement"
+            }
+          ],
+          "value": "advertisement"
+        }
+      ]
+    },
+    "Coordinate": {
+      "description": "One coordinate of a place, in degrees from -180 to 180. The twins bound the latitude, the first, to -90 to 90; a bound by position in a list cannot be said here (known-looser.yaml).",
+      "mappings": []
+    },
+    "EventParts": {
+      "description": "Event parts: the values of event_parts in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The baby at a birth.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:part_baby"
+            }
+          ],
+          "value": "baby"
+        },
+        {
+          "description": "The parent at a birth.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:part_parent"
+            }
+          ],
+          "value": "parent"
+        },
+        {
+          "description": "The bride at an engagement or a wedding.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:part_bride"
+            }
+          ],
+          "value": "bride"
+        },
+        {
+          "description": "The groom at an engagement or a wedding.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:part_groom"
+            }
+          ],
+          "value": "groom"
+        },
+        {
+          "description": "The boy at his bar mitzvah.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:part_boy"
+            }
+          ],
+          "value": "boy"
+        },
+        {
+          "description": "The person who died, at a death.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:part_deceased"
+            }
+          ],
+          "value": "deceased"
+        },
+        {
+          "description": "The person remembered, at a memorial.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:part_remembered"
+            }
+          ],
+          "value": "remembered"
+        }
+      ]
+    },
+    "EventTypes": {
+      "description": "Event types: the values of event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "An engagement event; participation uses event_participation with a mention role.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_engagement"
+            }
+          ],
+          "value": "engagement"
+        },
+        {
+          "description": "Compatibility value wedding: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_wedding"
+            }
+          ],
+          "value": "wedding"
+        },
+        {
+          "description": "Compatibility value birth: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_birth"
+            }
+          ],
+          "value": "birth"
+        },
+        {
+          "description": "Compatibility value death: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_death"
+            }
+          ],
+          "value": "death"
+        },
+        {
+          "description": "Compatibility value bar_mitzvah: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_bar_mitzvah"
+            }
+          ],
+          "value": "bar_mitzvah"
+        },
+        {
+          "description": "Compatibility value celebration: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_celebration"
+            }
+          ],
+          "value": "celebration"
+        },
+        {
+          "description": "Compatibility value community_event: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_community_event"
+            }
+          ],
+          "value": "community_event"
+        },
+        {
+          "description": "Compatibility value holocaust_event: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_holocaust_event"
+            }
+          ],
+          "value": "holocaust_event"
+        },
+        {
+          "description": "Compatibility value other: preserved unchanged from production event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:event_types_other"
+            }
+          ],
+          "value": "other"
+        },
+        {
+          "description": "One commemoration of a deceased person, including annual and 30-day memorials. A remembrance is never the death itself.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:site_event_memorial"
+            }
+          ],
+          "value": "memorial"
+        }
+      ]
+    },
+    "ExternalSourceTypes": {
+      "description": "External source types: the values of external_source_types in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "International Center on Nazi Persecution. Contains records of Holocaust victims.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:external_source_types_arolsen_archives"
+            }
+          ],
+          "value": "arolsen_archives"
+        },
+        {
+          "description": "Genealogical records including Polish vital records.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:external_source_types_familysearch"
+            }
+          ],
+          "value": "familysearch"
+        },
+        {
+          "description": "Cemetery and burial records.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:external_source_types_findagrave"
+            }
+          ],
+          "value": "findagrave"
+        },
+        {
+          "description": "Collaborative family tree platform.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:external_source_types_geni"
+            }
+          ],
+          "value": "geni"
+        },
+        {
+          "description": "Jewish genealogical research. Contains Yizkor books, vital records, and community data.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:external_source_types_jewishgen"
+            }
+          ],
+          "value": "jewishgen"
+        },
+        {
+          "description": "Jewish Records Indexing - Poland. Contains indexed vital records.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:external_source_types_jri_poland"
+            }
+          ],
+          "value": "jri_poland"
+        },
+        {
+          "description": "General reference for locations and events.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:external_source_types_wikipedia"
+            }
+          ],
+          "value": "wikipedia"
+        },
+        {
+          "description": "World Holocaust Remembrance Center. Contains Pages of Testimony and victim database.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:external_source_types_yad_vashem"
+            }
+          ],
+          "value": "yad_vashem"
+        }
+      ]
+    },
+    "FactTypes": {
+      "description": "Fact types: the values of fact_types in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A sourced birth date; a birth place uses rico:hasBirthPlace independently, including when no date is known.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasBirthDate"
+            }
+          ],
+          "value": "birth"
+        },
+        {
+          "description": "A sourced death date; a death place uses rico:hasDeathPlace independently, including when no date is known.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasDeathDate"
+            }
+          ],
+          "value": "death"
+        },
+        {
+          "description": "Residence in a place at a specified time.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasOrHadLocation"
+            }
+          ],
+          "value": "residence"
+        },
+        {
+          "description": "An occupation, optionally bounded in time.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasOrHadOccupationOfType"
+            }
+          ],
+          "value": "occupation"
+        },
+        {
+          "description": "Holding a Position at a time; person occupiesOrOccupied the position, qualified through PositionHoldingRelation.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:occupiesOrOccupied"
+            }
+          ],
+          "value": "office"
+        },
+        {
+          "description": "A person isOrWasMemberOf a group, inverse of group hasOrHadMember, qualified through MembershipRelation.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:isOrWasMemberOf"
+            }
+          ],
+          "value": "membership"
+        },
+        {
+          "description": "School attendance or education at a specified time.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_education"
+            }
+          ],
+          "value": "education"
+        },
+        {
+          "description": "A dated departure to live elsewhere; establishes neither death nor survival.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_emigration"
+            }
+          ],
+          "value": "emigration"
+        },
+        {
+          "description": "Evidence that a person was alive at a specified time.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_survival"
+            }
+          ],
+          "value": "survival"
+        },
+        {
+          "description": "Parenthood of an unnamed child without inventing a person node; claims naming a relative use kinship, and links between identified people use relationships. Deprecated in 1.2.0: represent the child as a person and link each parent by parent_of.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_parenthood"
+            }
+          ],
+          "value": "parenthood"
+        },
+        {
+          "description": "A sourced ghetto activity not expressible as membership or office; use membership or office whenever those fit.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_ghetto_role"
+            }
+          ],
+          "value": "ghetto_role"
+        },
+        {
+          "description": "A sourced partisan activity beyond membership or office; use membership or office whenever those fit.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_partisan_service"
+            }
+          ],
+          "value": "partisan_service"
+        },
+        {
+          "description": "A sourced forced removal at a date and place; event participation may link its event.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_deportation"
+            }
+          ],
+          "value": "deportation"
+        },
+        {
+          "description": "A sourced interment, optionally dated and placed; distinct from death.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_burial"
+            }
+          ],
+          "value": "burial"
+        },
+        {
+          "description": "A sourced act of remembrance; event participation may link its event.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_commemoration"
+            }
+          ],
+          "value": "commemoration"
+        },
+        {
+          "description": "Taking part in an event with an explicit mention role; weddings are events, not marriage facts.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:isOrWasParticipantIn"
+            }
+          ],
+          "value": "event_participation"
+        },
+        {
+          "description": "An assertion awaiting an owner-approved type; requires a nonempty proposed_type.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_other"
+            }
+          ],
+          "value": "other"
+        },
+        {
+          "description": "A source's statement that the person is related, in a stated way, to a named person who need not be identified",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "kinship"
+        }
+      ]
+    },
+    "FateOutcomes": {
+      "description": "Fate outcomes: the values of fate_outcomes in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Compatibility value unknown: preserved unchanged from production fate outcomes.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_unknown"
+            }
+          ],
+          "value": "unknown"
+        },
+        {
+          "description": "Compatibility value perished: preserved unchanged from production fate outcomes. How sure the conclusion is lives in the fate's separate confidence; the site's legacy likely_* values are derived from outcome plus confidence.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_perished"
+            }
+          ],
+          "value": "perished"
+        },
+        {
+          "description": "Compatibility value survived: preserved unchanged from production fate outcomes. How sure the conclusion is lives in the fate's separate confidence; the site's legacy likely_* values are derived from outcome plus confidence.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_survived"
+            }
+          ],
+          "value": "survived"
+        },
+        {
+          "description": "Compatibility value died_before: preserved unchanged from production fate outcomes.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_died_before"
+            }
+          ],
+          "value": "died_before"
+        },
+        {
+          "description": "Compatibility value not_applicable: preserved unchanged from production fate outcomes.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_not_applicable"
+            }
+          ],
+          "value": "not_applicable"
+        }
+      ]
+    },
+    "Gender": {
+      "description": "Gender: the values of gender in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Compatibility value male: preserved unchanged from production gender.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:gender_male"
+            }
+          ],
+          "value": "male"
+        },
+        {
+          "description": "Compatibility value female: preserved unchanged from production gender.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:gender_female"
+            }
+          ],
+          "value": "female"
+        },
+        {
+          "description": "Compatibility value unknown: preserved unchanged from production gender.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:gender_unknown"
+            }
+          ],
+          "value": "unknown"
+        }
+      ]
+    },
+    "HolderKind": {
+      "description": "What kind of holder keeps a source.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "An institution, such as an archive or a library.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "ehri:Institution"
+            }
+          ],
+          "value": "institution"
+        },
+        {
+          "description": "A family holding papers.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "ehri:Family"
+            }
+          ],
+          "value": "family"
+        },
+        {
+          "description": "A private person holding papers; the name is never published.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:Person"
+            }
+          ],
+          "value": "private"
+        }
+      ]
+    },
+    "HolocaustFateTypes": {
+      "description": "Holocaust fate types: the values of holocaust_fate_types in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Fate during Holocaust is not known",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:holocaust_fate_types_unknown"
+            }
+          ],
+          "value": "unknown"
+        },
+        {
+          "description": "Confirmed killed during Holocaust",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:holocaust_fate_types_perished"
+            }
+          ],
+          "value": "perished"
+        },
+        {
+          "description": "Living in area that was later destroyed, presumed perished",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:holocaust_fate_types_likely_perished"
+            }
+          ],
+          "value": "likely_perished"
+        },
+        {
+          "description": "Confirmed survived the Holocaust",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:holocaust_fate_types_survived"
+            }
+          ],
+          "value": "survived"
+        },
+        {
+          "description": "Living outside Nazi-occupied areas at time of publication",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:holocaust_fate_types_likely_survived"
+            }
+          ],
+          "value": "likely_survived"
+        },
+        {
+          "description": "Died before the Holocaust began",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:holocaust_fate_types_died_before"
+            }
+          ],
+          "value": "died_before"
+        },
+        {
+          "description": "Non-Jewish individual",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:holocaust_fate_types_not_applicable"
+            }
+          ],
+          "value": "not_applicable"
+        }
+      ]
+    },
+    "HostName": {
+      "description": "A lowercase internet host name with at least one dot, such as collections.yadvashem.org.",
+      "mappings": []
+    },
+    "HttpsUri": {
+      "description": "A web address that begins https:// and holds no white space, as the Pydantic twin's pattern says; the Zod twin asks for a URL whose protocol is https.",
+      "mappings": []
+    },
+    "ImpressoTypes": {
+      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The Impresso type article.",
+          "mappings": [],
+          "value": "article"
+        },
+        {
+          "description": "The Impresso type ad.",
+          "mappings": [],
+          "value": "ad"
+        },
+        {
+          "description": "The Impresso type image.",
+          "mappings": [],
+          "value": "image"
+        },
+        {
+          "description": "The Impresso type table.",
+          "mappings": [],
+          "value": "table"
+        },
+        {
+          "description": "The Impresso type death_notice.",
+          "mappings": [],
+          "value": "death_notice"
+        },
+        {
+          "description": "The Impresso type weather.",
+          "mappings": [],
+          "value": "weather"
+        },
+        {
+          "description": "The Impresso type page.",
+          "mappings": [],
+          "value": "page"
+        },
+        {
+          "description": "The Impresso type radio_bulletin.",
+          "mappings": [],
+          "value": "radio_bulletin"
+        },
+        {
+          "description": "The Impresso type radio_broadcast_episode.",
+          "mappings": [],
+          "value": "radio_broadcast_episode"
+        },
+        {
+          "description": "The Impresso type chronicle.",
+          "mappings": [],
+          "value": "chronicle"
+        },
+        {
+          "description": "The Impresso type chapter.",
+          "mappings": [],
+          "value": "chapter"
+        },
+        {
+          "description": "The Impresso type discussion.",
+          "mappings": [],
+          "value": "discussion"
+        },
+        {
+          "description": "The Impresso type entertainment.",
+          "mappings": [],
+          "value": "entertainment"
+        }
+      ]
+    },
+    "IsoDay": {
+      "description": "A calendar day written YYYY-MM-DD, such as 1938-12-16.",
+      "mappings": []
+    },
+    "IsoYearMonthOrDay": {
+      "description": "A year, a month or a day, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.",
+      "mappings": []
+    },
+    "LanguageTag": {
+      "description": "A BCP 47 language tag, by the pattern in vocabulary/citation-requirements.json.",
+      "mappings": []
+    },
+    "LifeEventTypes": {
+      "description": "Life event types: the values of life_event_types in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Compatibility value wedding: preserved unchanged from production life event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:life_event_types_wedding"
+            }
+          ],
+          "value": "wedding"
+        },
+        {
+          "description": "Compatibility value birth: preserved unchanged from production life event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:life_event_types_birth"
+            }
+          ],
+          "value": "birth"
+        },
+        {
+          "description": "Compatibility value death: preserved unchanged from production life event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:life_event_types_death"
+            }
+          ],
+          "value": "death"
+        },
+        {
+          "description": "Compatibility value bar_mitzvah: preserved unchanged from production life event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:life_event_types_bar_mitzvah"
+            }
+          ],
+          "value": "bar_mitzvah"
+        },
+        {
+          "description": "Compatibility value celebration: preserved unchanged from production life event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:life_event_types_celebration"
+            }
+          ],
+          "value": "celebration"
+        },
+        {
+          "description": "Compatibility value community_event: preserved unchanged from production life event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:life_event_types_community_event"
+            }
+          ],
+          "value": "community_event"
+        },
+        {
+          "description": "Compatibility value other: preserved unchanged from production life event types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:life_event_types_other"
+            }
+          ],
+          "value": "other"
+        }
+      ]
+    },
+    "LocationTypes": {
+      "description": "Location types: the values of location_types in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Compatibility value city: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "ehri:City"
+            }
+          ],
+          "value": "city"
+        },
+        {
+          "description": "Compatibility value town: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_town"
+            }
+          ],
+          "value": "town"
+        },
+        {
+          "description": "Compatibility value village: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_village"
+            }
+          ],
+          "value": "village"
+        },
+        {
+          "description": "Compatibility value shtetl: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_shtetl"
+            }
+          ],
+          "value": "shtetl"
+        },
+        {
+          "description": "Compatibility value street: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_street"
+            }
+          ],
+          "value": "street"
+        },
+        {
+          "description": "Compatibility value address: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_address"
+            }
+          ],
+          "value": "address"
+        },
+        {
+          "description": "Compatibility value landmark: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_landmark"
+            }
+          ],
+          "value": "landmark"
+        },
+        {
+          "description": "Compatibility value country: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "ehri:Country"
+            }
+          ],
+          "value": "country"
+        },
+        {
+          "description": "Compatibility value region: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "ehri:Region"
+            }
+          ],
+          "value": "region"
+        },
+        {
+          "description": "Compatibility value district: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_district"
+            }
+          ],
+          "value": "district"
+        },
+        {
+          "description": "Compatibility value ghetto: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_ghetto"
+            }
+          ],
+          "value": "ghetto"
+        },
+        {
+          "description": "Compatibility value camp: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_camp"
+            }
+          ],
+          "value": "camp"
+        },
+        {
+          "description": "Compatibility value massacre_site: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_massacre_site"
+            }
+          ],
+          "value": "massacre_site"
+        },
+        {
+          "description": "Compatibility value deportation_point: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_deportation_point"
+            }
+          ],
+          "value": "deportation_point"
+        },
+        {
+          "description": "Compatibility value forest: preserved unchanged from production location types.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:location_types_forest"
+            }
+          ],
+          "value": "forest"
+        }
+      ]
+    },
+    "MediaDecisionRole": {
+      "description": "Whose role made a decision about a medium.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The owner.",
+          "mappings": [],
+          "value": "owner"
+        },
+        {
+          "description": "The project.",
+          "mappings": [],
+          "value": "project"
+        }
+      ]
+    },
+    "MediaGrantedBy": {
+      "description": "Who gave the permission to show a medium, by role; never a person's name.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The owner.",
+          "mappings": [],
+          "value": "owner"
+        },
+        {
+          "description": "The family.",
+          "mappings": [],
+          "value": "family"
+        },
+        {
+          "description": "The holder.",
+          "mappings": [],
+          "value": "holder"
+        },
+        {
+          "description": "An institution.",
+          "mappings": [],
+          "value": "institution"
+        }
+      ]
+    },
+    "MediaIdentifiedBy": {
+      "description": "What identifies a person shown in a picture.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The family.",
+          "mappings": [],
+          "value": "family"
+        },
+        {
+          "description": "A record.",
+          "mappings": [],
+          "value": "record"
+        },
+        {
+          "description": "The picture's own inscription.",
+          "mappings": [],
+          "value": "inscription"
+        }
+      ]
+    },
+    "MediaKind": {
+      "description": "What a medium is: an image, a sound recording, a film or a document.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A still picture, such as a photograph.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:media_image"
+            }
+          ],
+          "value": "image"
+        },
+        {
+          "description": "A sound recording.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:media_audio"
+            }
+          ],
+          "value": "audio"
+        },
+        {
+          "description": "A film or video.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:media_video"
+            }
+          ],
+          "value": "video"
+        },
+        {
+          "description": "A document, with its transcript.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:media_document"
+            }
+          ],
+          "value": "document"
+        }
+      ]
+    },
+    "MediaWithdrawalReason": {
+      "description": "Why a medium was withdrawn.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "At the family's request.",
+          "mappings": [],
+          "value": "family"
+        },
+        {
+          "description": "At the holder's request.",
+          "mappings": [],
+          "value": "holder"
+        },
+        {
+          "description": "For an error.",
+          "mappings": [],
+          "value": "error"
+        }
+      ]
+    },
+    "MentionRoles": {
+      "description": "Mention roles: the values of mention_roles in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The person whom the source passage concerns.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_subject"
+            }
+          ],
+          "value": "subject"
+        },
+        {
+          "description": "The person whose death the passage concerns; a mention role alone is not death evidence.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_deceased"
+            }
+          ],
+          "value": "deceased"
+        },
+        {
+          "description": "The person being honored or congratulated.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_honoree"
+            }
+          ],
+          "value": "honoree"
+        },
+        {
+          "description": "A person signing the item.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_signer"
+            }
+          ],
+          "value": "signer"
+        },
+        {
+          "description": "A person identified as mourning.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_mourner"
+            }
+          ],
+          "value": "mourner"
+        },
+        {
+          "description": "A person placing or represented by an advertisement.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_advertiser"
+            }
+          ],
+          "value": "advertiser"
+        },
+        {
+          "description": "The author identified by a byline or attribution.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_author"
+            }
+          ],
+          "value": "author"
+        },
+        {
+          "description": "A person named in an official capacity; an office fact requires its own evidence.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_office_holder"
+            }
+          ],
+          "value": "office_holder"
+        },
+        {
+          "description": "A person identified as a donor.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_donor"
+            }
+          ],
+          "value": "donor"
+        },
+        {
+          "description": "A person named without a more specific established role.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_named"
+            }
+          ],
+          "value": "named"
+        },
+        {
+          "description": "A person identified as engaged to marry.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_betrothed"
+            }
+          ],
+          "value": "betrothed"
+        },
+        {
+          "description": "A participant identified as a parent; a named parent-child link belongs in relationships.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:mention_roles_parent"
+            }
+          ],
+          "value": "parent"
+        }
+      ]
+    },
+    "NameKinds": {
+      "description": "Name kinds: the values of name_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A name exactly as printed in a source.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:name_kinds_printed"
+            }
+          ],
+          "value": "printed"
+        },
+        {
+          "description": "A name used at birth, including a maiden name.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:name_kinds_birth"
+            }
+          ],
+          "value": "birth"
+        },
+        {
+          "description": "A name used following marriage.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:name_kinds_married"
+            }
+          ],
+          "value": "married"
+        },
+        {
+          "description": "A name used later in life, without assuming the reason for its adoption.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:name_kinds_later"
+            }
+          ],
+          "value": "later"
+        },
+        {
+          "description": "A familiar or informal name.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:name_kinds_nickname"
+            }
+          ],
+          "value": "nickname"
+        },
+        {
+          "description": "An alternative assumed name.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:name_kinds_alias"
+            }
+          ],
+          "value": "alias"
+        },
+        {
+          "description": "A name used in religious life.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:name_kinds_religious"
+            }
+          ],
+          "value": "religious"
+        },
+        {
+          "description": "An alternative spelling of a name, without asserting a different identity.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:name_kinds_spelling"
+            }
+          ],
+          "value": "spelling"
+        },
+        {
+          "description": "An attributed description used to name a person whom the source does not name.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:site_name_supplied"
+            }
+          ],
+          "value": "supplied"
+        }
+      ]
+    },
+    "NonBlankText": {
+      "description": "Text with at least one character that is not white space.",
+      "mappings": []
+    },
+    "NonNegativeInteger": {
+      "description": "A whole number from 0 to 9007199254740991, the largest integer JavaScript holds exactly. As the range of a multivalued slot it bounds each item, not the list.",
+      "mappings": []
+    },
+    "NonNegativeNumber": {
+      "description": "A number at least 0, such as each of the four numbers of a box on a page picture; the shapes bound the box's width and height above 0, which known-looser.yaml records.",
+      "mappings": []
+    },
+    "PositiveInteger": {
+      "description": "A whole number from 1 to 9007199254740991; the shapes say above 0, which for a whole number is the same.",
+      "mappings": []
+    },
+    "PrintedCalendar": {
+      "description": "The calendar a date was printed or written in.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The Gregorian calendar.",
+          "mappings": [],
+          "value": "gregorian"
+        },
+        {
+          "description": "The Hebrew calendar; its words are kept as printed and never converted.",
+          "mappings": [],
+          "value": "hebrew"
+        }
+      ]
+    },
+    "ReadingStatusValue": {
+      "description": "Reading states: the values of a content item's reading_status, from vocabulary/reading-status.json, whose entry reading_status describes the field: Optional per-field reading provenance. Null is unrecorded. A session check may cover particular words only.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A machine reading without a recorded qualifying check.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:site_reading_machine"
+            }
+          ],
+          "value": "machine"
+        },
+        {
+          "description": "An AI session checked or corrected the field, possibly particular words only.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:site_reading_session_checked"
+            }
+          ],
+          "value": "session_checked"
+        },
+        {
+          "description": "A recorded human author corrected the field; AI drafts and approvals alone do not qualify.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:site_reading_person_corrected"
+            }
+          ],
+          "value": "person_corrected"
+        }
+      ]
+    },
+    "RelationshipTypes": {
+      "description": "Relationship types: the values of relationship_types in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The subject is child in law of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "child_in_law"
+        },
+        {
+          "description": "The subject is child of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:isChildOf"
+            }
+          ],
+          "value": "child_of"
+        },
+        {
+          "description": "The subject is colleague of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:isAgentAssociatedWithAgent"
+            }
+          ],
+          "value": "colleague"
+        },
+        {
+          "description": "The subject is cousin of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "cousin"
+        },
+        {
+          "description": "The subject is family member of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "family_member"
+        },
+        {
+          "description": "The subject is friend of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:isAgentAssociatedWithAgent"
+            }
+          ],
+          "value": "friend"
+        },
+        {
+          "description": "The subject is grandchild of the related person; direction is descendant to ascendant. The vocabulary ID retains the exact generation; RiC-O DescendanceRelation covers descent across any number of intermediate persons.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasAncestor"
+            }
+          ],
+          "value": "grandchild_of"
+        },
+        {
+          "description": "The subject is grandparent of the related person; direction is ascendant to descendant. The vocabulary ID retains the exact generation; RiC-O DescendanceRelation covers descent across any number of intermediate persons.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasDescendant"
+            }
+          ],
+          "value": "grandparent_of"
+        },
+        {
+          "description": "The subject is in law of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "in_law"
+        },
+        {
+          "description": "The subject is nephew niece of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "nephew_niece_of"
+        },
+        {
+          "description": "The subject is parent in law of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "parent_in_law"
+        },
+        {
+          "description": "The subject is parent of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasChild"
+            }
+          ],
+          "value": "parent_of"
+        },
+        {
+          "description": "The subject is sibling of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasSibling"
+            }
+          ],
+          "value": "sibling"
+        },
+        {
+          "description": "The subject is sibling in law of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "sibling_in_law"
+        },
+        {
+          "description": "The subject is spouse of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasOrHadSpouse"
+            }
+          ],
+          "value": "spouse"
+        },
+        {
+          "description": "The subject is student of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasOrHadTeacher"
+            }
+          ],
+          "value": "student_of"
+        },
+        {
+          "description": "The subject is teacher of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasOrHadStudent"
+            }
+          ],
+          "value": "teacher_of"
+        },
+        {
+          "description": "The subject is uncle aunt of of the related person; direction is subject to related person. The specific relationship is retained by this vocabulary ID even when RiC-O provides only a broader association.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasFamilyAssociationWith"
+            }
+          ],
+          "value": "uncle_aunt_of"
+        },
+        {
+          "description": "The subject is great-grandparent of the related person; direction is ascendant to descendant. The vocabulary ID retains the exact generation; RiC-O DescendanceRelation covers descent across any number of intermediate persons.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasDescendant"
+            }
+          ],
+          "value": "great_grandparent_of"
+        },
+        {
+          "description": "The subject is great-grandchild of the related person; direction is descendant to ascendant. The vocabulary ID retains the exact generation; RiC-O DescendanceRelation covers descent across any number of intermediate persons.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:hasAncestor"
+            }
+          ],
+          "value": "great_grandchild_of"
+        }
+      ]
+    },
+    "ReviewStates": {
+      "description": "Review states: the values of review_states in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Awaiting human editorial approval.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:review_states_pending"
+            }
+          ],
+          "value": "pending"
+        },
+        {
+          "description": "Human editorial review has approved the item; publication remains subject to downstream privacy rules.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:review_states_approved"
+            }
+          ],
+          "value": "approved"
+        }
+      ]
+    },
+    "ScriptCode": {
+      "description": "A four-letter ISO 15924 script code, such as Hebr or Latn.",
+      "mappings": []
+    },
+    "Sha256Hex": {
+      "description": "A SHA-256 digest: exactly 64 lowercase hexadecimal digits and nothing after them. Some shapes write the pattern without its last part and add a length of 64, which says the same; LinkML has no length of a string, hence the last part.",
+      "mappings": []
+    },
+    "SharedFactRepresentation": {
+      "description": "The form a fact is kept in: a structured statement, retained prose, or an image path.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A structured statement of a released type.",
+          "mappings": [],
+          "value": "structured"
+        },
+        {
+          "description": "Retained prose, kept as other with a proposed type until it is reviewed.",
+          "mappings": [],
+          "value": "prose"
+        },
+        {
+          "description": "An image path, kept as other with a proposed type.",
+          "mappings": [],
+          "value": "image"
+        }
+      ]
+    },
+    "SimpleLanguageTag": {
+      "description": "A language tag in its simple form, letters then hyphenated parts, such as yi or yi-Latn.",
+      "mappings": []
+    },
+    "SourceDerivationRelation": {
+      "description": "How a source we hold was made from another: a copy of it, or a transcription of it.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A copy of the original record.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "ehri:isCopyOf"
+            }
+          ],
+          "value": "copy"
+        },
+        {
+          "description": "A transcription of the original record, which describes it and is not a copy of it.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "rico:describesOrDescribed"
+            }
+          ],
+          "value": "transcription"
+        }
+      ]
+    },
+    "SourceKinds": {
+      "description": "Source kinds: the values of source_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Archive database source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_archive_database"
+            }
+          ],
+          "value": "archive_database"
+        },
+        {
+          "description": "Book source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_book"
+            }
+          ],
+          "value": "book"
+        },
+        {
+          "description": "Memorial book source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_memorial_book"
+            }
+          ],
+          "value": "memorial_book"
+        },
+        {
+          "description": "Oral history source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_oral_history"
+            }
+          ],
+          "value": "oral_history"
+        },
+        {
+          "description": "Memoir source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_memoir"
+            }
+          ],
+          "value": "memoir"
+        },
+        {
+          "description": "Photograph source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_photograph"
+            }
+          ],
+          "value": "photograph"
+        },
+        {
+          "description": "Press source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_press"
+            }
+          ],
+          "value": "press"
+        },
+        {
+          "description": "Family document source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_family_document"
+            }
+          ],
+          "value": "family_document"
+        },
+        {
+          "description": "Web page source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_web_page"
+            }
+          ],
+          "value": "web_page"
+        },
+        {
+          "description": "The paper source kinds category.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:source_kinds_the_paper"
+            }
+          ],
+          "value": "the_paper"
+        }
+      ]
+    },
+    "SourceMadeBy": {
+      "description": "Who made a source, as a category: never an agent, so never its creator.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The family.",
+          "mappings": [],
+          "value": "family"
+        },
+        {
+          "description": "A photographer's studio.",
+          "mappings": [],
+          "value": "studio"
+        },
+        {
+          "description": "An institution.",
+          "mappings": [],
+          "value": "institution"
+        },
+        {
+          "description": "The perpetrators.",
+          "mappings": [],
+          "value": "perpetrator"
+        },
+        {
+          "description": "Not known.",
+          "mappings": [],
+          "value": "unknown"
+        }
+      ]
+    },
+    "SourceQuoteCondition": {
+      "description": "The owner's condition on a private source's cleared quotes.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A quote is shown only where no other record states the same (the owner's word of 24 October 2026).",
+          "mappings": [],
+          "value": "unique_information"
+        }
+      ]
+    },
+    "SourcedDatePrecision": {
+      "description": "How much of a sourced date is known: its year, its month, its day, or a range.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Only the year is known; the start is written YYYY.",
+          "mappings": [],
+          "value": "year"
+        },
+        {
+          "description": "The year and month are known; the start is written YYYY-MM.",
+          "mappings": [],
+          "value": "month"
+        },
+        {
+          "description": "The day is known; the start is written YYYY-MM-DD.",
+          "mappings": [],
+          "value": "day"
+        },
+        {
+          "description": "The date lies between a start and an end.",
+          "mappings": [],
+          "value": "range"
+        }
+      ]
+    },
+    "Subjects": {
+      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.0.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "Education, schools and learning.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_education"
+            }
+          ],
+          "value": "education"
+        },
+        {
+          "description": "Cultural activity and institutions.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_culture"
+            }
+          ],
+          "value": "culture"
+        },
+        {
+          "description": "Health, medicine and hygiene.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_health"
+            }
+          ],
+          "value": "health"
+        },
+        {
+          "description": "Life and developments in Palestine.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_palestine"
+            }
+          ],
+          "value": "palestine"
+        },
+        {
+          "description": "Jewish communities beyond the immediate locality.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_jewish_world"
+            }
+          ],
+          "value": "jewish_world"
+        },
+        {
+          "description": "Literary works and literary life.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_literature"
+            }
+          ],
+          "value": "literature"
+        },
+        {
+          "description": "Sport and sporting associations.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_sport"
+            }
+          ],
+          "value": "sport"
+        },
+        {
+          "description": "Trade, work and economic conditions.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_economy"
+            }
+          ],
+          "value": "economy"
+        },
+        {
+          "description": "Local and regional communal life.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_community_affairs"
+            }
+          ],
+          "value": "community_affairs"
+        },
+        {
+          "description": "Zionist activity, institutions and campaigns.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_zionism"
+            }
+          ],
+          "value": "zionism"
+        },
+        {
+          "description": "News of the wider world.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subject_international_affairs"
+            }
+          ],
+          "value": "international_affairs"
+        }
+      ]
+    },
+    "TitleTypes": {
+      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.0.0.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The printed words naming a content item or a section.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:title_type_printed"
+            }
+          ],
+          "value": "printed"
+        },
+        {
+          "description": "An attributed English name pinned to the text it was made from.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:title_type_supplied"
+            }
+          ],
+          "value": "supplied"
+        }
+      ]
+    }
+  }
+}

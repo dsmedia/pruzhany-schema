@@ -109,12 +109,34 @@ def unquote(value):
     return value
 
 
+def check_export(root):
+    """The generated export uses only pinned standards and explained local declarations."""
+    folder = root / 'linkml/generated/rdf'
+    if not folder.exists():
+        return []  # Older fixture repositories have no export profile.
+    ontology = (folder / 'ontology.ttl').read_text(encoding='utf-8')
+    context = (folder / 'context.jsonld').read_text(encoding='utf-8')
+    profile = (folder / 'profile.json').read_text(encoding='utf-8')
+    errors = []
+    for prefix, namespace, filename in [('rico', RICO, RICO_LIST), ('ehri', EHRI, EHRI_LIST)]:
+        known = {t['iri'] for t in json.loads((root / 'standards' / filename).read_text(encoding='utf-8'))['terms']}
+        for term in set(re.findall(re.escape(namespace) + r'[A-Za-z_][\w-]*', ontology + context + profile)):
+            if term not in known: errors.append('RDF export: unapproved ' + prefix + ' term ' + term)
+    pc = 'https://pruzhany.org/ns/sourced-entities#'
+    declared = set(re.findall(r'^<(' + re.escape(pc) + r'[^>]+)> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>', ontology, re.M))
+    explained = set(re.findall(r'^<(' + re.escape(pc) + r'[^>]+)> <http://www.w3.org/2000/01/rdf-schema#comment> "[^"\s]', ontology, re.M))
+    used = set(re.findall(re.escape(pc) + r'export_[A-Za-z_][\w-]*', context + profile + ontology))
+    for term in sorted(used - declared): errors.append('RDF export: undeclared local term ' + term)
+    for term in sorted(declared - explained): errors.append('RDF export: unexplained local term ' + term)
+    return errors
+
+
 def check(root):
     standards = root / "standards"
     def load(name):
         return {term["iri"] for term in json.loads((standards / name).read_text(encoding="utf-8"))["terms"]}
     known = {"rico": load(RICO_LIST), "ehri": load(EHRI_LIST)}
-    errors = check_axioms(standards)
+    errors = check_axioms(standards) + check_export(root)
     def validate(prefix, term, path):
         iri = term if term.startswith(("http:", "https:")) else {"rico": RICO, "ehri": EHRI}[prefix] + term.removeprefix(prefix + ":")
         if iri not in known[prefix]:
@@ -196,6 +218,10 @@ def check(root):
         for prefix, namespace in (("rico", RICO), ("ehri", EHRI)):
             for term in sorted(set(re.findall(r'\b' + prefix + r':([A-Za-z_][\w-]*)', text) + re.findall(re.escape(namespace) + r'([A-Za-z_][\w-]*)', text))):
                 validate(prefix, term, path)
+        # This JSON-compatible YAML is a projection policy, not a LinkML schema;
+        # its omitted Citation.via is prose. check_export checks its generated mappings.
+        if path.name == 'rdf-profile.yaml':
+            continue
         for number, key, value in linkml_scalars(text):
             if key not in LINKML_MAPPING_KEYS:
                 continue
