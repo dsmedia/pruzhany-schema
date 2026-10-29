@@ -1,0 +1,13 @@
+{
+  "code": "0123456789abcdef",
+  "asking": "write_english",
+  "model": "example-model",
+  "effort": "low",
+  "budget_usd": 1.5,
+  "shape_name": "example.ExampleAnswer",
+  "first_commit": "1111111111111111111111111111111111111111",
+  "first_day": "2026-10-01",
+  "last_commit": "2222222222222222222222222222222222222222",
+  "last_day": "2026-10-15",
+  "shape_recovered": true
+}

@@ -1,0 +1,8 @@
+{
+  "prompt_code": "0123456789abcdef",
+  "model": "example-model",
+  "day": "2026-10-15",
+  "input_fingerprint": "fedcba9876543210",
+  "answer_file": "readings/example-page/english-example-model-low.json",
+  "cost_usd": 0.12
+}

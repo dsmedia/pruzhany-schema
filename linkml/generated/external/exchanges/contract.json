@@ -1,0 +1,131 @@
+{
+  "$defs": {
+    "KeptAsking": {
+      "additionalProperties": false,
+      "description": "A reference to a kept answer file or an identified input within an accumulated file. Model and prompt metadata can come from a companion trial setting or history; fields absent from storage are not invented. This is not a promise that one file is one paid call. Payloads retain their existing steps formats.",
+      "properties": {
+        "answer_file": {
+          "description": "The kept answer's file path relative to the steps repository. The path locates an existing payload; it is not that payload or a public download URI.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "cost_usd": {
+          "description": "The cost in US dollars where kept, including zero. It retains the stored file's accounting scope: English and Latin accumulate calls, and structure may include retries. Do not sum the same file's cost again for every input or interpret it as a measured per-call cost. Omit when unavailable.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "day": {
+          "description": "An asking day where actually kept: English answered_on for the indexed input or the trial directory's day. Omit when unknown; a first committed day is not an observed asking day and must not be silently substituted.",
+          "format": "date",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$(?![\\s\\S])",
+          "type": "string"
+        },
+        "input_fingerprint": {
+          "description": "An input fingerprint where kept: English pieces keys are xxh3_64 text digests; structure and joining request values are truncated SHA-256 fingerprints of whole requests. Structure trials also keep request and sent fingerprints with different scopes; an index must choose and document its input scope. Latin request is a prompt code, not an input fingerprint. Omit when no input fingerprint was kept, including trial rows.",
+          "pattern": "^[0-9a-f]{16}$(?![\\s\\S])",
+          "type": "string"
+        },
+        "model": {
+          "description": "The stored model selector, or the companion setting's model for trial rows.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "prompt_code": {
+          "description": "The associated PromptVersion.code, resolved by steps from the stored prompt code, companion setting or recovered history. English stores the code as prompt and Latin as request. Structure and joining request values include inputs; their association requires recovery, not an assumption that they hash only instructions. A recovered version may retain a whole-request code.",
+          "pattern": "^[0-9a-f]{16}$(?![\\s\\S])",
+          "type": "string"
+        }
+      },
+      "required": [
+        "prompt_code",
+        "model",
+        "answer_file"
+      ],
+      "title": "KeptAsking",
+      "type": "object"
+    },
+    "PromptVersion": {
+      "additionalProperties": false,
+      "description": "One prompt version's metadata, kept beside its exact text and recovered answer shape. First and last refer to its presence in code history, not paid-call dates. A shape may be unrecoverable even when the prompt text and its history are known.",
+      "properties": {
+        "asking": {
+          "description": "The asking served by these instructions, such as find_items, read_latin, write_english or join_people. Trial variants are registered by steps; this field is not a new controlled vocabulary.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "budget_usd": {
+          "description": "The configured maximum budget in US dollars, separate from an answer's recorded cost. Zero is allowed; no undocumented upper bound is imposed.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "code": {
+          "description": "The sixteen-character code naming this stored version and its directory. Some historical codes cover an expanded whole request rather than only instructions; the steps registry must establish the recipe and scope.",
+          "pattern": "^[0-9a-f]{16}$(?![\\s\\S])",
+          "type": "string"
+        },
+        "effort": {
+          "description": "The explicit effort setting when known; omit when no setting was supplied or recovered. Model-dependent effort values are not enumerated here.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "first_commit": {
+          "description": "The first steps commit known to contain this prompt version in code.",
+          "pattern": "^[0-9a-f]{40}$(?![\\s\\S])",
+          "type": "string"
+        },
+        "first_day": {
+          "description": "The day of first_commit, as established by steps' history recovery.",
+          "format": "date",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$(?![\\s\\S])",
+          "type": "string"
+        },
+        "last_commit": {
+          "description": "The last steps commit known to contain this prompt version in code, not necessarily the latest kept answer or the commit removing the version.",
+          "pattern": "^[0-9a-f]{40}$(?![\\s\\S])",
+          "type": "string"
+        },
+        "last_day": {
+          "description": "The day of last_commit. Agreement with history and first_day ordering are checked in steps, not by this single-document shape.",
+          "format": "date",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$(?![\\s\\S])",
+          "type": "string"
+        },
+        "model": {
+          "description": "The model selector used with this version. It is recorded configuration, not an assertion that two selectors denote the same model release.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "shape_name": {
+          "description": "The answer shape's name, qualified by its module when needed. Knowing this name does not imply that the exact schema bytes were recovered.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "shape_recovered": {
+          "description": "Whether the exact answer JSON Schema was recovered reproducibly and kept beside the prompt. False explicitly records the limit on answer validation; a shape name by itself is not recovery.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "asking",
+        "model",
+        "budget_usd",
+        "shape_name",
+        "first_commit",
+        "first_day",
+        "last_commit",
+        "last_day",
+        "shape_recovered"
+      ],
+      "title": "PromptVersion",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "classes": {
+    "KeptAsking": "schema/exchanges.yaml",
+    "PromptVersion": "schema/exchanges.yaml"
+  },
+  "external_contract": "model-exchanges",
+  "known_looser": []
+}

@@ -6,7 +6,7 @@
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
   "contract_sha256": "9a725ddd88ae2f447b58ffc8b7ce9f0b5dc831b563480c4763098c65afc0fc70",
-  "index_sha256": "33e980da60c62d47aeb7d2c1f118ce034fb82bde5fb790ef00ce957a35648cfb",
+  "index_sha256": "441641ce3a2c985dcc984345267f81b54adc7d01cbfb12400611ae4c0e0962f4",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -2317,6 +2317,7 @@
   "source_sha256": {
     "linkml/schema/content_items.yaml": "8200c92b412a4695becfafb8dafcdcdeda2114291d334efd5fa4c2ca82ea4b2c",
     "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/exchanges.yaml": "292de879345085e4f3461a6d07633508a026d329e26439407a365499a5fbf131",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
     "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
     "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",

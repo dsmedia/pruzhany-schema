@@ -29,6 +29,12 @@ Impresso's own schema on invented fixtures and every available sibling edition p
 [physical contract notes](linkml/README.md#the-physical-page-contract) for source readings,
 ALTO correspondences and data discovery through `PRUZHANY_STEPS`.
 
+The [exchanges module](linkml/schema/exchanges.yaml) defines prompt-version metadata
+and references to kept model answers in steps. Its [generated JSON Schema](linkml/generated/json-schema/exchanges.schema.json)
+validates a prompt metadata file directly, with a separate `KeptAsking` definition
+for answer references. See the [exchange contract notes](linkml/README.md#the-exchanges-contract)
+for field names, stored-format correspondences and validation responsibilities.
+
 ## Cross-language contract
 
 A type is changed in the LinkML definition first (an enum in `vocabulary/*.json`, through its generator), then `linkml/generate.py` makes the JSON Schemas, the Python fields in `pydantic/generated/` and the RDF view again; generated files are never edited by hand. The hand-written Zod schema and any retained Python rule are then brought into step with the definition, and Zod and Pydantic models are kept in lock-step with each other — a contract test compares the two via JSON Schema, and compares LinkML with Zod for every mapped model, to catch drift.
