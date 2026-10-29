@@ -1,0 +1,313 @@
+{
+  "contract_sha256": "eccdfd49e295819250198c8562b69602c39399285fb8be5835a8822a746630d7",
+  "inputs": {
+    "linkml/schema/content_items.yaml": "8200c92b412a4695becfafb8dafcdcdeda2114291d334efd5fa4c2ca82ea4b2c",
+    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/exchanges.yaml": "292de879345085e4f3461a6d07633508a026d329e26439407a365499a5fbf131",
+    "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
+    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
+    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
+    "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
+    "linkml/schema/shared_record.yaml": "cdc402c9a3dd90bfed5cda74c2a8cc4017b91ee4eb6913b58606b2215b62e029",
+    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
+    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
+    "linkml/schema/vocabulary.yaml": "1f6e7e08897da6811177a71ca4a70e3b9cd824cc1246a52f45de80b0ed796767"
+  },
+  "models": {
+    "KeptAsking": {
+      "description": "A reference to a kept answer file or an identified input within an accumulated file. Model and prompt metadata can come from a companion trial setting or history; fields absent from storage are not invented. This is not a promise that one file is one paid call. Payloads retain their existing steps formats.",
+      "fields": [
+        {
+          "description": "The kept answer's file path relative to the steps repository. The path locates an existing payload; it is not that payload or a public download URI.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "answer_file",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The kept answer's file path relative to the steps repository. The path locates an existing payload; it is not that payload or a public download URI.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The cost in US dollars where kept, including zero. It retains the stored file's accounting scope: English and Latin accumulate calls, and structure may include retries. Do not sum the same file's cost again for every input or interpret it as a measured per-call cost. Omit when unavailable.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "cost_usd",
+          "range": "NonNegativeNumber",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The cost in US dollars where kept, including zero. It retains the stored file's accounting scope: English and Latin accumulate calls, and structure may include retries. Do not sum the same file's cost again for every input or interpret it as a measured per-call cost. Omit when unavailable.",
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        {
+          "description": "An asking day where actually kept: English answered_on for the indexed input or the trial directory's day. Omit when unknown; a first committed day is not an observed asking day and must not be silently substituted.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "day",
+          "range": "ExchangeDay",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "An asking day where actually kept: English answered_on for the indexed input or the trial directory's day. Omit when unknown; a first committed day is not an observed asking day and must not be silently substituted.",
+            "format": "date",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "An input fingerprint where kept: English pieces keys are xxh3_64 text digests; structure and joining request values are truncated SHA-256 fingerprints of whole requests. Structure trials also keep request and sent fingerprints with different scopes; an index must choose and document its input scope. Latin request is a prompt code, not an input fingerprint. Omit when no input fingerprint was kept, including trial rows.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "input_fingerprint",
+          "range": "ExchangeCode",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "An input fingerprint where kept: English pieces keys are xxh3_64 text digests; structure and joining request values are truncated SHA-256 fingerprints of whole requests. Structure trials also keep request and sent fingerprints with different scopes; an index must choose and document its input scope. Latin request is a prompt code, not an input fingerprint. Omit when no input fingerprint was kept, including trial rows.",
+            "pattern": "^[0-9a-f]{16}$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The stored model selector, or the companion setting's model for trial rows.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "model",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The stored model selector, or the companion setting's model for trial rows.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The associated PromptVersion.code, resolved by steps from the stored prompt code, companion setting or recovered history. English stores the code as prompt and Latin as request. Structure and joining request values include inputs; their association requires recovery, not an assumption that they hash only instructions. A recovered version may retain a whole-request code.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "prompt_code",
+          "range": "ExchangeCode",
+          "references": [
+            "PromptVersion.code"
+          ],
+          "relationship": "reference",
+          "required": true,
+          "shape": {
+            "description": "The associated PromptVersion.code, resolved by steps from the stored prompt code, companion setting or recovered history. English stores the code as prompt and Latin as request. Structure and joining request values include inputs; their association requires recovery, not an assumption that they hash only instructions. A recovered version may retain a whole-request code.",
+            "pattern": "^[0-9a-f]{16}$(?![\\s\\S])",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/exchanges.yaml",
+      "yaml": "  KeptAsking:\n    description: >-\n      A reference to a kept answer file or an identified input within an accumulated\n      file. Model and prompt metadata can come from a companion trial setting or\n      history; fields absent from storage are not invented. This is not a promise\n      that one file is one paid call. Payloads retain their existing steps formats.\n    see_also:\n      - https://www.w3.org/TR/prov-o/#Activity\n      - https://www.w3.org/TR/prov-o/#Entity\n    comments:\n      - >-\n        PROV-O Activity corresponds to the asking described, and Entity to the\n        kept file. Accumulated files need their own usage and generation history.\n    attributes:\n      prompt_code:\n        range: ExchangeCode\n        required: true\n        description: >-\n          The associated PromptVersion.code, resolved by steps from the stored\n          prompt code, companion setting or recovered history. English stores the\n          code as prompt and Latin as request. Structure and joining request values\n          include inputs; their association requires recovery, not an assumption that\n          they hash only instructions. A recovered version may retain a whole-request code.\n        annotations:\n          references: PromptVersion.code\n        see_also:\n          - https://www.w3.org/TR/prov-o/#hadPlan\n        comments:\n          - >-\n            A PROV-O plan link would pass through the asking's qualified association;\n            hadPlan is not a direct Activity property.\n      model:\n        range: NonBlankText\n        required: true\n        description: >-\n          The stored model selector, or the companion setting's model for trial rows.\n        see_also:\n          - https://www.w3.org/TR/prov-o/#SoftwareAgent\n          - https://www.w3.org/TR/prov-o/#wasAssociatedWith\n      day:\n        range: ExchangeDay\n        description: >-\n          An asking day where actually kept: English answered_on for the indexed input\n          or the trial directory's day. Omit when unknown; a first committed day is\n          not an observed asking day and must not be silently substituted.\n        see_also:\n          - https://www.w3.org/TR/prov-o/#endedAtTime\n        comments:\n          - >-\n            This day has less precision than the PROV-O timestamp property.\n      input_fingerprint:\n        range: ExchangeCode\n        description: >-\n          An input fingerprint where kept: English pieces keys are xxh3_64 text\n          digests; structure and joining request values are truncated SHA-256\n          fingerprints of whole requests. Structure trials also keep request and\n          sent fingerprints with different scopes; an index must choose and document\n          its input scope. Latin request is a prompt code, not an input fingerprint.\n          Omit when no input fingerprint was kept, including trial rows.\n        see_also:\n          - https://www.w3.org/TR/prov-o/#used\n      answer_file:\n        range: NonBlankText\n        required: true\n        description: >-\n          The kept answer's file path relative to the steps repository. The path\n          locates an existing payload; it is not that payload or a public download URI.\n        see_also:\n          - https://www.w3.org/TR/prov-o/#generated\n      cost_usd:\n        range: NonNegativeNumber\n        description: >-\n          The cost in US dollars where kept, including zero. It retains the stored\n          file's accounting scope: English and Latin accumulate calls, and structure\n          may include retries. Do not sum the same file's cost again for every input\n          or interpret it as a measured per-call cost. Omit when unavailable.\n"
+    },
+    "PromptVersion": {
+      "description": "One prompt version's metadata, kept beside its exact text and recovered answer shape. First and last refer to its presence in code history, not paid-call dates. A shape may be unrecoverable even when the prompt text and its history are known.",
+      "fields": [
+        {
+          "description": "The asking served by these instructions, such as find_items, read_latin, write_english or join_people. Trial variants are registered by steps; this field is not a new controlled vocabulary.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "asking",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The asking served by these instructions, such as find_items, read_latin, write_english or join_people. Trial variants are registered by steps; this field is not a new controlled vocabulary.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The configured maximum budget in US dollars, separate from an answer's recorded cost. Zero is allowed; no undocumented upper bound is imposed.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "budget_usd",
+          "range": "NonNegativeNumber",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The configured maximum budget in US dollars, separate from an answer's recorded cost. Zero is allowed; no undocumented upper bound is imposed.",
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        {
+          "description": "The sixteen-character code naming this stored version and its directory. Some historical codes cover an expanded whole request rather than only instructions; the steps registry must establish the recipe and scope.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "code",
+          "range": "ExchangeCode",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The sixteen-character code naming this stored version and its directory. Some historical codes cover an expanded whole request rather than only instructions; the steps registry must establish the recipe and scope.",
+            "pattern": "^[0-9a-f]{16}$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The explicit effort setting when known; omit when no setting was supplied or recovered. Model-dependent effort values are not enumerated here.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "effort",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The explicit effort setting when known; omit when no setting was supplied or recovered. Model-dependent effort values are not enumerated here.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The first steps commit known to contain this prompt version in code.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "first_commit",
+          "range": "ExchangeCommit",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The first steps commit known to contain this prompt version in code.",
+            "pattern": "^[0-9a-f]{40}$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The day of first_commit, as established by steps' history recovery.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "first_day",
+          "range": "ExchangeDay",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The day of first_commit, as established by steps' history recovery.",
+            "format": "date",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The last steps commit known to contain this prompt version in code, not necessarily the latest kept answer or the commit removing the version.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "last_commit",
+          "range": "ExchangeCommit",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The last steps commit known to contain this prompt version in code, not necessarily the latest kept answer or the commit removing the version.",
+            "pattern": "^[0-9a-f]{40}$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The day of last_commit. Agreement with history and first_day ordering are checked in steps, not by this single-document shape.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "last_day",
+          "range": "ExchangeDay",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The day of last_commit. Agreement with history and first_day ordering are checked in steps, not by this single-document shape.",
+            "format": "date",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The model selector used with this version. It is recorded configuration, not an assertion that two selectors denote the same model release.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "model",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The model selector used with this version. It is recorded configuration, not an assertion that two selectors denote the same model release.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The answer shape's name, qualified by its module when needed. Knowing this name does not imply that the exact schema bytes were recovered.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "shape_name",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The answer shape's name, qualified by its module when needed. Knowing this name does not imply that the exact schema bytes were recovered.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Whether the exact answer JSON Schema was recovered reproducibly and kept beside the prompt. False explicitly records the limit on answer validation; a shape name by itself is not recovery.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "shape_recovered",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Whether the exact answer JSON Schema was recovered reproducibly and kept beside the prompt. False explicitly records the limit on answer validation; a shape name by itself is not recovery.",
+            "type": "boolean"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/exchanges.yaml",
+      "yaml": "  PromptVersion:\n    tree_root: true\n    description: >-\n      One prompt version's metadata, kept beside its exact text and recovered answer\n      shape. First and last refer to its presence in code history, not paid-call dates.\n      A shape may be unrecoverable even when the prompt text and its history are known.\n    see_also:\n      - https://www.w3.org/TR/prov-o/#Plan\n    comments:\n      - >-\n        PROV-O Plan is a useful correspondence for versioned instructions. These\n        metadata do not assert an RDF type or establish a plan's execution.\n    attributes:\n      code:\n        range: ExchangeCode\n        required: true\n        description: >-\n          The sixteen-character code naming this stored version and its directory.\n          Some historical codes cover an expanded whole request rather than only\n          instructions; the steps registry must establish the recipe and scope.\n      asking:\n        range: NonBlankText\n        required: true\n        description: >-\n          The asking served by these instructions, such as find_items, read_latin,\n          write_english or join_people. Trial variants are registered by steps;\n          this field is not a new controlled vocabulary.\n      model:\n        range: NonBlankText\n        required: true\n        description: >-\n          The model selector used with this version. It is recorded configuration,\n          not an assertion that two selectors denote the same model release.\n      effort:\n        range: NonBlankText\n        description: >-\n          The explicit effort setting when known; omit when no setting was supplied\n          or recovered. Model-dependent effort values are not enumerated here.\n      budget_usd:\n        range: NonNegativeNumber\n        required: true\n        description: >-\n          The configured maximum budget in US dollars, separate from an answer's\n          recorded cost. Zero is allowed; no undocumented upper bound is imposed.\n      shape_name:\n        range: NonBlankText\n        required: true\n        description: >-\n          The answer shape's name, qualified by its module when needed. Knowing\n          this name does not imply that the exact schema bytes were recovered.\n      first_commit:\n        range: ExchangeCommit\n        required: true\n        description: >-\n          The first steps commit known to contain this prompt version in code.\n      first_day:\n        range: ExchangeDay\n        required: true\n        description: >-\n          The day of first_commit, as established by steps' history recovery.\n      last_commit:\n        range: ExchangeCommit\n        required: true\n        description: >-\n          The last steps commit known to contain this prompt version in code, not\n          necessarily the latest kept answer or the commit removing the version.\n      last_day:\n        range: ExchangeDay\n        required: true\n        description: >-\n          The day of last_commit. Agreement with history and first_day ordering\n          are checked in steps, not by this single-document shape.\n      shape_recovered:\n        range: boolean\n        required: true\n        description: >-\n          Whether the exact answer JSON Schema was recovered reproducibly and kept\n          beside the prompt. False explicitly records the limit on answer validation;\n          a shape name by itself is not recovery.\n"
+    }
+  },
+  "types": {
+    "ExchangeCode": {
+      "description": "Exactly sixteen lowercase hexadecimal characters. Prompt codes and the stored short input fingerprints share this lexical form; it does not identify the hash algorithm or what is covered. The steps registry owns the byte-level rule.",
+      "mappings": []
+    },
+    "ExchangeCommit": {
+      "description": "A full forty-character Git SHA-1 commit id in the steps repository, not an abbreviated id, branch or a claim that this commit exists in the schema repository.",
+      "mappings": []
+    },
+    "ExchangeDay": {
+      "description": "A calendar day as YYYY-MM-DD, with JSON Schema date format validation enabled by the consumer. No time of day or timezone is inferred.",
+      "mappings": []
+    }
+  },
+  "version": 1
+}
