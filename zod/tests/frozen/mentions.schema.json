@@ -1,0 +1,147 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"issue_date": {
+			"type": "string",
+			"pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+		},
+		"mentions": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"pattern": "\\S"
+					},
+					"person_id": {
+						"type": "string",
+						"pattern": "\\S"
+					},
+					"printed_name": {
+						"anyOf": [
+							{
+								"type": "string",
+								"pattern": "\\S"
+							},
+							{
+								"type": "null"
+							}
+						]
+					},
+					"title": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "null"
+							}
+						]
+					},
+					"function": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "null"
+							}
+						]
+					},
+					"wkd_id": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "null"
+							}
+						]
+					},
+					"content_item_id": {
+						"type": "string",
+						"pattern": "\\S"
+					},
+					"address_grain": {
+						"type": "string",
+						"enum": ["words", "regions"]
+					},
+					"roles": {
+						"minItems": 1,
+						"type": "array",
+						"items": {
+							"type": "string",
+							"enum": [
+								"subject",
+								"deceased",
+								"honoree",
+								"signer",
+								"mourner",
+								"advertiser",
+								"author",
+								"office_holder",
+								"donor",
+								"named",
+								"betrothed",
+								"parent"
+							]
+						}
+					},
+					"addresses": {
+						"minItems": 1,
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"image_uri": {
+									"type": "string",
+									"pattern": "\\S"
+								},
+								"bbox": {
+									"type": "array",
+									"prefixItems": [
+										{
+											"type": "number",
+											"minimum": 0
+										},
+										{
+											"type": "number",
+											"minimum": 0
+										},
+										{
+											"type": "number",
+											"exclusiveMinimum": 0
+										},
+										{
+											"type": "number",
+											"exclusiveMinimum": 0
+										}
+									]
+								},
+								"text": {
+									"type": "string"
+								}
+							},
+							"required": ["image_uri", "bbox", "text"],
+							"additionalProperties": false
+						}
+					}
+				},
+				"required": [
+					"id",
+					"person_id",
+					"printed_name",
+					"content_item_id",
+					"address_grain",
+					"roles",
+					"addresses"
+				],
+				"additionalProperties": false
+			}
+		}
+	},
+	"required": ["issue_date", "mentions"],
+	"additionalProperties": false
+}
