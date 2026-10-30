@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `a4cdd258a0d688a824c008b6df5ccf37abdf9fdc8116c22a238def600d4ce4d9`.
+Definition fingerprint: `4f5f583cbb05474da6063d886d51234e89e0178c8d303bb64e214bd3fcf75f77`.
 
 ## What the Pruzhany issue documents share
 
@@ -1317,6 +1317,211 @@ Meaning: No direct mapping recorded.
 | `shape_recovered` | Whether the exact answer JSON Schema was recovered reproducibly and kept beside the prompt. False explicitly records the limit on answer validation; a shape name by itself is not recovery. | boolean | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/exchanges.yaml`.
+
+## Current structured model answers
+
+### FindItemsAnswer
+
+The page's items in reading order, the headings over several items, the running head.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `headings` | The headings field in the Answer response. | list of FindItemsAnswerHeading | Yes | No direct mapping recorded |
+| `items` | The items field in the Answer response. | list of FindItemsAnswerItem | Yes | No direct mapping recorded |
+| `running_head` | The running_head field in the Answer response. | list of integer | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### FindItemsAnswerHeading
+
+A heading over several items as the model gives it: its lines, and the items' numbers.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `lines` | The lines field in the AnswerHeading response. | list of integer | Yes | No direct mapping recorded |
+| `over` | The over field in the AnswerHeading response. | list of integer | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### FindItemsAnswerItem
+
+One item as the model gives it: its parts in order, its kind, language and headline.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `headline` | The headline field in the AnswerItem response. | list of integer | Yes | No direct mapping recorded |
+| `kind` | The kind field in the AnswerItem response. | string; one of: ['article', 'advert', 'death notice'] | Yes | No direct mapping recorded |
+| `language` | The language field in the AnswerItem response. | string; one of: ['yi', 'he', 'pl'] | Yes | No direct mapping recorded |
+| `parts` | The parts field in the AnswerItem response. | list of integer | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### JoinPeopleAnswer
+
+The groups of names that are one person; a name in no group is a person of its own.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `groups` | The groups field in the Answer response. | list of JoinPeopleGroup | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### JoinPeopleGroup
+
+Names that are one person, and the name the person is given.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `certainty` | The certainty field in the Group response. | string; one of: ['certain', 'likely'] | Yes | No direct mapping recorded |
+| `name` | The fullest English name the edition gives the person. | string | Yes | No direct mapping recorded |
+| `names` | The numbers of the names that are one person. | list of integer | Yes | No direct mapping recorded |
+| `why` | In a few words. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### ReadLatinAnswer
+
+The model's answer to one message: a line for each picture, empty where it saw no text.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `lines` | The lines field in the Answer response. | list of ReadLatinLine | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### ReadLatinLine
+
+One picture as the model answers for it: the picture's number and the text printed in it.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `picture` | The picture field in the Line response. | integer | Yes | No direct mapping recorded |
+| `text` | The text field in the Line response. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteEnglishAnswer
+
+The answer about one page: every piece it was sent, by its number.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `pieces` | The pieces field in the Answer response. | list of WriteEnglishAnsweredPiece | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteEnglishAnsweredPiece
+
+A piece of the answer, with the number it was sent under.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `category` | The category field in the AnsweredPiece response. | string | Yes | No direct mapping recorded |
+| `doubts` | The doubts field in the AnsweredPiece response. | list of WriteEnglishDoubt | Yes | No direct mapping recorded |
+| `english` | The english field in the AnsweredPiece response. | string | Yes | No direct mapping recorded |
+| `kind` | The kind field in the AnsweredPiece response. | string; one of: ['article', 'notice', 'ad', 'congratulation', 'obituary', 'other'] | Yes | No direct mapping recorded |
+| `life_event` | The life_event field in the AnsweredPiece response. | WriteEnglishLifeEvent | Yes | No direct mapping recorded |
+| `number` | The number field in the AnsweredPiece response. | integer | Yes | No direct mapping recorded |
+| `organizations` | The organizations field in the AnsweredPiece response. | list of WriteEnglishOrganization | Yes | No direct mapping recorded |
+| `people` | The people field in the AnsweredPiece response. | list of WriteEnglishPerson | Yes | No direct mapping recorded |
+| `places` | The places field in the AnsweredPiece response. | list of WriteEnglishPlace | Yes | No direct mapping recorded |
+| `title` | The title field in the AnsweredPiece response. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteEnglishDoubt
+
+A word or short phrase the model believes the machine misread.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `likely` | The likely field in the Doubt response. | string | Yes | No direct mapping recorded |
+| `printed` | The printed field in the Doubt response. | string | Yes | No direct mapping recorded |
+| `why` | The why field in the Doubt response. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteEnglishLifeEvent
+
+The one family event a piece announces, greets or mourns.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `date_gregorian` | YYYY-MM-DD, only as printed. | string | Yes | No direct mapping recorded |
+| `date_hebrew` | The date_hebrew field in the LifeEvent response. | string | Yes | No direct mapping recorded |
+| `kind` | The kind field in the LifeEvent response. | string; one of: ['wedding', 'birth', 'death', 'bar_mitzvah', 'celebration', 'other'] | Yes | No direct mapping recorded |
+| `name` | A short English name for the event. | string | Yes | No direct mapping recorded |
+| `principals` | Their English names as in people. | list of string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteEnglishOrganization
+
+An organisation, institution or named business a piece names.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `kind` | In a word or two: school, bank, party, society, shop. | string | Yes | No direct mapping recorded |
+| `name` | In English. | string | Yes | No direct mapping recorded |
+| `printed` | As in the text. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteEnglishPerson
+
+A person a piece names.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `died` | True only if the piece says the person has died. | boolean | Yes | No direct mapping recorded |
+| `gender` | The gender field in the Person response. | string; one of: ['male', 'female', 'unknown'] | Yes | No direct mapping recorded |
+| `lives_in` | The town the piece says the person lives in. | string | Yes | No direct mapping recorded |
+| `minor` | True only if the piece shows the person was a child. | boolean | Yes | No direct mapping recorded |
+| `name` | In English, as the instructions say. | string | Yes | No direct mapping recorded |
+| `printed` | As in the text. | string | Yes | No direct mapping recorded |
+| `role` | What the person is in this piece, in a few words. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteEnglishPlace
+
+A place a piece names.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `kind` | The kind field in the Place response. | string; one of: ['city', 'town', 'village', 'shtetl', 'street', 'address', 'landmark', 'country', 'region', 'district'] | Yes | No direct mapping recorded |
+| `name` | Its usual English name. | string | Yes | No direct mapping recorded |
+| `printed` | As in the text. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
 
 ## Types and vocabularies
 

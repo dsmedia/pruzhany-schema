@@ -13,6 +13,12 @@
 			"top_class": "PromptVersion",
 			"external_contract": "model-exchanges"
 		},
+		{
+			"schema": "schema/answers.yaml",
+			"name": "answers",
+			"top_class": null,
+			"external_contract": "model-answers"
+		},
 		{ "schema": "schema/types.yaml", "name": "types", "top_class": null },
 		{ "schema": "schema/vocabulary.yaml", "name": "vocabulary", "top_class": null },
 		{ "schema": "schema/site_common.yaml", "name": "site_common", "top_class": null },

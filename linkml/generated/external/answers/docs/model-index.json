@@ -1,0 +1,977 @@
+{
+  "contract_sha256": "89bc88215fa588aff87e99d4a23250a4f4f36f83772059dfb5c1f2468082e215",
+  "inputs": {
+    "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
+    "linkml/schema/content_items.yaml": "8200c92b412a4695becfafb8dafcdcdeda2114291d334efd5fa4c2ca82ea4b2c",
+    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
+    "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
+    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
+    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
+    "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
+    "linkml/schema/shared_record.yaml": "cdc402c9a3dd90bfed5cda74c2a8cc4017b91ee4eb6913b58606b2215b62e029",
+    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
+    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
+    "linkml/schema/vocabulary.yaml": "1f6e7e08897da6811177a71ca4a70e3b9cd824cc1246a52f45de80b0ed796767"
+  },
+  "models": {
+    "FindItemsAnswer": {
+      "description": "The page's items in reading order, the headings over several items, the running head.",
+      "fields": [
+        {
+          "description": "The headings field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "headings",
+          "range": "FindItemsAnswerHeading",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "default": [],
+            "items": {
+              "$ref": "#/$defs/FindItemsAnswerHeading"
+            },
+            "title": "Headings",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The items field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "items",
+          "range": "FindItemsAnswerItem",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/FindItemsAnswerItem"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The running_head field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "running_head",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "default": [],
+            "items": {
+              "type": "integer"
+            },
+            "title": "Running Head",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  FindItemsAnswer:\n    title: Answer\n    description: >-\n      The page's items in reading order, the headings over several items, the running head.\n    annotations:\n      asking: find_items\n    attributes:\n      items:\n        multivalued: true\n        range: FindItemsAnswerItem\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Items\n        description: >-\n          The items field in the Answer response.\n        annotations:\n          description_in_wire: false\n      headings:\n        multivalued: true\n        range: FindItemsAnswerHeading\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Headings\n        annotations:\n          default_empty_list: true\n          description_in_wire: false\n        description: >-\n          The headings field in the Answer response.\n      running_head:\n        multivalued: true\n        range: integer\n        required: true\n        title: Running Head\n        annotations:\n          default_empty_list: true\n          description_in_wire: false\n        description: >-\n          The running_head field in the Answer response.\n"
+    },
+    "FindItemsAnswerHeading": {
+      "description": "A heading over several items as the model gives it: its lines, and the items' numbers.",
+      "fields": [
+        {
+          "description": "The lines field in the AnswerHeading response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "lines",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Lines",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The over field in the AnswerHeading response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "over",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Over",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  FindItemsAnswerHeading:\n    title: AnswerHeading\n    description: >-\n      A heading over several items as the model gives it: its lines, and the items' numbers.\n    attributes:\n      lines:\n        multivalued: true\n        range: integer\n        required: true\n        title: Lines\n        description: >-\n          The lines field in the AnswerHeading response.\n        annotations:\n          description_in_wire: false\n      over:\n        multivalued: true\n        range: integer\n        required: true\n        title: Over\n        description: >-\n          The over field in the AnswerHeading response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "FindItemsAnswerItem": {
+      "description": "One item as the model gives it: its parts in order, its kind, language and headline.",
+      "fields": [
+        {
+          "description": "The headline field in the AnswerItem response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "headline",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Headline",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The kind field in the AnswerItem response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "kind",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "enum": [
+              "article",
+              "advert",
+              "death notice"
+            ],
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The language field in the AnswerItem response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "language",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "enum": [
+              "yi",
+              "he",
+              "pl"
+            ],
+            "title": "Language",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The parts field in the AnswerItem response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "parts",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Parts",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  FindItemsAnswerItem:\n    title: AnswerItem\n    description: >-\n      One item as the model gives it: its parts in order, its kind, language and headline.\n    attributes:\n      parts:\n        multivalued: true\n        range: integer\n        required: true\n        title: Parts\n        description: >-\n          The parts field in the AnswerItem response.\n        annotations:\n          description_in_wire: false\n      kind:\n        range: string\n        required: true\n        title: Kind\n        equals_string_in:\n        - article\n        - advert\n        - death notice\n        description: >-\n          The kind field in the AnswerItem response.\n        annotations:\n          description_in_wire: false\n      language:\n        range: string\n        required: true\n        title: Language\n        equals_string_in:\n        - yi\n        - he\n        - pl\n        description: >-\n          The language field in the AnswerItem response.\n        annotations:\n          description_in_wire: false\n      headline:\n        multivalued: true\n        range: integer\n        required: true\n        title: Headline\n        description: >-\n          The headline field in the AnswerItem response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "JoinPeopleAnswer": {
+      "description": "The groups of names that are one person; a name in no group is a person of its own.",
+      "fields": [
+        {
+          "description": "The groups field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "groups",
+          "range": "JoinPeopleGroup",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/JoinPeopleGroup"
+            },
+            "title": "Groups",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  JoinPeopleAnswer:\n    title: Answer\n    description: >-\n      The groups of names that are one person; a name in no group is a person of its own.\n    annotations:\n      asking: join_people\n    attributes:\n      groups:\n        multivalued: true\n        range: JoinPeopleGroup\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Groups\n        description: >-\n          The groups field in the Answer response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "JoinPeopleGroup": {
+      "description": "Names that are one person, and the name the person is given.",
+      "fields": [
+        {
+          "description": "The certainty field in the Group response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "certainty",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "enum": [
+              "certain",
+              "likely"
+            ],
+            "title": "Certainty",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The fullest English name the edition gives the person.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "name",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The fullest English name the edition gives the person.",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The numbers of the names that are one person.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "names",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The numbers of the names that are one person.",
+            "items": {
+              "type": "integer"
+            },
+            "title": "Names",
+            "type": "array"
+          }
+        },
+        {
+          "description": "In a few words.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "why",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "In a few words.",
+            "title": "Why",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  JoinPeopleGroup:\n    title: Group\n    description: >-\n      Names that are one person, and the name the person is given.\n    attributes:\n      names:\n        multivalued: true\n        range: integer\n        required: true\n        title: Names\n        description: >-\n          The numbers of the names that are one person.\n      name:\n        range: string\n        required: true\n        title: Name\n        description: >-\n          The fullest English name the edition gives the person.\n      certainty:\n        range: string\n        required: true\n        title: Certainty\n        equals_string_in:\n        - certain\n        - likely\n        description: >-\n          The certainty field in the Group response.\n        annotations:\n          description_in_wire: false\n      why:\n        range: string\n        required: true\n        title: Why\n        description: >-\n          In a few words.\n"
+    },
+    "ReadLatinAnswer": {
+      "description": "The model's answer to one message: a line for each picture, empty where it saw no text.",
+      "fields": [
+        {
+          "description": "The lines field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "lines",
+          "range": "ReadLatinLine",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/ReadLatinLine"
+            },
+            "title": "Lines",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  ReadLatinAnswer:\n    title: Answer\n    description: >-\n      The model's answer to one message: a line for each picture, empty where it saw no text.\n    annotations:\n      asking: read_latin\n    attributes:\n      lines:\n        multivalued: true\n        range: ReadLatinLine\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Lines\n        description: >-\n          The lines field in the Answer response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "ReadLatinLine": {
+      "description": "One picture as the model answers for it: the picture's number and the text printed in it.",
+      "fields": [
+        {
+          "description": "The picture field in the Line response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "picture",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Picture",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The text field in the Line response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "text",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Text",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  ReadLatinLine:\n    title: Line\n    description: >-\n      One picture as the model answers for it: the picture's number and the text printed in it.\n    attributes:\n      picture:\n        range: integer\n        required: true\n        title: Picture\n        description: >-\n          The picture field in the Line response.\n        annotations:\n          description_in_wire: false\n      text:\n        range: string\n        required: true\n        title: Text\n        description: >-\n          The text field in the Line response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "WriteEnglishAnswer": {
+      "description": "The answer about one page: every piece it was sent, by its number.",
+      "fields": [
+        {
+          "description": "The pieces field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "pieces",
+          "range": "WriteEnglishAnsweredPiece",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/WriteEnglishAnsweredPiece"
+            },
+            "title": "Pieces",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteEnglishAnswer:\n    title: Answer\n    description: >-\n      The answer about one page: every piece it was sent, by its number.\n    annotations:\n      asking: write_english\n    attributes:\n      pieces:\n        multivalued: true\n        range: WriteEnglishAnsweredPiece\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Pieces\n        description: >-\n          The pieces field in the Answer response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "WriteEnglishAnsweredPiece": {
+      "description": "A piece of the answer, with the number it was sent under.",
+      "fields": [
+        {
+          "description": "The category field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "category",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Category",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The doubts field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "doubts",
+          "range": "WriteEnglishDoubt",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/WriteEnglishDoubt"
+            },
+            "title": "Doubts",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The english field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "english",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "English",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The kind field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "kind",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "enum": [
+              "article",
+              "notice",
+              "ad",
+              "congratulation",
+              "obituary",
+              "other"
+            ],
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The life_event field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "life_event",
+          "range": "WriteEnglishLifeEvent",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/WriteEnglishLifeEvent"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        {
+          "description": "The number field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "number",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Number",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The organizations field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "organizations",
+          "range": "WriteEnglishOrganization",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/WriteEnglishOrganization"
+            },
+            "title": "Organizations",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The people field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "people",
+          "range": "WriteEnglishPerson",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/WriteEnglishPerson"
+            },
+            "title": "People",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The places field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "places",
+          "range": "WriteEnglishPlace",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/WriteEnglishPlace"
+            },
+            "title": "Places",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The title field in the AnsweredPiece response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "title",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Title",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteEnglishAnsweredPiece:\n    title: AnsweredPiece\n    description: >-\n      A piece of the answer, with the number it was sent under.\n    attributes:\n      kind:\n        range: string\n        required: true\n        title: Kind\n        equals_string_in:\n        - article\n        - notice\n        - ad\n        - congratulation\n        - obituary\n        - other\n        description: >-\n          The kind field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n      title:\n        range: string\n        required: true\n        title: Title\n        description: >-\n          The title field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n      category:\n        range: string\n        required: true\n        title: Category\n        description: >-\n          The category field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n      english:\n        range: string\n        required: true\n        title: English\n        description: >-\n          The english field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n      people:\n        multivalued: true\n        range: WriteEnglishPerson\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: People\n        description: >-\n          The people field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n      places:\n        multivalued: true\n        range: WriteEnglishPlace\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Places\n        description: >-\n          The places field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n      organizations:\n        multivalued: true\n        range: WriteEnglishOrganization\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Organizations\n        description: >-\n          The organizations field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n      life_event:\n        range: WriteEnglishLifeEvent\n        inlined: true\n        required: true\n        annotations:\n          nullable: true\n          description_in_wire: false\n        description: >-\n          The life_event field in the AnsweredPiece response.\n      doubts:\n        multivalued: true\n        range: WriteEnglishDoubt\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Doubts\n        description: >-\n          The doubts field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n      number:\n        range: integer\n        required: true\n        title: Number\n        description: >-\n          The number field in the AnsweredPiece response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "WriteEnglishDoubt": {
+      "description": "A word or short phrase the model believes the machine misread.",
+      "fields": [
+        {
+          "description": "The likely field in the Doubt response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "likely",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Likely",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The printed field in the Doubt response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "printed",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Printed",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The why field in the Doubt response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "why",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Why",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteEnglishDoubt:\n    title: Doubt\n    description: >-\n      A word or short phrase the model believes the machine misread.\n    attributes:\n      printed:\n        range: string\n        required: true\n        title: Printed\n        description: >-\n          The printed field in the Doubt response.\n        annotations:\n          description_in_wire: false\n      likely:\n        range: string\n        required: true\n        title: Likely\n        description: >-\n          The likely field in the Doubt response.\n        annotations:\n          description_in_wire: false\n      why:\n        range: string\n        required: true\n        title: Why\n        description: >-\n          The why field in the Doubt response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "WriteEnglishLifeEvent": {
+      "description": "The one family event a piece announces, greets or mourns.",
+      "fields": [
+        {
+          "description": "YYYY-MM-DD, only as printed.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "date_gregorian",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "YYYY-MM-DD, only as printed.",
+            "title": "Date Gregorian"
+          }
+        },
+        {
+          "description": "The date_hebrew field in the LifeEvent response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "date_hebrew",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date Hebrew"
+          }
+        },
+        {
+          "description": "The kind field in the LifeEvent response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "kind",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "enum": [
+              "wedding",
+              "birth",
+              "death",
+              "bar_mitzvah",
+              "celebration",
+              "other"
+            ],
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        {
+          "description": "A short English name for the event.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "name",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A short English name for the event.",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Their English names as in people.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "principals",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Their English names as in people.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Principals",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteEnglishLifeEvent:\n    title: LifeEvent\n    description: >-\n      The one family event a piece announces, greets or mourns.\n    attributes:\n      kind:\n        range: string\n        required: true\n        title: Kind\n        equals_string_in:\n        - wedding\n        - birth\n        - death\n        - bar_mitzvah\n        - celebration\n        - other\n        description: >-\n          The kind field in the LifeEvent response.\n        annotations:\n          description_in_wire: false\n      name:\n        range: string\n        required: true\n        title: Name\n        description: >-\n          A short English name for the event.\n      principals:\n        multivalued: true\n        range: string\n        required: true\n        title: Principals\n        description: >-\n          Their English names as in people.\n      date_hebrew:\n        range: string\n        required: true\n        title: Date Hebrew\n        annotations:\n          nullable: true\n          description_in_wire: false\n        description: >-\n          The date_hebrew field in the LifeEvent response.\n      date_gregorian:\n        range: string\n        required: true\n        title: Date Gregorian\n        description: >-\n          YYYY-MM-DD, only as printed.\n        annotations:\n          nullable: true\n"
+    },
+    "WriteEnglishOrganization": {
+      "description": "An organisation, institution or named business a piece names.",
+      "fields": [
+        {
+          "description": "In a word or two: school, bank, party, society, shop.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "kind",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "In a word or two: school, bank, party, society, shop.",
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        {
+          "description": "In English.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "name",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "In English.",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "description": "As in the text.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "printed",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "As in the text.",
+            "title": "Printed",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteEnglishOrganization:\n    title: Organization\n    description: >-\n      An organisation, institution or named business a piece names.\n    attributes:\n      name:\n        range: string\n        required: true\n        title: Name\n        description: >-\n          In English.\n      printed:\n        range: string\n        required: true\n        title: Printed\n        description: >-\n          As in the text.\n      kind:\n        range: string\n        required: true\n        title: Kind\n        description: >-\n          In a word or two: school, bank, party, society, shop.\n"
+    },
+    "WriteEnglishPerson": {
+      "description": "A person a piece names.",
+      "fields": [
+        {
+          "description": "True only if the piece says the person has died.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "died",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "True only if the piece says the person has died.",
+            "title": "Died",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "The gender field in the Person response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "gender",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "title": "Gender",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The town the piece says the person lives in.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "lives_in",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The town the piece says the person lives in.",
+            "title": "Lives In"
+          }
+        },
+        {
+          "description": "True only if the piece shows the person was a child.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "minor",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "True only if the piece shows the person was a child.",
+            "title": "Minor",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "In English, as the instructions say.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "name",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "In English, as the instructions say.",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "description": "As in the text.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "printed",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "As in the text.",
+            "title": "Printed",
+            "type": "string"
+          }
+        },
+        {
+          "description": "What the person is in this piece, in a few words.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "role",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "What the person is in this piece, in a few words.",
+            "title": "Role",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteEnglishPerson:\n    title: Person\n    description: >-\n      A person a piece names.\n    attributes:\n      name:\n        range: string\n        required: true\n        title: Name\n        description: >-\n          In English, as the instructions say.\n      printed:\n        range: string\n        required: true\n        title: Printed\n        description: >-\n          As in the text.\n      gender:\n        range: string\n        required: true\n        title: Gender\n        equals_string_in:\n        - male\n        - female\n        - unknown\n        description: >-\n          The gender field in the Person response.\n        annotations:\n          description_in_wire: false\n      role:\n        range: string\n        required: true\n        title: Role\n        description: >-\n          What the person is in this piece, in a few words.\n      lives_in:\n        range: string\n        required: true\n        title: Lives In\n        description: >-\n          The town the piece says the person lives in.\n        annotations:\n          nullable: true\n      minor:\n        range: boolean\n        required: true\n        title: Minor\n        description: >-\n          True only if the piece shows the person was a child.\n      died:\n        range: boolean\n        required: true\n        title: Died\n        description: >-\n          True only if the piece says the person has died.\n"
+    },
+    "WriteEnglishPlace": {
+      "description": "A place a piece names.",
+      "fields": [
+        {
+          "description": "The kind field in the Place response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "kind",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "enum": [
+              "city",
+              "town",
+              "village",
+              "shtetl",
+              "street",
+              "address",
+              "landmark",
+              "country",
+              "region",
+              "district"
+            ],
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Its usual English name.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "name",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Its usual English name.",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        {
+          "description": "As in the text.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "printed",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "As in the text.",
+            "title": "Printed",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteEnglishPlace:\n    title: Place\n    description: >-\n      A place a piece names.\n    attributes:\n      name:\n        range: string\n        required: true\n        title: Name\n        description: >-\n          Its usual English name.\n      printed:\n        range: string\n        required: true\n        title: Printed\n        description: >-\n          As in the text.\n      kind:\n        range: string\n        required: true\n        title: Kind\n        equals_string_in:\n        - city\n        - town\n        - village\n        - shtetl\n        - street\n        - address\n        - landmark\n        - country\n        - region\n        - district\n        description: >-\n          The kind field in the Place response.\n        annotations:\n          description_in_wire: false\n"
+    }
+  },
+  "types": {},
+  "version": 1
+}
