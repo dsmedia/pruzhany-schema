@@ -15,8 +15,11 @@ these decisions from the vocabulary rather than inferring them from subtype name
 Since 2026-10-22 the owner has fixed the parent of every subtype listed (the last ten,
 announcement to humour, approved as proposed). The subtypes were released unchanged
 on 2026-10-25.
-The Impresso type list is copied from `pruzhany-steps/schemas/issue.schema.json`,
-`$defs.metadata.properties.tp.enum`, read 2026-10-22. There is no new local base type.
+The Impresso type list is copied from Impresso's published
+[`issue.schema.json`](https://github.com/impresso/impresso-schemas/blob/d55526d/json/canonical/issue.schema.json)
+at commit `d55526d`, `$defs.metadata.properties.tp.enum`, read 2026-10-22;
+all 13 values, in order, rechecked against that public file on 2026-10-30.
+There is no new local base type.
 
 Each subtype is a local SKOS concept typed `rico:DocumentaryFormType`, connected
 by `rico:hasDocumentaryFormType`; it is not equivalent to the whole ontology class.
