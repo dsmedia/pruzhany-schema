@@ -1,0 +1,1874 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "unknown",
+      "description": "No evidence keeps the living presumption.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "confirmed-perished",
+      "description": "A confirmed death fate is evidence without a date.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [],
+            "fate": {
+              "outcome": "perished",
+              "confidence": "confirmed"
+            }
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "confirmed-died_before",
+      "description": "A confirmed death fate is evidence without a date.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [],
+            "fate": {
+              "outcome": "died_before",
+              "confidence": "confirmed"
+            }
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "hedged-fate",
+      "description": "A probable death fate is not confirmed evidence.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [],
+            "fate": {
+              "outcome": "perished",
+              "confidence": "probable"
+            }
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "unconfirmed-fate",
+      "description": "An unconfirmed death fate does not count.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [],
+            "fate": {
+              "outcome": "perished",
+              "confidence": "possible"
+            }
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "survived-fate",
+      "description": "A confirmed survived fate does not establish death.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [],
+            "fate": {
+              "outcome": "survived",
+              "confidence": "confirmed"
+            }
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "death-accepted",
+      "description": "Only an accepted ordinary structured death fact counts.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "death",
+            "status": "accepted",
+            "citations": []
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "death-proposed",
+      "description": "Only an accepted ordinary structured death fact counts.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "death",
+            "status": "proposed",
+            "citations": []
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "death-disputed",
+      "description": "Only an accepted ordinary structured death fact counts.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "death",
+            "status": "disputed",
+            "citations": []
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "death-rejected",
+      "description": "Only an accepted ordinary structured death fact counts.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "death",
+            "status": "rejected",
+            "citations": []
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "prose-death",
+      "description": "Accepted prose about death is not structured death evidence.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "prose",
+            "type": "other",
+            "status": "accepted",
+            "citations": [],
+            "proposed_type": "death"
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "other-person-death",
+      "description": "A death fact for another id cannot affect the target.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-other-person",
+            "representation": "structured",
+            "type": "death",
+            "status": "accepted",
+            "citations": []
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "preserved-death_year",
+      "description": "Retained proposed legacy death evidence counts independently of an ordinary proposed death.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [],
+            "proposed_type": "preserved_death_year",
+            "qualifiers": {
+              "original_json": "1980"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "preserved-death_date",
+      "description": "Retained proposed legacy death evidence counts independently of an ordinary proposed death.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [],
+            "proposed_type": "preserved_death_date",
+            "qualifiers": {
+              "original_json": "\"1980-01-01\""
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "preserved-holocaust_fate",
+      "description": "Retained proposed legacy death evidence counts independently of an ordinary proposed death.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [],
+            "proposed_type": "preserved_holocaust_fate",
+            "qualifiers": {
+              "original_json": "\"perished\""
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "empty-preserved-death",
+      "description": "An empty preserved death value supplies no evidence.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [],
+            "proposed_type": "preserved_death_date",
+            "qualifiers": {
+              "original_json": "\"\""
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "birth-109",
+      "description": "Accepted birth 109 years before the fixed current year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1917-01-01"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "birth-110",
+      "description": "Accepted birth 110 years before the fixed current year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1916-01-01"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "birth-111",
+      "description": "Accepted birth 111 years before the fixed current year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1915-01-01"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "birth-year-only",
+      "description": "A bare four-digit birth year is read.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1916"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "birth-fixed-year-2000",
+      "description": "The threshold uses the case year, never the machine clock.",
+      "current_year": 2000,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1890"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "birth-proposed",
+      "description": "An ordinary proposed birth does not count.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "proposed",
+            "citations": [],
+            "date": {
+              "start": "1800"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "birth-preserved-integer",
+      "description": "A retained proposed birth_year uses an integer original value.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "proposed",
+            "citations": [],
+            "proposed_type": "preserved_birth_year",
+            "qualifiers": {
+              "original_json": "1916"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "birth-preserved-date",
+      "description": "A retained proposed birth_date uses its structured start date.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "proposed",
+            "citations": [],
+            "proposed_type": "preserved_birth_date",
+            "qualifiers": {
+              "original_json": "\"1916-01-01\""
+            },
+            "date": {
+              "start": "1916-01-01"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "birth-end-only",
+      "description": "A date end alone is not the birth start used by this rule.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "end": "1800-01-01"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "multiple-births",
+      "description": "One old-enough accepted birth suffices among several facts.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "2000"
+            }
+          },
+          {
+            "id": "fictional-second-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1916"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "printed-84",
+      "description": "A printed name cites a source 84 years before the fixed current year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "1942-01-01"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "printed-85",
+      "description": "A printed name cites a source 85 years before the fixed current year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "1941-01-01"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "printed-86",
+      "description": "A printed name cites a source 86 years before the fixed current year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "1940-01-01"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "print-fixed-year-2000",
+      "description": "Printed-source age uses the case year.",
+      "current_year": 2000,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "1915-01-01"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "alias-old-source",
+      "description": "An alias is not a printed name.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "alias",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "1800-01-01"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "printed-undated",
+      "description": "A printed name without a citation date supplies no year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional undated label",
+                "kind": "printed",
+                "citations": []
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "source-date-alone",
+      "description": "An old source without a printed-name link supplies no evidence.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [],
+        "sources": [
+          {
+            "id": "fictional-core-source",
+            "dated": {
+              "start": "1800-01-01"
+            }
+          }
+        ],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "printed-newborn",
+      "description": "Old print counts even when the person was born that year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "1941-01-01"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1941-01-01"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "preserved-print-accepted",
+      "description": "Nonempty retained unit_ids cite the original issue.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "accepted",
+            "citations": [
+              {
+                "source_id": "fictional-core-source",
+                "edition_date": "1941-01-01"
+              }
+            ],
+            "proposed_type": "preserved_unit_ids",
+            "qualifiers": {
+              "original_json": "[\"fictional-unit\"]"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "preserved-print-proposed",
+      "description": "Nonempty retained unit_ids cite the original issue.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [
+              {
+                "source_id": "fictional-core-source",
+                "edition_date": "1941-01-01"
+              }
+            ],
+            "proposed_type": "preserved_unit_ids",
+            "qualifiers": {
+              "original_json": "[\"fictional-unit\"]"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "preserved-print-rejected",
+      "description": "Nonempty retained unit_ids cite the original issue.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "rejected",
+            "citations": [
+              {
+                "source_id": "fictional-core-source",
+                "edition_date": "1941-01-01"
+              }
+            ],
+            "proposed_type": "preserved_unit_ids",
+            "qualifiers": {
+              "original_json": "[\"fictional-unit\"]"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "preserved-print-empty",
+      "description": "An empty unit_ids list does not establish print.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [
+              {
+                "source_id": "fictional-core-source",
+                "edition_date": "1800-01-01"
+              }
+            ],
+            "proposed_type": "preserved_unit_ids",
+            "qualifiers": {
+              "original_json": "[]"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "preserved-print-work-issue",
+      "description": "The retained issue work id supplies the missing citation date.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [
+              {
+                "source_id": "fictional-core-source"
+              }
+            ],
+            "proposed_type": "preserved_unit_ids",
+            "qualifiers": {
+              "original_json": "[\"fictional-unit\"]"
+            }
+          }
+        ],
+        "sources": [
+          {
+            "id": "fictional-core-source",
+            "work_id": "issue/1941-01-01"
+          }
+        ],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "preserved-print-work-legacy",
+      "description": "The retained issue work id supplies the missing citation date.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [
+              {
+                "source_id": "fictional-core-source"
+              }
+            ],
+            "proposed_type": "preserved_unit_ids",
+            "qualifiers": {
+              "original_json": "[\"fictional-unit\"]"
+            }
+          }
+        ],
+        "sources": [
+          {
+            "id": "fictional-core-source",
+            "work_id": "static/data/1941-01-01-enrichment.json"
+          }
+        ],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "preserved-print-qualifier",
+      "description": "The explicit original_field qualifier also identifies unit_ids.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "other",
+            "status": "proposed",
+            "citations": [
+              {
+                "source_id": "fictional-core-source",
+                "edition_date": "1941-01-01"
+              }
+            ],
+            "qualifiers": {
+              "original_field": "unit_ids",
+              "original_json": "[\"fictional-unit\"]"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "vouched-relative-death",
+      "description": "A reviewed incoming relationship carries confirmed death evidence.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": [
+          {
+            "id": "fictional-core-relation",
+            "person_id": "fictional-other-person",
+            "related_person_id": "fictional-core-person",
+            "status": "accepted",
+            "review": {
+              "state": "approved",
+              "by": "Fictional reviewer",
+              "on": "2020-01-01"
+            },
+            "qualifiers": {
+              "original_json": "{\"holocaust_fate\":\"died_before\"}"
+            }
+          }
+        ]
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "unvouched-relative-death",
+      "description": "A relationship without an approved review supplies no death evidence.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": [
+          {
+            "id": "fictional-core-relation",
+            "person_id": "fictional-other-person",
+            "related_person_id": "fictional-core-person",
+            "status": "accepted",
+            "review": {
+              "state": "pending",
+              "by": "Fictional reviewer",
+              "on": "2020-01-01"
+            },
+            "qualifiers": {
+              "original_json": "{\"holocaust_fate\":\"died_before\"}"
+            }
+          }
+        ]
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "malformed-birth-suffix",
+      "description": "Raw malformed birth start: '1916x'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1916x"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": true,
+      "expected": {
+        "steps": true,
+        "site": false
+      },
+      "recommendation": {
+        "side": "steps",
+        "why": "Require a year to end or be followed by a hyphen. An unseparated four-digit prefix in malformed input should not remove the living-person presumption. This records a recommendation only; neither implementation changes."
+      }
+    },
+    {
+      "id": "malformed-birth-compact",
+      "description": "Raw malformed birth start: '19160101'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "19160101"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": true,
+      "expected": {
+        "steps": true,
+        "site": false
+      },
+      "recommendation": {
+        "side": "steps",
+        "why": "Require a year to end or be followed by a hyphen. An unseparated four-digit prefix in malformed input should not remove the living-person presumption. This records a recommendation only; neither implementation changes."
+      }
+    },
+    {
+      "id": "malformed-birth-text",
+      "description": "Raw malformed birth start: 'not-a-date'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "not-a-date"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "malformed-birth-short",
+      "description": "Raw malformed birth start: '916'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "916"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "malformed-birth-leading-space",
+      "description": "Raw malformed birth start: ' 1916-01-01'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": " 1916-01-01"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "malformed-birth-empty",
+      "description": "Raw malformed birth start: ''.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": ""
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "malformed-birth-hyphen-text",
+      "description": "Raw malformed birth start: '1916-not-a-date'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "accepted",
+            "citations": [],
+            "date": {
+              "start": "1916-not-a-date"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "malformed-print-suffix",
+      "description": "Raw malformed printed citation date: '1941x'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "1941x"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": true,
+      "expected": {
+        "steps": true,
+        "site": false
+      },
+      "recommendation": {
+        "side": "steps",
+        "why": "Require a year to end or be followed by a hyphen. An unseparated four-digit prefix in malformed input should not remove the living-person presumption. This records a recommendation only; neither implementation changes."
+      }
+    },
+    {
+      "id": "malformed-print-compact",
+      "description": "Raw malformed printed citation date: '19410101'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "19410101"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": true,
+      "expected": {
+        "steps": true,
+        "site": false
+      },
+      "recommendation": {
+        "side": "steps",
+        "why": "Require a year to end or be followed by a hyphen. An unseparated four-digit prefix in malformed input should not remove the living-person presumption. This records a recommendation only; neither implementation changes."
+      }
+    },
+    {
+      "id": "malformed-print-text",
+      "description": "Raw malformed printed citation date: 'not-a-date'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "not-a-date"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "malformed-print-short",
+      "description": "Raw malformed printed citation date: '941'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "941"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": true
+      }
+    },
+    {
+      "id": "malformed-print-bad-calendar",
+      "description": "Raw malformed printed citation date: '1941-99-99'.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": [
+              {
+                "value": "Fictional printed label",
+                "kind": "printed",
+                "citations": [
+                  {
+                    "source_id": "fictional-core-source",
+                    "edition_date": "1941-99-99"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "facts": [],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    },
+    {
+      "id": "birth-invalid-date-integer-fallback",
+      "description": "An unreadable date falls back to a preserved integer birth year.",
+      "current_year": 2026,
+      "person_id": "fictional-core-person",
+      "record": {
+        "persons": [
+          {
+            "id": "fictional-core-person",
+            "names": []
+          }
+        ],
+        "facts": [
+          {
+            "id": "fictional-core-fact",
+            "subject_id": "fictional-core-person",
+            "representation": "structured",
+            "type": "birth",
+            "status": "proposed",
+            "citations": [],
+            "proposed_type": "preserved_birth_year",
+            "qualifiers": {
+              "original_json": "1916"
+            },
+            "date": {
+              "start": "unreadable"
+            }
+          }
+        ],
+        "sources": [],
+        "relations": []
+      },
+      "sides_differ": false,
+      "expected": {
+        "living": false
+      }
+    }
+  ]
+}
