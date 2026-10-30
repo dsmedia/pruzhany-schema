@@ -1,3 +1,4 @@
+import { BlockShape, PageShape, PagesDataShape } from './generated/pages';
 /**
  * Physical Newspaper Structure
  *
@@ -8,30 +9,21 @@
 
 import { z } from 'zod/v4';
 
-export const BlockSchema = z.object({
-	id: z.string(), // "blk-p4-001"
-	bbox: z.tuple([z.number(), z.number(), z.number(), z.number()]), // [x, y, w, h]
-	transcription: z.string(),
-	confidence: z.number().optional(),
-	// Producer (Pydantic Block.image_crop: str | None) emits null for blocks
-	// without a crop — accept both null and absent.
-	image_crop: z.string().nullable().optional(),
-	unit_id: z.string().nullable(), // FK to content unit
+// Tuples preserve the public inferred type; their elements keep LinkML's bounds.
+const boxPixel = BlockShape.shape.bbox.element;
+export const BlockSchema = BlockShape.extend({
+	bbox: z.tuple([boxPixel, boxPixel, boxPixel, boxPixel]),
+	// known-looser: optional non-null confidence, required nullable unit_id.
+	confidence: BlockShape.shape.confidence.unwrap().unwrap().optional(),
+	unit_id: BlockShape.shape.unit_id.unwrap().unwrap().nullable(),
 });
 
-export const PageSchema = z.object({
-	id: z.string(), // "page-1938-12-16-4"
-	issue_date: z.string(), // "1938-12-16"
-	page_number: z.number(),
-	image_uri: z.string(),
-	dimensions: z.tuple([z.number(), z.number()]), // [width, height]
+export const PageSchema = PageShape.extend({
+	dimensions: z.tuple([PageShape.shape.dimensions.element, PageShape.shape.dimensions.element]),
 	blocks: z.array(BlockSchema),
 });
 
-export const PagesDataSchema = z.object({
-	edition_date: z.string(),
-	pages: z.array(PageSchema),
-});
+export const PagesDataSchema = PagesDataShape.extend({ pages: z.array(PageSchema) });
 
 // Type exports
 export type Block = z.infer<typeof BlockSchema>;

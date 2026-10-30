@@ -1,5 +1,7 @@
+import { ExternalReferenceShape } from './generated/shared';
 import { z } from 'zod/v4';
 
+// The vocabulary gate inspects this released enum declaration directly.
 export const HolocaustFateSchema = z.enum([
 	'unknown',
 	'perished',
@@ -11,6 +13,7 @@ export const HolocaustFateSchema = z.enum([
 ]);
 export type HolocaustFate = z.infer<typeof HolocaustFateSchema>;
 
+// Legacy content categories have no owned LinkML class in the current documents.
 export const ContentTypeSchema = z.enum([
 	'lifecycle_event',
 	'community_news',
@@ -19,15 +22,15 @@ export const ContentTypeSchema = z.enum([
 ]);
 export type ContentType = z.infer<typeof ContentTypeSchema>;
 
-export const ExternalReferenceSchema = z.object({
-	source: z.string(),
-	url: z.string().nullable().optional(),
-	record_id: z.string().optional(),
-	notes: z.string().optional(),
-	verified: z.boolean().optional(),
+// The public inferred type requires these optional keys to reject null.
+export const ExternalReferenceSchema = ExternalReferenceShape.extend({
+	record_id: ExternalReferenceShape.shape.record_id.unwrap().unwrap().optional(),
+	notes: ExternalReferenceShape.shape.notes.unwrap().unwrap().optional(),
+	verified: ExternalReferenceShape.shape.verified.unwrap().unwrap().optional(),
 });
 export type ExternalReference = z.infer<typeof ExternalReferenceSchema>;
 
+// Legacy object-valued box has no owned LinkML class (site boxes are tuples).
 export const BboxSchema = z.object({
 	x: z.number(),
 	y: z.number(),

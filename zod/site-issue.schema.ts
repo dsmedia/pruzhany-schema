@@ -1,12 +1,17 @@
+import {
+	ContentItemRefShape,
+	IssueLifeEventShape,
+	IssueLifeEventsDataShape,
+} from './generated/life_events';
+import { IssueMentionShape, IssueMentionsDataShape } from './generated/mentions';
 import { z } from 'zod/v4';
 import { PagesDataSchema, type PagesData } from './page.schema';
-import { MentionSchema, type Citation } from './sourced-entities.schema';
-import { MentionRolesSchema, ContentUnitRolesSchema } from './sourced-entities.vocabulary';
+import { type Citation } from './sourced-entities.schema';
+
 import { ContentItemsDataSchema } from './content-item.schema';
 import { SharedRecordSchema } from './shared-record.schema';
 import {
 	PrintedAddressSchema,
-	siteText,
 	siteDay,
 	uniqueIds,
 	type PrintedAddress,
@@ -14,12 +19,26 @@ import {
 } from './site-common.schema';
 
 // Mention: located words or whole regions, with a derived content item reference.
-export const IssueMentionSchema = MentionSchema.omit({ unit_id: true, role: true })
-	.extend({
-		content_item_id: siteText,
-		address_grain: z.enum(['words', 'regions']),
-		printed_name: MentionSchema.shape.printed_name.nullable(),
-		roles: z.array(MentionRolesSchema).min(1),
+// Preserve the published files' key order when the site re-serializes parsed mentions.
+const {
+	id,
+	person_id,
+	printed_name,
+	title,
+	function: mentionFunction,
+	wkd_id,
+	...mentionFields
+} = IssueMentionShape.shape;
+export const IssueMentionSchema = z
+	.strictObject({
+		id,
+		person_id,
+		// known-looser: the printed_name key is required even when its value is null.
+		printed_name: printed_name.unwrap(),
+		title,
+		function: mentionFunction,
+		wkd_id,
+		...mentionFields,
 		addresses: z.array(PrintedAddressSchema).min(1),
 	})
 	.superRefine((v, ctx) => {
@@ -40,60 +59,48 @@ export const IssueMentionSchema = MentionSchema.omit({ unit_id: true, role: true
 			ctx.addIssue({ code: 'custom', message: 'printed name must occur at the mention address' });
 	});
 export type IssueMention = z.infer<typeof IssueMentionSchema>;
-export const IssueMentionsDataSchema = z
-	.strictObject({
-		issue_date: siteDay,
-		mentions: z.array(IssueMentionSchema),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(
-			v.mentions.map((m) => m.id),
-			'mention id'
-		))
-			ctx.addIssue({ code: 'custom', message });
-	});
+export const IssueMentionsDataSchema = IssueMentionsDataShape.extend({
+	issue_date: siteDay,
+	mentions: z.array(IssueMentionSchema),
+}).superRefine((v, ctx) => {
+	for (const message of uniqueIds(
+		v.mentions.map((m) => m.id),
+		'mention id'
+	))
+		ctx.addIssue({ code: 'custom', message });
+});
 export type IssueMentionsData = z.infer<typeof IssueMentionsDataSchema>;
 
-export const ContentItemRefSchema = z.strictObject({
-	content_item_id: siteText,
-	role: ContentUnitRolesSchema, // Role of the content item, not the person's role.
-});
+export const ContentItemRefSchema = ContentItemRefShape;
 export type ContentItemRef = z.infer<typeof ContentItemRefSchema>;
-export const IssueLifeEventSchema = z
-	.strictObject({
-		id: siteText,
-		content_items: z.array(ContentItemRefSchema).min(1),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(
-			v.content_items.map((c) => c.content_item_id),
-			'event content item'
-		))
-			ctx.addIssue({ code: 'custom', message });
-	});
+export const IssueLifeEventSchema = IssueLifeEventShape.superRefine((v, ctx) => {
+	for (const message of uniqueIds(
+		v.content_items.map((c) => c.content_item_id),
+		'event content item'
+	))
+		ctx.addIssue({ code: 'custom', message });
+});
 export type IssueLifeEvent = z.infer<typeof IssueLifeEventSchema>;
-export const IssueLifeEventsDataSchema = z
-	.strictObject({
-		issue_date: siteDay,
-		life_events: z.array(IssueLifeEventSchema),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(
-			v.life_events.map((e) => e.id),
-			'life event id'
-		))
-			ctx.addIssue({ code: 'custom', message });
-		const assigned = new Set<string>();
-		for (const event of v.life_events)
-			for (const ref of event.content_items) {
-				if (assigned.has(ref.content_item_id))
-					ctx.addIssue({
-						code: 'custom',
-						message: 'content item belongs to more than one life event',
-					});
-				assigned.add(ref.content_item_id);
-			}
-	});
+export const IssueLifeEventsDataSchema = IssueLifeEventsDataShape.extend({
+	issue_date: siteDay,
+	life_events: z.array(IssueLifeEventSchema),
+}).superRefine((v, ctx) => {
+	for (const message of uniqueIds(
+		v.life_events.map((e) => e.id),
+		'life event id'
+	))
+		ctx.addIssue({ code: 'custom', message });
+	const assigned = new Set<string>();
+	for (const event of v.life_events)
+		for (const ref of event.content_items) {
+			if (assigned.has(ref.content_item_id))
+				ctx.addIssue({
+					code: 'custom',
+					message: 'content item belongs to more than one life event',
+				});
+			assigned.add(ref.content_item_id);
+		}
+});
 export type IssueLifeEventsData = z.infer<typeof IssueLifeEventsDataSchema>;
 
 // In-memory check of the four documents. Pages keep their existing file shape.
