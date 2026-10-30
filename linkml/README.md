@@ -28,9 +28,40 @@ What LinkML cannot say about the shapes is listed in
 | `schema/physical.yaml` | Impresso's stored physical page contract, separate from the website's pages: page, region, paragraph, line, word and the shared array-valued box slot, with the computed identifier rule. |
 | `external_schema.py`, `generated/external/physical/` | Explicit-null JSON Schema adapter and the physical contract's own class inventory and learning index. The external contract is checked against Impresso rather than the site's Zod/Pydantic twins. |
 | `schema/exchanges.yaml`, `generated/external/exchanges/` | Prompt-version metadata and references to kept answers in steps, with their own external inventory and learning index; prompt text and answer payloads stay outside this repository. |
+| `schema/answers.yaml`, `answer_generator.py`, `generated/external/answers/` | The four current structured-answer contracts and their exact request JSON Schema strings, plus an external class inventory and learning index. These procedural contracts have no EHRI/RiC-O mapping; the module explains why. |
 | `tests/` | The canaries (`canary_*.py`), the tests (`test_*.py`) and their planted files (`fixtures/`). |
 
 ## Running it
+
+### Structured answers
+
+The `model-answers` manifest entry has no single top class: each class annotated
+with `asking` defines one independent response document. `generate.py` and its
+`--check` include all four `external/answers/<asking>.schema.json` files. Unlike
+the readable generated files, these contain the exact `json.dumps` request string,
+with no final newline. Their titles, descriptions, property/required/enum order,
+closedness and defaults reproduce the released Pydantic **2.13.5** serialization
+layout. The emitter needs no Pydantic runtime. The schema gate records all four
+baseline byte counts and SHA-256 values; steps also compares the actual bytes.
+
+`answer_generator.py` accepts only inline attributes, string/integer/boolean
+ranges, literal string alternatives, inlined objects and lists, requiredness,
+titles and descriptions. Unsupported constructs fail, including inheritance,
+recursive classes and unknown constraints or annotations. `nullable` explicitly
+allows JSON null independently of requiredness; `default_empty_list` preserves the
+existing serialized default without making a required key optional.
+`description_in_wire: false` distinguishes documentation for fields whose paid
+schema has no description. Existing wire descriptions are retained verbatim.
+These annotations are bounded wire adaptations, not claims that native LinkML
+validation enforces required nullable keys. No archival entities or released
+vocabulary values are added. New shapes are made here first; steps copies the
+generated file into a new prompt version, never edits the generated file.
+
+Read **30 October 2026**: LinkML [Slots](https://linkml.io/linkml/schemas/slots.html)
+and [Annotations](https://linkml.io/linkml/schemas/annotations.html), Pydantic
+[JSON Schema](https://docs.pydantic.dev/latest/concepts/json_schema/), and Python
+3.13 [json](https://docs.python.org/3.13/library/json.html). The exact released
+layout is witnessed by the byte tests rather than presumed from current defaults.
 
 ### Generated Python and retained rules
 
@@ -151,9 +182,9 @@ uv pip sync --python "$env/bin/python" --require-hashes \
 "$env/bin/python" -I linkml/generate.py --check   # what bin/verify runs
 ```
 
-On Windows the environment's Python is `"$env/Scripts/python.exe"`. Every generated file is UTF-8
-with `\n` line ends and one at the end, whatever the machine; `.gitattributes` here checks every
-file of this folder out with `\n` too.
+On Windows the environment's Python is `"$env/Scripts/python.exe"`. Generated files are UTF-8
+with `\n` line ends; readable outputs have one at the end, while the exact answer request
+strings have none. `.gitattributes` checks this folder out with `\n` too.
 
 To add a module: write `schema/<module>.yaml` (importing `types` where it needs a shared type), add
 it to `modules.json` with its top class, run the generator and commit what it makes with the
@@ -221,7 +252,8 @@ physical class. Its resolved learning index is under that folder's `docs/model-i
 All physical classes also appear in the combined data dictionary. The site's twin contract,
 Python models and public RDF view keep their own inventory: they do not consume these
 stored files. This is an explicit external contract, not an exception to site field parity.
-The generator refuses an unknown external contract or one without a document root.
+The generator refuses an unknown external contract or a physical/exchanges contract without
+a document root. The answers contract instead declares a separate root for each asking.
 
 Impresso's objects are open (`extra_slots: allowed: true`). Its optional fields generally
 refuse null, except `pOf` and `section_pOf`; the latter permits null members too. The schema

@@ -1,0 +1,539 @@
+# Procedural source schemas inspected 30 October 2026; no archive data copied.
+id: https://pruzhany.org/ns/answers
+name: pruzhany_answers
+title: Current structured model answers
+description: >-
+  The four current paid answer shapes. Procedural descriptions and titles are the exact strings sent by
+  steps; no prompt text or answer data is included.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+- linkml:types
+annotations:
+  mapping_policy: >-
+    External procedural contracts for model responses, not archival people, events or assertions. No EHRI/RiC-O
+    equivalence is claimed: named people and events here are unverified extracted text in an answer, not
+    the record's entities. Enums describe existing response wire values, not new released vocabulary.
+  wire_policy: pydantic-2.13.5-serialization
+classes:
+  FindItemsAnswerHeading:
+    title: AnswerHeading
+    description: >-
+      A heading over several items as the model gives it: its lines, and the items' numbers.
+    attributes:
+      lines:
+        multivalued: true
+        range: integer
+        required: true
+        title: Lines
+        description: >-
+          The lines field in the AnswerHeading response.
+        annotations:
+          description_in_wire: false
+      over:
+        multivalued: true
+        range: integer
+        required: true
+        title: Over
+        description: >-
+          The over field in the AnswerHeading response.
+        annotations:
+          description_in_wire: false
+  FindItemsAnswerItem:
+    title: AnswerItem
+    description: >-
+      One item as the model gives it: its parts in order, its kind, language and headline.
+    attributes:
+      parts:
+        multivalued: true
+        range: integer
+        required: true
+        title: Parts
+        description: >-
+          The parts field in the AnswerItem response.
+        annotations:
+          description_in_wire: false
+      kind:
+        range: string
+        required: true
+        title: Kind
+        equals_string_in:
+        - article
+        - advert
+        - death notice
+        description: >-
+          The kind field in the AnswerItem response.
+        annotations:
+          description_in_wire: false
+      language:
+        range: string
+        required: true
+        title: Language
+        equals_string_in:
+        - yi
+        - he
+        - pl
+        description: >-
+          The language field in the AnswerItem response.
+        annotations:
+          description_in_wire: false
+      headline:
+        multivalued: true
+        range: integer
+        required: true
+        title: Headline
+        description: >-
+          The headline field in the AnswerItem response.
+        annotations:
+          description_in_wire: false
+  FindItemsAnswer:
+    title: Answer
+    description: >-
+      The page's items in reading order, the headings over several items, the running head.
+    annotations:
+      asking: find_items
+    attributes:
+      items:
+        multivalued: true
+        range: FindItemsAnswerItem
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Items
+        description: >-
+          The items field in the Answer response.
+        annotations:
+          description_in_wire: false
+      headings:
+        multivalued: true
+        range: FindItemsAnswerHeading
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Headings
+        annotations:
+          default_empty_list: true
+          description_in_wire: false
+        description: >-
+          The headings field in the Answer response.
+      running_head:
+        multivalued: true
+        range: integer
+        required: true
+        title: Running Head
+        annotations:
+          default_empty_list: true
+          description_in_wire: false
+        description: >-
+          The running_head field in the Answer response.
+  ReadLatinLine:
+    title: Line
+    description: >-
+      One picture as the model answers for it: the picture's number and the text printed in it.
+    attributes:
+      picture:
+        range: integer
+        required: true
+        title: Picture
+        description: >-
+          The picture field in the Line response.
+        annotations:
+          description_in_wire: false
+      text:
+        range: string
+        required: true
+        title: Text
+        description: >-
+          The text field in the Line response.
+        annotations:
+          description_in_wire: false
+  ReadLatinAnswer:
+    title: Answer
+    description: >-
+      The model's answer to one message: a line for each picture, empty where it saw no text.
+    annotations:
+      asking: read_latin
+    attributes:
+      lines:
+        multivalued: true
+        range: ReadLatinLine
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Lines
+        description: >-
+          The lines field in the Answer response.
+        annotations:
+          description_in_wire: false
+  WriteEnglishAnsweredPiece:
+    title: AnsweredPiece
+    description: >-
+      A piece of the answer, with the number it was sent under.
+    attributes:
+      kind:
+        range: string
+        required: true
+        title: Kind
+        equals_string_in:
+        - article
+        - notice
+        - ad
+        - congratulation
+        - obituary
+        - other
+        description: >-
+          The kind field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+      title:
+        range: string
+        required: true
+        title: Title
+        description: >-
+          The title field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+      category:
+        range: string
+        required: true
+        title: Category
+        description: >-
+          The category field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+      english:
+        range: string
+        required: true
+        title: English
+        description: >-
+          The english field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+      people:
+        multivalued: true
+        range: WriteEnglishPerson
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: People
+        description: >-
+          The people field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+      places:
+        multivalued: true
+        range: WriteEnglishPlace
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Places
+        description: >-
+          The places field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+      organizations:
+        multivalued: true
+        range: WriteEnglishOrganization
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Organizations
+        description: >-
+          The organizations field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+      life_event:
+        range: WriteEnglishLifeEvent
+        inlined: true
+        required: true
+        annotations:
+          nullable: true
+          description_in_wire: false
+        description: >-
+          The life_event field in the AnsweredPiece response.
+      doubts:
+        multivalued: true
+        range: WriteEnglishDoubt
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Doubts
+        description: >-
+          The doubts field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+      number:
+        range: integer
+        required: true
+        title: Number
+        description: >-
+          The number field in the AnsweredPiece response.
+        annotations:
+          description_in_wire: false
+  WriteEnglishDoubt:
+    title: Doubt
+    description: >-
+      A word or short phrase the model believes the machine misread.
+    attributes:
+      printed:
+        range: string
+        required: true
+        title: Printed
+        description: >-
+          The printed field in the Doubt response.
+        annotations:
+          description_in_wire: false
+      likely:
+        range: string
+        required: true
+        title: Likely
+        description: >-
+          The likely field in the Doubt response.
+        annotations:
+          description_in_wire: false
+      why:
+        range: string
+        required: true
+        title: Why
+        description: >-
+          The why field in the Doubt response.
+        annotations:
+          description_in_wire: false
+  WriteEnglishLifeEvent:
+    title: LifeEvent
+    description: >-
+      The one family event a piece announces, greets or mourns.
+    attributes:
+      kind:
+        range: string
+        required: true
+        title: Kind
+        equals_string_in:
+        - wedding
+        - birth
+        - death
+        - bar_mitzvah
+        - celebration
+        - other
+        description: >-
+          The kind field in the LifeEvent response.
+        annotations:
+          description_in_wire: false
+      name:
+        range: string
+        required: true
+        title: Name
+        description: >-
+          A short English name for the event.
+      principals:
+        multivalued: true
+        range: string
+        required: true
+        title: Principals
+        description: >-
+          Their English names as in people.
+      date_hebrew:
+        range: string
+        required: true
+        title: Date Hebrew
+        annotations:
+          nullable: true
+          description_in_wire: false
+        description: >-
+          The date_hebrew field in the LifeEvent response.
+      date_gregorian:
+        range: string
+        required: true
+        title: Date Gregorian
+        description: >-
+          YYYY-MM-DD, only as printed.
+        annotations:
+          nullable: true
+  WriteEnglishOrganization:
+    title: Organization
+    description: >-
+      An organisation, institution or named business a piece names.
+    attributes:
+      name:
+        range: string
+        required: true
+        title: Name
+        description: >-
+          In English.
+      printed:
+        range: string
+        required: true
+        title: Printed
+        description: >-
+          As in the text.
+      kind:
+        range: string
+        required: true
+        title: Kind
+        description: >-
+          In a word or two: school, bank, party, society, shop.
+  WriteEnglishPerson:
+    title: Person
+    description: >-
+      A person a piece names.
+    attributes:
+      name:
+        range: string
+        required: true
+        title: Name
+        description: >-
+          In English, as the instructions say.
+      printed:
+        range: string
+        required: true
+        title: Printed
+        description: >-
+          As in the text.
+      gender:
+        range: string
+        required: true
+        title: Gender
+        equals_string_in:
+        - male
+        - female
+        - unknown
+        description: >-
+          The gender field in the Person response.
+        annotations:
+          description_in_wire: false
+      role:
+        range: string
+        required: true
+        title: Role
+        description: >-
+          What the person is in this piece, in a few words.
+      lives_in:
+        range: string
+        required: true
+        title: Lives In
+        description: >-
+          The town the piece says the person lives in.
+        annotations:
+          nullable: true
+      minor:
+        range: boolean
+        required: true
+        title: Minor
+        description: >-
+          True only if the piece shows the person was a child.
+      died:
+        range: boolean
+        required: true
+        title: Died
+        description: >-
+          True only if the piece says the person has died.
+  WriteEnglishPlace:
+    title: Place
+    description: >-
+      A place a piece names.
+    attributes:
+      name:
+        range: string
+        required: true
+        title: Name
+        description: >-
+          Its usual English name.
+      printed:
+        range: string
+        required: true
+        title: Printed
+        description: >-
+          As in the text.
+      kind:
+        range: string
+        required: true
+        title: Kind
+        equals_string_in:
+        - city
+        - town
+        - village
+        - shtetl
+        - street
+        - address
+        - landmark
+        - country
+        - region
+        - district
+        description: >-
+          The kind field in the Place response.
+        annotations:
+          description_in_wire: false
+  WriteEnglishAnswer:
+    title: Answer
+    description: >-
+      The answer about one page: every piece it was sent, by its number.
+    annotations:
+      asking: write_english
+    attributes:
+      pieces:
+        multivalued: true
+        range: WriteEnglishAnsweredPiece
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Pieces
+        description: >-
+          The pieces field in the Answer response.
+        annotations:
+          description_in_wire: false
+  JoinPeopleGroup:
+    title: Group
+    description: >-
+      Names that are one person, and the name the person is given.
+    attributes:
+      names:
+        multivalued: true
+        range: integer
+        required: true
+        title: Names
+        description: >-
+          The numbers of the names that are one person.
+      name:
+        range: string
+        required: true
+        title: Name
+        description: >-
+          The fullest English name the edition gives the person.
+      certainty:
+        range: string
+        required: true
+        title: Certainty
+        equals_string_in:
+        - certain
+        - likely
+        description: >-
+          The certainty field in the Group response.
+        annotations:
+          description_in_wire: false
+      why:
+        range: string
+        required: true
+        title: Why
+        description: >-
+          In a few words.
+  JoinPeopleAnswer:
+    title: Answer
+    description: >-
+      The groups of names that are one person; a name in no group is a person of its own.
+    annotations:
+      asking: join_people
+    attributes:
+      groups:
+        multivalued: true
+        range: JoinPeopleGroup
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Groups
+        description: >-
+          The groups field in the Answer response.
+        annotations:
+          description_in_wire: false
