@@ -45,6 +45,9 @@ _rdf_spec.loader.exec_module(_rdf_backend)
 _external_spec = importlib.util.spec_from_file_location('external_schema', Path(__file__).with_name('external_schema.py'))
 _external_backend = importlib.util.module_from_spec(_external_spec)
 _external_spec.loader.exec_module(_external_backend)
+_answers_spec = importlib.util.spec_from_file_location('answer_generator', Path(__file__).with_name('answer_generator.py'))
+_answers_backend = importlib.util.module_from_spec(_answers_spec)
+_answers_spec.loader.exec_module(_answers_backend)
 
 LINKML = Path(__file__).resolve().parent
 
@@ -57,9 +60,12 @@ def modules(linkml_dir):
     if len(set(names)) != len(names):
         raise SystemExit('linkml/modules.json: an output name is used twice')
     for entry in entries:
-        if 'external_contract' in entry and (entry['external_contract'] not in {'impresso-page', 'model-exchanges'}
-                                              or not entry['top_class']):
-            raise ValueError('unsupported external contract or missing top class')
+        if 'external_contract' in entry:
+            if entry['external_contract'] == 'model-answers':
+                if entry['top_class'] is not None:
+                    raise ValueError('model-answers declares its roots through asking annotations')
+            elif entry['external_contract'] not in {'impresso-page', 'model-exchanges'} or not entry['top_class']:
+                raise ValueError('unsupported external contract or missing top class')
     return entries
 
 
@@ -180,7 +186,15 @@ def build_index_and_dictionary(linkml_dir, destination):
         if 'external_contract' not in entry:
             continue
         view = SchemaView(str(linkml_dir / entry['schema']))
-        document = json.loads((destination / 'json-schema' / f"{entry['name']}.schema.json").read_text())
+        if entry['external_contract'] == 'model-answers':
+            answers, definitions = _answers_backend.build(linkml_dir / entry['schema'])
+            for asking, text in answers.items():
+                path = destination / 'external' / entry['name'] / f'{asking}.schema.json'
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(text.encode('utf-8'))  # Exact request string: no final newline.
+            document = {'$schema': 'https://json-schema.org/draft/2020-12/schema', '$defs': definitions}
+        else:
+            document = json.loads((destination / 'json-schema' / f"{entry['name']}.schema.json").read_text())
         external = {'$schema': document['$schema'], '$defs': document['$defs'],
                     'classes': {name: entry['schema'] for name in view.all_classes(imports=False)},
                     'known_looser': [], 'external_contract': entry['external_contract']}

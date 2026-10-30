@@ -1,0 +1,549 @@
+{
+  "$defs": {
+    "FindItemsAnswer": {
+      "additionalProperties": false,
+      "description": "The page's items in reading order, the headings over several items, the running head.",
+      "properties": {
+        "headings": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/FindItemsAnswerHeading"
+          },
+          "title": "Headings",
+          "type": "array"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/FindItemsAnswerItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "running_head": {
+          "default": [],
+          "items": {
+            "type": "integer"
+          },
+          "title": "Running Head",
+          "type": "array"
+        }
+      },
+      "required": [
+        "items",
+        "headings",
+        "running_head"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "FindItemsAnswerHeading": {
+      "additionalProperties": false,
+      "description": "A heading over several items as the model gives it: its lines, and the items' numbers.",
+      "properties": {
+        "lines": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Lines",
+          "type": "array"
+        },
+        "over": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Over",
+          "type": "array"
+        }
+      },
+      "required": [
+        "lines",
+        "over"
+      ],
+      "title": "AnswerHeading",
+      "type": "object"
+    },
+    "FindItemsAnswerItem": {
+      "additionalProperties": false,
+      "description": "One item as the model gives it: its parts in order, its kind, language and headline.",
+      "properties": {
+        "headline": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Headline",
+          "type": "array"
+        },
+        "kind": {
+          "enum": [
+            "article",
+            "advert",
+            "death notice"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "language": {
+          "enum": [
+            "yi",
+            "he",
+            "pl"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "parts": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Parts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "parts",
+        "kind",
+        "language",
+        "headline"
+      ],
+      "title": "AnswerItem",
+      "type": "object"
+    },
+    "JoinPeopleAnswer": {
+      "additionalProperties": false,
+      "description": "The groups of names that are one person; a name in no group is a person of its own.",
+      "properties": {
+        "groups": {
+          "items": {
+            "$ref": "#/$defs/JoinPeopleGroup"
+          },
+          "title": "Groups",
+          "type": "array"
+        }
+      },
+      "required": [
+        "groups"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "JoinPeopleGroup": {
+      "additionalProperties": false,
+      "description": "Names that are one person, and the name the person is given.",
+      "properties": {
+        "certainty": {
+          "enum": [
+            "certain",
+            "likely"
+          ],
+          "title": "Certainty",
+          "type": "string"
+        },
+        "name": {
+          "description": "The fullest English name the edition gives the person.",
+          "title": "Name",
+          "type": "string"
+        },
+        "names": {
+          "description": "The numbers of the names that are one person.",
+          "items": {
+            "type": "integer"
+          },
+          "title": "Names",
+          "type": "array"
+        },
+        "why": {
+          "description": "In a few words.",
+          "title": "Why",
+          "type": "string"
+        }
+      },
+      "required": [
+        "names",
+        "name",
+        "certainty",
+        "why"
+      ],
+      "title": "Group",
+      "type": "object"
+    },
+    "ReadLatinAnswer": {
+      "additionalProperties": false,
+      "description": "The model's answer to one message: a line for each picture, empty where it saw no text.",
+      "properties": {
+        "lines": {
+          "items": {
+            "$ref": "#/$defs/ReadLatinLine"
+          },
+          "title": "Lines",
+          "type": "array"
+        }
+      },
+      "required": [
+        "lines"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "ReadLatinLine": {
+      "additionalProperties": false,
+      "description": "One picture as the model answers for it: the picture's number and the text printed in it.",
+      "properties": {
+        "picture": {
+          "title": "Picture",
+          "type": "integer"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "picture",
+        "text"
+      ],
+      "title": "Line",
+      "type": "object"
+    },
+    "WriteEnglishAnswer": {
+      "additionalProperties": false,
+      "description": "The answer about one page: every piece it was sent, by its number.",
+      "properties": {
+        "pieces": {
+          "items": {
+            "$ref": "#/$defs/WriteEnglishAnsweredPiece"
+          },
+          "title": "Pieces",
+          "type": "array"
+        }
+      },
+      "required": [
+        "pieces"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "WriteEnglishAnsweredPiece": {
+      "additionalProperties": false,
+      "description": "A piece of the answer, with the number it was sent under.",
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "doubts": {
+          "items": {
+            "$ref": "#/$defs/WriteEnglishDoubt"
+          },
+          "title": "Doubts",
+          "type": "array"
+        },
+        "english": {
+          "title": "English",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "article",
+            "notice",
+            "ad",
+            "congratulation",
+            "obituary",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "life_event": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WriteEnglishLifeEvent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "number": {
+          "title": "Number",
+          "type": "integer"
+        },
+        "organizations": {
+          "items": {
+            "$ref": "#/$defs/WriteEnglishOrganization"
+          },
+          "title": "Organizations",
+          "type": "array"
+        },
+        "people": {
+          "items": {
+            "$ref": "#/$defs/WriteEnglishPerson"
+          },
+          "title": "People",
+          "type": "array"
+        },
+        "places": {
+          "items": {
+            "$ref": "#/$defs/WriteEnglishPlace"
+          },
+          "title": "Places",
+          "type": "array"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "title",
+        "category",
+        "english",
+        "people",
+        "places",
+        "organizations",
+        "life_event",
+        "doubts",
+        "number"
+      ],
+      "title": "AnsweredPiece",
+      "type": "object"
+    },
+    "WriteEnglishDoubt": {
+      "additionalProperties": false,
+      "description": "A word or short phrase the model believes the machine misread.",
+      "properties": {
+        "likely": {
+          "title": "Likely",
+          "type": "string"
+        },
+        "printed": {
+          "title": "Printed",
+          "type": "string"
+        },
+        "why": {
+          "title": "Why",
+          "type": "string"
+        }
+      },
+      "required": [
+        "printed",
+        "likely",
+        "why"
+      ],
+      "title": "Doubt",
+      "type": "object"
+    },
+    "WriteEnglishLifeEvent": {
+      "additionalProperties": false,
+      "description": "The one family event a piece announces, greets or mourns.",
+      "properties": {
+        "date_gregorian": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "YYYY-MM-DD, only as printed.",
+          "title": "Date Gregorian"
+        },
+        "date_hebrew": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date Hebrew"
+        },
+        "kind": {
+          "enum": [
+            "wedding",
+            "birth",
+            "death",
+            "bar_mitzvah",
+            "celebration",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "description": "A short English name for the event.",
+          "title": "Name",
+          "type": "string"
+        },
+        "principals": {
+          "description": "Their English names as in people.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Principals",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "principals",
+        "date_hebrew",
+        "date_gregorian"
+      ],
+      "title": "LifeEvent",
+      "type": "object"
+    },
+    "WriteEnglishOrganization": {
+      "additionalProperties": false,
+      "description": "An organisation, institution or named business a piece names.",
+      "properties": {
+        "kind": {
+          "description": "In a word or two: school, bank, party, society, shop.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "description": "In English.",
+          "title": "Name",
+          "type": "string"
+        },
+        "printed": {
+          "description": "As in the text.",
+          "title": "Printed",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "printed",
+        "kind"
+      ],
+      "title": "Organization",
+      "type": "object"
+    },
+    "WriteEnglishPerson": {
+      "additionalProperties": false,
+      "description": "A person a piece names.",
+      "properties": {
+        "died": {
+          "description": "True only if the piece says the person has died.",
+          "title": "Died",
+          "type": "boolean"
+        },
+        "gender": {
+          "enum": [
+            "male",
+            "female",
+            "unknown"
+          ],
+          "title": "Gender",
+          "type": "string"
+        },
+        "lives_in": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The town the piece says the person lives in.",
+          "title": "Lives In"
+        },
+        "minor": {
+          "description": "True only if the piece shows the person was a child.",
+          "title": "Minor",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "In English, as the instructions say.",
+          "title": "Name",
+          "type": "string"
+        },
+        "printed": {
+          "description": "As in the text.",
+          "title": "Printed",
+          "type": "string"
+        },
+        "role": {
+          "description": "What the person is in this piece, in a few words.",
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "printed",
+        "gender",
+        "role",
+        "lives_in",
+        "minor",
+        "died"
+      ],
+      "title": "Person",
+      "type": "object"
+    },
+    "WriteEnglishPlace": {
+      "additionalProperties": false,
+      "description": "A place a piece names.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "city",
+            "town",
+            "village",
+            "shtetl",
+            "street",
+            "address",
+            "landmark",
+            "country",
+            "region",
+            "district"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "description": "Its usual English name.",
+          "title": "Name",
+          "type": "string"
+        },
+        "printed": {
+          "description": "As in the text.",
+          "title": "Printed",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "printed",
+        "kind"
+      ],
+      "title": "Place",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "classes": {
+    "FindItemsAnswer": "schema/answers.yaml",
+    "FindItemsAnswerHeading": "schema/answers.yaml",
+    "FindItemsAnswerItem": "schema/answers.yaml",
+    "JoinPeopleAnswer": "schema/answers.yaml",
+    "JoinPeopleGroup": "schema/answers.yaml",
+    "ReadLatinAnswer": "schema/answers.yaml",
+    "ReadLatinLine": "schema/answers.yaml",
+    "WriteEnglishAnswer": "schema/answers.yaml",
+    "WriteEnglishAnsweredPiece": "schema/answers.yaml",
+    "WriteEnglishDoubt": "schema/answers.yaml",
+    "WriteEnglishLifeEvent": "schema/answers.yaml",
+    "WriteEnglishOrganization": "schema/answers.yaml",
+    "WriteEnglishPerson": "schema/answers.yaml",
+    "WriteEnglishPlace": "schema/answers.yaml"
+  },
+  "external_contract": "model-answers",
+  "known_looser": []
+}
