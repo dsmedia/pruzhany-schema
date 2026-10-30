@@ -1,4 +1,3 @@
-import { withFieldOrder } from './shared.schema';
 import {
 	PublicMediaShape,
 	MediaDecisionShape,
@@ -16,98 +15,65 @@ import {
 	MediaShape,
 } from './generated/media';
 import { z } from 'zod/v4';
-import { siteDay, siteText, uniqueIds } from './site-common.schema';
+import { siteDay, uniqueIds } from './site-common.schema';
 
 import type { Source } from './sourced-entities.schema';
 import { MEDIA_WIDTH_LIST } from './media-widths.table';
-import { MEDIA_RIGHTS, COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
+import { COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
 export { MEDIA_RIGHTS, COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
 
 export const MEDIA_WIDTHS: readonly number[] = MEDIA_WIDTH_LIST;
 // Local RepresentationType concepts, linked by rico:hasRepresentationType.
 export const MediaKindSchema = PublicMediaShape.shape.kind;
-export const MediaDecisionSchema = withFieldOrder(
-	MediaDecisionShape.extend({ on: siteDay }),
-	'role on'
-);
+// Rebind children to propagate retained calendar and consent checks into parents.
+export const MediaDecisionSchema = MediaDecisionShape.extend({ on: siteDay });
 export type MediaDecision = z.infer<typeof MediaDecisionSchema>;
-export const MediaTextSchema = withFieldOrder(
-	MediaTextShape.extend({ reviewed: MediaDecisionSchema.nullish() }),
-	'text lang reviewed'
-);
+export const MediaTextSchema = MediaTextShape.extend({ reviewed: MediaDecisionSchema.nullish() });
 export type MediaText = z.infer<typeof MediaTextSchema>;
-const pixels = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
-export const MediaRegionSchema = withFieldOrder(
-	MediaRegionShape.extend({ w: pixels, h: pixels }),
-	'x y w h'
-);
+export const MediaRegionSchema = MediaRegionShape;
 export type MediaRegion = z.infer<typeof MediaRegionSchema>;
-export const MediaDepictedSchema = withFieldOrder(
-	MediaDepictedShape.extend({ person_id: siteText.nullable(), region: MediaRegionSchema }),
-	'person_id region identified_by'
-);
-export const MediaPortraitSchema = withFieldOrder(
-	MediaPortraitShape.extend({ region: MediaRegionSchema, reviewed: MediaDecisionSchema }),
-	'media_id region reviewed'
-);
+// known-looser: a depicted person's key is required even when its value is null.
+export const MediaDepictedSchema = MediaDepictedShape.extend({
+	person_id: MediaDepictedShape.shape.person_id.unwrap(),
+});
+export const MediaPortraitSchema = MediaPortraitShape.extend({ reviewed: MediaDecisionSchema });
 export type MediaPortrait = z.infer<typeof MediaPortraitSchema>;
-export const MediaWithdrawalSchema = withFieldOrder(
-	MediaWithdrawalShape.extend({ on: siteDay }),
-	'on reason'
-);
-export const MediaConsentScopeSchema = withFieldOrder(
-	MediaConsentScopeShape,
-	'use person_ids unidentified'
-).superRefine((v, ctx) => {
+export const MediaWithdrawalSchema = MediaWithdrawalShape.extend({ on: siteDay });
+export const MediaConsentScopeSchema = MediaConsentScopeShape.superRefine((v, ctx) => {
 	for (const message of uniqueIds(v.person_ids, 'consent person'))
 		ctx.addIssue({ code: 'custom', message });
 });
-export const MediaConsentSchema = withFieldOrder(
-	MediaConsentShape.extend({ scope: MediaConsentScopeSchema, withdrawn_on: siteDay.nullish() }),
-	'basis granted_by scope ref withdrawn_on'
-);
+export const MediaConsentSchema = MediaConsentShape.extend({
+	scope: MediaConsentScopeSchema,
+	withdrawn_on: siteDay.nullish(),
+});
 // A public Citation subset: exact words and their recorded part. No private note or locator.
-export const MediaFamilyWordsSchema = withFieldOrder(
-	MediaFamilyWordsShape,
-	'source_id page quote quote_language'
-);
-export const MediaFixitySchema = withFieldOrder(
-	MediaFixityShape.extend({ on: siteDay }),
-	'on sha256'
-);
-export const MediaMasterSchema = withFieldOrder(
-	MediaMasterShape.extend({ bytes: pixels, checked: MediaFixitySchema.nullish() }),
-	'bucket key sha256 mime bytes checked'
-).superRefine((v, ctx) => {
+export const MediaFamilyWordsSchema = MediaFamilyWordsShape;
+export const MediaFixitySchema = MediaFixityShape.extend({ on: siteDay });
+export const MediaMasterSchema = MediaMasterShape.extend({
+	checked: MediaFixitySchema.nullish(),
+}).superRefine((v, ctx) => {
 	const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
 	if (v.bucket === 'pruzhany-page-pictures') fail('master needs its own private bucket');
 	if (v.key.split('/').at(-1) !== v.sha256) fail('master key must be named by its sha256');
 	if (v.checked && v.checked.sha256 !== v.sha256) fail('master check must match its sha256');
 });
 export type MediaMaster = z.infer<typeof MediaMasterSchema>;
-export const MediaDerivativeSchema = withFieldOrder(
-	MediaDerivativeShape.extend({ width: pixels, height: pixels }),
-	'url width height process'
-);
+export const MediaDerivativeSchema = MediaDerivativeShape;
 export type MediaDerivative = z.infer<typeof MediaDerivativeSchema>;
-const publicFields = withFieldOrder(
-	PublicMediaShape.extend({
-		caption: MediaTextSchema,
-		alt: MediaTextSchema.nullish(),
-		inscription: MediaTextSchema.nullish(),
-		transcript: MediaTextSchema.nullish(),
-		family_words: MediaFamilyWordsSchema.nullish(),
-		depicted: z.array(MediaDepictedSchema),
-		width: pixels.nullish(),
-		height: pixels.nullish(),
-		duration: z.number().positive().nullish(),
-		rights: z.enum(MEDIA_RIGHTS).default(COPYRIGHT_NOT_EVALUATED).optional(),
-		cleared: MediaDecisionSchema.nullish(),
-		withdrawn: MediaWithdrawalSchema.nullish(),
-		derived: z.array(MediaDerivativeSchema).min(1).nullish(),
-	}),
-	'id source_id kind caption alt inscription transcript family_words depicted shows_unidentified width height duration credit conditions_of_access conditions_of_use rights cleared withdrawn link derived'
-);
+const publicFields = PublicMediaShape.extend({
+	caption: MediaTextSchema,
+	alt: MediaTextSchema.nullish(),
+	inscription: MediaTextSchema.nullish(),
+	transcript: MediaTextSchema.nullish(),
+	depicted: z.array(MediaDepictedSchema),
+	// known-looser: LinkML's duration bound is inclusive; the validator requires > 0.
+	duration: z.number().positive().nullish(),
+	// Preserve the released rights default and inferred optional type.
+	rights: PublicMediaShape.shape.rights.unwrap().default(COPYRIGHT_NOT_EVALUATED).optional(),
+	cleared: MediaDecisionSchema.nullish(),
+	withdrawn: MediaWithdrawalSchema.nullish(),
+});
 export function regionFits(
 	region: MediaRegion,
 	width?: number | null,
@@ -163,14 +129,11 @@ function mediaRules(v: z.infer<typeof publicFields>, ctx: z.RefinementCtx) {
 		}
 	}
 }
-export const MediaSchema = withFieldOrder(
-	MediaShape.extend({
-		...publicFields.shape,
-		master: MediaMasterSchema.nullish(),
-		consent: MediaConsentSchema.nullish(),
-	}),
-	'id source_id kind caption alt inscription transcript family_words depicted shows_unidentified width height duration credit conditions_of_access conditions_of_use rights cleared withdrawn link derived master consent'
-)
+export const MediaSchema = MediaShape.extend({
+	...publicFields.shape,
+	master: MediaMasterSchema.nullish(),
+	consent: MediaConsentSchema.nullish(),
+})
 	.superRefine(mediaRules)
 	.superRefine((v, ctx) => {
 		if (v.consent?.withdrawn_on && !v.withdrawn)

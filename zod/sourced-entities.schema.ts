@@ -1,4 +1,3 @@
-import { withFieldOrder } from './shared.schema';
 import {
 	AttributionShape,
 	SourcedDateShape,
@@ -15,6 +14,7 @@ import { z } from 'zod/v4';
 
 import type { HolocaustFate } from './shared.schema';
 
+// Retained calendar/host refinements and child rebindings keep checks active in parents.
 const date = SourcedDateShape.shape.start
 	.unwrap()
 	.unwrap()
@@ -37,26 +37,20 @@ function upper(v: string): string {
 	const days = month === 2 ? (leap ? 29 : 28) : [4, 6, 9, 11].includes(month) ? 30 : 31;
 	return `${v}-${days}`;
 }
-export const SourcedDateSchema = withFieldOrder(
-	SourcedDateShape.extend({
-		start: date.nullish(),
-		end: date.nullish(),
-	}),
-	'start end precision printed printed_calendar inferred'
-).superRefine((v, ctx) => {
+export const SourcedDateSchema = SourcedDateShape.extend({
+	start: date.nullish(),
+	end: date.nullish(),
+}).superRefine((v, ctx) => {
 	const error = validateSourcedDate(v);
 	if (error) ctx.addIssue({ code: 'custom', message: error });
 });
 export type SourcedDate = z.infer<typeof SourcedDateSchema>;
-export const ReviewSchema = withFieldOrder(
-	ReviewShape.extend({ on: day.nullish() }),
-	'state by on'
-).superRefine((v, ctx) => {
+export const ReviewSchema = ReviewShape.extend({ on: day.nullish() }).superRefine((v, ctx) => {
 	const error = validateReview(v);
 	if (error) ctx.addIssue({ code: 'custom', message: error });
 });
 export type Review = z.infer<typeof ReviewSchema>;
-export const AttributionSchema = withFieldOrder(AttributionShape.extend({ on: day }), 'by on note');
+export const AttributionSchema = AttributionShape.extend({ on: day });
 export type Attribution = z.infer<typeof AttributionSchema>;
 export const SourceHostSchema = SourceShape.shape.host
 	.unwrap()
@@ -65,46 +59,35 @@ export const SourceHostSchema = SourceShape.shape.host
 // RFC 5646 §2.1, https://www.rfc-editor.org/rfc/rfc5646, read 2026-10-24:
 // syntax (including private-use and grandfathered tags), not registry membership.
 export const SourceLanguageSchema = SourceShape.shape.language.unwrap().unwrap().element;
-export const SourceDerivationSchema = withFieldOrder(SourceDerivationShape, 'source_id relation');
+export const SourceDerivationSchema = SourceDerivationShape;
 export type SourceDerivation = z.infer<typeof SourceDerivationSchema>;
-export const SourceSchema = withFieldOrder(
-	SourceShape.extend({
-		host: SourceHostSchema.nullish(),
-		derived_from: z.array(SourceDerivationSchema).min(1).nullish(),
-		dated: SourcedDateSchema.nullish(),
-		quotes_cleared: AttributionSchema.nullish(),
-	}),
-	'made_by id kind title short_name holder_id reference_code language derived_from dated quotes_cleared quote_condition private work_id author editor published repository url_pattern host subjects'
-);
-export type Source = z.infer<typeof SourceSchema>;
-export const CitationSchema = withFieldOrder(
-	CitationShape.extend({ url: z.url({ protocol: /^https$/ }).nullish(), accessed: day.nullish() }),
-	'source_id via reference_code record_type quote_language public_note locator record_id page scan time edition_date unit_id url quote note accessed'
-).superRefine((v, ctx) => {
-	const error = validateCitation(v);
-	if (error) ctx.addIssue({ code: 'custom', message: error });
+export const SourceSchema = SourceShape.extend({
+	host: SourceHostSchema.nullish(),
+	dated: SourcedDateSchema.nullish(),
+	quotes_cleared: AttributionSchema.nullish(),
 });
+export type Source = z.infer<typeof SourceSchema>;
+export const CitationSchema = CitationShape.extend({ accessed: day.nullish() }).superRefine(
+	(v, ctx) => {
+		const error = validateCitation(v);
+		if (error) ctx.addIssue({ code: 'custom', message: error });
+	}
+);
 export type Citation = z.infer<typeof CitationSchema>;
-export const FactSchema = withFieldOrder(
-	FactShape.extend({
-		date: SourcedDateSchema.nullish(),
-		citations: z.array(CitationSchema).min(1),
-		review: ReviewSchema,
-		attribution: AttributionSchema,
-	}),
-	'id type proposed_type value date place_id organization_id event_id related_person_id relationship_type related_name qualifiers holocaust_related citations evidence_confidence identity_confidence status review attribution'
-).superRefine((v, ctx) => {
+export const FactSchema = FactShape.extend({
+	date: SourcedDateSchema.nullish(),
+	citations: z.array(CitationSchema).min(1),
+	review: ReviewSchema,
+	attribution: AttributionSchema,
+}).superRefine((v, ctx) => {
 	const error = validateFact(v);
 	if (error) ctx.addIssue({ code: 'custom', message: error });
 });
 export type Fact = z.infer<typeof FactSchema>;
-export const NameSchema = withFieldOrder(
-	NameShape.extend({
-		citations: z.array(CitationSchema).nullish(),
-		attribution: AttributionSchema.nullish(),
-	}),
-	'value kind script lang citations attribution'
-).superRefine((v, ctx) => {
+export const NameSchema = NameShape.extend({
+	citations: z.array(CitationSchema).nullish(),
+	attribution: AttributionSchema.nullish(),
+}).superRefine((v, ctx) => {
 	if (v.kind === 'supplied' && (!v.attribution || !v.citations?.length))
 		ctx.addIssue({ code: 'custom', message: 'supplied name needs attribution and citations' });
 	if (v.attribution && v.kind !== 'supplied')
@@ -114,18 +97,12 @@ export const NameSchema = withFieldOrder(
 		});
 });
 export type Name = z.infer<typeof NameSchema>;
-export const FateSchema = withFieldOrder(
-	FateShape.extend({ review: ReviewSchema }),
-	'outcome confidence rests_on review summary'
-).superRefine((v, ctx) => {
+export const FateSchema = FateShape.extend({ review: ReviewSchema }).superRefine((v, ctx) => {
 	const error = validateFate(v);
 	if (error) ctx.addIssue({ code: 'custom', message: error });
 });
 export type Fate = z.infer<typeof FateSchema>;
-export const MentionSchema = withFieldOrder(
-	MentionShape,
-	'id person_id unit_id printed_name role title function wkd_id'
-);
+export const MentionSchema = MentionShape;
 export type Mention = z.infer<typeof MentionSchema>;
 
 function validateSourcedDate(v: SourcedDate) {

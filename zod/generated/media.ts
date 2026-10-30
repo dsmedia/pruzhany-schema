@@ -25,28 +25,28 @@ const pattern9 = /^[a-z0-9]+(?:-[a-z0-9]+)*$(?![\s\S])/;
 const pattern10 = /^https:\/\/[a-z0-9]+(?:[.-][a-z0-9]+)*(?:\/[^\s\\]*)?$(?![\s\S])/;
 
 export const MediaConsentScopeShape = z.strictObject({
+	use: MediaConsentScopeUseEnum,
 	person_ids: z.array(z.string().regex(pattern1)),
 	unidentified: z.boolean(),
-	use: MediaConsentScopeUseEnum,
 });
 
 export const MediaDecisionShape = z.strictObject({
-	on: z.string().regex(pattern2),
 	role: MediaDecisionRoleEnum,
+	on: z.string().regex(pattern2),
 });
 
 export const MediaDerivativeShape = z.strictObject({
-	height: z.number().int().min(1).max(9007199254740991),
-	process: z.literal('resize'),
 	url: z.string().regex(pattern3),
 	width: z.number().int().min(1).max(9007199254740991),
+	height: z.number().int().min(1).max(9007199254740991),
+	process: z.literal('resize'),
 });
 
 export const MediaFamilyWordsShape = z.strictObject({
+	source_id: z.string().regex(pattern1),
 	page: z.string().regex(pattern1),
 	quote: z.string().regex(pattern1),
 	quote_language: z.string().regex(pattern4),
-	source_id: z.string().regex(pattern1),
 });
 
 export const MediaFixityShape = z.strictObject({
@@ -56,24 +56,24 @@ export const MediaFixityShape = z.strictObject({
 
 export const MediaMasterShape = z.strictObject({
 	bucket: z.string().regex(pattern6),
+	key: z.string().regex(pattern7),
+	sha256: z.string().regex(pattern5),
+	mime: z.string().regex(pattern8),
 	bytes: z.number().int().min(1).max(9007199254740991),
 	checked: MediaFixityShape.nullish(),
-	key: z.string().regex(pattern7),
-	mime: z.string().regex(pattern8),
-	sha256: z.string().regex(pattern5),
 });
 
 export const MediaRegionShape = z.strictObject({
-	h: z.number().int().min(1).max(9007199254740991),
-	w: z.number().int().min(1).max(9007199254740991),
 	x: z.number().int().min(0).max(9007199254740991),
 	y: z.number().int().min(0).max(9007199254740991),
+	w: z.number().int().min(1).max(9007199254740991),
+	h: z.number().int().min(1).max(9007199254740991),
 });
 
 export const MediaTextShape = z.strictObject({
+	text: z.string().regex(pattern1),
 	lang: z.string().regex(pattern4),
 	reviewed: MediaDecisionShape.nullish(),
-	text: z.string().regex(pattern1),
 });
 
 export const MediaWithdrawalShape = z.strictObject({
@@ -84,15 +84,15 @@ export const MediaWithdrawalShape = z.strictObject({
 export const MediaConsentShape = z.strictObject({
 	basis: MediaConsentBasisEnum,
 	granted_by: MediaGrantedByEnum,
-	ref: z.string().regex(pattern1),
 	scope: MediaConsentScopeShape,
+	ref: z.string().regex(pattern1),
 	withdrawn_on: z.string().regex(pattern2).nullish(),
 });
 
 export const MediaDepictedShape = z.strictObject({
-	identified_by: MediaIdentifiedByEnum,
 	person_id: z.string().regex(pattern1).nullish(),
 	region: MediaRegionShape,
+	identified_by: MediaIdentifiedByEnum,
 });
 
 export const MediaPortraitShape = z.strictObject({
@@ -102,51 +102,51 @@ export const MediaPortraitShape = z.strictObject({
 });
 
 export const PublicMediaShape = z.strictObject({
-	alt: MediaTextShape.nullish(),
+	id: z.string().regex(pattern9),
+	source_id: z.string().regex(pattern1),
+	kind: MediaKindEnum,
 	caption: MediaTextShape,
-	cleared: MediaDecisionShape.nullish(),
+	alt: MediaTextShape.nullish(),
+	inscription: MediaTextShape.nullish(),
+	transcript: MediaTextShape.nullish(),
+	family_words: MediaFamilyWordsShape.nullish(),
+	depicted: z.array(MediaDepictedShape),
+	shows_unidentified: z.boolean(),
+	width: z.number().int().min(1).max(9007199254740991).nullish(),
+	height: z.number().int().min(1).max(9007199254740991).nullish(),
+	duration: z.number().min(0).nullish(),
+	credit: z.string().regex(pattern1),
 	conditions_of_access: z.string().regex(pattern1).nullish(),
 	conditions_of_use: z.string().regex(pattern1).nullish(),
-	credit: z.string().regex(pattern1),
-	depicted: z.array(MediaDepictedShape),
-	derived: z.array(MediaDerivativeShape).min(1).nullish(),
-	duration: z.number().min(0).nullish(),
-	family_words: MediaFamilyWordsShape.nullish(),
-	height: z.number().int().min(1).max(9007199254740991).nullish(),
-	id: z.string().regex(pattern9),
-	inscription: MediaTextShape.nullish(),
-	kind: MediaKindEnum,
-	link: z.string().regex(pattern10).nullish(),
 	rights: MediaRightsEnum.optional(),
-	shows_unidentified: z.boolean(),
-	source_id: z.string().regex(pattern1),
-	transcript: MediaTextShape.nullish(),
-	width: z.number().int().min(1).max(9007199254740991).nullish(),
+	cleared: MediaDecisionShape.nullish(),
 	withdrawn: MediaWithdrawalShape.nullish(),
+	link: z.string().regex(pattern10).nullish(),
+	derived: z.array(MediaDerivativeShape).min(1).nullish(),
 });
 
 export const MediaShape = z.strictObject({
-	alt: MediaTextShape.nullish(),
+	id: z.string().regex(pattern9),
+	source_id: z.string().regex(pattern1),
+	kind: MediaKindEnum,
 	caption: MediaTextShape,
-	cleared: MediaDecisionShape.nullish(),
+	alt: MediaTextShape.nullish(),
+	inscription: MediaTextShape.nullish(),
+	transcript: MediaTextShape.nullish(),
+	family_words: MediaFamilyWordsShape.nullish(),
+	depicted: z.array(MediaDepictedShape),
+	shows_unidentified: z.boolean(),
+	width: z.number().int().min(1).max(9007199254740991).nullish(),
+	height: z.number().int().min(1).max(9007199254740991).nullish(),
+	duration: z.number().min(0).nullish(),
+	credit: z.string().regex(pattern1),
 	conditions_of_access: z.string().regex(pattern1).nullish(),
 	conditions_of_use: z.string().regex(pattern1).nullish(),
-	consent: MediaConsentShape.nullish(),
-	credit: z.string().regex(pattern1),
-	depicted: z.array(MediaDepictedShape),
-	derived: z.array(MediaDerivativeShape).min(1).nullish(),
-	duration: z.number().min(0).nullish(),
-	family_words: MediaFamilyWordsShape.nullish(),
-	height: z.number().int().min(1).max(9007199254740991).nullish(),
-	id: z.string().regex(pattern9),
-	inscription: MediaTextShape.nullish(),
-	kind: MediaKindEnum,
-	link: z.string().regex(pattern10).nullish(),
-	master: MediaMasterShape.nullish(),
 	rights: MediaRightsEnum.optional(),
-	shows_unidentified: z.boolean(),
-	source_id: z.string().regex(pattern1),
-	transcript: MediaTextShape.nullish(),
-	width: z.number().int().min(1).max(9007199254740991).nullish(),
+	cleared: MediaDecisionShape.nullish(),
 	withdrawn: MediaWithdrawalShape.nullish(),
+	link: z.string().regex(pattern10).nullish(),
+	derived: z.array(MediaDerivativeShape).min(1).nullish(),
+	master: MediaMasterShape.nullish(),
+	consent: MediaConsentShape.nullish(),
 });

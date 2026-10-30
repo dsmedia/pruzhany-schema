@@ -280,7 +280,8 @@ def differences(linkml_dir):
         build(linkml_dir, Path(scratch))
         fresh = files(Path(scratch))
         python = _python_backend.build_python(linkml_dir, json.loads(fresh['contract.json'])) if (linkml_dir / 'python-compatibility.json').exists() else None
-        zod = _zod_backend.build_zod(json.loads(fresh['contract.json']))
+        index = json.loads(fresh['contract.json'])
+        zod = _zod_backend.build_zod(index, _zod_backend.definition_field_orders(linkml_dir, index))
     committed = files(linkml_dir / 'generated')
     shown = 'linkml/generated/'
     problems = []
@@ -311,7 +312,8 @@ def regenerate(linkml_dir):
     with tempfile.TemporaryDirectory() as scratch:
         build(linkml_dir, Path(scratch))
         python = _python_backend.build_python(linkml_dir, json.loads((Path(scratch) / 'contract.json').read_text())) if (linkml_dir / 'python-compatibility.json').exists() else None
-        zod = _zod_backend.build_zod(json.loads((Path(scratch) / 'contract.json').read_text()))
+        index = json.loads((Path(scratch) / 'contract.json').read_text())
+        zod = _zod_backend.build_zod(index, _zod_backend.definition_field_orders(linkml_dir, index))
         target = linkml_dir / 'generated'
         if target.exists():
             shutil.rmtree(target)

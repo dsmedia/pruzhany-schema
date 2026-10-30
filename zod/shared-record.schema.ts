@@ -1,4 +1,3 @@
-import { withFieldOrder } from './shared.schema';
 import {
 	SiteCitationShape,
 	SharedNameShape,
@@ -32,11 +31,13 @@ import { MediaSchema, MediaPortraitSchema, mediaReferenceErrors } from './media.
 
 // Located notice evidence written by the site writer. An older Citation without
 // addresses retains its locator and quote verbatim, even after a rereading.
-export const SiteCitationSchema = CitationSchema.safeExtend(
-	SiteCitationShape.pick({ addresses: true }).extend({
-		addresses: z.array(PrintedAddressSchema).min(1).nullish(),
-	}).shape
-).superRefine((v, ctx) => {
+// Zod "Defining schemas", https://zod.dev/api, read 30 October 2026: safeExtend
+// preserves ancestor refinements. Child rebindings retain tuple, calendar and evidence checks.
+export const SiteCitationSchema = CitationSchema.safeExtend({
+	...SiteCitationShape.shape,
+	accessed: CitationSchema.shape.accessed,
+	addresses: z.array(PrintedAddressSchema).min(1).nullish(),
+}).superRefine((v, ctx) => {
 	if (!v.addresses) return;
 	if (!v.unit_id?.trim() || !siteDay.safeParse(v.edition_date).success || !v.quote?.trim())
 		ctx.addIssue({
@@ -54,11 +55,11 @@ export const SiteCitationSchema = CitationSchema.safeExtend(
 export type SiteCitation = z.infer<typeof SiteCitationSchema>;
 
 // Released names with the site's located evidence; supplied attribution is inherited.
-export const SharedNameSchema = NameSchema.safeExtend(
-	SharedNameShape.pick({ citations: true }).extend({
-		citations: z.array(SiteCitationSchema).nullish(),
-	}).shape
-);
+export const SharedNameSchema = NameSchema.safeExtend({
+	...SharedNameShape.shape,
+	citations: z.array(SiteCitationSchema).nullish(),
+	attribution: NameSchema.shape.attribution,
+});
 export type SharedName = z.infer<typeof SharedNameSchema>;
 export function isPrintedName(name: SharedName): boolean {
 	return name.kind === 'printed';
@@ -66,16 +67,12 @@ export function isPrintedName(name: SharedName): boolean {
 
 // Printed dates keep their original rules. A record date refers to the preferred
 // fact, whose SourcedDate retains ranges, inference and even an unknown date.
-export const LifeEventDateSchema = withFieldOrder(
-	LifeEventDateShape.extend({
-		printed: SourcedDateSchema.shape.printed,
-		printed_calendar: SourcedDateSchema.shape.printed_calendar,
-		start: SourcedDateSchema.shape.start,
-		qualifier: z.literal('reported_in').nullish(),
-		reported_in: siteDay.nullish(),
-	}),
-	'record_fact_id printed printed_calendar start qualifier reported_in'
-).superRefine((v, ctx) => {
+export const LifeEventDateSchema = LifeEventDateShape.extend({
+	start: SourcedDateSchema.shape.start,
+	// Preserve the public inferred type: LinkML const slots otherwise exclude null.
+	qualifier: z.literal('reported_in').nullish(),
+	reported_in: siteDay.nullish(),
+}).superRefine((v, ctx) => {
 	const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
 	if (v.record_fact_id) {
 		if (v.printed || v.printed_calendar || v.start || v.qualifier || v.reported_in)
@@ -92,15 +89,17 @@ export const LifeEventDateSchema = withFieldOrder(
 		fail('normalization requires a printed Gregorian date');
 });
 export type LifeEventDate = z.infer<typeof LifeEventDateSchema>;
-export const LifeEventMainPersonSchema = withFieldOrder(LifeEventMainPersonShape, 'person_id part');
+export const LifeEventMainPersonSchema = LifeEventMainPersonShape;
 export type LifeEventMainPerson = z.infer<typeof LifeEventMainPersonSchema>;
 
 // Fact and standing reuse the production contract, including its sources and review.
-export const SharedFactSchema = FactSchema.safeExtend(
-	SharedFactShape.pick({ subject_id: true, family_id: true, representation: true }).extend({
-		citations: z.array(SiteCitationSchema).min(1),
-	}).shape
-).superRefine((v, ctx) => {
+export const SharedFactSchema = FactSchema.safeExtend({
+	...SharedFactShape.shape,
+	date: FactSchema.shape.date,
+	citations: z.array(SiteCitationSchema).min(1),
+	review: FactSchema.shape.review,
+	attribution: FactSchema.shape.attribution,
+}).superRefine((v, ctx) => {
 	// Legacy Fact still reads parenthood; the current site writer must use a child person.
 	if (v.type === 'parenthood' || v.proposed_type === 'parenthood')
 		ctx.addIssue({
@@ -120,12 +119,14 @@ export function isUnreviewedProse(fact: SharedFact): boolean {
 }
 
 // Relation: subject -> relative; unreleased types keep other/proposed_type.
-export const SourcedRelationSchema = FactSchema.safeExtend(
-	SourcedRelationShape.pick({ type: true, subject_id: true, family_id: true, shown: true }).extend({
-		citations: z.array(SiteCitationSchema).min(1),
-		shown: AttributionSchema.nullish(),
-	}).shape
-).superRefine((v, ctx) => {
+export const SourcedRelationSchema = FactSchema.safeExtend({
+	...SourcedRelationShape.shape,
+	date: FactSchema.shape.date,
+	citations: z.array(SiteCitationSchema).min(1),
+	review: FactSchema.shape.review,
+	attribution: FactSchema.shape.attribution,
+	shown: AttributionSchema.nullish(),
+}).superRefine((v, ctx) => {
 	if (!(v.related_person_id || v.related_name))
 		ctx.addIssue({ code: 'custom', message: 'relation needs a person or an unresolved name' });
 	if (v.type === 'other' && v.relationship_type)
@@ -138,65 +139,46 @@ export const SourcedRelationSchema = FactSchema.safeExtend(
 });
 export type SourcedRelation = z.infer<typeof SourcedRelationSchema>;
 
-export const SharedPersonSchema = withFieldOrder(
-	SharedPersonShape.extend({
-		portrait: MediaPortraitSchema.nullish(),
-		names: z.array(SharedNameSchema),
-		fate: FateSchema.nullish(),
-	}),
-	'portrait id name names gender fate'
-);
+export const SharedPersonSchema = SharedPersonShape.extend({
+	portrait: MediaPortraitSchema.nullish(),
+	names: z.array(SharedNameSchema),
+	fate: FateSchema.nullish(),
+});
 export type SharedPerson = z.infer<typeof SharedPersonSchema>;
-export const SharedFamilySchema = withFieldOrder(
-	SharedFamilyShape.extend({ names: z.array(NameSchema) }),
-	'id name names'
-);
+export const SharedFamilySchema = SharedFamilyShape.extend({ names: z.array(NameSchema) });
 export type SharedFamily = z.infer<typeof SharedFamilySchema>;
 // An outside id of a place (rico:Identifier), read on its authority's own pages: the
 // authority list is a registered source, so its host and address form are described once.
 // Carried only on evidence, never from a name match (vetting §4).
-export const PlaceIdentifierSchema = withFieldOrder(
-	PlaceIdentifierShape.extend({
-		url: z.url({ protocol: /^https$/ }).nullish(),
-		accessed: siteDay,
-		attribution: AttributionSchema,
-	}),
-	'source_id value url accessed attribution'
-);
+export const PlaceIdentifierSchema = PlaceIdentifierShape.extend({
+	accessed: siteDay,
+	attribution: AttributionSchema,
+});
 export type PlaceIdentifier = z.infer<typeof PlaceIdentifierSchema>;
 // Same evidence and uniqueness rules as places; a private holder's name is never public.
-export const HolderSchema = withFieldOrder(
-	HolderShape.extend({
-		identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
-		host: SourceHostSchema.nullish(),
-	}),
-	'id name short_name kind identifiers host'
-);
+export const HolderSchema = HolderShape.extend({
+	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
+	host: SourceHostSchema.nullish(),
+});
 export type Holder = z.infer<typeof HolderSchema>;
 // Plain object: the site derives its public place with .omit(). The identifiers' own
 // rules (once per place, a registered authority, its host) are the shared record's.
-export const SharedPlaceSchema = withFieldOrder(
-	SharedPlaceShape.extend({
-		coordinates: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]).nullish(),
-		identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
-		names: z.array(NameSchema),
-	}),
-	'id name names type parent_id coordinates identifiers'
-);
+export const SharedPlaceSchema = SharedPlaceShape.extend({
+	// known-looser: positional coordinate bounds and the public tuple type.
+	coordinates: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]).nullish(),
+	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
+	names: z.array(NameSchema),
+});
 export type SharedPlace = z.infer<typeof SharedPlaceSchema>;
-export const SharedOrganizationSchema = withFieldOrder(
-	SharedOrganizationShape.extend({ names: z.array(NameSchema) }),
-	'id name names'
-);
+export const SharedOrganizationSchema = SharedOrganizationShape.extend({
+	names: z.array(NameSchema),
+});
 export type SharedOrganization = z.infer<typeof SharedOrganizationSchema>;
-export const SharedEventSchema = withFieldOrder(
-	SharedEventShape.extend({
-		main_people: z.array(LifeEventMainPersonSchema),
-		evidence_basis: z.literal('records_only').nullish(),
-		dates: z.array(LifeEventDateSchema).min(1),
-	}),
-	'id name type proposed_type main_people evidence_basis dates location_id description'
-).superRefine((v, ctx) => {
+export const SharedEventSchema = SharedEventShape.extend({
+	// Preserve the public inferred type: LinkML const slots otherwise exclude null.
+	evidence_basis: z.literal('records_only').nullish(),
+	dates: z.array(LifeEventDateSchema).min(1),
+}).superRefine((v, ctx) => {
 	const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
 	if ((v.type === 'other') !== !!v.proposed_type) fail('event proposed_type exactly for other');
 	if (v.proposed_type && EventTypesSchema.safeParse(v.proposed_type).success)
@@ -228,23 +210,21 @@ export const SharedEventSchema = withFieldOrder(
 });
 export type SharedEvent = z.infer<typeof SharedEventSchema>;
 
-export const SharedRecordSchema = withFieldOrder(
-	SharedRecordShape.extend({
-		// The existing version gate reads this released literal declaration directly.
-		version: z.literal('1'),
-		persons: z.array(SharedPersonSchema),
-		families: z.array(SharedFamilySchema),
-		places: z.array(SharedPlaceSchema),
-		organizations: z.array(SharedOrganizationSchema),
-		events: z.array(SharedEventSchema),
-		sources: z.array(SourceSchema),
-		holders: z.array(HolderSchema).optional(),
-		facts: z.array(SharedFactSchema),
-		relations: z.array(SourcedRelationSchema),
-		media: z.array(MediaSchema).nullish(),
-	}),
-	'version vocabulary_version persons families places organizations events sources holders facts relations media'
-).superRefine((v, ctx) => {
+export const SharedRecordSchema = SharedRecordShape.extend({
+	// The existing version gate reads this released literal declaration directly.
+	version: z.literal('1'),
+	persons: z.array(SharedPersonSchema),
+	families: z.array(SharedFamilySchema),
+	places: z.array(SharedPlaceSchema),
+	organizations: z.array(SharedOrganizationSchema),
+	events: z.array(SharedEventSchema),
+	sources: z.array(SourceSchema),
+	// known-looser: the holders key may be absent, but must reject null.
+	holders: z.array(HolderSchema).optional(),
+	facts: z.array(SharedFactSchema),
+	relations: z.array(SourcedRelationSchema),
+	media: z.array(MediaSchema).nullish(),
+}).superRefine((v, ctx) => {
 	for (const message of sharedRecordErrors(v)) ctx.addIssue({ code: 'custom', message });
 });
 export type SharedRecord = z.infer<typeof SharedRecordSchema>;

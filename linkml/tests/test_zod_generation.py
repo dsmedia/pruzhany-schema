@@ -6,11 +6,14 @@ need only bun; these backend tests run in bin/verify linkml's hashed environment
 
 import copy
 import json
+import re
 import shutil
 import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+
+import yaml
 
 from support import FIXTURES, LINKML, ROOT, load
 
@@ -29,6 +32,110 @@ def fixture(field=None):
 
 
 class ZodGeneration(unittest.TestCase):
+    def test_every_generated_class_has_definition_order_with_inherited_fields_first(self):
+        index = json.loads((LINKML / 'generated/contract.json').read_text())
+        # Independent oracle: YAML's insertion order, walking each is_a parent first.
+        # This covers all production classes and aliases, not a selected field list.
+        classes = {}
+        for source in set(index['classes'].values()):
+            classes.update(yaml.safe_load((LINKML / source).read_text()).get('classes', {}))
+
+        def fields(name):
+            cls = classes[name]
+            inherited = fields(cls['is_a']) if 'is_a' in cls else []
+            self.assertNotIn('mixins', cls, 'extend the independent oracle before adding mixins')
+            self.assertNotIn('slots', cls, 'extend the independent oracle before adding global slots')
+            return list(dict.fromkeys([*inherited, *cls.get('attributes', {})]))
+
+        def wire_fields(name):
+            # Slot aliases/overrides are resolved in the most-derived class context.
+            cls = classes[name]
+            attrs = {}
+            if 'is_a' in cls:
+                attrs.update(wire_definitions(cls['is_a']))
+            attrs.update(cls.get('attributes', {}))
+            attrs.update(cls.get('slot_usage', {}))
+            return [attrs[slot].get('alias', slot) for slot in fields(name)]
+
+        def wire_definitions(name):
+            cls = classes[name]
+            attrs = wire_definitions(cls['is_a']) if 'is_a' in cls else {}
+            attrs.update(cls.get('attributes', {}))
+            attrs.update(cls.get('slot_usage', {}))
+            return attrs
+
+        made = backend.build_zod(index, backend.definition_field_orders(LINKML, index))
+        for name, source in index['classes'].items():
+            with self.subTest(model=name):
+                body = made[Path(source).stem + '.ts'].split(f'export const {name}Shape = ')[1]
+                body = body.split('\n});', 1)[0] if body.startswith('z.strictObject') else ''
+                actual = re.findall(r'^\t([A-Za-z_$][\w$]*): ', body, re.M)
+                self.assertEqual(actual, wire_fields(name))
+                # Test the committed output too, so wiring generate.py incorrectly fails.
+                committed = (ROOT / 'zod/generated' / (Path(source).stem + '.ts')).read_text()
+                self.assertIn(f'export const {name}Shape = ' + body, committed)
+        self.assertEqual(wire_fields('Block'),
+                         ['id', 'bbox', 'transcription', 'confidence', 'image_crop', 'unit_id'])
+        self.assertEqual(wire_fields('TitleCheck'), wire_fields('EnglishCheck'))
+
+    def test_definition_order_mismatch_or_missing_class_is_refused(self):
+        for orders in ({}, {'Fixture': []}, {'Fixture': ['value', 'value']},
+                       {'Fixture': ['missing']}):
+            with self.subTest(orders=orders), self.assertRaisesRegex(ValueError, 'field order'):
+                backend.build_zod(fixture(), orders)
+
+    def test_inherited_order_uses_final_aliases_and_keeps_overridden_slots_in_place(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            (root / 'schema').mkdir()
+            (root / 'schema/fixture.yaml').write_text('''
+id: https://example.test/fictional-order
+name: fictional_order
+prefixes:
+  linkml: https://w3id.org/linkml/
+imports: [linkml:types]
+default_range: string
+slots:
+  first:
+    range: string
+classes:
+  Parent:
+    slots: [first]
+    attributes:
+      middle:
+        alias: middleWire
+  Fixture:
+    is_a: Parent
+    slot_usage:
+      middle:
+        alias: changedWire
+    attributes:
+      last:
+        range: string
+''')
+            index = fixture()
+            index['$defs']['Fixture'] = object_shape({name: {'type': 'string'}
+                                                    for name in ['last', 'changedWire', 'first']})
+            order = backend.definition_field_orders(root, index)
+            self.assertEqual(order, {'Fixture': ['first', 'changedWire', 'last']})
+            made = backend.build_zod(index, order)['fixture.ts']
+            self.assertLess(made.index('\tfirst:'), made.index('\tchangedWire:'))
+            self.assertLess(made.index('\tchangedWire:'), made.index('\tlast:'))
+
+    def test_uri_with_pattern_keeps_both_runtime_and_export_constraints(self):
+        made = backend.build_zod(fixture({'type': 'string', 'format': 'uri',
+                                         'pattern': r'^https://[^\s/?#]+[^\s]*$'}))
+        script = made['fixture.ts'] + '''
+const shape = z.toJSONSchema(FixtureShape).properties.value;
+if (shape.format !== 'uri' || shape.pattern !== /^https:\/\/[^\\s/?#]+[^\\s]*$/.source)
+    throw new Error('lost URI format or pattern');
+for (const value of ['http://example.test', 'https://[invalid', 'https://example.test/has space'])
+    if (FixtureShape.safeParse({ value }).success) throw new Error('loosened URL');
+if (!FixtureShape.safeParse({ value: 'https://example.test/path' }).success)
+    throw new Error('valid HTTPS URL rejected');
+'''
+        subprocess.run(['bun', '-e', script], cwd=ROOT, check=True, capture_output=True)
+
     def test_production_index_covers_every_class_including_resolved_ancestors(self):
         index = json.loads((LINKML / 'generated/contract.json').read_text())
         made = backend.build_zod(index)

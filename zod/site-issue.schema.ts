@@ -1,4 +1,3 @@
-import { withFieldOrder } from './shared.schema';
 import {
 	ContentItemRefShape,
 	IssueLifeEventShape,
@@ -7,7 +6,7 @@ import {
 import { IssueMentionShape, IssueMentionsDataShape } from './generated/mentions';
 import { z } from 'zod/v4';
 import { PagesDataSchema, type PagesData } from './page.schema';
-import { MentionSchema, type Citation } from './sourced-entities.schema';
+import { type Citation } from './sourced-entities.schema';
 
 import { ContentItemsDataSchema } from './content-item.schema';
 import { SharedRecordSchema } from './shared-record.schema';
@@ -20,13 +19,11 @@ import {
 } from './site-common.schema';
 
 // Mention: located words or whole regions, with a derived content item reference.
-export const IssueMentionSchema = withFieldOrder(
-	IssueMentionShape.extend({
-		printed_name: MentionSchema.shape.printed_name.nullable(),
-		addresses: z.array(PrintedAddressSchema).min(1),
-	}),
-	'id person_id printed_name title function wkd_id content_item_id address_grain roles addresses'
-).superRefine((v, ctx) => {
+export const IssueMentionSchema = IssueMentionShape.extend({
+	// known-looser: the printed_name key is required even when its value is null.
+	printed_name: IssueMentionShape.shape.printed_name.unwrap(),
+	addresses: z.array(PrintedAddressSchema).min(1),
+}).superRefine((v, ctx) => {
 	for (const message of uniqueIds(v.roles, 'mention role'))
 		ctx.addIssue({ code: 'custom', message });
 	if ((v.address_grain === 'regions') !== (v.printed_name === null))
@@ -44,10 +41,10 @@ export const IssueMentionSchema = withFieldOrder(
 		ctx.addIssue({ code: 'custom', message: 'printed name must occur at the mention address' });
 });
 export type IssueMention = z.infer<typeof IssueMentionSchema>;
-export const IssueMentionsDataSchema = withFieldOrder(
-	IssueMentionsDataShape.extend({ issue_date: siteDay, mentions: z.array(IssueMentionSchema) }),
-	'issue_date mentions'
-).superRefine((v, ctx) => {
+export const IssueMentionsDataSchema = IssueMentionsDataShape.extend({
+	issue_date: siteDay,
+	mentions: z.array(IssueMentionSchema),
+}).superRefine((v, ctx) => {
 	for (const message of uniqueIds(
 		v.mentions.map((m) => m.id),
 		'mention id'
@@ -56,12 +53,9 @@ export const IssueMentionsDataSchema = withFieldOrder(
 });
 export type IssueMentionsData = z.infer<typeof IssueMentionsDataSchema>;
 
-export const ContentItemRefSchema = withFieldOrder(ContentItemRefShape, 'content_item_id role');
+export const ContentItemRefSchema = ContentItemRefShape;
 export type ContentItemRef = z.infer<typeof ContentItemRefSchema>;
-export const IssueLifeEventSchema = withFieldOrder(
-	IssueLifeEventShape.extend({ content_items: z.array(ContentItemRefSchema).min(1) }),
-	'id content_items'
-).superRefine((v, ctx) => {
+export const IssueLifeEventSchema = IssueLifeEventShape.superRefine((v, ctx) => {
 	for (const message of uniqueIds(
 		v.content_items.map((c) => c.content_item_id),
 		'event content item'
@@ -69,13 +63,10 @@ export const IssueLifeEventSchema = withFieldOrder(
 		ctx.addIssue({ code: 'custom', message });
 });
 export type IssueLifeEvent = z.infer<typeof IssueLifeEventSchema>;
-export const IssueLifeEventsDataSchema = withFieldOrder(
-	IssueLifeEventsDataShape.extend({
-		issue_date: siteDay,
-		life_events: z.array(IssueLifeEventSchema),
-	}),
-	'issue_date life_events'
-).superRefine((v, ctx) => {
+export const IssueLifeEventsDataSchema = IssueLifeEventsDataShape.extend({
+	issue_date: siteDay,
+	life_events: z.array(IssueLifeEventSchema),
+}).superRefine((v, ctx) => {
 	for (const message of uniqueIds(
 		v.life_events.map((e) => e.id),
 		'life event id'

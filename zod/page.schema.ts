@@ -1,4 +1,3 @@
-import { withFieldOrder } from './shared.schema';
 import { BlockShape, PageShape, PagesDataShape } from './generated/pages';
 /**
  * Physical Newspaper Structure
@@ -10,28 +9,21 @@ import { BlockShape, PageShape, PagesDataShape } from './generated/pages';
 
 import { z } from 'zod/v4';
 
-export const BlockSchema = withFieldOrder(
-	BlockShape.extend({
-		bbox: z.tuple([z.number(), z.number(), z.number(), z.number()]),
-		confidence: z.number().optional(),
-		unit_id: z.string().nullable(),
-	}),
-	'id bbox transcription confidence image_crop unit_id'
-).strip();
+// Tuples preserve the public inferred type; their elements keep LinkML's bounds.
+const boxPixel = BlockShape.shape.bbox.element;
+export const BlockSchema = BlockShape.extend({
+	bbox: z.tuple([boxPixel, boxPixel, boxPixel, boxPixel]),
+	// known-looser: optional non-null confidence, required nullable unit_id.
+	confidence: BlockShape.shape.confidence.unwrap().unwrap().optional(),
+	unit_id: BlockShape.shape.unit_id.unwrap().unwrap().nullable(),
+});
 
-export const PageSchema = withFieldOrder(
-	PageShape.extend({
-		page_number: z.number(),
-		dimensions: z.tuple([z.number(), z.number()]),
-		blocks: z.array(BlockSchema),
-	}),
-	'id issue_date page_number image_uri dimensions blocks'
-).strip();
+export const PageSchema = PageShape.extend({
+	dimensions: z.tuple([PageShape.shape.dimensions.element, PageShape.shape.dimensions.element]),
+	blocks: z.array(BlockSchema),
+});
 
-export const PagesDataSchema = withFieldOrder(
-	PagesDataShape.extend({ pages: z.array(PageSchema) }),
-	'edition_date pages'
-).strip();
+export const PagesDataSchema = PagesDataShape.extend({ pages: z.array(PageSchema) });
 
 // Type exports
 export type Block = z.infer<typeof BlockSchema>;

@@ -11,8 +11,8 @@ export const ContentItemRefShape = z.strictObject({
 });
 
 export const IssueLifeEventShape = z.strictObject({
-	content_items: z.array(ContentItemRefShape).min(1),
 	id: z.string().regex(pattern1),
+	content_items: z.array(ContentItemRefShape).min(1),
 });
 
 export const IssueLifeEventsDataShape = z.strictObject({

@@ -2,9 +2,9 @@
 import { z } from 'zod/v4';
 
 export const ExternalReferenceShape = z.strictObject({
-	notes: z.string().nullish(),
-	record_id: z.string().nullish(),
 	source: z.string(),
 	url: z.string().nullish(),
+	record_id: z.string().nullish(),
+	notes: z.string().nullish(),
 	verified: z.boolean().nullish(),
 });

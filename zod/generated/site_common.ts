@@ -11,78 +11,78 @@ const pattern6 = /^[^\s\u0085\uFEFF]+:text$(?![\s\S])/;
 
 export const AuthorshipShape = z.strictObject({
 	by: z.string().regex(pattern1),
-	kind: AuthorshipKindEnum,
-	note: z.string().nullish(),
 	on: z.string().regex(pattern2),
+	note: z.string().nullish(),
+	kind: AuthorshipKindEnum,
 });
 
 export const ContentItemBlockRefShape = z.strictObject({
-	block_ids: z.array(z.string().regex(pattern1)).min(1),
 	page_id: z.string().regex(pattern1),
+	block_ids: z.array(z.string().regex(pattern1)).min(1),
 });
 
 export const CrossReferenceShape = z.strictObject({
-	confidence: z.number(),
-	evidence: z.string(),
-	relationship: z.string(),
 	target_id: z.string(),
+	confidence: z.number(),
+	relationship: z.string(),
+	evidence: z.string(),
 });
 
 export const EnglishCheckShape = z.strictObject({
-	attribution: AuthorshipShape,
+	reading_id: z.string().regex(pattern1),
+	reading_sha256: z.string().regex(pattern3),
 	english_sha256: z.string().regex(pattern3),
 	judgement_id: z.string().regex(pattern4),
 	judgement_sha256: z.string().regex(pattern3),
-	reading_id: z.string().regex(pattern1),
-	reading_sha256: z.string().regex(pattern3),
+	attribution: AuthorshipShape,
 });
 
 export const PrintedAddressShape = z.strictObject({
-	bbox: z.array(z.number().min(0)).min(4).max(4),
 	image_uri: z.string().regex(pattern1),
+	bbox: z.array(z.number().min(0)).min(4).max(4),
 	text: z.string(),
 });
 
 export const PrintedTitleShape = z.strictObject({
-	addresses: z.array(PrintedAddressShape).min(1),
 	text: z.string().regex(pattern1),
+	addresses: z.array(PrintedAddressShape).min(1),
 });
 
 export const TextBasisShape = z.strictObject({
-	addresses: z.array(PrintedAddressShape).min(1),
 	source_text: z.string(),
+	addresses: z.array(PrintedAddressShape).min(1),
 });
 
 export const TitleCheckShape = z.strictObject({
-	attribution: AuthorshipShape,
+	reading_id: z.string().regex(pattern1),
+	reading_sha256: z.string().regex(pattern3),
 	english_sha256: z.string().regex(pattern3),
 	judgement_id: z.string().regex(pattern5),
 	judgement_sha256: z.string().regex(pattern3),
-	reading_id: z.string().regex(pattern1),
-	reading_sha256: z.string().regex(pattern3),
+	attribution: AuthorshipShape,
 });
 
 export const TranslationCheckShape = z.strictObject({
-	attribution: AuthorshipShape,
+	reading_id: z.string().regex(pattern1),
+	reading_sha256: z.string().regex(pattern3),
 	english_sha256: z.string().regex(pattern3),
 	judgement_id: z.string().regex(pattern6),
 	judgement_sha256: z.string().regex(pattern3),
-	reading_id: z.string().regex(pattern1),
-	reading_sha256: z.string().regex(pattern3),
+	attribution: AuthorshipShape,
 });
 
 export const SuppliedTitleShape = z.strictObject({
-	attribution: AuthorshipShape,
-	based_on: TextBasisShape,
-	checked_against: TitleCheckShape.nullish(),
-	language: z.literal('en'),
 	text: z.string().regex(pattern1),
+	language: z.literal('en'),
+	based_on: TextBasisShape,
+	attribution: AuthorshipShape,
+	checked_against: TitleCheckShape.nullish(),
 });
 
 export const TranslationShape = z.strictObject({
-	attribution: AuthorshipShape,
-	based_on: TextBasisShape,
-	checked_against: TranslationCheckShape.nullish(),
-	language: z.literal('en'),
 	text: z.string().regex(pattern1),
+	language: z.literal('en'),
+	based_on: TextBasisShape,
+	attribution: AuthorshipShape,
+	checked_against: TranslationCheckShape.nullish(),
 });

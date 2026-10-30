@@ -1,28 +1,6 @@
 import { ExternalReferenceShape } from './generated/shared';
 import { z } from 'zod/v4';
 
-// Zod "Defining schemas — .extend(), .safeExtend(), .pick(), .omit()",
-// https://zod.dev/api, read 30 October 2026. Order/narrow unrefined generated
-// objects first; keep refinements last. A refined base uses safeExtend instead.
-// The released JSON exports preserve field order as well as their constraints.
-export function withFieldOrder<T extends z.ZodRawShape, C extends z.core.$ZodObjectConfig>(
-	schema: z.ZodObject<T, C>,
-	fieldOrder: string
-): z.ZodObject<T, C> {
-	const order = fieldOrder.split(' ');
-	if (
-		order.length !== Object.keys(schema.shape).length ||
-		new Set(order).size !== order.length ||
-		order.some((key) => !Object.hasOwn(schema.shape, key))
-	)
-		throw new Error('field order must name every generated field exactly once');
-	return schema.pick(
-		Object.fromEntries(order.map((key) => [key, true])) as {
-			[K in keyof T]: true;
-		} & Record<Exclude<keyof T, keyof T>, never>
-	) as z.ZodObject<T, C>;
-}
-
 // The vocabulary gate inspects this released enum declaration directly.
 export const HolocaustFateSchema = z.enum([
 	'unknown',
@@ -35,6 +13,7 @@ export const HolocaustFateSchema = z.enum([
 ]);
 export type HolocaustFate = z.infer<typeof HolocaustFateSchema>;
 
+// Legacy content categories have no owned LinkML class in the current documents.
 export const ContentTypeSchema = z.enum([
 	'lifecycle_event',
 	'community_news',
@@ -43,16 +22,15 @@ export const ContentTypeSchema = z.enum([
 ]);
 export type ContentType = z.infer<typeof ContentTypeSchema>;
 
-export const ExternalReferenceSchema = withFieldOrder(
-	ExternalReferenceShape.extend({
-		record_id: z.string().optional(),
-		notes: z.string().optional(),
-		verified: z.boolean().optional(),
-	}),
-	'source url record_id notes verified'
-).strip();
+// The public inferred type requires these optional keys to reject null.
+export const ExternalReferenceSchema = ExternalReferenceShape.extend({
+	record_id: ExternalReferenceShape.shape.record_id.unwrap().unwrap().optional(),
+	notes: ExternalReferenceShape.shape.notes.unwrap().unwrap().optional(),
+	verified: ExternalReferenceShape.shape.verified.unwrap().unwrap().optional(),
+});
 export type ExternalReference = z.infer<typeof ExternalReferenceSchema>;
 
+// Legacy object-valued box has no owned LinkML class (site boxes are tuples).
 export const BboxSchema = z.object({
 	x: z.number(),
 	y: z.number(),

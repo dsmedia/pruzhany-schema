@@ -68,7 +68,14 @@ not treat an individual shard as a self-contained record with complete reference
 ### Generated Zod and retained refinements
 
 `zod_generator.py` consumes that same resolved class index and emits all owned site classes into
-`zod/generated/<module>.ts`, including inherited fields, in the JSON Schema's property order.
+`zod/generated/<module>.ts`. Field order comes from the definition, not the alphabetized JSON
+Schema index: `SchemaView.class_ancestors` is reversed (ancestors first), `class_slots(direct=True)`
+keeps declared slots/attributes in order, and `induced_slot` supplies aliases in the final class
+context. Repeated inherited slots keep their first position. The pinned **linkml-runtime 1.12.1**
+source, `linkml_runtime/utils/schemaview.py`, those three methods, and LinkML's
+[SchemaView](https://linkml.io/linkml/developers/schemaview.html) page were read **30 October 2026**.
+A test compares every emitted class's order with an independent traversal of the schema YAML,
+including inherited fields and wire aliases; mismatched field inventories fail generation.
 Objects use `z.strictObject`; the named text map uses `z.record`. Shared enums are declared once in
 `enums.ts`; references between modules are imports. The backend supports the house style's scalar
 types, patterns, URI format, numeric bounds, array item types/cardinality, maps, literals, enum
@@ -78,12 +85,12 @@ repository's Prettier form directly, without a JavaScript runtime or formatter a
 `generate.py` writes and byte-checks `zod/generated/` alongside the existing outputs.
 
 The public `zod/*.schema.ts` modules keep their schema/type/function exports. They adapt generated
-shapes before refining them, restore the released field order, and use the retained child validators
+shapes before refining them and use the retained child validators
 where calendar, host, evidence and other checks are needed. Refined ancestor schemas use
 `.safeExtend`; `.pick`, `.omit` and ordinary `.extend` operate on unrefined shapes. Zod's
 [Defining schemas](https://zod.dev/api), including those four object APIs, was read **30 October
 2026**; `.extend` throws on a refined object, while `.safeExtend` retains its refinements.
-The code names that page/date beside the composition helper. Formatting follows Prettier's
+The code names that page/date beside the retained ancestor composition. Formatting follows Prettier's
 [Options](https://prettier.io/docs/options), read **30 October 2026**: tabs, single quotes,
 ES5 trailing commas and width 100.
 
@@ -93,13 +100,18 @@ in the existing refinements and cross-document checks inventoried by `checks/doc
 The Python backend's condition inventory continues to require review when those conditions change.
 
 The hand layer preserves all 24 places in `known-looser.yaml`: required nullable keys, optional
-non-null keys, positional box/coordinate bounds and positive duration. Other released differences
-are explicit too: pages accept number-valued geometry/page numbers and strip unknown keys; catalog
-objects, cross-references and external references also strip unknown keys. External-reference
-optional scalar fields reject null. English-check digests retain their exact-length/pattern form;
-HTTPS URLs retain the protocol validator; version stamps retain their literal/enum types;
-event-date qualifiers and evidence basis retain null; media integers retain the positive-bound
-spelling and rights retain their default. The legacy `ContentType` and object-valued `Bbox`, plus
+non-null keys, positional box/coordinate bounds and positive duration. Type compatibility keeps
+box/dimension/coordinate tuples, external-reference optional non-null scalars, the supported
+content vocabulary version union, and nullable event-date qualifier/evidence-basis literals.
+Page tuples reuse the generated element validators, so integer ranges and box bounds govern.
+All generated objects keep their closedness; page numbers keep their integer range. Hashes and
+HTTPS URLs use the generated patterns. Zod **4.3.5** lets a regex hide a URL's `format: uri` during
+JSON Schema export; the generator preserves that format with metadata alongside both runtime
+checks (read **30 October 2026**, installed `zod/src/v4/core/json-schema-processors.ts`,
+`stringProcessor`). A regression test checks the pattern, URI format and runtime rejections.
+The retained child rebindings propagate tuple/null adjustments, calendar and host refinements,
+text/evidence/consent checks and defaults through parents; array rebindings retain cardinality.
+Media rights retain their released default. The legacy `ContentType` and object-valued `Bbox`, plus
 the isolated pilot, have no owned site class to replace and remain hand-written.
 Two public enum declarations (`HolocaustFateSchema`, `ReadingStatusValueSchema`) retain their
 literal spelling because the existing vocabulary tests inspect those declarations directly;
@@ -110,8 +122,12 @@ stay explicit for existing source-inspecting gates.
 `zod/tests/frozen/` holds test-only shapes from `main` **e3e80c1**. Strict `tsc` compares every
 exported inferred schema type with that baseline, including all six documents, and repeats the
 site's `.pick`, `.extend`, `.shape`, `.safeExtend` and `.omit` projections. The bun-only tests compare
-each public schema's kind and JSON export bytes with those frozen shapes; existing tests continue
-to exercise retained refinements. Backend tests plant unknown constructs, drift, missing/extra
+each public schema's kind and verify that its JSON export never widens those frozen shapes,
+allowing only the measured tightenings and equivalent integer/digest spellings. Negative controls
+reject weakened types, patterns, bounds, URI formats and required keys. The frozen type-equality
+assertions are unchanged; only round one's obsolete byte-identity/stripping assertions follow
+ticket 20's revised measure. Existing behavior tests continue to exercise retained refinements.
+Backend tests plant unknown constructs, drift, missing/extra
 files and cycles. `bin/verify zod` typechecks imported generated/test subfolders and checks their
 formatting recursively; `bin/verify linkml` checks generation and runs the backend tests.
 

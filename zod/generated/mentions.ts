@@ -7,15 +7,15 @@ const pattern1 = /\S/;
 const pattern2 = /^\d{4}-\d{2}-\d{2}$/;
 
 export const IssueMentionShape = z.strictObject({
-	address_grain: AddressGrainEnum,
-	addresses: z.array(PrintedAddressShape).min(1),
-	content_item_id: z.string().regex(pattern1),
-	function: z.string().nullish(),
 	id: z.string().regex(pattern1),
 	person_id: z.string().regex(pattern1),
+	content_item_id: z.string().regex(pattern1),
+	address_grain: AddressGrainEnum,
 	printed_name: z.string().regex(pattern1).nullish(),
 	roles: z.array(MentionRolesEnum).min(1),
+	addresses: z.array(PrintedAddressShape).min(1),
 	title: z.string().nullish(),
+	function: z.string().nullish(),
 	wkd_id: z.string().nullish(),
 });
 

@@ -106,6 +106,54 @@ const equalityControls: [
 	Equal<'en', string>,
 ] = [false, false, false, false];
 
+// Ticket 20's revised measure permits generated constraints to tighten exports.
+// Normalize only these measured, non-widening changes; everything else must match.
+function expectTightening(before: unknown, after: unknown, key = ''): void {
+	if (Array.isArray(before) && Array.isArray(after)) {
+		if (key === 'required') {
+			expect([...after].sort()).toEqual([...before].sort());
+			return;
+		}
+		expect(after).toHaveLength(before.length);
+		before.forEach((value, i) => expectTightening(value, after[i], String(i)));
+		return;
+	}
+	if (before && after && typeof before === 'object' && typeof after === 'object') {
+		const old = { ...before } as Record<string, unknown>;
+		const next = after as Record<string, unknown>;
+		if (old.type === 'number' && next.type === 'integer') old.type = 'integer';
+		// Positive integer spelling: > 0 and >= 1 have the same accepted values.
+		if (old.type === 'integer' && old.exclusiveMinimum === 0 && next.minimum === 1) {
+			delete old.exclusiveMinimum;
+			old.minimum = 1;
+		}
+		for (const bound of ['minimum', 'maximum'] as const)
+			if (!(bound in old) && typeof next[bound] === 'number' && old.type === 'integer')
+				old[bound] = next[bound];
+		// The absolute-end pattern implies the previous exact-length annotations.
+		if (
+			old.pattern === '^[0-9a-f]{64}$' &&
+			old.minLength === 64 &&
+			old.maxLength === 64 &&
+			next.pattern === '^[0-9a-f]{64}$(?![\\s\\S])'
+		) {
+			delete old.minLength;
+			delete old.maxLength;
+			old.pattern = next.pattern;
+		}
+		if (
+			old.format === 'uri' &&
+			!('pattern' in old) &&
+			next.pattern === '^https:\\/\\/[^\\s/?#]+[^\\s]*$'
+		)
+			old.pattern = next.pattern;
+		expect(Object.keys(next).sort()).toEqual(Object.keys(old).sort());
+		for (const field of Object.keys(old)) expectTightening(old[field], next[field], field);
+		return;
+	}
+	expect(after).toEqual(before);
+}
+
 describe('generated shapes preserve the released Zod API', () => {
 	it('checks the complete frozen schema inventory and equality helper', () => {
 		expect(Object.keys(typeEquality).sort()).toEqual(
@@ -116,14 +164,34 @@ describe('generated shapes preserve the released Zod API', () => {
 		expect(equalityControls).toEqual([false, false, false, false]);
 	});
 	for (const name of Object.keys(typeEquality) as SchemaKey[]) {
-		it(name + ' keeps its schema kind and JSON export bytes', () => {
+		it(name + ' keeps its schema kind and never widens its JSON export', () => {
 			expect(current[name].constructor.name).toBe(frozen[name].constructor.name);
 			const options = { target: 'draft-2020-12', io: 'output' } as const;
-			expect(JSON.stringify(z.toJSONSchema(current[name], options), null, '\t') + '\n').toBe(
-				JSON.stringify(z.toJSONSchema(frozen[name], options), null, '\t') + '\n'
+			expectTightening(
+				z.toJSONSchema(frozen[name], options),
+				z.toJSONSchema(current[name], options)
 			);
 		});
 	}
+});
+
+it('refuses weakened types, patterns, bounds, URI formats and required keys', () => {
+	for (const [before, after] of [
+		[{ type: 'integer' }, { type: 'number' }],
+		[{ type: 'string', pattern: '\\S' }, { type: 'string' }],
+		[
+			{ type: 'integer', minimum: 1 },
+			{ type: 'integer', minimum: 0 },
+		],
+		[
+			{ type: 'integer', maximum: 10 },
+			{ type: 'integer', maximum: 11 },
+		],
+		[{ type: 'string', format: 'uri' }, { type: 'string' }],
+		[{ required: ['id'] }, { required: [] }],
+		[{ type: 'object', additionalProperties: false }, { type: 'object' }],
+	])
+		expect(() => expectTightening(before, after)).toThrow();
 });
 
 // Operations used by pruzhany-svelte/src/lib/data/public.schema.ts, read 30 October 2026.
@@ -265,25 +333,28 @@ it('retains calendar and host refinements inside generated parents', () => {
 	).toBe(false);
 });
 
-it('keeps the released stripping and strict object policies', () => {
+it('uses generated closedness for formerly stripping objects', () => {
 	const crossReference = {
 		target_id: 'fictional-item',
 		confidence: 1,
 		relationship: 'fictional link',
 		evidence: 'Fictional evidence',
 	};
-	expect(current.CrossReferenceSchema.parse({ ...crossReference, extra: true })).toEqual(
+	expect(frozen.CrossReferenceSchema.parse({ ...crossReference, extra: true })).toEqual(
 		crossReference
 	);
+	expect(current.CrossReferenceSchema.safeParse({ ...crossReference, extra: true }).success).toBe(
+		false
+	);
 	expect(
-		current.EditionSchema.parse({
+		current.EditionSchema.safeParse({
 			date: '2000-01-01',
 			hebrewDate: 'Fictional date',
 			hebrewMonth: 1,
 			hebrewYear: 5760,
 			extra: true,
-		})
-	).not.toHaveProperty('extra');
+		}).success
+	).toBe(false);
 	expect(
 		current.PrintedAddressSchema.safeParse({
 			image_uri: 'fictional.png',
@@ -292,6 +363,36 @@ it('keeps the released stripping and strict object policies', () => {
 			extra: true,
 		}).success
 	).toBe(false);
+});
+
+it('retains generated integer ranges, box bounds and closedness in public pages', () => {
+	const block = { id: 'fictional-block', bbox: [0, 0, 2, 3], transcription: '', unit_id: null };
+	const page = {
+		id: 'fictional-page',
+		issue_date: '2000-01-01',
+		page_number: 1,
+		image_uri: 'fictional.png',
+		dimensions: [20, 30],
+		blocks: [block],
+	};
+	const document = { edition_date: '2000-01-01', pages: [page] };
+	expect(current.PagesDataSchema.safeParse(document).success).toBe(true);
+	for (const changed of [
+		{ ...page, page_number: 1.5 },
+		{ ...page, dimensions: [20.5, 30] },
+		{ ...page, blocks: [{ ...block, bbox: [-1, 0, 2, 3] }] },
+		{ ...page, blocks: [{ ...block, bbox: [0, 0, 2.5, 3] }] },
+	]) {
+		expect(frozen.PageSchema.safeParse(changed).success).toBe(true);
+		expect(current.PageSchema.safeParse(changed).success).toBe(false);
+	}
+	for (const [schema, value] of [
+		[current.BlockSchema, block],
+		[current.PageSchema, page],
+		[current.PagesDataSchema, document],
+		[current.ExternalReferenceSchema, { source: 'fictional-source' }],
+	] as const)
+		expect(schema.safeParse({ ...value, extra: true }).success).toBe(false);
 });
 
 it('enforces generated bounds, array cardinality, map values and closedness', () => {

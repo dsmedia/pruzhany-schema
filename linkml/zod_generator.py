@@ -18,6 +18,8 @@ import math
 import re
 from pathlib import PurePosixPath
 
+from linkml_runtime.utils.schemaview import SchemaView
+
 
 HEADER = '// Generated from LinkML by linkml/generate.py (zod_generator.py). Do not edit.'
 META = {'description', 'title'}
@@ -170,6 +172,12 @@ class Renderer:
                         refuse(path, 'non-literal regex pattern')
                     self.patterns.setdefault(pattern, f'pattern{len(self.patterns) + 1}')
                     result += f'.regex({self.patterns[pattern]})'
+                    # Zod 4.3.5's stringProcessor lets regex overwrite the URL format
+                    # in JSON exports. Metadata restores the generated URI constraint
+                    # while both runtime checks remain active (source read 30 Oct 2026:
+                    # zod/src/v4/core/json-schema-processors.ts, stringProcessor).
+                    if 'format' in shape:
+                        result += ".meta({ format: 'uri' })"
             elif kind in {'number', 'integer'}:
                 allowed |= {'minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum'}
                 result = 'z.number().int()' if kind == 'integer' else 'z.number()'
@@ -215,10 +223,36 @@ class Renderer:
             refuse(path, f'non-negative integer {key} needed')
 
 
-def build_zod(index):
+def definition_field_orders(linkml_dir, index):
+    """Definition order, ancestors first; induced slots supply the final wire aliases.
+
+    Read 30 October 2026: linkml-runtime 1.12.1, utils/schemaview.py,
+    SchemaView.class_ancestors, class_slots and induced_slot (the locked source).
+    class_slots(direct=True) preserves slots then YAML attributes; ancestor closure
+    is child-first, so reverse it and retain the first position of repeated slots.
+    Induce in the final class context so slot_usage/aliases keep their precedence.
+    """
+    views = {}
+    result = {}
+    for name, source in index['classes'].items():
+        if source not in views:
+            views[source] = SchemaView(str(linkml_dir / source))
+        view = views[source]
+        slots = dict.fromkeys(slot for ancestor in reversed(view.class_ancestors(name))
+                              for slot in view.class_slots(ancestor, direct=True))
+        result[name] = [str(slot.alias or slot.name)
+                        for slot in (view.induced_slot(slot, name) for slot in slots)]
+    return result
+
+
+def build_zod(index, field_orders=None):
     """Return module -> text for the owned site graph, without reading hand Zod."""
     definitions = index['$defs']
     owners = {name: PurePosixPath(source).stem for name, source in index['classes'].items()}
+    # Small isolated renderer fixtures can supply their own property order. Production
+    # always supplies definition_field_orders; never trust the sorted JSON index there.
+    if field_orders is not None and field_orders.keys() != owners.keys():
+        raise ValueError('Zod field orders must cover every owned class exactly once')
     for name in owners:
         if not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', name):
             refuse(name, 'class name')
@@ -276,11 +310,15 @@ def build_zod(index):
                 if shape.get('additionalProperties') is not False:
                     refuse(name, 'open class')
                 fields = shape.get('properties', {})
+                order = list(fields) if field_orders is None else field_orders[name]
+                if len(order) != len(set(order)) or set(order) != fields.keys():
+                    refuse(name, 'definition field order differs from generated properties')
                 required = shape.get('required', [])
                 if len(set(required)) != len(required) or set(required) - fields.keys():
                     refuse(name, 'required fields outside the class or duplicated')
                 lines = [f'export const {name}Shape = z.strictObject({{']
-                for field, value in fields.items():
+                for field in order:
+                    value = fields[field]
                     if field == '__proto__' or not re.fullmatch(r'[A-Za-z_$][A-Za-z0-9_$]*', field):
                         refuse(f'{name}.{field}', 'property name')
                     expr = renderer.expression(value, f'{name}.{field}', field not in required)

@@ -13,20 +13,20 @@ export const EditionShape = z.strictObject({
 
 export const HistoricalEventShape = z.strictObject({
 	date: z.string().regex(pattern1),
-	description: z.string(),
 	endDate: z.string().regex(pattern1).nullish(),
 	name: z.string(),
+	description: z.string(),
 });
 
 export const HolidayShape = z.strictObject({
 	date: z.string().regex(pattern1),
-	hebrewName: z.string().nullish(),
 	name: z.string(),
+	hebrewName: z.string().nullish(),
 });
 
 export const EditionsCatalogShape = z.strictObject({
-	availableDates: z.array(z.string().regex(pattern1)),
 	editions: z.array(EditionShape),
-	historicalEvents: z.array(HistoricalEventShape),
 	holidays: z.array(HolidayShape),
+	historicalEvents: z.array(HistoricalEventShape),
+	availableDates: z.array(z.string().regex(pattern1)),
 });
