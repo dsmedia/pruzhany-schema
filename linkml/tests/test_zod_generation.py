@@ -93,7 +93,8 @@ id: https://example.test/fictional-order
 name: fictional_order
 prefixes:
   linkml: https://w3id.org/linkml/
-imports: [linkml:types]
+imports:
+  - linkml:types
 default_range: string
 slots:
   first:

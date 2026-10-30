@@ -19,27 +19,45 @@ import {
 } from './site-common.schema';
 
 // Mention: located words or whole regions, with a derived content item reference.
-export const IssueMentionSchema = IssueMentionShape.extend({
-	// known-looser: the printed_name key is required even when its value is null.
-	printed_name: IssueMentionShape.shape.printed_name.unwrap(),
-	addresses: z.array(PrintedAddressSchema).min(1),
-}).superRefine((v, ctx) => {
-	for (const message of uniqueIds(v.roles, 'mention role'))
-		ctx.addIssue({ code: 'custom', message });
-	if ((v.address_grain === 'regions') !== (v.printed_name === null))
-		ctx.addIssue({
-			code: 'custom',
-			message: 'printed name must be null exactly when address grain is regions',
-		});
-	if (
-		v.printed_name !== null &&
-		!v.addresses
-			.map((a) => a.text)
-			.join('\n')
-			.includes(v.printed_name)
-	)
-		ctx.addIssue({ code: 'custom', message: 'printed name must occur at the mention address' });
-});
+// Preserve the published files' key order when the site re-serializes parsed mentions.
+const {
+	id,
+	person_id,
+	printed_name,
+	title,
+	function: mentionFunction,
+	wkd_id,
+	...mentionFields
+} = IssueMentionShape.shape;
+export const IssueMentionSchema = z
+	.strictObject({
+		id,
+		person_id,
+		// known-looser: the printed_name key is required even when its value is null.
+		printed_name: printed_name.unwrap(),
+		title,
+		function: mentionFunction,
+		wkd_id,
+		...mentionFields,
+		addresses: z.array(PrintedAddressSchema).min(1),
+	})
+	.superRefine((v, ctx) => {
+		for (const message of uniqueIds(v.roles, 'mention role'))
+			ctx.addIssue({ code: 'custom', message });
+		if ((v.address_grain === 'regions') !== (v.printed_name === null))
+			ctx.addIssue({
+				code: 'custom',
+				message: 'printed name must be null exactly when address grain is regions',
+			});
+		if (
+			v.printed_name !== null &&
+			!v.addresses
+				.map((a) => a.text)
+				.join('\n')
+				.includes(v.printed_name)
+		)
+			ctx.addIssue({ code: 'custom', message: 'printed name must occur at the mention address' });
+	});
 export type IssueMention = z.infer<typeof IssueMentionSchema>;
 export const IssueMentionsDataSchema = IssueMentionsDataShape.extend({
 	issue_date: siteDay,

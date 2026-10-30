@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { z } from 'zod/v4';
 import * as current from './index';
 import * as frozen from './tests/frozen';
@@ -121,6 +123,7 @@ function expectTightening(before: unknown, after: unknown, key = ''): void {
 	if (before && after && typeof before === 'object' && typeof after === 'object') {
 		const old = { ...before } as Record<string, unknown>;
 		const next = after as Record<string, unknown>;
+		if (key === 'properties') expect(Object.keys(next)).toEqual(Object.keys(old));
 		if (old.type === 'number' && next.type === 'integer') old.type = 'integer';
 		// Positive integer spelling: > 0 and >= 1 have the same accepted values.
 		if (old.type === 'integer' && old.exclusiveMinimum === 0 && next.minimum === 1) {
@@ -173,6 +176,38 @@ describe('generated shapes preserve the released Zod API', () => {
 			);
 		});
 	}
+});
+
+it('keeps the published mention property, required-key and parsed key order', () => {
+	// Supplied ticket-20 baseline: zod-exports-baseline/site-next/mentions.schema.json,
+	// /properties/mentions/items. The local copy keeps this check bun-only in consumers.
+	const baseline = JSON.parse(
+		readFileSync(join(__dirname, 'tests/frozen/mentions.schema.json'), 'utf8')
+	).properties.mentions.items;
+	const exported = z.toJSONSchema(current.IssueMentionSchema, {
+		target: 'draft-2020-12',
+		io: 'output',
+	});
+	const order = Object.keys(baseline.properties);
+	expect(Object.keys(exported.properties!)).toEqual(order);
+	expect(exported.required).toEqual(baseline.required);
+	// Reverse the input keys so the check observes the parser's serialization order.
+	const mention = {
+		addresses: [{ image_uri: 'fictional.png', bbox: [0, 0, 1, 1], text: 'Fictional name' }],
+		roles: ['named'],
+		address_grain: 'words',
+		content_item_id: 'fictional-item',
+		wkd_id: null,
+		function: null,
+		title: null,
+		printed_name: 'Fictional name',
+		person_id: 'fictional-person',
+		id: 'fictional-mention',
+	};
+	expect(Object.keys(current.IssueMentionSchema.parse(mention))).toEqual(order);
+	expect(Object.keys(PublicMention.parse(mention))).toEqual(
+		Object.keys(FrozenPublicMention.parse(mention))
+	);
 });
 
 it('refuses weakened types, patterns, bounds, URI formats and required keys', () => {
