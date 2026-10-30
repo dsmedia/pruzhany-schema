@@ -1,0 +1,84 @@
+// Frozen dependency from main e3e80c1 for ticket 20; test only.
+import { z } from 'zod/v4';
+export const siteVocabularyVersion = '1.0.0' as const;
+export const siteVocabularyStatus = 'released' as const;
+export const SiteVocabularyVersionSchema = z.enum(['0.1.0', '1.0.0']);
+export const ImpressoTypesSchema = z.enum([
+	'article',
+	'ad',
+	'image',
+	'table',
+	'death_notice',
+	'weather',
+	'page',
+	'radio_bulletin',
+	'radio_broadcast_episode',
+	'chronicle',
+	'chapter',
+	'discussion',
+	'entertainment',
+]);
+export type ImpressoTypes = z.infer<typeof ImpressoTypesSchema>;
+export const ContentItemSubtypesSchema = z.enum([
+	'wedding_greeting',
+	'engagement_greeting',
+	'birth_greeting',
+	'bar_mitzvah_greeting',
+	'new_year_greeting',
+	'departure_greeting',
+	'greeting',
+	'thanks',
+	'meeting_notice',
+	'announcement',
+	'appeal',
+	'commercial_advertisement',
+	'condolence',
+	'memorial_notice',
+	'death_announcement',
+	'editorial',
+	'opinion',
+	'letter',
+	'poem',
+	'sketch',
+	'humour',
+]);
+export type ContentItemSubtypes = z.infer<typeof ContentItemSubtypesSchema>;
+export const SubjectsSchema = z.enum([
+	'education',
+	'culture',
+	'health',
+	'palestine',
+	'jewish_world',
+	'literature',
+	'sport',
+	'economy',
+	'community_affairs',
+	'zionism',
+	'international_affairs',
+]);
+export type Subjects = z.infer<typeof SubjectsSchema>;
+export const TitleTypesSchema = z.enum(['printed', 'supplied']);
+export type TitleTypes = z.infer<typeof TitleTypesSchema>;
+export const subtypeParents = {
+	wedding_greeting: 'ad',
+	engagement_greeting: 'ad',
+	birth_greeting: 'ad',
+	bar_mitzvah_greeting: 'ad',
+	new_year_greeting: 'ad',
+	departure_greeting: 'ad',
+	greeting: 'ad',
+	thanks: 'ad',
+	meeting_notice: 'ad',
+	announcement: 'ad',
+	appeal: 'ad',
+	commercial_advertisement: 'ad',
+	condolence: 'death_notice',
+	memorial_notice: 'death_notice',
+	death_announcement: 'death_notice',
+	editorial: 'article',
+	opinion: 'article',
+	letter: 'article',
+	poem: 'article',
+	sketch: 'article',
+	humour: 'entertainment',
+} as const satisfies Record<ContentItemSubtypes, ImpressoTypes>;

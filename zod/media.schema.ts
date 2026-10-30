@@ -1,136 +1,78 @@
+import {
+	PublicMediaShape,
+	MediaDecisionShape,
+	MediaTextShape,
+	MediaRegionShape,
+	MediaDepictedShape,
+	MediaPortraitShape,
+	MediaWithdrawalShape,
+	MediaConsentScopeShape,
+	MediaConsentShape,
+	MediaFamilyWordsShape,
+	MediaFixityShape,
+	MediaMasterShape,
+	MediaDerivativeShape,
+	MediaShape,
+} from './generated/media';
 import { z } from 'zod/v4';
-import { siteDay, siteText, uniqueIds } from './site-common.schema';
-import { SourceLanguageSchema } from './sourced-entities.schema';
+import { siteDay, uniqueIds } from './site-common.schema';
+
 import type { Source } from './sourced-entities.schema';
 import { MEDIA_WIDTH_LIST } from './media-widths.table';
-import { MEDIA_RIGHTS, COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
+import { COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
 export { MEDIA_RIGHTS, COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
 
 export const MEDIA_WIDTHS: readonly number[] = MEDIA_WIDTH_LIST;
 // Local RepresentationType concepts, linked by rico:hasRepresentationType.
-export const MediaKindSchema = z.enum(['image', 'audio', 'video', 'document']);
-export const MediaDecisionSchema = z.strictObject({
-	role: z.enum(['owner', 'project']),
-	on: siteDay,
-});
+export const MediaKindSchema = PublicMediaShape.shape.kind;
+// Rebind children to propagate retained calendar and consent checks into parents.
+export const MediaDecisionSchema = MediaDecisionShape.extend({ on: siteDay });
 export type MediaDecision = z.infer<typeof MediaDecisionSchema>;
-export const MediaTextSchema = z.strictObject({
-	text: siteText,
-	lang: SourceLanguageSchema,
-	reviewed: MediaDecisionSchema.nullish(),
-});
+export const MediaTextSchema = MediaTextShape.extend({ reviewed: MediaDecisionSchema.nullish() });
 export type MediaText = z.infer<typeof MediaTextSchema>;
-const digest = z.string().regex(/^[0-9a-f]{64}$(?![\s\S])/);
-const pixels = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
-const coordinate = z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
-export const MediaRegionSchema = z.strictObject({
-	x: coordinate,
-	y: coordinate,
-	w: pixels,
-	h: pixels,
-});
+export const MediaRegionSchema = MediaRegionShape;
 export type MediaRegion = z.infer<typeof MediaRegionSchema>;
-export const MediaDepictedSchema = z.strictObject({
-	person_id: siteText.nullable(),
-	region: MediaRegionSchema,
-	identified_by: z.enum(['family', 'record', 'inscription']),
+// known-looser: a depicted person's key is required even when its value is null.
+export const MediaDepictedSchema = MediaDepictedShape.extend({
+	person_id: MediaDepictedShape.shape.person_id.unwrap(),
 });
-export const MediaPortraitSchema = z.strictObject({
-	media_id: siteText,
-	region: MediaRegionSchema,
-	reviewed: MediaDecisionSchema,
-});
+export const MediaPortraitSchema = MediaPortraitShape.extend({ reviewed: MediaDecisionSchema });
 export type MediaPortrait = z.infer<typeof MediaPortraitSchema>;
-export const MediaWithdrawalSchema = z.strictObject({
-	on: siteDay,
-	reason: z.enum(['family', 'holder', 'error']),
+export const MediaWithdrawalSchema = MediaWithdrawalShape.extend({ on: siteDay });
+export const MediaConsentScopeSchema = MediaConsentScopeShape.superRefine((v, ctx) => {
+	for (const message of uniqueIds(v.person_ids, 'consent person'))
+		ctx.addIssue({ code: 'custom', message });
 });
-export const MediaConsentScopeSchema = z
-	.strictObject({
-		use: z.enum(['site', 'site+download']),
-		person_ids: z.array(siteText),
-		unidentified: z.boolean(),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(v.person_ids, 'consent person'))
-			ctx.addIssue({ code: 'custom', message });
-	});
-export const MediaConsentSchema = z.strictObject({
-	basis: z.enum([
-		'institution-terms',
-		'holder-licence',
-		'family-permission',
-		'public-domain',
-		'owner-family-papers',
-	]),
-	// A role, never a person's name: the private `ref` names the permission document.
-	granted_by: z.enum(['owner', 'family', 'holder', 'institution']),
+export const MediaConsentSchema = MediaConsentShape.extend({
 	scope: MediaConsentScopeSchema,
-	ref: siteText,
 	withdrawn_on: siteDay.nullish(),
 });
 // A public Citation subset: exact words and their recorded part. No private note or locator.
-export const MediaFamilyWordsSchema = z.strictObject({
-	source_id: siteText,
-	page: siteText,
-	quote: siteText,
-	quote_language: SourceLanguageSchema,
+export const MediaFamilyWordsSchema = MediaFamilyWordsShape;
+export const MediaFixitySchema = MediaFixityShape.extend({ on: siteDay });
+export const MediaMasterSchema = MediaMasterShape.extend({
+	checked: MediaFixitySchema.nullish(),
+}).superRefine((v, ctx) => {
+	const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
+	if (v.bucket === 'pruzhany-page-pictures') fail('master needs its own private bucket');
+	if (v.key.split('/').at(-1) !== v.sha256) fail('master key must be named by its sha256');
+	if (v.checked && v.checked.sha256 !== v.sha256) fail('master check must match its sha256');
 });
-export const MediaFixitySchema = z.strictObject({ on: siteDay, sha256: digest });
-export const MediaMasterSchema = z
-	.strictObject({
-		bucket: z.string().regex(/^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$(?![\s\S])/),
-		key: z.string().regex(/^(?:[a-z0-9_-]+\/)*[0-9a-f]{64}$(?![\s\S])/),
-		sha256: digest,
-		mime: z.string().regex(/^(?:image|audio|video|application)\/[a-z0-9][a-z0-9.+-]*$(?![\s\S])/),
-		bytes: pixels,
-		checked: MediaFixitySchema.nullish(),
-	})
-	.superRefine((v, ctx) => {
-		const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
-		if (v.bucket === 'pruzhany-page-pictures') fail('master needs its own private bucket');
-		if (v.key.split('/').at(-1) !== v.sha256) fail('master key must be named by its sha256');
-		if (v.checked && v.checked.sha256 !== v.sha256) fail('master check must match its sha256');
-	});
 export type MediaMaster = z.infer<typeof MediaMasterSchema>;
-export const MediaDerivativeSchema = z.strictObject({
-	url: z
-		.string()
-		.regex(
-			new RegExp(
-				`^https://pictures\\.pruzhanychronicles\\.org/media/[0-9a-f]{64}-w(?:${MEDIA_WIDTHS.join('|')})\\.webp$(?![\\s\\S])`
-			)
-		),
-	width: pixels,
-	height: pixels,
-	process: z.literal('resize'),
-});
+export const MediaDerivativeSchema = MediaDerivativeShape;
 export type MediaDerivative = z.infer<typeof MediaDerivativeSchema>;
-const publicFields = z.strictObject({
-	id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$(?![\s\S])/),
-	source_id: siteText,
-	kind: MediaKindSchema,
+const publicFields = PublicMediaShape.extend({
 	caption: MediaTextSchema,
 	alt: MediaTextSchema.nullish(),
 	inscription: MediaTextSchema.nullish(),
 	transcript: MediaTextSchema.nullish(),
-	family_words: MediaFamilyWordsSchema.nullish(),
 	depicted: z.array(MediaDepictedSchema),
-	shows_unidentified: z.boolean(),
-	width: pixels.nullish(),
-	height: pixels.nullish(),
+	// known-looser: LinkML's duration bound is inclusive; the validator requires > 0.
 	duration: z.number().positive().nullish(),
-	credit: siteText,
-	conditions_of_access: siteText.nullish(),
-	conditions_of_use: siteText.nullish(),
-	rights: z.enum(MEDIA_RIGHTS).default(COPYRIGHT_NOT_EVALUATED).optional(),
+	// Preserve the released rights default and inferred optional type.
+	rights: PublicMediaShape.shape.rights.unwrap().default(COPYRIGHT_NOT_EVALUATED).optional(),
 	cleared: MediaDecisionSchema.nullish(),
 	withdrawn: MediaWithdrawalSchema.nullish(),
-	link: z
-		.string()
-		.regex(/^https:\/\/[a-z0-9]+(?:[.-][a-z0-9]+)*(?:\/[^\s\\]*)?$(?![\s\S])/)
-		.nullish(),
-	derived: z.array(MediaDerivativeSchema).min(1).nullish(),
 });
 export function regionFits(
 	region: MediaRegion,
@@ -187,8 +129,11 @@ function mediaRules(v: z.infer<typeof publicFields>, ctx: z.RefinementCtx) {
 		}
 	}
 }
-export const MediaSchema = publicFields
-	.extend({ master: MediaMasterSchema.nullish(), consent: MediaConsentSchema.nullish() })
+export const MediaSchema = MediaShape.extend({
+	...publicFields.shape,
+	master: MediaMasterSchema.nullish(),
+	consent: MediaConsentSchema.nullish(),
+})
 	.superRefine(mediaRules)
 	.superRefine((v, ctx) => {
 		if (v.consent?.withdrawn_on && !v.withdrawn)

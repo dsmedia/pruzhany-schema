@@ -33,6 +33,9 @@ import importlib.util
 _python_spec = importlib.util.spec_from_file_location('python_generator', Path(__file__).with_name('python_generator.py'))
 _python_backend = importlib.util.module_from_spec(_python_spec)
 _python_spec.loader.exec_module(_python_backend)
+_zod_spec = importlib.util.spec_from_file_location('zod_generator', Path(__file__).with_name('zod_generator.py'))
+_zod_backend = importlib.util.module_from_spec(_zod_spec)
+_zod_spec.loader.exec_module(_zod_backend)
 _learning_spec = importlib.util.spec_from_file_location('learning_index', Path(__file__).with_name('learning_index.py'))
 _learning_backend = importlib.util.module_from_spec(_learning_spec)
 _learning_spec.loader.exec_module(_learning_backend)
@@ -277,6 +280,8 @@ def differences(linkml_dir):
         build(linkml_dir, Path(scratch))
         fresh = files(Path(scratch))
         python = _python_backend.build_python(linkml_dir, json.loads(fresh['contract.json'])) if (linkml_dir / 'python-compatibility.json').exists() else None
+        index = json.loads(fresh['contract.json'])
+        zod = _zod_backend.build_zod(index, _zod_backend.definition_field_orders(linkml_dir, index))
     committed = files(linkml_dir / 'generated')
     shown = 'linkml/generated/'
     problems = []
@@ -294,6 +299,11 @@ def differences(linkml_dir):
         for name in sorted(expected.keys() | actual.keys()):
             if expected.get(name) != actual.get(name):
                 problems.append(f'pydantic/generated/{name}: missing, extra or differs from generation')
+    actual = files(linkml_dir.parent / 'zod' / 'generated')
+    expected = {name: text.encode('utf-8') for name, text in zod.items()}
+    for name in sorted(expected.keys() | actual.keys()):
+        if expected.get(name) != actual.get(name):
+            problems.append(f'zod/generated/{name}: missing, extra or differs from generation')
     return problems
 
 
@@ -302,6 +312,8 @@ def regenerate(linkml_dir):
     with tempfile.TemporaryDirectory() as scratch:
         build(linkml_dir, Path(scratch))
         python = _python_backend.build_python(linkml_dir, json.loads((Path(scratch) / 'contract.json').read_text())) if (linkml_dir / 'python-compatibility.json').exists() else None
+        index = json.loads((Path(scratch) / 'contract.json').read_text())
+        zod = _zod_backend.build_zod(index, _zod_backend.definition_field_orders(linkml_dir, index))
         target = linkml_dir / 'generated'
         if target.exists():
             shutil.rmtree(target)
@@ -312,11 +324,16 @@ def regenerate(linkml_dir):
                 shutil.rmtree(target)
             for name, content in python.items():
                 write_text(target / name, content)
+        target = linkml_dir.parent / 'zod' / 'generated'
+        if target.exists():
+            shutil.rmtree(target)
+        for name, content in zod.items():
+            write_text(target / name, content)
 
 
 def main(argv):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--check', action='store_true', help='compare with linkml/generated/ and change nothing')
+    parser.add_argument('--check', action='store_true', help='compare all generated LinkML, Python and Zod files and change nothing')
     args = parser.parse_args(argv)
     if not args.check:
         regenerate(LINKML)
