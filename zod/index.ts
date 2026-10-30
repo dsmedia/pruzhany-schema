@@ -1,3 +1,4 @@
+// Stable public validators: generated shapes are adapted and refined in these modules.
 export {
 	HolocaustFateSchema,
 	ContentTypeSchema,

@@ -1,3 +1,5 @@
+import { withFieldOrder } from './shared.schema';
+import { BlockShape, PageShape, PagesDataShape } from './generated/pages';
 /**
  * Physical Newspaper Structure
  *
@@ -8,30 +10,28 @@
 
 import { z } from 'zod/v4';
 
-export const BlockSchema = z.object({
-	id: z.string(), // "blk-p4-001"
-	bbox: z.tuple([z.number(), z.number(), z.number(), z.number()]), // [x, y, w, h]
-	transcription: z.string(),
-	confidence: z.number().optional(),
-	// Producer (Pydantic Block.image_crop: str | None) emits null for blocks
-	// without a crop — accept both null and absent.
-	image_crop: z.string().nullable().optional(),
-	unit_id: z.string().nullable(), // FK to content unit
-});
+export const BlockSchema = withFieldOrder(
+	BlockShape.extend({
+		bbox: z.tuple([z.number(), z.number(), z.number(), z.number()]),
+		confidence: z.number().optional(),
+		unit_id: z.string().nullable(),
+	}),
+	'id bbox transcription confidence image_crop unit_id'
+).strip();
 
-export const PageSchema = z.object({
-	id: z.string(), // "page-1938-12-16-4"
-	issue_date: z.string(), // "1938-12-16"
-	page_number: z.number(),
-	image_uri: z.string(),
-	dimensions: z.tuple([z.number(), z.number()]), // [width, height]
-	blocks: z.array(BlockSchema),
-});
+export const PageSchema = withFieldOrder(
+	PageShape.extend({
+		page_number: z.number(),
+		dimensions: z.tuple([z.number(), z.number()]),
+		blocks: z.array(BlockSchema),
+	}),
+	'id issue_date page_number image_uri dimensions blocks'
+).strip();
 
-export const PagesDataSchema = z.object({
-	edition_date: z.string(),
-	pages: z.array(PageSchema),
-});
+export const PagesDataSchema = withFieldOrder(
+	PagesDataShape.extend({ pages: z.array(PageSchema) }),
+	'edition_date pages'
+).strip();
 
 // Type exports
 export type Block = z.infer<typeof BlockSchema>;

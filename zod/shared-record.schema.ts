@@ -1,3 +1,20 @@
+import { withFieldOrder } from './shared.schema';
+import {
+	SiteCitationShape,
+	SharedNameShape,
+	LifeEventDateShape,
+	LifeEventMainPersonShape,
+	SharedFactShape,
+	SourcedRelationShape,
+	SharedPersonShape,
+	SharedFamilyShape,
+	PlaceIdentifierShape,
+	HolderShape,
+	SharedPlaceShape,
+	SharedOrganizationShape,
+	SharedEventShape,
+	SharedRecordShape,
+} from './generated/shared_record';
 import { z } from 'zod/v4';
 import {
 	FactSchema,
@@ -9,22 +26,17 @@ import {
 	CitationSchema,
 	SourceHostSchema,
 } from './sourced-entities.schema';
-import {
-	GenderSchema,
-	LocationTypesSchema,
-	EventTypesSchema,
-	EventPartsSchema,
-	eventPartKinds,
-	vocabularyVersion,
-} from './sourced-entities.vocabulary';
-import { PrintedAddressSchema, siteText, siteDay, uniqueIds } from './site-common.schema';
+import { EventTypesSchema, eventPartKinds } from './sourced-entities.vocabulary';
+import { PrintedAddressSchema, siteDay, uniqueIds } from './site-common.schema';
 import { MediaSchema, MediaPortraitSchema, mediaReferenceErrors } from './media.schema';
 
 // Located notice evidence written by the site writer. An older Citation without
 // addresses retains its locator and quote verbatim, even after a rereading.
-export const SiteCitationSchema = CitationSchema.safeExtend({
-	addresses: z.array(PrintedAddressSchema).min(1).nullish(),
-}).superRefine((v, ctx) => {
+export const SiteCitationSchema = CitationSchema.safeExtend(
+	SiteCitationShape.pick({ addresses: true }).extend({
+		addresses: z.array(PrintedAddressSchema).min(1).nullish(),
+	}).shape
+).superRefine((v, ctx) => {
 	if (!v.addresses) return;
 	if (!v.unit_id?.trim() || !siteDay.safeParse(v.edition_date).success || !v.quote?.trim())
 		ctx.addIssue({
@@ -42,9 +54,11 @@ export const SiteCitationSchema = CitationSchema.safeExtend({
 export type SiteCitation = z.infer<typeof SiteCitationSchema>;
 
 // Released names with the site's located evidence; supplied attribution is inherited.
-export const SharedNameSchema = NameSchema.safeExtend({
-	citations: z.array(SiteCitationSchema).nullish(),
-});
+export const SharedNameSchema = NameSchema.safeExtend(
+	SharedNameShape.pick({ citations: true }).extend({
+		citations: z.array(SiteCitationSchema).nullish(),
+	}).shape
+);
 export type SharedName = z.infer<typeof SharedNameSchema>;
 export function isPrintedName(name: SharedName): boolean {
 	return name.kind === 'printed';
@@ -52,45 +66,41 @@ export function isPrintedName(name: SharedName): boolean {
 
 // Printed dates keep their original rules. A record date refers to the preferred
 // fact, whose SourcedDate retains ranges, inference and even an unknown date.
-export const LifeEventDateSchema = z
-	.strictObject({
-		record_fact_id: siteText.nullish(),
+export const LifeEventDateSchema = withFieldOrder(
+	LifeEventDateShape.extend({
 		printed: SourcedDateSchema.shape.printed,
 		printed_calendar: SourcedDateSchema.shape.printed_calendar,
 		start: SourcedDateSchema.shape.start,
 		qualifier: z.literal('reported_in').nullish(),
 		reported_in: siteDay.nullish(),
-	})
-	.superRefine((v, ctx) => {
-		const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
-		if (v.record_fact_id) {
-			if (v.printed || v.printed_calendar || v.start || v.qualifier || v.reported_in)
-				fail('record date must only name its fact');
-			return;
-		}
-		if (v.qualifier === 'reported_in' && v.reported_in) {
-			if (v.printed || v.printed_calendar || v.start)
-				fail('reported_in cannot carry a printed or normalized event date');
-		} else if (!v.printed || !v.printed_calendar || v.qualifier || v.reported_in) {
-			fail('event date needs printed words and calendar or reported_in qualifier');
-		}
-		if (v.start && v.printed_calendar === 'hebrew')
-			fail('normalization requires a printed Gregorian date');
-	});
-export type LifeEventDate = z.infer<typeof LifeEventDateSchema>;
-export const LifeEventMainPersonSchema = z.strictObject({
-	person_id: siteText,
-	part: EventPartsSchema,
+	}),
+	'record_fact_id printed printed_calendar start qualifier reported_in'
+).superRefine((v, ctx) => {
+	const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
+	if (v.record_fact_id) {
+		if (v.printed || v.printed_calendar || v.start || v.qualifier || v.reported_in)
+			fail('record date must only name its fact');
+		return;
+	}
+	if (v.qualifier === 'reported_in' && v.reported_in) {
+		if (v.printed || v.printed_calendar || v.start)
+			fail('reported_in cannot carry a printed or normalized event date');
+	} else if (!v.printed || !v.printed_calendar || v.qualifier || v.reported_in) {
+		fail('event date needs printed words and calendar or reported_in qualifier');
+	}
+	if (v.start && v.printed_calendar === 'hebrew')
+		fail('normalization requires a printed Gregorian date');
 });
+export type LifeEventDate = z.infer<typeof LifeEventDateSchema>;
+export const LifeEventMainPersonSchema = withFieldOrder(LifeEventMainPersonShape, 'person_id part');
 export type LifeEventMainPerson = z.infer<typeof LifeEventMainPersonSchema>;
 
 // Fact and standing reuse the production contract, including its sources and review.
-export const SharedFactSchema = FactSchema.safeExtend({
-	citations: z.array(SiteCitationSchema).min(1),
-	subject_id: siteText,
-	family_id: siteText.nullish(),
-	representation: z.enum(['structured', 'prose', 'image']),
-}).superRefine((v, ctx) => {
+export const SharedFactSchema = FactSchema.safeExtend(
+	SharedFactShape.pick({ subject_id: true, family_id: true, representation: true }).extend({
+		citations: z.array(SiteCitationSchema).min(1),
+	}).shape
+).superRefine((v, ctx) => {
 	// Legacy Fact still reads parenthood; the current site writer must use a child person.
 	if (v.type === 'parenthood' || v.proposed_type === 'parenthood')
 		ctx.addIssue({
@@ -110,13 +120,12 @@ export function isUnreviewedProse(fact: SharedFact): boolean {
 }
 
 // Relation: subject -> relative; unreleased types keep other/proposed_type.
-export const SourcedRelationSchema = FactSchema.safeExtend({
-	citations: z.array(SiteCitationSchema).min(1),
-	type: z.enum(['kinship', 'other']),
-	subject_id: siteText,
-	family_id: siteText.nullish(),
-	shown: AttributionSchema.nullish(), // Permission to show a relative, never death evidence.
-}).superRefine((v, ctx) => {
+export const SourcedRelationSchema = FactSchema.safeExtend(
+	SourcedRelationShape.pick({ type: true, subject_id: true, family_id: true, shown: true }).extend({
+		citations: z.array(SiteCitationSchema).min(1),
+		shown: AttributionSchema.nullish(),
+	}).shape
+).superRefine((v, ctx) => {
 	if (!(v.related_person_id || v.related_name))
 		ctx.addIssue({ code: 'custom', message: 'relation needs a person or an unresolved name' });
 	if (v.type === 'other' && v.relationship_type)
@@ -129,98 +138,100 @@ export const SourcedRelationSchema = FactSchema.safeExtend({
 });
 export type SourcedRelation = z.infer<typeof SourcedRelationSchema>;
 
-const identity = { id: siteText, name: siteText, names: z.array(NameSchema) };
-export const SharedPersonSchema = z.strictObject({
-	portrait: MediaPortraitSchema.nullish(),
-	...identity,
-	names: z.array(SharedNameSchema),
-	gender: GenderSchema,
-	fate: FateSchema.nullish(),
-});
+export const SharedPersonSchema = withFieldOrder(
+	SharedPersonShape.extend({
+		portrait: MediaPortraitSchema.nullish(),
+		names: z.array(SharedNameSchema),
+		fate: FateSchema.nullish(),
+	}),
+	'portrait id name names gender fate'
+);
 export type SharedPerson = z.infer<typeof SharedPersonSchema>;
-export const SharedFamilySchema = z.strictObject(identity);
+export const SharedFamilySchema = withFieldOrder(
+	SharedFamilyShape.extend({ names: z.array(NameSchema) }),
+	'id name names'
+);
 export type SharedFamily = z.infer<typeof SharedFamilySchema>;
 // An outside id of a place (rico:Identifier), read on its authority's own pages: the
 // authority list is a registered source, so its host and address form are described once.
 // Carried only on evidence, never from a name match (vetting §4).
-export const PlaceIdentifierSchema = z.strictObject({
-	source_id: siteText,
-	value: siteText,
-	url: z.url({ protocol: /^https$/ }).nullish(),
-	accessed: siteDay,
-	attribution: AttributionSchema,
-});
+export const PlaceIdentifierSchema = withFieldOrder(
+	PlaceIdentifierShape.extend({
+		url: z.url({ protocol: /^https$/ }).nullish(),
+		accessed: siteDay,
+		attribution: AttributionSchema,
+	}),
+	'source_id value url accessed attribution'
+);
 export type PlaceIdentifier = z.infer<typeof PlaceIdentifierSchema>;
 // Same evidence and uniqueness rules as places; a private holder's name is never public.
-export const HolderSchema = z.strictObject({
-	id: siteText,
-	name: siteText,
-	short_name: siteText.nullish(),
-	kind: z.enum(['institution', 'family', 'private']),
-	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
-	host: SourceHostSchema.nullish(),
-});
+export const HolderSchema = withFieldOrder(
+	HolderShape.extend({
+		identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
+		host: SourceHostSchema.nullish(),
+	}),
+	'id name short_name kind identifiers host'
+);
 export type Holder = z.infer<typeof HolderSchema>;
 // Plain object: the site derives its public place with .omit(). The identifiers' own
 // rules (once per place, a registered authority, its host) are the shared record's.
-export const SharedPlaceSchema = z.strictObject({
-	...identity,
-	type: LocationTypesSchema,
-	parent_id: siteText.nullish(),
-	coordinates: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]).nullish(),
-	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
-});
+export const SharedPlaceSchema = withFieldOrder(
+	SharedPlaceShape.extend({
+		coordinates: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]).nullish(),
+		identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
+		names: z.array(NameSchema),
+	}),
+	'id name names type parent_id coordinates identifiers'
+);
 export type SharedPlace = z.infer<typeof SharedPlaceSchema>;
-export const SharedOrganizationSchema = z.strictObject(identity);
+export const SharedOrganizationSchema = withFieldOrder(
+	SharedOrganizationShape.extend({ names: z.array(NameSchema) }),
+	'id name names'
+);
 export type SharedOrganization = z.infer<typeof SharedOrganizationSchema>;
-export const SharedEventSchema = z
-	.strictObject({
-		id: siteText,
-		name: siteText,
-		type: EventTypesSchema,
-		proposed_type: siteText.nullish(),
+export const SharedEventSchema = withFieldOrder(
+	SharedEventShape.extend({
 		main_people: z.array(LifeEventMainPersonSchema),
 		evidence_basis: z.literal('records_only').nullish(),
 		dates: z.array(LifeEventDateSchema).min(1),
-		location_id: siteText.nullish(),
-		description: z.string().nullish(),
-	})
-	.superRefine((v, ctx) => {
-		const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
-		if ((v.type === 'other') !== !!v.proposed_type) fail('event proposed_type exactly for other');
-		if (v.proposed_type && EventTypesSchema.safeParse(v.proposed_type).success)
-			fail('released event kind cannot be proposed_type');
-		for (const message of uniqueIds(
-			v.main_people.map((p) => p.person_id),
-			'event main person'
-		))
-			fail(message);
-		const kind = v.proposed_type ?? v.type;
-		for (const p of v.main_people)
-			if (!eventPartKinds[p.part].includes(kind)) fail('part does not fit event kind');
-		if (v.dates.some((d) => d.qualifier === 'reported_in') && v.dates.length !== 1)
-			fail('reported_in must be the only date when no date is printed');
-		if (v.dates.some((d) => d.record_fact_id)) {
-			if (
-				v.type !== 'death' ||
-				!v.dates[0].record_fact_id ||
-				v.dates.filter((d) => d.record_fact_id).length !== 1
-			)
-				fail('death must put its one preferred record date first');
-			if (v.main_people.length !== 1 || v.main_people[0].part !== 'deceased')
-				fail('record death needs one deceased person');
-		}
-		if (v.evidence_basis === 'records_only' && !v.dates[0]?.record_fact_id)
-			fail('records-only death needs its preferred record fact');
-		if (v.evidence_basis === 'records_only' && v.dates.length !== 1)
-			fail('records-only death takes its date only from its preferred fact');
-	});
+	}),
+	'id name type proposed_type main_people evidence_basis dates location_id description'
+).superRefine((v, ctx) => {
+	const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
+	if ((v.type === 'other') !== !!v.proposed_type) fail('event proposed_type exactly for other');
+	if (v.proposed_type && EventTypesSchema.safeParse(v.proposed_type).success)
+		fail('released event kind cannot be proposed_type');
+	for (const message of uniqueIds(
+		v.main_people.map((p) => p.person_id),
+		'event main person'
+	))
+		fail(message);
+	const kind = v.proposed_type ?? v.type;
+	for (const p of v.main_people)
+		if (!eventPartKinds[p.part].includes(kind)) fail('part does not fit event kind');
+	if (v.dates.some((d) => d.qualifier === 'reported_in') && v.dates.length !== 1)
+		fail('reported_in must be the only date when no date is printed');
+	if (v.dates.some((d) => d.record_fact_id)) {
+		if (
+			v.type !== 'death' ||
+			!v.dates[0].record_fact_id ||
+			v.dates.filter((d) => d.record_fact_id).length !== 1
+		)
+			fail('death must put its one preferred record date first');
+		if (v.main_people.length !== 1 || v.main_people[0].part !== 'deceased')
+			fail('record death needs one deceased person');
+	}
+	if (v.evidence_basis === 'records_only' && !v.dates[0]?.record_fact_id)
+		fail('records-only death needs its preferred record fact');
+	if (v.evidence_basis === 'records_only' && v.dates.length !== 1)
+		fail('records-only death takes its date only from its preferred fact');
+});
 export type SharedEvent = z.infer<typeof SharedEventSchema>;
 
-export const SharedRecordSchema = z
-	.strictObject({
+export const SharedRecordSchema = withFieldOrder(
+	SharedRecordShape.extend({
+		// The existing version gate reads this released literal declaration directly.
 		version: z.literal('1'),
-		vocabulary_version: z.literal(vocabularyVersion),
 		persons: z.array(SharedPersonSchema),
 		families: z.array(SharedFamilySchema),
 		places: z.array(SharedPlaceSchema),
@@ -231,10 +242,11 @@ export const SharedRecordSchema = z
 		facts: z.array(SharedFactSchema),
 		relations: z.array(SourcedRelationSchema),
 		media: z.array(MediaSchema).nullish(),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of sharedRecordErrors(v)) ctx.addIssue({ code: 'custom', message });
-	});
+	}),
+	'version vocabulary_version persons families places organizations events sources holders facts relations media'
+).superRefine((v, ctx) => {
+	for (const message of sharedRecordErrors(v)) ctx.addIssue({ code: 'custom', message });
+});
 export type SharedRecord = z.infer<typeof SharedRecordSchema>;
 
 function sharedRecordErrors(v: SharedRecord): string[] {

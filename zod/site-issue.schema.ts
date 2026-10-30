@@ -1,12 +1,18 @@
+import { withFieldOrder } from './shared.schema';
+import {
+	ContentItemRefShape,
+	IssueLifeEventShape,
+	IssueLifeEventsDataShape,
+} from './generated/life_events';
+import { IssueMentionShape, IssueMentionsDataShape } from './generated/mentions';
 import { z } from 'zod/v4';
 import { PagesDataSchema, type PagesData } from './page.schema';
 import { MentionSchema, type Citation } from './sourced-entities.schema';
-import { MentionRolesSchema, ContentUnitRolesSchema } from './sourced-entities.vocabulary';
+
 import { ContentItemsDataSchema } from './content-item.schema';
 import { SharedRecordSchema } from './shared-record.schema';
 import {
 	PrintedAddressSchema,
-	siteText,
 	siteDay,
 	uniqueIds,
 	type PrintedAddress,
@@ -14,86 +20,78 @@ import {
 } from './site-common.schema';
 
 // Mention: located words or whole regions, with a derived content item reference.
-export const IssueMentionSchema = MentionSchema.omit({ unit_id: true, role: true })
-	.extend({
-		content_item_id: siteText,
-		address_grain: z.enum(['words', 'regions']),
+export const IssueMentionSchema = withFieldOrder(
+	IssueMentionShape.extend({
 		printed_name: MentionSchema.shape.printed_name.nullable(),
-		roles: z.array(MentionRolesSchema).min(1),
 		addresses: z.array(PrintedAddressSchema).min(1),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(v.roles, 'mention role'))
-			ctx.addIssue({ code: 'custom', message });
-		if ((v.address_grain === 'regions') !== (v.printed_name === null))
-			ctx.addIssue({
-				code: 'custom',
-				message: 'printed name must be null exactly when address grain is regions',
-			});
-		if (
-			v.printed_name !== null &&
-			!v.addresses
-				.map((a) => a.text)
-				.join('\n')
-				.includes(v.printed_name)
-		)
-			ctx.addIssue({ code: 'custom', message: 'printed name must occur at the mention address' });
-	});
+	}),
+	'id person_id printed_name title function wkd_id content_item_id address_grain roles addresses'
+).superRefine((v, ctx) => {
+	for (const message of uniqueIds(v.roles, 'mention role'))
+		ctx.addIssue({ code: 'custom', message });
+	if ((v.address_grain === 'regions') !== (v.printed_name === null))
+		ctx.addIssue({
+			code: 'custom',
+			message: 'printed name must be null exactly when address grain is regions',
+		});
+	if (
+		v.printed_name !== null &&
+		!v.addresses
+			.map((a) => a.text)
+			.join('\n')
+			.includes(v.printed_name)
+	)
+		ctx.addIssue({ code: 'custom', message: 'printed name must occur at the mention address' });
+});
 export type IssueMention = z.infer<typeof IssueMentionSchema>;
-export const IssueMentionsDataSchema = z
-	.strictObject({
-		issue_date: siteDay,
-		mentions: z.array(IssueMentionSchema),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(
-			v.mentions.map((m) => m.id),
-			'mention id'
-		))
-			ctx.addIssue({ code: 'custom', message });
-	});
+export const IssueMentionsDataSchema = withFieldOrder(
+	IssueMentionsDataShape.extend({ issue_date: siteDay, mentions: z.array(IssueMentionSchema) }),
+	'issue_date mentions'
+).superRefine((v, ctx) => {
+	for (const message of uniqueIds(
+		v.mentions.map((m) => m.id),
+		'mention id'
+	))
+		ctx.addIssue({ code: 'custom', message });
+});
 export type IssueMentionsData = z.infer<typeof IssueMentionsDataSchema>;
 
-export const ContentItemRefSchema = z.strictObject({
-	content_item_id: siteText,
-	role: ContentUnitRolesSchema, // Role of the content item, not the person's role.
-});
+export const ContentItemRefSchema = withFieldOrder(ContentItemRefShape, 'content_item_id role');
 export type ContentItemRef = z.infer<typeof ContentItemRefSchema>;
-export const IssueLifeEventSchema = z
-	.strictObject({
-		id: siteText,
-		content_items: z.array(ContentItemRefSchema).min(1),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(
-			v.content_items.map((c) => c.content_item_id),
-			'event content item'
-		))
-			ctx.addIssue({ code: 'custom', message });
-	});
+export const IssueLifeEventSchema = withFieldOrder(
+	IssueLifeEventShape.extend({ content_items: z.array(ContentItemRefSchema).min(1) }),
+	'id content_items'
+).superRefine((v, ctx) => {
+	for (const message of uniqueIds(
+		v.content_items.map((c) => c.content_item_id),
+		'event content item'
+	))
+		ctx.addIssue({ code: 'custom', message });
+});
 export type IssueLifeEvent = z.infer<typeof IssueLifeEventSchema>;
-export const IssueLifeEventsDataSchema = z
-	.strictObject({
+export const IssueLifeEventsDataSchema = withFieldOrder(
+	IssueLifeEventsDataShape.extend({
 		issue_date: siteDay,
 		life_events: z.array(IssueLifeEventSchema),
-	})
-	.superRefine((v, ctx) => {
-		for (const message of uniqueIds(
-			v.life_events.map((e) => e.id),
-			'life event id'
-		))
-			ctx.addIssue({ code: 'custom', message });
-		const assigned = new Set<string>();
-		for (const event of v.life_events)
-			for (const ref of event.content_items) {
-				if (assigned.has(ref.content_item_id))
-					ctx.addIssue({
-						code: 'custom',
-						message: 'content item belongs to more than one life event',
-					});
-				assigned.add(ref.content_item_id);
-			}
-	});
+	}),
+	'issue_date life_events'
+).superRefine((v, ctx) => {
+	for (const message of uniqueIds(
+		v.life_events.map((e) => e.id),
+		'life event id'
+	))
+		ctx.addIssue({ code: 'custom', message });
+	const assigned = new Set<string>();
+	for (const event of v.life_events)
+		for (const ref of event.content_items) {
+			if (assigned.has(ref.content_item_id))
+				ctx.addIssue({
+					code: 'custom',
+					message: 'content item belongs to more than one life event',
+				});
+			assigned.add(ref.content_item_id);
+		}
+});
 export type IssueLifeEventsData = z.infer<typeof IssueLifeEventsDataSchema>;
 
 // In-memory check of the four documents. Pages keep their existing file shape.
