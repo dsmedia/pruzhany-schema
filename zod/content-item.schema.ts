@@ -6,6 +6,7 @@ import {
 } from './generated/content_items';
 import { z } from 'zod/v4';
 import {
+	CrossReferenceSchema,
 	PrintedTitleSchema,
 	SuppliedTitleSchema,
 	TranslationSchema,
@@ -30,6 +31,7 @@ export const ContentItemSchema = ContentItemShape.extend({
 	supplied_title: SuppliedTitleSchema,
 	translation: TranslationSchema.nullish(),
 	reading_status: ReadingStatusSchema.nullish(),
+	cross_references: z.array(CrossReferenceSchema),
 }).superRefine((v, ctx) => {
 	if (v.subtype && subtypeParents[v.subtype] !== v.type)
 		ctx.addIssue({ code: 'custom', message: 'subtype has a different Impresso parent' });

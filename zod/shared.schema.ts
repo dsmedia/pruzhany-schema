@@ -23,7 +23,9 @@ export const ContentTypeSchema = z.enum([
 export type ContentType = z.infer<typeof ContentTypeSchema>;
 
 // The public inferred type requires these optional keys to reject null.
-export const ExternalReferenceSchema = ExternalReferenceShape.extend({
+// Today's documents carry extensions; the old shape stripped unknown keys.
+export const ExternalReferenceSchema = z.object({
+	...ExternalReferenceShape.shape,
 	record_id: ExternalReferenceShape.shape.record_id.unwrap().unwrap().optional(),
 	notes: ExternalReferenceShape.shape.notes.unwrap().unwrap().optional(),
 	verified: ExternalReferenceShape.shape.verified.unwrap().unwrap().optional(),
