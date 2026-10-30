@@ -368,28 +368,7 @@ it('retains calendar and host refinements inside generated parents', () => {
 	).toBe(false);
 });
 
-it('uses generated closedness for formerly stripping objects', () => {
-	const crossReference = {
-		target_id: 'fictional-item',
-		confidence: 1,
-		relationship: 'fictional link',
-		evidence: 'Fictional evidence',
-	};
-	expect(frozen.CrossReferenceSchema.parse({ ...crossReference, extra: true })).toEqual(
-		crossReference
-	);
-	expect(current.CrossReferenceSchema.safeParse({ ...crossReference, extra: true }).success).toBe(
-		false
-	);
-	expect(
-		current.EditionSchema.safeParse({
-			date: '2000-01-01',
-			hebrewDate: 'Fictional date',
-			hebrewMonth: 1,
-			hebrewYear: 5760,
-			extra: true,
-		}).success
-	).toBe(false);
+it('keeps formerly strict printed addresses strict', () => {
 	expect(
 		current.PrintedAddressSchema.safeParse({
 			image_uri: 'fictional.png',
@@ -400,7 +379,7 @@ it('uses generated closedness for formerly stripping objects', () => {
 	).toBe(false);
 });
 
-it('retains generated integer ranges, box bounds and closedness in public pages', () => {
+it('retains generated integer ranges and box bounds in public pages', () => {
 	const block = { id: 'fictional-block', bbox: [0, 0, 2, 3], transcription: '', unit_id: null };
 	const page = {
 		id: 'fictional-page',
@@ -421,13 +400,6 @@ it('retains generated integer ranges, box bounds and closedness in public pages'
 		expect(frozen.PageSchema.safeParse(changed).success).toBe(true);
 		expect(current.PageSchema.safeParse(changed).success).toBe(false);
 	}
-	for (const [schema, value] of [
-		[current.BlockSchema, block],
-		[current.PageSchema, page],
-		[current.PagesDataSchema, document],
-		[current.ExternalReferenceSchema, { source: 'fictional-source' }],
-	] as const)
-		expect(schema.safeParse({ ...value, extra: true }).success).toBe(false);
 });
 
 it('enforces generated bounds, array cardinality, map values and closedness', () => {

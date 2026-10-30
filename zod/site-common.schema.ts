@@ -14,7 +14,8 @@ import {
 import { z } from 'zod/v4';
 import { AttributionSchema } from './sourced-entities.schema';
 
-export const CrossReferenceSchema = CrossReferenceShape;
+// Today's documents carry extensions; the old shape stripped unknown keys.
+export const CrossReferenceSchema = z.object({ ...CrossReferenceShape.shape });
 export type CrossReference = z.infer<typeof CrossReferenceSchema>;
 
 export const siteText = PrintedAddressShape.shape.image_uri;
