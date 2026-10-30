@@ -421,8 +421,54 @@ measure again, and change the canary, the house lint rule it guards, this README
 - LinkML's GitHub issues (whether the faults above are reported upstream): GitHub outside
   `dsmedia` is not reachable from the cloud session that built this.
 - gen-pydantic's reading of `pattern` (whether `\S` means "contains" there, as in JSON Schema),
-  and LinkML's other generators (SHACL, OWL, JSON-LD context, TypeScript): not used; stage 3
-  writes its SHACL, OWL and JSON-LD context with its own `rdf_generator.py` (rdflib).
+  and the TypeScript generator: not used. The linked-data generators were measured below.
+
+## LinkML's own generators, measured (30 October 2026)
+
+Read on **30 October 2026**: LinkML's [OWL](https://linkml.io/linkml/generators/owl.html),
+[SHACL](https://linkml.io/linkml/generators/shacl.html),
+[JSON-LD Contexts](https://linkml.io/linkml/generators/jsonld-context.html) and
+[RDF](https://linkml.io/linkml/generators/rdf.html) pages; checked against installed
+**linkml/linkml-runtime 1.12.1**, rdflib **7.6.0**, pySHACL **0.30.1**, from the
+hashed lock on Python **3.11.17**. A scratch import wrapper covers all 12 site
+modules in `modules.json`; physical and exchanges are outside the public RDF view.
+Native defaults were used, with generation dates disabled.
+
+Unmodified `gen-shacl`, `gen-jsonld-context` and `gen-rdf` each fail on
+`SourcedRelation.type`: `equals_string_in` with range `FactTypes` requires range
+`string` in these generators. Each also succeeds on 11/12 modules individually;
+`shared_record` fails. To measure beyond that blocker, a **scratch-only enum
+intersection adapter** replaces that one field's range with an enum containing
+`kinship` and `other`, copying their meanings and removing `equals_string_in`.
+The original/adapted field validators agree on all 22 witnesses (all enum values
+plus invalid controls). No source definition or production generator was changed.
+
+OWL and context comparisons use canonical N-Triples and rdflib graph isomorphism;
+blank-node labels are canonicalized, not compared as run-local identifiers.
+A context alone has no RDF triples: both contexts were applied to the identical
+eight-record synthetic export from `tests/test_rdf_export.py`. An additional
+probe exercises all 16 public type contexts and 102 field entries.
+
+| Output | Measured result (ours / native) | Recommendation and deciding differences |
+| --- | --- | --- |
+| OWL, unadapted | 356 / 8,758 triples; 9 shared, 347 only ours, 8,749 only native; not isomorphic. | **Keep ours.** Native describes the storage schema with restrictions, global properties and enum classes; ours declares the selected public classes/fields, source-scoped assertions and approved role/type vocabulary. For example, only ours has `pc:export_SharedPerson rdfs:subClassOf ehri:Person`; only native has `pc:SharedPerson a owl:Class`. Native makes `pc:event_types_birth` an OWL class; ours preserves its approved named-individual/EventType declarations. |
+| JSON-LD context, adapted | Export: 102 / 78 triples; 10 shared, 92 only ours, 68 only native. All-term probe: 142 / 118; 3 shared, 139 only ours, 115 only native. Neither is isomorphic. | **Keep ours.** Native loses the public type-scoped predicates, ordered/repeated list values, reference coercions and derived reification/evidence/role terms. For the same event, only ours emits `rdfs:label "Fictional event"`; native emits `pc:name "Fictional event"`. |
+| SHACL, adapted | 1,287 / 4,547 shape triples. Same two good controls: 2 / 0 accepted; same 19 faults: 12 / 16 rejected by shapes alone. Our complete runtime accepts 2/2 and rejects 19/19. | **Keep ours.** Native rejects both the full fixture and the place with optional coordinates absent (closed-property and required-field violations); its bad-case rejections therefore do not establish working validation. It targets storage classes/predicates and requiredness rather than the public profile, and does not model its RDF lists or Reference alternatives. |
+| RDF records | `gen-rdf` emits schema metadata (8,456 triples after adaptation), not records. The native Python loader/RDFLib dumper behind `linkml-convert`, with the same adapter, converts only 3/8 exported records. For those same three inputs: 41 / 21 triples, none shared; not isomorphic. | **Keep ours.** Both persons and the place require stored `names`; the fact requires `representation`; the relation requires `type`. The successful Source, SharedEvent and PrintedAddress become blank-node identities, omit our derived edges and flatten lists: `[1, 1, 2, 2]` becomes just two bbox values. Ours exports all eight records in 102 triples. |
+
+SHACL outcome differences, individually: native rejects both good controls and
+also rejects the malformed `Citation.url`, mismatched `SharedFact.assertion_predicate`,
+`SharedEvent.event_type` and `SharedEvent.role_deceased` that our shapes alone
+accept. Our runtime refuses all four through format/derived-edge checks. Both
+shape sets accept the standalone cyclic list, list with two rest edges, and list
+with missing rest; our runtime refuses each through list-structure checks. All
+other 12 planted faults are refused by both shape sets. Namespace, stale-input
+and generator-configuration checks remain outside SHACL.
+
+[Measurements, triple samples from each side, and every case's result](trials/2026-10-30-own-generators.json)
+retain only synthetic evidence. These are bounded replacement trials, not a claim
+that the full storage schema and the public view should be equivalent. No output
+is replaced, no consumer dependency is added, and no check is loosened.
 
 ## Pages read, 28 October 2026
 

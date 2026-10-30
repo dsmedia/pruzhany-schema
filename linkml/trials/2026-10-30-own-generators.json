@@ -1,0 +1,900 @@
+{
+  "date": "2026-10-30",
+  "versions": {
+    "python": "3.11.17",
+    "linkml": "1.12.1",
+    "linkml-runtime": "1.12.1",
+    "rdflib": "7.6.0",
+    "pyshacl": "0.30.1"
+  },
+  "modules": [
+    "types",
+    "vocabulary",
+    "site_common",
+    "pages",
+    "content_items",
+    "mentions",
+    "life_events",
+    "editions",
+    "sourced_entities",
+    "media",
+    "shared_record",
+    "shared"
+  ],
+  "inputs": {
+    "linkml/schema/content_items.yaml": "8200c92b412a4695becfafb8dafcdcdeda2114291d334efd5fa4c2ca82ea4b2c",
+    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/exchanges.yaml": "292de879345085e4f3461a6d07633508a026d329e26439407a365499a5fbf131",
+    "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
+    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
+    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
+    "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
+    "linkml/schema/shared_record.yaml": "cdc402c9a3dd90bfed5cda74c2a8cc4017b91ee4eb6913b58606b2215b62e029",
+    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
+    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
+    "linkml/schema/vocabulary.yaml": "1f6e7e08897da6811177a71ca4a70e3b9cd824cc1246a52f45de80b0ed796767"
+  },
+  "owl": {
+    "ours": 356,
+    "native": 8758,
+    "isomorphic": false,
+    "common": 9,
+    "only_ours": 347,
+    "only_native": 8749,
+    "ours_samples": [
+      "<http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://pruzhany.org/ns/sourced-entities#site_fact_subject> .",
+      "<https://pruzhany.org/ns/sourced-entities#event_types_bar_mitzvah> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .",
+      "<https://pruzhany.org/ns/sourced-entities#event_types_bar_mitzvah> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.ica.org/standards/RiC/ontology#EventType> .",
+      "<https://pruzhany.org/ns/sourced-entities#event_types_bar_mitzvah> <http://www.w3.org/2000/01/rdf-schema#comment> \"Application-specific event types category; no exact pinned ontology value is established.\" .",
+      "<https://pruzhany.org/ns/sourced-entities#event_types_birth> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> ."
+    ],
+    "native_samples": [
+      "<http://lod.ehri-project-test.eu/ontology#City> <http://purl.org/dc/terms/title> \"City\" .",
+      "<http://lod.ehri-project-test.eu/ontology#City> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .",
+      "<http://lod.ehri-project-test.eu/ontology#City> <http://www.w3.org/2000/01/rdf-schema#label> \"city\" .",
+      "<http://lod.ehri-project-test.eu/ontology#City> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://pruzhany.org/ns/sourced-entities#LocationTypes> .",
+      "<http://lod.ehri-project-test.eu/ontology#City> <http://www.w3.org/2004/02/skos/core#definition> \"Compatibility value city: preserved unchanged from production location types.\" ."
+    ]
+  },
+  "context_records": {
+    "ours": 102,
+    "native": 78,
+    "isomorphic": false,
+    "common": 10,
+    "only_ours": 92,
+    "only_native": 68,
+    "ours_samples": [
+      "<https://example.org/fictional/id/event-fictional> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent> .",
+      "<https://example.org/fictional/id/event-fictional> <http://www.w3.org/2000/01/rdf-schema#label> \"Fictional event\" .",
+      "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent_dates> _:abf8984c3a0460887dd9ed359b7bc2babcacfce6c0aca51146881c02baba7bcb_0_cb0 .",
+      "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent_id> \"event-fictional\" .",
+      "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent_main_people> _:454d6dfb8d1ff7a816f7d75b36ca7d95e5a31cc0886a142deb78993e49f14d6f_0_cb0 ."
+    ],
+    "native_samples": [
+      "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#dates> <https://example.org/fictional/node/6727272ddc99a0346d7d786ed9a71e561dde539624239bdcd41e41bac36193c1> .",
+      "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#event_type> \"https://pruzhany.org/ns/sourced-entities#event_types_death\" .",
+      "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#id> \"event-fictional\" .",
+      "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#name> \"Fictional event\" .",
+      "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#role_deceased> \"https://example.org/fictional/id/person%2Ffictional%20%D7%90\" ."
+    ]
+  },
+  "context_all_terms": {
+    "ours": 142,
+    "native": 118,
+    "isomorphic": false,
+    "common": 3,
+    "only_ours": 139,
+    "only_native": 115,
+    "ours_samples": [
+      "<https://example.org/fictional/probe/Attribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#export_Attribution> .",
+      "<https://example.org/fictional/probe/Attribution> <https://pruzhany.org/ns/sourced-entities#export_Attribution_by> \"fictional\" .",
+      "<https://example.org/fictional/probe/Attribution> <https://pruzhany.org/ns/sourced-entities#export_Attribution_on> \"fictional\" .",
+      "<https://example.org/fictional/probe/Citation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#export_Citation> .",
+      "<https://example.org/fictional/probe/Citation> <https://pruzhany.org/ns/sourced-entities#export_Citation_accessed> \"fictional\" ."
+    ],
+    "native_samples": [
+      "<https://example.org/fictional/probe/Attribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#Attribution> .",
+      "<https://example.org/fictional/probe/Attribution> <https://pruzhany.org/ns/sourced-entities#by> \"fictional\" .",
+      "<https://example.org/fictional/probe/Attribution> <https://pruzhany.org/ns/sourced-entities#on> \"fictional\" .",
+      "<https://example.org/fictional/probe/Citation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#Citation> .",
+      "<https://example.org/fictional/probe/Citation> <https://pruzhany.org/ns/sourced-entities#accessed> \"fictional\" ."
+    ],
+    "models": 16,
+    "fields": 102
+  },
+  "shacl": {
+    "ours_triples": 1287,
+    "native_triples": 4547,
+    "cases": [
+      {
+        "name": "good: full eight-record fixture",
+        "expected": true,
+        "ours": true,
+        "ours_target_nodes": 16,
+        "ours_components": {},
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": true
+      },
+      {
+        "name": "good: optional coordinates absent",
+        "expected": true,
+        "ours": true,
+        "ours_target_nodes": 1,
+        "ours_components": {},
+        "native": false,
+        "native_target_nodes": 1,
+        "native_components": {
+          "ClosedConstraintComponent": 2,
+          "MinCountConstraintComponent": 6
+        },
+        "ours_runtime": true
+      },
+      {
+        "name": "bad: SharedPerson.gender=\"invented\"",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "InConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedPerson.name=null",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "MinCountConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 34,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedPerson.https://pruzhany.org/ns/sourced-entities#private=\"canary\"",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "ClosedConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 36,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: Citation.source_id={\"@id\": \"https://example.org/fictional/nonexistent\"}",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "OrConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: Citation.url=\"https://[broken\"",
+        "expected": false,
+        "ours": true,
+        "ours_target_nodes": 16,
+        "ours_components": {},
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedFact.assertion_predicate=\"https://pruzhany.org/ns/sourced-entities#export_assertion_birth\"",
+        "expected": false,
+        "ours": true,
+        "ours_target_nodes": 16,
+        "ours_components": {},
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: PrintedAddress.bbox=[1, 1, 0, 2]",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "NodeConstraintComponent": 1,
+          "MinExclusiveConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedPlace.coordinates=[91, 1]",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "NodeConstraintComponent": 1,
+          "MaxInclusiveConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: PrintedAddress.bbox=[1, 1, 2]",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "NodeConstraintComponent": 1,
+          "MinCountConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedPlace.coordinates=[]",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "NodeConstraintComponent": 1,
+          "MinCountConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: LifeEventDate.qualifier=\"invented\"",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "InConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45,
+          "InConstraintComponent": 1
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedEvent.evidence_basis=\"invented\"",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "InConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 36,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedFact.evidence_sources=[\"https://example.org/fictional/id/fictional-content\"]",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "OrConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedEvent.event_type=\"https://pruzhany.org/ns/sourced-entities#event_types_birth\"",
+        "expected": false,
+        "ours": true,
+        "ours_target_nodes": 16,
+        "ours_components": {},
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: SharedEvent.role_deceased=[\"https://example.org/fictional/id/person-child\"]",
+        "expected": false,
+        "ours": true,
+        "ours_target_nodes": 16,
+        "ours_components": {},
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: Reference.target_model=WrongModel",
+        "expected": false,
+        "ours": false,
+        "ours_target_nodes": 16,
+        "ours_components": {
+          "OrConstraintComponent": 1
+        },
+        "native": false,
+        "native_target_nodes": 8,
+        "native_components": {
+          "ClosedConstraintComponent": 35,
+          "MinCountConstraintComponent": 45
+        },
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: standalone list cycle",
+        "expected": false,
+        "ours": true,
+        "ours_target_nodes": 0,
+        "ours_components": {},
+        "native": true,
+        "native_target_nodes": 0,
+        "native_components": {},
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: standalone list multiple",
+        "expected": false,
+        "ours": true,
+        "ours_target_nodes": 0,
+        "ours_components": {},
+        "native": true,
+        "native_target_nodes": 0,
+        "native_components": {},
+        "ours_runtime": false
+      },
+      {
+        "name": "bad: standalone list missing",
+        "expected": false,
+        "ours": true,
+        "ours_target_nodes": 0,
+        "ours_components": {},
+        "native": true,
+        "native_target_nodes": 0,
+        "native_components": {},
+        "ours_runtime": false
+      }
+    ],
+    "counts": {
+      "ours": {
+        "good_accepted": 2,
+        "good_total": 2,
+        "bad_rejected": 12,
+        "bad_total": 19
+      },
+      "native": {
+        "good_accepted": 0,
+        "good_total": 2,
+        "bad_rejected": 16,
+        "bad_total": 19
+      },
+      "ours_runtime": {
+        "good_accepted": 2,
+        "good_total": 2,
+        "bad_rejected": 19,
+        "bad_total": 19
+      }
+    }
+  },
+  "rdf_schema_triples": 8456,
+  "rdf_records": {
+    "records": [
+      {
+        "model": "SharedPerson",
+        "error": "ValueError: names must be supplied"
+      },
+      {
+        "model": "SharedPerson",
+        "error": "ValueError: names must be supplied"
+      },
+      {
+        "model": "Source",
+        "triples": 4
+      },
+      {
+        "model": "SharedPlace",
+        "error": "ValueError: names must be supplied"
+      },
+      {
+        "model": "SharedFact",
+        "error": "ValueError: representation must be supplied"
+      },
+      {
+        "model": "SharedEvent",
+        "triples": 12
+      },
+      {
+        "model": "PrintedAddress",
+        "triples": 5
+      },
+      {
+        "model": "SourcedRelation",
+        "error": "ValueError: type must be supplied"
+      }
+    ],
+    "comparison": {
+      "ours": 102,
+      "native": 21,
+      "isomorphic": false,
+      "common": 0,
+      "only_ours": 102,
+      "only_native": 21,
+      "ours_samples": [
+        "<https://example.org/fictional/id/event-fictional> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent> .",
+        "<https://example.org/fictional/id/event-fictional> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.ica.org/standards/RiC/ontology#Event> .",
+        "<https://example.org/fictional/id/event-fictional> <http://www.w3.org/2000/01/rdf-schema#label> \"Fictional event\" .",
+        "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent_dates> _:abf8984c3a0460887dd9ed359b7bc2babcacfce6c0aca51146881c02baba7bcb_0_cb0 .",
+        "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent_id> \"event-fictional\" ."
+      ],
+      "native_samples": [
+        "_:6cd41efbc692287c92f65e69f0ced6e7b9249a1a605af931197f72c0171b0ace_0_cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lod.ehri-project-test.eu/ontology#RecordResource> .",
+        "_:6cd41efbc692287c92f65e69f0ced6e7b9249a1a605af931197f72c0171b0ace_0_cb0 <https://pruzhany.org/ns/sourced-entities#id> \"source-book\" .",
+        "_:6cd41efbc692287c92f65e69f0ced6e7b9249a1a605af931197f72c0171b0ace_0_cb0 <https://pruzhany.org/ns/sourced-entities#kind> <https://pruzhany.org/ns/sourced-entities#source_kinds_book> .",
+        "_:6cd41efbc692287c92f65e69f0ced6e7b9249a1a605af931197f72c0171b0ace_0_cb0 <https://pruzhany.org/ns/sourced-entities#title> \"Fictional book\" .",
+        "_:d97c515fe1bbdb051bfc79d720d34b205fda25ece4cee8e0e4b93150351bdeaf_0_cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#LifeEventMainPerson> ."
+      ]
+    },
+    "successful_subset": {
+      "ours": 41,
+      "native": 21,
+      "isomorphic": false,
+      "common": 0,
+      "only_ours": 41,
+      "only_native": 21,
+      "ours_samples": [
+        "<https://example.org/fictional/id/event-fictional> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent> .",
+        "<https://example.org/fictional/id/event-fictional> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.ica.org/standards/RiC/ontology#Event> .",
+        "<https://example.org/fictional/id/event-fictional> <http://www.w3.org/2000/01/rdf-schema#label> \"Fictional event\" .",
+        "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent_dates> _:abf8984c3a0460887dd9ed359b7bc2babcacfce6c0aca51146881c02baba7bcb_0_cb0 .",
+        "<https://example.org/fictional/id/event-fictional> <https://pruzhany.org/ns/sourced-entities#export_SharedEvent_id> \"event-fictional\" ."
+      ],
+      "native_samples": [
+        "_:6cd41efbc692287c92f65e69f0ced6e7b9249a1a605af931197f72c0171b0ace_0_cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lod.ehri-project-test.eu/ontology#RecordResource> .",
+        "_:6cd41efbc692287c92f65e69f0ced6e7b9249a1a605af931197f72c0171b0ace_0_cb0 <https://pruzhany.org/ns/sourced-entities#id> \"source-book\" .",
+        "_:6cd41efbc692287c92f65e69f0ced6e7b9249a1a605af931197f72c0171b0ace_0_cb0 <https://pruzhany.org/ns/sourced-entities#kind> <https://pruzhany.org/ns/sourced-entities#source_kinds_book> .",
+        "_:6cd41efbc692287c92f65e69f0ced6e7b9249a1a605af931197f72c0171b0ace_0_cb0 <https://pruzhany.org/ns/sourced-entities#title> \"Fictional book\" .",
+        "_:d97c515fe1bbdb051bfc79d720d34b205fda25ece4cee8e0e4b93150351bdeaf_0_cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://pruzhany.org/ns/sourced-entities#LifeEventMainPerson> ."
+      ]
+    }
+  },
+  "pages_read": [
+    {
+      "title": "OWL",
+      "url": "https://linkml.io/linkml/generators/owl.html",
+      "read_on": "2026-10-30"
+    },
+    {
+      "title": "SHACL",
+      "url": "https://linkml.io/linkml/generators/shacl.html",
+      "read_on": "2026-10-30"
+    },
+    {
+      "title": "JSON-LD Contexts",
+      "url": "https://linkml.io/linkml/generators/jsonld-context.html",
+      "read_on": "2026-10-30"
+    },
+    {
+      "title": "RDF",
+      "url": "https://linkml.io/linkml/generators/rdf.html",
+      "read_on": "2026-10-30"
+    }
+  ],
+  "procedure": {
+    "environment": "uv venv --python 3.11 <work>/env; uv pip sync --python <work>/env/bin/python --require-hashes --build-constraints linkml/build-constraints.txt linkml/requirements.lock",
+    "wrapper": {
+      "id": "https://pruzhany.org/ns/generator-trial",
+      "name": "generator_trial",
+      "prefixes": {
+        "pc": "https://pruzhany.org/ns/sourced-entities#",
+        "linkml": "https://w3id.org/linkml/"
+      },
+      "default_prefix": "pc",
+      "default_range": "string",
+      "imports": [
+        "<root>/linkml/schema/types",
+        "<root>/linkml/schema/vocabulary",
+        "<root>/linkml/schema/site_common",
+        "<root>/linkml/schema/pages",
+        "<root>/linkml/schema/content_items",
+        "<root>/linkml/schema/mentions",
+        "<root>/linkml/schema/life_events",
+        "<root>/linkml/schema/editions",
+        "<root>/linkml/schema/sourced_entities",
+        "<root>/linkml/schema/media",
+        "<root>/linkml/schema/shared_record",
+        "<root>/linkml/schema/shared"
+      ]
+    },
+    "imports": "Copy the same twelve schema files beside the scratch wrapper for legacy SchemaLoader relative-import resolution. The unadapted wrapper imports the original source files by absolute path; the adapted wrapper imports those scratch copies by local stem.",
+    "commands": [
+      "gen-owl --no-generation-date -f ttl all.yaml",
+      "gen-shacl --no-generation-date all.yaml",
+      "gen-jsonld-context --no-generation-date all.yaml",
+      "gen-rdf --no-generation-date -f ttl all.yaml"
+    ],
+    "raw_results": "gen-owl succeeds; the other three exit 1 with no output. The latter three were also run separately on all twelve original module files.",
+    "adapter": {
+      "scope": "scratch shared_record.yaml only; production schema unchanged",
+      "class": "SourcedRelation",
+      "field": "type",
+      "before": {
+        "range": "FactTypes",
+        "equals_string_in": [
+          "kinship",
+          "other"
+        ]
+      },
+      "after": {
+        "range": "TrialRelationFactTypes"
+      },
+      "enum": "Copy kinship and other permissible values, including all metadata and meanings, from FactTypes to TrialRelationFactTypes. Switch adapted.yaml imports to the scratch copies.",
+      "witnesses": 22,
+      "accepted_values": [
+        "kinship",
+        "other"
+      ],
+      "validator": "Draft201909Validator of the property emitted by JsonSchemaGenerator(top_class=\"SourcedRelation\"), with its complete $defs; all 18 FactTypes strings and null, 42, empty string, invented agree."
+    },
+    "adapted_commands": [
+      "gen-shacl --no-generation-date adapted.yaml",
+      "gen-jsonld-context --no-generation-date adapted.yaml",
+      "gen-rdf --no-generation-date -f ttl adapted.yaml"
+    ],
+    "graph_comparison": "Canonical N-Triples, then rdflib.compare.to_isomorphic equality and canonical triple set intersection/differences. Canonicalize independent blank-node components with rdflib.compare.to_canonical_graph, including their grounded anchors; retain duplicate components with distinct deterministic occurrence suffixes. Preserve these labels when reparsing N-Triples with bnode_context. Counts include metadata; no triples are removed.",
+    "context_comparison": "Replace only @context on the unchanged RdfExport.document() from linkml/tests/test_rdf_export.py. Also probe each of the 15 selected model contexts and Reference, every selected field and derived context term; lists contain repeated values. The all-term probe is a mapping probe, not a set of validated records.",
+    "shacl_comparison": "pyshacl.validate on the identical graph for each named case, with inference=none, advanced=False, js=False, do_owl_imports=False. Compare shapes alone separately from rdf_runtime.check_graph/check_lists. Namespace, input staleness and unsupported generator configuration are not data-shape cases.",
+    "record_conversion": "PythonGenerator(adapted.yaml).compile_module(), json_loader.load(deepcopy(record), target_class=<generated class>), rdflib_dumper.as_rdf_graph(instance, SchemaView(adapted.yaml)), for each unchanged fixture record. Constructors and their required-field checks remain enabled. Do not treat the incomplete 3/8 conversion as a complete RDF export. successful_subset compares exactly those same three inputs through both encoders."
+  },
+  "per_module_runs": {
+    "context": [
+      {
+        "module": "types",
+        "exit": 0,
+        "bytes": 364,
+        "diagnostic": ""
+      },
+      {
+        "module": "vocabulary",
+        "exit": 0,
+        "bytes": 489,
+        "diagnostic": ""
+      },
+      {
+        "module": "site_common",
+        "exit": 0,
+        "bytes": 10039,
+        "diagnostic": "ERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\n"
+      },
+      {
+        "module": "pages",
+        "exit": 0,
+        "bytes": 1476,
+        "diagnostic": ""
+      },
+      {
+        "module": "content_items",
+        "exit": 0,
+        "bytes": 12342,
+        "diagnostic": "ERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\n"
+      },
+      {
+        "module": "mentions",
+        "exit": 0,
+        "bytes": 10806,
+        "diagnostic": "ERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\n"
+      },
+      {
+        "module": "life_events",
+        "exit": 0,
+        "bytes": 1241,
+        "diagnostic": ""
+      },
+      {
+        "module": "editions",
+        "exit": 0,
+        "bytes": 1615,
+        "diagnostic": ""
+      },
+      {
+        "module": "sourced_entities",
+        "exit": 0,
+        "bytes": 8198,
+        "diagnostic": ""
+      },
+      {
+        "module": "media",
+        "exit": 0,
+        "bytes": 5998,
+        "diagnostic": ""
+      },
+      {
+        "module": "shared_record",
+        "exit": 1,
+        "bytes": 0,
+        "diagnostic": "ValueError: File \"shared_record.yaml\", line 391, col 16 slot: sourcedRelation__type - 'equals_string' and 'equals_string_in' requires range 'string' and not range 'FactTypes'\n"
+      },
+      {
+        "module": "shared",
+        "exit": 0,
+        "bytes": 734,
+        "diagnostic": ""
+      }
+    ],
+    "shacl": [
+      {
+        "module": "types",
+        "exit": 0,
+        "bytes": 1,
+        "diagnostic": ""
+      },
+      {
+        "module": "vocabulary",
+        "exit": 0,
+        "bytes": 1,
+        "diagnostic": ""
+      },
+      {
+        "module": "site_common",
+        "exit": 0,
+        "bytes": 46525,
+        "diagnostic": "WARNING:linkml.generators.shaclgen:Rule in class 'Fact' has elseconditions; only the forward (if/then) branch is emitted as sh:sparql. The else branch cannot be represented in SHACL-SPARQL.\n"
+      },
+      {
+        "module": "pages",
+        "exit": 0,
+        "bytes": 4036,
+        "diagnostic": ""
+      },
+      {
+        "module": "content_items",
+        "exit": 0,
+        "bytes": 57237,
+        "diagnostic": "WARNING:linkml.generators.shaclgen:Rule in class 'Fact' has elseconditions; only the forward (if/then) branch is emitted as sh:sparql. The else branch cannot be represented in SHACL-SPARQL.\n"
+      },
+      {
+        "module": "mentions",
+        "exit": 0,
+        "bytes": 52905,
+        "diagnostic": "WARNING:linkml.generators.shaclgen:Rule in class 'Fact' has elseconditions; only the forward (if/then) branch is emitted as sh:sparql. The else branch cannot be represented in SHACL-SPARQL.\n"
+      },
+      {
+        "module": "life_events",
+        "exit": 0,
+        "bytes": 2953,
+        "diagnostic": ""
+      },
+      {
+        "module": "editions",
+        "exit": 0,
+        "bytes": 5033,
+        "diagnostic": ""
+      },
+      {
+        "module": "sourced_entities",
+        "exit": 0,
+        "bytes": 32200,
+        "diagnostic": "WARNING:linkml.generators.shaclgen:Rule in class 'Fact' has elseconditions; only the forward (if/then) branch is emitted as sh:sparql. The else branch cannot be represented in SHACL-SPARQL.\n"
+      },
+      {
+        "module": "media",
+        "exit": 0,
+        "bytes": 31681,
+        "diagnostic": ""
+      },
+      {
+        "module": "shared_record",
+        "exit": 1,
+        "bytes": 0,
+        "diagnostic": "WARNING:linkml.generators.shaclgen:Rule in class 'Fact' has elseconditions; only the forward (if/then) branch is emitted as sh:sparql. The else branch cannot be represented in SHACL-SPARQL.\nValueError: slot: \"https://pruzhany.org/ns/sourced-entities#type\" - 'equals_string' and 'equals_string_in' require range 'string' and not 'FactTypes'\n"
+      },
+      {
+        "module": "shared",
+        "exit": 0,
+        "bytes": 1587,
+        "diagnostic": ""
+      }
+    ],
+    "rdf": [
+      {
+        "module": "types",
+        "exit": 0,
+        "bytes": 21519,
+        "diagnostic": ""
+      },
+      {
+        "module": "vocabulary",
+        "exit": 0,
+        "bytes": 79418,
+        "diagnostic": ""
+      },
+      {
+        "module": "site_common",
+        "exit": 0,
+        "bytes": 234580,
+        "diagnostic": "ERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\n"
+      },
+      {
+        "module": "pages",
+        "exit": 0,
+        "bytes": 36960,
+        "diagnostic": ""
+      },
+      {
+        "module": "content_items",
+        "exit": 0,
+        "bytes": 269476,
+        "diagnostic": "ERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\n"
+      },
+      {
+        "module": "mentions",
+        "exit": 0,
+        "bytes": 248769,
+        "diagnostic": "ERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\nERROR:linkml.utils.generator:slot_usage for undefined slot: judgement_id\n"
+      },
+      {
+        "module": "life_events",
+        "exit": 0,
+        "bytes": 107039,
+        "diagnostic": ""
+      },
+      {
+        "module": "editions",
+        "exit": 0,
+        "bytes": 37989,
+        "diagnostic": ""
+      },
+      {
+        "module": "sourced_entities",
+        "exit": 0,
+        "bytes": 198207,
+        "diagnostic": ""
+      },
+      {
+        "module": "media",
+        "exit": 0,
+        "bytes": 101002,
+        "diagnostic": ""
+      },
+      {
+        "module": "shared_record",
+        "exit": 1,
+        "bytes": 0,
+        "diagnostic": "ValueError: File \"shared_record.yaml\", line 391, col 16 slot: sourcedRelation__type - 'equals_string' and 'equals_string_in' requires range 'string' and not range 'FactTypes'\n"
+      },
+      {
+        "module": "shared",
+        "exit": 0,
+        "bytes": 18782,
+        "diagnostic": ""
+      }
+    ]
+  },
+  "artifact_sha256": {
+    "linkml/generated/rdf/context.jsonld": "a212e549e680de4a71b0601b94fbf5314e640ede8fe06d46a879ade811405ade",
+    "linkml/generated/rdf/coverage.md": "567a76c4bd64acb679b7b42094b5b87d3b81e9501616d7bdf3cae4853dff0e66",
+    "linkml/generated/rdf/ontology.ttl": "0ca0ff1d420a940e1dd57e217ffda9ff980a835b15b84c68492eb3102fff3975",
+    "linkml/generated/rdf/profile.json": "0b0952a3b70c4dfe1007336071a28d799601f1b8e418c6bbaee86ce8f6a1e6bf",
+    "linkml/generated/rdf/shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
+  },
+  "checks": {
+    "bin/verify": {
+      "result": "passed",
+      "steps": [
+        "scan",
+        "zod",
+        "pydantic",
+        "contract",
+        "pilot",
+        "standards",
+        "vocabulary",
+        "entities",
+        "linkml"
+      ],
+      "linkml_canaries": 3,
+      "linkml_tests": 173,
+      "regenerated_files": 1481,
+      "skipped_tests": 0
+    },
+    "consumer": {
+      "root": "disposable pruzhany-svelte copy inside the worktree",
+      "candidate": "all tracked files copied from this worktree into src/vendor/pruzhany-schema; source static data read through a sibling symlink",
+      "commands": {
+        "bun run format:check": "passed",
+        "bun run lint": "passed",
+        "bun run check": "passed",
+        "bun run test:run": "passed",
+        "bun run validate:data": "passed"
+      },
+      "test_files": 90,
+      "tests": 4199,
+      "typecheck_files": 1571,
+      "typecheck_errors": 0,
+      "typecheck_warnings": 0,
+      "limitations": "Local checks, not a GitHub runner. The existing dimension checker skips absent remote-hosted images; all available local image dimensions agree."
+    },
+    "local_tools": {
+      "bun": "1.3.11",
+      "node": "22.22.0",
+      "uv": "0.11.32",
+      "gitleaks": "8.24.3"
+    }
+  },
+  "impresso_source_check": {
+    "url": "https://raw.githubusercontent.com/impresso/impresso-schemas/d55526d/json/canonical/issue.schema.json",
+    "commit": "d55526d",
+    "json_path": "$defs.metadata.properties.tp.enum",
+    "sha256": "96d3b80366d3e37b52e9ec7b0d0758133d19b739db9de94fe03b6c23e0ada799",
+    "read_on": "2026-10-30",
+    "ordered_values": 13,
+    "matches_vocabulary_impresso_types": true
+  }
+}
