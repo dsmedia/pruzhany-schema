@@ -35,25 +35,8 @@ Tests compare booleans only; site reason precedence is outside this shared core.
 booleans, plus a recommendation. These are active assertions, never skips or
 expected failures. Common cases explicitly use `sides_differ: false`.
 
-| Case                    | Raw date   | Site living | Steps living | Recommendation |
-| ----------------------- | ---------- | ----------- | ------------ | -------------- |
-| malformed-birth-suffix  | `1916x`    | false       | true         | Steps          |
-| malformed-birth-compact | `19160101` | false       | true         | Steps          |
-| malformed-print-suffix  | `1941x`    | false       | true         | Steps          |
-| malformed-print-compact | `19410101` | false       | true         | Steps          |
-
-Recommend requiring the year to end or be followed by a hyphen, as Python does.
-An arbitrary four-digit prefix in malformed input should not lift privacy.
-This recommendation changes neither implementation. Both currently still read
-the year in `1916-not-a-date` and `1941-99-99`; those common malformed cases are
-also pinned. Neither function is a complete calendar-date validator.
-
-The corpus structure is checked by `zod/conformance.test.ts`, using only the
-repository's Bun toolchain (no Python or sibling checkout). Consumers must run
-every case and select their own recorded answer on a difference. A deliberate
-rule change updates this corpus and both consumers together.
-
-Documentation read 30 October 2026: [Vitest Test API](https://vitest.dev/api/test)
-(`it.each`), [Zod Defining schemas](https://zod.dev/api) (strict objects and
-discriminated unions), and [Bun Runtime](https://bun.sh/docs/runtime). Tool
-versions stay at the repository's existing pins.
+No case differs today. The four malformed-date cases (`1916x`, `19160101`,
+`1941x`, `19410101`) first differed: the site read a year from any four-digit
+prefix. Both sides now require the year to end the text or be followed by a
+hyphen, so malformed text never lifts the presumption that a person may be living. No dated
+field of the real record was malformed when this was agreed (30 October 2026).

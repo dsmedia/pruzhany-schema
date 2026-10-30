@@ -1424,7 +1424,7 @@
     },
     {
       "id": "malformed-birth-suffix",
-      "description": "Raw malformed birth start: '1916x'.",
+      "description": "Raw malformed birth start: '1916x': a year must end the text or be followed by a hyphen, so this is no evidence and the presumption holds.",
       "current_year": 2026,
       "person_id": "fictional-core-person",
       "record": {
@@ -1450,19 +1450,14 @@
         "sources": [],
         "relations": []
       },
-      "sides_differ": true,
+      "sides_differ": false,
       "expected": {
-        "steps": true,
-        "site": false
-      },
-      "recommendation": {
-        "side": "steps",
-        "why": "Require a year to end or be followed by a hyphen. An unseparated four-digit prefix in malformed input should not remove the living-person presumption. This records a recommendation only; neither implementation changes."
+        "living": true
       }
     },
     {
       "id": "malformed-birth-compact",
-      "description": "Raw malformed birth start: '19160101'.",
+      "description": "Raw malformed birth start: '19160101': a year must end the text or be followed by a hyphen, so this is no evidence and the presumption holds.",
       "current_year": 2026,
       "person_id": "fictional-core-person",
       "record": {
@@ -1488,14 +1483,9 @@
         "sources": [],
         "relations": []
       },
-      "sides_differ": true,
+      "sides_differ": false,
       "expected": {
-        "steps": true,
-        "site": false
-      },
-      "recommendation": {
-        "side": "steps",
-        "why": "Require a year to end or be followed by a hyphen. An unseparated four-digit prefix in malformed input should not remove the living-person presumption. This records a recommendation only; neither implementation changes."
+        "living": true
       }
     },
     {
@@ -1665,7 +1655,7 @@
     },
     {
       "id": "malformed-print-suffix",
-      "description": "Raw malformed printed citation date: '1941x'.",
+      "description": "Raw malformed printed citation date: '1941x': a year must end the text or be followed by a hyphen, so this is no evidence and the presumption holds.",
       "current_year": 2026,
       "person_id": "fictional-core-person",
       "record": {
@@ -1690,19 +1680,14 @@
         "sources": [],
         "relations": []
       },
-      "sides_differ": true,
+      "sides_differ": false,
       "expected": {
-        "steps": true,
-        "site": false
-      },
-      "recommendation": {
-        "side": "steps",
-        "why": "Require a year to end or be followed by a hyphen. An unseparated four-digit prefix in malformed input should not remove the living-person presumption. This records a recommendation only; neither implementation changes."
+        "living": true
       }
     },
     {
       "id": "malformed-print-compact",
-      "description": "Raw malformed printed citation date: '19410101'.",
+      "description": "Raw malformed printed citation date: '19410101': a year must end the text or be followed by a hyphen, so this is no evidence and the presumption holds.",
       "current_year": 2026,
       "person_id": "fictional-core-person",
       "record": {
@@ -1727,14 +1712,9 @@
         "sources": [],
         "relations": []
       },
-      "sides_differ": true,
+      "sides_differ": false,
       "expected": {
-        "steps": true,
-        "site": false
-      },
-      "recommendation": {
-        "side": "steps",
-        "why": "Require a year to end or be followed by a hyphen. An unseparated four-digit prefix in malformed input should not remove the living-person presumption. This records a recommendation only; neither implementation changes."
+        "living": true
       }
     },
     {
