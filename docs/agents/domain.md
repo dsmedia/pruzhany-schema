@@ -35,7 +35,7 @@ decision is actually settled.
 
 ## The glossary follows EHRI and RiC-O
 
-The owner's rule (`CLAUDE.md`): prefer an EHRI class, else a RiC-O term in EHRI's RiC-O
+The owner's rule (`AGENTS.md`): prefer an EHRI class, else a RiC-O term in EHRI's RiC-O
 version, else a local term with a reason. A glossary entry for a concept those standards
 name uses their term and cites the `standards/` file it was read in. `/domain-modeling`
 does not add vocabulary types; those are approved by the owner in batches ([approval record](../vocabulary-approvals.md)).
@@ -51,7 +51,7 @@ invented that the project doesn't use (reconsider), or there's a real gap (note 
 
 ## Flag ADR conflicts
 
-If output contradicts an ADR, a design doc listed above, or a rule in `CLAUDE.md`
-/`AGENTS.md`, say so explicitly rather than silently overriding it:
+If output contradicts an ADR, a design doc listed above, or a rule in `AGENTS.md`,
+say so explicitly rather than silently overriding it:
 
 > _Contradicts ADR-0007 (...), but worth reopening because…_
