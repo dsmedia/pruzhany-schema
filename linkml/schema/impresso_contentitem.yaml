@@ -1,0 +1,335 @@
+# Impresso README and schemas; LinkML JSON Schema, Slots, Advanced features and Arrays
+# https://linkml.io/linkml/schemas/arrays.html, read 31 October 2026.
+# Upstream field descriptions: Impresso team, AGPL-3.0-or-later; see standards/impresso-329323c.
+id: https://pruzhany.org/ns/impresso_contentitem
+name: pruzhany_impresso_contentitem
+title: Impresso rebuilt paper content item external contract
+description: External Impresso wire contract. Every published field is described; no stored field
+  is added. Unknown object properties remain allowed. Annotations preserve JSON unions and nulls
+  independently of requiredness; native LinkML validation alone is not the oracle.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+- linkml:types
+see_also:
+- https://impresso.github.io/impresso-schemas/json/rebuilt/paper_contentitem.schema.json
+annotations:
+  json_schema_nulls: explicit
+  sources_read: '31 October 2026: impresso/impresso-schemas master 329323c, README.md and the unchanged
+    three schemas in standards/impresso-329323c; LinkML JSON Schema, Slots, Advanced features and
+    Arrays documentation. Impresso governs under ADR 0001; these are format correspondences, not
+    ontology equivalences.'
+classes:
+  ImpressoContentItem:
+    extra_slots:
+      allowed: true
+    description: "This schema defines the JSON representation of a paper-based content item \u2014\
+      \ either printed or typewritten. A content item corresponds to any logical segmentation unit\
+      \ of a digitised media production, at or below the page level for printed documents. In newspapers,\
+      \ for example, an article is a typical type of content item."
+    annotations:
+      impresso: content
+    attributes:
+      id:
+        required: true
+        description: The unique identifier for a content item (CI), (e.g. GDL-1900-01-02-a-i0001,
+          or SOC_CJ-1940-07-22-a-i0001)
+        annotations:
+          impresso: content.id
+        pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-i[0-9]{4}$
+      ts:
+        required: true
+        description: timestamp of creation of the JSON file (in '%Y-%m-%dT%H:%M:%SZ' format e.g.
+          '2018-09-18T08:00:08Z')
+        annotations:
+          impresso: content.ts
+        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$
+      publication_date:
+        alias: d
+        description: Date of publication of issue or broadcast to which the content item belongs
+          to in yyyy-mm-dd format.
+        annotations:
+          impresso: content.d
+        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+      cc:
+        description: True if image box coordinates are known to be correct (eg. have been checked,
+          converted or rescaled), False otherwise
+        annotations:
+          impresso: content.cc
+        range: boolean
+      olr:
+        required: true
+        description: True if optical layout recognition was applied to the issue/bulletin this content
+          item originates from.
+        annotations:
+          impresso: content.olr
+        range: boolean
+      st:
+        description: The type of media source to which this content item belongs. Must be a value
+          from the impresso-essentials.utils SourceType enum.
+        annotations:
+          impresso: content.st
+        equals_string_in:
+        - newspaper
+        - radio_broadcast
+        - radio_magazine
+        - radio_schedule
+        - monograph
+        - encyclopedia
+      sm:
+        description: The medium in which the source media this content item belongs to was originally
+          produced. For printed documents, this relates to the physical paper support.
+        annotations:
+          impresso: content.sm
+        equals_string_in:
+        - print
+        - typescript
+      tp:
+        required: true
+        description: content item type (e.g. 'ar' for article, 'ad' for advertisement)
+        annotations:
+          impresso: content.tp
+          nullable: true
+      lg:
+        description: Language of the content item's text, expressed as a two-letter ISO 639-1 language
+          code.
+        annotations:
+          impresso: content.lg
+        pattern: ^[a-z]{2,3}$
+      rc:
+        description: Radio channel, if applicable (st=='radio_broadcast') and is known.
+        annotations:
+          impresso: content.rc
+          nullable: true
+      rp:
+        description: Radio program, if applicable (st=='radio_broadcast') and is known.
+        annotations:
+          impresso: content.rp
+          nullable: true
+      media_title_variant:
+        description: Variant title of the media title this CI is from (mainly in the case of BL newspapers).
+          The field is present only when a meaningful variant title is available.
+        annotations:
+          impresso: content.media_title_variant
+          json_min_length: 1
+      title_text:
+        alias: t
+        description: Content-item title (deprecated).
+        annotations:
+          impresso: content.t
+          nullable: true
+      title:
+        description: Content-item title.
+        annotations:
+          impresso: content.title
+          nullable: true
+      ro:
+        description: Reading order index of the content item, for the table of contents view on the
+          interface. If not defined, the CI number (after 'i' in the ID) should be used.
+        annotations:
+          impresso: content.ro
+        range: integer
+      consolidated:
+        description: True if the issue this CI comes from was consolidated, meaning it contains additional
+          language identification and ocrqa information.
+        annotations:
+          impresso: content.consolidated
+        range: boolean
+      consolidated_reocr_applied:
+        description: True if the CI's text went through the re-OCRisation process.
+        annotations:
+          impresso: content.consolidated_reocr_applied
+        range: boolean
+      consolidated_ocrqa:
+        description: Estimated OCR quality, between 0 and 1. May be null if there is no text or not
+          enough text to compute an estimate.
+        annotations:
+          impresso: content.consolidated_ocrqa
+          nullable: true
+        range: double
+        minimum_value: 0
+        maximum_value: 1
+      lg_original:
+        description: Language of the content item in the original OCR/OLR. Only defined if the content-item
+          was consolidated.
+        annotations:
+          impresso: content.lg_original
+          nullable: true
+      is_exact_date:
+        description: False if the date assigned to the issue is known to be inexact or approximated,
+          True or undefined otherwise.
+        annotations:
+          impresso: content.is_exact_date
+        range: boolean
+      section_title:
+        description: A section title grouping this content item with others.
+        annotations:
+          impresso: content.section_title
+        range: ImpressoContentSection
+        inlined: true
+      pp:
+        description: Array of physical page numbers spanned by the content item, based on the issue
+          pagination as extracted from the OCR.
+        annotations:
+          impresso: content.pp
+        multivalued: true
+        minimum_cardinality: 1
+        range: double
+      ft:
+        description: The rebuilt full text.
+        annotations:
+          impresso: content.ft
+      rb:
+        description: text offsets of page regions (relative to 'ft' field)
+        annotations:
+          impresso: content.rb
+        multivalued: true
+        range: integer
+      pb:
+        description: text offsets of physical paragraph breaks (relative to 'ft' field)
+        annotations:
+          impresso: content.pb
+        multivalued: true
+        range: integer
+      lb:
+        description: text offsets of physical line breaks (relative to 'ft' field)
+        annotations:
+          impresso: content.lb
+        multivalued: true
+        range: integer
+      ppreb:
+        description: List of rebuilt pages
+        annotations:
+          impresso: content.ppreb
+        multivalued: true
+        range: ImpressoRebuiltPage
+        inlined_as_list: true
+    rules:
+    - preconditions:
+        slot_conditions:
+          sm:
+            required: true
+      postconditions:
+        slot_conditions:
+          st:
+            required: true
+    - preconditions:
+        slot_conditions:
+          st:
+            required: true
+      postconditions:
+        slot_conditions:
+          sm:
+            required: true
+    - preconditions:
+        slot_conditions:
+          consolidated:
+            required: true
+      postconditions:
+        slot_conditions:
+          consolidated_ocrqa:
+            required: true
+          lg_original:
+            required: true
+    - preconditions:
+        slot_conditions:
+          st:
+            required: false
+            equals_string: radio_broadcast
+      postconditions:
+        slot_conditions:
+          ro:
+            required: false
+            equals_number: 1
+    tree_root: true
+  ImpressoContentSection:
+    extra_slots:
+      allowed: true
+    description: A section title grouping this content item with others.
+    annotations:
+      impresso: content.section_title
+    attributes:
+      title_text:
+        required: true
+        description: A section title grouping this content item with others.title_text.
+        annotations:
+          impresso: content.section_title.title_text
+      composing_ci_ids:
+        required: true
+        description: A section title grouping this content item with others.composing_ci_ids.
+        annotations:
+          impresso: content.section_title.composing_ci_ids
+        multivalued: true
+      section_id:
+        required: true
+        description: A section title grouping this content item with others.section_id.
+        annotations:
+          impresso: content.section_title.section_id
+  ImpressoRebuiltPage:
+    extra_slots:
+      allowed: true
+    description: The rebuilt tokens and region boxes for one physical page of this content item.
+    annotations:
+      impresso: content.ppreb[]
+    attributes:
+      id:
+        description: Page canonical ID
+        annotations:
+          impresso: content.ppreb[].id
+        pattern: ^[A-Za-z_]+-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$
+      page_number:
+        alias: n
+        description: page number
+        annotations:
+          impresso: content.ppreb[].n
+        range: integer
+      tokens:
+        alias: t
+        description: List of tokens
+        annotations:
+          impresso: content.ppreb[].t
+        multivalued: true
+        range: ImpressoRebuiltToken
+        inlined_as_list: true
+      regions:
+        alias: r
+        description: List of region coordinates.
+        annotations:
+          impresso: content.ppreb[].r
+        range: integer
+        array:
+          dimensions:
+          - minimum_cardinality: 0
+          - minimum_cardinality: 4
+            maximum_cardinality: 4
+  ImpressoRebuiltToken:
+    extra_slots:
+      allowed: true
+    description: The rebuilt tokens and region boxes for one physical page of this content item.t[].
+    annotations:
+      impresso: content.ppreb[].t[]
+    attributes:
+      coordinates:
+        alias: c
+        description: Coordinates of token relative to page.
+        annotations:
+          impresso: content.ppreb[].t[].c
+        multivalued: true
+        minimum_cardinality: 4
+        maximum_cardinality: 4
+        range: integer
+      start:
+        alias: s
+        description: offset start (relative to ft field)
+        annotations:
+          impresso: content.ppreb[].t[].s
+        range: integer
+      length:
+        alias: l
+        description: token length
+        annotations:
+          impresso: content.ppreb[].t[].l
+        range: integer

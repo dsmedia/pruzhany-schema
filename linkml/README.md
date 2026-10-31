@@ -260,7 +260,7 @@ a document root. The answers contract instead declares a separate root for each 
 Impresso's objects are open (`extra_slots: allowed: true`). Its optional fields generally
 refuse null, except `pOf` and `section_pOf`; the latter permits null members too. The schema
 annotation `json_schema_nulls: explicit` selects `external_schema.py`, which calls the pinned
-native generator with `include_null=False` and implements only the boolean slot annotations
+native generator with `include_null=False` and implements the boolean slot annotations
 `nullable` and `nullable_items` through its `after_generate_class_slot` lifecycle hook.
 Unsupported annotation values or shapes fail generation. The native generator still handles
 aliases, requiredness, integer boxes, openness, enums and class conditions. LinkML rules
@@ -272,7 +272,7 @@ must enforce 999, across all paragraphs for lines, as the module description spe
 `test_physical.py` compares both validators on the invented two-region page and mutations
 of every field, absent/null values, extra keys, boxes, nullable section members, all source
 type/medium pairs and all image/timestamp presence combinations. The oracle is the unmodified
-Impresso schema, pinned with its SHA-256, attribution and license in `tests/fixtures/physical/`.
+Impresso schema, pinned with its SHA-256, attribution and license in `standards/impresso-329323c/`.
 Both validators use their own declared JSON Schema draft. The test also reads **every**
 `editions/*/*-pNNNN.json` when `$PRUZHANY_STEPS` names a checkout, or `pruzhany-steps/editions`
 exists beside this checkout or any of its parents. An explicit path with missing data fails;
@@ -665,3 +665,37 @@ for values, formats, fixed values, tuple order/bounds, list cycles, references,
 reification, omitted/unknown fields, stale inputs and reproducibility. It installs
 pySHACL from the same hashed lock; the website gains no RDF dependency. Historical
 examples and export diagnostics belong only in private pruzhany-steps.
+
+### The other Impresso edition contracts
+
+`schema/impresso_issue.yaml` and `schema/impresso_contentitem.yaml` describe every
+field of the canonical issue and rebuilt paper content-item contracts beside
+`physical.yaml`. Their manifest entries are external contracts; they generate
+JSON Schemas, documentation and separate inventories under `generated/external/`.
+They add no stored field or site model, and do not enter the Zod/Pydantic twins.
+All three upstream oracles now read `../standards/impresso-329323c/` only.
+
+`external_schema.py` preserves optional versus nullable fields, including required
+nullable scalars. Bounded `json_types` and `json_item_types` annotations describe
+legacy unions whose array/object contents upstream leaves unconstrained; they
+replace only an unconstrained string placeholder, refusing constrained inputs.
+`json_min_length` preserves string length without adding a whitespace rule.
+Nested region-coordinate arrays use LinkML's native `array.dimensions`. These
+wire adaptations are not a claim that native LinkML instance validation alone
+enforces the JSON contract. Unknown properties remain allowed.
+
+The issue schema places `required: [m]` on the **array**, where JSON Schema ignores
+it; metadata is consequently optional on an entry. Its metadata `tp` enum excludes
+null even though its type lists null. The rebuilt item's radio reading-order
+condition applies when `st` is absent too, as upstream's `if` does not require
+it. Tests retain these behaviors rather than repairing the upstream files.
+
+Read **31 October 2026**: Impresso's README and all three schemas at the pinned
+commit; LinkML [JSON Schema](https://linkml.io/linkml/generators/json-schema.html),
+[Slots](https://linkml.io/linkml/schemas/slots.html),
+[Advanced features](https://linkml.io/linkml/schemas/advanced.html) and
+[Arrays](https://linkml.io/linkml/schemas/arrays.html); uv
+[Commands](https://docs.astral.sh/uv/reference/cli/) for the existing hashed
+environment. `test_impresso.py` checks each field's normalized constraints,
+requiredness and mapping, then compares both validators on planted type, null,
+absence, numeric/array bounds and dependency faults. Fixtures are fictional.

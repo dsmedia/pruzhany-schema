@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `f7ee4aff1c449defbdebf13a6d09e6087ced7f287a6cdab40a8d0ef8a4772ab6`.
+Definition fingerprint: `d33223d483be8e7d7873830f77ffdd4edcf2bbf4a427d63cf8db8312ee00b7f6`.
 
 ## What the Pruzhany issue documents share
 
@@ -1279,6 +1279,227 @@ Meaning: No direct mapping recorded.
 | `tx` | Token surface text, including empty text if stored that way. | string | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/physical.yaml`.
+
+## Impresso canonical issue external contract
+
+### ImpressoIssue
+
+Logical representation of the contents of a canonical issue (newspaper or broadcast).
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `cdt` | Creation date timestamp (of the JSON file). | string | No | No direct mapping recorded |
+| `consolidated` | True if this issue is consolidated, and contains additional language identification and ocrqa information. | boolean | No | No direct mapping recorded |
+| `consolidated_ts_original` | Creation date timestamp (in '%Y-%m-%dT%H:%M:%SZ' format) of the original issue which was consolidated into this object. Only defined if `consolidated==True`. | string; pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ | No | No direct mapping recorded |
+| `i` | The content item(s) contained in the newspaper/radio_broadcast issue. Upstream places required m on the array, where JSON Schema does not apply it; the entry metadata is therefore optional. | list of ImpressoIssueItem | Yes | No direct mapping recorded |
+| `id` | Canonical ID of the newspaper or radio broadcast issue (e.g. GDL-1900-01-02-a, or SOC_CJ-1940-07-22-a) | string; pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}$ | Yes | No direct mapping recorded |
+| `iiif_manifest_uri` | URI for the issue's manifest in the IIIF Presentation API. The field is present only when a meaningful URI is available. | string | No | No direct mapping recorded |
+| `is_exact_date` | False if the date assigned to the issue is known to be inexact or approximated, True or undefined otherwise. | boolean | No | No direct mapping recorded |
+| `media_title_variant` | Variant title of the media title this CI is from (mainly in the case of BL newspapers). The field is present only when a meaningful variant title is available. | string | No | No direct mapping recorded |
+| `n` | Notes. | string | No | No direct mapping recorded |
+| `olr` | True if optical layout recognition was applied to the issue/bulletin this content item originates from. | boolean | No | No direct mapping recorded |
+| `pp` | Canonical IDs of pages in the issue, without file extension (e.g. GDL-1900-01-02-a-p0004). In the case `sm` is in [`print`, `typescript`]. | list of string; pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$ | No | No direct mapping recorded |
+| `provided_metadata` | Minimally preprocessed issue-level metadata included by the provider institution, especially useful for radio data (sm=audio). | string | No | No direct mapping recorded |
+| `rc` | Radio channel, if applicable (st=='radio_broadcast'). The field is present only when a meaningful value is available. | string | No | No direct mapping recorded |
+| `rp` | Radio program if applicable (st=='radio_broadcast'). The field is present only when a meaningful program name is available. | string | No | No direct mapping recorded |
+| `rr` | Canonical ID of audio record of the issue (in list for consistency), without file extension (e.g. INA-1900-01-02-a-r0004). In the case `sm`==`audio`. | list of string; pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,3}-r[0-9]{4}$ | No | No direct mapping recorded |
+| `s` | The text style as defined in the OCR output. Each style consists of: - a name (`id`) - a type-face (`f`) - a font-size (`fs`) - a color (`rgb`). | list of ImpressoStyle | No | No direct mapping recorded |
+| `sm` | Source medium, format in which the media was originally produced. If `tp == radio_broadcast`, this is typically `typescript` or `audio`. | string; one of: ['print', 'typescript', 'audio'] | No | No direct mapping recorded |
+| `st` | Type of media source. Should be a value the impresso-essentials.utils SourceType enum. | string; one of: ['newspaper', 'radio_broadcast', 'radio_magazine', 'radio_schedule', 'monograph', 'encyclopedia'] | No | No direct mapping recorded |
+| `ts` | Creation date timestamp (in '%Y-%m-%dT%H:%M:%SZ' format). If consolidated==True, this is the consolidated timestamp (the original creation timestamp can be found in consolidated_timestamp_original); otherwise it is the original creation timestamp. | string; pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ | No | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_issue.yaml`.
+
+### ImpressoIssueItem
+
+A content item (e.g. article, advertisement, radio broadcast, etc.)
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `c` | Coordinates (xywh format or [HPOS, VPOS, WIDTH, HEIGHT]) of image-region corresponding to the content-item depending on its type (if `tp == image`). NOTE: the 'null' option should be removed to prevent tables from having coordinates. | list of integer; minimum items: 4 | No | No direct mapping recorded |
+| `l` | Legacy sections or components of the content item in the original OCR/OLR. They are meant to enable the reassignation of Impresso CIs (and enrichments) to the original OCR/OLR files. | ImpressoLegacy | No | No direct mapping recorded |
+| `m` | Metadata about the content item. | ImpressoMetadata | No | No direct mapping recorded |
+| `pOf` | Article/content-item to which the image is attached (if `tp == image`). | string | No | No direct mapping recorded |
+| `section_title` | A section title grouping content items, with its original OCR components. | ImpressoIssueSection | No | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_issue.yaml`.
+
+### ImpressoIssueSection
+
+A section title grouping content items, with its original OCR components.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `composing_ci_ids` | A section title grouping content items, with its original OCR components.composing_ci_ids. | list of string | Yes | No direct mapping recorded |
+| `heading_legacy_parts` | A section title grouping content items, with its original OCR components.heading_legacy_parts. | list of ImpressoLegacyPart | Yes | No direct mapping recorded |
+| `section_id` | A section title grouping content items, with its original OCR components.section_id. | string | Yes | No direct mapping recorded |
+| `title_text` | A section title grouping content items, with its original OCR components.title_text. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_issue.yaml`.
+
+### ImpressoLegacy
+
+Legacy sections or components of the content item in the original OCR/OLR. They are meant to enable the reassignation of Impresso CIs (and enrichments) to the original OCR/OLR files.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `id` | ID of the sections or components used to compose the CI in the original OCR/OLR files. | string | No | No direct mapping recorded |
+| `parts` | List of parts of the given section or components. Exact contents can vary, will typically be composed of the metadata at disposal in the OCR/OLR. | list of ImpressoLegacyPart | No | No direct mapping recorded |
+| `source` | Source image or OCR/OLR file name. | string | No | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_issue.yaml`.
+
+### ImpressoLegacyPart
+
+One original OCR component retained for tracing a content item back to its source.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `comp_fileid` | ID of the ALTO file the component comes from. | string | No | No direct mapping recorded |
+| `comp_id` | ID of the part. | string | No | No direct mapping recorded |
+| `comp_page_no` | Page number of the component. | string | No | No direct mapping recorded |
+| `comp_role` | Role of the component part (eg. heading, body, etc). | string | No | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_issue.yaml`.
+
+### ImpressoMetadata
+
+Metadata for an entry in the canonical issue, including its page or audio references.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `archival_note` | Plaintext archival note or description concerning the content item. In case of audio radio broadcasts, this corresponds to the content summary provided with the metadata. The field is present only when a meaningful note is available. | string | No | No direct mapping recorded |
+| `consolidated_char_len` | Character count of the consolidated text for the content item. May be null if there is no text. Only defined if `consolidated==True`. | integer; minimum: 0 | No | No direct mapping recorded |
+| `consolidated_langident_run_id` | Run ID corresponding to the lang ID process used to obtain the `consolidated_language` value. Only defined if `consolidated==True`. | string | No | No direct mapping recorded |
+| `consolidated_lg` | Computed language of the content item. Only defined if `consolidated==True`. | string; pattern: ^[a-z]{2,3}$ | No | No direct mapping recorded |
+| `consolidated_ocrqa` | Estimated OCR quality, between 0 and 1. May be null if there is no text or not enough text to compute an estimate. Only defined if `consolidated==True`. | double; minimum: 0; maximum: 1 | No | No direct mapping recorded |
+| `consolidated_reocr_applied` | True if the CI's text went through the re-OCRisation process. Only defined if `consolidated==True`. | boolean | No | No direct mapping recorded |
+| `consolidated_reocr_model_id` | Model ID or name corresponding to the re-OCR process. Only defined if `consolidated==True` and `consolidated_re_ocr_applied==True`. | string | No | No direct mapping recorded |
+| `consolidated_reocr_run_id` | Run ID corresponding to the re-OCR process. Only defined if `consolidated==True` and `consolidated_re_ocr_applied==True`. | string | No | No direct mapping recorded |
+| `id` | Content item ID (e.g. `GDL-1900-01-02-a-i0001`). | string; pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-i[0-9]{4}$ | Yes | No direct mapping recorded |
+| `iiif_link` | IIIF image link, depending on content item type (if `tp == image`). The field is present only when a meaningful link is available. It should follow the format: '{scheme}://{server}/{prefix}/{identifier}/info.json'. | string | No | No direct mapping recorded |
+| `l` | Language of the content item (deprecated). | string | No | No direct mapping recorded |
+| `lg` | Language of the content item. | string | Yes | No direct mapping recorded |
+| `lg_original` | Language of the content item in the original OCR/OLR. Only defined if `consolidated==True`. | string | No | No direct mapping recorded |
+| `pp` | Page numbers over which the content item spans, in the case `sm` is in [`print`, `typescript`]. | list of integer | No | No direct mapping recorded |
+| `ro` | Reading order index of the content item, for the table of contents view on the interface. If not defined, the CI number (after 'i' in the ID) should be used. | integer | No | No direct mapping recorded |
+| `rr` | Record numbers over which the content item spans, in the case `sm` is `audio`. | list of integer | No | No direct mapping recorded |
+| `speakers` | List of speakers (names or IDs based on availabilities) within boradcast. | list of string | No | No direct mapping recorded |
+| `t` | Title of the content item. The field is present only when a meaningful title is available. | string | No | No direct mapping recorded |
+| `tp` | Type of the content item. | string; one of: ['article', 'ad', 'image', 'table', 'death_notice', 'weather', 'page', 'radio_bulletin', 'radio_broadcast_episode', 'chronicle', 'chapter', 'discussion', 'entertainment'] | Yes | No direct mapping recorded |
+| `var_t` | Deprecated, replaced by `media_title_variant` at issue's top-level. Variant title of the media title this CI is from (only in the case of BL newspapers). The field is present only when a meaningful variant title is available. | string | No | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_issue.yaml`.
+
+### ImpressoStyle
+
+One text style from the original OCR, identified locally within the issue.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `f` | Font name | string | No | No direct mapping recorded |
+| `fs` | Font size | double | No | No direct mapping recorded |
+| `id` | Local ID of the style | integer | Yes | No direct mapping recorded |
+| `rgb` | Color of the text (in RGB). | list of integer; minimum items: 3 | No | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_issue.yaml`.
+
+## Impresso rebuilt paper content item external contract
+
+### ImpressoContentItem
+
+This schema defines the JSON representation of a paper-based content item — either printed or typewritten. A content item corresponds to any logical segmentation unit of a digitised media production, at or below the page level for printed documents. In newspapers, for example, an article is a typical type of content item.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `cc` | True if image box coordinates are known to be correct (eg. have been checked, converted or rescaled), False otherwise | boolean | No | No direct mapping recorded |
+| `consolidated` | True if the issue this CI comes from was consolidated, meaning it contains additional language identification and ocrqa information. | boolean | No | No direct mapping recorded |
+| `consolidated_ocrqa` | Estimated OCR quality, between 0 and 1. May be null if there is no text or not enough text to compute an estimate. | double; minimum: 0; maximum: 1 | No | No direct mapping recorded |
+| `consolidated_reocr_applied` | True if the CI's text went through the re-OCRisation process. | boolean | No | No direct mapping recorded |
+| `d` | Date of publication of issue or broadcast to which the content item belongs to in yyyy-mm-dd format. | string; pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ | No | No direct mapping recorded |
+| `ft` | The rebuilt full text. | string | No | No direct mapping recorded |
+| `id` | The unique identifier for a content item (CI), (e.g. GDL-1900-01-02-a-i0001, or SOC_CJ-1940-07-22-a-i0001) | string; pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-i[0-9]{4}$ | Yes | No direct mapping recorded |
+| `is_exact_date` | False if the date assigned to the issue is known to be inexact or approximated, True or undefined otherwise. | boolean | No | No direct mapping recorded |
+| `lb` | text offsets of physical line breaks (relative to 'ft' field) | list of integer | No | No direct mapping recorded |
+| `lg` | Language of the content item's text, expressed as a two-letter ISO 639-1 language code. | string; pattern: ^[a-z]{2,3}$ | No | No direct mapping recorded |
+| `lg_original` | Language of the content item in the original OCR/OLR. Only defined if the content-item was consolidated. | string | No | No direct mapping recorded |
+| `media_title_variant` | Variant title of the media title this CI is from (mainly in the case of BL newspapers). The field is present only when a meaningful variant title is available. | string | No | No direct mapping recorded |
+| `olr` | True if optical layout recognition was applied to the issue/bulletin this content item originates from. | boolean | Yes | No direct mapping recorded |
+| `pb` | text offsets of physical paragraph breaks (relative to 'ft' field) | list of integer | No | No direct mapping recorded |
+| `pp` | Array of physical page numbers spanned by the content item, based on the issue pagination as extracted from the OCR. | list of double; minimum items: 1 | No | No direct mapping recorded |
+| `ppreb` | List of rebuilt pages | list of ImpressoRebuiltPage | No | No direct mapping recorded |
+| `rb` | text offsets of page regions (relative to 'ft' field) | list of integer | No | No direct mapping recorded |
+| `rc` | Radio channel, if applicable (st=='radio_broadcast') and is known. | string | No | No direct mapping recorded |
+| `ro` | Reading order index of the content item, for the table of contents view on the interface. If not defined, the CI number (after 'i' in the ID) should be used. | integer | No | No direct mapping recorded |
+| `rp` | Radio program, if applicable (st=='radio_broadcast') and is known. | string | No | No direct mapping recorded |
+| `section_title` | A section title grouping this content item with others. | ImpressoContentSection | No | No direct mapping recorded |
+| `sm` | The medium in which the source media this content item belongs to was originally produced. For printed documents, this relates to the physical paper support. | string; one of: ['print', 'typescript'] | No | No direct mapping recorded |
+| `st` | The type of media source to which this content item belongs. Must be a value from the impresso-essentials.utils SourceType enum. | string; one of: ['newspaper', 'radio_broadcast', 'radio_magazine', 'radio_schedule', 'monograph', 'encyclopedia'] | No | No direct mapping recorded |
+| `t` | Content-item title (deprecated). | string | No | No direct mapping recorded |
+| `title` | Content-item title. | string | No | No direct mapping recorded |
+| `tp` | content item type (e.g. 'ar' for article, 'ad' for advertisement) | string | Yes | No direct mapping recorded |
+| `ts` | timestamp of creation of the JSON file (in '%Y-%m-%dT%H:%M:%SZ' format e.g. '2018-09-18T08:00:08Z') | string; pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_contentitem.yaml`.
+
+### ImpressoContentSection
+
+A section title grouping this content item with others.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `composing_ci_ids` | A section title grouping this content item with others.composing_ci_ids. | list of string | Yes | No direct mapping recorded |
+| `section_id` | A section title grouping this content item with others.section_id. | string | Yes | No direct mapping recorded |
+| `title_text` | A section title grouping this content item with others.title_text. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_contentitem.yaml`.
+
+### ImpressoRebuiltPage
+
+The rebuilt tokens and region boxes for one physical page of this content item.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `id` | Page canonical ID | string; pattern: ^[A-Za-z_]+-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$ | No | No direct mapping recorded |
+| `n` | page number | integer | No | No direct mapping recorded |
+| `r` | List of region coordinates. | integer | No | No direct mapping recorded |
+| `t` | List of tokens | list of ImpressoRebuiltToken | No | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_contentitem.yaml`.
+
+### ImpressoRebuiltToken
+
+The rebuilt tokens and region boxes for one physical page of this content item.t[].
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `c` | Coordinates of token relative to page. | list of integer; minimum items: 4; maximum items: 4 | No | No direct mapping recorded |
+| `l` | token length | integer | No | No direct mapping recorded |
+| `s` | offset start (relative to ft field) | integer | No | No direct mapping recorded |
+
+Source: `linkml/schema/impresso_contentitem.yaml`.
 
 ## Kept exchanges with models
 

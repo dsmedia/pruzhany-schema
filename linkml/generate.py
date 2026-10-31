@@ -64,7 +64,7 @@ def modules(linkml_dir):
             if entry['external_contract'] == 'model-answers':
                 if entry['top_class'] is not None:
                     raise ValueError('model-answers declares its roots through asking annotations')
-            elif entry['external_contract'] not in {'impresso-page', 'model-exchanges'} or not entry['top_class']:
+            elif entry['external_contract'] not in {'impresso-page', 'impresso-issue', 'impresso-contentitem', 'model-exchanges'} or not entry['top_class']:
                 raise ValueError('unsupported external contract or missing top class')
     return entries
 

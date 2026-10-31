@@ -1,0 +1,30 @@
+{
+  "repo": "impresso/impresso-schemas",
+  "commit": "329323c73712c33110e28531726847210617c418",
+  "branch": "master",
+  "read_on": "2026-10-31",
+  "license": "AGPL-3.0-or-later",
+  "attribution": "Copyright (C) 2026 The impresso team. Contributors include Simon Clematide, Maud Ehrmann and Matteo Romanello.",
+  "files": {
+    "issue.schema.json": {
+      "path": "json/canonical/issue.schema.json",
+      "url": "https://github.com/impresso/impresso-schemas/blob/329323c73712c33110e28531726847210617c418/json/canonical/issue.schema.json",
+      "sha256": "96d3b80366d3e37b52e9ec7b0d0758133d19b739db9de94fe03b6c23e0ada799"
+    },
+    "page.schema.json": {
+      "path": "json/canonical/page.schema.json",
+      "url": "https://github.com/impresso/impresso-schemas/blob/329323c73712c33110e28531726847210617c418/json/canonical/page.schema.json",
+      "sha256": "b6a6ca37167b30d318eb175a844dc50c80d245f9753ddc279a5e198b47f53b2c"
+    },
+    "paper_contentitem.schema.json": {
+      "path": "json/rebuilt/paper_contentitem.schema.json",
+      "url": "https://github.com/impresso/impresso-schemas/blob/329323c73712c33110e28531726847210617c418/json/rebuilt/paper_contentitem.schema.json",
+      "sha256": "3aa22833cb9ff069a86f94f5775d73dac727f45b854ca72a0260ab734a98bc9a"
+    },
+    "LICENSE": {
+      "path": "LICENSE",
+      "url": "https://github.com/impresso/impresso-schemas/blob/329323c73712c33110e28531726847210617c418/LICENSE",
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    }
+  }
+}

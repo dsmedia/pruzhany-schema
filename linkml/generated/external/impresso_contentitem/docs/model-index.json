@@ -1,0 +1,657 @@
+{
+  "contract_sha256": "92da300fd1843e4aeecd2e4a427a96af92870f52c378c3be73305835ad0fbe6c",
+  "inputs": {
+    "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
+    "linkml/schema/content_items.yaml": "24c90f09ff8def4281f4173e38b598da3ae618742d82ef88658d02d2d263f181",
+    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
+    "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
+    "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
+    "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
+    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
+    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
+    "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
+    "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
+    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
+    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
+    "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4"
+  },
+  "models": {
+    "ImpressoContentItem": {
+      "description": "This schema defines the JSON representation of a paper-based content item — either printed or typewritten. A content item corresponds to any logical segmentation unit of a digitised media production, at or below the page level for printed documents. In newspapers, for example, an article is a typical type of content item.",
+      "fields": [
+        {
+          "description": "True if image box coordinates are known to be correct (eg. have been checked, converted or rescaled), False otherwise",
+          "mappings": [],
+          "multivalued": false,
+          "name": "cc",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "True if image box coordinates are known to be correct (eg. have been checked, converted or rescaled), False otherwise",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "True if the issue this CI comes from was consolidated, meaning it contains additional language identification and ocrqa information.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "True if the issue this CI comes from was consolidated, meaning it contains additional language identification and ocrqa information.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Estimated OCR quality, between 0 and 1. May be null if there is no text or not enough text to compute an estimate.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_ocrqa",
+          "range": "double",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Estimated OCR quality, between 0 and 1. May be null if there is no text or not enough text to compute an estimate.",
+            "maximum": 1,
+            "minimum": 0,
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "True if the CI's text went through the re-OCRisation process.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_reocr_applied",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "True if the CI's text went through the re-OCRisation process.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Date of publication of issue or broadcast to which the content item belongs to in yyyy-mm-dd format.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "d",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Date of publication of issue or broadcast to which the content item belongs to in yyyy-mm-dd format.",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The rebuilt full text.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "ft",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The rebuilt full text.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The unique identifier for a content item (CI), (e.g. GDL-1900-01-02-a-i0001, or SOC_CJ-1940-07-22-a-i0001)",
+          "mappings": [],
+          "multivalued": false,
+          "name": "id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The unique identifier for a content item (CI), (e.g. GDL-1900-01-02-a-i0001, or SOC_CJ-1940-07-22-a-i0001)",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-i[0-9]{4}$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "False if the date assigned to the issue is known to be inexact or approximated, True or undefined otherwise.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "is_exact_date",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "False if the date assigned to the issue is known to be inexact or approximated, True or undefined otherwise.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "text offsets of physical line breaks (relative to 'ft' field)",
+          "mappings": [],
+          "multivalued": true,
+          "name": "lb",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "text offsets of physical line breaks (relative to 'ft' field)",
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Language of the content item's text, expressed as a two-letter ISO 639-1 language code.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "lg",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Language of the content item's text, expressed as a two-letter ISO 639-1 language code.",
+            "pattern": "^[a-z]{2,3}$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Language of the content item in the original OCR/OLR. Only defined if the content-item was consolidated.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "lg_original",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Language of the content item in the original OCR/OLR. Only defined if the content-item was consolidated.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Variant title of the media title this CI is from (mainly in the case of BL newspapers). The field is present only when a meaningful variant title is available.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "media_title_variant",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Variant title of the media title this CI is from (mainly in the case of BL newspapers). The field is present only when a meaningful variant title is available.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        {
+          "description": "True if optical layout recognition was applied to the issue/bulletin this content item originates from.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "olr",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "True if optical layout recognition was applied to the issue/bulletin this content item originates from.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "text offsets of physical paragraph breaks (relative to 'ft' field)",
+          "mappings": [],
+          "multivalued": true,
+          "name": "pb",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "text offsets of physical paragraph breaks (relative to 'ft' field)",
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Array of physical page numbers spanned by the content item, based on the issue pagination as extracted from the OCR.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "pp",
+          "range": "double",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Array of physical page numbers spanned by the content item, based on the issue pagination as extracted from the OCR.",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        {
+          "description": "List of rebuilt pages",
+          "mappings": [],
+          "multivalued": true,
+          "name": "ppreb",
+          "range": "ImpressoRebuiltPage",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "List of rebuilt pages",
+            "items": {
+              "$ref": "#/$defs/ImpressoRebuiltPage"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "text offsets of page regions (relative to 'ft' field)",
+          "mappings": [],
+          "multivalued": true,
+          "name": "rb",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "text offsets of page regions (relative to 'ft' field)",
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Radio channel, if applicable (st=='radio_broadcast') and is known.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "rc",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Radio channel, if applicable (st=='radio_broadcast') and is known.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Reading order index of the content item, for the table of contents view on the interface. If not defined, the CI number (after 'i' in the ID) should be used.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "ro",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Reading order index of the content item, for the table of contents view on the interface. If not defined, the CI number (after 'i' in the ID) should be used.",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Radio program, if applicable (st=='radio_broadcast') and is known.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "rp",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Radio program, if applicable (st=='radio_broadcast') and is known.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "A section title grouping this content item with others.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "section_title",
+          "range": "ImpressoContentSection",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "$ref": "#/$defs/ImpressoContentSection",
+            "description": "A section title grouping this content item with others."
+          }
+        },
+        {
+          "description": "The medium in which the source media this content item belongs to was originally produced. For printed documents, this relates to the physical paper support.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "sm",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The medium in which the source media this content item belongs to was originally produced. For printed documents, this relates to the physical paper support.",
+            "enum": [
+              "print",
+              "typescript"
+            ],
+            "type": "string"
+          }
+        },
+        {
+          "description": "The type of media source to which this content item belongs. Must be a value from the impresso-essentials.utils SourceType enum.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "st",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The type of media source to which this content item belongs. Must be a value from the impresso-essentials.utils SourceType enum.",
+            "enum": [
+              "newspaper",
+              "radio_broadcast",
+              "radio_magazine",
+              "radio_schedule",
+              "monograph",
+              "encyclopedia"
+            ],
+            "type": "string"
+          }
+        },
+        {
+          "description": "Content-item title (deprecated).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "t",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Content-item title (deprecated).",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Content-item title.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "title",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Content-item title.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "content item type (e.g. 'ar' for article, 'ad' for advertisement)",
+          "mappings": [],
+          "multivalued": false,
+          "name": "tp",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "content item type (e.g. 'ar' for article, 'ad' for advertisement)",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "timestamp of creation of the JSON file (in '%Y-%m-%dT%H:%M:%SZ' format e.g. '2018-09-18T08:00:08Z')",
+          "mappings": [],
+          "multivalued": false,
+          "name": "ts",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "timestamp of creation of the JSON file (in '%Y-%m-%dT%H:%M:%SZ' format e.g. '2018-09-18T08:00:08Z')",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_contentitem.yaml",
+      "yaml": "  ImpressoContentItem:\n    extra_slots:\n      allowed: true\n    description: \"This schema defines the JSON representation of a paper-based content item \\u2014\\\n      \\ either printed or typewritten. A content item corresponds to any logical segmentation unit\\\n      \\ of a digitised media production, at or below the page level for printed documents. In newspapers,\\\n      \\ for example, an article is a typical type of content item.\"\n    annotations:\n      impresso: content\n    attributes:\n      id:\n        required: true\n        description: The unique identifier for a content item (CI), (e.g. GDL-1900-01-02-a-i0001,\n          or SOC_CJ-1940-07-22-a-i0001)\n        annotations:\n          impresso: content.id\n        pattern: ^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-i[0-9]{4}$\n      ts:\n        required: true\n        description: timestamp of creation of the JSON file (in '%Y-%m-%dT%H:%M:%SZ' format e.g.\n          '2018-09-18T08:00:08Z')\n        annotations:\n          impresso: content.ts\n        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$\n      publication_date:\n        alias: d\n        description: Date of publication of issue or broadcast to which the content item belongs\n          to in yyyy-mm-dd format.\n        annotations:\n          impresso: content.d\n        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$\n      cc:\n        description: True if image box coordinates are known to be correct (eg. have been checked,\n          converted or rescaled), False otherwise\n        annotations:\n          impresso: content.cc\n        range: boolean\n      olr:\n        required: true\n        description: True if optical layout recognition was applied to the issue/bulletin this content\n          item originates from.\n        annotations:\n          impresso: content.olr\n        range: boolean\n      st:\n        description: The type of media source to which this content item belongs. Must be a value\n          from the impresso-essentials.utils SourceType enum.\n        annotations:\n          impresso: content.st\n        equals_string_in:\n        - newspaper\n        - radio_broadcast\n        - radio_magazine\n        - radio_schedule\n        - monograph\n        - encyclopedia\n      sm:\n        description: The medium in which the source media this content item belongs to was originally\n          produced. For printed documents, this relates to the physical paper support.\n        annotations:\n          impresso: content.sm\n        equals_string_in:\n        - print\n        - typescript\n      tp:\n        required: true\n        description: content item type (e.g. 'ar' for article, 'ad' for advertisement)\n        annotations:\n          impresso: content.tp\n          nullable: true\n      lg:\n        description: Language of the content item's text, expressed as a two-letter ISO 639-1 language\n          code.\n        annotations:\n          impresso: content.lg\n        pattern: ^[a-z]{2,3}$\n      rc:\n        description: Radio channel, if applicable (st=='radio_broadcast') and is known.\n        annotations:\n          impresso: content.rc\n          nullable: true\n      rp:\n        description: Radio program, if applicable (st=='radio_broadcast') and is known.\n        annotations:\n          impresso: content.rp\n          nullable: true\n      media_title_variant:\n        description: Variant title of the media title this CI is from (mainly in the case of BL newspapers).\n          The field is present only when a meaningful variant title is available.\n        annotations:\n          impresso: content.media_title_variant\n          json_min_length: 1\n      title_text:\n        alias: t\n        description: Content-item title (deprecated).\n        annotations:\n          impresso: content.t\n          nullable: true\n      title:\n        description: Content-item title.\n        annotations:\n          impresso: content.title\n          nullable: true\n      ro:\n        description: Reading order index of the content item, for the table of contents view on the\n          interface. If not defined, the CI number (after 'i' in the ID) should be used.\n        annotations:\n          impresso: content.ro\n        range: integer\n      consolidated:\n        description: True if the issue this CI comes from was consolidated, meaning it contains additional\n          language identification and ocrqa information.\n        annotations:\n          impresso: content.consolidated\n        range: boolean\n      consolidated_reocr_applied:\n        description: True if the CI's text went through the re-OCRisation process.\n        annotations:\n          impresso: content.consolidated_reocr_applied\n        range: boolean\n      consolidated_ocrqa:\n        description: Estimated OCR quality, between 0 and 1. May be null if there is no text or not\n          enough text to compute an estimate.\n        annotations:\n          impresso: content.consolidated_ocrqa\n          nullable: true\n        range: double\n        minimum_value: 0\n        maximum_value: 1\n      lg_original:\n        description: Language of the content item in the original OCR/OLR. Only defined if the content-item\n          was consolidated.\n        annotations:\n          impresso: content.lg_original\n          nullable: true\n      is_exact_date:\n        description: False if the date assigned to the issue is known to be inexact or approximated,\n          True or undefined otherwise.\n        annotations:\n          impresso: content.is_exact_date\n        range: boolean\n      section_title:\n        description: A section title grouping this content item with others.\n        annotations:\n          impresso: content.section_title\n        range: ImpressoContentSection\n        inlined: true\n      pp:\n        description: Array of physical page numbers spanned by the content item, based on the issue\n          pagination as extracted from the OCR.\n        annotations:\n          impresso: content.pp\n        multivalued: true\n        minimum_cardinality: 1\n        range: double\n      ft:\n        description: The rebuilt full text.\n        annotations:\n          impresso: content.ft\n      rb:\n        description: text offsets of page regions (relative to 'ft' field)\n        annotations:\n          impresso: content.rb\n        multivalued: true\n        range: integer\n      pb:\n        description: text offsets of physical paragraph breaks (relative to 'ft' field)\n        annotations:\n          impresso: content.pb\n        multivalued: true\n        range: integer\n      lb:\n        description: text offsets of physical line breaks (relative to 'ft' field)\n        annotations:\n          impresso: content.lb\n        multivalued: true\n        range: integer\n      ppreb:\n        description: List of rebuilt pages\n        annotations:\n          impresso: content.ppreb\n        multivalued: true\n        range: ImpressoRebuiltPage\n        inlined_as_list: true\n    rules:\n    - preconditions:\n        slot_conditions:\n          sm:\n            required: true\n      postconditions:\n        slot_conditions:\n          st:\n            required: true\n    - preconditions:\n        slot_conditions:\n          st:\n            required: true\n      postconditions:\n        slot_conditions:\n          sm:\n            required: true\n    - preconditions:\n        slot_conditions:\n          consolidated:\n            required: true\n      postconditions:\n        slot_conditions:\n          consolidated_ocrqa:\n            required: true\n          lg_original:\n            required: true\n    - preconditions:\n        slot_conditions:\n          st:\n            required: false\n            equals_string: radio_broadcast\n      postconditions:\n        slot_conditions:\n          ro:\n            required: false\n            equals_number: 1\n    tree_root: true\n"
+    },
+    "ImpressoContentSection": {
+      "description": "A section title grouping this content item with others.",
+      "fields": [
+        {
+          "description": "A section title grouping this content item with others.composing_ci_ids.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "composing_ci_ids",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A section title grouping this content item with others.composing_ci_ids.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "A section title grouping this content item with others.section_id.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "section_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A section title grouping this content item with others.section_id.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "A section title grouping this content item with others.title_text.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "title_text",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A section title grouping this content item with others.title_text.",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_contentitem.yaml",
+      "yaml": "  ImpressoContentSection:\n    extra_slots:\n      allowed: true\n    description: A section title grouping this content item with others.\n    annotations:\n      impresso: content.section_title\n    attributes:\n      title_text:\n        required: true\n        description: A section title grouping this content item with others.title_text.\n        annotations:\n          impresso: content.section_title.title_text\n      composing_ci_ids:\n        required: true\n        description: A section title grouping this content item with others.composing_ci_ids.\n        annotations:\n          impresso: content.section_title.composing_ci_ids\n        multivalued: true\n      section_id:\n        required: true\n        description: A section title grouping this content item with others.section_id.\n        annotations:\n          impresso: content.section_title.section_id\n"
+    },
+    "ImpressoRebuiltPage": {
+      "description": "The rebuilt tokens and region boxes for one physical page of this content item.",
+      "fields": [
+        {
+          "description": "Page canonical ID",
+          "mappings": [],
+          "multivalued": false,
+          "name": "id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Page canonical ID",
+            "pattern": "^[A-Za-z_]+-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-p[0-9]{4}$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "page number",
+          "mappings": [],
+          "multivalued": false,
+          "name": "n",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "page number",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "List of region coordinates.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "r",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "items": {
+              "items": {
+                "description": "List of region coordinates.",
+                "type": "integer"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            },
+            "minItems": 0,
+            "type": "array"
+          }
+        },
+        {
+          "description": "List of tokens",
+          "mappings": [],
+          "multivalued": true,
+          "name": "t",
+          "range": "ImpressoRebuiltToken",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "List of tokens",
+            "items": {
+              "$ref": "#/$defs/ImpressoRebuiltToken"
+            },
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_contentitem.yaml",
+      "yaml": "  ImpressoRebuiltPage:\n    extra_slots:\n      allowed: true\n    description: The rebuilt tokens and region boxes for one physical page of this content item.\n    annotations:\n      impresso: content.ppreb[]\n    attributes:\n      id:\n        description: Page canonical ID\n        annotations:\n          impresso: content.ppreb[].id\n        pattern: ^[A-Za-z_]+-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-p[0-9]{4}$\n      page_number:\n        alias: n\n        description: page number\n        annotations:\n          impresso: content.ppreb[].n\n        range: integer\n      tokens:\n        alias: t\n        description: List of tokens\n        annotations:\n          impresso: content.ppreb[].t\n        multivalued: true\n        range: ImpressoRebuiltToken\n        inlined_as_list: true\n      regions:\n        alias: r\n        description: List of region coordinates.\n        annotations:\n          impresso: content.ppreb[].r\n        range: integer\n        array:\n          dimensions:\n          - minimum_cardinality: 0\n          - minimum_cardinality: 4\n            maximum_cardinality: 4\n"
+    },
+    "ImpressoRebuiltToken": {
+      "description": "The rebuilt tokens and region boxes for one physical page of this content item.t[].",
+      "fields": [
+        {
+          "description": "Coordinates of token relative to page.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "c",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Coordinates of token relative to page.",
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 4,
+            "minItems": 4,
+            "type": "array"
+          }
+        },
+        {
+          "description": "token length",
+          "mappings": [],
+          "multivalued": false,
+          "name": "l",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "token length",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "offset start (relative to ft field)",
+          "mappings": [],
+          "multivalued": false,
+          "name": "s",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "offset start (relative to ft field)",
+            "type": "integer"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_contentitem.yaml",
+      "yaml": "  ImpressoRebuiltToken:\n    extra_slots:\n      allowed: true\n    description: The rebuilt tokens and region boxes for one physical page of this content item.t[].\n    annotations:\n      impresso: content.ppreb[].t[]\n    attributes:\n      coordinates:\n        alias: c\n        description: Coordinates of token relative to page.\n        annotations:\n          impresso: content.ppreb[].t[].c\n        multivalued: true\n        minimum_cardinality: 4\n        maximum_cardinality: 4\n        range: integer\n      start:\n        alias: s\n        description: offset start (relative to ft field)\n        annotations:\n          impresso: content.ppreb[].t[].s\n        range: integer\n      length:\n        alias: l\n        description: token length\n        annotations:\n          impresso: content.ppreb[].t[].l\n        range: integer\n"
+    }
+  },
+  "types": {},
+  "version": 1
+}

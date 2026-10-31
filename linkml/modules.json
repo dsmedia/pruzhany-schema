@@ -8,6 +8,18 @@
 			"external_contract": "impresso-page"
 		},
 		{
+			"schema": "schema/impresso_issue.yaml",
+			"name": "impresso_issue",
+			"top_class": "ImpressoIssue",
+			"external_contract": "impresso-issue"
+		},
+		{
+			"schema": "schema/impresso_contentitem.yaml",
+			"name": "impresso_contentitem",
+			"top_class": "ImpressoContentItem",
+			"external_contract": "impresso-contentitem"
+		},
+		{
 			"schema": "schema/exchanges.yaml",
 			"name": "exchanges",
 			"top_class": "PromptVersion",

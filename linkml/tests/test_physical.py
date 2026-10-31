@@ -22,7 +22,7 @@ from linkml_runtime.utils.schemaview import SchemaView
 from support import FIXTURES, LINKML, ROOT, load
 
 FOLDER = FIXTURES / 'physical'
-ORACLE_PATH = FOLDER / 'impresso-page.schema.json'
+ORACLE_PATH = ROOT / 'standards/impresso-329323c/page.schema.json'
 ORACLE = json.loads(ORACLE_PATH.read_text(encoding='utf-8'))
 GENERATED = json.loads((LINKML / 'generated/json-schema/physical.schema.json').read_text(encoding='utf-8'))
 PAGE = json.loads((FOLDER / 'page.json').read_text(encoding='utf-8'))
@@ -200,14 +200,18 @@ class PhysicalContract(unittest.TestCase):
                 with patch.dict(os.environ, PRUZHANY_STEPS=str(base / 'explicit')):
                     self.assertEqual(steps_checkout(), base / 'explicit')
 
+    def test_required_nullable_scalar_retains_requiredness(self):
+        shape = json.loads((LINKML / 'generated/json-schema/impresso_contentitem.schema.json').read_text())
+        self.assertIn('tp', shape['required'])
+        self.assertEqual(shape['properties']['tp']['type'], ['string', 'null'])
+
     def test_explicit_null_annotations_fail_closed_on_unsupported_settings(self):
         from linkml.generators.jsonschemagen import SlotResult
         from linkml_runtime.linkml_model import ClassDefinition, SlotDefinition
         slot = SlotDefinition('value', annotations={'nullable': 'maybe'})
         with self.assertRaises(ValueError):
             EXTERNAL.flag(slot, 'nullable')
-        for settings, shape in (({'nullable': True}, {'type': 'string'}),
-                                ({'nullable': True}, {'$ref': '#/$defs/Test'}),
+        for settings, shape in (({'nullable': True}, {'$ref': '#/$defs/Test'}),
                                 ({'nullable_items': True}, {'type': 'string'})):
             slot = SlotDefinition('value', required=True, annotations=settings)
             if '$ref' in shape:

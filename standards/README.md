@@ -56,3 +56,16 @@ and birth/death dates require inverse edges to EHRI's own person IRI stem;
 SHACL requires an IRI there. Fictional controls exercise those nested shapes and
 that difference. Passing the person focuses does not claim standalone name-shape
 conformance for our addresses, RiC-O conformance, or acceptance by EHRI.
+
+## Impresso edition contracts
+
+`impresso-329323c/` is the single home of the unchanged canonical issue, canonical
+page and rebuilt paper content-item JSON Schemas from `impresso/impresso-schemas`,
+master commit `329323c73712c33110e28531726847210617c418`, read **2026-10-31**.
+`pin.json` records each upstream path, URL and SHA-256, the read date, attribution
+and AGPL-3.0-or-later licence; the unchanged upstream `LICENSE` travels with them.
+These three schema files are byte-identical to the earlier steps copies at
+`d55526d`. Never edit a pin in place. `bin/verify standards` checks the bytes and
+provenance; `bin/verify linkml` compares the separately described external
+contracts against these oracles, including fictional controls and planted faults.
+The page oracle reads this pin, with no second fixture copy.
