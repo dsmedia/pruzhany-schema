@@ -1,0 +1,35 @@
+{
+  "repo": "EHRI/ehri-kg-mapping",
+  "commit": "1c2325f9d2267a8a0c639cd041be54ec9a73e517",
+  "read_on": "2026-10-31",
+  "version": "1.1",
+  "license": "EUPL-1.2",
+  "attribution": "EHRI/ehri-kg-mapping contributors",
+  "files": {
+    "holdings.shacl.ttl": {
+      "path": "src/shapes/1.1/holdings.shacl.ttl",
+      "url": "https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/src/shapes/1.1/holdings.shacl.ttl",
+      "sha256": "39798f412e5fb3e2d7d012b80817e1e278665ebcbb88927d3bc77b6dc631e278"
+    },
+    "holdings.shex": {
+      "path": "src/shapes/1.1/holdings.shex",
+      "url": "https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/src/shapes/1.1/holdings.shex",
+      "sha256": "ded21267f8268f41ff1e82a19fff32b6267aed1660fc7330d54a0a022812c405"
+    },
+    "repositories.shacl.ttl": {
+      "path": "src/shapes/1.1/repositories.shacl.ttl",
+      "url": "https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/src/shapes/1.1/repositories.shacl.ttl",
+      "sha256": "ff3eeba4dce6a6bd0a4b71cb39a1e43c5cc772754c97cae809e44a1147d76964"
+    },
+    "repositories.shex": {
+      "path": "src/shapes/1.1/repositories.shex",
+      "url": "https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/src/shapes/1.1/repositories.shex",
+      "sha256": "895b14b9c2ba83292e861201a89d083d51faac291f022454fa45fe5dbb9a8c0c"
+    },
+    "LICENSE.md": {
+      "path": "LICENSE.md",
+      "url": "https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/LICENSE.md",
+      "sha256": "44905a5dff88eb1872d9e1a1880e5c8cd302ed3d20008de53cf07c83ca6a131d"
+    }
+  }
+}

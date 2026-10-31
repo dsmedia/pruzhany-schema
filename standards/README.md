@@ -100,3 +100,32 @@ runs the fetch and validates a fictional Manifest with the fetched file, then
 rejects a planted fault. Steps uses the same tool on an absent cache and validates
 with jsonschema-rs offline after checking the cached bytes. Empty caches need
 network, including on CI. No site or LinkML contract changes.
+
+## Holdings, repositories and EAD3 (31 October 2026)
+
+`ehri-holdings-1.1-1c2325f9/` pins the unchanged `holdings.shacl.ttl`,
+`holdings.shex`, `repositories.shacl.ttl` and `repositories.shex` from the same
+EHRI mapping commit as the person and corporate-body pins, with the upstream
+EUPL-1.2 licence. Each URL and SHA-256 is recorded in `pin.json`.
+
+These particular SHACL bytes are **unparseable Turtle**, at holdings line 226
+and repositories line 280. The holdings SHACL additionally states incompatible
+datatypes on `rico:conditionsOfUse` and requires unsupplied history/type data.
+The ShEx holding/linked-language rules require EHRI address stems. We neither
+repair these pins nor invent EHRI identifiers. `bin/verify standards` checks
+bytes/provenance; `bin/verify linkml` exercises fictional positive/negative ShEx
+controls and asserts the parse failures. Those diagnostic tests do not claim
+SHACL conformance. A later corrected upstream pin needs the owner's word.
+
+`ead3-1.1.1-c3576974/` pins LOC's self-contained EAD3 XSD, downloaded from
+https://www.loc.gov/ead/ead3.xsd on **2026-10-31**, with URL and SHA-256,
+and SAA-SDT/EAD3's unchanged **CC0-1.0** licence. The official schema page
+https://www.loc.gov/ead/ead3schema.html and delivered XSD say 1.1.1, while
+https://www.loc.gov/ead/EAD3taglib/ describes 1.1.2; this pin names the delivered
+bytes, not the newest revision. No import is fetched or rewritten. The private
+steps exporter validates fictional and real finding aids with this XSD offline;
+XSD validation does not assert the ancillary Schematron rules or EHRI acceptance.
+
+Both licences permit redistribution of these upstream files with their notices
+and licence texts retained. These pins change no generated model or website
+contract. Never edit their upstream files in place.
