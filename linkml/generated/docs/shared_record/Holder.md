@@ -205,11 +205,12 @@ attributes:
     description: 'The holder''s outside identifiers, each with its evidence: EHRI''s
       institution id first.'
     from_schema: https://pruzhany.org/ns/shared_record
-    rank: 1000
     slot_uri: rico:hasOrHadIdentifier
     domain_of:
+    - SharedPerson
     - Holder
     - SharedPlace
+    - SharedOrganization
     range: PlaceIdentifier
     multivalued: true
     inlined_as_list: true
@@ -312,12 +313,13 @@ attributes:
     description: 'The holder''s outside identifiers, each with its evidence: EHRI''s
       institution id first.'
     from_schema: https://pruzhany.org/ns/shared_record
-    rank: 1000
     slot_uri: rico:hasOrHadIdentifier
     owner: Holder
     domain_of:
+    - SharedPerson
     - Holder
     - SharedPlace
+    - SharedOrganization
     range: PlaceIdentifier
     multivalued: true
     inlined: true

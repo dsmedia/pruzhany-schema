@@ -131,6 +131,8 @@ export const HolocaustFateTypesEnum = z.enum([
 	'not_applicable',
 ]);
 
+export const IdentifierTypesEnum = z.enum(['old_identifier']);
+
 export const ImpressoTypesEnum = z.enum([
 	'article',
 	'ad',

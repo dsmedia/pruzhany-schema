@@ -21,7 +21,7 @@ URI: [pc:url](https://pruzhany.org/ns/sourced-entities#url)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SiteCitation](SiteCitation.md) | A citation as the shared record keeps it: an older one as it was written, or one the site writer locates on the printed page, with the addresses of the words it quotes. |  no  |
-| [PlaceIdentifier](PlaceIdentifier.md) | One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names. |  no  |
+| [PlaceIdentifier](PlaceIdentifier.md) | One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge. |  no  |
 | [Citation](Citation.md) | Where in one source a statement's evidence lies: the source, and the record, page, scan, time, piece of the paper, address or pointer within it, with the quoted words. |  no  |
 | [MediaDerivative](MediaDerivative.md) | One served copy of a picture: a WebP file at one of the exported widths, named by the master's digest, made by resizing alone. |  no  |
 

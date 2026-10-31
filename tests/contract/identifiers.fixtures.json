@@ -1,0 +1,903 @@
+{
+	"description": "Fictional evidence and merge records only; no name matching or real identities.",
+	"example": {
+		"version": "1",
+		"vocabulary_version": "1.3.0",
+		"persons": [
+			{
+				"id": "person-one",
+				"name": "Fictional Person",
+				"names": [],
+				"gender": "unknown",
+				"identifiers": [
+					{
+						"source_id": "authority",
+						"value": "person-17",
+						"url": "https://authority.example.org/person/17",
+						"accessed": "2026-10-31",
+						"attribution": {
+							"by": "fictional editor",
+							"on": "2026-10-31"
+						}
+					},
+					{
+						"source_id": "merges",
+						"value": "person-retired",
+						"accessed": "2026-10-31",
+						"attribution": {
+							"by": "fictional editor",
+							"on": "2026-10-31"
+						},
+						"type": "old_identifier"
+					}
+				]
+			}
+		],
+		"organizations": [
+			{
+				"id": "organization-one",
+				"name": "Fictional Society",
+				"names": [],
+				"identifiers": [
+					{
+						"source_id": "authority",
+						"value": "society-18",
+						"url": "https://authority.example.org/society/18",
+						"accessed": "2026-10-31",
+						"attribution": {
+							"by": "fictional editor",
+							"on": "2026-10-31"
+						}
+					},
+					{
+						"source_id": "merges",
+						"value": "organization-retired",
+						"accessed": "2026-10-31",
+						"attribution": {
+							"by": "fictional editor",
+							"on": "2026-10-31"
+						},
+						"type": "old_identifier"
+					}
+				]
+			}
+		],
+		"families": [],
+		"places": [],
+		"events": [],
+		"facts": [],
+		"relations": [],
+		"sources": [
+			{
+				"id": "authority",
+				"title": "Fictional authority",
+				"kind": "archive_database",
+				"host": "authority.example.org"
+			},
+			{
+				"id": "merges",
+				"title": "Fictional adjudicated merge ledger",
+				"kind": "archive_database"
+			}
+		]
+	},
+	"models": {
+		"SharedRecord": [],
+		"SharedPerson": ["persons", 0],
+		"SharedOrganization": ["organizations", 0],
+		"PlaceIdentifier": ["persons", 0, "identifiers", 0]
+	},
+	"cases": [
+		{
+			"name": "persons and organisations retain evidenced external and old identifiers",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "SharedPerson remains valid without identifiers",
+			"model": "SharedPerson",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SharedPerson accepts null identifiers",
+			"model": "SharedPerson",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "SharedPerson refuses empty identifiers",
+			"model": "SharedPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "SharedOrganization remains valid without identifiers",
+			"model": "SharedOrganization",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SharedOrganization accepts null identifiers",
+			"model": "SharedOrganization",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "SharedOrganization refuses empty identifiers",
+			"model": "SharedOrganization",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "identifier requires source_id",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier requires value",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["value"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier requires accessed",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["accessed"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier requires attribution",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["attribution"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "identifier requires an attributed reader",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["attribution", "by"],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "identifier reading day must exist",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["accessed"],
+					"value": "2026-02-30"
+				}
+			]
+		},
+		{
+			"name": "identifier attribution day must exist",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["attribution", "on"],
+					"value": "2026-02-30"
+				}
+			]
+		},
+		{
+			"name": "identifier address must use HTTPS",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "http://authority.example.org/17"
+				}
+			]
+		},
+		{
+			"name": "old identifier marker round trips",
+			"model": "PlaceIdentifier",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "old_identifier"
+				}
+			]
+		},
+		{
+			"name": "identifier type accepts null",
+			"model": "PlaceIdentifier",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "identifier type refuses unapproved values",
+			"model": "PlaceIdentifier",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "same_as"
+				}
+			]
+		},
+		{
+			"name": "persons nested evidence requires source_id",
+			"model": "SharedPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers", 0, "source_id"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "persons nested evidence requires value",
+			"model": "SharedPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers", 0, "value"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "persons nested evidence requires accessed",
+			"model": "SharedPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers", 0, "accessed"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "persons nested evidence requires attribution",
+			"model": "SharedPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers", 0, "attribution"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "persons unknown authority",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "identifiers", 0, "source_id"],
+					"value": "missing"
+				}
+			],
+			"error": "unknown identifier source"
+		},
+		{
+			"name": "persons off-host address",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "identifiers", 0, "url"],
+					"value": "https://unrelated.example.org/17"
+				}
+			],
+			"error": "identifier off its source host"
+		},
+		{
+			"name": "persons host suffix attack",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "identifiers", 0, "url"],
+					"value": "https://authority.example.org.evil.example/17"
+				}
+			],
+			"error": "identifier off its source host"
+		},
+		{
+			"name": "persons old id still active",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "identifiers", 1, "value"],
+					"value": "person-one"
+				}
+			],
+			"error": "old identifier is still an active id"
+		},
+		{
+			"name": "persons allows authority subdomains",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["persons", 0, "identifiers", 0, "url"],
+					"value": "https://records.authority.example.org/17"
+				}
+			]
+		},
+		{
+			"name": "persons duplicate identifier refused",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons", 0, "identifiers"],
+					"value": [
+						{
+							"source_id": "authority",
+							"value": "person-17",
+							"url": "https://authority.example.org/person/17",
+							"accessed": "2026-10-31",
+							"attribution": {
+								"by": "fictional editor",
+								"on": "2026-10-31"
+							}
+						},
+						{
+							"source_id": "authority",
+							"value": "person-17",
+							"url": "https://authority.example.org/person/17",
+							"accessed": "2026-10-31",
+							"attribution": {
+								"by": "fictional editor",
+								"on": "2026-10-31"
+							},
+							"type": "old_identifier"
+						}
+					]
+				}
+			],
+			"error": "identifier"
+		},
+		{
+			"name": "persons identifier cannot name two records",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons"],
+					"value": [
+						{
+							"id": "person-one",
+							"name": "Fictional Person",
+							"names": [],
+							"gender": "unknown",
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "person-17",
+									"url": "https://authority.example.org/person/17",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								},
+								{
+									"source_id": "merges",
+									"value": "person-retired",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									},
+									"type": "old_identifier"
+								}
+							]
+						},
+						{
+							"id": "person-one-two",
+							"name": "Fictional Person",
+							"names": [],
+							"gender": "unknown",
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "person-17",
+									"url": "https://authority.example.org/person/17",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								},
+								{
+									"source_id": "merges",
+									"value": "person-retired",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									},
+									"type": "old_identifier"
+								}
+							]
+						}
+					]
+				}
+			],
+			"error": "one identifier on two persons"
+		},
+		{
+			"name": "persons equal values in distinct authorities remain distinct",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["persons"],
+					"value": [
+						{
+							"id": "person-one",
+							"name": "Fictional Person",
+							"names": [],
+							"gender": "unknown",
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "person-17",
+									"url": "https://authority.example.org/person/17",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								},
+								{
+									"source_id": "merges",
+									"value": "person-retired",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									},
+									"type": "old_identifier"
+								}
+							]
+						},
+						{
+							"id": "person-one-two",
+							"name": "Fictional Person",
+							"names": [],
+							"gender": "unknown",
+							"identifiers": [
+								{
+									"source_id": "merges",
+									"value": "person-17",
+									"url": "https://authority.example.org/person/17",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "persons merged id cannot be reused on a second record",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["persons"],
+					"value": [
+						{
+							"id": "person-one",
+							"name": "Fictional Person",
+							"names": [],
+							"gender": "unknown",
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "person-17",
+									"url": "https://authority.example.org/person/17",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								},
+								{
+									"source_id": "merges",
+									"value": "person-retired",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									},
+									"type": "old_identifier"
+								}
+							]
+						},
+						{
+							"id": "person-retired",
+							"name": "Fictional Person",
+							"names": [],
+							"gender": "unknown",
+							"identifiers": null
+						}
+					]
+				}
+			],
+			"error": "old identifier is still an active id"
+		},
+		{
+			"name": "organizations nested evidence requires source_id",
+			"model": "SharedOrganization",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers", 0, "source_id"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "organizations nested evidence requires value",
+			"model": "SharedOrganization",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers", 0, "value"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "organizations nested evidence requires accessed",
+			"model": "SharedOrganization",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers", 0, "accessed"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "organizations nested evidence requires attribution",
+			"model": "SharedOrganization",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["identifiers", 0, "attribution"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "organizations unknown authority",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["organizations", 0, "identifiers", 0, "source_id"],
+					"value": "missing"
+				}
+			],
+			"error": "unknown identifier source"
+		},
+		{
+			"name": "organizations off-host address",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["organizations", 0, "identifiers", 0, "url"],
+					"value": "https://unrelated.example.org/17"
+				}
+			],
+			"error": "identifier off its source host"
+		},
+		{
+			"name": "organizations host suffix attack",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["organizations", 0, "identifiers", 0, "url"],
+					"value": "https://authority.example.org.evil.example/17"
+				}
+			],
+			"error": "identifier off its source host"
+		},
+		{
+			"name": "organizations old id still active",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["organizations", 0, "identifiers", 1, "value"],
+					"value": "organization-one"
+				}
+			],
+			"error": "old identifier is still an active id"
+		},
+		{
+			"name": "organizations allows authority subdomains",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["organizations", 0, "identifiers", 0, "url"],
+					"value": "https://records.authority.example.org/17"
+				}
+			]
+		},
+		{
+			"name": "organizations duplicate identifier refused",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["organizations", 0, "identifiers"],
+					"value": [
+						{
+							"source_id": "authority",
+							"value": "person-17",
+							"url": "https://authority.example.org/person/17",
+							"accessed": "2026-10-31",
+							"attribution": {
+								"by": "fictional editor",
+								"on": "2026-10-31"
+							}
+						},
+						{
+							"source_id": "authority",
+							"value": "person-17",
+							"url": "https://authority.example.org/person/17",
+							"accessed": "2026-10-31",
+							"attribution": {
+								"by": "fictional editor",
+								"on": "2026-10-31"
+							},
+							"type": "old_identifier"
+						}
+					]
+				}
+			],
+			"error": "identifier"
+		},
+		{
+			"name": "organizations identifier cannot name two records",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["organizations"],
+					"value": [
+						{
+							"id": "organization-one",
+							"name": "Fictional Society",
+							"names": [],
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "society-18",
+									"url": "https://authority.example.org/society/18",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								},
+								{
+									"source_id": "merges",
+									"value": "organization-retired",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									},
+									"type": "old_identifier"
+								}
+							]
+						},
+						{
+							"id": "organization-one-two",
+							"name": "Fictional Society",
+							"names": [],
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "society-18",
+									"url": "https://authority.example.org/society/18",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								},
+								{
+									"source_id": "merges",
+									"value": "organization-retired",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									},
+									"type": "old_identifier"
+								}
+							]
+						}
+					]
+				}
+			],
+			"error": "one identifier on two organizations"
+		},
+		{
+			"name": "organizations equal values in distinct authorities remain distinct",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["organizations"],
+					"value": [
+						{
+							"id": "organization-one",
+							"name": "Fictional Society",
+							"names": [],
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "society-18",
+									"url": "https://authority.example.org/society/18",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								},
+								{
+									"source_id": "merges",
+									"value": "organization-retired",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									},
+									"type": "old_identifier"
+								}
+							]
+						},
+						{
+							"id": "organization-one-two",
+							"name": "Fictional Society",
+							"names": [],
+							"identifiers": [
+								{
+									"source_id": "merges",
+									"value": "society-18",
+									"url": "https://authority.example.org/society/18",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "organizations merged id cannot be reused on a second record",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["organizations"],
+					"value": [
+						{
+							"id": "organization-one",
+							"name": "Fictional Society",
+							"names": [],
+							"identifiers": [
+								{
+									"source_id": "authority",
+									"value": "society-18",
+									"url": "https://authority.example.org/society/18",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									}
+								},
+								{
+									"source_id": "merges",
+									"value": "organization-retired",
+									"accessed": "2026-10-31",
+									"attribution": {
+										"by": "fictional editor",
+										"on": "2026-10-31"
+									},
+									"type": "old_identifier"
+								}
+							]
+						},
+						{
+							"id": "organization-retired",
+							"name": "Fictional Society",
+							"names": [],
+							"identifiers": null
+						}
+					]
+				}
+			],
+			"error": "old identifier is still an active id"
+		}
+	]
+}

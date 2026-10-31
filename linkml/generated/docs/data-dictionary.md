@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `7e62c88d74f61a8180b0283436b230b48dcf2f35b8ecdad910170ae5ec996253`.
+Definition fingerprint: `f7ee4aff1c449defbdebf13a6d09e6087ced7f287a6cdab40a8d0ef8a4772ab6`.
 
 ## What the Pruzhany issue documents share
 
@@ -945,7 +945,7 @@ Source: `linkml/schema/shared_record.yaml`.
 
 ### PlaceIdentifier
 
-One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names.
+One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge.
 
 Meaning: rico:Identifier (class uri).
 
@@ -954,6 +954,7 @@ Meaning: rico:Identifier (class uri).
 | `accessed` | The day it was read on its authority's own pages. | IsoDay | Yes | pc:site_identifier_reading (related mappings) |
 | `attribution` | Who added it, and on what day. | Attribution | Yes | pc:site_identifier_reading (related mappings) |
 | `source_id` | The authority the identifier comes from, a registered source, by its id. | NonBlankText | Yes | rico:hasIdentifierType (slot uri) |
+| `type` | old_identifier marks a merged id retained permanently on the surviving record. Absent for an ordinary authority identifier; source_id still names its authority. | IdentifierTypes | No | rico:hasIdentifierType (slot uri) |
 | `url` | The identifier's page on the authority's host. | HttpsUri | No | No direct mapping recorded |
 | `value` | The identifier as its authority writes it. | NonBlankText | Yes | rico:textualValue (slot uri) |
 
@@ -1045,13 +1046,14 @@ Source: `linkml/schema/shared_record.yaml`.
 
 ### SharedOrganization
 
-One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts.
+One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts.
 
 Meaning: ehri:CorporateBody (class uri).
 
 | Field | What it holds | Value | Required | Standard mapping |
 | --- | --- | --- | --- | --- |
 | `id` | The organisation's id. | NonBlankText | Yes | No direct mapping recorded |
+| `identifiers` | Evidenced identifiers of this organisation, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record. | list of PlaceIdentifier; minimum items: 1 | No | rico:hasOrHadIdentifier (slot uri) |
 | `name` | The name the site shows. | NonBlankText | Yes | No direct mapping recorded |
 | `names` | The organisation's names. | list of Name | Yes | No direct mapping recorded |
 
@@ -1059,7 +1061,7 @@ Source: `linkml/schema/shared_record.yaml`.
 
 ### SharedPerson
 
-One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait.
+One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers.
 
 Meaning: ehri:Person (class uri).
 
@@ -1068,6 +1070,7 @@ Meaning: ehri:Person (class uri).
 | `fate` | What became of the person in the Holocaust, as far as the record shows. | Fate | No | No direct mapping recorded |
 | `gender` | The person's gender, or unknown. | Gender | Yes | No direct mapping recorded |
 | `id` | The person's id, kept for ever: never renamed, reused or deleted. | NonBlankText | Yes | No direct mapping recorded |
+| `identifiers` | Evidenced identifiers of this person, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record. | list of PlaceIdentifier; minimum items: 1 | No | rico:hasOrHadIdentifier (slot uri) |
 | `name` | The name the site shows. | NonBlankText | Yes | No direct mapping recorded |
 | `names` | Every name the person is known by, printed or supplied, with where it is found. | list of SharedName | Yes | rico:hasOrHadAgentName (slot uri) |
 | `portrait` | The reviewed picture and region the person's page shows. | MediaPortrait | No | pc:media_portrait (slot uri) |
@@ -1781,6 +1784,14 @@ Holocaust fate types: the values of holocaust_fate_types in vocabulary/sourced-e
 | `likely_survived` | Living outside Nazi-occupied areas at time of publication | pc:holocaust_fate_types_likely_survived (meaning) |
 | `died_before` | Died before the Holocaust began | pc:holocaust_fate_types_died_before (meaning) |
 | `not_applicable` | Non-Jewish individual | pc:holocaust_fate_types_not_applicable (meaning) |
+
+### IdentifierTypes
+
+Identifier types approved in ADR 0001 and linked-data ticket 03.
+
+| Value | Meaning | Standard mapping |
+| --- | --- | --- |
+| `old_identifier` | A merged identifier retained permanently on the surviving record, with the registered merge source, reading day and attribution. It redirects to the surviving id and is never reused. | pc:old_identifier (meaning) |
 
 ### ImpressoTypes
 

@@ -8,6 +8,7 @@ import {
 	FactTypesEnum,
 	GenderEnum,
 	HolderKindEnum,
+	IdentifierTypesEnum,
 	LocationTypesEnum,
 	NameKindsEnum,
 	PrintedCalendarEnum,
@@ -57,6 +58,7 @@ export const PlaceIdentifierShape = z.strictObject({
 	url: z.url().regex(pattern4).meta({ format: 'uri' }).nullish(),
 	accessed: z.string().regex(pattern3),
 	attribution: AttributionShape,
+	type: IdentifierTypesEnum.nullish(),
 });
 
 export const SharedEventShape = z.strictObject({
@@ -81,6 +83,7 @@ export const SharedOrganizationShape = z.strictObject({
 	id: z.string().regex(pattern1),
 	name: z.string().regex(pattern1),
 	names: z.array(NameShape),
+	identifiers: z.array(PlaceIdentifierShape).min(1).nullish(),
 });
 
 export const SharedPlaceShape = z.strictObject({
@@ -189,6 +192,7 @@ export const SharedPersonShape = z.strictObject({
 	names: z.array(SharedNameShape),
 	gender: GenderEnum,
 	fate: FateShape.nullish(),
+	identifiers: z.array(PlaceIdentifierShape).min(1).nullish(),
 });
 
 export const SharedRecordShape = z.strictObject({

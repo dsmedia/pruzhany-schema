@@ -225,6 +225,7 @@ attributes:
     slot_uri: rico:hasEventType
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact
@@ -382,6 +383,7 @@ attributes:
     owner: SharedEvent
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact

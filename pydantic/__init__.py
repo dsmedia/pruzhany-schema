@@ -70,3 +70,5 @@ __all__ += ['statement_citation_shortfalls', 'shared_record_citation_shortfalls'
 
 from .media import MediaRegion, MediaDepicted, MediaPortrait, MediaWithdrawal, MediaConsentScope, MediaConsent, MediaFamilyWords, MediaFixity
 __all__ += ['MediaRegion', 'MediaDepicted', 'MediaPortrait', 'MediaWithdrawal', 'MediaConsentScope', 'MediaConsent', 'MediaFamilyWords', 'MediaFixity']
+from .identifiers_vocabulary import IdentifierTypes
+__all__ += ['IdentifierTypes']

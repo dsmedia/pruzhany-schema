@@ -197,7 +197,8 @@ class Meaning(unittest.TestCase):
                 counts[(key, value.split(':')[0])] += 1
         self.assertEqual(dict(counts), {
             ('class_uri', 'rico'): 9, ('class_uri', 'ehri'): 4, ('class_uri', 'pc'): 1,
-            ('slot_uri', 'rico'): 34, ('slot_uri', 'pc'): 29,
+            # Ticket 03: person/organisation identifiers and the retained-id type.
+            ('slot_uri', 'rico'): 37, ('slot_uri', 'pc'): 29,
             ('meaning', 'rico'): 2, ('meaning', 'ehri'): 3, ('meaning', 'pc'): 4,
             ('related_mappings', 'pc'): 6, ('related_mappings', 'rico'): 1, ('via', 'rico'): 1})
 

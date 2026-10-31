@@ -1,5 +1,5 @@
 {
-  "contract_sha256": "7c287c4494e40a905f90f50de7e8aeceabe3cba59a89de21c960bc354c423db1",
+  "contract_sha256": "7eb49d1d3de1dc0e40b074d2fedb46cd4596f6ad88dada962a4887801731e305",
   "inputs": {
     "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
     "linkml/schema/content_items.yaml": "24c90f09ff8def4281f4173e38b598da3ae618742d82ef88658d02d2d263f181",
@@ -11,11 +11,11 @@
     "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
-    "linkml/schema/shared_record.yaml": "cdc402c9a3dd90bfed5cda74c2a8cc4017b91ee4eb6913b58606b2215b62e029",
+    "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
     "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
     "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
-    "linkml/schema/vocabulary.yaml": "f9b1717b1f6b3fd04e55fbc46274fe9e2e8fd869ddc10517b0672422dd461e82"
+    "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4"
   },
   "models": {
     "Attribution": {
@@ -4454,7 +4454,7 @@
       "yaml": "  PagesData:\n    tree_root: true\n    description: >-\n      One issue's pages document: the issue's date and its pages in order.\n    annotations:\n      impresso: >-\n        The page files of one issue (page.schema.json), and the issue file's list of its pages\n        (issue.schema.json pp).\n    attributes:\n      edition_date:\n        required: true\n        description: >-\n          The issue's date, written YYYY-MM-DD.\n      pages:\n        range: Page\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The issue's pages.\n"
     },
     "PlaceIdentifier": {
-      "description": "One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names.",
+      "description": "One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge.",
       "fields": [
         {
           "description": "The day it was read on its authority's own pages.",
@@ -4516,6 +4516,32 @@
           }
         },
         {
+          "description": "old_identifier marks a merged id retained permanently on the surviving record. Absent for an ordinary authority identifier; source_id still names its authority.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasIdentifierType"
+            }
+          ],
+          "multivalued": false,
+          "name": "type",
+          "range": "IdentifierTypes",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/IdentifierTypes"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "old_identifier marks a merged id retained permanently on the surviving record. Absent for an ordinary authority identifier; source_id still names its authority."
+          }
+        },
+        {
           "description": "The identifier's page on the authority's host.",
           "mappings": [],
           "multivalued": false,
@@ -4563,7 +4589,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/shared_record.yaml",
-      "yaml": "  PlaceIdentifier:\n    # vocabulary/site-content.json, binding identifier.\n    class_uri: rico:Identifier\n    description: >-\n      One outside identifier of a place or a holder, read on its authority's own pages and\n      carried only on that evidence, never from a match of names.\n    attributes:\n      source_id:\n        # vocabulary/site-content.json, binding identifier_authority.\n        slot_uri: rico:hasIdentifierType\n        range: NonBlankText\n        required: true\n        description: >-\n          The authority the identifier comes from, a registered source, by its id.\n      value:\n        # vocabulary/site-content.json, binding identifier_value.\n        slot_uri: rico:textualValue\n        range: NonBlankText\n        required: true\n        description: >-\n          The identifier as its authority writes it.\n      url:\n        range: HttpsUri\n        description: >-\n          The identifier's page on the authority's host.\n      accessed:\n        # vocabulary/site-content.json, binding identifier_reading (who added it and the day\n        # it was read).\n        related_mappings:\n          - pc:site_identifier_reading\n        range: IsoDay\n        required: true\n        description: >-\n          The day it was read on its authority's own pages.\n      attribution:\n        # vocabulary/site-content.json, binding identifier_reading.\n        related_mappings:\n          - pc:site_identifier_reading\n        range: Attribution\n        inlined: true\n        required: true\n        description: >-\n          Who added it, and on what day.\n"
+      "yaml": "  PlaceIdentifier:\n    # vocabulary/site-content.json, binding identifier.\n    class_uri: rico:Identifier\n    description: >-\n      One identifier of a person, organisation, place or holder, carried only on evidence,\n      never from a match of names. Outside ids are read on their authority's own pages;\n      merged local ids cite the registered source of the adjudicated merge.\n    attributes:\n      source_id:\n        # vocabulary/site-content.json, binding identifier_authority.\n        slot_uri: rico:hasIdentifierType\n        range: NonBlankText\n        required: true\n        description: >-\n          The authority the identifier comes from, a registered source, by its id.\n      value:\n        # vocabulary/site-content.json, binding identifier_value.\n        slot_uri: rico:textualValue\n        range: NonBlankText\n        required: true\n        description: >-\n          The identifier as its authority writes it.\n      url:\n        range: HttpsUri\n        description: >-\n          The identifier's page on the authority's host.\n      accessed:\n        # vocabulary/site-content.json, binding identifier_reading (who added it and the day\n        # it was read).\n        related_mappings:\n          - pc:site_identifier_reading\n        range: IsoDay\n        required: true\n        description: >-\n          The day it was read on its authority's own pages.\n      attribution:\n        # vocabulary/site-content.json, binding identifier_reading.\n        related_mappings:\n          - pc:site_identifier_reading\n        range: Attribution\n        inlined: true\n        required: true\n        description: >-\n          Who added it, and on what day.\n      type:\n        # vocabulary/identifiers.json; ADR 0001: a merged id is an old identifier.\n        slot_uri: rico:hasIdentifierType\n        range: IdentifierTypes\n        description: >-\n          old_identifier marks a merged id retained permanently on the surviving record.\n          Absent for an ordinary authority identifier; source_id still names its authority.\n"
     },
     "PrintedAddress": {
       "description": "Where some printed words stand: the page picture, a box on it in the picture's own pixels, and the words read in that box.",
@@ -6201,7 +6227,7 @@
       "yaml": "  SharedName:\n    # vocabulary/site-content.json, bindings agent_name (\"A printed or supplied name of a\n    # person\") and person_name.\n    class_uri: rico:AgentName\n    is_a: Name\n    description: >-\n      One name of a person in the shared record, with its evidence located on the printed page\n      where the site writer found it.\n    attributes:\n      citations:\n        range: SiteCitation\n        multivalued: true\n        inlined_as_list: true\n        description: >-\n          Where the name is found.\n"
     },
     "SharedOrganization": {
-      "description": "One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts.",
+      "description": "One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts.",
       "fields": [
         {
           "description": "The organisation's id.",
@@ -6216,6 +6242,32 @@
             "description": "The organisation's id.",
             "pattern": "\\S",
             "type": "string"
+          }
+        },
+        {
+          "description": "Evidenced identifiers of this organisation, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasOrHadIdentifier"
+            }
+          ],
+          "multivalued": true,
+          "name": "identifiers",
+          "range": "PlaceIdentifier",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "Evidenced identifiers of this organisation, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record.",
+            "items": {
+              "$ref": "#/$defs/PlaceIdentifier"
+            },
+            "minItems": 1,
+            "type": [
+              "array",
+              "null"
+            ]
           }
         },
         {
@@ -6259,10 +6311,10 @@
       ],
       "parent": null,
       "source": "linkml/schema/shared_record.yaml",
-      "yaml": "  SharedOrganization:\n    # vocabulary/site-content.json, binding organization.\n    class_uri: ehri:CorporateBody\n    description: >-\n      One organisation of the record: its id, the name shown and its names; its offices and\n      members are sourced facts.\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The organisation's id.\n      name:\n        range: NonBlankText\n        required: true\n        description: >-\n          The name the site shows.\n      names:\n        range: Name\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The organisation's names.\n"
+      "yaml": "  SharedOrganization:\n    # vocabulary/site-content.json, binding organization.\n    class_uri: ehri:CorporateBody\n    description: >-\n      One organisation of the record: its id, the name shown, its names and evidenced\n      identifiers; its offices and members are sourced facts.\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The organisation's id.\n      name:\n        range: NonBlankText\n        required: true\n        description: >-\n          The name the site shows.\n      names:\n        range: Name\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The organisation's names.\n      identifiers:\n        # ADR 0001; same evidence shape and RiC-O property as persons and places.\n        slot_uri: rico:hasOrHadIdentifier\n        range: PlaceIdentifier\n        multivalued: true\n        inlined_as_list: true\n        minimum_cardinality: 1\n        description: >-\n          Evidenced identifiers of this organisation, never inferred from a name match.\n          A merged local id is kept here as an old_identifier on the surviving record.\n"
     },
     "SharedPerson": {
-      "description": "One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait.",
+      "description": "One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers.",
       "fields": [
         {
           "description": "What became of the person in the Holocaust, as far as the record shows.",
@@ -6312,6 +6364,32 @@
             "description": "The person's id, kept for ever: never renamed, reused or deleted.",
             "pattern": "\\S",
             "type": "string"
+          }
+        },
+        {
+          "description": "Evidenced identifiers of this person, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:hasOrHadIdentifier"
+            }
+          ],
+          "multivalued": true,
+          "name": "identifiers",
+          "range": "PlaceIdentifier",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "Evidenced identifiers of this person, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record.",
+            "items": {
+              "$ref": "#/$defs/PlaceIdentifier"
+            },
+            "minItems": 1,
+            "type": [
+              "array",
+              "null"
+            ]
           }
         },
         {
@@ -6386,7 +6464,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/shared_record.yaml",
-      "yaml": "  SharedPerson:\n    # vocabulary/site-content.json, binding person; ADR 0001: persons are EHRI's.\n    class_uri: ehri:Person\n    description: >-\n      One person of the record, across every issue: their id, the name shown, every name they\n      are known by, their gender, what became of them, and their portrait.\n    attributes:\n      portrait:\n        # vocabulary/media.json, binding media_portrait.\n        slot_uri: pc:media_portrait\n        range: MediaPortrait\n        inlined: true\n        description: >-\n          The reviewed picture and region the person's page shows.\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The person's id, kept for ever: never renamed, reused or deleted.\n      name:\n        range: NonBlankText\n        required: true\n        description: >-\n          The name the site shows.\n      names:\n        # vocabulary/site-content.json, binding person_name.\n        slot_uri: rico:hasOrHadAgentName\n        range: SharedName\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Every name the person is known by, printed or supplied, with where it is found.\n      gender:\n        range: Gender\n        required: true\n        description: >-\n          The person's gender, or unknown.\n      fate:\n        range: Fate\n        inlined: true\n        description: >-\n          What became of the person in the Holocaust, as far as the record shows.\n"
+      "yaml": "  SharedPerson:\n    # vocabulary/site-content.json, binding person; ADR 0001: persons are EHRI's.\n    class_uri: ehri:Person\n    description: >-\n      One person of the record, across every issue: their id, the name shown, every name they\n      are known by, their gender, what became of them, their portrait and evidenced identifiers.\n    attributes:\n      portrait:\n        # vocabulary/media.json, binding media_portrait.\n        slot_uri: pc:media_portrait\n        range: MediaPortrait\n        inlined: true\n        description: >-\n          The reviewed picture and region the person's page shows.\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The person's id, kept for ever: never renamed, reused or deleted.\n      name:\n        range: NonBlankText\n        required: true\n        description: >-\n          The name the site shows.\n      names:\n        # vocabulary/site-content.json, binding person_name.\n        slot_uri: rico:hasOrHadAgentName\n        range: SharedName\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Every name the person is known by, printed or supplied, with where it is found.\n      gender:\n        range: Gender\n        required: true\n        description: >-\n          The person's gender, or unknown.\n      fate:\n        range: Fate\n        inlined: true\n        description: >-\n          What became of the person in the Holocaust, as far as the record shows.\n      identifiers:\n        # ADR 0001 and standards foundation vetting §4; same evidence shape as places.\n        slot_uri: rico:hasOrHadIdentifier\n        range: PlaceIdentifier\n        multivalued: true\n        inlined_as_list: true\n        minimum_cardinality: 1\n        description: >-\n          Evidenced identifiers of this person, never inferred from a name match. A merged\n          local id is kept here as an old_identifier on the surviving record.\n"
     },
     "SharedPlace": {
       "description": "One place of the record: its names, its kind, the place it lies in, its coordinates and its outside identifiers.",
@@ -9806,6 +9884,22 @@
     "HttpsUri": {
       "description": "A web address that begins https:// and holds no white space, as the Pydantic twin's pattern says; the Zod twin asks for a URL whose protocol is https.",
       "mappings": []
+    },
+    "IdentifierTypes": {
+      "description": "Identifier types approved in ADR 0001 and linked-data ticket 03.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A merged identifier retained permanently on the surviving record, with the registered merge source, reading day and attribution. It redirects to the surviving id and is never reused.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:old_identifier"
+            }
+          ],
+          "value": "old_identifier"
+        }
+      ]
     },
     "ImpressoTypes": {
       "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",

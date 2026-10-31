@@ -6,7 +6,7 @@ search:
 # Class: SharedOrganization 
 
 
-_One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts._
+_One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts._
 
 
 
@@ -25,6 +25,17 @@ URI: [ehri:CorporateBody](http://lod.ehri-project-test.eu/ontology#CorporateBody
     class SharedOrganization
     click SharedOrganization href "../SharedOrganization/"
       SharedOrganization : id
+        
+      SharedOrganization : identifiers
+        
+          
+    
+        
+        
+        SharedOrganization --> "1..*" PlaceIdentifier : identifiers
+        click PlaceIdentifier href "../PlaceIdentifier/"
+    
+
         
       SharedOrganization : name
         
@@ -61,6 +72,7 @@ URI: [ehri:CorporateBody](http://lod.ehri-project-test.eu/ontology#CorporateBody
 | [id](id.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The organisation's id. | direct |
 | [name](name.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The name the site shows. | direct |
 | [names](names.md) | 1..* <br/> [Name](Name.md) | The organisation's names. | direct |
+| [identifiers](identifiers.md) | 1..* <br/> [PlaceIdentifier](PlaceIdentifier.md) | Evidenced identifiers of this organisation, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record. | direct |
 
 
 
@@ -118,8 +130,8 @@ URI: [ehri:CorporateBody](http://lod.ehri-project-test.eu/ontology#CorporateBody
 <details>
 ```yaml
 name: SharedOrganization
-description: 'One organisation of the record: its id, the name shown and its names;
-  its offices and members are sourced facts.'
+description: 'One organisation of the record: its id, the name shown, its names and
+  evidenced identifiers; its offices and members are sourced facts.'
 from_schema: https://pruzhany.org/ns/shared_record
 rank: 1000
 attributes:
@@ -166,6 +178,22 @@ attributes:
     required: true
     multivalued: true
     inlined_as_list: true
+  identifiers:
+    name: identifiers
+    description: Evidenced identifiers of this organisation, never inferred from a
+      name match. A merged local id is kept here as an old_identifier on the surviving
+      record.
+    from_schema: https://pruzhany.org/ns/shared_record
+    slot_uri: rico:hasOrHadIdentifier
+    domain_of:
+    - SharedPerson
+    - Holder
+    - SharedPlace
+    - SharedOrganization
+    range: PlaceIdentifier
+    multivalued: true
+    inlined_as_list: true
+    minimum_cardinality: 1
 class_uri: ehri:CorporateBody
 
 ```
@@ -176,8 +204,8 @@ class_uri: ehri:CorporateBody
 <details>
 ```yaml
 name: SharedOrganization
-description: 'One organisation of the record: its id, the name shown and its names;
-  its offices and members are sourced facts.'
+description: 'One organisation of the record: its id, the name shown, its names and
+  evidenced identifiers; its offices and members are sourced facts.'
 from_schema: https://pruzhany.org/ns/shared_record
 rank: 1000
 attributes:
@@ -228,6 +256,24 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+  identifiers:
+    name: identifiers
+    description: Evidenced identifiers of this organisation, never inferred from a
+      name match. A merged local id is kept here as an old_identifier on the surviving
+      record.
+    from_schema: https://pruzhany.org/ns/shared_record
+    slot_uri: rico:hasOrHadIdentifier
+    owner: SharedOrganization
+    domain_of:
+    - SharedPerson
+    - Holder
+    - SharedPlace
+    - SharedOrganization
+    range: PlaceIdentifier
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    minimum_cardinality: 1
 class_uri: ehri:CorporateBody
 
 ```

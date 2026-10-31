@@ -1043,6 +1043,14 @@
             "title": "HolocaustFateTypes",
             "type": "string"
         },
+        "IdentifierTypes": {
+            "description": "Identifier types approved in ADR 0001 and linked-data ticket 03.",
+            "enum": [
+                "old_identifier"
+            ],
+            "title": "IdentifierTypes",
+            "type": "string"
+        },
         "ImpressoTypes": {
             "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
             "enum": [
@@ -2485,7 +2493,7 @@
         },
         "PlaceIdentifier": {
             "additionalProperties": false,
-            "description": "One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names.",
+            "description": "One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge.",
             "properties": {
                 "accessed": {
                     "description": "The day it was read on its authority's own pages.",
@@ -2500,6 +2508,17 @@
                     "description": "The authority the identifier comes from, a registered source, by its id.",
                     "pattern": "\\S",
                     "type": "string"
+                },
+                "type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/IdentifierTypes"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "old_identifier marks a merged id retained permanently on the surviving record. Absent for an ordinary authority identifier; source_id still names its authority."
                 },
                 "url": {
                     "description": "The identifier's page on the authority's host.",
@@ -3845,12 +3864,23 @@
         },
         "SharedOrganization": {
             "additionalProperties": false,
-            "description": "One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts.",
+            "description": "One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts.",
             "properties": {
                 "id": {
                     "description": "The organisation's id.",
                     "pattern": "\\S",
                     "type": "string"
+                },
+                "identifiers": {
+                    "description": "Evidenced identifiers of this organisation, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record.",
+                    "items": {
+                        "$ref": "#/$defs/PlaceIdentifier"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 },
                 "name": {
                     "description": "The name the site shows.",
@@ -3875,7 +3905,7 @@
         },
         "SharedPerson": {
             "additionalProperties": false,
-            "description": "One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait.",
+            "description": "One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers.",
             "properties": {
                 "fate": {
                     "anyOf": [
@@ -3896,6 +3926,17 @@
                     "description": "The person's id, kept for ever: never renamed, reused or deleted.",
                     "pattern": "\\S",
                     "type": "string"
+                },
+                "identifiers": {
+                    "description": "Evidenced identifiers of this person, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record.",
+                    "items": {
+                        "$ref": "#/$defs/PlaceIdentifier"
+                    },
+                    "minItems": 1,
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 },
                 "name": {
                     "description": "The name the site shows.",

@@ -20,8 +20,10 @@ URI: [pc:identifiers](https://pruzhany.org/ns/sourced-entities#identifiers)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [SharedPerson](SharedPerson.md) | One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers. |  no  |
 | [Holder](Holder.md) | Who holds a source: an institution, a family or a private person, with its outside identifiers and its web host. A private holder's name is never published. |  no  |
 | [SharedPlace](SharedPlace.md) | One place of the record: its names, its kind, the place it lies in, its coordinates and its outside identifiers. |  no  |
+| [SharedOrganization](SharedOrganization.md) | One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts. |  no  |
 
 
 
@@ -35,7 +37,7 @@ URI: [pc:identifiers](https://pruzhany.org/ns/sourced-entities#identifiers)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [Holder](Holder.md), [SharedPlace](SharedPlace.md) |
+| Domain Of | [SharedPerson](SharedPerson.md), [Holder](Holder.md), [SharedPlace](SharedPlace.md), [SharedOrganization](SharedOrganization.md) |
 
 
 
@@ -69,8 +71,10 @@ URI: [pc:identifiers](https://pruzhany.org/ns/sourced-entities#identifiers)
 ```yaml
 name: identifiers
 domain_of:
+- SharedPerson
 - Holder
 - SharedPlace
+- SharedOrganization
 range: string
 
 ```

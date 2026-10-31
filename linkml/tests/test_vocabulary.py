@@ -63,7 +63,7 @@ class TheCommittedFile(unittest.TestCase):
                         self.assertEqual(prefix, 'rico')
                         self.assertRegex(value.annotations['via'].value, r'^rico:[A-Za-z]+Relation$')
         # A tally, so a value that loses its meaning or its via shows here as well.
-        self.assertEqual(counts, {'rico': 28, 'ehri': 3, 'pc': 160, None: 13})
+        self.assertEqual(counts, {'rico': 28, 'ehri': 3, 'pc': 161, None: 13})
         self.assertEqual(vias, 23)
         self.assertEqual(set(view.all_enums(imports=False)['ImpressoTypes'].permissible_values),
                          set(json.loads((ROOT / 'vocabulary/site-content.json').read_text(encoding='utf-8'))

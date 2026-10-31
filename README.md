@@ -87,6 +87,28 @@ source ancestry and citation fields. Both twins read the advisory per-kind rules
 from `vocabulary/citation-requirements.json`; missing evidence is reported separately
 from the reference checks that refuse invalid records.
 
+Persons and organisations can carry the same optional, nonempty `identifiers` list
+as places and holders. The retained `PlaceIdentifier` name is the shared public API:
+`source_id`, `value`, optional HTTPS `url`, real `accessed` day and `attribution`.
+The registered source supplies the host; an identifier is unique within its record
+and cannot name two records of the same kind. Outside ids require evidence, never a
+name match ([ADR 0001](docs/adr/0001-which-standard-governs-what.md)).
+For a merged local id, add `type: "old_identifier"` to that identifier on the
+surviving record and cite the registered adjudicated merge ledger as its source.
+The old value cannot remain an active id of that kind; redirects and the ledger
+must persist in steps. The type is a `rico:IdentifierType`, attached through
+`rico:hasIdentifierType`; omitting it preserves ordinary authority identifiers.
+Carrying these fields through the steps writer and publishing them are later work.
+
+Implementation documentation read **31 October 2026**: LinkML
+[Semantic Enumerations](https://linkml.io/linkml/schemas/enums.html) for value meanings,
+Zod [Defining schemas](https://zod.dev/api) for object extension and nullish fields,
+uv [Commands](https://docs.astral.sh/uv/reference/cli/) for the locked environment's
+`venv` and `pip sync --require-hashes --build-constraints`, and Bun
+[bun install](https://bun.sh/docs/pm/cli/install) for `--frozen-lockfile`.
+Installed versions stay those pinned by this repository, independently of the
+documentation's latest release.
+
 The [checked-English addition](docs/design/2026-10-23-checked-english.md) adds an
 optional independent check to each supplied title and translation, preserving
 its original source and author. Exact-byte bindings and field-specific judgement

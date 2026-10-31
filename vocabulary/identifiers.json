@@ -1,0 +1,13 @@
+{
+	"identifier_types": [
+		{
+			"id": "old_identifier",
+			"label": "Old identifier",
+			"definition": "A merged identifier retained permanently on the surviving record, with the registered merge source, reading day and attribution. It redirects to the surviving id and is never reused.",
+			"mapping": {
+				"local": "pc:old_identifier",
+				"reason": "RiC-O IdentifierType gives old identifier as an example but does not mint that value; this concept types our retained merged identifiers."
+			}
+		}
+	]
+}

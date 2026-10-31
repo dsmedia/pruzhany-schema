@@ -1,12 +1,12 @@
 {
   "artifacts_sha256": {
     "context.jsonld": "a212e549e680de4a71b0601b94fbf5314e640ede8fe06d46a879ade811405ade",
-    "coverage.md": "567a76c4bd64acb679b7b42094b5b87d3b81e9501616d7bdf3cae4853dff0e66",
-    "ontology.ttl": "0ca0ff1d420a940e1dd57e217ffda9ff980a835b15b84c68492eb3102fff3975",
+    "coverage.md": "d6ef1ec8c82360c5b4f25df7c128a31ad67d7b5778af0658cd79be7481ec666b",
+    "ontology.ttl": "61d32d991d656f5570a2ed2776cde0fc40551060ace7bc92154729aeb47363ec",
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
-  "contract_sha256": "7c287c4494e40a905f90f50de7e8aeceabe3cba59a89de21c960bc354c423db1",
-  "index_sha256": "25a9869d1348efbfdfe8b59a5507991abc8e47caba84a3d18bc1c38a5a21add6",
+  "contract_sha256": "7eb49d1d3de1dc0e40b074d2fedb46cd4596f6ad88dada962a4887801731e305",
+  "index_sha256": "30dfd59180a34f7fd350a3d467a96f88c9ef5116f974a278bc693e1142530d3d",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -511,7 +511,7 @@
       "types": []
     },
     "PlaceIdentifier": {
-      "description": "One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names.",
+      "description": "One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge.",
       "fields": {
         "accessed": {
           "constraint": {
@@ -607,7 +607,8 @@
       },
       "iri": "https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier",
       "omitted": {
-        "attribution": "Absent from this final public view; never recover it from private storage."
+        "attribution": "Absent from this final public view; never recover it from private storage.",
+        "type": "Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended."
       },
       "optional": {},
       "reason": "A public view of PlaceIdentifier; source-scoped values are retained without asserting an unqualified historical relationship.",
@@ -1433,7 +1434,7 @@
       ]
     },
     "SharedOrganization": {
-      "description": "One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts.",
+      "description": "One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts.",
       "fields": {
         "id": {
           "constraint": {
@@ -1474,6 +1475,7 @@
       },
       "iri": "https://pruzhany.org/ns/sourced-entities#export_SharedOrganization",
       "omitted": {
+        "identifiers": "Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended.",
         "names": "Absent from this final public view; never recover it from private storage."
       },
       "optional": {},
@@ -1485,7 +1487,7 @@
       ]
     },
     "SharedPerson": {
-      "description": "One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait.",
+      "description": "One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers.",
       "fields": {
         "gender": {
           "constraint": {
@@ -1549,6 +1551,7 @@
       "iri": "https://pruzhany.org/ns/sourced-entities#export_SharedPerson",
       "omitted": {
         "fate": "Absent from this final public view; never recover it from private storage.",
+        "identifiers": "Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended.",
         "names": "Absent from this final public view; never recover it from private storage.",
         "portrait": "Absent from this final public view; never recover it from private storage."
       },
@@ -2313,7 +2316,7 @@
     "Translation": "Outside the public shared-record export; this layer keeps its current format.",
     "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format."
   },
-  "profile_sha256": "9295ce72bde0f880ddff8fb6e1c14ade2f4f7bf7268d896bd0fd0db127e17c00",
+  "profile_sha256": "e7b5b0043bf263de971b73120528a3450793815720e7090a39cdc9c2bfdaf75e",
   "source_sha256": {
     "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
     "linkml/schema/content_items.yaml": "24c90f09ff8def4281f4173e38b598da3ae618742d82ef88658d02d2d263f181",
@@ -2325,11 +2328,11 @@
     "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
-    "linkml/schema/shared_record.yaml": "cdc402c9a3dd90bfed5cda74c2a8cc4017b91ee4eb6913b58606b2215b62e029",
+    "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
     "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
     "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
-    "linkml/schema/vocabulary.yaml": "f9b1717b1f6b3fd04e55fbc46274fe9e2e8fd869ddc10517b0672422dd461e82",
+    "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4",
     "vocabulary/profile.ttl": "44fc01c3a5672de7152928466ec2221b029454679446dc5925bedaf7afd84778"
   },
   "version": 1,
@@ -3491,6 +3494,22 @@
     "HttpsUri": {
       "description": "A web address that begins https:// and holds no white space, as the Pydantic twin's pattern says; the Zod twin asks for a URL whose protocol is https.",
       "mappings": []
+    },
+    "IdentifierTypes": {
+      "description": "Identifier types approved in ADR 0001 and linked-data ticket 03.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "A merged identifier retained permanently on the surviving record, with the registered merge source, reading day and attribution. It redirects to the surviving id and is never reused.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:old_identifier"
+            }
+          ],
+          "value": "old_identifier"
+        }
+      ]
     },
     "ImpressoTypes": {
       "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
