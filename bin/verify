@@ -21,7 +21,8 @@
 #             when that repository was retired on 2026-10-22).
 #   entities  checks sourced-entity parity in the current SiteArchive carrier and its JSON Schema.
 #   vocabulary validates production vocabulary, history, crosswalk and generated contracts.
-#   standards checks pinned RiC-O/EHRI terms and explicit local mappings.
+#   standards checks pinned RiC-O/EHRI terms, local mappings and the fetched IIIF schema.
+#             An empty IIIF cache requires network; download/hash failures stop the check.
 #   pilot     checks generated vocabulary/artifacts and exercises the isolated
 #             issue-14 pilot, including parsed RDF and privacy/reversal cases,
 #             the isolated TS parity test under bun and a non-UTF-8 locale check.
@@ -109,7 +110,11 @@ step_vocabulary() {
 }
 
 step_standards() {
-	uv run --no-project --python "$PYTHON_VERSION" python -P -m unittest discover -s standards -p 'test_*.py'
+	uv run --no-project --python "$PYTHON_VERSION" python -P standards/fetch_iiif.py
+	# Same jsonschema version as linkml/requirements.lock; validation API read 31 October 2026:
+	# https://python-jsonschema.readthedocs.io/en/v4.26.0/validate/
+	uv run --no-project --python "$PYTHON_VERSION" --with "jsonschema==4.26.0" \
+		python -P -m unittest discover -s standards -p 'test_*.py'
 	uv run --no-project --python "$PYTHON_VERSION" python -P standards/check_alignment.py
 }
 

@@ -86,3 +86,17 @@ is unavailable, rather than inventing one. Person names remain plain strings.
 Nested names and dates have the same ShEx-only EHRI inverse-address restriction
 as the person pin; tests expose it. These are corporate-body focus checks,
 not acceptance by EHRI or a claim about every auxiliary shape or family export.
+
+## IIIF Presentation 3
+
+`iiif-presentation-3-3891f47/` keeps only the source pin and a short README for
+IIIF/presentation-validator commit `3891f47ce7dbaa896027a5fab5f63a109de4bd70`,
+read **31 October 2026**. The upstream repository grants no licence, so neither
+its schema nor its README is redistributed. `fetch_iiif.py` (stdlib only) fetches
+the commit's raw schema into ignored `standards/.cache/iiif-presentation-3-3891f47/`
+and checks SHA-256 before saving and on reuse. It never falls back to an unpinned
+copy; network or checksum failure stops the command. `bin/verify standards`
+runs the fetch and validates a fictional Manifest with the fetched file, then
+rejects a planted fault. Steps uses the same tool on an absent cache and validates
+with jsonschema-rs offline after checking the cached bytes. Empty caches need
+network, including on CI. No site or LinkML contract changes.
