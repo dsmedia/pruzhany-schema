@@ -69,3 +69,20 @@ These three schema files are byte-identical to the earlier steps copies at
 provenance; `bin/verify linkml` compares the separately described external
 contracts against these oracles, including fictional controls and planted faults.
 The page oracle reads this pin, with no second fixture copy.
+
+## EHRI corporate-body shapes (1.1)
+
+At the same owner's word of 30–31 October 2026, `ehri-cb-1.1-1c2325f9/`
+pins unchanged `src/shapes/1.1/cb.shacl.ttl`, `cb.shex` and `LICENSE.md` from
+`EHRI/ehri-kg-mapping` commit `1c2325f9d2267a8a0c639cd041be54ec9a73e517`,
+read **2026-10-31**. `pin.json` records URLs, SHA-256, attribution and EUPL-1.2.
+`bin/verify standards` checks bytes and provenance; `bin/verify linkml` tests
+fictional corporate bodies and planted faults against both unchanged shapes.
+No production contract or ontology pin changes. Never edit pinned files in place.
+
+The corporate-body focus is `ehri:CBAndFamily`, requiring a language-tagged
+`rico:name`. Steps preserves the public name and uses `und` when its language
+is unavailable, rather than inventing one. Person names remain plain strings.
+Nested names and dates have the same ShEx-only EHRI inverse-address restriction
+as the person pin; tests expose it. These are corporate-body focus checks,
+not acceptance by EHRI or a claim about every auxiliary shape or family export.
