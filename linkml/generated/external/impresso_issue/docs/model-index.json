@@ -1,0 +1,1047 @@
+{
+  "contract_sha256": "3d8082b8b7f642ce1eb0e0a8d0e133f6aa4cc1e2b9c8295bba3f8355c1f4b161",
+  "inputs": {
+    "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
+    "linkml/schema/content_items.yaml": "24c90f09ff8def4281f4173e38b598da3ae618742d82ef88658d02d2d263f181",
+    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
+    "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
+    "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
+    "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
+    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
+    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
+    "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
+    "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
+    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
+    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
+    "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4"
+  },
+  "models": {
+    "ImpressoIssue": {
+      "description": "Logical representation of the contents of a canonical issue (newspaper or broadcast).",
+      "fields": [
+        {
+          "description": "Creation date timestamp (of the JSON file).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "cdt",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Creation date timestamp (of the JSON file).",
+            "type": "string"
+          }
+        },
+        {
+          "description": "True if this issue is consolidated, and contains additional language identification and ocrqa information.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "True if this issue is consolidated, and contains additional language identification and ocrqa information.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Creation date timestamp (in '%Y-%m-%dT%H:%M:%SZ' format) of the original issue which was consolidated into this object. Only defined if `consolidated==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_ts_original",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Creation date timestamp (in '%Y-%m-%dT%H:%M:%SZ' format) of the original issue which was consolidated into this object. Only defined if `consolidated==True`.",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The content item(s) contained in the newspaper/radio_broadcast issue. Upstream places required m on the array, where JSON Schema does not apply it; the entry metadata is therefore optional.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "i",
+          "range": "ImpressoIssueItem",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "description": "The content item(s) contained in the newspaper/radio_broadcast issue. Upstream places required m on the array, where JSON Schema does not apply it; the entry metadata is therefore optional.",
+            "items": {
+              "$ref": "#/$defs/ImpressoIssueItem"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Canonical ID of the newspaper or radio broadcast issue (e.g. GDL-1900-01-02-a, or SOC_CJ-1940-07-22-a)",
+          "mappings": [],
+          "multivalued": false,
+          "name": "id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Canonical ID of the newspaper or radio broadcast issue (e.g. GDL-1900-01-02-a, or SOC_CJ-1940-07-22-a)",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "URI for the issue's manifest in the IIIF Presentation API. The field is present only when a meaningful URI is available.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "iiif_manifest_uri",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "URI for the issue's manifest in the IIIF Presentation API. The field is present only when a meaningful URI is available.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        {
+          "description": "False if the date assigned to the issue is known to be inexact or approximated, True or undefined otherwise.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "is_exact_date",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "False if the date assigned to the issue is known to be inexact or approximated, True or undefined otherwise.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Variant title of the media title this CI is from (mainly in the case of BL newspapers). The field is present only when a meaningful variant title is available.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "media_title_variant",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Variant title of the media title this CI is from (mainly in the case of BL newspapers). The field is present only when a meaningful variant title is available.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        {
+          "description": "Notes.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "n",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Notes.",
+            "type": [
+              "string",
+              "array"
+            ]
+          }
+        },
+        {
+          "description": "True if optical layout recognition was applied to the issue/bulletin this content item originates from.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "olr",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "True if optical layout recognition was applied to the issue/bulletin this content item originates from.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Canonical IDs of pages in the issue, without file extension (e.g. GDL-1900-01-02-a-p0004). In the case `sm` is in [`print`, `typescript`].",
+          "mappings": [],
+          "multivalued": true,
+          "name": "pp",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Canonical IDs of pages in the issue, without file extension (e.g. GDL-1900-01-02-a-p0004). In the case `sm` is in [`print`, `typescript`].",
+            "items": {
+              "pattern": "^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-p[0-9]{4}$",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Minimally preprocessed issue-level metadata included by the provider institution, especially useful for radio data (sm=audio).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "provided_metadata",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Minimally preprocessed issue-level metadata included by the provider institution, especially useful for radio data (sm=audio).",
+            "type": [
+              "object",
+              "array"
+            ]
+          }
+        },
+        {
+          "description": "Radio channel, if applicable (st=='radio_broadcast'). The field is present only when a meaningful value is available.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "rc",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Radio channel, if applicable (st=='radio_broadcast'). The field is present only when a meaningful value is available.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        {
+          "description": "Radio program if applicable (st=='radio_broadcast'). The field is present only when a meaningful program name is available.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "rp",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Radio program if applicable (st=='radio_broadcast'). The field is present only when a meaningful program name is available.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        {
+          "description": "Canonical ID of audio record of the issue (in list for consistency), without file extension (e.g. INA-1900-01-02-a-r0004). In the case `sm`==`audio`.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "rr",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Canonical ID of audio record of the issue (in list for consistency), without file extension (e.g. INA-1900-01-02-a-r0004). In the case `sm`==`audio`.",
+            "items": {
+              "pattern": "^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,3}-r[0-9]{4}$",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "The text style as defined in the OCR output. \nEach style consists of:\n - a name (`id`)\n - a type-face (`f`)\n - a font-size (`fs`)\n - a color (`rgb`).",
+          "mappings": [],
+          "multivalued": true,
+          "name": "s",
+          "range": "ImpressoStyle",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "The text style as defined in the OCR output. \nEach style consists of:\n - a name (`id`)\n - a type-face (`f`)\n - a font-size (`fs`)\n - a color (`rgb`).",
+            "items": {
+              "$ref": "#/$defs/ImpressoStyle"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Source medium, format in which the media was originally produced. If `tp == radio_broadcast`, this is typically `typescript` or `audio`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "sm",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Source medium, format in which the media was originally produced. If `tp == radio_broadcast`, this is typically `typescript` or `audio`.",
+            "enum": [
+              "print",
+              "typescript",
+              "audio"
+            ],
+            "type": "string"
+          }
+        },
+        {
+          "description": "Type of media source. Should be a value the impresso-essentials.utils SourceType enum.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "st",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Type of media source. Should be a value the impresso-essentials.utils SourceType enum.",
+            "enum": [
+              "newspaper",
+              "radio_broadcast",
+              "radio_magazine",
+              "radio_schedule",
+              "monograph",
+              "encyclopedia"
+            ],
+            "type": "string"
+          }
+        },
+        {
+          "description": "Creation date timestamp (in '%Y-%m-%dT%H:%M:%SZ' format). If consolidated==True, this is the consolidated timestamp (the original creation timestamp can be found in consolidated_timestamp_original); otherwise it is the original creation timestamp.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "ts",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Creation date timestamp (in '%Y-%m-%dT%H:%M:%SZ' format). If consolidated==True, this is the consolidated timestamp (the original creation timestamp can be found in consolidated_timestamp_original); otherwise it is the original creation timestamp.",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_issue.yaml",
+      "yaml": "  ImpressoIssue:\n    extra_slots:\n      allowed: true\n    description: Logical representation of the contents of a canonical issue (newspaper or broadcast).\n    annotations:\n      impresso: issue\n    attributes:\n      id:\n        required: true\n        description: Canonical ID of the newspaper or radio broadcast issue (e.g. GDL-1900-01-02-a,\n          or SOC_CJ-1940-07-22-a)\n        annotations:\n          impresso: issue.id\n        pattern: ^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}$\n      cdt:\n        description: Creation date timestamp (of the JSON file).\n        annotations:\n          impresso: issue.cdt\n      ts:\n        description: Creation date timestamp (in '%Y-%m-%dT%H:%M:%SZ' format). If consolidated==True,\n          this is the consolidated timestamp (the original creation timestamp can be found in consolidated_timestamp_original);\n          otherwise it is the original creation timestamp.\n        annotations:\n          impresso: issue.ts\n        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$\n      st:\n        description: Type of media source. Should be a value the impresso-essentials.utils SourceType\n          enum.\n        annotations:\n          impresso: issue.st\n        equals_string_in:\n        - newspaper\n        - radio_broadcast\n        - radio_magazine\n        - radio_schedule\n        - monograph\n        - encyclopedia\n      sm:\n        description: Source medium, format in which the media was originally produced. If `tp ==\n          radio_broadcast`, this is typically `typescript` or `audio`.\n        annotations:\n          impresso: issue.sm\n        equals_string_in:\n        - print\n        - typescript\n        - audio\n      consolidated:\n        description: True if this issue is consolidated, and contains additional language identification\n          and ocrqa information.\n        annotations:\n          impresso: issue.consolidated\n        range: boolean\n      consolidated_ts_original:\n        description: Creation date timestamp (in '%Y-%m-%dT%H:%M:%SZ' format) of the original issue\n          which was consolidated into this object. Only defined if `consolidated==True`.\n        annotations:\n          impresso: issue.consolidated_ts_original\n        pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$\n      media_title_variant:\n        description: Variant title of the media title this CI is from (mainly in the case of BL newspapers).\n          The field is present only when a meaningful variant title is available.\n        annotations:\n          impresso: issue.media_title_variant\n          json_min_length: 1\n      olr:\n        description: True if optical layout recognition was applied to the issue/bulletin this content\n          item originates from.\n        annotations:\n          impresso: issue.olr\n        range: boolean\n      content_items:\n        required: true\n        alias: i\n        description: The content item(s) contained in the newspaper/radio_broadcast issue. Upstream\n          places required m on the array, where JSON Schema does not apply it; the entry metadata\n          is therefore optional.\n        annotations:\n          impresso: issue.i\n        multivalued: true\n        range: ImpressoIssueItem\n        inlined_as_list: true\n      styles:\n        alias: s\n        description: \"The text style as defined in the OCR output. \\nEach style consists of:\\n -\\\n          \\ a name (`id`)\\n - a type-face (`f`)\\n - a font-size (`fs`)\\n - a color (`rgb`).\"\n        annotations:\n          impresso: issue.s\n        multivalued: true\n        range: ImpressoStyle\n        inlined_as_list: true\n      pp:\n        description: Canonical IDs of pages in the issue, without file extension (e.g. GDL-1900-01-02-a-p0004).\n          In the case `sm` is in [`print`, `typescript`].\n        annotations:\n          impresso: issue.pp\n        multivalued: true\n        pattern: ^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-p[0-9]{4}$\n      rr:\n        description: Canonical ID of audio record of the issue (in list for consistency), without\n          file extension (e.g. INA-1900-01-02-a-r0004). In the case `sm`==`audio`.\n        annotations:\n          impresso: issue.rr\n        multivalued: true\n        pattern: ^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,3}-r[0-9]{4}$\n      notes:\n        alias: n\n        description: Notes.\n        annotations:\n          impresso: issue.n\n          json_types: string,array\n      iiif_manifest_uri:\n        description: URI for the issue's manifest in the IIIF Presentation API. The field is present\n          only when a meaningful URI is available.\n        annotations:\n          impresso: issue.iiif_manifest_uri\n          json_min_length: 1\n      is_exact_date:\n        description: False if the date assigned to the issue is known to be inexact or approximated,\n          True or undefined otherwise.\n        annotations:\n          impresso: issue.is_exact_date\n        range: boolean\n      rc:\n        description: Radio channel, if applicable (st=='radio_broadcast'). The field is present only\n          when a meaningful value is available.\n        annotations:\n          impresso: issue.rc\n          json_min_length: 1\n      rp:\n        description: Radio program if applicable (st=='radio_broadcast'). The field is present only\n          when a meaningful program name is available.\n        annotations:\n          impresso: issue.rp\n          json_min_length: 1\n      provided_metadata:\n        description: Minimally preprocessed issue-level metadata included by the provider institution,\n          especially useful for radio data (sm=audio).\n        annotations:\n          impresso: issue.provided_metadata\n          json_types: object,array\n    rules:\n    - preconditions:\n        slot_conditions:\n          sm:\n            required: true\n      postconditions:\n        slot_conditions:\n          st:\n            required: true\n    - preconditions:\n        slot_conditions:\n          st:\n            required: true\n      postconditions:\n        slot_conditions:\n          sm:\n            required: true\n    - preconditions:\n        slot_conditions:\n          sm:\n            required: true\n            equals_string_in:\n            - typescript\n            - print\n      postconditions:\n        slot_conditions:\n          pp:\n            required: true\n    - preconditions:\n        slot_conditions:\n          sm:\n            required: true\n            equals_string: audio\n      postconditions:\n        slot_conditions:\n          rr:\n            required: true\n    - preconditions:\n        slot_conditions:\n          sm:\n            required: true\n            equals_string: print\n      postconditions:\n        slot_conditions:\n          olr:\n            required: true\n    any_of:\n    - slot_conditions:\n        ts:\n          required: true\n    - slot_conditions:\n        cdt:\n          required: true\n    tree_root: true\n"
+    },
+    "ImpressoIssueItem": {
+      "description": "A content item (e.g. article, advertisement, radio broadcast, etc.)",
+      "fields": [
+        {
+          "description": "Coordinates (xywh format or [HPOS, VPOS, WIDTH, HEIGHT]) of image-region corresponding to the content-item depending on its type (if `tp == image`). NOTE: the 'null' option should be removed to prevent tables from having coordinates.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "c",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Coordinates (xywh format or [HPOS, VPOS, WIDTH, HEIGHT]) of image-region corresponding to the content-item depending on its type (if `tp == image`). NOTE: the 'null' option should be removed to prevent tables from having coordinates.",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 4,
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Legacy sections or components of the content item in the original OCR/OLR. They are meant to enable the reassignation of Impresso CIs (and enrichments) to the original OCR/OLR files.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "l",
+          "range": "ImpressoLegacy",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "$ref": "#/$defs/ImpressoLegacy",
+            "description": "Legacy sections or components of the content item in the original OCR/OLR. They are meant to enable the reassignation of Impresso CIs (and enrichments) to the original OCR/OLR files."
+          }
+        },
+        {
+          "description": "Metadata about the content item.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "m",
+          "range": "ImpressoMetadata",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "$ref": "#/$defs/ImpressoMetadata",
+            "description": "Metadata about the content item."
+          }
+        },
+        {
+          "description": "Article/content-item to which the image is attached (if `tp == image`).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "pOf",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Article/content-item to which the image is attached (if `tp == image`).",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "A section title grouping content items, with its original OCR components.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "section_title",
+          "range": "ImpressoIssueSection",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "$ref": "#/$defs/ImpressoIssueSection",
+            "description": "A section title grouping content items, with its original OCR components."
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_issue.yaml",
+      "yaml": "  ImpressoIssueItem:\n    extra_slots:\n      allowed: true\n    description: A content item (e.g. article, advertisement, radio broadcast, etc.)\n    annotations:\n      impresso: issue.i[]\n    attributes:\n      metadata:\n        alias: m\n        description: Metadata about the content item.\n        annotations:\n          impresso: issue.i[].m\n        range: ImpressoMetadata\n        inlined: true\n      coordinates:\n        alias: c\n        description: 'Coordinates (xywh format or [HPOS, VPOS, WIDTH, HEIGHT]) of image-region corresponding\n          to the content-item depending on its type (if `tp == image`). NOTE: the ''null'' option\n          should be removed to prevent tables from having coordinates.'\n        annotations:\n          impresso: issue.i[].c\n          nullable: true\n        multivalued: true\n        minimum_cardinality: 4\n        range: integer\n      legacy:\n        alias: l\n        description: Legacy sections or components of the content item in the original OCR/OLR. They\n          are meant to enable the reassignation of Impresso CIs (and enrichments) to the original\n          OCR/OLR files.\n        annotations:\n          impresso: issue.i[].l\n        range: ImpressoLegacy\n        inlined: true\n      part_of:\n        alias: pOf\n        description: Article/content-item to which the image is attached (if `tp == image`).\n        annotations:\n          impresso: issue.i[].pOf\n          nullable: true\n      section_title:\n        description: A section title grouping content items, with its original OCR components.\n        annotations:\n          impresso: issue.i[].section_title\n        range: ImpressoIssueSection\n        inlined: true\n"
+    },
+    "ImpressoIssueSection": {
+      "description": "A section title grouping content items, with its original OCR components.",
+      "fields": [
+        {
+          "description": "A section title grouping content items, with its original OCR components.composing_ci_ids.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "composing_ci_ids",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A section title grouping content items, with its original OCR components.composing_ci_ids.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "A section title grouping content items, with its original OCR components.heading_legacy_parts.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "heading_legacy_parts",
+          "range": "ImpressoLegacyPart",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "description": "A section title grouping content items, with its original OCR components.heading_legacy_parts.",
+            "items": {
+              "$ref": "#/$defs/ImpressoLegacyPart"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "A section title grouping content items, with its original OCR components.section_id.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "section_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A section title grouping content items, with its original OCR components.section_id.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "A section title grouping content items, with its original OCR components.title_text.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "title_text",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "A section title grouping content items, with its original OCR components.title_text.",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_issue.yaml",
+      "yaml": "  ImpressoIssueSection:\n    extra_slots:\n      allowed: true\n    description: A section title grouping content items, with its original OCR components.\n    annotations:\n      impresso: issue.i[].section_title\n    attributes:\n      title_text:\n        required: true\n        description: A section title grouping content items, with its original OCR components.title_text.\n        annotations:\n          impresso: issue.i[].section_title.title_text\n      composing_ci_ids:\n        required: true\n        description: A section title grouping content items, with its original OCR components.composing_ci_ids.\n        annotations:\n          impresso: issue.i[].section_title.composing_ci_ids\n        multivalued: true\n      section_id:\n        required: true\n        description: A section title grouping content items, with its original OCR components.section_id.\n        annotations:\n          impresso: issue.i[].section_title.section_id\n      heading_legacy_parts:\n        required: true\n        description: A section title grouping content items, with its original OCR components.heading_legacy_parts.\n        annotations:\n          impresso: issue.i[].section_title.heading_legacy_parts\n        multivalued: true\n        range: ImpressoLegacyPart\n        inlined_as_list: true\n"
+    },
+    "ImpressoLegacy": {
+      "description": "Legacy sections or components of the content item in the original OCR/OLR. They are meant to enable the reassignation of Impresso CIs (and enrichments) to the original OCR/OLR files.",
+      "fields": [
+        {
+          "description": "ID of the sections or components used to compose the CI in the original OCR/OLR files.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "ID of the sections or components used to compose the CI in the original OCR/OLR files.",
+            "type": [
+              "string",
+              "array"
+            ]
+          }
+        },
+        {
+          "description": "List of parts of the given section or components. Exact contents can vary, will typically be composed of the metadata at disposal in the OCR/OLR.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "parts",
+          "range": "ImpressoLegacyPart",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "List of parts of the given section or components. Exact contents can vary, will typically be composed of the metadata at disposal in the OCR/OLR.",
+            "items": {
+              "$ref": "#/$defs/ImpressoLegacyPart"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Source image or OCR/OLR file name.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "source",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Source image or OCR/OLR file name.",
+            "type": [
+              "string",
+              "array"
+            ]
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_issue.yaml",
+      "yaml": "  ImpressoLegacy:\n    extra_slots:\n      allowed: true\n    description: Legacy sections or components of the content item in the original OCR/OLR. They\n      are meant to enable the reassignation of Impresso CIs (and enrichments) to the original OCR/OLR\n      files.\n    annotations:\n      impresso: issue.i[].l\n    attributes:\n      id:\n        description: ID of the sections or components used to compose the CI in the original OCR/OLR\n          files.\n        annotations:\n          impresso: issue.i[].l.id\n          json_types: string,array\n      parts:\n        description: List of parts of the given section or components. Exact contents can vary, will\n          typically be composed of the metadata at disposal in the OCR/OLR.\n        annotations:\n          impresso: issue.i[].l.parts\n        multivalued: true\n        range: ImpressoLegacyPart\n        inlined_as_list: true\n      source:\n        description: Source image or OCR/OLR file name.\n        annotations:\n          impresso: issue.i[].l.source\n          json_types: string,array\n"
+    },
+    "ImpressoLegacyPart": {
+      "description": "One original OCR component retained for tracing a content item back to its source.",
+      "fields": [
+        {
+          "description": "ID of the ALTO file the component comes from.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "comp_fileid",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "ID of the ALTO file the component comes from.",
+            "type": [
+              "string",
+              "array"
+            ]
+          }
+        },
+        {
+          "description": "ID of the part.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "comp_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "ID of the part.",
+            "type": [
+              "string",
+              "array"
+            ]
+          }
+        },
+        {
+          "description": "Page number of the component.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "comp_page_no",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Page number of the component.",
+            "type": [
+              "integer",
+              "array"
+            ]
+          }
+        },
+        {
+          "description": "Role of the component part (eg. heading, body, etc).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "comp_role",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Role of the component part (eg. heading, body, etc).",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_issue.yaml",
+      "yaml": "  ImpressoLegacyPart:\n    extra_slots:\n      allowed: true\n    description: One original OCR component retained for tracing a content item back to its source.\n    annotations:\n      impresso: issue.$defs.legacy_part_item\n    attributes:\n      comp_role:\n        description: Role of the component part (eg. heading, body, etc).\n        annotations:\n          impresso: issue.$defs.legacy_part_item.comp_role\n          nullable: true\n      comp_id:\n        description: ID of the part.\n        annotations:\n          impresso: issue.$defs.legacy_part_item.comp_id\n          json_types: string,array\n      comp_fileid:\n        description: ID of the ALTO file the component comes from.\n        annotations:\n          impresso: issue.$defs.legacy_part_item.comp_fileid\n          json_types: string,array\n      comp_page_no:\n        description: Page number of the component.\n        annotations:\n          impresso: issue.$defs.legacy_part_item.comp_page_no\n          json_types: integer,array\n"
+    },
+    "ImpressoMetadata": {
+      "description": "Metadata for an entry in the canonical issue, including its page or audio references.",
+      "fields": [
+        {
+          "description": "Plaintext archival note or description concerning the content item. In case of audio radio broadcasts, this corresponds to the content summary provided with the metadata. The field is present only when a meaningful note is available.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "archival_note",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Plaintext archival note or description concerning the content item. In case of audio radio broadcasts, this corresponds to the content summary provided with the metadata. The field is present only when a meaningful note is available.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        {
+          "description": "Character count of the consolidated text for the content item. May be null if there is no text. Only defined if `consolidated==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_char_len",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Character count of the consolidated text for the content item. May be null if there is no text. Only defined if `consolidated==True`.",
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Run ID corresponding to the lang ID process used to obtain the `consolidated_language` value. Only defined if `consolidated==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_langident_run_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Run ID corresponding to the lang ID process used to obtain the `consolidated_language` value. Only defined if `consolidated==True`.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Computed language of the content item. Only defined if `consolidated==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_lg",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Computed language of the content item. Only defined if `consolidated==True`.",
+            "pattern": "^[a-z]{2,3}$",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Estimated OCR quality, between 0 and 1. May be null if there is no text or not enough text to compute an estimate. Only defined if `consolidated==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_ocrqa",
+          "range": "double",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Estimated OCR quality, between 0 and 1. May be null if there is no text or not enough text to compute an estimate. Only defined if `consolidated==True`.",
+            "maximum": 1,
+            "minimum": 0,
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "True if the CI's text went through the re-OCRisation process. Only defined if `consolidated==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_reocr_applied",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "True if the CI's text went through the re-OCRisation process. Only defined if `consolidated==True`.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "Model ID or name corresponding to the re-OCR process. Only defined if `consolidated==True` and `consolidated_re_ocr_applied==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_reocr_model_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Model ID or name corresponding to the re-OCR process. Only defined if `consolidated==True` and `consolidated_re_ocr_applied==True`.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Run ID corresponding to the re-OCR process. Only defined if `consolidated==True` and `consolidated_re_ocr_applied==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "consolidated_reocr_run_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Run ID corresponding to the re-OCR process. Only defined if `consolidated==True` and `consolidated_re_ocr_applied==True`.",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Content item ID (e.g. `GDL-1900-01-02-a-i0001`).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Content item ID (e.g. `GDL-1900-01-02-a-i0001`).",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-i[0-9]{4}$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "IIIF image link, depending on content item type (if `tp == image`). The field is present only when a meaningful link is available. It should follow the format: '{scheme}://{server}/{prefix}/{identifier}/info.json'.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "iiif_link",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "IIIF image link, depending on content item type (if `tp == image`). The field is present only when a meaningful link is available. It should follow the format: '{scheme}://{server}/{prefix}/{identifier}/info.json'.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        {
+          "description": "Language of the content item (deprecated).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "l",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Language of the content item (deprecated).",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Language of the content item.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "lg",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Language of the content item.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Language of the content item in the original OCR/OLR. Only defined if `consolidated==True`.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "lg_original",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Language of the content item in the original OCR/OLR. Only defined if `consolidated==True`.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "Page numbers over which the content item spans, in the case `sm` is in [`print`, `typescript`].",
+          "mappings": [],
+          "multivalued": true,
+          "name": "pp",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Page numbers over which the content item spans, in the case `sm` is in [`print`, `typescript`].",
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Reading order index of the content item, for the table of contents view on the interface. If not defined, the CI number (after 'i' in the ID) should be used.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "ro",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Reading order index of the content item, for the table of contents view on the interface. If not defined, the CI number (after 'i' in the ID) should be used.",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Record numbers over which the content item spans, in the case `sm` is `audio`.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "rr",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Record numbers over which the content item spans, in the case `sm` is `audio`.",
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "List of speakers (names or IDs based on availabilities) within boradcast.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "speakers",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "List of speakers (names or IDs based on availabilities) within boradcast.",
+            "items": {
+              "type": [
+                "object",
+                "string"
+              ]
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Title of the content item. The field is present only when a meaningful title is available.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "t",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Title of the content item. The field is present only when a meaningful title is available.",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        {
+          "description": "Type of the content item.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "tp",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Type of the content item.",
+            "enum": [
+              "article",
+              "ad",
+              "image",
+              "table",
+              "death_notice",
+              "weather",
+              "page",
+              "radio_bulletin",
+              "radio_broadcast_episode",
+              "chronicle",
+              "chapter",
+              "discussion",
+              "entertainment"
+            ],
+            "type": "string"
+          }
+        },
+        {
+          "description": "Deprecated, replaced by `media_title_variant` at issue's top-level. Variant title of the media title this CI is from (only in the case of BL newspapers). The field is present only when a meaningful variant title is available.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "var_t",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Deprecated, replaced by `media_title_variant` at issue's top-level. Variant title of the media title this CI is from (only in the case of BL newspapers). The field is present only when a meaningful variant title is available.",
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_issue.yaml",
+      "yaml": "  ImpressoMetadata:\n    extra_slots:\n      allowed: true\n    description: Metadata for an entry in the canonical issue, including its page or audio references.\n    annotations:\n      impresso: issue.$defs.metadata\n    attributes:\n      id:\n        required: true\n        description: Content item ID (e.g. `GDL-1900-01-02-a-i0001`).\n        annotations:\n          impresso: issue.$defs.metadata.id\n        pattern: ^[A-Za-z][A-Za-z0-9_]*-\\d{4}-\\d{2}-\\d{2}-[a-z]{1,2}-i[0-9]{4}$\n      lg:\n        required: true\n        description: Language of the content item.\n        annotations:\n          impresso: issue.$defs.metadata.lg\n          nullable: true\n      deprecated_language:\n        alias: l\n        description: Language of the content item (deprecated).\n        annotations:\n          impresso: issue.$defs.metadata.l\n      consolidated_reocr_applied:\n        description: True if the CI's text went through the re-OCRisation process. Only defined if\n          `consolidated==True`.\n        annotations:\n          impresso: issue.$defs.metadata.consolidated_reocr_applied\n        range: boolean\n      consolidated_reocr_run_id:\n        description: Run ID corresponding to the re-OCR process. Only defined if `consolidated==True`\n          and `consolidated_re_ocr_applied==True`.\n        annotations:\n          impresso: issue.$defs.metadata.consolidated_reocr_run_id\n      consolidated_reocr_model_id:\n        description: Model ID or name corresponding to the re-OCR process. Only defined if `consolidated==True`\n          and `consolidated_re_ocr_applied==True`.\n        annotations:\n          impresso: issue.$defs.metadata.consolidated_reocr_model_id\n      consolidated_ocrqa:\n        description: Estimated OCR quality, between 0 and 1. May be null if there is no text or not\n          enough text to compute an estimate. Only defined if `consolidated==True`.\n        annotations:\n          impresso: issue.$defs.metadata.consolidated_ocrqa\n          nullable: true\n        range: double\n        minimum_value: 0\n        maximum_value: 1\n      consolidated_char_len:\n        description: Character count of the consolidated text for the content item. May be null if\n          there is no text. Only defined if `consolidated==True`.\n        annotations:\n          impresso: issue.$defs.metadata.consolidated_char_len\n          nullable: true\n        range: integer\n        minimum_value: 0\n      lg_original:\n        description: Language of the content item in the original OCR/OLR. Only defined if `consolidated==True`.\n        annotations:\n          impresso: issue.$defs.metadata.lg_original\n          nullable: true\n      consolidated_lg:\n        pattern: '^[a-z]{2,3}$'\n        description: Computed language of the content item. Only defined if `consolidated==True`.\n        annotations:\n          impresso: issue.$defs.metadata.consolidated_lg\n          nullable: true\n      consolidated_langident_run_id:\n        description: Run ID corresponding to the lang ID process used to obtain the `consolidated_language`\n          value. Only defined if `consolidated==True`.\n        annotations:\n          impresso: issue.$defs.metadata.consolidated_langident_run_id\n      pp:\n        description: Page numbers over which the content item spans, in the case `sm` is in [`print`,\n          `typescript`].\n        annotations:\n          impresso: issue.$defs.metadata.pp\n        multivalued: true\n        range: integer\n      rr:\n        description: Record numbers over which the content item spans, in the case `sm` is `audio`.\n        annotations:\n          impresso: issue.$defs.metadata.rr\n        multivalued: true\n        range: integer\n      title:\n        alias: t\n        description: Title of the content item. The field is present only when a meaningful title\n          is available.\n        annotations:\n          impresso: issue.$defs.metadata.t\n          json_min_length: 1\n      tp:\n        required: true\n        description: Type of the content item.\n        annotations:\n          impresso: issue.$defs.metadata.tp\n        equals_string_in:\n        - article\n        - ad\n        - image\n        - table\n        - death_notice\n        - weather\n        - page\n        - radio_bulletin\n        - radio_broadcast_episode\n        - chronicle\n        - chapter\n        - discussion\n        - entertainment\n      iiif_link:\n        description: 'IIIF image link, depending on content item type (if `tp == image`). The field\n          is present only when a meaningful link is available. It should follow the format: ''{scheme}://{server}/{prefix}/{identifier}/info.json''.'\n        annotations:\n          impresso: issue.$defs.metadata.iiif_link\n          json_min_length: 1\n      ro:\n        description: Reading order index of the content item, for the table of contents view on the\n          interface. If not defined, the CI number (after 'i' in the ID) should be used.\n        annotations:\n          impresso: issue.$defs.metadata.ro\n        range: integer\n      speakers:\n        description: List of speakers (names or IDs based on availabilities) within boradcast.\n        annotations:\n          impresso: issue.$defs.metadata.speakers\n          json_item_types: object,string\n        multivalued: true\n      var_t:\n        description: Deprecated, replaced by `media_title_variant` at issue's top-level. Variant\n          title of the media title this CI is from (only in the case of BL newspapers). The field\n          is present only when a meaningful variant title is available.\n        annotations:\n          impresso: issue.$defs.metadata.var_t\n          json_min_length: 1\n      archival_note:\n        description: Plaintext archival note or description concerning the content item. In case\n          of audio radio broadcasts, this corresponds to the content summary provided with the metadata.\n          The field is present only when a meaningful note is available.\n        annotations:\n          impresso: issue.$defs.metadata.archival_note\n          json_min_length: 1\n    rules:\n    - preconditions:\n        slot_conditions:\n          consolidated_reocr_run_id:\n            required: true\n      postconditions:\n        slot_conditions:\n          consolidated_reocr_applied:\n            required: true\n          consolidated_ocrqa:\n            required: true\n          consolidated_char_len:\n            required: true\n    - preconditions:\n        slot_conditions:\n          consolidated_lg:\n            required: true\n      postconditions:\n        slot_conditions:\n          consolidated_langident_run_id:\n            required: true\n    exactly_one_of:\n    - slot_conditions:\n        pp:\n          required: true\n    - slot_conditions:\n        rr:\n          required: true\n"
+    },
+    "ImpressoStyle": {
+      "description": "One text style from the original OCR, identified locally within the issue.",
+      "fields": [
+        {
+          "description": "Font name",
+          "mappings": [],
+          "multivalued": false,
+          "name": "f",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Font name",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Font size",
+          "mappings": [],
+          "multivalued": false,
+          "name": "fs",
+          "range": "double",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Font size",
+            "type": "number"
+          }
+        },
+        {
+          "description": "Local ID of the style",
+          "mappings": [],
+          "multivalued": false,
+          "name": "id",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Local ID of the style",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "Color of the text (in RGB).",
+          "mappings": [],
+          "multivalued": true,
+          "name": "rgb",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "Color of the text (in RGB).",
+            "items": {
+              "type": "integer"
+            },
+            "minItems": 3,
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/impresso_issue.yaml",
+      "yaml": "  ImpressoStyle:\n    extra_slots:\n      allowed: true\n    description: One text style from the original OCR, identified locally within the issue.\n    annotations:\n      impresso: issue.s[]\n    attributes:\n      rgb:\n        description: Color of the text (in RGB).\n        annotations:\n          impresso: issue.s[].rgb\n        multivalued: true\n        minimum_cardinality: 3\n        range: integer\n      font:\n        alias: f\n        description: Font name\n        annotations:\n          impresso: issue.s[].f\n      fs:\n        description: Font size\n        annotations:\n          impresso: issue.s[].fs\n        range: double\n      id:\n        required: true\n        description: Local ID of the style\n        annotations:\n          impresso: issue.s[].id\n        range: integer\n"
+    }
+  },
+  "types": {},
+  "version": 1
+}

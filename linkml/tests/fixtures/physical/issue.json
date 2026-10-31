@@ -1,0 +1,107 @@
+{
+  "id": "FABLE-1900-01-01-a",
+  "cdt": "",
+  "ts": "1900-01-01T00:00:00Z",
+  "st": "newspaper",
+  "sm": "print",
+  "consolidated": false,
+  "consolidated_ts_original": "1900-01-01T00:00:00Z",
+  "media_title_variant": "Fable",
+  "olr": true,
+  "i": [
+    {
+      "m": {
+        "id": "FABLE-1900-01-01-a-i0001",
+        "lg": null,
+        "l": "en",
+        "consolidated_reocr_applied": false,
+        "consolidated_reocr_run_id": "run",
+        "consolidated_reocr_model_id": "model",
+        "consolidated_ocrqa": 0.5,
+        "consolidated_char_len": 0,
+        "lg_original": null,
+        "consolidated_lg": "en",
+        "consolidated_langident_run_id": "language-run",
+        "pp": [
+          1
+        ],
+        "t": "Fictional title",
+        "tp": "article",
+        "iiif_link": "image",
+        "ro": 1,
+        "speakers": [
+          "Fictional speaker",
+          {}
+        ],
+        "var_t": "Fictional newspaper",
+        "archival_note": "Fictional note"
+      },
+      "c": null,
+      "l": {
+        "id": [
+          "legacy"
+        ],
+        "parts": [
+          {
+            "comp_role": null,
+            "comp_id": [
+              "legacy"
+            ],
+            "comp_fileid": "fictional.xml",
+            "comp_page_no": [
+              1
+            ]
+          }
+        ],
+        "source": "fictional.xml"
+      },
+      "pOf": null,
+      "section_title": {
+        "title_text": "Fictional section",
+        "composing_ci_ids": [
+          "FABLE-1900-01-01-a-i0001"
+        ],
+        "section_id": "fictional-section",
+        "heading_legacy_parts": [
+          {
+            "comp_role": null,
+            "comp_id": [
+              "legacy"
+            ],
+            "comp_fileid": "fictional.xml",
+            "comp_page_no": [
+              1
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "s": [
+    {
+      "rgb": [
+        0,
+        0,
+        0
+      ],
+      "f": "Fictional font",
+      "fs": 1.5,
+      "id": 1
+    }
+  ],
+  "pp": [
+    "FABLE-1900-01-01-a-p0001"
+  ],
+  "rr": [],
+  "n": [
+    {},
+    null
+  ],
+  "iiif_manifest_uri": "manifest",
+  "is_exact_date": false,
+  "rc": "Fictional channel",
+  "rp": "Fictional program",
+  "provided_metadata": {
+    "fictional": true
+  }
+}

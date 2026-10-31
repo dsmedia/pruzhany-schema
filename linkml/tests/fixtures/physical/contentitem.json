@@ -1,0 +1,68 @@
+{
+  "id": "FABLE-1900-01-01-a-i0001",
+  "ts": "1900-01-01T00:00:00Z",
+  "d": "1900-01-01",
+  "cc": false,
+  "olr": true,
+  "st": "newspaper",
+  "sm": "print",
+  "tp": null,
+  "lg": "en",
+  "rc": null,
+  "rp": null,
+  "media_title_variant": "Fable",
+  "t": null,
+  "title": "Fictional title",
+  "ro": 2,
+  "consolidated": false,
+  "consolidated_reocr_applied": false,
+  "consolidated_ocrqa": null,
+  "lg_original": null,
+  "is_exact_date": false,
+  "section_title": {
+    "title_text": "Fictional section",
+    "composing_ci_ids": [
+      "FABLE-1900-01-01-a-i0001"
+    ],
+    "section_id": "fictional-section"
+  },
+  "pp": [
+    1.5
+  ],
+  "ft": "Fictional words",
+  "rb": [
+    15
+  ],
+  "pb": [
+    15
+  ],
+  "lb": [
+    15
+  ],
+  "ppreb": [
+    {
+      "id": "FABLE-1900-01-01-a-p0001",
+      "n": 1,
+      "t": [
+        {
+          "c": [
+            0,
+            0,
+            4,
+            2
+          ],
+          "s": 0,
+          "l": 9
+        }
+      ],
+      "r": [
+        [
+          0,
+          0,
+          8,
+          2
+        ]
+      ]
+    }
+  ]
+}
