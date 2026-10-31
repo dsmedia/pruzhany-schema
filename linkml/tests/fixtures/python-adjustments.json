@@ -74,6 +74,11 @@
       },
       {
         "value": "1.1.0",
+        "valid": true,
+        "python_type": "str"
+      },
+      {
+        "value": "1.2.0",
         "valid": false
       }
     ]

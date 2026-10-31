@@ -153,11 +153,13 @@ stay explicit for existing source-inspecting gates.
 `zod/tests/frozen/` holds test-only shapes from `main` **e3e80c1**. Strict `tsc` compares every
 exported inferred schema type with that baseline, including all six documents, and repeats the
 site's `.pick`, `.extend`, `.shape`, `.safeExtend` and `.omit` projections. The bun-only tests compare
-each public schema's kind and verify that its JSON export never widens those frozen shapes,
-allowing only the measured tightenings and equivalent integer/digest spellings. Negative controls
-reject weakened types, patterns, bounds, URI formats and required keys. The frozen type-equality
-assertions are unchanged; only round one's obsolete byte-identity/stripping assertions follow
-ticket 20's revised measure. Existing behavior tests continue to exercise retained refinements.
+each public schema's kind and verify its JSON contract against those frozen shapes,
+allowing only the measured tightenings and equivalent integer/digest spellings. The owner's
+31 October 2026 site-content 1.1.0 release adds exactly that document-version literal to the
+three affected type and JSON comparisons; the frozen files stay unchanged. Negative controls
+reject weakened types, patterns, bounds, URI formats and required keys. Round one's obsolete
+byte-identity/stripping assertions follow ticket 20's revised measure. Existing behavior tests
+continue to exercise retained refinements.
 Backend tests plant unknown constructs, drift, missing/extra
 files and cycles. `bin/verify zod` typechecks imported generated/test subfolders and checks their
 formatting recursively; `bin/verify linkml` checks generation and runs the backend tests.

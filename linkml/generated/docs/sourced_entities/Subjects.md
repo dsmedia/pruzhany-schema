@@ -9,7 +9,7 @@ search:
 
 
 
-_Subjects: the values of subjects in vocabulary/site-content.json, version 1.0.0._
+_Subjects: the values of subjects in vocabulary/site-content.json, version 1.1.0._
 
 
 
@@ -66,7 +66,7 @@ URI: [pc:Subjects](https://pruzhany.org/ns/sourced-entities#Subjects)
 ```yaml
 name: Subjects
 description: 'Subjects: the values of subjects in vocabulary/site-content.json, version
-  1.0.0.'
+  1.1.0.'
 from_schema: https://pruzhany.org/ns/sourced_entities
 rank: 1000
 permissible_values:

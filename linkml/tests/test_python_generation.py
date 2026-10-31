@@ -52,6 +52,14 @@ class PythonGeneration(unittest.TestCase):
         self.assertEqual(previous['commit'], self.profile['baseline_commit'])
         for name, old in previous['models'].items():
             with self.subTest(model=name):
+                # Owner-approved site-content 1.1.0, 31 October 2026; preserve the
+                # frozen fixture and prescribe only the newly accepted stamp.
+                content = (old['schema'] if name == 'ContentItemsData' else
+                           old['schema'].get('$defs', {}).get('ContentItemsData'))
+                if content is not None:
+                    version = content['properties']['vocabulary_version']
+                    self.assertEqual(version['enum'], ['0.1.0', '1.0.0'])
+                    version['enum'] = ['0.1.0', '1.0.0', '1.1.0']
                 model = getattr(models(), name)
                 new = model.model_json_schema()
                 self.assertEqual(backend.canonical(new, new.get('$defs', {})),
