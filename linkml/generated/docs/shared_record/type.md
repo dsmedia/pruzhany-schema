@@ -22,6 +22,7 @@ URI: [pc:type](https://pruzhany.org/ns/sourced-entities#type)
 | --- | --- | --- |
 | [SharedFact](SharedFact.md) | One source's statement as the shared record keeps it: a fact with its subject, its form and its evidence located on the printed page where the site writer found it. |  no  |
 | [SourcedRelation](SourcedRelation.md) | One source's statement that a person is related to another, from the subject to the relative, of a released kinship type, or of type other with a proposed type. |  no  |
+| [PlaceIdentifier](PlaceIdentifier.md) | One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge. |  no  |
 | [SharedPlace](SharedPlace.md) | One place of the record: its names, its kind, the place it lies in, its coordinates and its outside identifiers. |  no  |
 | [SharedEvent](SharedEvent.md) | One life event, once for each happening across every issue (a birth, a wedding, a death, a memorial and so on): its kind, its main people and their parts, its dates and its place. |  no  |
 | [Fact](Fact.md) | One source's statement about a person, a family or a relation, kept as that source gives it, with its evidence, its confidence, its standing and who recorded it. What it means depends on its type (see FactTypes). |  no  |
@@ -38,7 +39,7 @@ URI: [pc:type](https://pruzhany.org/ns/sourced-entities#type)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [SourcedRelation](SourcedRelation.md), [SharedPlace](SharedPlace.md), [SharedEvent](SharedEvent.md), [Fact](Fact.md) |
+| Domain Of | [SourcedRelation](SourcedRelation.md), [PlaceIdentifier](PlaceIdentifier.md), [SharedPlace](SharedPlace.md), [SharedEvent](SharedEvent.md), [Fact](Fact.md) |
 
 
 
@@ -73,6 +74,7 @@ URI: [pc:type](https://pruzhany.org/ns/sourced-entities#type)
 name: type
 domain_of:
 - SourcedRelation
+- PlaceIdentifier
 - SharedPlace
 - SharedEvent
 - Fact

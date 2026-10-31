@@ -50,13 +50,35 @@ class PythonGeneration(unittest.TestCase):
     def test_all_previous_model_fields_requiredness_enums_and_config_are_preserved(self):
         previous = json.loads((LINKML / 'tests/fixtures/python-baseline.json').read_text())
         self.assertEqual(previous['commit'], self.profile['baseline_commit'])
+        # Ticket 03's exact optional additions, applied to the immutable baseline and
+        # its nested definitions. All previous constraints/defaults/config remain checked.
+        additions = {
+            'PlaceIdentifier': {'type': {'anyOf': [
+                {'const': 'old_identifier', 'type': 'string'}, {'type': 'null'}], 'default': None}},
+            **{name: {'identifiers': {'anyOf': [
+                {'items': {'$ref': '#/$defs/PlaceIdentifier'}, 'minItems': 1, 'type': 'array'},
+                {'type': 'null'}], 'default': None}}
+               for name in ('SharedPerson', 'SharedOrganization')},
+        }
         for name, old in previous['models'].items():
             with self.subTest(model=name):
+                expected = copy.deepcopy(old['schema'])
+                for class_name, fields in additions.items():
+                    target = expected if class_name == name else expected.get('$defs', {}).get(class_name)
+                    if target is not None:
+                        target['properties'].update(copy.deepcopy(fields))
+                if name in ('SharedPerson', 'SharedOrganization'):
+                    expected.setdefault('$defs', {}).update(copy.deepcopy(
+                        previous['models']['PlaceIdentifier']['schema'].get('$defs', {})))
+                    expected['$defs']['PlaceIdentifier'] = copy.deepcopy(
+                        previous['models']['PlaceIdentifier']['schema'])
+                    expected['$defs']['PlaceIdentifier']['properties'].update(
+                        copy.deepcopy(additions['PlaceIdentifier']))
                 model = getattr(models(), name)
                 new = model.model_json_schema()
                 self.assertEqual(backend.canonical(new, new.get('$defs', {})),
-                                 backend.canonical(old['schema'], old['schema'].get('$defs', {})))
-                self.assertEqual(list(model.model_fields), old['order'])
+                                 backend.canonical(expected, expected.get('$defs', {})))
+                self.assertEqual(list(model.model_fields), old['order'] + list(additions.get(name, {})))
                 self.assertEqual(model.model_config, old['config'])
                 for field in old['schema']['properties']:
                     before = old['schema']['properties'][field]

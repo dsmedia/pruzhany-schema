@@ -314,6 +314,7 @@ attributes:
     rank: 1000
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact
@@ -414,6 +415,7 @@ attributes:
     owner: SourcedRelation
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact

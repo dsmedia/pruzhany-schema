@@ -219,19 +219,24 @@ def _SharedRecord__record_references(self):
     for person in self.persons:
         if person.fate and any(id not in facts or facts[id].subject_id != person.id for id in person.fate.rests_on):
             errors.append('fate must rest on own facts')
-    for entities, label in [(self.places, 'places'), (self.holders, 'holders')]:
+    for entities, label, singular in [(self.places, 'places', 'place'), (self.holders, 'holders', 'holder'),
+                                      (self.persons, 'persons', 'person'),
+                                      (self.organizations, 'organizations', 'organisation')]:
         identified = {}
-        for place in entities:
-            errors += unique_ids([(i.source_id, i.value) for i in place.identifiers or []], ('place' if label == 'places' else 'holder') + ' identifier')
-            for identifier in place.identifiers or []:
+        active_ids = {entity.id for entity in entities}
+        for entity in entities:
+            errors += unique_ids([(i.source_id, i.value) for i in entity.identifiers or []], singular + ' identifier')
+            for identifier in entity.identifiers or []:
                 if identifier.source_id not in sources:
                     errors.append('unknown identifier source')
                 if identifier.url and not on_host(identifier.url, hosts.get(identifier.source_id)):
                     errors.append('identifier off its source host')
+                if identifier.type == 'old_identifier' and identifier.value in active_ids:
+                    errors.append('old identifier is still an active id')
                 key = (identifier.source_id, identifier.value)
-                if identified.get(key, place.id) != place.id:
+                if identified.get(key, entity.id) != entity.id:
                     errors.append(f'one identifier on two {label}')
-                identified[key] = place.id
+                identified[key] = entity.id
     by_place = {p.id: p for p in self.places}
     for place in self.places:
         seen = set()

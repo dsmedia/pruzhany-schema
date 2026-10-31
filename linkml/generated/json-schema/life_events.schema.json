@@ -212,6 +212,14 @@
             "title": "HolocaustFateTypes",
             "type": "string"
         },
+        "IdentifierTypes": {
+            "description": "Identifier types approved in ADR 0001 and linked-data ticket 03.",
+            "enum": [
+                "old_identifier"
+            ],
+            "title": "IdentifierTypes",
+            "type": "string"
+        },
         "ImpressoTypes": {
             "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
             "enum": [

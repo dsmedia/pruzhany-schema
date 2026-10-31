@@ -509,6 +509,7 @@ attributes:
     owner: SharedFact
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact

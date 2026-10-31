@@ -473,13 +473,14 @@ class PagesData(BaseModel):
 
 
 class PlaceIdentifier(Strict):
-    "One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names."
+    "One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge."
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     source_id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     value: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     url: Annotated[str, Field(pattern='^https://[^\\s/?#]+[^\\s]*$')] | None = Field(default=None)
     accessed: Annotated[Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')], AfterValidator(partial(_typed_call, 'sourced_entities', 'valid_date', [], True))] = Field(default=...)
     attribution: Attribution = Field(default=...)
+    type: Literal['old_identifier'] | None = Field(default=None)
 
 
 class PrintedAddress(Strict):
@@ -591,7 +592,7 @@ class SharedFamily(Strict):
 
 
 class SharedPerson(Strict):
-    'One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait.'
+    'One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers.'
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     portrait: MediaPortrait | None = Field(default=None)
     id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
@@ -599,6 +600,7 @@ class SharedPerson(Strict):
     names: list[SharedName] = Field(default=...)
     gender: Literal['female', 'male', 'unknown'] = Field(default=...)
     fate: Fate | None = Field(default=None)
+    identifiers: Annotated[list[PlaceIdentifier], Field(min_length=1)] | None = Field(default=None)
 
 
 class SharedRecord(Strict):
@@ -791,11 +793,12 @@ class SharedName(Name):
 
 
 class SharedOrganization(SharedFamily):
-    'One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts.'
+    'One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts.'
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     name: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     names: list[Name] = Field(default=...)
+    identifiers: Annotated[list[PlaceIdentifier], Field(min_length=1)] | None = Field(default=None)
 
 
 class SharedPlace(SharedFamily):

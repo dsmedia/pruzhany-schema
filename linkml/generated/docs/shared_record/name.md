@@ -20,11 +20,11 @@ URI: [pc:name](https://pruzhany.org/ns/sourced-entities#name)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [SharedPerson](SharedPerson.md) | One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait. |  no  |
+| [SharedPerson](SharedPerson.md) | One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers. |  no  |
 | [SharedFamily](SharedFamily.md) | One family of the record: its id, the name shown and its names. |  no  |
 | [Holder](Holder.md) | Who holds a source: an institution, a family or a private person, with its outside identifiers and its web host. A private holder's name is never published. |  no  |
 | [SharedPlace](SharedPlace.md) | One place of the record: its names, its kind, the place it lies in, its coordinates and its outside identifiers. |  no  |
-| [SharedOrganization](SharedOrganization.md) | One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts. |  no  |
+| [SharedOrganization](SharedOrganization.md) | One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts. |  no  |
 | [SharedEvent](SharedEvent.md) | One life event, once for each happening across every issue (a birth, a wedding, a death, a memorial and so on): its kind, its main people and their parts, its dates and its place. |  no  |
 
 

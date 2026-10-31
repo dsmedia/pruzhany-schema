@@ -32,6 +32,14 @@ approve publication of evidence or private notes.
 
 ## Approval history
 
+- **31 October 2026 — retained merged identifiers.** Linked-data ticket 03 and
+  the owner's implementation request explicitly add `old_identifier`, as already
+  decided in ADR 0001 and standards foundation vetting §4. The value is
+  `pc:old_identifier`, a `rico:IdentifierType` concept; the identifier's `type`
+  uses `rico:hasIdentifierType`. Its definition is in
+  `vocabulary/identifiers.json` and its declaration in `identifiers.profile.ttl`.
+  This adds no fact or event type and changes no released vocabulary snapshot.
+  Real merge evidence stays in the private steps record; examples here are fictional.
 - **20 October 2026 — standing process and vocabulary 1.0.0.** The owner chose
   the standards-first mapping rule and batch approval with real examples. The
   owner then approved the recommended types in advance for that release and

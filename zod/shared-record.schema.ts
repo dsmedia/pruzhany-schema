@@ -139,15 +139,7 @@ export const SourcedRelationSchema = FactSchema.safeExtend({
 });
 export type SourcedRelation = z.infer<typeof SourcedRelationSchema>;
 
-export const SharedPersonSchema = SharedPersonShape.extend({
-	portrait: MediaPortraitSchema.nullish(),
-	names: z.array(SharedNameSchema),
-	fate: FateSchema.nullish(),
-});
-export type SharedPerson = z.infer<typeof SharedPersonSchema>;
-export const SharedFamilySchema = SharedFamilyShape.extend({ names: z.array(NameSchema) });
-export type SharedFamily = z.infer<typeof SharedFamilySchema>;
-// An outside id of a place (rico:Identifier), read on its authority's own pages: the
+// An evidenced id (rico:Identifier), shared by persons, organisations, places and holders: the
 // authority list is a registered source, so its host and address form are described once.
 // Carried only on evidence, never from a name match (vetting §4).
 export const PlaceIdentifierSchema = PlaceIdentifierShape.extend({
@@ -155,6 +147,16 @@ export const PlaceIdentifierSchema = PlaceIdentifierShape.extend({
 	attribution: AttributionSchema,
 });
 export type PlaceIdentifier = z.infer<typeof PlaceIdentifierSchema>;
+
+export const SharedPersonSchema = SharedPersonShape.extend({
+	portrait: MediaPortraitSchema.nullish(),
+	names: z.array(SharedNameSchema),
+	fate: FateSchema.nullish(),
+	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
+});
+export type SharedPerson = z.infer<typeof SharedPersonSchema>;
+export const SharedFamilySchema = SharedFamilyShape.extend({ names: z.array(NameSchema) });
+export type SharedFamily = z.infer<typeof SharedFamilySchema>;
 // Same evidence and uniqueness rules as places; a private holder's name is never public.
 export const HolderSchema = HolderShape.extend({
 	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
@@ -172,6 +174,7 @@ export const SharedPlaceSchema = SharedPlaceShape.extend({
 export type SharedPlace = z.infer<typeof SharedPlaceSchema>;
 export const SharedOrganizationSchema = SharedOrganizationShape.extend({
 	names: z.array(NameSchema),
+	identifiers: z.array(PlaceIdentifierSchema).min(1).nullish(),
 });
 export type SharedOrganization = z.infer<typeof SharedOrganizationSchema>;
 export const SharedEventSchema = SharedEventShape.extend({
@@ -374,26 +377,31 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 	for (const p of v.persons)
 		if (p.fate?.rests_on.some((id) => facts.get(id)?.subject_id !== p.id))
 			errors.push('fate must rest on own facts');
-	for (const [entities, label] of [
-		[v.places, 'places'],
-		[v.holders ?? [], 'holders'],
+	for (const [entities, label, singular] of [
+		[v.places, 'places', 'place'],
+		[v.holders ?? [], 'holders', 'holder'],
+		[v.persons, 'persons', 'person'],
+		[v.organizations, 'organizations', 'organisation'],
 	] as const) {
 		const identified = new Map<string, string>();
-		for (const place of entities) {
+		const activeIds = new Set(entities.map((entity) => entity.id));
+		for (const entity of entities) {
 			errors.push(
 				...uniqueIds(
-					(place.identifiers ?? []).map((i) => JSON.stringify([i.source_id, i.value])),
-					`${label === 'places' ? 'place' : 'holder'} identifier`
+					(entity.identifiers ?? []).map((i) => JSON.stringify([i.source_id, i.value])),
+					`${singular} identifier`
 				)
 			);
-			for (const identifier of place.identifiers ?? []) {
+			for (const identifier of entity.identifiers ?? []) {
 				if (!sources.has(identifier.source_id)) errors.push('unknown identifier source');
 				if (identifier.url && !onHost(identifier.url, hosts.get(identifier.source_id)))
 					errors.push('identifier off its source host');
+				if (identifier.type === 'old_identifier' && activeIds.has(identifier.value))
+					errors.push('old identifier is still an active id');
 				const key = JSON.stringify([identifier.source_id, identifier.value]);
-				if ((identified.get(key) ?? place.id) !== place.id)
+				if ((identified.get(key) ?? entity.id) !== entity.id)
 					errors.push(`one identifier on two ${label}`);
-				identified.set(key, place.id);
+				identified.set(key, entity.id);
 			}
 		}
 	}

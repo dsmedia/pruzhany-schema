@@ -6,7 +6,7 @@ search:
 # Class: PlaceIdentifier 
 
 
-_One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names._
+_One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge._
 
 
 
@@ -39,6 +39,17 @@ URI: [rico:Identifier](https://www.ica.org/standards/RiC/ontology#Identifier)
         
       PlaceIdentifier : source_id
         
+      PlaceIdentifier : type
+        
+          
+    
+        
+        
+        PlaceIdentifier --> "0..1" IdentifierTypes : type
+        click IdentifierTypes href "../IdentifierTypes/"
+    
+
+        
       PlaceIdentifier : url
         
       PlaceIdentifier : value
@@ -67,6 +78,7 @@ URI: [rico:Identifier](https://www.ica.org/standards/RiC/ontology#Identifier)
 | [url](url.md) | 0..1 <br/> [HttpsUri](HttpsUri.md) | The identifier's page on the authority's host. | direct |
 | [accessed](accessed.md) | 1 <br/> [IsoDay](IsoDay.md) | The day it was read on its authority's own pages. | direct |
 | [attribution](attribution.md) | 1 <br/> [Attribution](Attribution.md) | Who added it, and on what day. | direct |
+| [type](type.md) | 0..1 <br/> [IdentifierTypes](IdentifierTypes.md) | old_identifier marks a merged id retained permanently on the surviving record. Absent for an ordinary authority identifier; source_id still names its authority. | direct |
 
 
 
@@ -76,8 +88,10 @@ URI: [rico:Identifier](https://www.ica.org/standards/RiC/ontology#Identifier)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
+| [SharedPerson](SharedPerson.md) | [identifiers](identifiers.md) | range | [PlaceIdentifier](PlaceIdentifier.md) |
 | [Holder](Holder.md) | [identifiers](identifiers.md) | range | [PlaceIdentifier](PlaceIdentifier.md) |
 | [SharedPlace](SharedPlace.md) | [identifiers](identifiers.md) | range | [PlaceIdentifier](PlaceIdentifier.md) |
+| [SharedOrganization](SharedOrganization.md) | [identifiers](identifiers.md) | range | [PlaceIdentifier](PlaceIdentifier.md) |
 
 
 
@@ -125,8 +139,9 @@ URI: [rico:Identifier](https://www.ica.org/standards/RiC/ontology#Identifier)
 <details>
 ```yaml
 name: PlaceIdentifier
-description: One outside identifier of a place or a holder, read on its authority's
-  own pages and carried only on that evidence, never from a match of names.
+description: One identifier of a person, organisation, place or holder, carried only
+  on evidence, never from a match of names. Outside ids are read on their authority's
+  own pages; merged local ids cite the registered source of the adjudicated merge.
 from_schema: https://pruzhany.org/ns/shared_record
 rank: 1000
 attributes:
@@ -196,6 +211,20 @@ attributes:
     range: Attribution
     required: true
     inlined: true
+  type:
+    name: type
+    description: old_identifier marks a merged id retained permanently on the surviving
+      record. Absent for an ordinary authority identifier; source_id still names its
+      authority.
+    from_schema: https://pruzhany.org/ns/shared_record
+    slot_uri: rico:hasIdentifierType
+    domain_of:
+    - SourcedRelation
+    - PlaceIdentifier
+    - SharedPlace
+    - SharedEvent
+    - Fact
+    range: IdentifierTypes
 class_uri: rico:Identifier
 
 ```
@@ -206,8 +235,9 @@ class_uri: rico:Identifier
 <details>
 ```yaml
 name: PlaceIdentifier
-description: One outside identifier of a place or a holder, read on its authority's
-  own pages and carried only on that evidence, never from a match of names.
+description: One identifier of a person, organisation, place or holder, carried only
+  on evidence, never from a match of names. Outside ids are read on their authority's
+  own pages; merged local ids cite the registered source of the adjudicated merge.
 from_schema: https://pruzhany.org/ns/shared_record
 rank: 1000
 attributes:
@@ -282,6 +312,21 @@ attributes:
     range: Attribution
     required: true
     inlined: true
+  type:
+    name: type
+    description: old_identifier marks a merged id retained permanently on the surviving
+      record. Absent for an ordinary authority identifier; source_id still names its
+      authority.
+    from_schema: https://pruzhany.org/ns/shared_record
+    slot_uri: rico:hasIdentifierType
+    owner: PlaceIdentifier
+    domain_of:
+    - SourcedRelation
+    - PlaceIdentifier
+    - SharedPlace
+    - SharedEvent
+    - Fact
+    range: IdentifierTypes
 class_uri: rico:Identifier
 
 ```

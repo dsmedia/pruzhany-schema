@@ -1,0 +1,6 @@
+@prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
+@prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+pc:old_identifier a rico:IdentifierType, skos:Concept ; skos:prefLabel "Old identifier"@en ; rdfs:comment "RiC-O IdentifierType gives old identifier as an example but does not mint that value; this concept types our retained merged identifiers." .

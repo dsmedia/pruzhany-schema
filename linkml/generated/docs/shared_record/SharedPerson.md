@@ -6,7 +6,7 @@ search:
 # Class: SharedPerson 
 
 
-_One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait._
+_One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers._
 
 
 
@@ -47,6 +47,17 @@ URI: [ehri:Person](http://lod.ehri-project-test.eu/ontology#Person)
 
         
       SharedPerson : id
+        
+      SharedPerson : identifiers
+        
+          
+    
+        
+        
+        SharedPerson --> "1..*" PlaceIdentifier : identifiers
+        click PlaceIdentifier href "../PlaceIdentifier/"
+    
+
         
       SharedPerson : name
         
@@ -97,6 +108,7 @@ URI: [ehri:Person](http://lod.ehri-project-test.eu/ontology#Person)
 | [names](names.md) | 1..* <br/> [SharedName](SharedName.md) | Every name the person is known by, printed or supplied, with where it is found. | direct |
 | [gender](gender.md) | 1 <br/> [Gender](Gender.md) | The person's gender, or unknown. | direct |
 | [fate](fate.md) | 0..1 <br/> [Fate](Fate.md) | What became of the person in the Holocaust, as far as the record shows. | direct |
+| [identifiers](identifiers.md) | 1..* <br/> [PlaceIdentifier](PlaceIdentifier.md) | Evidenced identifiers of this person, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record. | direct |
 
 
 
@@ -155,7 +167,8 @@ URI: [ehri:Person](http://lod.ehri-project-test.eu/ontology#Person)
 ```yaml
 name: SharedPerson
 description: 'One person of the record, across every issue: their id, the name shown,
-  every name they are known by, their gender, what became of them, and their portrait.'
+  every name they are known by, their gender, what became of them, their portrait
+  and evidenced identifiers.'
 from_schema: https://pruzhany.org/ns/shared_record
 rank: 1000
 attributes:
@@ -236,6 +249,23 @@ attributes:
     - SharedPerson
     range: Fate
     inlined: true
+  identifiers:
+    name: identifiers
+    description: Evidenced identifiers of this person, never inferred from a name
+      match. A merged local id is kept here as an old_identifier on the surviving
+      record.
+    from_schema: https://pruzhany.org/ns/shared_record
+    rank: 1000
+    slot_uri: rico:hasOrHadIdentifier
+    domain_of:
+    - SharedPerson
+    - Holder
+    - SharedPlace
+    - SharedOrganization
+    range: PlaceIdentifier
+    multivalued: true
+    inlined_as_list: true
+    minimum_cardinality: 1
 class_uri: ehri:Person
 
 ```
@@ -247,7 +277,8 @@ class_uri: ehri:Person
 ```yaml
 name: SharedPerson
 description: 'One person of the record, across every issue: their id, the name shown,
-  every name they are known by, their gender, what became of them, and their portrait.'
+  every name they are known by, their gender, what became of them, their portrait
+  and evidenced identifiers.'
 from_schema: https://pruzhany.org/ns/shared_record
 rank: 1000
 attributes:
@@ -335,6 +366,25 @@ attributes:
     - SharedPerson
     range: Fate
     inlined: true
+  identifiers:
+    name: identifiers
+    description: Evidenced identifiers of this person, never inferred from a name
+      match. A merged local id is kept here as an old_identifier on the surviving
+      record.
+    from_schema: https://pruzhany.org/ns/shared_record
+    rank: 1000
+    slot_uri: rico:hasOrHadIdentifier
+    owner: SharedPerson
+    domain_of:
+    - SharedPerson
+    - Holder
+    - SharedPlace
+    - SharedOrganization
+    range: PlaceIdentifier
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    minimum_cardinality: 1
 class_uri: ehri:Person
 
 ```

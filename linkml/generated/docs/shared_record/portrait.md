@@ -25,7 +25,7 @@ URI: [pc:media_portrait](https://pruzhany.org/ns/sourced-entities#media_portrait
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [SharedPerson](SharedPerson.md) | One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait. |  no  |
+| [SharedPerson](SharedPerson.md) | One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers. |  no  |
 
 
 

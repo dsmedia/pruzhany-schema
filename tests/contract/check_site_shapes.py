@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 def fixture_cases():
     for filename in ['site-shapes.fixtures.json', 'life-event-shapes.fixtures.json',
                      'death-event-shapes.fixtures.json', 'sources-citations.fixtures.json',
-                     'media-shapes.fixtures.json']:
+                     'media-shapes.fixtures.json', 'identifiers.fixtures.json']:
         yield from cases_from_file(filename)
 
 

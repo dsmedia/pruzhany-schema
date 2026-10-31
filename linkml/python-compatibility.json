@@ -1532,7 +1532,7 @@
 				"extra": "forbid",
 				"strict": true
 			},
-			"order": ["source_id", "value", "url", "accessed", "attribution"],
+			"order": ["source_id", "value", "url", "accessed", "attribution", "type"],
 			"fields": {
 				"accessed": {
 					"type_hooks": [
@@ -2266,7 +2266,7 @@
 				"extra": "forbid",
 				"strict": true
 			},
-			"order": ["id", "name", "names"],
+			"order": ["id", "name", "names", "identifiers"],
 			"parent": "SharedFamily"
 		},
 		"SharedPerson": {
@@ -2275,7 +2275,7 @@
 				"extra": "forbid",
 				"strict": true
 			},
-			"order": ["portrait", "id", "name", "names", "gender", "fate"]
+			"order": ["portrait", "id", "name", "names", "gender", "fate", "identifiers"]
 		},
 		"SharedPlace": {
 			"module": "shared_record",

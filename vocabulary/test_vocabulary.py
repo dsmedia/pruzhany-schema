@@ -436,17 +436,19 @@ class VocabularyTests(unittest.TestCase):
         reading = json.loads((self.root / 'vocabulary/reading-status.json').read_text(encoding='utf-8'))
         site = json.loads(self.site_path.read_text(encoding='utf-8'))
         data = json.loads(self.path.read_text(encoding='utf-8'))
+        identifiers = json.loads((self.root / 'vocabulary/identifiers.json').read_text(encoding='utf-8'))
         return ([('sourced-entities', group, entries) for group, entries in data['groups'].items()]
                 + [('site-content', 'impresso_types', [{'id': value} for value in site['impresso_types']])]
                 + [('site-content', group, entries) for group, entries in site['groups'].items()]
                 + [('reading-status', 'reading_status_value',
-                    [{'id': key, **entry} for key, entry in reading.items() if key != 'reading_status'])])
+                    [{'id': key, **entry} for key, entry in reading.items() if key != 'reading_status'])]
+                + [('identifiers', group, entries) for group, entries in identifiers.items()])
 
     def test_linkml_enums_hold_every_group_and_every_id(self):
         schema = generator.linkml_vocabulary(self.root)
         groups = self.linkml_groups()
         self.assertEqual(list(schema['enums']), [generator.contract_name(group) for _, group, _ in groups])
-        self.assertEqual(len(schema['enums']), 24)
+        self.assertEqual(len(schema['enums']), 25)
         prefixes = {'rico': 'rico:', 'ehri': 'ehri:'}
         for source, group, entries in groups:
             enum = schema['enums'][generator.contract_name(group)]
@@ -487,10 +489,11 @@ class VocabularyTests(unittest.TestCase):
         root = HERE.parent
         schema = generator.linkml_vocabulary(root)
         zod = ''.join((root / name).read_text(encoding='utf-8') for name in (
-            'zod/sourced-entities.vocabulary.ts', 'zod/site-content.vocabulary.ts', 'zod/content-item.schema.ts'))
+            'zod/sourced-entities.vocabulary.ts', 'zod/site-content.vocabulary.ts', 'zod/content-item.schema.ts',
+            'zod/identifiers.vocabulary.ts'))
         python = ''.join((root / name).read_text(encoding='utf-8') for name in (
             'pydantic/sourced_entities_vocabulary.py', 'pydantic/site_content_vocabulary.py',
-            'pydantic/content_item.py'))
+            'pydantic/content_item.py', 'pydantic/identifiers_vocabulary.py'))
         for name, enum in schema['enums'].items():
             with self.subTest(enum=name):
                 body = re.search(r'export const ' + name + r'Schema = z\.enum\(\[(.*?)\]\)', zod, re.S)

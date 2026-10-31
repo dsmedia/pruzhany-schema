@@ -328,6 +328,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/sourced_entities
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact
@@ -642,6 +643,7 @@ attributes:
     owner: Fact
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact

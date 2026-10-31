@@ -39,7 +39,7 @@ Name: pruzhany_shared_record
 | [MediaWithdrawal](MediaWithdrawal.md) | That a medium was withdrawn from the site, on what day and why; its record stays. |
 | [Mention](Mention.md) | The older form of a person's mention in a piece of the paper: the person, the piece, the name as printed and the person's role there. The site's current mention is IssueMention. |
 | [Name](Name.md) | One name of a person, a family, an organisation or a place, of one kind (printed, birth, married, supplied and so on), in one script. A person's, a family's and an organisation's names are agent names and a place's are place names (vocabulary/ site-content.json, bindings agent_name and place_name), so the class itself names no single term. |
-| [PlaceIdentifier](PlaceIdentifier.md) | One outside identifier of a place or a holder, read on its authority's own pages and carried only on that evidence, never from a match of names. |
+| [PlaceIdentifier](PlaceIdentifier.md) | One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge. |
 | [PrintedAddress](PrintedAddress.md) | Where some printed words stand: the page picture, a box on it in the picture's own pixels, and the words read in that box. |
 | [PrintedTitle](PrintedTitle.md) | A title as printed in the paper: its words and where each line of them stands. |
 | [PublicMedia](PublicMedia.md) | One held or linked copy of a registered source (a photograph, document, recording or film), as the public may see it: what it is, what it shows and says, its review, its terms and its served copies. |
@@ -48,8 +48,8 @@ Name: pruzhany_shared_record
 | [SharedFact](SharedFact.md) | One source's statement as the shared record keeps it: a fact with its subject, its form and its evidence located on the printed page where the site writer found it. |
 | [SharedFamily](SharedFamily.md) | One family of the record: its id, the name shown and its names. |
 | [SharedName](SharedName.md) | One name of a person in the shared record, with its evidence located on the printed page where the site writer found it. |
-| [SharedOrganization](SharedOrganization.md) | One organisation of the record: its id, the name shown and its names; its offices and members are sourced facts. |
-| [SharedPerson](SharedPerson.md) | One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, and their portrait. |
+| [SharedOrganization](SharedOrganization.md) | One organisation of the record: its id, the name shown, its names and evidenced identifiers; its offices and members are sourced facts. |
+| [SharedPerson](SharedPerson.md) | One person of the record, across every issue: their id, the name shown, every name they are known by, their gender, what became of them, their portrait and evidenced identifiers. |
 | [SharedPlace](SharedPlace.md) | One place of the record: its names, its kind, the place it lies in, its coordinates and its outside identifiers. |
 | [SharedRecord](SharedRecord.md) | The shared record whole: its version, the vocabulary version it uses, and every person, family, place, organisation, event, source, holder, fact, relation and medium. |
 | [SiteCitation](SiteCitation.md) | A citation as the shared record keeps it: an older one as it was written, or one the site writer locates on the printed page, with the addresses of the words it quotes. |
@@ -125,7 +125,7 @@ Name: pruzhany_shared_record
 | [host](host.md) | The holder's web host, without www. |
 | [id](id.md) | The person's id, kept for ever: never renamed, reused or deleted. |
 | [identified_by](identified_by.md) | What identifies the person: the family, a record, or the picture's inscription. |
-| [identifiers](identifiers.md) | The holder's outside identifiers, each with its evidence: EHRI's institution id first. |
+| [identifiers](identifiers.md) | Evidenced identifiers of this person, never inferred from a name match. A merged local id is kept here as an old_identifier on the surviving record. |
 | [identity_confidence](identity_confidence.md) | How sure it is that the statement is about this person. |
 | [image_uri](image_uri.md) | The page picture the box is on, by its name or address. |
 | [inferred](inferred.md) | True when the date was worked out rather than read. |
@@ -260,6 +260,7 @@ Name: pruzhany_shared_record
 | [Gender](Gender.md) | Gender: the values of gender in vocabulary/sourced-entities.json, version 1.3.0. |
 | [HolderKind](HolderKind.md) | What kind of holder keeps a source. |
 | [HolocaustFateTypes](HolocaustFateTypes.md) | Holocaust fate types: the values of holocaust_fate_types in vocabulary/sourced-entities.json, version 1.3.0. |
+| [IdentifierTypes](IdentifierTypes.md) | Identifier types approved in ADR 0001 and linked-data ticket 03. |
 | [ImpressoTypes](ImpressoTypes.md) | Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here. |
 | [LifeEventTypes](LifeEventTypes.md) | Life event types: the values of life_event_types in vocabulary/sourced-entities.json, version 1.3.0. |
 | [LocationTypes](LocationTypes.md) | Location types: the values of location_types in vocabulary/sourced-entities.json, version 1.3.0. |

@@ -449,7 +449,7 @@ classes:
     class_uri: ehri:Person
     description: >-
       One person of the record, across every issue: their id, the name shown, every name they
-      are known by, their gender, what became of them, and their portrait.
+      are known by, their gender, what became of them, their portrait and evidenced identifiers.
     attributes:
       portrait:
         # vocabulary/media.json, binding media_portrait.
@@ -487,6 +487,16 @@ classes:
         inlined: true
         description: >-
           What became of the person in the Holocaust, as far as the record shows.
+      identifiers:
+        # ADR 0001 and standards foundation vetting §4; same evidence shape as places.
+        slot_uri: rico:hasOrHadIdentifier
+        range: PlaceIdentifier
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          Evidenced identifiers of this person, never inferred from a name match. A merged
+          local id is kept here as an old_identifier on the surviving record.
 
   SharedFamily:
     # vocabulary/site-content.json, binding family; ADR 0001: families are EHRI's.
@@ -516,8 +526,9 @@ classes:
     # vocabulary/site-content.json, binding identifier.
     class_uri: rico:Identifier
     description: >-
-      One outside identifier of a place or a holder, read on its authority's own pages and
-      carried only on that evidence, never from a match of names.
+      One identifier of a person, organisation, place or holder, carried only on evidence,
+      never from a match of names. Outside ids are read on their authority's own pages;
+      merged local ids cite the registered source of the adjudicated merge.
     attributes:
       source_id:
         # vocabulary/site-content.json, binding identifier_authority.
@@ -555,6 +566,13 @@ classes:
         required: true
         description: >-
           Who added it, and on what day.
+      type:
+        # vocabulary/identifiers.json; ADR 0001: a merged id is an old identifier.
+        slot_uri: rico:hasIdentifierType
+        range: IdentifierTypes
+        description: >-
+          old_identifier marks a merged id retained permanently on the surviving record.
+          Absent for an ordinary authority identifier; source_id still names its authority.
 
   Holder:
     description: >-
@@ -670,8 +688,8 @@ classes:
     # vocabulary/site-content.json, binding organization.
     class_uri: ehri:CorporateBody
     description: >-
-      One organisation of the record: its id, the name shown and its names; its offices and
-      members are sourced facts.
+      One organisation of the record: its id, the name shown, its names and evidenced
+      identifiers; its offices and members are sourced facts.
     attributes:
       id:
         range: NonBlankText
@@ -690,6 +708,16 @@ classes:
         required: true
         description: >-
           The organisation's names.
+      identifiers:
+        # ADR 0001; same evidence shape and RiC-O property as persons and places.
+        slot_uri: rico:hasOrHadIdentifier
+        range: PlaceIdentifier
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          Evidenced identifiers of this organisation, never inferred from a name match.
+          A merged local id is kept here as an old_identifier on the surviving record.
 
   SharedEvent:
     # vocabulary/site-content.json, binding life_event; ADR 0001: life events are RiC-O's.

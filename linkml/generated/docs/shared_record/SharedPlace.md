@@ -203,6 +203,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/shared_record
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact
@@ -235,8 +236,10 @@ attributes:
     from_schema: https://pruzhany.org/ns/shared_record
     slot_uri: rico:hasOrHadIdentifier
     domain_of:
+    - SharedPerson
     - Holder
     - SharedPlace
+    - SharedOrganization
     range: PlaceIdentifier
     multivalued: true
     inlined_as_list: true
@@ -311,6 +314,7 @@ attributes:
     owner: SharedPlace
     domain_of:
     - SourcedRelation
+    - PlaceIdentifier
     - SharedPlace
     - SharedEvent
     - Fact
@@ -346,8 +350,10 @@ attributes:
     slot_uri: rico:hasOrHadIdentifier
     owner: SharedPlace
     domain_of:
+    - SharedPerson
     - Holder
     - SharedPlace
+    - SharedOrganization
     range: PlaceIdentifier
     multivalued: true
     inlined: true

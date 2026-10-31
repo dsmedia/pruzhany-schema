@@ -75,6 +75,7 @@ A public view of PlaceIdentifier; source-scoped values are retained without asse
 | `url` | `https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_url` |
 | `accessed` | `https://pruzhany.org/ns/sourced-entities#export_PlaceIdentifier_accessed` |
 | `attribution` | Omitted: Absent from this final public view; never recover it from private storage. |
+| `type` | Omitted: Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended. |
 
 
 ## PrintedAddress
@@ -155,6 +156,7 @@ A public view of SharedOrganization; source-scoped values are retained without a
 | `id` | `https://pruzhany.org/ns/sourced-entities#export_SharedOrganization_id` |
 | `name` | `http://www.w3.org/2000/01/rdf-schema#label` |
 | `names` | Omitted: Absent from this final public view; never recover it from private storage. |
+| `identifiers` | Omitted: Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended. |
 
 
 ## SharedPerson
@@ -169,6 +171,7 @@ A public view of SharedPerson; source-scoped values are retained without asserti
 | `fate` | Omitted: Absent from this final public view; never recover it from private storage. |
 | `names` | Omitted: Absent from this final public view; never recover it from private storage. |
 | `portrait` | Omitted: Absent from this final public view; never recover it from private storage. |
+| `identifiers` | Omitted: Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended. |
 
 
 ## SharedPlace

@@ -78,7 +78,8 @@
         "accessed"
       ],
       "omitted": {
-        "attribution": "Absent from this final public view; never recover it from private storage."
+        "attribution": "Absent from this final public view; never recover it from private storage.",
+        "type": "Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended."
       },
       "reason": "A public view of PlaceIdentifier; source-scoped values are retained without asserting an unqualified historical relationship.",
       "references": {
@@ -194,7 +195,8 @@
         "name"
       ],
       "omitted": {
-        "names": "Absent from this final public view; never recover it from private storage."
+        "names": "Absent from this final public view; never recover it from private storage.",
+        "identifiers": "Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended."
       },
       "predicates": {
         "name": "rdfs:label"
@@ -211,7 +213,8 @@
       "omitted": {
         "fate": "Absent from this final public view; never recover it from private storage.",
         "names": "Absent from this final public view; never recover it from private storage.",
-        "portrait": "Absent from this final public view; never recover it from private storage."
+        "portrait": "Absent from this final public view; never recover it from private storage.",
+        "identifiers": "Not yet carried by the final public site projection; keep this sourced shared-record field private until that projection is deliberately extended."
       },
       "predicates": {
         "name": "rdfs:label"

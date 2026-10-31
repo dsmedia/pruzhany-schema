@@ -1060,15 +1060,16 @@ checks:
           Every fact a person's fate rests on is a fact of the record whose subject is that
           person.
       - holds: >-
-          A place's or holder's identifiers are each given once, from a registered source, on
-          its host, and no identifier is given to two places or two holders.
+          Identifiers of persons, organisations, places and holders are each given once, from a
+          registered source, on its host, and name only one record within each kind. An old
+          identifier is never an active id of that kind.
         how: rule_catalog
         rule: outside-identifier-names-one-record
         tier: rule
         statement: >-
-          Every outside identifier of a place or holder comes from a source of the record and
-          is on its host, is given once to its place or holder, and is given to no other place
-          or holder.
+          Every identifier of a person, organisation, place or holder comes from a source of
+          the record and is on its host, is given once to its record, and is given to no
+          other record of that kind; a retained old identifier is not an active id.
       - holds: >-
           A place's parent is a place of the record, and no chain of parents comes back to
           where it began.
