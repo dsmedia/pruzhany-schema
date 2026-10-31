@@ -1,4 +1,6 @@
 import {
+	CitedTextBasisShape,
+	CitedTranslationShape,
 	CrossReferenceShape,
 	PrintedAddressShape,
 	TextBasisShape,
@@ -12,7 +14,7 @@ import {
 	ContentItemBlockRefShape,
 } from './generated/site_common';
 import { z } from 'zod/v4';
-import { AttributionSchema } from './sourced-entities.schema';
+import { AttributionSchema } from './attribution.schema';
 
 // Today's documents carry extensions; the old shape stripped unknown keys.
 export const CrossReferenceSchema = z.object({ ...CrossReferenceShape.shape });
@@ -58,13 +60,6 @@ export const TranslationCheckSchema = TranslationCheckShape.extend({
 	attribution: AuthorshipSchema,
 });
 
-export const PrintedTitleSchema = PrintedTitleShape.extend({
-	addresses: z.array(PrintedAddressSchema).min(1),
-}).refine((v) => v.text === v.addresses.map((a) => a.text).join('\n'), {
-	message: 'printed title must be its addressed words, joined by newlines',
-});
-export type PrintedTitle = z.infer<typeof PrintedTitleSchema>;
-
 export const SuppliedTitleSchema = SuppliedTitleShape.extend({
 	checked_against: TitleCheckSchema.optional(),
 	based_on: TextBasisSchema,
@@ -79,6 +74,26 @@ export const TranslationSchema = TranslationShape.extend({
 	attribution: AuthorshipSchema,
 });
 export type Translation = z.infer<typeof TranslationSchema>;
+
+// Citation/source locators can identify words without an image. Retain the
+// Translation contract, including complete attribution and optional non-null checks.
+export const CitedTextBasisSchema = CitedTextBasisShape.extend({
+	addresses: z.array(PrintedAddressSchema).min(1).nullish(),
+});
+export type CitedTextBasis = z.infer<typeof CitedTextBasisSchema>;
+export const CitedTranslationSchema = CitedTranslationShape.extend({
+	based_on: CitedTextBasisSchema,
+	attribution: AuthorshipSchema,
+	checked_against: TranslationCheckSchema.optional(),
+});
+export type CitedTranslation = z.infer<typeof CitedTranslationSchema>;
+
+export const PrintedTitleSchema = PrintedTitleShape.extend({
+	addresses: z.array(PrintedAddressSchema).min(1),
+}).refine((v) => v.text === v.addresses.map((a) => a.text).join('\n'), {
+	message: 'printed title must be its addressed words, joined by newlines',
+});
+export type PrintedTitle = z.infer<typeof PrintedTitleSchema>;
 
 export function textBasisMatches(basis: TextBasis, currentText: string): boolean {
 	return basis.source_text === currentText;

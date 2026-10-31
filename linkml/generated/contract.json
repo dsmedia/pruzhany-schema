@@ -266,6 +266,17 @@
             "null"
           ]
         },
+        "quote_english": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CitedTranslation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model."
+        },
         "quote_language": {
           "description": "The quote's language, where it is not the source's (a translation).",
           "pattern": "^(?:[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[A-Za-z]{4,8}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[xX](?:-[A-Za-z0-9]{1,8})+|[eE][nN]-[gG][bB]-[oO][eE][dD]|[iI]-(?:[aA][mM][iI]|[bB][nN][nN]|[dD][eE][fF][aA][uU][lL][tT]|[eE][nN][oO][cC][hH][iI][aA][nN]|[hH][aA][kK]|[kK][lL][iI][nN][gG][oO][nN]|[lL][uU][xX]|[mM][iI][nN][gG][oO]|[nN][aA][vV][aA][jJ][oO]|[pP][wW][nN]|[tT][aA][oO]|[tT][aA][yY]|[tT][sS][uU])|[sS][gG][nN]-(?:[bB][eE]-[fF][rR]|[bB][eE]-[nN][lL]|[cC][hH]-[dD][eE])|[aA][rR][tT]-[lL][oO][jJ][bB][aA][nN]|[cC][eE][lL]-[gG][aA][uU][lL][iI][sS][hH]|[nN][oO]-[bB][oO][kK]|[nN][oO]-[nN][yY][nN]|[zZ][hH]-[gG][uU][oO][yY][uU]|[zZ][hH]-[hH][aA][kK][kK][aA]|[zZ][hH]-[mM][iI][nN]|[zZ][hH]-[mM][iI][nN]-[nN][aA][nN]|[zZ][hH]-[xX][iI][aA][nN][gG])$",
@@ -354,6 +365,75 @@
       ],
       "title": "CitationRemarkKinds",
       "type": "string"
+    },
+    "CitedTextBasis": {
+      "additionalProperties": false,
+      "description": "The exact source words of a citation or source title. The containing citation's locator or source description locates them; printed addresses are optional, and when supplied remain nonempty real image-and-box witnesses.",
+      "properties": {
+        "addresses": {
+          "description": "Where that text is printed, one address a line or patch.",
+          "items": {
+            "$ref": "#/$defs/PrintedAddress"
+          },
+          "minItems": 1,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "source_text": {
+          "description": "The text used, exactly, never normalised or replaced by a later reading.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_text"
+      ],
+      "title": "CitedTextBasis",
+      "type": "object"
+    },
+    "CitedTranslation": {
+      "additionalProperties": false,
+      "description": "English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record.",
+      "properties": {
+        "attribution": {
+          "$ref": "#/$defs/Authorship",
+          "description": "Who translated it, and on which day."
+        },
+        "based_on": {
+          "$ref": "#/$defs/CitedTextBasis",
+          "description": "The exact quote or title translated; source_text equals that original field, including whitespace and punctuation."
+        },
+        "checked_against": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TranslationCheck"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A later check of this translation against the reading, where one was made."
+        },
+        "language": {
+          "const": "en",
+          "description": "The translation's language, always English (en).",
+          "type": "string"
+        },
+        "text": {
+          "description": "The English text.",
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "language",
+        "based_on",
+        "attribution"
+      ],
+      "title": "CitedTranslation",
+      "type": "object"
     },
     "ClaimStatus": {
       "description": "Claim status: the values of claim_status in vocabulary/sourced-entities.json, version 1.3.0.",
@@ -2786,6 +2866,17 @@
           "pattern": "\\S",
           "type": "string"
         },
+        "quote_english": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CitedTranslation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model."
+        },
         "quote_language": {
           "description": "Their language, as a BCP 47 tag.",
           "pattern": "^(?:[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[A-Za-z]{4,8}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[xX](?:-[A-Za-z0-9]{1,8})+|[eE][nN]-[gG][bB]-[oO][eE][dD]|[iI]-(?:[aA][mM][iI]|[bB][nN][nN]|[dD][eE][fF][aA][uU][lL][tT]|[eE][nN][oO][cC][hH][iI][aA][nN]|[hH][aA][kK]|[kK][lL][iI][nN][gG][oO][nN]|[lL][uU][xX]|[mM][iI][nN][gG][oO]|[nN][aA][vV][aA][jJ][oO]|[pP][wW][nN]|[tT][aA][oO]|[tT][aA][yY]|[tT][sS][uU])|[sS][gG][nN]-(?:[bB][eE]-[fF][rR]|[bB][eE]-[nN][lL]|[cC][hH]-[dD][eE])|[aA][rR][tT]-[lL][oO][jJ][bB][aA][nN]|[cC][eE][lL]-[gG][aA][uU][lL][iI][sS][hH]|[nN][oO]-[bB][oO][kK]|[nN][oO]-[nN][yY][nN]|[zZ][hH]-[gG][uU][oO][yY][uU]|[zZ][hH]-[hH][aA][kK][kK][aA]|[zZ][hH]-[mM][iI][nN]|[zZ][hH]-[mM][iI][nN]-[nN][aA][nN]|[zZ][hH]-[xX][iI][aA][nN][gG])$",
@@ -5212,6 +5303,17 @@
             "null"
           ]
         },
+        "quote_english": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CitedTranslation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model."
+        },
         "quote_language": {
           "description": "The quote's language, where it is not the source's (a translation).",
           "pattern": "^(?:[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[A-Za-z]{4,8}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[xX](?:-[A-Za-z0-9]{1,8})+|[eE][nN]-[gG][bB]-[oO][eE][dD]|[iI]-(?:[aA][mM][iI]|[bB][nN][nN]|[dD][eE][fF][aA][uU][lL][tT]|[eE][nN][oO][cC][hH][iI][aA][nN]|[hH][aA][kK]|[kK][lL][iI][nN][gG][oO][nN]|[lL][uU][xX]|[mM][iI][nN][gG][oO]|[nN][aA][vV][aA][jJ][oO]|[pP][wW][nN]|[tT][aA][oO]|[tT][aA][yY]|[tT][sS][uU])|[sS][gG][nN]-(?:[bB][eE]-[fF][rR]|[bB][eE]-[nN][lL]|[cC][hH]-[dD][eE])|[aA][rR][tT]-[lL][oO][jJ][bB][aA][nN]|[cC][eE][lL]-[gG][aA][uU][lL][iI][sS][hH]|[nN][oO]-[bB][oO][kK]|[nN][oO]-[nN][yY][nN]|[zZ][hH]-[gG][uU][oO][yY][uU]|[zZ][hH]-[hH][aA][kK][kK][aA]|[zZ][hH]-[mM][iI][nN]|[zZ][hH]-[mM][iI][nN]-[nN][aA][nN]|[zZ][hH]-[xX][iI][aA][nN][gG])$",
@@ -5482,6 +5584,17 @@
           "description": "The source's title.",
           "pattern": "\\S",
           "type": "string"
+        },
+        "title_english": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CitedTranslation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "English of exactly title, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model."
         },
         "url_pattern": {
           "description": "How an address of one of the source's records is formed.",
@@ -6349,7 +6462,7 @@
     },
     "Translation": {
       "additionalProperties": false,
-      "description": "An English translation of a content item's printed text, with the exact text it was made from, who made it and, where one was made, its later check.",
+      "description": "An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check.",
       "properties": {
         "attribution": {
           "$ref": "#/$defs/Authorship",
@@ -6438,10 +6551,12 @@
   },
   "$schema": "https://json-schema.org/draft/2019-09/schema",
   "classes": {
-    "Attribution": "schema/sourced_entities.yaml",
+    "Attribution": "schema/site_common.yaml",
     "Authorship": "schema/site_common.yaml",
     "Block": "schema/pages.yaml",
     "Citation": "schema/sourced_entities.yaml",
+    "CitedTextBasis": "schema/site_common.yaml",
+    "CitedTranslation": "schema/site_common.yaml",
     "ContentItem": "schema/content_items.yaml",
     "ContentItemBlockRef": "schema/site_common.yaml",
     "ContentItemRef": "schema/life_events.yaml",
@@ -6545,7 +6660,7 @@
       "why": "Present-and-null is a distinction LinkML's data model does not make."
     },
     {
-      "count": 8,
+      "count": 16,
       "enforced_by": [
         "zod/editions.schema.ts: Edition.holiday, Holiday.hebrewName and HistoricalEvent.endDate are optional, not nullable; measured by record compare linkml on the catalog and synthetic fixtures",
         "zod/page.schema.ts: Block.confidence is z.number().optional()",
@@ -6590,12 +6705,44 @@
         {
           "file": "schemas/site-next/shared-record.schema.json",
           "pointer": "/properties/holders"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/families/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/places/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/organizations/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/sources/items/properties/title_english/anyOf/0/properties/checked_against"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/facts/items/properties/citations/items/properties/quote_english/anyOf/0/properties/checked_against"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/relations/items/properties/citations/items/properties/quote_english/anyOf/0/properties/checked_against"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/media/anyOf/0/items/properties/family_words/anyOf/0/properties/quote_english/anyOf/0/properties/checked_against"
         }
       ],
       "why": "Present-and-null is a distinction LinkML's data model does not make."
     },
     {
-      "count": 10,
+      "count": 18,
       "enforced_by": [
         "zod/site-common.schema.ts: pixelBox, a z.tuple of nonnegative, nonnegative, positive, positive",
         "zod/shared-record.schema.ts: Place.coordinates, a z.tuple of min(-90).max(90) and min(-180).max(180)",
@@ -6633,7 +6780,19 @@
         },
         {
           "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
           "pointer": "/properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/addresses/anyOf/0/items/properties/bbox"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/families/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/places/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox"
         },
         {
           "file": "schemas/site-next/shared-record.schema.json",
@@ -6641,11 +6800,31 @@
         },
         {
           "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/organizations/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/sources/items/properties/title_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/facts/items/properties/citations/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
           "pointer": "/properties/facts/items/properties/citations/items/properties/addresses/anyOf/0/items/properties/bbox"
         },
         {
           "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/relations/items/properties/citations/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
           "pointer": "/properties/relations/items/properties/citations/items/properties/addresses/anyOf/0/items/properties/bbox"
+        },
+        {
+          "file": "schemas/site-next/shared-record.schema.json",
+          "pointer": "/properties/media/anyOf/0/items/properties/family_words/anyOf/0/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox"
         }
       ],
       "why": "LinkML has no constraint by position within a list, which is what JSON Schema's prefixItems is."

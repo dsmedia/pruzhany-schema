@@ -130,6 +130,10 @@ attributes:
     rank: 1000
     domain_of:
     - MediaText
+    - PrintedAddress
+    - PrintedTitle
+    - SuppliedTitle
+    - Translation
     range: NonBlankText
     required: true
   lang:
@@ -173,6 +177,10 @@ attributes:
     owner: MediaText
     domain_of:
     - MediaText
+    - PrintedAddress
+    - PrintedTitle
+    - SuppliedTitle
+    - Translation
     range: NonBlankText
     required: true
   lang:

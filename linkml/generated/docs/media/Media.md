@@ -376,6 +376,7 @@ attributes:
     owner: Media
     domain_of:
     - PublicMedia
+    - Authorship
     range: MediaKind
     required: true
   caption:

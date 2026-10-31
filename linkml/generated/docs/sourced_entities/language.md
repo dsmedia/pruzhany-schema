@@ -5,16 +5,11 @@ search:
 
 # Slot: language 
 
-
-_The languages of the record, as BCP 47 tags._
-
-
-
 <div data-search-exclude markdown="1">
 
 
 
-URI: [rico:hasOrHadLanguage](https://www.ica.org/standards/RiC/ontology#hasOrHadLanguage)
+URI: [pc:language](https://pruzhany.org/ns/sourced-entities#language)
 <!-- no inheritance hierarchy -->
 
 
@@ -26,6 +21,9 @@ URI: [rico:hasOrHadLanguage](https://www.ica.org/standards/RiC/ontology#hasOrHad
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Source](Source.md) | A record the statements rest on: a book, an archive's database, a family document, the paper itself and the like, registered once and cited by its id. |  no  |
+| [SuppliedTitle](SuppliedTitle.md) | A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check. |  no  |
+| [Translation](Translation.md) | An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check. |  no  |
+| [CitedTranslation](CitedTranslation.md) | English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record. |  no  |
 
 
 
@@ -38,24 +36,8 @@ URI: [rico:hasOrHadLanguage](https://www.ica.org/standards/RiC/ontology#hasOrHad
 
 | Property | Value |
 | --- | --- |
-| Range | [LanguageTag](LanguageTag.md) |
-| Domain Of | [Source](Source.md) |
-| Slot URI | [rico:hasOrHadLanguage](https://www.ica.org/standards/RiC/ontology#hasOrHadLanguage) |
-### Cardinality and Requirements
-
-| Property | Value |
-| --- | --- |
-| Multivalued | Yes |
-| Minimum Cardinality | 1 |
-
-
-### Slot Characteristics
-
-| Property | Value |
-| --- | --- |
-| Owner | [Source](Source.md) |
-
-
+| Range | [String](String.md) |
+| Domain Of | [Source](Source.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
 
 
 
@@ -72,19 +54,12 @@ URI: [rico:hasOrHadLanguage](https://www.ica.org/standards/RiC/ontology#hasOrHad
 
 
 
-### Schema Source
-
-
-* from schema: https://pruzhany.org/ns/sourced_entities
-
-
-
 
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rico:hasOrHadLanguage |
+| self | pc:language |
 | native | pc:language |
 
 
@@ -95,16 +70,11 @@ URI: [rico:hasOrHadLanguage](https://www.ica.org/standards/RiC/ontology#hasOrHad
 <details>
 ```yaml
 name: language
-description: The languages of the record, as BCP 47 tags.
-from_schema: https://pruzhany.org/ns/sourced_entities
-rank: 1000
-slot_uri: rico:hasOrHadLanguage
-owner: Source
 domain_of:
 - Source
-range: LanguageTag
-multivalued: true
-minimum_cardinality: 1
+- SuppliedTitle
+- Translation
+range: string
 
 ```
 </details></div>

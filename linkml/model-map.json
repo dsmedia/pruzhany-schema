@@ -267,7 +267,9 @@
 		"TranslationCheck": {
 			"zod": "TranslationCheck",
 			"pointer": ""
-		}
+		},
+		"CitedTextBasis": { "zod": "CitedTextBasis", "pointer": "" },
+		"CitedTranslation": { "zod": "CitedTranslation", "pointer": "" }
 	},
 	"required_exceptions": {
 		"Block.unit_id": "schemas/site/pages.schema.json#/properties/pages/items/properties/blocks/items/properties/unit_id",

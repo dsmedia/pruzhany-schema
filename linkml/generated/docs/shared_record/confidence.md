@@ -20,8 +20,8 @@ URI: [pc:confidence](https://pruzhany.org/ns/sourced-entities#confidence)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Fate](Fate.md) | What became of a person in the Holocaust, as far as the record shows, the facts it rests on and its review. |  no  |
 | [CrossReference](CrossReference.md) | A link from one content item to another in the same issue, with how sure it is and why. |  no  |
+| [Fate](Fate.md) | What became of a person in the Holocaust, as far as the record shows, the facts it rests on and its review. |  no  |
 
 
 
@@ -35,7 +35,7 @@ URI: [pc:confidence](https://pruzhany.org/ns/sourced-entities#confidence)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [Fate](Fate.md), [CrossReference](CrossReference.md) |
+| Domain Of | [CrossReference](CrossReference.md), [Fate](Fate.md) |
 
 
 
@@ -69,8 +69,8 @@ URI: [pc:confidence](https://pruzhany.org/ns/sourced-entities#confidence)
 ```yaml
 name: confidence
 domain_of:
-- Fate
 - CrossReference
+- Fate
 range: string
 
 ```

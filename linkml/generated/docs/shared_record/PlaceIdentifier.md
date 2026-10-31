@@ -203,11 +203,11 @@ attributes:
     rank: 1000
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Attribution
     required: true
     inlined: true
@@ -304,11 +304,11 @@ attributes:
     owner: PlaceIdentifier
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Attribution
     required: true
     inlined: true

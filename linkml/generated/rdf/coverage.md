@@ -38,6 +38,7 @@ A public view of Citation; source-scoped values are retained without asserting a
 | `record_type` | Omitted: Absent from this final public view; never recover it from private storage. |
 | `reference_code` | Omitted: Absent from this final public view; never recover it from private storage. |
 | `via` | Omitted: Absent from this final public view; never recover it from private storage. |
+| `quote_english` | Omitted: Staged English and its attribution remain private until the site publication projection explicitly supports them. |
 
 
 ## LifeEventDate
@@ -217,6 +218,7 @@ A public view of Source; source-scoped values are retained without asserting an 
 | `reference_code` | Omitted: Absent from this final public view; never recover it from private storage. |
 | `short_name` | Omitted: Absent from this final public view; never recover it from private storage. |
 | `subjects` | Omitted: Absent from this final public view; never recover it from private storage. |
+| `title_english` | Omitted: Staged English and its attribution remain private until the site publication projection explicitly supports them. |
 
 
 ## SourcedDate
@@ -319,3 +321,5 @@ Public required field `relationship_type`: The displayed direction must be expli
 - `TitleCheck`: Outside the public shared-record export; this layer keeps its current format.
 - `Translation`: Outside the public shared-record export; this layer keeps its current format.
 - `TranslationCheck`: Outside the public shared-record export; this layer keeps its current format.
+- `CitedTextBasis`: Outside the public shared-record export; citation/source English requires an explicit publication projection.
+- `CitedTranslation`: Outside the public shared-record export; citation/source English requires an explicit publication projection.

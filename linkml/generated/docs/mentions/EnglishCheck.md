@@ -188,9 +188,8 @@ attributes:
     name: attribution
     description: Who checked it, and on which day.
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     domain_of:
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
@@ -271,10 +270,9 @@ attributes:
     name: attribution
     description: Who checked it, and on which day.
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: EnglishCheck
     domain_of:
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation

@@ -80,6 +80,7 @@ URI: [pc:TranslationCheck](https://pruzhany.org/ns/sourced-entities#TranslationC
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [Translation](Translation.md) | [checked_against](checked_against.md) | range | [TranslationCheck](TranslationCheck.md) |
+| [CitedTranslation](CitedTranslation.md) | [checked_against](checked_against.md) | range | [TranslationCheck](TranslationCheck.md) |
 
 
 
@@ -218,8 +219,6 @@ attributes:
     - EnglishCheck
     - SuppliedTitle
     - Translation
-    - Fact
-    - Name
     range: Authorship
     required: true
     inlined: true

@@ -21,8 +21,8 @@ URI: [pc:language](https://pruzhany.org/ns/sourced-entities#language)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SuppliedTitle](SuppliedTitle.md) | A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check. |  no  |
-| [Translation](Translation.md) | An English translation of a content item's printed text, with the exact text it was made from, who made it and, where one was made, its later check. |  no  |
-| [Source](Source.md) | A record the statements rest on: a book, an archive's database, a family document, the paper itself and the like, registered once and cited by its id. |  no  |
+| [Translation](Translation.md) | An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check. |  no  |
+| [CitedTranslation](CitedTranslation.md) | English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record. |  no  |
 
 
 
@@ -36,7 +36,7 @@ URI: [pc:language](https://pruzhany.org/ns/sourced-entities#language)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md), [Source](Source.md) |
+| Domain Of | [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
 
 
 
@@ -72,7 +72,6 @@ name: language
 domain_of:
 - SuppliedTitle
 - Translation
-- Source
 range: string
 
 ```

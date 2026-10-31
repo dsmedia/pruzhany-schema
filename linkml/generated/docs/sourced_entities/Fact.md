@@ -476,6 +476,9 @@ attributes:
     domain_of:
     - Fact
     - Name
+    - EnglishCheck
+    - SuppliedTitle
+    - Translation
     range: Attribution
     required: true
     inlined: true
@@ -794,6 +797,9 @@ attributes:
     domain_of:
     - Fact
     - Name
+    - EnglishCheck
+    - SuppliedTitle
+    - Translation
     range: Attribution
     required: true
     inlined: true

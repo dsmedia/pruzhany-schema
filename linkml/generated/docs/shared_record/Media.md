@@ -393,10 +393,10 @@ attributes:
     owner: Media
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: MediaKind
     required: true
   caption:

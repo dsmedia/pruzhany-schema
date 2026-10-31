@@ -64,6 +64,7 @@ class Citation(Strict):
     quote: None | str = Field(default=None)
     note: None | str = Field(default=None)
     accessed: Annotated[Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')] | None, AfterValidator(partial(_typed_call, 'sourced_entities', 'valid_date', [], True))] = Field(default=None)
+    quote_english: CitedTranslation | None = Field(default=None)
 
     @model_validator(mode='after')
     def validate_contract(self):
@@ -370,6 +371,11 @@ class MediaFamilyWords(Strict):
     page: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     quote: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     quote_language: Annotated[str, Field(pattern='^(?:[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[A-Za-z]{4,8}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[xX](?:-[A-Za-z0-9]{1,8})+|[eE][nN]-[gG][bB]-[oO][eE][dD]|[iI]-(?:[aA][mM][iI]|[bB][nN][nN]|[dD][eE][fF][aA][uU][lL][tT]|[eE][nN][oO][cC][hH][iI][aA][nN]|[hH][aA][kK]|[kK][lL][iI][nN][gG][oO][nN]|[lL][uU][xX]|[mM][iI][nN][gG][oO]|[nN][aA][vV][aA][jJ][oO]|[pP][wW][nN]|[tT][aA][oO]|[tT][aA][yY]|[tT][sS][uU])|[sS][gG][nN]-(?:[bB][eE]-[fF][rR]|[bB][eE]-[nN][lL]|[cC][hH]-[dD][eE])|[aA][rR][tT]-[lL][oO][jJ][bB][aA][nN]|[cC][eE][lL]-[gG][aA][uU][lL][iI][sS][hH]|[nN][oO]-[bB][oO][kK]|[nN][oO]-[nN][yY][nN]|[zZ][hH]-[gG][uU][oO][yY][uU]|[zZ][hH]-[hH][aA][kK][kK][aA]|[zZ][hH]-[mM][iI][nN]|[zZ][hH]-[mM][iI][nN]-[nN][aA][nN]|[zZ][hH]-[xX][iI][aA][nN][gG])$')] = Field(default=...)
+    quote_english: CitedTranslation | None = Field(default=None)
+
+    @model_validator(mode='after')
+    def english_words(self):
+        return _call('media', '_MediaFamilyWords__english_words', self)
 
 
 class MediaFixity(Strict):
@@ -648,6 +654,7 @@ class Source(Strict):
     url_pattern: None | str = Field(default=None)
     host: Annotated[Annotated[str, Field(pattern='^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$')] | None, AfterValidator(partial(_typed_call, 'sourced_entities', '_bare_host', [], True))] = Field(default=None)
     subjects: Annotated[list[Annotated[str, Field(pattern='\\S')]], Field(min_length=1)] | None = Field(default=None)
+    title_english: CitedTranslation | None = Field(default=None)
 
 
 class SourceDerivation(Strict):
@@ -695,7 +702,7 @@ class TextBasis(Strict):
 
 
 class Translation(Strict):
-    "An English translation of a content item's printed text, with the exact text it was made from, who made it and, where one was made, its later check."
+    'An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check.'
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     text: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     language: Literal['en'] = Field(default=...)
@@ -716,6 +723,23 @@ class Authorship(Attribution):
     on: Annotated[Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')], AfterValidator(partial(_typed_call, 'sourced_entities', 'valid_date', [], True))] = Field(default=...)
     note: None | str = Field(default=None)
     kind: Literal['model', 'person'] = Field(default=...)
+
+
+class CitedTextBasis(TextBasis):
+    "The exact source words of a citation or source title. The containing citation's locator or source description locates them; printed addresses are optional, and when supplied remain nonempty real image-and-box witnesses."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    source_text: str = Field(default=...)
+    addresses: Annotated[list[PrintedAddress], Field(min_length=1)] | None = Field(default=None)
+
+
+class CitedTranslation(Translation):
+    "English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    text: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    language: Literal['en'] = Field(default=...)
+    based_on: CitedTextBasis = Field(default=...)
+    attribution: Authorship = Field(default=...)
+    checked_against: TranslationCheck | None = Field(default=None, exclude_if=lambda value: value is None)
 
 
 class Media(PublicMedia):
@@ -833,6 +857,7 @@ class SiteCitation(Citation):
     quote: None | str = Field(default=None)
     note: None | str = Field(default=None)
     accessed: Annotated[Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')] | None, AfterValidator(partial(_typed_call, 'sourced_entities', 'valid_date', [], True))] = Field(default=None)
+    quote_english: CitedTranslation | None = Field(default=None)
     addresses: Annotated[list[PrintedAddress], Field(min_length=1)] | None = Field(default=None)
 
     @model_validator(mode='after')
@@ -897,6 +922,8 @@ Attribution.model_rebuild()
 Authorship.model_rebuild()
 Block.model_rebuild()
 Citation.model_rebuild()
+CitedTextBasis.model_rebuild()
+CitedTranslation.model_rebuild()
 ContentItem.model_rebuild()
 ContentItemBlockRef.model_rebuild()
 ContentItemRef.model_rebuild()
@@ -960,4 +987,4 @@ TitleCheck.model_rebuild()
 Translation.model_rebuild()
 TranslationCheck.model_rebuild()
 
-__all__ = ['Attribution', 'Authorship', 'Block', 'Citation', 'ContentItem', 'ContentItemBlockRef', 'ContentItemRef', 'ContentItemsData', 'CrossReference', 'Edition', 'EditionsCatalog', 'EnglishCheck', 'ExternalReference', 'Fact', 'FactQualifiers', 'Fate', 'HistoricalEvent', 'Holder', 'Holiday', 'IssueLifeEvent', 'IssueLifeEventsData', 'IssueMention', 'IssueMentionsData', 'LifeEventDate', 'LifeEventMainPerson', 'Media', 'MediaConsent', 'MediaConsentScope', 'MediaDecision', 'MediaDepicted', 'MediaDerivative', 'MediaFamilyWords', 'MediaFixity', 'MediaMaster', 'MediaPortrait', 'MediaRegion', 'MediaText', 'MediaWithdrawal', 'Mention', 'Name', 'Page', 'PagesData', 'PlaceIdentifier', 'PrintedAddress', 'PrintedSection', 'PrintedTitle', 'PublicMedia', 'ReadingStatus', 'Review', 'SharedEvent', 'SharedFact', 'SharedFamily', 'SharedName', 'SharedOrganization', 'SharedPerson', 'SharedPlace', 'SharedRecord', 'SiteCitation', 'Source', 'SourceDerivation', 'SourcedDate', 'SourcedRelation', 'SuppliedTitle', 'TextBasis', 'TitleCheck', 'Translation', 'TranslationCheck']
+__all__ = ['Attribution', 'Authorship', 'Block', 'Citation', 'CitedTextBasis', 'CitedTranslation', 'ContentItem', 'ContentItemBlockRef', 'ContentItemRef', 'ContentItemsData', 'CrossReference', 'Edition', 'EditionsCatalog', 'EnglishCheck', 'ExternalReference', 'Fact', 'FactQualifiers', 'Fate', 'HistoricalEvent', 'Holder', 'Holiday', 'IssueLifeEvent', 'IssueLifeEventsData', 'IssueMention', 'IssueMentionsData', 'LifeEventDate', 'LifeEventMainPerson', 'Media', 'MediaConsent', 'MediaConsentScope', 'MediaDecision', 'MediaDepicted', 'MediaDerivative', 'MediaFamilyWords', 'MediaFixity', 'MediaMaster', 'MediaPortrait', 'MediaRegion', 'MediaText', 'MediaWithdrawal', 'Mention', 'Name', 'Page', 'PagesData', 'PlaceIdentifier', 'PrintedAddress', 'PrintedSection', 'PrintedTitle', 'PublicMedia', 'ReadingStatus', 'Review', 'SharedEvent', 'SharedFact', 'SharedFamily', 'SharedName', 'SharedOrganization', 'SharedPerson', 'SharedPlace', 'SharedRecord', 'SiteCitation', 'Source', 'SourceDerivation', 'SourcedDate', 'SourcedRelation', 'SuppliedTitle', 'TextBasis', 'TitleCheck', 'Translation', 'TranslationCheck']

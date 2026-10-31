@@ -154,10 +154,9 @@ attributes:
     name: confidence
     description: How sure the outcome is.
     from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
     domain_of:
-    - Fate
     - CrossReference
+    - Fate
     range: Confidence
     required: true
   rests_on:
@@ -217,11 +216,10 @@ attributes:
     name: confidence
     description: How sure the outcome is.
     from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
     owner: Fate
     domain_of:
-    - Fate
     - CrossReference
+    - Fate
     range: Confidence
     required: true
   rests_on:

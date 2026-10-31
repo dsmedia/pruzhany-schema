@@ -147,6 +147,7 @@ bases:
     credit: The family
 
 checks:
+
   - id: written-date
     holds: >-
       A year, month or day written YYYY, YYYY-MM or YYYY-MM-DD exists in the calendar.
@@ -177,8 +178,8 @@ checks:
     holds: >-
       A day written YYYY-MM-DD exists in the calendar.
     zod:
-      - file: zod/sourced-entities.schema.ts
-        at: day
+      - file: zod/attribution.schema.ts
+        at: AttributionSchema
         call: refine
     pydantic:
       - file: pydantic/sourced_entities.py
@@ -384,6 +385,26 @@ checks:
           locator: register/12
         fails:
           page: ~
+      - holds: >-
+          A present English rendering has exactly the original field as based_on.source_text.
+        how: twin_only
+        why: >-
+          LinkML cannot compare sibling string values. Exact byte equality is checked by
+          the retained twins; words-english.fixtures.json supplies passing and failing cases.
+      - holds: >-
+          When the single rollout switch is enabled, a quote without an explicit English
+          language exemption carries non-null quote_english; SiteCitation inherits this.
+        how: linkml_rule
+        class: Citation
+        rule: A quote not explicitly marked as English carries quote_english.
+        staged: true
+        passes:
+          quote: Fictional source words
+          quote_language: en
+        fails:
+          quote: Fictional source words
+          quote_language: yi
+
 
   - id: fact
     holds: >-
@@ -1078,6 +1099,12 @@ checks:
         tier: rule
         statement: >-
           Every place's parent is a place of the record, and no chain of parents is a loop.
+      - holds: >-
+          A present English rendering has exactly the original field as based_on.source_text.
+        how: twin_only
+        why: >-
+          LinkML cannot compare sibling string values. Exact byte equality is checked by
+          the retained twins; words-english.fixtures.json supplies passing and failing cases.
 
   - id: media-consent-scope
     holds: >-
@@ -1457,3 +1484,22 @@ checks:
         why: >-
           Its condition is on a field of a nested object (the permission's withdrawal day),
           which a rule cannot reach.
+
+  - id: mediafamilywords-english
+    holds: >-
+      A present English rendering translates exactly its original source-word field.
+    zod:
+      - file: zod/media.schema.ts
+        at: MediaFamilyWordsSchema
+        call: superRefine
+    pydantic:
+      - file: pydantic/media.py
+        at: MediaFamilyWords.english_words
+        call: model_validator
+    parts:
+      - holds: >-
+          A present English rendering has exactly the original field as based_on.source_text.
+        how: twin_only
+        why: >-
+          LinkML cannot compare sibling string values. Exact byte equality is checked by
+          the retained twins; words-english.fixtures.json supplies passing and failing cases.

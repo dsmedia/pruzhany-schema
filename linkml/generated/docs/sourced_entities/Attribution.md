@@ -24,6 +24,9 @@ URI: [pc:Attribution](https://pruzhany.org/ns/sourced-entities#Attribution)
  classDiagram
     class Attribution
     click Attribution href "../Attribution/"
+      Attribution <|-- Authorship
+        click Authorship href "../Authorship/"
+      
       Attribution : by
         
       Attribution : note
@@ -36,7 +39,11 @@ URI: [pc:Attribution](https://pruzhany.org/ns/sourced-entities#Attribution)
 
 
 
-<!-- no inheritance hierarchy -->
+
+## Inheritance
+* **Attribution**
+    * [Authorship](Authorship.md)
+
 
 ## Slots
 
@@ -111,7 +118,7 @@ attributes:
   by:
     name: by
     description: 'Who made it or allowed it: a person, a session or a program.'
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
     domain_of:
     - Review
     - Attribution
@@ -120,7 +127,7 @@ attributes:
   'on':
     name: 'on'
     description: The day it was made or allowed.
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
     domain_of:
     - Review
     - Attribution
@@ -129,11 +136,10 @@ attributes:
   note:
     name: note
     description: A note on how or why.
-    from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
+    from_schema: https://pruzhany.org/ns/site_common
     domain_of:
-    - Attribution
     - Citation
+    - Attribution
     range: string
 
 ```
@@ -151,7 +157,7 @@ attributes:
   by:
     name: by
     description: 'Who made it or allowed it: a person, a session or a program.'
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
     owner: Attribution
     domain_of:
     - Review
@@ -161,7 +167,7 @@ attributes:
   'on':
     name: 'on'
     description: The day it was made or allowed.
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
     owner: Attribution
     domain_of:
     - Review
@@ -171,12 +177,11 @@ attributes:
   note:
     name: note
     description: A note on how or why.
-    from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
+    from_schema: https://pruzhany.org/ns/site_common
     owner: Attribution
     domain_of:
-    - Attribution
     - Citation
+    - Attribution
     range: string
 
 ```

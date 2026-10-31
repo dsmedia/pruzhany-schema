@@ -1,3 +1,4 @@
+import { englishIssues } from './words-english';
 import {
 	SiteCitationShape,
 	SharedNameShape,
@@ -36,6 +37,7 @@ import { MediaSchema, MediaPortraitSchema, mediaReferenceErrors } from './media.
 export const SiteCitationSchema = CitationSchema.safeExtend({
 	...SiteCitationShape.shape,
 	accessed: CitationSchema.shape.accessed,
+	quote_english: CitationSchema.shape.quote_english,
 	addresses: z.array(PrintedAddressSchema).min(1).nullish(),
 }).superRefine((v, ctx) => {
 	if (!v.addresses) return;
@@ -267,6 +269,7 @@ function sharedRecordErrors(v: SharedRecord): string[] {
 	const holders = ids(v.holders ?? []);
 	const bySource = new Map(v.sources.map((s) => [s.id, s]));
 	for (const source of v.sources) {
+		errors.push(...englishIssues('Source', source).map((issue) => issue.message));
 		if (source.holder_id && !holders.has(source.holder_id)) errors.push('unknown source holder');
 		for (const link of source.derived_from ?? [])
 			if (!sources.has(link.source_id)) errors.push('unknown derived source');

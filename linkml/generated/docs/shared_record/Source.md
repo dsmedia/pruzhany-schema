@@ -116,6 +116,17 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
         
       Source : title
         
+      Source : title_english
+        
+          
+    
+        
+        
+        Source --> "0..1" CitedTranslation : title_english
+        click CitedTranslation href "../CitedTranslation/"
+    
+
+        
       Source : url_pattern
         
       Source : work_id
@@ -160,6 +171,7 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
 | [url_pattern](url_pattern.md) | 0..1 <br/> [String](String.md) | How an address of one of the source's records is formed. | direct |
 | [host](host.md) | 0..1 <br/> [HostName](HostName.md) | The web host the source's records are served from, without www: every address cited from it is on that host or a subdomain of it. | direct |
 | [subjects](subjects.md) | 1..* <br/> [NonBlankText](NonBlankText.md) | The persons, places or events the source shows or speaks of, by their ids. | direct |
+| [title_english](title_english.md) | 0..1 <br/> [CitedTranslation](CitedTranslation.md) | English of exactly title, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. | direct |
 
 
 
@@ -268,10 +280,10 @@ attributes:
     from_schema: https://pruzhany.org/ns/sourced_entities
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: SourceKinds
     required: true
   title:
@@ -316,12 +328,11 @@ attributes:
     name: language
     description: The languages of the record, as BCP 47 tags.
     from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
     slot_uri: rico:hasOrHadLanguage
     domain_of:
-    - Source
     - SuppliedTitle
     - Translation
+    - Source
     range: LanguageTag
     multivalued: true
     minimum_cardinality: 1
@@ -452,6 +463,23 @@ attributes:
     range: NonBlankText
     multivalued: true
     minimum_cardinality: 1
+  title_english:
+    name: title_english
+    annotations:
+      english_of:
+        tag: english_of
+        value: title
+    description: English of exactly title, with based_on.source_text equal to that
+      field's exact bytes and attribution naming the kept English or its person or
+      model.
+    from_schema: https://pruzhany.org/ns/sourced_entities
+    exact_mappings:
+    - pc:site_translation
+    rank: 1000
+    domain_of:
+    - Source
+    range: CitedTranslation
+    inlined: true
 class_uri: ehri:RecordResource
 rules:
 - preconditions:
@@ -516,10 +544,10 @@ attributes:
     owner: Source
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: SourceKinds
     required: true
   title:
@@ -568,13 +596,12 @@ attributes:
     name: language
     description: The languages of the record, as BCP 47 tags.
     from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
     slot_uri: rico:hasOrHadLanguage
     owner: Source
     domain_of:
-    - Source
     - SuppliedTitle
     - Translation
+    - Source
     range: LanguageTag
     multivalued: true
     minimum_cardinality: 1
@@ -719,6 +746,24 @@ attributes:
     range: NonBlankText
     multivalued: true
     minimum_cardinality: 1
+  title_english:
+    name: title_english
+    annotations:
+      english_of:
+        tag: english_of
+        value: title
+    description: English of exactly title, with based_on.source_text equal to that
+      field's exact bytes and attribution naming the kept English or its person or
+      model.
+    from_schema: https://pruzhany.org/ns/sourced_entities
+    exact_mappings:
+    - pc:site_translation
+    rank: 1000
+    owner: Source
+    domain_of:
+    - Source
+    range: CitedTranslation
+    inlined: true
 class_uri: ehri:RecordResource
 rules:
 - preconditions:

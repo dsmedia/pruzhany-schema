@@ -5,11 +5,6 @@ search:
 
 # Slot: confidence 
 
-
-_How sure the outcome is._
-
-
-
 <div data-search-exclude markdown="1">
 
 
@@ -26,6 +21,7 @@ URI: [pc:confidence](https://pruzhany.org/ns/sourced-entities#confidence)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Fate](Fate.md) | What became of a person in the Holocaust, as far as the record shows, the facts it rests on and its review. |  no  |
+| [CrossReference](CrossReference.md) | A link from one content item to another in the same issue, with how sure it is and why. |  no  |
 
 
 
@@ -38,22 +34,8 @@ URI: [pc:confidence](https://pruzhany.org/ns/sourced-entities#confidence)
 
 | Property | Value |
 | --- | --- |
-| Range | [Confidence](Confidence.md) |
-| Domain Of | [Fate](Fate.md) |
-### Cardinality and Requirements
-
-| Property | Value |
-| --- | --- |
-| Required | Yes |
-
-
-### Slot Characteristics
-
-| Property | Value |
-| --- | --- |
-| Owner | [Fate](Fate.md) |
-
-
+| Range | [String](String.md) |
+| Domain Of | [Fate](Fate.md), [CrossReference](CrossReference.md) |
 
 
 
@@ -67,13 +49,6 @@ URI: [pc:confidence](https://pruzhany.org/ns/sourced-entities#confidence)
 ## Identifier and Mapping Information
 
 
-
-
-
-### Schema Source
-
-
-* from schema: https://pruzhany.org/ns/sourced_entities
 
 
 
@@ -93,14 +68,10 @@ URI: [pc:confidence](https://pruzhany.org/ns/sourced-entities#confidence)
 <details>
 ```yaml
 name: confidence
-description: How sure the outcome is.
-from_schema: https://pruzhany.org/ns/sourced_entities
-rank: 1000
-owner: Fate
 domain_of:
 - Fate
-range: Confidence
-required: true
+- CrossReference
+range: string
 
 ```
 </details></div>

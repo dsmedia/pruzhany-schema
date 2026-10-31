@@ -5,6 +5,11 @@ search:
 
 # Slot: function 
 
+
+_The person's occupation or part in the content item, in a few words, such as bride, mourner or well-wisher._
+
+
+
 <div data-search-exclude markdown="1">
 
 
@@ -21,7 +26,6 @@ URI: [pc:function](https://pruzhany.org/ns/sourced-entities#function)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [IssueMention](IssueMention.md) | A person of the shared record named in a content item, pinned to the printed words of the name or to whole regions, with the person's roles there. A mention alone does not say the content item is about the person. |  no  |
-| [Mention](Mention.md) | The older form of a person's mention in a piece of the paper: the person, the piece, the name as printed and the person's role there. The site's current mention is IssueMention. |  no  |
 
 
 
@@ -35,7 +39,14 @@ URI: [pc:function](https://pruzhany.org/ns/sourced-entities#function)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [IssueMention](IssueMention.md), [Mention](Mention.md) |
+| Domain Of | [IssueMention](IssueMention.md) |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [IssueMention](IssueMention.md) |
+
+
 
 
 
@@ -49,6 +60,13 @@ URI: [pc:function](https://pruzhany.org/ns/sourced-entities#function)
 ## Identifier and Mapping Information
 
 
+
+
+
+### Schema Source
+
+
+* from schema: https://pruzhany.org/ns/mentions
 
 
 
@@ -68,9 +86,13 @@ URI: [pc:function](https://pruzhany.org/ns/sourced-entities#function)
 <details>
 ```yaml
 name: function
+description: The person's occupation or part in the content item, in a few words,
+  such as bride, mourner or well-wisher.
+from_schema: https://pruzhany.org/ns/mentions
+rank: 1000
+owner: IssueMention
 domain_of:
 - IssueMention
-- Mention
 range: string
 
 ```

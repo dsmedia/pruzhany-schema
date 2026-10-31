@@ -108,8 +108,8 @@ attributes:
     description: The day of the check.
     from_schema: https://pruzhany.org/ns/media
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
@@ -144,8 +144,8 @@ attributes:
     from_schema: https://pruzhany.org/ns/media
     owner: MediaFixity
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity

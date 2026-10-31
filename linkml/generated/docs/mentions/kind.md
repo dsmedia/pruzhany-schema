@@ -5,6 +5,11 @@ search:
 
 # Slot: kind 
 
+
+_Whether a person or a model wrote it._
+
+
+
 <div data-search-exclude markdown="1">
 
 
@@ -20,8 +25,6 @@ URI: [pc:kind](https://pruzhany.org/ns/sourced-entities#kind)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Source](Source.md) | A record the statements rest on: a book, an archive's database, a family document, the paper itself and the like, registered once and cited by its id. |  no  |
-| [Name](Name.md) | One name of a person, a family, an organisation or a place, of one kind (printed, birth, married, supplied and so on), in one script. A person's, a family's and an organisation's names are agent names and a place's are place names (vocabulary/ site-content.json, bindings agent_name and place_name), so the class itself names no single term. |  no  |
 | [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
 
 
@@ -35,8 +38,22 @@ URI: [pc:kind](https://pruzhany.org/ns/sourced-entities#kind)
 
 | Property | Value |
 | --- | --- |
-| Range | [String](String.md) |
-| Domain Of | [Source](Source.md), [Name](Name.md), [Authorship](Authorship.md) |
+| Range | [AuthorshipKind](AuthorshipKind.md) |
+| Domain Of | [Authorship](Authorship.md) |
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Required | Yes |
+
+
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Authorship](Authorship.md) |
+
+
 
 
 
@@ -50,6 +67,13 @@ URI: [pc:kind](https://pruzhany.org/ns/sourced-entities#kind)
 ## Identifier and Mapping Information
 
 
+
+
+
+### Schema Source
+
+
+* from schema: https://pruzhany.org/ns/mentions
 
 
 
@@ -69,11 +93,14 @@ URI: [pc:kind](https://pruzhany.org/ns/sourced-entities#kind)
 <details>
 ```yaml
 name: kind
+description: Whether a person or a model wrote it.
+from_schema: https://pruzhany.org/ns/mentions
+rank: 1000
+owner: Authorship
 domain_of:
-- Source
-- Name
 - Authorship
-range: string
+range: AuthorshipKind
+required: true
 
 ```
 </details></div>

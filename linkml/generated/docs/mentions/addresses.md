@@ -23,6 +23,7 @@ URI: [pc:addresses](https://pruzhany.org/ns/sourced-entities#addresses)
 | [IssueMention](IssueMention.md) | A person of the shared record named in a content item, pinned to the printed words of the name or to whole regions, with the person's roles there. A mention alone does not say the content item is about the person. |  no  |
 | [TextBasis](TextBasis.md) | The exact text a translation or supplied title was made from, and where it is printed, kept even after the text is read again. |  no  |
 | [PrintedTitle](PrintedTitle.md) | A title as printed in the paper: its words and where each line of them stands. |  no  |
+| [CitedTextBasis](CitedTextBasis.md) | The exact source words of a citation or source title. The containing citation's locator or source description locates them; printed addresses are optional, and when supplied remain nonempty real image-and-box witnesses. |  yes  |
 
 
 

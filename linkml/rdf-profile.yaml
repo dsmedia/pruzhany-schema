@@ -31,7 +31,8 @@
         "quote_language": "Absent from this final public view; never recover it from private storage.",
         "record_type": "Absent from this final public view; never recover it from private storage.",
         "reference_code": "Absent from this final public view; never recover it from private storage.",
-        "via": "Absent from this final public view; never recover it from private storage."
+        "via": "Absent from this final public view; never recover it from private storage.",
+        "quote_english": "Staged English and its attribution remain private until the site publication projection explicitly supports them."
       },
       "reason": "A public view of Citation; source-scoped values are retained without asserting an unqualified historical relationship.",
       "references": {
@@ -281,7 +282,8 @@
         "quotes_cleared": "Absent from this final public view; never recover it from private storage.",
         "reference_code": "Absent from this final public view; never recover it from private storage.",
         "short_name": "Absent from this final public view; never recover it from private storage.",
-        "subjects": "Absent from this final public view; never recover it from private storage."
+        "subjects": "Absent from this final public view; never recover it from private storage.",
+        "title_english": "Staged English and its attribution remain private until the site publication projection explicitly supports them."
       },
       "predicates": {
         "title": "rdfs:label"
@@ -400,7 +402,9 @@
     "TextBasis": "Outside the public shared-record export; this layer keeps its current format.",
     "TitleCheck": "Outside the public shared-record export; this layer keeps its current format.",
     "Translation": "Outside the public shared-record export; this layer keeps its current format.",
-    "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format."
+    "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format.",
+    "CitedTextBasis": "Outside the public shared-record export; citation/source English requires an explicit publication projection.",
+    "CitedTranslation": "Outside the public shared-record export; citation/source English requires an explicit publication projection."
   },
   "position_constraints_source": "zod/shared-record.schema.ts SharedPlaceSchema.coordinates and zod/site-common.schema.ts pixelBox; test_rdf_export checks their live Zod exports.",
   "version": 1

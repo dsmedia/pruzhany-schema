@@ -192,10 +192,10 @@ attributes:
     from_schema: https://pruzhany.org/ns/sourced_entities
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: NameKinds
     required: true
   script:
@@ -237,11 +237,11 @@ attributes:
     from_schema: https://pruzhany.org/ns/sourced_entities
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Attribution
     inlined: true
 rules:
@@ -306,10 +306,10 @@ attributes:
     owner: Name
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: NameKinds
     required: true
   script:
@@ -356,11 +356,11 @@ attributes:
     owner: Name
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Attribution
     inlined: true
 rules:

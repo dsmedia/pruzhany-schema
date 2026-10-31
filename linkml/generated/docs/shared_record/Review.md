@@ -143,19 +143,17 @@ attributes:
     name: by
     description: Who reviewed it.
     from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
     domain_of:
-    - Review
     - Attribution
+    - Review
     range: NonBlankText
   'on':
     name: 'on'
     description: The day it was reviewed.
     from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
@@ -202,21 +200,19 @@ attributes:
     name: by
     description: Who reviewed it.
     from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
     owner: Review
     domain_of:
-    - Review
     - Attribution
+    - Review
     range: NonBlankText
   'on':
     name: 'on'
     description: The day it was reviewed.
     from_schema: https://pruzhany.org/ns/sourced_entities
-    rank: 1000
     owner: Review
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity

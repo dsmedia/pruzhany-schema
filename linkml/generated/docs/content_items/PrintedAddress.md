@@ -56,6 +56,7 @@ URI: [pc:PrintedAddress](https://pruzhany.org/ns/sourced-entities#PrintedAddress
 | ---  | --- | --- | --- |
 | [TextBasis](TextBasis.md) | [addresses](addresses.md) | range | [PrintedAddress](PrintedAddress.md) |
 | [PrintedTitle](PrintedTitle.md) | [addresses](addresses.md) | range | [PrintedAddress](PrintedAddress.md) |
+| [CitedTextBasis](CitedTextBasis.md) | [addresses](addresses.md) | range | [PrintedAddress](PrintedAddress.md) |
 
 
 

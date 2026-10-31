@@ -9,6 +9,12 @@ const pattern4 = /^[^\s\u0085\uFEFF]+:(title|text)$(?![\s\S])/;
 const pattern5 = /^[^\s\u0085\uFEFF]+:title$(?![\s\S])/;
 const pattern6 = /^[^\s\u0085\uFEFF]+:text$(?![\s\S])/;
 
+export const AttributionShape = z.strictObject({
+	by: z.string().regex(pattern1),
+	on: z.string().regex(pattern2),
+	note: z.string().nullish(),
+});
+
 export const AuthorshipShape = z.strictObject({
 	by: z.string().regex(pattern1),
 	on: z.string().regex(pattern2),
@@ -69,6 +75,19 @@ export const TranslationCheckShape = z.strictObject({
 	judgement_id: z.string().regex(pattern6),
 	judgement_sha256: z.string().regex(pattern3),
 	attribution: AuthorshipShape,
+});
+
+export const CitedTextBasisShape = z.strictObject({
+	source_text: z.string(),
+	addresses: z.array(PrintedAddressShape).min(1).nullish(),
+});
+
+export const CitedTranslationShape = z.strictObject({
+	text: z.string().regex(pattern1),
+	language: z.literal('en'),
+	based_on: CitedTextBasisShape,
+	attribution: AuthorshipShape,
+	checked_against: TranslationCheckShape.nullish(),
 });
 
 export const SuppliedTitleShape = z.strictObject({

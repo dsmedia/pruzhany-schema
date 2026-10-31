@@ -146,21 +146,22 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     slot_uri: rico:textualValue
     domain_of:
-    - MediaText
     - PrintedAddress
     - PrintedTitle
     - SuppliedTitle
     - Translation
+    - MediaText
     range: NonBlankText
     required: true
   language:
     name: language
     description: The title's language, always English (en).
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     domain_of:
-    - Source
     - SuppliedTitle
     - Translation
+    - Source
     required: true
     equals_string: en
   based_on:
@@ -180,11 +181,11 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Authorship
     required: true
     inlined: true
@@ -222,22 +223,23 @@ attributes:
     slot_uri: rico:textualValue
     owner: SuppliedTitle
     domain_of:
-    - MediaText
     - PrintedAddress
     - PrintedTitle
     - SuppliedTitle
     - Translation
+    - MediaText
     range: NonBlankText
     required: true
   language:
     name: language
     description: The title's language, always English (en).
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: SuppliedTitle
     domain_of:
-    - Source
     - SuppliedTitle
     - Translation
+    - Source
     range: string
     required: true
     equals_string: en
@@ -260,11 +262,11 @@ attributes:
     owner: SuppliedTitle
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Authorship
     required: true
     inlined: true

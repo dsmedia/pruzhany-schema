@@ -1,3 +1,5 @@
+import { addEnglishIssues } from './words-english';
+import { CitedTranslationSchema } from './site-common.schema';
 import {
 	PublicMediaShape,
 	MediaDecisionShape,
@@ -28,7 +30,9 @@ export const MediaKindSchema = PublicMediaShape.shape.kind;
 // Rebind children to propagate retained calendar and consent checks into parents.
 export const MediaDecisionSchema = MediaDecisionShape.extend({ on: siteDay });
 export type MediaDecision = z.infer<typeof MediaDecisionSchema>;
-export const MediaTextSchema = MediaTextShape.extend({ reviewed: MediaDecisionSchema.nullish() });
+export const MediaTextSchema = MediaTextShape.extend({
+	reviewed: MediaDecisionSchema.nullish(),
+});
 export type MediaText = z.infer<typeof MediaTextSchema>;
 export const MediaRegionSchema = MediaRegionShape;
 export type MediaRegion = z.infer<typeof MediaRegionSchema>;
@@ -48,7 +52,9 @@ export const MediaConsentSchema = MediaConsentShape.extend({
 	withdrawn_on: siteDay.nullish(),
 });
 // A public Citation subset: exact words and their recorded part. No private note or locator.
-export const MediaFamilyWordsSchema = MediaFamilyWordsShape;
+export const MediaFamilyWordsSchema = MediaFamilyWordsShape.extend({
+	quote_english: CitedTranslationSchema.nullish(),
+}).superRefine((v, ctx) => addEnglishIssues('MediaFamilyWords', v, ctx));
 export const MediaFixitySchema = MediaFixityShape.extend({ on: siteDay });
 export const MediaMasterSchema = MediaMasterShape.extend({
 	checked: MediaFixitySchema.nullish(),
@@ -66,6 +72,7 @@ const publicFields = PublicMediaShape.extend({
 	alt: MediaTextSchema.nullish(),
 	inscription: MediaTextSchema.nullish(),
 	transcript: MediaTextSchema.nullish(),
+	family_words: MediaFamilyWordsSchema.nullish(),
 	depicted: z.array(MediaDepictedSchema),
 	// known-looser: LinkML's duration bound is inclusive; the validator requires > 0.
 	duration: z.number().positive().nullish(),

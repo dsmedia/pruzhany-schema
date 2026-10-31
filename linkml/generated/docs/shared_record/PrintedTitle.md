@@ -131,11 +131,11 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     slot_uri: rico:textualValue
     domain_of:
-    - MediaText
     - PrintedAddress
     - PrintedTitle
     - SuppliedTitle
     - Translation
+    - MediaText
     range: NonBlankText
     required: true
   addresses:
@@ -178,11 +178,11 @@ attributes:
     slot_uri: rico:textualValue
     owner: PrintedTitle
     domain_of:
-    - MediaText
     - PrintedAddress
     - PrintedTitle
     - SuppliedTitle
     - Translation
+    - MediaText
     range: NonBlankText
     required: true
   addresses:

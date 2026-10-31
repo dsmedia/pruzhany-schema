@@ -23,6 +23,8 @@ URI: [pc:on](https://pruzhany.org/ns/sourced-entities#on)
 | [MediaDecision](MediaDecision.md) | A review or a clearance: whose role made it (the owner or the project) and on what day. |  no  |
 | [MediaWithdrawal](MediaWithdrawal.md) | That a medium was withdrawn from the site, on what day and why; its record stays. |  no  |
 | [MediaFixity](MediaFixity.md) | A dated check that a master file still has its digest. |  no  |
+| [Attribution](Attribution.md) | Who made or allowed something, on what day, with an optional note. |  no  |
+| [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
 
 
 
@@ -36,7 +38,7 @@ URI: [pc:on](https://pruzhany.org/ns/sourced-entities#on)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [MediaDecision](MediaDecision.md), [MediaWithdrawal](MediaWithdrawal.md), [MediaFixity](MediaFixity.md) |
+| Domain Of | [MediaDecision](MediaDecision.md), [MediaWithdrawal](MediaWithdrawal.md), [MediaFixity](MediaFixity.md), [Attribution](Attribution.md) |
 
 
 
@@ -73,6 +75,7 @@ domain_of:
 - MediaDecision
 - MediaWithdrawal
 - MediaFixity
+- Attribution
 range: string
 
 ```

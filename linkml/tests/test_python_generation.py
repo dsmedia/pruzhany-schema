@@ -60,6 +60,15 @@ class PythonGeneration(unittest.TestCase):
                 {'type': 'null'}], 'default': None}}
                for name in ('SharedPerson', 'SharedOrganization')},
         }
+        # Ticket 02: exact optional Translation additions, including inherited fields.
+        # Expected field names are independent of generated declarations.
+        english_fields = {
+            'Citation': ['quote_english'], 'SiteCitation': ['quote_english'],
+            'Source': ['title_english'], 'MediaFamilyWords': ['quote_english'],
+        }
+        for name, fields in english_fields.items():
+            additions.setdefault(name, {}).update({field: {'anyOf': [
+                {'$ref': '#/$defs/CitedTranslation'}, {'type': 'null'}], 'default': None} for field in fields})
         for name, old in previous['models'].items():
             with self.subTest(model=name):
                 # Owner-approved site-content 1.1.0, 31 October 2026; preserve the
@@ -82,11 +91,31 @@ class PythonGeneration(unittest.TestCase):
                         previous['models']['PlaceIdentifier']['schema'])
                     expected['$defs']['PlaceIdentifier']['properties'].update(
                         copy.deepcopy(additions['PlaceIdentifier']))
+                if any(class_name == name or class_name in expected.get('$defs', {})
+                       for class_name in english_fields):
+                    translation = copy.deepcopy(previous['models']['Translation']['schema'])
+                    translation['properties']['based_on'] = {'$ref': '#/$defs/CitedTextBasis'}
+                    definitions = translation.pop('$defs', {})
+                    expected.setdefault('$defs', {}).update({key: value for key, value in definitions.items()
+                                                            if key not in expected.get('$defs', {})})
+                    basis = copy.deepcopy(definitions['TextBasis'])
+                    basis['required'].remove('addresses')
+                    addresses = basis['properties']['addresses']
+                    basis['properties']['addresses'] = {'anyOf': [addresses, {'type': 'null'}], 'default': None}
+                    expected['$defs']['CitedTextBasis'] = basis
+                    expected['$defs']['CitedTranslation'] = translation
                 model = getattr(models(), name)
                 new = model.model_json_schema()
                 self.assertEqual(backend.canonical(new, new.get('$defs', {})),
                                  backend.canonical(expected, expected.get('$defs', {})))
-                self.assertEqual(list(model.model_fields), old['order'] + list(additions.get(name, {})))
+                expected_order = old['order'] + list(additions.get(name, {}))
+                parent = {'SiteCitation': 'Citation'}.get(name)
+                if parent:
+                    fields = english_fields[name]
+                    expected_order = [field for field in expected_order if field not in fields]
+                    at = len(previous['models'][parent]['order'])
+                    expected_order[at:at] = fields
+                self.assertEqual(list(model.model_fields), expected_order)
                 self.assertEqual(model.model_config, old['config'])
                 for field in old['schema']['properties']:
                     before = old['schema']['properties'][field]

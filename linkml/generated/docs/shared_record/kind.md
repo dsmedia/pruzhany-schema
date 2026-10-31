@@ -22,11 +22,11 @@ URI: [pc:kind](https://pruzhany.org/ns/sourced-entities#kind)
 | --- | --- | --- |
 | [SharedName](SharedName.md) | One name of a person in the shared record, with its evidence located on the printed page where the site writer found it. |  no  |
 | [Holder](Holder.md) | Who holds a source: an institution, a family or a private person, with its outside identifiers and its web host. A private holder's name is never published. |  no  |
+| [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
 | [Source](Source.md) | A record the statements rest on: a book, an archive's database, a family document, the paper itself and the like, registered once and cited by its id. |  no  |
 | [Name](Name.md) | One name of a person, a family, an organisation or a place, of one kind (printed, birth, married, supplied and so on), in one script. A person's, a family's and an organisation's names are agent names and a place's are place names (vocabulary/ site-content.json, bindings agent_name and place_name), so the class itself names no single term. |  no  |
 | [PublicMedia](PublicMedia.md) | One held or linked copy of a registered source (a photograph, document, recording or film), as the public may see it: what it is, what it shows and says, its review, its terms and its served copies. |  no  |
 | [Media](Media.md) | One held or linked copy of a registered source, as the shared record keeps it: all that the public may see, with the private master file and the private permission besides. |  no  |
-| [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
 
 
 
@@ -40,7 +40,7 @@ URI: [pc:kind](https://pruzhany.org/ns/sourced-entities#kind)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [Holder](Holder.md), [Source](Source.md), [Name](Name.md), [PublicMedia](PublicMedia.md), [Authorship](Authorship.md) |
+| Domain Of | [Holder](Holder.md), [Authorship](Authorship.md), [Source](Source.md), [Name](Name.md), [PublicMedia](PublicMedia.md) |
 
 
 
@@ -75,10 +75,10 @@ URI: [pc:kind](https://pruzhany.org/ns/sourced-entities#kind)
 name: kind
 domain_of:
 - Holder
+- Authorship
 - Source
 - Name
 - PublicMedia
-- Authorship
 range: string
 
 ```

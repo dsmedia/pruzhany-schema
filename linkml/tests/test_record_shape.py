@@ -200,6 +200,7 @@ class Meaning(unittest.TestCase):
             # Ticket 03: person/organisation identifiers and the retained-id type.
             ('slot_uri', 'rico'): 37, ('slot_uri', 'pc'): 29,
             ('meaning', 'rico'): 2, ('meaning', 'ehri'): 3, ('meaning', 'pc'): 4,
+            ('exact_mappings', 'pc'): 3,
             ('related_mappings', 'pc'): 6, ('related_mappings', 'rico'): 1, ('via', 'rico'): 1})
 
 

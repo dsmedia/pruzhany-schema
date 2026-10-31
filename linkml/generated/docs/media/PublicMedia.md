@@ -376,6 +376,7 @@ attributes:
     slot_uri: rico:hasRepresentationType
     domain_of:
     - PublicMedia
+    - Authorship
     range: MediaKind
     required: true
   caption:
@@ -771,6 +772,7 @@ attributes:
     owner: PublicMedia
     domain_of:
     - PublicMedia
+    - Authorship
     range: MediaKind
     required: true
   caption:

@@ -28,6 +28,17 @@ URI: [pc:MediaFamilyWords](https://pruzhany.org/ns/sourced-entities#MediaFamilyW
         
       MediaFamilyWords : quote
         
+      MediaFamilyWords : quote_english
+        
+          
+    
+        
+        
+        MediaFamilyWords --> "0..1" CitedTranslation : quote_english
+        click CitedTranslation href "../CitedTranslation/"
+    
+
+        
       MediaFamilyWords : quote_language
         
       MediaFamilyWords : source_id
@@ -48,6 +59,7 @@ URI: [pc:MediaFamilyWords](https://pruzhany.org/ns/sourced-entities#MediaFamilyW
 | [page](page.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The page or recorded part the words are on. | direct |
 | [quote](quote.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The words, exactly. | direct |
 | [quote_language](quote_language.md) | 1 <br/> [LanguageTag](LanguageTag.md) | Their language, as a BCP 47 tag. | direct |
+| [quote_english](quote_english.md) | 0..1 <br/> [CitedTranslation](CitedTranslation.md) | English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. | direct |
 
 
 
@@ -149,6 +161,23 @@ attributes:
     - MediaFamilyWords
     range: LanguageTag
     required: true
+  quote_english:
+    name: quote_english
+    annotations:
+      english_of:
+        tag: english_of
+        value: quote
+    description: English of exactly quote, with based_on.source_text equal to that
+      field's exact bytes and attribution naming the kept English or its person or
+      model.
+    from_schema: https://pruzhany.org/ns/media
+    exact_mappings:
+    - pc:site_translation
+    rank: 1000
+    domain_of:
+    - MediaFamilyWords
+    range: CitedTranslation
+    inlined: true
 
 ```
 </details>
@@ -205,6 +234,24 @@ attributes:
     - MediaFamilyWords
     range: LanguageTag
     required: true
+  quote_english:
+    name: quote_english
+    annotations:
+      english_of:
+        tag: english_of
+        value: quote
+    description: English of exactly quote, with based_on.source_text equal to that
+      field's exact bytes and attribution naming the kept English or its person or
+      model.
+    from_schema: https://pruzhany.org/ns/media
+    exact_mappings:
+    - pc:site_translation
+    rank: 1000
+    owner: MediaFamilyWords
+    domain_of:
+    - MediaFamilyWords
+    range: CitedTranslation
+    inlined: true
 
 ```
 </details></div>

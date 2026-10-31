@@ -293,9 +293,6 @@ attributes:
     domain_of:
     - ContentItem
     - PrintedSection
-    - Source
-    - Fact
-    - Mention
     range: NonBlankText
     required: true
   type:
@@ -309,7 +306,6 @@ attributes:
     rank: 1000
     domain_of:
     - ContentItem
-    - Fact
     range: ImpressoTypes
     required: true
   subtype:
@@ -477,7 +473,6 @@ attributes:
     rank: 1000
     domain_of:
     - ContentItem
-    - Fact
     range: NonBlankText
 class_uri: ehri:RecordResource
 rules:
@@ -579,9 +574,6 @@ attributes:
     domain_of:
     - ContentItem
     - PrintedSection
-    - Source
-    - Fact
-    - Mention
     range: NonBlankText
     required: true
   type:
@@ -596,7 +588,6 @@ attributes:
     owner: ContentItem
     domain_of:
     - ContentItem
-    - Fact
     range: ImpressoTypes
     required: true
   subtype:
@@ -781,7 +772,6 @@ attributes:
     owner: ContentItem
     domain_of:
     - ContentItem
-    - Fact
     range: NonBlankText
 class_uri: ehri:RecordResource
 rules:

@@ -79,12 +79,41 @@ class ExplicitNullGenerator(JsonSchemaGenerator):
         return result
 
 
+class ReleaseGenerator(JsonSchemaGenerator):
+    """Honor deactivated rules and explicitly typed conditions in released contracts.
+
+    Read 31 October 2026: LinkML Advanced features (Rules), JSON Schema (Rules),
+    and https://linkml.io/linkml-model/latest/docs/deactivated/; pinned 1.12.1
+    handle_class ignores deactivated and anonymous conditions omit their types.
+    The opt-in annotation below preserves a condition's declared range, including
+    rejection of null. Existing unannotated conditions retain their exact behavior.
+    """
+
+    def get_subschema_for_anonymous_class(self, cls, properties_required=False):
+        result = super().get_subschema_for_anonymous_class(cls, properties_required)
+        if cls:
+            for slot in cls.slot_conditions.values():
+                if flag(slot, 'json_schema_typed_range'):
+                    if not slot.range:
+                        raise ValueError(f'{slot.name}: typed condition needs an explicit range')
+                    result['properties'][self.aliased_slot_name(slot)] = self.get_subschema_for_slot(
+                        slot, omit_type=False, include_null=False)
+        return result
+
+
+def release_rules(generator):
+    """Filter a generator's private SchemaView, never the source definition."""
+    for cls in generator.schemaview.all_classes().values():
+        cls.rules = [rule for rule in cls.rules if not rule.deactivated]
+    return generator
+
+
 def generator(schema, top_class):
     """Select explicit nulls only when the schema definition requests them."""
-    native = JsonSchemaGenerator(str(schema), top_class=top_class, not_closed=False)
+    native = ReleaseGenerator(str(schema), top_class=top_class, not_closed=False)
     annotation = native.schemaview.schema.annotations.get('json_schema_nulls')
     if annotation is None:
-        return native
+        return release_rules(native)
     if str(annotation.value) != 'explicit':
         raise ValueError('unsupported json_schema_nulls policy')
     return ExplicitNullGenerator(str(schema), top_class=top_class,

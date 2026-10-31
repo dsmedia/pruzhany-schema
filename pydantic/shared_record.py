@@ -1,5 +1,6 @@
 """One shared record, built on production sourced facts and standing."""
 from .generated.models import Holder, LifeEventDate, LifeEventMainPerson, PlaceIdentifier, SharedEvent, SharedFact, SharedFamily, SharedName, SharedOrganization, SharedPerson, SharedPlace, SharedRecord, SiteCitation, SourcedRelation
+from .words_english import validate_english
 from typing import Annotated, Literal, get_args
 from urllib.parse import urlsplit
 from pydantic import Field, TypeAdapter, ValidationError, model_validator
@@ -124,6 +125,7 @@ def _SharedRecord__record_references(self):
     holders = {h.id for h in self.holders}
     by_source = {s.id: s for s in self.sources}
     for source in self.sources:
+        validate_english('Source', source)
         if source.holder_id and source.holder_id not in holders:
             errors.append('unknown source holder')
         if any(d.source_id not in sources for d in source.derived_from or []):

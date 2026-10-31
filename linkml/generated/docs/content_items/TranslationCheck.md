@@ -80,6 +80,7 @@ URI: [pc:TranslationCheck](https://pruzhany.org/ns/sourced-entities#TranslationC
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [Translation](Translation.md) | [checked_against](checked_against.md) | range | [TranslationCheck](TranslationCheck.md) |
+| [CitedTranslation](CitedTranslation.md) | [checked_against](checked_against.md) | range | [TranslationCheck](TranslationCheck.md) |
 
 
 
@@ -212,10 +213,9 @@ attributes:
     name: attribution
     description: Who checked it, and on which day.
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: TranslationCheck
     domain_of:
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation

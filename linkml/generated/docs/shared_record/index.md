@@ -15,6 +15,8 @@ Name: pruzhany_shared_record
 | [Attribution](Attribution.md) | Who made or allowed something, on what day, with an optional note. |
 | [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |
 | [Citation](Citation.md) | Where in one source a statement's evidence lies: the source, and the record, page, scan, time, piece of the paper, address or pointer within it, with the quoted words. |
+| [CitedTextBasis](CitedTextBasis.md) | The exact source words of a citation or source title. The containing citation's locator or source description locates them; printed addresses are optional, and when supplied remain nonempty real image-and-box witnesses. |
+| [CitedTranslation](CitedTranslation.md) | English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record. |
 | [ContentItemBlockRef](ContentItemBlockRef.md) | The regions of one page that a content item or a section heading covers, in reading order. |
 | [CrossReference](CrossReference.md) | A link from one content item to another in the same issue, with how sure it is and why. |
 | [EnglishCheck](EnglishCheck.md) | A later, separate check of one English field against one exact reading of the printed text, bound to both and to the judgement kept by their digests. |
@@ -60,7 +62,7 @@ Name: pruzhany_shared_record
 | [SuppliedTitle](SuppliedTitle.md) | A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check. |
 | [TextBasis](TextBasis.md) | The exact text a translation or supplied title was made from, and where it is printed, kept even after the text is read again. |
 | [TitleCheck](TitleCheck.md) | A check of a supplied title's English. |
-| [Translation](Translation.md) | An English translation of a content item's printed text, with the exact text it was made from, who made it and, where one was made, its later check. |
+| [Translation](Translation.md) | An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check. |
 | [TranslationCheck](TranslationCheck.md) | A check of a translation's English. |
 
 
@@ -79,7 +81,7 @@ Name: pruzhany_shared_record
 | [bbox](bbox.md) | The box on the picture: left, top, width and height, in the picture's pixels. |
 | [block_ids](block_ids.md) | The regions on that page, by their ids in the pages document, in reading order. |
 | [bucket](bucket.md) | The private storage bucket, apart from the page pictures' bucket. |
-| [by](by.md) | Who reviewed it. |
+| [by](by.md) | Who made it or allowed it: a person, a session or a program. |
 | [bytes](bytes.md) | The file's size in bytes. |
 | [caption](caption.md) | The caption the site shows, with its language and review. |
 | [checked](checked.md) | The last dated check of the file's digest. |
@@ -88,7 +90,7 @@ Name: pruzhany_shared_record
 | [cleared](cleared.md) | Who cleared the medium for the site, by role, and on what day. |
 | [conditions_of_access](conditions_of_access.md) | The holder's terms of access, as written. |
 | [conditions_of_use](conditions_of_use.md) | The holder's terms of use, as written, with no permission inferred from them. |
-| [confidence](confidence.md) | How sure the outcome is. |
+| [confidence](confidence.md) | How sure the link is, from 0 to 1. |
 | [consent](consent.md) | The private record of the permission to show the medium; never public. |
 | [coordinates](coordinates.md) | Where it lies: latitude then longitude, in degrees. |
 | [credit](credit.md) | The holder's or the family's credit, as they word it. |
@@ -135,7 +137,7 @@ Name: pruzhany_shared_record
 | [key](key.md) | The file's key in the bucket, whose last part is its SHA-256 digest. |
 | [kind](kind.md) | An institution, a family or a private person. |
 | [lang](lang.md) | Its language, as a language tag such as yi or en. |
-| [language](language.md) | The languages of the record, as BCP 47 tags. |
+| [language](language.md) | The title's language, always English (en). |
 | [link](link.md) | For sound or film: the page on the holder's own host where it can be heard or seen. |
 | [location_id](location_id.md) | Where the event happened, by the place's id. |
 | [locator](locator.md) | An internal pointer into the project's files; never published and never a holder's record number. |
@@ -148,7 +150,7 @@ Name: pruzhany_shared_record
 | [name](name.md) | The name the site shows. |
 | [names](names.md) | Every name the person is known by, printed or supplied, with where it is found. |
 | [note](note.md) | A note on how or why. |
-| [on](on.md) | The day it was reviewed. |
+| [on](on.md) | The day it was made or allowed. |
 | [organization_id](organization_id.md) | The organisation the statement concerns, by its id in the record. |
 | [organizations](organizations.md) | Every organisation. |
 | [outcome](outcome.md) | What became of the person: unknown, perished, survived, died before, or not applicable. |
@@ -175,6 +177,7 @@ Name: pruzhany_shared_record
 | [qualifiers](qualifiers.md) | More about the statement, as named texts. |
 | [quote](quote.md) | The record's own words, exactly. |
 | [quote_condition](quote_condition.md) | The owner's condition on the cleared quotes: shown only where no other record says the same. |
+| [quote_english](quote_english.md) | English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. |
 | [quote_language](quote_language.md) | The quote's language, where it is not the source's (a translation). |
 | [quotes_cleared](quotes_cleared.md) | Who allowed quotes from this private document to be published, and on what day. |
 | [reading_id](reading_id.md) | The reading of the printed text that the English was checked against. |
@@ -217,9 +220,10 @@ Name: pruzhany_shared_record
 | [subjects](subjects.md) | The persons, places or events the source shows or speaks of, by their ids. |
 | [summary](summary.md) | A short summary in words. |
 | [target_id](target_id.md) | The id of the content item linked to. |
-| [text](text.md) | The words. |
+| [text](text.md) | The words read in the box, exactly as read; empty for a patch with no readable line. |
 | [time](time.md) | The time in a recording. |
 | [title](title.md) | The source's title. |
+| [title_english](title_english.md) | English of exactly title, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. |
 | [transcript](transcript.md) | A document's full text; required for documents. |
 | [type](type.md) | kinship for a released relationship type; other, with a proposed type, for one not yet released. |
 | [unidentified](unidentified.md) | True when the permission also covers people shown and not identified. |

@@ -26,7 +26,7 @@ CHECKS = LINKML / 'checks' / 'record.yaml'
 SCHEMA = json.loads((LINKML / 'generated' / 'json-schema' / 'shared_record.schema.json').read_text(encoding='utf-8'))
 MODULES = ['sourced_entities', 'media', 'shared_record', 'shared']
 ZOD = ['zod/sourced-entities.schema.ts', 'zod/shared-record.schema.ts', 'zod/media.schema.ts',
-       'zod/shared.schema.ts', 'zod/citation-requirements.ts']
+       'zod/shared.schema.ts', 'zod/citation-requirements.ts', 'zod/attribution.schema.ts']
 PYDANTIC = ['pydantic/sourced_entities.py', 'pydantic/shared_record.py', 'pydantic/media.py',
             'pydantic/shared.py', 'pydantic/citation_requirements.py']
 PYDANTIC_DECORATORS = {'model_validator', 'field_validator'}
@@ -144,8 +144,13 @@ def instance(base, changes):
     return made
 
 
-def errors(class_name, value):
-    validator = Draft201909Validator({'$schema': SCHEMA['$schema'], '$defs': SCHEMA['$defs'],
+def errors(class_name, value, staged=False):
+    if staged:
+        from test_words_english import activated_schema
+        schema = activated_schema()
+    else:
+        schema = SCHEMA
+    validator = Draft201909Validator({'$schema': schema['$schema'], '$defs': schema['$defs'],
                                       '$ref': f'#/$defs/{class_name}'})
     return [error.message for error in validator.iter_errors(value)]
 
@@ -165,11 +170,11 @@ class TheAccount(unittest.TestCase):
     def test_the_count(self):
         """A tally, so a check added to or taken from the twins shows here too."""
         found = found_in_twins()
-        self.assertEqual(sum(n for key, n in found.items() if key[0] == 'zod'), 20)
-        self.assertEqual(sum(n for key, n in found.items() if key[0] == 'pydantic'), 19)
-        self.assertEqual(len(self.checks), 19)
+        self.assertEqual(sum(n for key, n in found.items() if key[0] == 'zod'), 21)
+        self.assertEqual(sum(n for key, n in found.items() if key[0] == 'pydantic'), 20)
+        self.assertEqual(len(self.checks), 20)
         hows = collections.Counter(part['how'] for _, part in self.parts)
-        self.assertEqual(hows, {'linkml_rule': 44, 'rule_catalog': 48})
+        self.assertEqual(hows, {'linkml_rule': 45, 'rule_catalog': 48, 'twin_only': 3})
 
     def test_a_planted_refinement_and_a_planted_validator_are_found_and_named(self):
         found = found_in_twins()
@@ -256,8 +261,8 @@ class TheRules(unittest.TestCase):
         for part in self.parts:
             with self.subTest(part=part['holds']):
                 base = self.bases[part['class']]
-                self.assertEqual(errors(part['class'], instance(base, part['passes'])), [])
-                self.assertNotEqual(errors(part['class'], instance(base, part['fails'])), [])
+                self.assertEqual(errors(part['class'], instance(base, part['passes']), part.get('staged', False)), [])
+                self.assertNotEqual(errors(part['class'], instance(base, part['fails']), part.get('staged', False)), [])
 
 
 class TheCatalogRules(unittest.TestCase):

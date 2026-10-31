@@ -190,11 +190,11 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Authorship
     required: true
     inlined: true
@@ -275,11 +275,11 @@ attributes:
     owner: EnglishCheck
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Authorship
     required: true
     inlined: true
