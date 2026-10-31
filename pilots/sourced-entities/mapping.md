@@ -6,7 +6,7 @@ The upstream RDF files were read on 2026-10-19. [The checked component profile](
 
 | Pilot concept | RDF representation | EHRI | Qualification |
 |---|---|---|---|
-| Person | `rico:Person` | `ehri:Person` | Local ID; no automatic Wikidata/EHRI equivalence. |
+| Person | `ehri:Person` (a RiC-O Person subclass) | `ehri:Person` only | Local ID; exactly one plain `rico:name`; no automatic Wikidata/EHRI equivalence. |
 | Newspaper edition | `rico:RecordSet` | — | Individual cited content units are `rico:Record` nodes. |
 | Other source | `rico:RecordResource` | — | Hosted copies retain their underlying bibliographic `work_id`. |
 | Printed name | `rico:AgentName` | — | `rico:name` carries a language tag; `pc:recordedFor` records its proposed association with a person. |
@@ -30,4 +30,4 @@ No `owl:sameAs` or `schema:sameAs` is emitted. A record describing a person is n
 
 `profile.ttl` declares the local terms. JSON-LD has an inline prefix context and is parsed in tests without fetching any remote context. The current checks validate RDF parsing, the actually used RiC-O IRIs and selected semantic invariants; they do not run a full OWL reasoner or claim compliance with an EHRI ingestion API.
 
-EHRI’s Person class adds no person-specific properties. People’s names remain `rico:AgentName`: EHRI’s AlternateAgentName and ParallelAgentName are defined for institutions. EHRI’s namespace is the upstream test-domain namespace `http://lod.ehri-project-test.eu/ontology#`. Place kind (`city`, `region`, `country`) may be supplied to the RDF exporter; the current pilot Place contract carries no kind and real data has no places.
+The pinned EHRI person shapes require `ehri:Person` as the only type and one plain `rico:name` on the person. The pilot’s printed name observations remain `rico:AgentName`, with language and source citations; an unreviewed proposed association is not promoted to a canonical alternate name. The shapes also define linked `ehri:AlternateAgentName` and `ehri:ParallelAgentName`; the ShEx inverse address stem is specific to EHRI (see `standards/README.md`). EHRI’s namespace is the upstream test-domain namespace `http://lod.ehri-project-test.eu/ontology#`. Place kind (`city`, `region`, `country`) may be supplied to the RDF exporter; the current pilot Place contract carries no kind and real data has no places.

@@ -30,7 +30,8 @@
 #             `linkml lint` on every schema file, the house lint (linkml/lint.py),
 #             every generated file made again and compared byte for byte with
 #             linkml/generated/, the canaries that fail when LinkML's behaviour
-#             changes, then the tests.
+#             changes, then the tests (including the pilot against both pinned
+#             EHRI person shapes, using PyShEx/pySHACL in this hashed lock).
 #
 # Tools: bash, git, bun, uv, gitleaks (versions pinned in mise.toml; CI
 # installs the same ones).

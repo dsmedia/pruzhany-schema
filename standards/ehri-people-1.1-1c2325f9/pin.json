@@ -1,0 +1,25 @@
+{
+  "repo": "EHRI/ehri-kg-mapping",
+  "commit": "1c2325f9d2267a8a0c639cd041be54ec9a73e517",
+  "read_on": "2026-10-31",
+  "version": "1.1",
+  "license": "EUPL-1.2",
+  "attribution": "EHRI/ehri-kg-mapping contributors",
+  "files": {
+    "people.shacl.ttl": {
+      "path": "src/shapes/1.1/people.shacl.ttl",
+      "url": "https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/src/shapes/1.1/people.shacl.ttl",
+      "sha256": "341bbf120657a5e9975f2bb6db068958ff583003ccbb1960bae974d4af8e4d18"
+    },
+    "people.shex": {
+      "path": "src/shapes/1.1/people.shex",
+      "url": "https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/src/shapes/1.1/people.shex",
+      "sha256": "4b808aa2a60e01b9ce41b46347b81db44578b79c3617f0a6f33be09149be4a47"
+    },
+    "LICENSE.md": {
+      "path": "LICENSE.md",
+      "url": "https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/LICENSE.md",
+      "sha256": "44905a5dff88eb1872d9e1a1880e5c8cd302ed3d20008de53cf07c83ca6a131d"
+    }
+  }
+}
