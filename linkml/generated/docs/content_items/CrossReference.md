@@ -122,8 +122,8 @@ attributes:
     name: confidence
     description: How sure the link is, from 0 to 1.
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     domain_of:
-    - Fate
     - CrossReference
     range: float
     required: true
@@ -171,9 +171,9 @@ attributes:
     name: confidence
     description: How sure the link is, from 0 to 1.
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: CrossReference
     domain_of:
-    - Fate
     - CrossReference
     range: float
     required: true

@@ -31,8 +31,10 @@ imports:
   - linkml:types
   - types
   - vocabulary
+  - site_common
 
 types:
+
   HttpsUri:
     typeof: uri
     pattern: '^https://[^\s/?#]+[^\s]*$'
@@ -41,6 +43,7 @@ types:
       pattern says; the Zod twin asks for a URL whose protocol is https.
 
 enums:
+
   SourceDerivationRelation:
     description: >-
       How a source we hold was made from another: a copy of it, or a transcription of it.
@@ -55,6 +58,7 @@ enums:
           A transcription of the original record, which describes it and is not a copy of it.
         # vocabulary/site-content.json, binding source_transcription.
         meaning: rico:describesOrDescribed
+
   SourcedDatePrecision:
     description: >-
       How much of a sourced date is known: its year, its month, its day, or a range.
@@ -71,6 +75,7 @@ enums:
       range:
         description: >-
           The date lies between a start and an end.
+
   PrintedCalendar:
     description: >-
       The calendar a date was printed or written in.
@@ -81,6 +86,7 @@ enums:
       hebrew:
         description: >-
           The Hebrew calendar; its words are kept as printed and never converted.
+
   SourceMadeBy:
     description: >-
       Who made a source, as a category: never an agent, so never its creator.
@@ -100,6 +106,7 @@ enums:
       unknown:
         description: >-
           Not known.
+
   SourceQuoteCondition:
     description: >-
       The owner's condition on a private source's cleared quotes.
@@ -110,6 +117,7 @@ enums:
           24 October 2026).
 
 classes:
+
   SourcedDate:
     # ADR 0001: dates are governed by RiC-O's Date, its printed words kept as expressedDate.
     class_uri: rico:Date
@@ -250,25 +258,6 @@ classes:
               required: true
             'on':
               required: true
-
-  Attribution:
-    description: >-
-      Who made or allowed something, on what day, with an optional note.
-    attributes:
-      by:
-        range: NonBlankText
-        required: true
-        description: >-
-          Who made it or allowed it: a person, a session or a program.
-      'on':
-        range: IsoDay
-        required: true
-        description: >-
-          The day it was made or allowed.
-      note:
-        range: string
-        description: >-
-          A note on how or why.
 
   SourceDerivation:
     description: >-
@@ -420,6 +409,16 @@ classes:
         minimum_cardinality: 1
         description: >-
           The persons, places or events the source shows or speaks of, by their ids.
+      title_english:
+        range: CitedTranslation
+        inlined: true
+        exact_mappings:
+          - pc:site_translation
+        annotations:
+          english_of: title
+        description: >-
+          English of exactly title, with based_on.source_text equal to that field's
+          exact bytes and attribution naming the kept English or its person or model.
     rules:
       - description: >-
           A source's host is written without www.
@@ -527,6 +526,47 @@ classes:
         range: IsoDay
         description: >-
           The day a person read the record.
+      quote_english:
+        range: CitedTranslation
+        inlined: true
+        exact_mappings:
+          - pc:site_translation
+        annotations:
+          english_of: quote
+        description: >-
+          English of exactly quote, with based_on.source_text equal to that field's
+          exact bytes and attribution naming the kept English or its person or model.
+    # LinkML Advanced features (Rules), Slots, JSON Schema (Rules), and metamodel
+    # deactivated, read 31 October 2026: https://linkml.io/linkml/schemas/advanced.html
+    # and https://linkml.io/linkml-model/latest/docs/deactivated/.
+    # One switch: set this rule's deactivated to false and regenerate with the data rollout.
+    rules:
+      - title: require_non_english_quote_english
+        deactivated: true
+        description: >-
+          A quote not explicitly marked as English carries quote_english.
+        preconditions:
+          slot_conditions:
+            quote:
+              annotations:
+                json_schema_typed_range: true
+              range: NonBlankText
+              required: true
+          none_of:
+            - slot_conditions:
+                quote_language:
+                  annotations:
+                    json_schema_typed_range: true
+                  range: LanguageTag
+                  required: true
+                  pattern: '^[eE][nN](-|$)'
+        postconditions:
+          slot_conditions:
+            quote_english:
+              annotations:
+                json_schema_typed_range: true
+              range: CitedTranslation
+              required: true
     any_of:
       - description: >-
           A citation names where in its source the evidence is.

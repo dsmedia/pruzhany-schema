@@ -1,0 +1,1183 @@
+{
+	"example": {
+		"Citation": {
+			"source_id": "original",
+			"reference_code": "part one",
+			"quote": "Fiktive verter.",
+			"record_type": "Fiktive verter."
+		},
+		"MediaFamilyWords": {
+			"source_id": "source-fixture",
+			"page": "back",
+			"quote": "Our aunt beside the gate.",
+			"quote_language": "en"
+		},
+		"SharedRecord": {
+			"version": "1",
+			"vocabulary_version": "1.3.0",
+			"persons": [
+				{
+					"id": "fictional-person",
+					"name": "Fictional Person",
+					"names": [
+						{
+							"value": "Fictional Person",
+							"kind": "printed",
+							"script": "Latn"
+						}
+					],
+					"gender": "unknown",
+					"fate": {
+						"outcome": "unknown",
+						"confidence": "possible",
+						"rests_on": [],
+						"review": {
+							"state": "pending"
+						}
+					}
+				}
+			],
+			"families": [
+				{
+					"id": "fictional-family",
+					"name": "Fictional Family",
+					"names": []
+				}
+			],
+			"places": [
+				{
+					"id": "fictional-place",
+					"name": "Fictional Town",
+					"names": [],
+					"type": "town",
+					"coordinates": [50, 25],
+					"identifiers": [
+						{
+							"source_id": "fictional-authority",
+							"value": "42",
+							"url": "https://authority.example.org/places/42",
+							"accessed": "2026-10-24",
+							"attribution": {
+								"by": "fictional researcher",
+								"on": "2026-10-24"
+							}
+						}
+					]
+				}
+			],
+			"organizations": [
+				{
+					"id": "fictional-organization",
+					"name": "Fictional Association",
+					"names": []
+				}
+			],
+			"events": [
+				{
+					"id": "fictional-event",
+					"name": "Fictional event",
+					"type": "community_event",
+					"main_people": [],
+					"dates": [
+						{
+							"qualifier": "reported_in",
+							"reported_in": "1938-01-01"
+						}
+					]
+				}
+			],
+			"sources": [
+				{
+					"id": "fictional-source",
+					"kind": "book",
+					"title": "Fictional source",
+					"published": "A fictional publication"
+				},
+				{
+					"id": "fictional-authority",
+					"kind": "archive_database",
+					"title": "Fictional authority list",
+					"host": "authority.example.org",
+					"url_pattern": "https://authority.example.org/places/{}"
+				}
+			],
+			"facts": [
+				{
+					"id": "fictional-fact",
+					"subject_id": "fictional-person",
+					"type": "birth",
+					"place_id": "fictional-place",
+					"representation": "structured",
+					"citations": [
+						{
+							"source_id": "fictional-source",
+							"page": "1"
+						}
+					],
+					"evidence_confidence": "possible",
+					"identity_confidence": "possible",
+					"status": "accepted",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional researcher",
+						"on": "2026-10-22"
+					}
+				}
+			],
+			"relations": [
+				{
+					"id": "fictional-relation",
+					"subject_id": "fictional-person",
+					"type": "kinship",
+					"citations": [
+						{
+							"source_id": "fictional-source",
+							"page": "1"
+						}
+					],
+					"evidence_confidence": "possible",
+					"identity_confidence": "possible",
+					"status": "accepted",
+					"review": {
+						"state": "pending"
+					},
+					"attribution": {
+						"by": "fictional researcher",
+						"on": "2026-10-22"
+					},
+					"related_name": "Fictional Relative",
+					"relationship_type": "sibling",
+					"family_id": "fictional-family"
+				}
+			]
+		},
+		"SiteCitation": {
+			"source_id": "paper",
+			"edition_date": "1938-12-16",
+			"unit_id": "notice-1938-12-16",
+			"quote": "\u05d6\u05d9\u05d9\u05e2\u05e8 \u05d8\u05e2\u05db\u05d8\u05e2\u05e8\u05dc",
+			"addresses": [
+				{
+					"image_uri": "page-1938-12-16.png",
+					"bbox": [10, 10, 80, 20],
+					"text": "\u05d6\u05d9\u05d9\u05e2\u05e8 \u05d8\u05e2\u05db\u05d8\u05e2\u05e8\u05dc"
+				}
+			]
+		},
+		"Translation": {
+			"text": "Fictional English words.",
+			"language": "en",
+			"based_on": {
+				"source_text": "Fiktive verter.",
+				"addresses": [
+					{
+						"image_uri": "fictional-paper.png",
+						"bbox": [0, 0, 10, 10],
+						"text": "Fiktive verter."
+					}
+				]
+			},
+			"attribution": {
+				"kind": "person",
+				"by": "Fictional translator",
+				"on": "2000-01-01"
+			}
+		},
+		"CitedTranslation": {
+			"text": "Fictional English words.",
+			"language": "en",
+			"based_on": {
+				"source_text": "Fiktive verter.",
+				"addresses": [
+					{
+						"image_uri": "fictional-paper.png",
+						"bbox": [0, 0, 10, 10],
+						"text": "Fiktive verter."
+					}
+				]
+			},
+			"attribution": {
+				"kind": "person",
+				"by": "Fictional translator",
+				"on": "2000-01-01"
+			}
+		}
+	},
+	"models": {
+		"Citation": ["Citation"],
+		"MediaFamilyWords": ["MediaFamilyWords"],
+		"SharedRecord": ["SharedRecord"],
+		"SiteCitation": ["SiteCitation"],
+		"Translation": ["Translation"],
+		"CitedTranslation": ["CitedTranslation"]
+	},
+	"cases": [
+		{
+			"name": "English staging: old Citation",
+			"model": "Citation",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "Citation.quote_english: exact English",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Fiktive verter."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: changed bytes refused",
+			"model": "Citation",
+			"valid": false,
+			"error": "quote_english must translate exactly quote",
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter. ",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Fiktive verter."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: wrong language",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "yi",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Fiktive verter."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: bad attribution day",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Fiktive verter."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-02-30"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: bad box",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 0, 10],
+									"text": "Fiktive verter."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: missing attribution",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Fiktive verter."
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "English staging: old MediaFamilyWords",
+			"model": "MediaFamilyWords",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "MediaFamilyWords.quote_english: exact English",
+			"model": "MediaFamilyWords",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Our aunt beside the gate.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Our aunt beside the gate."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "MediaFamilyWords.quote_english: changed bytes refused",
+			"model": "MediaFamilyWords",
+			"valid": false,
+			"error": "quote_english must translate exactly quote",
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Our aunt beside the gate. ",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Our aunt beside the gate."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "MediaFamilyWords.quote_english: wrong language",
+			"model": "MediaFamilyWords",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "yi",
+						"based_on": {
+							"source_text": "Our aunt beside the gate.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Our aunt beside the gate."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "MediaFamilyWords.quote_english: bad attribution day",
+			"model": "MediaFamilyWords",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Our aunt beside the gate.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Our aunt beside the gate."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-02-30"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "MediaFamilyWords.quote_english: bad box",
+			"model": "MediaFamilyWords",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Our aunt beside the gate.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 0, 10],
+									"text": "Our aunt beside the gate."
+								}
+							]
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "MediaFamilyWords.quote_english: missing attribution",
+			"model": "MediaFamilyWords",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Our aunt beside the gate.",
+							"addresses": [
+								{
+									"image_uri": "fictional.png",
+									"bbox": [0, 0, 10, 10],
+									"text": "Our aunt beside the gate."
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Source.title_english document binding True",
+			"model": "SharedRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["sources", 0, "title_english"],
+					"value": {
+						"text": "An invented title",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fictional source"
+						},
+						"attribution": {
+							"kind": "model",
+							"by": "kept:fictional/english:text",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Source.title_english document binding False",
+			"model": "SharedRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["sources", 0, "title_english"],
+					"value": {
+						"text": "An invented title",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fictional source "
+						},
+						"attribution": {
+							"kind": "model",
+							"by": "kept:fictional/english:text",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation release accepts legacy quote yi",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				}
+			]
+		},
+		{
+			"name": "Citation release accepts legacy quote en",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "en"
+				}
+			]
+		},
+		{
+			"name": "Citation release accepts legacy quote en-US",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "en-US"
+				}
+			]
+		},
+		{
+			"name": "Citation release accepts legacy quote None",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "SiteCitation release accepts legacy quote yi",
+			"model": "SiteCitation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SiteCitation release accepts legacy quote en",
+			"model": "SiteCitation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "en"
+				},
+				{
+					"path": ["addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SiteCitation release accepts legacy quote en-US",
+			"model": "SiteCitation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "en-US"
+				},
+				{
+					"path": ["addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SiteCitation release accepts legacy quote None",
+			"model": "SiteCitation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": null
+				},
+				{
+					"path": ["addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: book page and URL without boxes",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": "fictional-book"
+				},
+				{
+					"path": ["page"],
+					"value": "795"
+				},
+				{
+					"path": ["url"],
+					"value": "https://archive.org/details/fictional-memorial-book/page/795"
+				},
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter."
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: book changed bytes refused",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": "fictional-book"
+				},
+				{
+					"path": ["page"],
+					"value": "795"
+				},
+				{
+					"path": ["url"],
+					"value": "https://archive.org/details/fictional-memorial-book/page/795"
+				},
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter. "
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: book empty addresses refused",
+			"model": "Citation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": "fictional-book"
+				},
+				{
+					"path": ["page"],
+					"value": "795"
+				},
+				{
+					"path": ["url"],
+					"value": "https://archive.org/details/fictional-memorial-book/page/795"
+				},
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": []
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Citation.quote_english: book null addresses",
+			"model": "Citation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": "fictional-book"
+				},
+				{
+					"path": ["page"],
+					"value": "795"
+				},
+				{
+					"path": ["url"],
+					"value": "https://archive.org/details/fictional-memorial-book/page/795"
+				},
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": null
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SiteCitation.quote_english: book page and URL without boxes",
+			"model": "SiteCitation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": "fictional-book"
+				},
+				{
+					"path": ["page"],
+					"value": "795"
+				},
+				{
+					"path": ["url"],
+					"value": "https://archive.org/details/fictional-memorial-book/page/795"
+				},
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter."
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				},
+				{
+					"path": ["addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SiteCitation.quote_english: book changed bytes refused",
+			"model": "SiteCitation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": "fictional-book"
+				},
+				{
+					"path": ["page"],
+					"value": "795"
+				},
+				{
+					"path": ["url"],
+					"value": "https://archive.org/details/fictional-memorial-book/page/795"
+				},
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter. "
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				},
+				{
+					"path": ["addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SiteCitation.quote_english: book empty addresses refused",
+			"model": "SiteCitation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": "fictional-book"
+				},
+				{
+					"path": ["page"],
+					"value": "795"
+				},
+				{
+					"path": ["url"],
+					"value": "https://archive.org/details/fictional-memorial-book/page/795"
+				},
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": []
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				},
+				{
+					"path": ["addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "SiteCitation.quote_english: book null addresses",
+			"model": "SiteCitation",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["source_id"],
+					"value": "fictional-book"
+				},
+				{
+					"path": ["page"],
+					"value": "795"
+				},
+				{
+					"path": ["url"],
+					"value": "https://archive.org/details/fictional-memorial-book/page/795"
+				},
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi"
+				},
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fiktive verter.",
+							"addresses": null
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				},
+				{
+					"path": ["addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "MediaFamilyWords.quote_english: page without boxes",
+			"model": "MediaFamilyWords",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"value": {
+						"text": "Fictional English words.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Our aunt beside the gate."
+						},
+						"attribution": {
+							"kind": "person",
+							"by": "Fictional translator",
+							"on": "2000-01-01"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Piece Translation keeps required absent addresses",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["based_on", "addresses"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "Piece Translation keeps required null addresses",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["based_on", "addresses"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "Piece Translation keeps required empty addresses",
+			"model": "Translation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["based_on", "addresses"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "CitedTranslation rejects null check",
+			"model": "CitedTranslation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["checked_against"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "CitedTranslation rejects missing source text",
+			"model": "CitedTranslation",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["based_on", "source_text"],
+					"remove": true
+				}
+			]
+		}
+	]
+}

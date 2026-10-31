@@ -122,6 +122,7 @@ attributes:
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
+    - Attribution
     range: IsoDay
     required: true
   reason:
@@ -156,6 +157,7 @@ attributes:
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
+    - Attribution
     range: IsoDay
     required: true
   reason:

@@ -131,8 +131,8 @@ attributes:
     description: The day of the decision.
     from_schema: https://pruzhany.org/ns/media
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
@@ -169,8 +169,8 @@ attributes:
     from_schema: https://pruzhany.org/ns/media
     owner: MediaDecision
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity

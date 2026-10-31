@@ -150,6 +150,7 @@ attributes:
     rank: 1000
     domain_of:
     - Fate
+    - CrossReference
     range: Confidence
     required: true
   rests_on:
@@ -213,6 +214,7 @@ attributes:
     owner: Fate
     domain_of:
     - Fate
+    - CrossReference
     range: Confidence
     required: true
   rests_on:

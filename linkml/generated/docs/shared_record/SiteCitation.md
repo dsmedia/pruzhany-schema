@@ -52,6 +52,17 @@ URI: [pc:SiteCitation](https://pruzhany.org/ns/sourced-entities#SiteCitation)
         
       SiteCitation : quote
         
+      SiteCitation : quote_english
+        
+          
+    
+        
+        
+        SiteCitation --> "0..1" CitedTranslation : quote_english
+        click CitedTranslation href "../CitedTranslation/"
+    
+
+        
       SiteCitation : quote_language
         
       SiteCitation : record_id
@@ -106,6 +117,7 @@ URI: [pc:SiteCitation](https://pruzhany.org/ns/sourced-entities#SiteCitation)
 | [quote](quote.md) | 0..1 <br/> [String](String.md) | The record's own words, exactly. | [Citation](Citation.md) |
 | [note](note.md) | 0..1 <br/> [String](String.md) | Our private note on the evidence; never published. | [Citation](Citation.md) |
 | [accessed](accessed.md) | 0..1 <br/> [IsoDay](IsoDay.md) | The day a person read the record. | [Citation](Citation.md) |
+| [quote_english](quote_english.md) | 0..1 <br/> [CitedTranslation](CitedTranslation.md) | English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. | [Citation](Citation.md) |
 
 <details>
 <summary>Expressions & Logic</summary>
@@ -498,6 +510,25 @@ attributes:
     - PlaceIdentifier
     - Citation
     range: IsoDay
+  quote_english:
+    name: quote_english
+    annotations:
+      english_of:
+        tag: english_of
+        value: quote
+    description: English of exactly quote, with based_on.source_text equal to that
+      field's exact bytes and attribution naming the kept English or its person or
+      model.
+    from_schema: https://pruzhany.org/ns/sourced_entities
+    exact_mappings:
+    - pc:site_translation
+    rank: 1000
+    owner: SiteCitation
+    domain_of:
+    - Citation
+    - MediaFamilyWords
+    range: CitedTranslation
+    inlined: true
 rules:
 - preconditions:
     slot_conditions:

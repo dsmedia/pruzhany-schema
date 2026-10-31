@@ -127,13 +127,12 @@ attributes:
     name: text
     description: The words.
     from_schema: https://pruzhany.org/ns/media
-    rank: 1000
     domain_of:
-    - MediaText
     - PrintedAddress
     - PrintedTitle
     - SuppliedTitle
     - Translation
+    - MediaText
     range: NonBlankText
     required: true
   lang:
@@ -173,14 +172,13 @@ attributes:
     name: text
     description: The words.
     from_schema: https://pruzhany.org/ns/media
-    rank: 1000
     owner: MediaText
     domain_of:
-    - MediaText
     - PrintedAddress
     - PrintedTitle
     - SuppliedTitle
     - Translation
+    - MediaText
     range: NonBlankText
     required: true
   lang:

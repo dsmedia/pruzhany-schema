@@ -78,7 +78,8 @@
 				"url",
 				"quote",
 				"note",
-				"accessed"
+				"accessed",
+				"quote_english"
 			],
 			"validators": [
 				{
@@ -1359,7 +1360,15 @@
 				"extra": "forbid",
 				"strict": true
 			},
-			"order": ["source_id", "page", "quote", "quote_language"]
+			"order": ["source_id", "page", "quote", "quote_language", "quote_english"],
+			"validators": [
+				{
+					"mode": "after",
+					"name": "english_words",
+					"module": "media",
+					"function": "_MediaFamilyWords__english_words"
+				}
+			]
 		},
 		"MediaFixity": {
 			"module": "media",
@@ -2344,6 +2353,7 @@
 				"quote",
 				"note",
 				"accessed",
+				"quote_english",
 				"addresses"
 			],
 			"parent": "Citation",
@@ -2477,7 +2487,8 @@
 				"repository",
 				"url_pattern",
 				"host",
-				"subjects"
+				"subjects",
+				"title_english"
 			],
 			"fields": {
 				"host": {
@@ -2978,6 +2989,29 @@
 				"attribution"
 			],
 			"parent": "EnglishCheck"
+		},
+		"CitedTextBasis": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_text", "addresses"],
+			"parent": "TextBasis"
+		},
+		"CitedTranslation": {
+			"module": "site_common",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["text", "language", "based_on", "attribution", "checked_against"],
+			"parent": "Translation",
+			"fields": {
+				"checked_against": {
+					"exclude_none": true
+				}
+			}
 		}
 	},
 	"adjustments": [

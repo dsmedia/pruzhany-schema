@@ -1,5 +1,8 @@
+import { AttributionSchema, validDate } from './attribution.schema';
+export { AttributionSchema } from './attribution.schema';
+import { CitedTranslationSchema } from './site-common.schema';
+import { addEnglishIssues } from './words-english';
 import {
-	AttributionShape,
 	SourcedDateShape,
 	ReviewShape,
 	SourceShape,
@@ -19,14 +22,7 @@ const date = SourcedDateShape.shape.start
 	.unwrap()
 	.unwrap()
 	.refine(validDate, 'invalid calendar date');
-const day = AttributionShape.shape.on.refine(validDate, 'invalid ISO day');
-function validDate(v: string): boolean {
-	const full = v + ({ 4: '-01-01', 7: '-01', 10: '' }[v.length] ?? 'invalid');
-	const d = new Date(`${full}T00:00:00Z`);
-	return (
-		Number(v.slice(0, 4)) > 0 && !Number.isNaN(d.valueOf()) && d.toISOString().slice(0, 10) === full
-	);
-}
+const day = AttributionSchema.shape.on;
 const lower = (v: string) => v + ({ 4: '-01-01', 7: '-01', 10: '' }[v.length] ?? '');
 function upper(v: string): string {
 	if (v.length === 4) return `${v}-12-31`;
@@ -50,7 +46,6 @@ export const ReviewSchema = ReviewShape.extend({ on: day.nullish() }).superRefin
 	if (error) ctx.addIssue({ code: 'custom', message: error });
 });
 export type Review = z.infer<typeof ReviewSchema>;
-export const AttributionSchema = AttributionShape.extend({ on: day });
 export type Attribution = z.infer<typeof AttributionSchema>;
 export const SourceHostSchema = SourceShape.shape.host
 	.unwrap()
@@ -62,17 +57,21 @@ export const SourceLanguageSchema = SourceShape.shape.language.unwrap().unwrap()
 export const SourceDerivationSchema = SourceDerivationShape;
 export type SourceDerivation = z.infer<typeof SourceDerivationSchema>;
 export const SourceSchema = SourceShape.extend({
+	title_english: CitedTranslationSchema.nullish(),
+
 	host: SourceHostSchema.nullish(),
 	dated: SourcedDateSchema.nullish(),
 	quotes_cleared: AttributionSchema.nullish(),
 });
 export type Source = z.infer<typeof SourceSchema>;
-export const CitationSchema = CitationShape.extend({ accessed: day.nullish() }).superRefine(
-	(v, ctx) => {
-		const error = validateCitation(v);
-		if (error) ctx.addIssue({ code: 'custom', message: error });
-	}
-);
+export const CitationSchema = CitationShape.extend({
+	quote_english: CitedTranslationSchema.nullish(),
+	accessed: day.nullish(),
+}).superRefine((v, ctx) => {
+	addEnglishIssues('Citation', v, ctx);
+	const error = validateCitation(v);
+	if (error) ctx.addIssue({ code: 'custom', message: error });
+});
 export type Citation = z.infer<typeof CitationSchema>;
 export const FactSchema = FactShape.extend({
 	date: SourcedDateSchema.nullish(),

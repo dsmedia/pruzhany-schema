@@ -24,6 +24,9 @@ URI: [pc:TextBasis](https://pruzhany.org/ns/sourced-entities#TextBasis)
  classDiagram
     class TextBasis
     click TextBasis href "../TextBasis/"
+      TextBasis <|-- CitedTextBasis
+        click CitedTextBasis href "../CitedTextBasis/"
+      
       TextBasis : addresses
         
           
@@ -43,7 +46,11 @@ URI: [pc:TextBasis](https://pruzhany.org/ns/sourced-entities#TextBasis)
 
 
 
-<!-- no inheritance hierarchy -->
+
+## Inheritance
+* **TextBasis**
+    * [CitedTextBasis](CitedTextBasis.md)
+
 
 ## Slots
 

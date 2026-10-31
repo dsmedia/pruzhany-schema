@@ -8,9 +8,23 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `d33223d483be8e7d7873830f77ffdd4edcf2bbf4a427d63cf8db8312ee00b7f6`.
+Definition fingerprint: `b51448092d593ba9eacea77f2e0dcaf6cc7e1ce4d776046ff343a7a9a1425c33`.
 
 ## What the Pruzhany issue documents share
+
+### Attribution
+
+Who made or allowed something, on what day, with an optional note.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `by` | Who made it or allowed it: a person, a session or a program. | NonBlankText | Yes | No direct mapping recorded |
+| `note` | A note on how or why. | string | No | No direct mapping recorded |
+| `on` | The day it was made or allowed. | IsoDay | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/site_common.yaml`.
 
 ### Authorship
 
@@ -24,6 +38,35 @@ Meaning: pc:site_authorship (exact mappings).
 | `kind` | Whether a person or a model wrote it. | AuthorshipKind | Yes | No direct mapping recorded |
 | `note` | A note on how or why. | string | No | No direct mapping recorded |
 | `on` | The day it was made or allowed. | IsoDay | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/site_common.yaml`.
+
+### CitedTextBasis
+
+The exact source words of a citation or source title. The containing citation's locator or source description locates them; printed addresses are optional, and when supplied remain nonempty real image-and-box witnesses.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `addresses` | Where that text is printed, one address a line or patch. | list of PrintedAddress; minimum items: 1 | No | No direct mapping recorded |
+| `source_text` | The text used, exactly, never normalised or replaced by a later reading. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/site_common.yaml`.
+
+### CitedTranslation
+
+English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `attribution` | Who translated it, and on which day. | Authorship | Yes | No direct mapping recorded |
+| `based_on` | The exact quote or title translated; source_text equals that original field, including whitespace and punctuation. | CitedTextBasis | Yes | No direct mapping recorded |
+| `checked_against` | A later check of this translation against the reading, where one was made. | TranslationCheck | No | pc:site_checked_against_text (exact mappings) |
+| `language` | The translation's language, always English (en). | string; fixed value: en | Yes | No direct mapping recorded |
+| `text` | The English text. | NonBlankText | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/site_common.yaml`.
 
@@ -147,7 +190,7 @@ Source: `linkml/schema/site_common.yaml`.
 
 ### Translation
 
-An English translation of a content item's printed text, with the exact text it was made from, who made it and, where one was made, its later check.
+An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check.
 
 Meaning: pc:site_translation (exact mappings).
 
@@ -441,20 +484,6 @@ Source: `linkml/schema/editions.yaml`.
 
 ## The sourced entities of the Pruzhany record
 
-### Attribution
-
-Who made or allowed something, on what day, with an optional note.
-
-Meaning: No direct mapping recorded.
-
-| Field | What it holds | Value | Required | Standard mapping |
-| --- | --- | --- | --- | --- |
-| `by` | Who made it or allowed it: a person, a session or a program. | NonBlankText | Yes | No direct mapping recorded |
-| `note` | A note on how or why. | string | No | No direct mapping recorded |
-| `on` | The day it was made or allowed. | IsoDay | Yes | No direct mapping recorded |
-
-Source: `linkml/schema/sourced_entities.yaml`.
-
 ### Citation
 
 Where in one source a statement's evidence lies: the source, and the record, page, scan, time, piece of the paper, address or pointer within it, with the quoted words.
@@ -470,6 +499,7 @@ Meaning: No direct mapping recorded.
 | `page` | The page, folio or entry cited. | string | No | No direct mapping recorded |
 | `public_note` | Our reviewed words for the page about this evidence, apart from the record's quote. | NonBlankText | No | pc:site_citation_public_note (slot uri) |
 | `quote` | The record's own words, exactly. | string | No | No direct mapping recorded |
+| `quote_english` | English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. | CitedTranslation | No | pc:site_translation (exact mappings) |
 | `quote_language` | The quote's language, where it is not the source's (a translation). | LanguageTag | No | rico:hasOrHadLanguage (slot uri) |
 | `record_id` | The holder's own number for the record, such as a Yad Vashem record number. | string | No | rico:hasOrHadIdentifier (slot uri) |
 | `record_type` | The holder's own type of the record, such as Page of Testimony. | NonBlankText | No | rico:hasDocumentaryFormType (slot uri) |
@@ -618,6 +648,7 @@ Meaning: ehri:RecordResource (class uri).
 | `short_name` | A short name the site shows for the source. | NonBlankText | No | pc:site_source_display (slot uri) |
 | `subjects` | The persons, places or events the source shows or speaks of, by their ids. | list of NonBlankText; minimum items: 1 | No | rico:hasOrHadSubject (slot uri) |
 | `title` | The source's title. | NonBlankText | Yes | No direct mapping recorded |
+| `title_english` | English of exactly title, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. | CitedTranslation | No | pc:site_translation (exact mappings) |
 | `url_pattern` | How an address of one of the source's records is formed. | string | No | No direct mapping recorded |
 | `work_id` | The id of the work in the project's files; never published where it is a file name. | string | No | No direct mapping recorded |
 
@@ -771,6 +802,7 @@ Meaning: No direct mapping recorded.
 | --- | --- | --- | --- | --- |
 | `page` | The page or recorded part the words are on. | NonBlankText | Yes | No direct mapping recorded |
 | `quote` | The words, exactly. | NonBlankText | Yes | No direct mapping recorded |
+| `quote_english` | English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. | CitedTranslation | No | pc:site_translation (exact mappings) |
 | `quote_language` | Their language, as a BCP 47 tag. | LanguageTag | Yes | No direct mapping recorded |
 | `source_id` | The source the words are quoted from, by its id in the record's sources. | NonBlankText | Yes | No direct mapping recorded |
 
@@ -1134,6 +1166,7 @@ Meaning: No direct mapping recorded.
 | `page` | The page, folio or entry cited. | string | No | No direct mapping recorded |
 | `public_note` | Our reviewed words for the page about this evidence, apart from the record's quote. | NonBlankText | No | pc:site_citation_public_note (slot uri) |
 | `quote` | The record's own words, exactly. | string | No | No direct mapping recorded |
+| `quote_english` | English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. | CitedTranslation | No | pc:site_translation (exact mappings) |
 | `quote_language` | The quote's language, where it is not the source's (a translation). | LanguageTag | No | rico:hasOrHadLanguage (slot uri) |
 | `record_id` | The holder's own number for the record, such as a Yad Vashem record number. | string | No | rico:hasOrHadIdentifier (slot uri) |
 | `record_type` | The holder's own type of the record, such as Page of Testimony. | NonBlankText | No | rico:hasDocumentaryFormType (slot uri) |
@@ -2416,6 +2449,14 @@ Exact places:
 - `schemas/site-next/content-items.schema.json#/properties/content_items/items/properties/translation/anyOf/0/properties/checked_against`
 - `schemas/site-next/content-items.schema.json#/properties/sections/items/properties/supplied_title/anyOf/0/properties/checked_against`
 - `schemas/site-next/shared-record.schema.json#/properties/holders`
+- `schemas/site-next/shared-record.schema.json#/properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against`
+- `schemas/site-next/shared-record.schema.json#/properties/families/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against`
+- `schemas/site-next/shared-record.schema.json#/properties/places/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against`
+- `schemas/site-next/shared-record.schema.json#/properties/organizations/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against`
+- `schemas/site-next/shared-record.schema.json#/properties/sources/items/properties/title_english/anyOf/0/properties/checked_against`
+- `schemas/site-next/shared-record.schema.json#/properties/facts/items/properties/citations/items/properties/quote_english/anyOf/0/properties/checked_against`
+- `schemas/site-next/shared-record.schema.json#/properties/relations/items/properties/citations/items/properties/quote_english/anyOf/0/properties/checked_against`
+- `schemas/site-next/shared-record.schema.json#/properties/media/anyOf/0/items/properties/family_words/anyOf/0/properties/quote_english/anyOf/0/properties/checked_against`
 
 ### Position wise bounds
 
@@ -2439,10 +2480,18 @@ Exact places:
 - `schemas/site-next/content-items.schema.json#/properties/sections/items/properties/printed_title/properties/addresses/items/properties/bbox`
 - `schemas/site-next/content-items.schema.json#/properties/sections/items/properties/supplied_title/anyOf/0/properties/based_on/properties/addresses/items/properties/bbox`
 - `schemas/site-next/mentions.schema.json#/properties/mentions/items/properties/addresses/items/properties/bbox`
+- `schemas/site-next/shared-record.schema.json#/properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox`
 - `schemas/site-next/shared-record.schema.json#/properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/addresses/anyOf/0/items/properties/bbox`
+- `schemas/site-next/shared-record.schema.json#/properties/families/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox`
+- `schemas/site-next/shared-record.schema.json#/properties/places/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox`
 - `schemas/site-next/shared-record.schema.json#/properties/places/items/properties/coordinates/anyOf/0`
+- `schemas/site-next/shared-record.schema.json#/properties/organizations/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox`
+- `schemas/site-next/shared-record.schema.json#/properties/sources/items/properties/title_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox`
+- `schemas/site-next/shared-record.schema.json#/properties/facts/items/properties/citations/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox`
 - `schemas/site-next/shared-record.schema.json#/properties/facts/items/properties/citations/items/properties/addresses/anyOf/0/items/properties/bbox`
+- `schemas/site-next/shared-record.schema.json#/properties/relations/items/properties/citations/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox`
 - `schemas/site-next/shared-record.schema.json#/properties/relations/items/properties/citations/items/properties/addresses/anyOf/0/items/properties/bbox`
+- `schemas/site-next/shared-record.schema.json#/properties/media/anyOf/0/items/properties/family_words/anyOf/0/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox`
 
 ### Exclusive minimum on a number
 

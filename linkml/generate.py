@@ -48,6 +48,9 @@ _external_spec.loader.exec_module(_external_backend)
 _answers_spec = importlib.util.spec_from_file_location('answer_generator', Path(__file__).with_name('answer_generator.py'))
 _answers_backend = importlib.util.module_from_spec(_answers_spec)
 _answers_spec.loader.exec_module(_answers_backend)
+_words_spec = importlib.util.spec_from_file_location('words_policy', Path(__file__).with_name('words_policy.py'))
+_words_backend = importlib.util.module_from_spec(_words_spec)
+_words_spec.loader.exec_module(_words_backend)
 
 LINKML = Path(__file__).resolve().parent
 
@@ -113,8 +116,7 @@ def schema_index(linkml_dir, destination):
     owned = {name: entry['schema'] for entry, view in views for name in view.all_classes(imports=False)}
     for name, source in sorted(owned.items()):
         if name not in definitions:
-            made = json.loads(JsonSchemaGenerator(str(linkml_dir / source), top_class=name,
-                                                   not_closed=False).serialize())
+            made = json.loads(_external_backend.generator(linkml_dir / source, name).serialize())
             for extra, definition in made['$defs'].items():
                 if extra in definitions and definitions[extra] != definition:
                     raise ValueError(f'{extra}: generated definitions differ for standalone {name}')
@@ -296,6 +298,10 @@ def differences(linkml_dir):
         python = _python_backend.build_python(linkml_dir, json.loads(fresh['contract.json'])) if (linkml_dir / 'python-compatibility.json').exists() else None
         index = json.loads(fresh['contract.json'])
         zod = _zod_backend.build_zod(index, _zod_backend.definition_field_orders(linkml_dir, index))
+        if (linkml_dir / 'words_policy.py').exists():
+            python_policy, zod['words_policy.ts'] = _words_backend.outputs(linkml_dir)
+            if python is not None:
+                python['words_policy.py'] = python_policy
     committed = files(linkml_dir / 'generated')
     shown = 'linkml/generated/'
     problems = []
@@ -328,6 +334,10 @@ def regenerate(linkml_dir):
         python = _python_backend.build_python(linkml_dir, json.loads((Path(scratch) / 'contract.json').read_text())) if (linkml_dir / 'python-compatibility.json').exists() else None
         index = json.loads((Path(scratch) / 'contract.json').read_text())
         zod = _zod_backend.build_zod(index, _zod_backend.definition_field_orders(linkml_dir, index))
+        if (linkml_dir / 'words_policy.py').exists():
+            python_policy, zod['words_policy.ts'] = _words_backend.outputs(linkml_dir)
+            if python is not None:
+                python['words_policy.py'] = python_policy
         target = linkml_dir / 'generated'
         if target.exists():
             shutil.rmtree(target)

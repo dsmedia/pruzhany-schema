@@ -17,9 +17,8 @@ import {
 	SourcedRelationTypeEnum,
 } from './enums';
 import { MediaPortraitShape, MediaShape } from './media';
-import { PrintedAddressShape } from './site_common';
+import { AttributionShape, CitedTranslationShape, PrintedAddressShape } from './site_common';
 import {
-	AttributionShape,
 	FactQualifiersShape,
 	FateShape,
 	NameShape,
@@ -32,9 +31,9 @@ const pattern1 = /\S/;
 const pattern2 = /^\d{4}(-\d{2}(-\d{2})?)?$/;
 const pattern3 = /^\d{4}-\d{2}-\d{2}$/;
 const pattern4 = /^https:\/\/[^\s/?#]+[^\s]*$/;
-const pattern5 =
+const pattern5 = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/;
+const pattern6 =
 	/^(?:[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[A-Za-z]{4,8}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[xX](?:-[A-Za-z0-9]{1,8})+|[eE][nN]-[gG][bB]-[oO][eE][dD]|[iI]-(?:[aA][mM][iI]|[bB][nN][nN]|[dD][eE][fF][aA][uU][lL][tT]|[eE][nN][oO][cC][hH][iI][aA][nN]|[hH][aA][kK]|[kK][lL][iI][nN][gG][oO][nN]|[lL][uU][xX]|[mM][iI][nN][gG][oO]|[nN][aA][vV][aA][jJ][oO]|[pP][wW][nN]|[tT][aA][oO]|[tT][aA][yY]|[tT][sS][uU])|[sS][gG][nN]-(?:[bB][eE]-[fF][rR]|[bB][eE]-[nN][lL]|[cC][hH]-[dD][eE])|[aA][rR][tT]-[lL][oO][jJ][bB][aA][nN]|[cC][eE][lL]-[gG][aA][uU][lL][iI][sS][hH]|[nN][oO]-[bB][oO][kK]|[nN][oO]-[nN][yY][nN]|[zZ][hH]-[gG][uU][oO][yY][uU]|[zZ][hH]-[hH][aA][kK][kK][aA]|[zZ][hH]-[mM][iI][nN]|[zZ][hH]-[mM][iI][nN]-[nN][aA][nN]|[zZ][hH]-[xX][iI][aA][nN][gG])$/;
-const pattern6 = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/;
 const pattern7 = /^[A-Za-z]{4}$/;
 const pattern8 = /^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$/;
 
@@ -73,27 +72,13 @@ export const SharedEventShape = z.strictObject({
 	description: z.string().nullish(),
 });
 
-export const SharedFamilyShape = z.strictObject({
+export const HolderShape = z.strictObject({
 	id: z.string().regex(pattern1),
 	name: z.string().regex(pattern1),
-	names: z.array(NameShape),
-});
-
-export const SharedOrganizationShape = z.strictObject({
-	id: z.string().regex(pattern1),
-	name: z.string().regex(pattern1),
-	names: z.array(NameShape),
+	short_name: z.string().regex(pattern1).nullish(),
+	kind: HolderKindEnum,
 	identifiers: z.array(PlaceIdentifierShape).min(1).nullish(),
-});
-
-export const SharedPlaceShape = z.strictObject({
-	id: z.string().regex(pattern1),
-	name: z.string().regex(pattern1),
-	names: z.array(NameShape),
-	type: LocationTypesEnum,
-	parent_id: z.string().regex(pattern1).nullish(),
-	coordinates: z.array(z.number().min(-180).max(180)).min(2).max(2).nullish(),
-	identifiers: z.array(PlaceIdentifierShape).min(1).nullish(),
+	host: z.string().regex(pattern5).nullish(),
 });
 
 export const SiteCitationShape = z.strictObject({
@@ -101,7 +86,7 @@ export const SiteCitationShape = z.strictObject({
 	via: z.string().regex(pattern1).nullish(),
 	reference_code: z.string().regex(pattern1).nullish(),
 	record_type: z.string().regex(pattern1).nullish(),
-	quote_language: z.string().regex(pattern5).nullish(),
+	quote_language: z.string().regex(pattern6).nullish(),
 	public_note: z.string().regex(pattern1).nullish(),
 	locator: z.string().regex(pattern1).nullish(),
 	record_id: z.string().nullish(),
@@ -114,6 +99,7 @@ export const SiteCitationShape = z.strictObject({
 	quote: z.string().nullish(),
 	note: z.string().nullish(),
 	accessed: z.string().regex(pattern3).nullish(),
+	quote_english: CitedTranslationShape.nullish(),
 	addresses: z.array(PrintedAddressShape).min(1).nullish(),
 });
 
@@ -142,15 +128,6 @@ export const SourcedRelationShape = z.strictObject({
 	shown: AttributionShape.nullish(),
 });
 
-export const HolderShape = z.strictObject({
-	id: z.string().regex(pattern1),
-	name: z.string().regex(pattern1),
-	short_name: z.string().regex(pattern1).nullish(),
-	kind: HolderKindEnum,
-	identifiers: z.array(PlaceIdentifierShape).min(1).nullish(),
-	host: z.string().regex(pattern6).nullish(),
-});
-
 export const SharedFactShape = z.strictObject({
 	id: z.string().regex(pattern1),
 	type: FactTypesEnum,
@@ -176,6 +153,12 @@ export const SharedFactShape = z.strictObject({
 	representation: SharedFactRepresentationEnum,
 });
 
+export const SharedFamilyShape = z.strictObject({
+	id: z.string().regex(pattern1),
+	name: z.string().regex(pattern1),
+	names: z.array(NameShape),
+});
+
 export const SharedNameShape = z.strictObject({
 	value: z.string().regex(pattern1),
 	kind: NameKindsEnum,
@@ -185,6 +168,13 @@ export const SharedNameShape = z.strictObject({
 	attribution: AttributionShape.nullish(),
 });
 
+export const SharedOrganizationShape = z.strictObject({
+	id: z.string().regex(pattern1),
+	name: z.string().regex(pattern1),
+	names: z.array(NameShape),
+	identifiers: z.array(PlaceIdentifierShape).min(1).nullish(),
+});
+
 export const SharedPersonShape = z.strictObject({
 	portrait: MediaPortraitShape.nullish(),
 	id: z.string().regex(pattern1),
@@ -192,6 +182,16 @@ export const SharedPersonShape = z.strictObject({
 	names: z.array(SharedNameShape),
 	gender: GenderEnum,
 	fate: FateShape.nullish(),
+	identifiers: z.array(PlaceIdentifierShape).min(1).nullish(),
+});
+
+export const SharedPlaceShape = z.strictObject({
+	id: z.string().regex(pattern1),
+	name: z.string().regex(pattern1),
+	names: z.array(NameShape),
+	type: LocationTypesEnum,
+	parent_id: z.string().regex(pattern1).nullish(),
+	coordinates: z.array(z.number().min(-180).max(180)).min(2).max(2).nullish(),
 	identifiers: z.array(PlaceIdentifierShape).min(1).nullish(),
 });
 

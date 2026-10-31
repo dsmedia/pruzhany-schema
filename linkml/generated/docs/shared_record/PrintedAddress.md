@@ -57,6 +57,7 @@ URI: [pc:PrintedAddress](https://pruzhany.org/ns/sourced-entities#PrintedAddress
 | [SiteCitation](SiteCitation.md) | [addresses](addresses.md) | range | [PrintedAddress](PrintedAddress.md) |
 | [TextBasis](TextBasis.md) | [addresses](addresses.md) | range | [PrintedAddress](PrintedAddress.md) |
 | [PrintedTitle](PrintedTitle.md) | [addresses](addresses.md) | range | [PrintedAddress](PrintedAddress.md) |
+| [CitedTextBasis](CitedTextBasis.md) | [addresses](addresses.md) | range | [PrintedAddress](PrintedAddress.md) |
 
 
 
@@ -139,12 +140,13 @@ attributes:
     description: The words read in the box, exactly as read; empty for a patch with
       no readable line.
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     domain_of:
-    - MediaText
     - PrintedAddress
     - PrintedTitle
     - SuppliedTitle
     - Translation
+    - MediaText
     required: true
 
 ```
@@ -191,13 +193,14 @@ attributes:
     description: The words read in the box, exactly as read; empty for a patch with
       no readable line.
     from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: PrintedAddress
     domain_of:
-    - MediaText
     - PrintedAddress
     - PrintedTitle
     - SuppliedTitle
     - Translation
+    - MediaText
     range: string
     required: true
 

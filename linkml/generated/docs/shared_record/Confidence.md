@@ -33,7 +33,6 @@ URI: [pc:Confidence](https://pruzhany.org/ns/sourced-entities#Confidence)
 | ---  | --- |
 | [evidence_confidence](evidence_confidence.md) | How sure the evidence makes the statement. |
 | [identity_confidence](identity_confidence.md) | How sure it is that the statement is about this person. |
-| [confidence](confidence.md) | How sure the outcome is. |
 
 
 

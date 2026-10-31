@@ -26,6 +26,7 @@ URI: [pc:source_text](https://pruzhany.org/ns/sourced-entities#source_text)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [TextBasis](TextBasis.md) | The exact text a translation or supplied title was made from, and where it is printed, kept even after the text is read again. |  no  |
+| [CitedTextBasis](CitedTextBasis.md) | The exact source words of a citation or source title. The containing citation's locator or source description locates them; printed addresses are optional, and when supplied remain nonempty real image-and-box witnesses. |  no  |
 
 
 

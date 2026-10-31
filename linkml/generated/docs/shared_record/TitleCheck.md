@@ -215,11 +215,11 @@ attributes:
     owner: TitleCheck
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Authorship
     required: true
     inlined: true

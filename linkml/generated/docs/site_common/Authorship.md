@@ -78,6 +78,7 @@ URI: [pc:Authorship](https://pruzhany.org/ns/sourced-entities#Authorship)
 | [TranslationCheck](TranslationCheck.md) | [attribution](attribution.md) | range | [Authorship](Authorship.md) |
 | [SuppliedTitle](SuppliedTitle.md) | [attribution](attribution.md) | range | [Authorship](Authorship.md) |
 | [Translation](Translation.md) | [attribution](attribution.md) | range | [Authorship](Authorship.md) |
+| [CitedTranslation](CitedTranslation.md) | [attribution](attribution.md) | range | [Authorship](Authorship.md) |
 
 
 
@@ -141,8 +142,6 @@ attributes:
     rank: 1000
     domain_of:
     - Authorship
-    - Source
-    - Name
     range: AuthorshipKind
     required: true
 
@@ -170,39 +169,36 @@ attributes:
     owner: Authorship
     domain_of:
     - Authorship
-    - Source
-    - Name
     range: AuthorshipKind
     required: true
   by:
     name: by
     description: 'Who made it or allowed it: a person, a session or a program.'
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: Authorship
     domain_of:
-    - Review
     - Attribution
     range: NonBlankText
     required: true
   'on':
     name: 'on'
     description: The day it was made or allowed.
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: Authorship
     domain_of:
-    - Review
     - Attribution
     range: IsoDay
     required: true
   note:
     name: note
     description: A note on how or why.
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
     rank: 1000
     owner: Authorship
     domain_of:
     - Attribution
-    - Citation
     range: string
 
 ```

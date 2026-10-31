@@ -1,5 +1,6 @@
 """Optional stage-1 sourced assertions. All models are closed and strict."""
 from .generated.models import Attribution, Citation, Fact, Fate, Mention, Name, Review, Source, SourceDerivation, SourcedDate, Strict
+from .words_english import validate_english
 from typing import Literal, Annotated
 from datetime import date as calendar_date
 from calendar import monthrange
@@ -39,6 +40,7 @@ SourceHost = Annotated[str, Field(pattern=r"^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-
 
 
 def _Citation__validate_contract(self):
+    validate_english('Citation', self)
     validate_Citation(self)
     return self
 

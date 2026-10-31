@@ -123,19 +123,21 @@ attributes:
   by:
     name: by
     description: 'Who made it or allowed it: a person, a session or a program.'
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     domain_of:
-    - Review
     - Attribution
+    - Review
     range: NonBlankText
     required: true
   'on':
     name: 'on'
     description: The day it was made or allowed.
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
@@ -144,7 +146,7 @@ attributes:
   note:
     name: note
     description: A note on how or why.
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
     rank: 1000
     domain_of:
     - Attribution
@@ -166,21 +168,23 @@ attributes:
   by:
     name: by
     description: 'Who made it or allowed it: a person, a session or a program.'
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: Attribution
     domain_of:
-    - Review
     - Attribution
+    - Review
     range: NonBlankText
     required: true
   'on':
     name: 'on'
     description: The day it was made or allowed.
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
+    rank: 1000
     owner: Attribution
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
@@ -189,7 +193,7 @@ attributes:
   note:
     name: note
     description: A note on how or why.
-    from_schema: https://pruzhany.org/ns/sourced_entities
+    from_schema: https://pruzhany.org/ns/site_common
     rank: 1000
     owner: Attribution
     domain_of:

@@ -111,6 +111,7 @@ attributes:
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
+    - Attribution
     range: IsoDay
     required: true
   sha256:
@@ -145,6 +146,7 @@ attributes:
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
+    - Attribution
     range: IsoDay
     required: true
   sha256:

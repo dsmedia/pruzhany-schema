@@ -169,9 +169,6 @@ attributes:
     domain_of:
     - ContentItem
     - PrintedSection
-    - Source
-    - Fact
-    - Mention
     range: NonBlankText
     required: true
   printed_title:
@@ -258,9 +255,6 @@ attributes:
     domain_of:
     - ContentItem
     - PrintedSection
-    - Source
-    - Fact
-    - Mention
     range: NonBlankText
     required: true
   printed_title:

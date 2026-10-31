@@ -13,7 +13,9 @@
 #
 # A pointer is a JSON Pointer into the export named by file.
 
-measured: '2026-10-28'
+# Re-measured 31 October 2026: new Translation uses propagate the same retained
+# box/check constraints; no existing exception or validator is weakened.
+measured: '2026-10-31'
 linkml: '1.12.1'
 exports:
   - schemas/site/pages.schema.json
@@ -60,7 +62,7 @@ entries:
       - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'
 
   - kind: optional-key-not-nullable
-    count: 8
+    count: 16
     where:
       - file: schemas/site/editions.schema.json
         pointer: /properties/editions/items/properties/holiday
@@ -78,6 +80,22 @@ entries:
         pointer: /properties/sections/items/properties/supplied_title/anyOf/0/properties/checked_against
       - file: schemas/site-next/shared-record.schema.json
         pointer: /properties/holders
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/families/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/places/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/organizations/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/checked_against
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/sources/items/properties/title_english/anyOf/0/properties/checked_against
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/facts/items/properties/citations/items/properties/quote_english/anyOf/0/properties/checked_against
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/relations/items/properties/citations/items/properties/quote_english/anyOf/0/properties/checked_against
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/media/anyOf/0/items/properties/family_words/anyOf/0/properties/quote_english/anyOf/0/properties/checked_against
     export_says: >-
       The key may be left out, but when it is there its value may not be null: the key is
       not in required and its schema has no null branch.
@@ -101,7 +119,7 @@ entries:
       - 'pruzhany-steps: the bundled Zod validator (schemas/site-next/validate-archive.js), before site_writer installs a document'
 
   - kind: position-wise-bounds
-    count: 10
+    count: 18
     where:
       - file: schemas/site-next/content-items.schema.json
         pointer: /properties/content_items/items/properties/printed_title/anyOf/0/properties/addresses/items/properties/bbox
@@ -116,13 +134,29 @@ entries:
       - file: schemas/site-next/mentions.schema.json
         pointer: /properties/mentions/items/properties/addresses/items/properties/bbox
       - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
         pointer: /properties/persons/items/properties/names/items/properties/citations/anyOf/0/items/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/families/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/places/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox
       - file: schemas/site-next/shared-record.schema.json
         pointer: /properties/places/items/properties/coordinates/anyOf/0
       - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/organizations/items/properties/names/items/properties/citations/anyOf/0/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/sources/items/properties/title_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/facts/items/properties/citations/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
         pointer: /properties/facts/items/properties/citations/items/properties/addresses/anyOf/0/items/properties/bbox
       - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/relations/items/properties/citations/items/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
         pointer: /properties/relations/items/properties/citations/items/properties/addresses/anyOf/0/items/properties/bbox
+      - file: schemas/site-next/shared-record.schema.json
+        pointer: /properties/media/anyOf/0/items/properties/family_words/anyOf/0/properties/quote_english/anyOf/0/properties/based_on/properties/addresses/anyOf/0/items/properties/bbox
     export_says: >-
       Each position of the array has its own bound (prefixItems): a box's x and y are at
       least 0 and its width and height above 0; a place's latitude lies from -90 to 90 and

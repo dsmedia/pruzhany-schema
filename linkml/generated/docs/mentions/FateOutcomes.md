@@ -29,12 +29,6 @@ URI: [pc:FateOutcomes](https://pruzhany.org/ns/sourced-entities#FateOutcomes)
 
 
 
-## Slots
-
-| Name | Description |
-| ---  | --- |
-| [outcome](outcome.md) | What became of the person: unknown, perished, survived, died before, or not applicable. |
-
 
 
 

@@ -5,6 +5,11 @@ search:
 
 # Slot: person_id 
 
+
+_The person named, by their id in the shared record._
+
+
+
 <div data-search-exclude markdown="1">
 
 
@@ -21,7 +26,6 @@ URI: [pc:person_id](https://pruzhany.org/ns/sourced-entities#person_id)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [IssueMention](IssueMention.md) | A person of the shared record named in a content item, pinned to the printed words of the name or to whole regions, with the person's roles there. A mention alone does not say the content item is about the person. |  no  |
-| [Mention](Mention.md) | The older form of a person's mention in a piece of the paper: the person, the piece, the name as printed and the person's role there. The site's current mention is IssueMention. |  no  |
 
 
 
@@ -34,8 +38,22 @@ URI: [pc:person_id](https://pruzhany.org/ns/sourced-entities#person_id)
 
 | Property | Value |
 | --- | --- |
-| Range | [String](String.md) |
-| Domain Of | [IssueMention](IssueMention.md), [Mention](Mention.md) |
+| Range | [NonBlankText](NonBlankText.md) |
+| Domain Of | [IssueMention](IssueMention.md) |
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Required | Yes |
+
+
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [IssueMention](IssueMention.md) |
+
+
 
 
 
@@ -49,6 +67,20 @@ URI: [pc:person_id](https://pruzhany.org/ns/sourced-entities#person_id)
 ## Identifier and Mapping Information
 
 
+
+### Annotations
+
+| property | value |
+| --- | --- |
+| references | SharedPerson.id |
+
+
+
+
+### Schema Source
+
+
+* from schema: https://pruzhany.org/ns/mentions
 
 
 
@@ -68,10 +100,18 @@ URI: [pc:person_id](https://pruzhany.org/ns/sourced-entities#person_id)
 <details>
 ```yaml
 name: person_id
+annotations:
+  references:
+    tag: references
+    value: SharedPerson.id
+description: The person named, by their id in the shared record.
+from_schema: https://pruzhany.org/ns/mentions
+rank: 1000
+owner: IssueMention
 domain_of:
 - IssueMention
-- Mention
-range: string
+range: NonBlankText
+required: true
 
 ```
 </details></div>

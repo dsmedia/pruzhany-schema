@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { z } from 'zod/v4';
 import * as current from './index';
-import * as frozen from './tests/identifiers-baseline';
+import * as frozen from './tests/words-english-baseline';
 import { BlockShape } from './generated/pages';
 import { TitleCheckShape, TextBasisShape } from './generated/site_common';
 import { SourcedRelationShape } from './generated/shared_record';

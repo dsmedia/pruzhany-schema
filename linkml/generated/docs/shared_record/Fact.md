@@ -496,11 +496,11 @@ attributes:
     from_schema: https://pruzhany.org/ns/sourced_entities
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Attribution
     required: true
     inlined: true
@@ -829,11 +829,11 @@ attributes:
     owner: Fact
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Attribution
     required: true
     inlined: true

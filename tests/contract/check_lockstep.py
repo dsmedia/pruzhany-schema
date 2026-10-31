@@ -58,6 +58,8 @@ MODEL_PAIRS = {
     "TranslationCheck": "TranslationCheck",
     "PrintedAddress": "PrintedAddress",
     "TextBasis": "TextBasis",
+    "CitedTextBasis": "CitedTextBasis",
+    "CitedTranslation": "CitedTranslation",
     "Authorship": "Authorship",
     "PrintedTitle": "PrintedTitle",
     "SuppliedTitle": "SuppliedTitle",

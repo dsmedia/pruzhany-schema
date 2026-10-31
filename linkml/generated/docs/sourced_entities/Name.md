@@ -176,6 +176,7 @@ attributes:
     domain_of:
     - Source
     - Name
+    - Authorship
     range: NameKinds
     required: true
   script:
@@ -214,6 +215,9 @@ attributes:
     domain_of:
     - Fact
     - Name
+    - EnglishCheck
+    - SuppliedTitle
+    - Translation
     range: Attribution
     inlined: true
 rules:
@@ -278,6 +282,7 @@ attributes:
     domain_of:
     - Source
     - Name
+    - Authorship
     range: NameKinds
     required: true
   script:
@@ -321,6 +326,9 @@ attributes:
     domain_of:
     - Fact
     - Name
+    - EnglishCheck
+    - SuppliedTitle
+    - Translation
     range: Attribution
     inlined: true
 rules:

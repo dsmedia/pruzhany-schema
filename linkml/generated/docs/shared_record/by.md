@@ -20,9 +20,9 @@ URI: [pc:by](https://pruzhany.org/ns/sourced-entities#by)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Review](Review.md) | Whether a person has reviewed a statement, who and on what day. |  no  |
 | [Attribution](Attribution.md) | Who made or allowed something, on what day, with an optional note. |  no  |
 | [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
+| [Review](Review.md) | Whether a person has reviewed a statement, who and on what day. |  no  |
 
 
 
@@ -36,7 +36,7 @@ URI: [pc:by](https://pruzhany.org/ns/sourced-entities#by)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [Review](Review.md), [Attribution](Attribution.md) |
+| Domain Of | [Attribution](Attribution.md), [Review](Review.md) |
 
 
 
@@ -70,8 +70,8 @@ URI: [pc:by](https://pruzhany.org/ns/sourced-entities#by)
 ```yaml
 name: by
 domain_of:
-- Review
 - Attribution
+- Review
 range: string
 
 ```

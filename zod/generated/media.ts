@@ -10,17 +10,18 @@ import {
 	MediaRightsEnum,
 	MediaWithdrawalReasonEnum,
 } from './enums';
+import { CitedTranslationShape } from './site_common';
 
 const pattern1 = /\S/;
 const pattern2 = /^\d{4}-\d{2}-\d{2}$/;
 const pattern3 =
 	/^https:\/\/pictures\.pruzhanychronicles\.org\/media\/[0-9a-f]{64}-w(?:100|400|800|1200)\.webp$(?![\s\S])/;
-const pattern4 =
+const pattern4 = /^[0-9a-f]{64}$(?![\s\S])/;
+const pattern5 = /^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$(?![\s\S])/;
+const pattern6 = /^(?:[a-z0-9_-]+\/)*[0-9a-f]{64}$(?![\s\S])/;
+const pattern7 = /^(?:image|audio|video|application)\/[a-z0-9][a-z0-9.+-]*$(?![\s\S])/;
+const pattern8 =
 	/^(?:[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[A-Za-z]{4,8}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[xX](?:-[A-Za-z0-9]{1,8})+)?|[xX](?:-[A-Za-z0-9]{1,8})+|[eE][nN]-[gG][bB]-[oO][eE][dD]|[iI]-(?:[aA][mM][iI]|[bB][nN][nN]|[dD][eE][fF][aA][uU][lL][tT]|[eE][nN][oO][cC][hH][iI][aA][nN]|[hH][aA][kK]|[kK][lL][iI][nN][gG][oO][nN]|[lL][uU][xX]|[mM][iI][nN][gG][oO]|[nN][aA][vV][aA][jJ][oO]|[pP][wW][nN]|[tT][aA][oO]|[tT][aA][yY]|[tT][sS][uU])|[sS][gG][nN]-(?:[bB][eE]-[fF][rR]|[bB][eE]-[nN][lL]|[cC][hH]-[dD][eE])|[aA][rR][tT]-[lL][oO][jJ][bB][aA][nN]|[cC][eE][lL]-[gG][aA][uU][lL][iI][sS][hH]|[nN][oO]-[bB][oO][kK]|[nN][oO]-[nN][yY][nN]|[zZ][hH]-[gG][uU][oO][yY][uU]|[zZ][hH]-[hH][aA][kK][kK][aA]|[zZ][hH]-[mM][iI][nN]|[zZ][hH]-[mM][iI][nN]-[nN][aA][nN]|[zZ][hH]-[xX][iI][aA][nN][gG])$/;
-const pattern5 = /^[0-9a-f]{64}$(?![\s\S])/;
-const pattern6 = /^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$(?![\s\S])/;
-const pattern7 = /^(?:[a-z0-9_-]+\/)*[0-9a-f]{64}$(?![\s\S])/;
-const pattern8 = /^(?:image|audio|video|application)\/[a-z0-9][a-z0-9.+-]*$(?![\s\S])/;
 const pattern9 = /^[a-z0-9]+(?:-[a-z0-9]+)*$(?![\s\S])/;
 const pattern10 = /^https:\/\/[a-z0-9]+(?:[.-][a-z0-9]+)*(?:\/[^\s\\]*)?$(?![\s\S])/;
 
@@ -42,23 +43,16 @@ export const MediaDerivativeShape = z.strictObject({
 	process: z.literal('resize'),
 });
 
-export const MediaFamilyWordsShape = z.strictObject({
-	source_id: z.string().regex(pattern1),
-	page: z.string().regex(pattern1),
-	quote: z.string().regex(pattern1),
-	quote_language: z.string().regex(pattern4),
-});
-
 export const MediaFixityShape = z.strictObject({
 	on: z.string().regex(pattern2),
-	sha256: z.string().regex(pattern5),
+	sha256: z.string().regex(pattern4),
 });
 
 export const MediaMasterShape = z.strictObject({
-	bucket: z.string().regex(pattern6),
-	key: z.string().regex(pattern7),
-	sha256: z.string().regex(pattern5),
-	mime: z.string().regex(pattern8),
+	bucket: z.string().regex(pattern5),
+	key: z.string().regex(pattern6),
+	sha256: z.string().regex(pattern4),
+	mime: z.string().regex(pattern7),
 	bytes: z.number().int().min(1).max(9007199254740991),
 	checked: MediaFixityShape.nullish(),
 });
@@ -72,7 +66,7 @@ export const MediaRegionShape = z.strictObject({
 
 export const MediaTextShape = z.strictObject({
 	text: z.string().regex(pattern1),
-	lang: z.string().regex(pattern4),
+	lang: z.string().regex(pattern8),
 	reviewed: MediaDecisionShape.nullish(),
 });
 
@@ -93,6 +87,14 @@ export const MediaDepictedShape = z.strictObject({
 	person_id: z.string().regex(pattern1).nullish(),
 	region: MediaRegionShape,
 	identified_by: MediaIdentifiedByEnum,
+});
+
+export const MediaFamilyWordsShape = z.strictObject({
+	source_id: z.string().regex(pattern1),
+	page: z.string().regex(pattern1),
+	quote: z.string().regex(pattern1),
+	quote_language: z.string().regex(pattern8),
+	quote_english: CitedTranslationShape.nullish(),
 });
 
 export const MediaPortraitShape = z.strictObject({

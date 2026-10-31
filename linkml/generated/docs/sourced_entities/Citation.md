@@ -38,6 +38,17 @@ URI: [pc:Citation](https://pruzhany.org/ns/sourced-entities#Citation)
         
       Citation : quote
         
+      Citation : quote_english
+        
+          
+    
+        
+        
+        Citation --> "0..1" CitedTranslation : quote_english
+        click CitedTranslation href "../CitedTranslation/"
+    
+
+        
       Citation : quote_language
         
       Citation : record_id
@@ -87,6 +98,7 @@ URI: [pc:Citation](https://pruzhany.org/ns/sourced-entities#Citation)
 | [quote](quote.md) | 0..1 <br/> [String](String.md) | The record's own words, exactly. | direct |
 | [note](note.md) | 0..1 <br/> [String](String.md) | Our private note on the evidence; never published. | direct |
 | [accessed](accessed.md) | 0..1 <br/> [IsoDay](IsoDay.md) | The day a person read the record. | direct |
+| [quote_english](quote_english.md) | 0..1 <br/> [CitedTranslation](CitedTranslation.md) | English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model. | direct |
 
 <details>
 <summary>Expressions & Logic</summary>
@@ -129,6 +141,19 @@ The class must satisfy at least one of:
 | ---  | --- | --- | --- |
 | [Fact](Fact.md) | [citations](citations.md) | range | [Citation](Citation.md) |
 | [Name](Name.md) | [citations](citations.md) | range | [Citation](Citation.md) |
+
+
+
+
+## Rules
+
+
+### require_non_english_quote_english
+
+| Rule Applied | Preconditions | Postconditions | Elseconditions |
+|--------------|---------------|----------------|----------------|
+| none_of |```[{'slot_conditions': {'quote_language': {'annotations': {'json_schema_typed_range': {'tag': 'json_schema_typed_range', 'value': True}}, 'range': 'LanguageTag', 'required': True, 'pattern': '^[eE][nN](-|$)'}}}]``` | | |
+| slot_conditions |```{'quote': {'annotations': {'json_schema_typed_range': {'tag': 'json_schema_typed_range', 'value': True}}, 'range': 'NonBlankText', 'required': True}}``` |```{'quote_english': {'annotations': {'json_schema_typed_range': {'tag': 'json_schema_typed_range', 'value': True}}, 'range': 'CitedTranslation', 'required': True}}``` | |
 
 
 
@@ -325,9 +350,10 @@ attributes:
     name: note
     description: Our private note on the evidence; never published.
     from_schema: https://pruzhany.org/ns/sourced_entities
+    rank: 1000
     domain_of:
-    - Attribution
     - Citation
+    - Attribution
     range: string
   accessed:
     name: accessed
@@ -337,6 +363,58 @@ attributes:
     domain_of:
     - Citation
     range: IsoDay
+  quote_english:
+    name: quote_english
+    annotations:
+      english_of:
+        tag: english_of
+        value: quote
+    description: English of exactly quote, with based_on.source_text equal to that
+      field's exact bytes and attribution naming the kept English or its person or
+      model.
+    from_schema: https://pruzhany.org/ns/sourced_entities
+    exact_mappings:
+    - pc:site_translation
+    rank: 1000
+    domain_of:
+    - Citation
+    range: CitedTranslation
+    inlined: true
+rules:
+- preconditions:
+    none_of:
+    - slot_conditions:
+        quote_language:
+          name: quote_language
+          annotations:
+            json_schema_typed_range:
+              tag: json_schema_typed_range
+              value: true
+          range: LanguageTag
+          required: true
+          pattern: ^[eE][nN](-|$)
+    slot_conditions:
+      quote:
+        name: quote
+        annotations:
+          json_schema_typed_range:
+            tag: json_schema_typed_range
+            value: true
+        range: NonBlankText
+        required: true
+  postconditions:
+    slot_conditions:
+      quote_english:
+        name: quote_english
+        annotations:
+          json_schema_typed_range:
+            tag: json_schema_typed_range
+            value: true
+        range: CitedTranslation
+        required: true
+  deactivated: true
+  description: A quote not explicitly marked as English carries quote_english.
+  title: require_non_english_quote_english
 any_of:
 - description: A citation names where in its source the evidence is.
   slot_conditions:
@@ -549,10 +627,11 @@ attributes:
     name: note
     description: Our private note on the evidence; never published.
     from_schema: https://pruzhany.org/ns/sourced_entities
+    rank: 1000
     owner: Citation
     domain_of:
-    - Attribution
     - Citation
+    - Attribution
     range: string
   accessed:
     name: accessed
@@ -563,6 +642,59 @@ attributes:
     domain_of:
     - Citation
     range: IsoDay
+  quote_english:
+    name: quote_english
+    annotations:
+      english_of:
+        tag: english_of
+        value: quote
+    description: English of exactly quote, with based_on.source_text equal to that
+      field's exact bytes and attribution naming the kept English or its person or
+      model.
+    from_schema: https://pruzhany.org/ns/sourced_entities
+    exact_mappings:
+    - pc:site_translation
+    rank: 1000
+    owner: Citation
+    domain_of:
+    - Citation
+    range: CitedTranslation
+    inlined: true
+rules:
+- preconditions:
+    none_of:
+    - slot_conditions:
+        quote_language:
+          name: quote_language
+          annotations:
+            json_schema_typed_range:
+              tag: json_schema_typed_range
+              value: true
+          range: LanguageTag
+          required: true
+          pattern: ^[eE][nN](-|$)
+    slot_conditions:
+      quote:
+        name: quote
+        annotations:
+          json_schema_typed_range:
+            tag: json_schema_typed_range
+            value: true
+        range: NonBlankText
+        required: true
+  postconditions:
+    slot_conditions:
+      quote_english:
+        name: quote_english
+        annotations:
+          json_schema_typed_range:
+            tag: json_schema_typed_range
+            value: true
+        range: CitedTranslation
+        required: true
+  deactivated: true
+  description: A quote not explicitly marked as English carries quote_english.
+  title: require_non_english_quote_english
 any_of:
 - description: A citation names where in its source the evidence is.
   slot_conditions:

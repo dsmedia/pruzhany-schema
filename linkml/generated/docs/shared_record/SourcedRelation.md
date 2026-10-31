@@ -654,11 +654,11 @@ attributes:
     owner: SourcedRelation
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Attribution
     required: true
     inlined: true

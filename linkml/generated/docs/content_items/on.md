@@ -5,6 +5,11 @@ search:
 
 # Slot: on 
 
+
+_The day it was made or allowed._
+
+
+
 <div data-search-exclude markdown="1">
 
 
@@ -20,7 +25,6 @@ URI: [pc:on](https://pruzhany.org/ns/sourced-entities#on)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Review](Review.md) | Whether a person has reviewed a statement, who and on what day. |  no  |
 | [Attribution](Attribution.md) | Who made or allowed something, on what day, with an optional note. |  no  |
 | [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
 
@@ -35,8 +39,22 @@ URI: [pc:on](https://pruzhany.org/ns/sourced-entities#on)
 
 | Property | Value |
 | --- | --- |
-| Range | [String](String.md) |
-| Domain Of | [Review](Review.md), [Attribution](Attribution.md) |
+| Range | [IsoDay](IsoDay.md) |
+| Domain Of | [Attribution](Attribution.md) |
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Required | Yes |
+
+
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Attribution](Attribution.md) |
+
+
 
 
 
@@ -50,6 +68,13 @@ URI: [pc:on](https://pruzhany.org/ns/sourced-entities#on)
 ## Identifier and Mapping Information
 
 
+
+
+
+### Schema Source
+
+
+* from schema: https://pruzhany.org/ns/content_items
 
 
 
@@ -69,10 +94,14 @@ URI: [pc:on](https://pruzhany.org/ns/sourced-entities#on)
 <details>
 ```yaml
 name: 'on'
+description: The day it was made or allowed.
+from_schema: https://pruzhany.org/ns/content_items
+rank: 1000
+owner: Attribution
 domain_of:
-- Review
 - Attribution
-range: string
+range: IsoDay
+required: true
 
 ```
 </details></div>

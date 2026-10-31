@@ -194,10 +194,10 @@ attributes:
     rank: 1000
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: HolderKind
     required: true
   identifiers:
@@ -302,10 +302,10 @@ attributes:
     owner: Holder
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: HolderKind
     required: true
   identifiers:

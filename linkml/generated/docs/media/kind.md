@@ -5,16 +5,11 @@ search:
 
 # Slot: kind 
 
-
-_What the medium is: image, audio, video or document._
-
-
-
 <div data-search-exclude markdown="1">
 
 
 
-URI: [rico:hasRepresentationType](https://www.ica.org/standards/RiC/ontology#hasRepresentationType)
+URI: [pc:kind](https://pruzhany.org/ns/sourced-entities#kind)
 <!-- no inheritance hierarchy -->
 
 
@@ -27,6 +22,7 @@ URI: [rico:hasRepresentationType](https://www.ica.org/standards/RiC/ontology#has
 | --- | --- | --- |
 | [PublicMedia](PublicMedia.md) | One held or linked copy of a registered source (a photograph, document, recording or film), as the public may see it: what it is, what it shows and says, its review, its terms and its served copies. |  no  |
 | [Media](Media.md) | One held or linked copy of a registered source, as the shared record keeps it: all that the public may see, with the private master file and the private permission besides. |  no  |
+| [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
 
 
 
@@ -39,23 +35,8 @@ URI: [rico:hasRepresentationType](https://www.ica.org/standards/RiC/ontology#has
 
 | Property | Value |
 | --- | --- |
-| Range | [MediaKind](MediaKind.md) |
-| Domain Of | [PublicMedia](PublicMedia.md) |
-| Slot URI | [rico:hasRepresentationType](https://www.ica.org/standards/RiC/ontology#hasRepresentationType) |
-### Cardinality and Requirements
-
-| Property | Value |
-| --- | --- |
-| Required | Yes |
-
-
-### Slot Characteristics
-
-| Property | Value |
-| --- | --- |
-| Owner | [PublicMedia](PublicMedia.md) |
-
-
+| Range | [String](String.md) |
+| Domain Of | [PublicMedia](PublicMedia.md), [Authorship](Authorship.md) |
 
 
 
@@ -72,19 +53,12 @@ URI: [rico:hasRepresentationType](https://www.ica.org/standards/RiC/ontology#has
 
 
 
-### Schema Source
-
-
-* from schema: https://pruzhany.org/ns/media
-
-
-
 
 ## Mappings
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | rico:hasRepresentationType |
+| self | pc:kind |
 | native | pc:kind |
 
 
@@ -95,15 +69,10 @@ URI: [rico:hasRepresentationType](https://www.ica.org/standards/RiC/ontology#has
 <details>
 ```yaml
 name: kind
-description: 'What the medium is: image, audio, video or document.'
-from_schema: https://pruzhany.org/ns/media
-rank: 1000
-slot_uri: rico:hasRepresentationType
-owner: PublicMedia
 domain_of:
 - PublicMedia
-range: MediaKind
-required: true
+- Authorship
+range: string
 
 ```
 </details></div>

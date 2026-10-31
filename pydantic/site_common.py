@@ -1,5 +1,5 @@
 """Printed places, titles, translation and cross-references in the site shape."""
-from .generated.models import Authorship, ContentItemBlockRef, CrossReference, EnglishCheck, PrintedAddress, PrintedTitle, SuppliedTitle, TextBasis, TitleCheck, Translation, TranslationCheck
+from .generated.models import CitedTextBasis, CitedTranslation, Authorship, ContentItemBlockRef, CrossReference, EnglishCheck, PrintedAddress, PrintedTitle, SuppliedTitle, TextBasis, TitleCheck, Translation, TranslationCheck
 from typing import Annotated, Literal
 from pydantic import BaseModel, Field, field_validator, model_validator
 from .sourced_entities import Strict, Text, Day, Attribution

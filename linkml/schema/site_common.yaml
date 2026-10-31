@@ -24,9 +24,9 @@ default_range: string
 imports:
   - linkml:types
   - types
-  - sourced_entities
 
 enums:
+
   AuthorshipKind:
     description: >-
       Whether a person or a program wrote a supplied title or a translation.
@@ -39,6 +39,26 @@ enums:
           A language model wrote it.
 
 classes:
+
+  Attribution:
+    description: >-
+      Who made or allowed something, on what day, with an optional note.
+    attributes:
+      by:
+        range: NonBlankText
+        required: true
+        description: >-
+          Who made it or allowed it: a person, a session or a program.
+      'on':
+        range: IsoDay
+        required: true
+        description: >-
+          The day it was made or allowed.
+      note:
+        range: string
+        description: >-
+          A note on how or why.
+
   CrossReference:
     description: >-
       A link from one content item to another in the same issue, with how sure it is and why.
@@ -241,7 +261,7 @@ classes:
 
   Translation:
     description: >-
-      An English translation of a content item's printed text, with the exact text it was
+      An English translation of exact source words, with the exact text it was
       made from, who made it and, where one was made, its later check.
     exact_mappings:
       - pc:site_translation
@@ -275,6 +295,29 @@ classes:
           - pc:site_checked_against_text
         description: >-
           A later check of this translation against the reading, where one was made.
+
+  CitedTextBasis:
+    is_a: TextBasis
+    description: >-
+      The exact source words of a citation or source title. The containing citation's
+      locator or source description locates them; printed addresses are optional,
+      and when supplied remain nonempty real image-and-box witnesses.
+    slot_usage:
+      addresses:
+        required: false
+
+  CitedTranslation:
+    is_a: Translation
+    description: >-
+      English of a citation's quote or a source title, located by its containing
+      record. Reuses Translation's English, attribution and check contract without
+      requiring an image and box for a book page or archive record.
+    slot_usage:
+      based_on:
+        range: CitedTextBasis
+        description: >-
+          The exact quote or title translated; source_text equals that original
+          field, including whitespace and punctuation.
 
   ContentItemBlockRef:
     description: >-

@@ -1,5 +1,5 @@
 {
-  "contract_sha256": "7eb49d1d3de1dc0e40b074d2fedb46cd4596f6ad88dada962a4887801731e305",
+  "contract_sha256": "c3f055ace909662fb27258718df3f628c55276c2e4e3fd4289008507cb353017",
   "inputs": {
     "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
     "linkml/schema/content_items.yaml": "24c90f09ff8def4281f4173e38b598da3ae618742d82ef88658d02d2d263f181",
@@ -8,14 +8,14 @@
     "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
-    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/media.yaml": "514410702d9db8b741df691c9266c14f86c12cbb8959fa1225e4edb7499496e5",
     "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
     "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
     "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
-    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
-    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",
+    "linkml/schema/sourced_entities.yaml": "d302997e92587794d1e12b36418c3d39122af0cd9e78d53442b6fb9f1762771a",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
     "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4"
   },
@@ -73,7 +73,7 @@
       ],
       "mappings": [],
       "parent": null,
-      "source": "linkml/schema/sourced_entities.yaml",
+      "source": "linkml/schema/site_common.yaml",
       "yaml": "  Attribution:\n    description: >-\n      Who made or allowed something, on what day, with an optional note.\n    attributes:\n      by:\n        range: NonBlankText\n        required: true\n        description: >-\n          Who made it or allowed it: a person, a session or a program.\n      'on':\n        range: IsoDay\n        required: true\n        description: >-\n          The day it was made or allowed.\n      note:\n        range: string\n        description: >-\n          A note on how or why.\n"
     },
     "Authorship": {
@@ -396,6 +396,32 @@
           }
         },
         {
+          "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model.",
+          "mappings": [
+            {
+              "kind": "exact_mappings",
+              "term": "pc:site_translation"
+            }
+          ],
+          "multivalued": false,
+          "name": "quote_english",
+          "range": "CitedTranslation",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/CitedTranslation"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model."
+          }
+        },
+        {
           "description": "The quote's language, where it is not the source's (a translation).",
           "mappings": [
             {
@@ -600,7 +626,144 @@
       "mappings": [],
       "parent": null,
       "source": "linkml/schema/sourced_entities.yaml",
-      "yaml": "  Citation:\n    description: >-\n      Where in one source a statement's evidence lies: the source, and the record, page, scan,\n      time, piece of the paper, address or pointer within it, with the quoted words.\n    attributes:\n      source_id:\n        # docs/design/2026-10-24-sources-and-citations.md, section 3.3, and\n        # vocabulary/site-content.json, binding fact_source: the record a statement rests on is\n        # its evidence.\n        slot_uri: rico:isEvidencedBy\n        range: NonBlankText\n        required: true\n        annotations:\n          references: Source.id\n        description: >-\n          The record the statement rests on (the original where it is known), by its id in the\n          record's sources.\n      via:\n        range: NonBlankText\n        description: >-\n          The one source actually read, a copy or a transcription of the original, by its id.\n      reference_code:\n        # vocabulary/site-content.json, binding source_reference_code.\n        slot_uri: rico:hasOrHadIdentifier\n        range: NonBlankText\n        description: >-\n          The holder's reference of the document cited, where the source is a set of many.\n      record_type:\n        # vocabulary/site-content.json, binding citation_record_type.\n        slot_uri: rico:hasDocumentaryFormType\n        range: NonBlankText\n        description: >-\n          The holder's own type of the record, such as Page of Testimony.\n      quote_language:\n        # vocabulary/site-content.json, binding source_language.\n        slot_uri: rico:hasOrHadLanguage\n        range: LanguageTag\n        description: >-\n          The quote's language, where it is not the source's (a translation).\n      public_note:\n        # vocabulary/site-content.json, binding citation_public_note.\n        slot_uri: pc:site_citation_public_note\n        range: NonBlankText\n        description: >-\n          Our reviewed words for the page about this evidence, apart from the record's quote.\n      locator:\n        # vocabulary/site-content.json, binding citation_locator.\n        slot_uri: pc:site_citation_locator\n        range: NonBlankText\n        description: >-\n          An internal pointer into the project's files; never published and never a holder's\n          record number.\n      record_id:\n        # docs/design/2026-10-24-sources-and-citations.md, section 3.3: the holder's own number\n        # for the record maps to rico:hasOrHadIdentifier.\n        slot_uri: rico:hasOrHadIdentifier\n        range: string\n        description: >-\n          The holder's own number for the record, such as a Yad Vashem record number.\n      page:\n        range: string\n        description: >-\n          The page, folio or entry cited.\n      scan:\n        range: string\n        description: >-\n          The scan or image cited.\n      time:\n        range: string\n        description: >-\n          The time in a recording.\n      edition_date:\n        range: string\n        description: >-\n          The day of the paper's issue cited, written YYYY-MM-DD.\n      unit_id:\n        range: string\n        description: >-\n          The piece of the paper cited, by its content item id.\n      url:\n        range: HttpsUri\n        description: >-\n          The record's web address.\n      quote:\n        range: string\n        description: >-\n          The record's own words, exactly.\n      note:\n        range: string\n        description: >-\n          Our private note on the evidence; never published.\n      accessed:\n        range: IsoDay\n        description: >-\n          The day a person read the record.\n    any_of:\n      - description: >-\n          A citation names where in its source the evidence is.\n        slot_conditions:\n          record_id:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          page:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          scan:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          time:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          unit_id:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          url:\n            required: true\n      - slot_conditions:\n          locator:\n            required: true\n      - slot_conditions:\n          reference_code:\n            required: true\n"
+      "yaml": "  Citation:\n    description: >-\n      Where in one source a statement's evidence lies: the source, and the record, page, scan,\n      time, piece of the paper, address or pointer within it, with the quoted words.\n    attributes:\n      source_id:\n        # docs/design/2026-10-24-sources-and-citations.md, section 3.3, and\n        # vocabulary/site-content.json, binding fact_source: the record a statement rests on is\n        # its evidence.\n        slot_uri: rico:isEvidencedBy\n        range: NonBlankText\n        required: true\n        annotations:\n          references: Source.id\n        description: >-\n          The record the statement rests on (the original where it is known), by its id in the\n          record's sources.\n      via:\n        range: NonBlankText\n        description: >-\n          The one source actually read, a copy or a transcription of the original, by its id.\n      reference_code:\n        # vocabulary/site-content.json, binding source_reference_code.\n        slot_uri: rico:hasOrHadIdentifier\n        range: NonBlankText\n        description: >-\n          The holder's reference of the document cited, where the source is a set of many.\n      record_type:\n        # vocabulary/site-content.json, binding citation_record_type.\n        slot_uri: rico:hasDocumentaryFormType\n        range: NonBlankText\n        description: >-\n          The holder's own type of the record, such as Page of Testimony.\n      quote_language:\n        # vocabulary/site-content.json, binding source_language.\n        slot_uri: rico:hasOrHadLanguage\n        range: LanguageTag\n        description: >-\n          The quote's language, where it is not the source's (a translation).\n      public_note:\n        # vocabulary/site-content.json, binding citation_public_note.\n        slot_uri: pc:site_citation_public_note\n        range: NonBlankText\n        description: >-\n          Our reviewed words for the page about this evidence, apart from the record's quote.\n      locator:\n        # vocabulary/site-content.json, binding citation_locator.\n        slot_uri: pc:site_citation_locator\n        range: NonBlankText\n        description: >-\n          An internal pointer into the project's files; never published and never a holder's\n          record number.\n      record_id:\n        # docs/design/2026-10-24-sources-and-citations.md, section 3.3: the holder's own number\n        # for the record maps to rico:hasOrHadIdentifier.\n        slot_uri: rico:hasOrHadIdentifier\n        range: string\n        description: >-\n          The holder's own number for the record, such as a Yad Vashem record number.\n      page:\n        range: string\n        description: >-\n          The page, folio or entry cited.\n      scan:\n        range: string\n        description: >-\n          The scan or image cited.\n      time:\n        range: string\n        description: >-\n          The time in a recording.\n      edition_date:\n        range: string\n        description: >-\n          The day of the paper's issue cited, written YYYY-MM-DD.\n      unit_id:\n        range: string\n        description: >-\n          The piece of the paper cited, by its content item id.\n      url:\n        range: HttpsUri\n        description: >-\n          The record's web address.\n      quote:\n        range: string\n        description: >-\n          The record's own words, exactly.\n      note:\n        range: string\n        description: >-\n          Our private note on the evidence; never published.\n      accessed:\n        range: IsoDay\n        description: >-\n          The day a person read the record.\n      quote_english:\n        range: CitedTranslation\n        inlined: true\n        exact_mappings:\n          - pc:site_translation\n        annotations:\n          english_of: quote\n        description: >-\n          English of exactly quote, with based_on.source_text equal to that field's\n          exact bytes and attribution naming the kept English or its person or model.\n    # LinkML Advanced features (Rules), Slots, JSON Schema (Rules), and metamodel\n    # deactivated, read 31 October 2026: https://linkml.io/linkml/schemas/advanced.html\n    # and https://linkml.io/linkml-model/latest/docs/deactivated/.\n    # One switch: set this rule's deactivated to false and regenerate with the data rollout.\n    rules:\n      - title: require_non_english_quote_english\n        deactivated: true\n        description: >-\n          A quote not explicitly marked as English carries quote_english.\n        preconditions:\n          slot_conditions:\n            quote:\n              annotations:\n                json_schema_typed_range: true\n              range: NonBlankText\n              required: true\n          none_of:\n            - slot_conditions:\n                quote_language:\n                  annotations:\n                    json_schema_typed_range: true\n                  range: LanguageTag\n                  required: true\n                  pattern: '^[eE][nN](-|$)'\n        postconditions:\n          slot_conditions:\n            quote_english:\n              annotations:\n                json_schema_typed_range: true\n              range: CitedTranslation\n              required: true\n    any_of:\n      - description: >-\n          A citation names where in its source the evidence is.\n        slot_conditions:\n          record_id:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          page:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          scan:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          time:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          unit_id:\n            required: true\n            pattern: '\\S'\n      - slot_conditions:\n          url:\n            required: true\n      - slot_conditions:\n          locator:\n            required: true\n      - slot_conditions:\n          reference_code:\n            required: true\n"
+    },
+    "CitedTextBasis": {
+      "description": "The exact source words of a citation or source title. The containing citation's locator or source description locates them; printed addresses are optional, and when supplied remain nonempty real image-and-box witnesses.",
+      "fields": [
+        {
+          "description": "Where that text is printed, one address a line or patch.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "addresses",
+          "range": "PrintedAddress",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "Where that text is printed, one address a line or patch.",
+            "items": {
+              "$ref": "#/$defs/PrintedAddress"
+            },
+            "minItems": 1,
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The text used, exactly, never normalised or replaced by a later reading.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "source_text",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The text used, exactly, never normalised or replaced by a later reading.",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": "TextBasis",
+      "source": "linkml/schema/site_common.yaml",
+      "yaml": "  CitedTextBasis:\n    is_a: TextBasis\n    description: >-\n      The exact source words of a citation or source title. The containing citation's\n      locator or source description locates them; printed addresses are optional,\n      and when supplied remain nonempty real image-and-box witnesses.\n    slot_usage:\n      addresses:\n        required: false\n"
+    },
+    "CitedTranslation": {
+      "description": "English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record.",
+      "fields": [
+        {
+          "description": "Who translated it, and on which day.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "attribution",
+          "range": "Authorship",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/Authorship",
+            "description": "Who translated it, and on which day."
+          }
+        },
+        {
+          "description": "The exact quote or title translated; source_text equals that original field, including whitespace and punctuation.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "based_on",
+          "range": "CitedTextBasis",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/CitedTextBasis",
+            "description": "The exact quote or title translated; source_text equals that original field, including whitespace and punctuation."
+          }
+        },
+        {
+          "description": "A later check of this translation against the reading, where one was made.",
+          "mappings": [
+            {
+              "kind": "exact_mappings",
+              "term": "pc:site_checked_against_text"
+            }
+          ],
+          "multivalued": false,
+          "name": "checked_against",
+          "range": "TranslationCheck",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TranslationCheck"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A later check of this translation against the reading, where one was made."
+          }
+        },
+        {
+          "description": "The translation's language, always English (en).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "language",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "const": "en",
+            "description": "The translation's language, always English (en).",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The English text.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "text",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The English text.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": "Translation",
+      "source": "linkml/schema/site_common.yaml",
+      "yaml": "  CitedTranslation:\n    is_a: Translation\n    description: >-\n      English of a citation's quote or a source title, located by its containing\n      record. Reuses Translation's English, attribution and check contract without\n      requiring an image and box for a book page or archive record.\n    slot_usage:\n      based_on:\n        range: CitedTextBasis\n        description: >-\n          The exact quote or title translated; source_text equals that original\n          field, including whitespace and punctuation.\n"
     },
     "ContentItem": {
       "description": "One article, notice, greeting or advertisement of the issue: its kind, its titles, its text and English, the regions it is printed in and what it names.",
@@ -3653,6 +3816,32 @@
           }
         },
         {
+          "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model.",
+          "mappings": [
+            {
+              "kind": "exact_mappings",
+              "term": "pc:site_translation"
+            }
+          ],
+          "multivalued": false,
+          "name": "quote_english",
+          "range": "CitedTranslation",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/CitedTranslation"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model."
+          }
+        },
+        {
           "description": "Their language, as a BCP 47 tag.",
           "mappings": [],
           "multivalued": false,
@@ -3686,7 +3875,7 @@
       "mappings": [],
       "parent": null,
       "source": "linkml/schema/media.yaml",
-      "yaml": "  MediaFamilyWords:\n    description: >-\n      The family's own words about a medium, quoted from a registered source with the page or\n      part they are on: a public part of a citation, with no private note.\n    attributes:\n      source_id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The source the words are quoted from, by its id in the record's sources.\n      page:\n        range: NonBlankText\n        required: true\n        description: >-\n          The page or recorded part the words are on.\n      quote:\n        range: NonBlankText\n        required: true\n        description: >-\n          The words, exactly.\n      quote_language:\n        range: LanguageTag\n        required: true\n        description: >-\n          Their language, as a BCP 47 tag.\n"
+      "yaml": "  MediaFamilyWords:\n    description: >-\n      The family's own words about a medium, quoted from a registered source with the page or\n      part they are on: a public part of a citation, with no private note.\n    attributes:\n      source_id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The source the words are quoted from, by its id in the record's sources.\n      page:\n        range: NonBlankText\n        required: true\n        description: >-\n          The page or recorded part the words are on.\n      quote:\n        range: NonBlankText\n        required: true\n        description: >-\n          The words, exactly.\n      quote_language:\n        range: LanguageTag\n        required: true\n        description: >-\n          Their language, as a BCP 47 tag.\n      quote_english:\n        range: CitedTranslation\n        inlined: true\n        exact_mappings:\n          - pc:site_translation\n        annotations:\n          english_of: quote\n        description: >-\n          English of exactly quote, with based_on.source_text equal to that field's\n          exact bytes and attribution naming the kept English or its person or model.\n"
     },
     "MediaFixity": {
       "description": "A dated check that a master file still has its digest.",
@@ -6998,6 +7187,32 @@
           }
         },
         {
+          "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model.",
+          "mappings": [
+            {
+              "kind": "exact_mappings",
+              "term": "pc:site_translation"
+            }
+          ],
+          "multivalued": false,
+          "name": "quote_english",
+          "range": "CitedTranslation",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/CitedTranslation"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "English of exactly quote, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model."
+          }
+        },
+        {
           "description": "The quote's language, where it is not the source's (a translation).",
           "mappings": [
             {
@@ -7618,6 +7833,32 @@
           }
         },
         {
+          "description": "English of exactly title, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model.",
+          "mappings": [
+            {
+              "kind": "exact_mappings",
+              "term": "pc:site_translation"
+            }
+          ],
+          "multivalued": false,
+          "name": "title_english",
+          "range": "CitedTranslation",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/CitedTranslation"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "English of exactly title, with based_on.source_text equal to that field's exact bytes and attribution naming the kept English or its person or model."
+          }
+        },
+        {
           "description": "How an address of one of the source's records is formed.",
           "mappings": [],
           "multivalued": false,
@@ -7660,7 +7901,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/sourced_entities.yaml",
-      "yaml": "  Source:\n    # vocabulary/site-content.json, binding source: a source is a record resource.\n    class_uri: ehri:RecordResource\n    description: >-\n      A record the statements rest on: a book, an archive's database, a family document, the\n      paper itself and the like, registered once and cited by its id.\n    attributes:\n      made_by:\n        # vocabulary/media.json, binding source_made_by.\n        slot_uri: pc:source_made_by\n        range: SourceMadeBy\n        description: >-\n          Who made the source, as a category (family, studio, institution, perpetrator,\n          unknown); never its creator.\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The source's id in the record, which citations name.\n      kind:\n        range: SourceKinds\n        required: true\n        description: >-\n          What kind of source it is: a book, a memorial book, an archive's database, the paper\n          and so on.\n      title:\n        range: NonBlankText\n        required: true\n        description: >-\n          The source's title.\n      short_name:\n        # vocabulary/site-content.json, binding source_display.\n        slot_uri: pc:site_source_display\n        range: NonBlankText\n        description: >-\n          A short name the site shows for the source.\n      holder_id:\n        # vocabulary/site-content.json, binding source_holder.\n        slot_uri: rico:hasOrHadHolder\n        range: NonBlankText\n        description: >-\n          Who holds the source, by its id in the record's holders.\n      reference_code:\n        # vocabulary/site-content.json, binding source_reference_code.\n        slot_uri: rico:hasOrHadIdentifier\n        range: NonBlankText\n        description: >-\n          The holder's own reference for the record, as the holder writes it.\n      language:\n        # vocabulary/site-content.json, binding source_language.\n        slot_uri: rico:hasOrHadLanguage\n        range: LanguageTag\n        multivalued: true\n        minimum_cardinality: 1\n        description: >-\n          The languages of the record, as BCP 47 tags.\n      derived_from:\n        range: SourceDerivation\n        multivalued: true\n        inlined_as_list: true\n        minimum_cardinality: 1\n        description: >-\n          For a copy or a transcription we hold: the original it was made from, and how.\n      dated:\n        # vocabulary/site-content.json, binding source_dated.\n        slot_uri: rico:hasCreationDate\n        range: SourcedDate\n        inlined: true\n        description: >-\n          The record's own date, apart from when it was published or consulted.\n      quotes_cleared:\n        # vocabulary/site-content.json, binding source_privacy (a private document and the\n        # attributed permission to quote it).\n        related_mappings:\n          - pc:site_source_privacy\n        range: Attribution\n        inlined: true\n        description: >-\n          Who allowed quotes from this private document to be published, and on what day.\n      quote_condition:\n        # vocabulary/site-content.json, binding source_quote_condition.\n        slot_uri: pc:site_source_quote_condition\n        range: SourceQuoteCondition\n        description: >-\n          The owner's condition on the cleared quotes: shown only where no other record says\n          the same.\n      private:\n        # vocabulary/site-content.json, binding source_privacy.\n        related_mappings:\n          - pc:site_source_privacy\n        range: boolean\n        description: >-\n          True when the document itself is never shown.\n      work_id:\n        range: string\n        description: >-\n          The id of the work in the project's files; never published where it is a file name.\n      author:\n        # docs/design/2026-10-24-sources-and-citations.md, section 3.2: author maps to\n        # rico:hasCreator.\n        slot_uri: rico:hasCreator\n        range: string\n        description: >-\n          Who wrote the source: an institution, never a member of its staff.\n      editor:\n        range: string\n        description: >-\n          Who edited the source.\n      published:\n        range: string\n        description: >-\n          When or where the source was published, as written.\n      repository:\n        range: string\n        description: >-\n          The old free-text holder, read for one release; holder_id replaces it.\n      url_pattern:\n        range: string\n        description: >-\n          How an address of one of the source's records is formed.\n      host:\n        # vocabulary/site-content.json, binding source_host.\n        slot_uri: pc:site_source_host\n        range: HostName\n        description: >-\n          The web host the source's records are served from, without www: every address cited\n          from it is on that host or a subdomain of it.\n      subjects:\n        # vocabulary/media.json, binding source_subjects.\n        slot_uri: rico:hasOrHadSubject\n        range: NonBlankText\n        multivalued: true\n        minimum_cardinality: 1\n        description: >-\n          The persons, places or events the source shows or speaks of, by their ids.\n    rules:\n      - description: >-\n          A source's host is written without www.\n        preconditions:\n          slot_conditions:\n            host:\n              value_presence: PRESENT\n        postconditions:\n          slot_conditions:\n            host:\n              pattern: '^(?!www\\.)'\n"
+      "yaml": "  Source:\n    # vocabulary/site-content.json, binding source: a source is a record resource.\n    class_uri: ehri:RecordResource\n    description: >-\n      A record the statements rest on: a book, an archive's database, a family document, the\n      paper itself and the like, registered once and cited by its id.\n    attributes:\n      made_by:\n        # vocabulary/media.json, binding source_made_by.\n        slot_uri: pc:source_made_by\n        range: SourceMadeBy\n        description: >-\n          Who made the source, as a category (family, studio, institution, perpetrator,\n          unknown); never its creator.\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The source's id in the record, which citations name.\n      kind:\n        range: SourceKinds\n        required: true\n        description: >-\n          What kind of source it is: a book, a memorial book, an archive's database, the paper\n          and so on.\n      title:\n        range: NonBlankText\n        required: true\n        description: >-\n          The source's title.\n      short_name:\n        # vocabulary/site-content.json, binding source_display.\n        slot_uri: pc:site_source_display\n        range: NonBlankText\n        description: >-\n          A short name the site shows for the source.\n      holder_id:\n        # vocabulary/site-content.json, binding source_holder.\n        slot_uri: rico:hasOrHadHolder\n        range: NonBlankText\n        description: >-\n          Who holds the source, by its id in the record's holders.\n      reference_code:\n        # vocabulary/site-content.json, binding source_reference_code.\n        slot_uri: rico:hasOrHadIdentifier\n        range: NonBlankText\n        description: >-\n          The holder's own reference for the record, as the holder writes it.\n      language:\n        # vocabulary/site-content.json, binding source_language.\n        slot_uri: rico:hasOrHadLanguage\n        range: LanguageTag\n        multivalued: true\n        minimum_cardinality: 1\n        description: >-\n          The languages of the record, as BCP 47 tags.\n      derived_from:\n        range: SourceDerivation\n        multivalued: true\n        inlined_as_list: true\n        minimum_cardinality: 1\n        description: >-\n          For a copy or a transcription we hold: the original it was made from, and how.\n      dated:\n        # vocabulary/site-content.json, binding source_dated.\n        slot_uri: rico:hasCreationDate\n        range: SourcedDate\n        inlined: true\n        description: >-\n          The record's own date, apart from when it was published or consulted.\n      quotes_cleared:\n        # vocabulary/site-content.json, binding source_privacy (a private document and the\n        # attributed permission to quote it).\n        related_mappings:\n          - pc:site_source_privacy\n        range: Attribution\n        inlined: true\n        description: >-\n          Who allowed quotes from this private document to be published, and on what day.\n      quote_condition:\n        # vocabulary/site-content.json, binding source_quote_condition.\n        slot_uri: pc:site_source_quote_condition\n        range: SourceQuoteCondition\n        description: >-\n          The owner's condition on the cleared quotes: shown only where no other record says\n          the same.\n      private:\n        # vocabulary/site-content.json, binding source_privacy.\n        related_mappings:\n          - pc:site_source_privacy\n        range: boolean\n        description: >-\n          True when the document itself is never shown.\n      work_id:\n        range: string\n        description: >-\n          The id of the work in the project's files; never published where it is a file name.\n      author:\n        # docs/design/2026-10-24-sources-and-citations.md, section 3.2: author maps to\n        # rico:hasCreator.\n        slot_uri: rico:hasCreator\n        range: string\n        description: >-\n          Who wrote the source: an institution, never a member of its staff.\n      editor:\n        range: string\n        description: >-\n          Who edited the source.\n      published:\n        range: string\n        description: >-\n          When or where the source was published, as written.\n      repository:\n        range: string\n        description: >-\n          The old free-text holder, read for one release; holder_id replaces it.\n      url_pattern:\n        range: string\n        description: >-\n          How an address of one of the source's records is formed.\n      host:\n        # vocabulary/site-content.json, binding source_host.\n        slot_uri: pc:site_source_host\n        range: HostName\n        description: >-\n          The web host the source's records are served from, without www: every address cited\n          from it is on that host or a subdomain of it.\n      subjects:\n        # vocabulary/media.json, binding source_subjects.\n        slot_uri: rico:hasOrHadSubject\n        range: NonBlankText\n        multivalued: true\n        minimum_cardinality: 1\n        description: >-\n          The persons, places or events the source shows or speaks of, by their ids.\n      title_english:\n        range: CitedTranslation\n        inlined: true\n        exact_mappings:\n          - pc:site_translation\n        annotations:\n          english_of: title\n        description: >-\n          English of exactly title, with based_on.source_text equal to that field's\n          exact bytes and attribution naming the kept English or its person or model.\n    rules:\n      - description: >-\n          A source's host is written without www.\n        preconditions:\n          slot_conditions:\n            host:\n              value_presence: PRESENT\n        postconditions:\n          slot_conditions:\n            host:\n              pattern: '^(?!www\\.)'\n"
     },
     "SourceDerivation": {
       "description": "The record a source we hold was made from, and how: a copy or a transcription of it.",
@@ -8517,7 +8758,7 @@
       "yaml": "  TitleCheck:\n    is_a: EnglishCheck\n    description: >-\n      A check of a supplied title's English.\n    slot_usage:\n      judgement_id:\n        pattern: '^[^\\s\\u0085\\uFEFF]+:title$(?![\\s\\S])'\n"
     },
     "Translation": {
-      "description": "An English translation of a content item's printed text, with the exact text it was made from, who made it and, where one was made, its later check.",
+      "description": "An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check.",
       "fields": [
         {
           "description": "Who translated it, and on which day.",
@@ -8612,7 +8853,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/site_common.yaml",
-      "yaml": "  Translation:\n    description: >-\n      An English translation of a content item's printed text, with the exact text it was\n      made from, who made it and, where one was made, its later check.\n    exact_mappings:\n      - pc:site_translation\n    attributes:\n      text:\n        range: NonBlankText\n        required: true\n        description: >-\n          The English text.\n      language:\n        equals_string: en\n        required: true\n        description: >-\n          The translation's language, always English (en).\n      based_on:\n        range: TextBasis\n        inlined: true\n        required: true\n        description: >-\n          The exact printed text translated, and where it is printed.\n      attribution:\n        range: Authorship\n        inlined: true\n        required: true\n        description: >-\n          Who translated it, and on which day.\n      checked_against:\n        range: TranslationCheck\n        inlined: true\n        exact_mappings:\n          - pc:site_checked_against_text\n        description: >-\n          A later check of this translation against the reading, where one was made.\n"
+      "yaml": "  Translation:\n    description: >-\n      An English translation of exact source words, with the exact text it was\n      made from, who made it and, where one was made, its later check.\n    exact_mappings:\n      - pc:site_translation\n    attributes:\n      text:\n        range: NonBlankText\n        required: true\n        description: >-\n          The English text.\n      language:\n        equals_string: en\n        required: true\n        description: >-\n          The translation's language, always English (en).\n      based_on:\n        range: TextBasis\n        inlined: true\n        required: true\n        description: >-\n          The exact printed text translated, and where it is printed.\n      attribution:\n        range: Authorship\n        inlined: true\n        required: true\n        description: >-\n          Who translated it, and on which day.\n      checked_against:\n        range: TranslationCheck\n        inlined: true\n        exact_mappings:\n          - pc:site_checked_against_text\n        description: >-\n          A later check of this translation against the reading, where one was made.\n"
     },
     "TranslationCheck": {
       "description": "A check of a translation's English.",

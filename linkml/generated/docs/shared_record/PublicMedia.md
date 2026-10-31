@@ -386,10 +386,10 @@ attributes:
     slot_uri: rico:hasRepresentationType
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: MediaKind
     required: true
   caption:
@@ -795,10 +795,10 @@ attributes:
     owner: PublicMedia
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: MediaKind
     required: true
   caption:

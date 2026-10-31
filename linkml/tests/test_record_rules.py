@@ -11,6 +11,10 @@ precondition gives a `then` with no `if`, which JSON Schema ignores; and a class
 its parent's any_of or none_of, only its rules. The first class below shows each, so a LinkML
 upgrade that changes any of them fails here; the guard then keeps the record's modules
 (sourced_entities, media, shared_record) to what holds.
+
+31 October 2026: ReleaseGenerator explicitly preserves a condition's range only
+with json_schema_typed_range: true. The native-generator measurements below stay
+unchanged; the opt-in is exercised against the activated quote rule in test_words_english.
 """
 
 import json
@@ -133,6 +137,9 @@ def rule_findings(schema):
         for name, condition in conditions.items():
             for key in DROPPED:
                 if key in (condition or {}):
+                    if (key == 'range' and
+                            (condition.get('annotations') or {}).get('json_schema_typed_range') is True):
+                        continue  # This explicit range is enforced by ReleaseGenerator.
                     found.append(f'{where}: {name} uses {key}, which the generator drops')
         for kind in ('any_of', 'none_of', 'all_of', 'exactly_one_of'):
             for index, branch in enumerate(node.get(kind) or []):
@@ -196,6 +203,18 @@ class TheGuard(unittest.TestCase):
                       'items uses all_members', 'items uses has_member', 'no precondition'):
             with self.subTest(construct=words):
                 self.assertTrue(any(words in finding for finding in findings), findings)
+
+    def test_only_the_adapter_s_explicit_range_opt_in_is_accepted(self):
+        schema = yaml.safe_load(MEASURED)
+        condition = schema['classes']['Parent']['rules'][1]['postconditions']['slot_conditions']['a']
+        condition['annotations'] = {'json_schema_typed_range': True}
+        findings = rule_findings(schema)
+        self.assertEqual(len(findings), 5)
+        self.assertFalse(any('a uses range' in finding for finding in findings))
+        self.assertTrue(any('items uses minimum_cardinality' in finding for finding in findings))
+        for value in (False, 'true', 'maybe'):
+            condition['annotations']['json_schema_typed_range'] = value
+            self.assertEqual(len(rule_findings(schema)), 6)
 
 
 if __name__ == '__main__':

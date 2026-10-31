@@ -41,7 +41,6 @@ URI: [pc:MentionRoles](https://pruzhany.org/ns/sourced-entities#MentionRoles)
 | Name | Description |
 | ---  | --- |
 | [roles](roles.md) | The person's roles in the content item, such as the deceased or a mourner. |
-| [role](role.md) | The person's role in the piece. |
 
 
 

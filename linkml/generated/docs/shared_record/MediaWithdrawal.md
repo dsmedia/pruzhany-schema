@@ -119,8 +119,8 @@ attributes:
     description: The day it was withdrawn.
     from_schema: https://pruzhany.org/ns/media
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity
@@ -155,8 +155,8 @@ attributes:
     from_schema: https://pruzhany.org/ns/media
     owner: MediaWithdrawal
     domain_of:
-    - Review
     - Attribution
+    - Review
     - MediaDecision
     - MediaWithdrawal
     - MediaFixity

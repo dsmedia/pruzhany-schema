@@ -5,11 +5,6 @@ search:
 
 # Slot: text 
 
-
-_The words._
-
-
-
 <div data-search-exclude markdown="1">
 
 
@@ -26,6 +21,11 @@ URI: [pc:text](https://pruzhany.org/ns/sourced-entities#text)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [MediaText](MediaText.md) | Words about or on a medium (a caption, a description for screen readers, an inscription, a transcript), their language and their review. |  no  |
+| [PrintedAddress](PrintedAddress.md) | Where some printed words stand: the page picture, a box on it in the picture's own pixels, and the words read in that box. |  no  |
+| [PrintedTitle](PrintedTitle.md) | A title as printed in the paper: its words and where each line of them stands. |  no  |
+| [SuppliedTitle](SuppliedTitle.md) | A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check. |  no  |
+| [Translation](Translation.md) | An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check. |  no  |
+| [CitedTranslation](CitedTranslation.md) | English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record. |  no  |
 
 
 
@@ -38,22 +38,8 @@ URI: [pc:text](https://pruzhany.org/ns/sourced-entities#text)
 
 | Property | Value |
 | --- | --- |
-| Range | [NonBlankText](NonBlankText.md) |
-| Domain Of | [MediaText](MediaText.md) |
-### Cardinality and Requirements
-
-| Property | Value |
-| --- | --- |
-| Required | Yes |
-
-
-### Slot Characteristics
-
-| Property | Value |
-| --- | --- |
-| Owner | [MediaText](MediaText.md) |
-
-
+| Range | [String](String.md) |
+| Domain Of | [MediaText](MediaText.md), [PrintedAddress](PrintedAddress.md), [PrintedTitle](PrintedTitle.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
 
 
 
@@ -67,13 +53,6 @@ URI: [pc:text](https://pruzhany.org/ns/sourced-entities#text)
 ## Identifier and Mapping Information
 
 
-
-
-
-### Schema Source
-
-
-* from schema: https://pruzhany.org/ns/media
 
 
 
@@ -93,14 +72,13 @@ URI: [pc:text](https://pruzhany.org/ns/sourced-entities#text)
 <details>
 ```yaml
 name: text
-description: The words.
-from_schema: https://pruzhany.org/ns/media
-rank: 1000
-owner: MediaText
 domain_of:
 - MediaText
-range: NonBlankText
-required: true
+- PrintedAddress
+- PrintedTitle
+- SuppliedTitle
+- Translation
+range: string
 
 ```
 </details></div>

@@ -1,5 +1,6 @@
 """Media council contract; storage and consent never enter the public projection."""
 from .generated.models import Media, MediaConsent, MediaConsentScope, MediaDecision, MediaDepicted, MediaDerivative, MediaFamilyWords, MediaFixity, MediaMaster, MediaPortrait, MediaRegion, MediaText, MediaWithdrawal, PublicMedia
+from .words_english import validate_english
 import json
 import re
 from pathlib import Path
@@ -133,3 +134,7 @@ def media_reference_errors(media: list[Media], sources: list[Source], subjects: 
                 or not region_fits(portrait.region, medium.width, medium.height)):
             errors.append('portrait needs a cleared reviewed image depicting this person and a region in master pixels')
     return errors
+
+
+def _MediaFamilyWords__english_words(self):
+    return validate_english('MediaFamilyWords', self)

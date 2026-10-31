@@ -223,10 +223,10 @@ attributes:
     owner: SharedName
     domain_of:
     - Holder
+    - Authorship
     - Source
     - Name
     - PublicMedia
-    - Authorship
     range: NameKinds
     required: true
   script:
@@ -258,11 +258,11 @@ attributes:
     owner: SharedName
     domain_of:
     - PlaceIdentifier
-    - Fact
-    - Name
     - EnglishCheck
     - SuppliedTitle
     - Translation
+    - Fact
+    - Name
     range: Attribution
     inlined: true
 class_uri: rico:AgentName

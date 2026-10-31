@@ -42,12 +42,6 @@ URI: [pc:FactTypes](https://pruzhany.org/ns/sourced-entities#FactTypes)
 
 
 
-## Slots
-
-| Name | Description |
-| ---  | --- |
-| [type](type.md) | What the statement is about: a birth, a death, a residence, an occupation and so on. |
-
 
 
 

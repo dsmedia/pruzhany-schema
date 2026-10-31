@@ -8,7 +8,7 @@ What LinkML cannot say about the shapes is listed in
 
 | File | What it is |
 | --- | --- |
-| `schema/*.yaml` | The definition: `types.yaml` (the shared types), `vocabulary.yaml` (the vocabulary's enums, generated), `site_common.yaml`, `pages.yaml`, `content_items.yaml`, `mentions.yaml`, `life_events.yaml`, `editions.yaml` (the issue documents and the catalog), `sourced_entities.yaml`, `media.yaml`, `shared.yaml`, `shared_record.yaml` (the shared record). Imports run types and vocabulary <- sourced_entities <- site_common <- shared_record. |
+| `schema/*.yaml` | The definition: `types.yaml` (the shared types), `vocabulary.yaml` (the vocabulary's enums, generated), `site_common.yaml`, `pages.yaml`, `content_items.yaml`, `mentions.yaml`, `life_events.yaml`, `editions.yaml` (the issue documents and the catalog), `sourced_entities.yaml`, `media.yaml`, `shared.yaml`, `shared_record.yaml` (the shared record). Imports run types/vocabulary <- site_common <- sourced_entities <- shared_record; media imports site_common. |
 | `schema/vocabulary.yaml` | Written by `vocabulary/generate.py` from `vocabulary/*.json`, one enum a group, never edited by hand: change the JSON, run that generator, then `linkml/generate.py` for its docs. That generator's `--check` (`bin/verify vocabulary`) fails on a hand edit. |
 | `modules.json` | The manifest: each schema file, its top class (or `null`) and the name its outputs take. |
 | `generated/` | What `generate.py` makes from the manifest, committed: `json-schema/<name>.schema.json` for a module with a top class, `docs/<name>/` (gen-doc) for every module. Never edited by hand. |
@@ -130,7 +130,8 @@ in the existing refinements and cross-document checks inventoried by `checks/doc
 `checks/record.yaml`; the generated JSON Schemas also enforce them at the document boundaries.
 The Python backend's condition inventory continues to require review when those conditions change.
 
-The hand layer preserves all 24 places in `known-looser.yaml`: required nullable keys, optional
+The hand layer preserves all 40 places in `known-looser.yaml` (24 original locations plus
+16 locations introduced by reusing CitedTranslation): required nullable keys, optional
 non-null keys, positional box/coordinate bounds and positive duration. Type compatibility keeps
 box/dimension/coordinate tuples, external-reference optional non-null scalars, the supported
 content vocabulary version union, and nullable event-date qualifier/evidence-basis literals.
@@ -163,6 +164,36 @@ continue to exercise retained refinements.
 Backend tests plant unknown constructs, drift, missing/extra
 files and cycles. `bin/verify zod` typechecks imported generated/test subfolders and checks their
 formatting recursively; `bin/verify linkml` checks generation and runs the backend tests.
+
+### Source words and English (staged)
+
+Citation, MediaFamilyWords and Source title English use `CitedTranslation is_a Translation`
+from `site_common.yaml`. Its `CitedTextBasis is_a TextBasis` makes addresses optional;
+piece Translation and TextBasis still require them.
+The [slot audit](../docs/design/2026-10-31-words-and-their-english.md) lists every source-word
+slot, existing English coverage, the three optional additions and remaining approval candidates.
+The `english_of` annotation records each exact sibling-text binding; generation exports its
+inventory for both twins. Attribution lives in site_common so the dependency stays acyclic;
+the existing public imports remain available.
+
+The single switch is the `deactivated: true` flag on Citation's
+`require_non_english_quote_english` rule in `schema/sourced_entities.yaml`. Generation derives
+the runtime constants in `zod/generated/words_policy.ts` and
+`pydantic/generated/words_policy.py`. Existing files still validate. Present English is always
+bound to the exact original; source metadata binding runs at SharedRecord so the site's
+`SourceSchema.pick()` API remains usable. The later data rollout enables quote coverage and
+reviews the existing Python condition inventory, with fictional tests already covering both states.
+
+Read **31 October 2026**: LinkML [Advanced features, Rules](https://linkml.io/linkml/schemas/advanced.html#rules),
+[Slots](https://linkml.io/linkml/schemas/slots.html),
+[Annotations](https://linkml.io/linkml/schemas/annotations.html),
+[JSON Schema](https://linkml.io/linkml/generators/json-schema.html) and
+[deactivated](https://linkml.io/linkml-model/latest/docs/deactivated/).
+Pinned 1.12.1's emitter ignores `deactivated` and omits anonymous slot range types;
+`external_schema.ReleaseGenerator` honors the switch and only restores explicit condition
+ranges carrying `json_schema_typed_range: true`. Existing unannotated rules retain their
+measured behavior. `test_words_english.py` checks missing/null values, inherited Citation
+rules, emitted policy and both runtime validators against the actual activated LinkML rule.
 
 ### Commands
 

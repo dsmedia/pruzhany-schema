@@ -160,7 +160,6 @@ attributes:
     domain_of:
     - SuppliedTitle
     - Translation
-    - Source
     required: true
     equals_string: en
   based_on:
@@ -182,8 +181,6 @@ attributes:
     - EnglishCheck
     - SuppliedTitle
     - Translation
-    - Fact
-    - Name
     range: Authorship
     required: true
     inlined: true
@@ -236,7 +233,6 @@ attributes:
     domain_of:
     - SuppliedTitle
     - Translation
-    - Source
     range: string
     required: true
     equals_string: en
@@ -261,8 +257,6 @@ attributes:
     - EnglishCheck
     - SuppliedTitle
     - Translation
-    - Fact
-    - Name
     range: Authorship
     required: true
     inlined: true

@@ -26,12 +26,6 @@ URI: [pc:ReviewStates](https://pruzhany.org/ns/sourced-entities#ReviewStates)
 
 
 
-## Slots
-
-| Name | Description |
-| ---  | --- |
-| [state](state.md) | Pending, or approved by a reviewer. |
-
 
 
 

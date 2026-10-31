@@ -1,12 +1,12 @@
 {
   "artifacts_sha256": {
     "context.jsonld": "a212e549e680de4a71b0601b94fbf5314e640ede8fe06d46a879ade811405ade",
-    "coverage.md": "d6ef1ec8c82360c5b4f25df7c128a31ad67d7b5778af0658cd79be7481ec666b",
+    "coverage.md": "3a03d4e08546f3e493e719edf0426da4d53a72bcb1e401693621109203a6b3dc",
     "ontology.ttl": "61d32d991d656f5570a2ed2776cde0fc40551060ace7bc92154729aeb47363ec",
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
-  "contract_sha256": "7eb49d1d3de1dc0e40b074d2fedb46cd4596f6ad88dada962a4887801731e305",
-  "index_sha256": "2f22c979f359c64e19ebe92935c93bd346a26e2e91963bd4f720bd279a60f57c",
+  "contract_sha256": "c3f055ace909662fb27258718df3f628c55276c2e4e3fd4289008507cb353017",
+  "index_sha256": "a91a81bb9a41c424d2f1e1276614ae165fa7f8fdf3d529b2d339abd3d40026fc",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -55,7 +55,7 @@
       "optional": {},
       "reason": "A public view of Attribution; source-scoped values are retained without asserting an unqualified historical relationship.",
       "required": {},
-      "source": "linkml/schema/sourced_entities.yaml",
+      "source": "linkml/schema/site_common.yaml",
       "types": []
     },
     "Citation": {
@@ -278,6 +278,7 @@
         "locator": "Absent from this final public view; never recover it from private storage.",
         "note": "Absent from this final public view; never recover it from private storage.",
         "public_note": "Absent from this final public view; never recover it from private storage.",
+        "quote_english": "Staged English and its attribution remain private until the site publication projection explicitly supports them.",
         "quote_language": "Absent from this final public view; never recover it from private storage.",
         "record_type": "Absent from this final public view; never recover it from private storage.",
         "reference_code": "Absent from this final public view; never recover it from private storage.",
@@ -1964,7 +1965,8 @@
         "quotes_cleared": "Absent from this final public view; never recover it from private storage.",
         "reference_code": "Absent from this final public view; never recover it from private storage.",
         "short_name": "Absent from this final public view; never recover it from private storage.",
-        "subjects": "Absent from this final public view; never recover it from private storage."
+        "subjects": "Absent from this final public view; never recover it from private storage.",
+        "title_english": "Staged English and its attribution remain private until the site publication projection explicitly supports them."
       },
       "optional": {},
       "reason": "A public view of Source; source-scoped values are retained without asserting an unqualified historical relationship.",
@@ -2265,6 +2267,8 @@
   "omitted_models": {
     "Authorship": "Outside the public shared-record export; this layer keeps its current format.",
     "Block": "Outside the public shared-record export; this layer keeps its current format.",
+    "CitedTextBasis": "Outside the public shared-record export; citation/source English requires an explicit publication projection.",
+    "CitedTranslation": "Outside the public shared-record export; citation/source English requires an explicit publication projection.",
     "ContentItem": "Outside the public shared-record export; this layer keeps its current format.",
     "ContentItemBlockRef": "Outside the public shared-record export; this layer keeps its current format.",
     "ContentItemRef": "Outside the public shared-record export; this layer keeps its current format.",
@@ -2316,7 +2320,7 @@
     "Translation": "Outside the public shared-record export; this layer keeps its current format.",
     "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format."
   },
-  "profile_sha256": "e7b5b0043bf263de971b73120528a3450793815720e7090a39cdc9c2bfdaf75e",
+  "profile_sha256": "49305bc3a5c3e39453750482cdcf552f5f24f2e972cd8d6060707b6646d1cd49",
   "source_sha256": {
     "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
     "linkml/schema/content_items.yaml": "24c90f09ff8def4281f4173e38b598da3ae618742d82ef88658d02d2d263f181",
@@ -2325,14 +2329,14 @@
     "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
-    "linkml/schema/media.yaml": "3e3e77acfd6eb56dba8e524b082ef45cba0c4fb1ae8d50030e5493ae6f43a827",
+    "linkml/schema/media.yaml": "514410702d9db8b741df691c9266c14f86c12cbb8959fa1225e4edb7499496e5",
     "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
     "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
     "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
-    "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
-    "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
+    "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",
+    "linkml/schema/sourced_entities.yaml": "d302997e92587794d1e12b36418c3d39122af0cd9e78d53442b6fb9f1762771a",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
     "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4",
     "vocabulary/profile.ttl": "44fc01c3a5672de7152928466ec2221b029454679446dc5925bedaf7afd84778"

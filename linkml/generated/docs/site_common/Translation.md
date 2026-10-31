@@ -6,7 +6,7 @@ search:
 # Class: Translation 
 
 
-_An English translation of a content item's printed text, with the exact text it was made from, who made it and, where one was made, its later check._
+_An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check._
 
 
 
@@ -24,6 +24,9 @@ URI: [pc:Translation](https://pruzhany.org/ns/sourced-entities#Translation)
  classDiagram
     class Translation
     click Translation href "../Translation/"
+      Translation <|-- CitedTranslation
+        click CitedTranslation href "../CitedTranslation/"
+      
       Translation : attribution
         
           
@@ -67,7 +70,11 @@ URI: [pc:Translation](https://pruzhany.org/ns/sourced-entities#Translation)
 
 
 
-<!-- no inheritance hierarchy -->
+
+## Inheritance
+* **Translation**
+    * [CitedTranslation](CitedTranslation.md)
+
 
 ## Slots
 
@@ -129,8 +136,8 @@ URI: [pc:Translation](https://pruzhany.org/ns/sourced-entities#Translation)
 <details>
 ```yaml
 name: Translation
-description: An English translation of a content item's printed text, with the exact
-  text it was made from, who made it and, where one was made, its later check.
+description: An English translation of exact source words, with the exact text it
+  was made from, who made it and, where one was made, its later check.
 from_schema: https://pruzhany.org/ns/site_common
 exact_mappings:
 - pc:site_translation
@@ -154,7 +161,6 @@ attributes:
     domain_of:
     - SuppliedTitle
     - Translation
-    - Source
     required: true
     equals_string: en
   based_on:
@@ -175,8 +181,6 @@ attributes:
     - EnglishCheck
     - SuppliedTitle
     - Translation
-    - Fact
-    - Name
     range: Authorship
     required: true
     inlined: true
@@ -201,8 +205,8 @@ attributes:
 <details>
 ```yaml
 name: Translation
-description: An English translation of a content item's printed text, with the exact
-  text it was made from, who made it and, where one was made, its later check.
+description: An English translation of exact source words, with the exact text it
+  was made from, who made it and, where one was made, its later check.
 from_schema: https://pruzhany.org/ns/site_common
 exact_mappings:
 - pc:site_translation
@@ -228,7 +232,6 @@ attributes:
     domain_of:
     - SuppliedTitle
     - Translation
-    - Source
     range: string
     required: true
     equals_string: en
@@ -252,8 +255,6 @@ attributes:
     - EnglishCheck
     - SuppliedTitle
     - Translation
-    - Fact
-    - Name
     range: Authorship
     required: true
     inlined: true
