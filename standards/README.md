@@ -86,3 +86,11 @@ is unavailable, rather than inventing one. Person names remain plain strings.
 Nested names and dates have the same ShEx-only EHRI inverse-address restriction
 as the person pin; tests expose it. These are corporate-body focus checks,
 not acceptance by EHRI or a claim about every auxiliary shape or family export.
+
+## IIIF Presentation 3
+
+`iiif-presentation-3-3891f47/` keeps the unchanged Presentation 3 JSON Schema
+from IIIF/presentation-validator main `3891f47ce7dbaa896027a5fab5f63a109de4bd70`,
+read 31 October 2026. Its README describes the schema, source provenance and
+licence limits. `bin/verify standards` checks its bytes; steps validates fictional
+manifests and the private real export offline. No site or LinkML contract changes.
