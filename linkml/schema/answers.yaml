@@ -537,3 +537,42 @@ classes:
           The groups field in the Answer response.
         annotations:
           description_in_wire: false
+  QuoteEnglishQuotedEnglish:
+    title: QuotedEnglish
+    description: >-
+      One quotation's English, with the number it was sent under.
+    attributes:
+      number:
+        range: integer
+        required: true
+        title: Number
+        description: >-
+          The number field in the QuotedEnglish response.
+        annotations:
+          description_in_wire: false
+      english:
+        range: string
+        required: true
+        title: English
+        description: >-
+          The english field in the QuotedEnglish response.
+        annotations:
+          description_in_wire: false
+  QuoteEnglishAnswer:
+    title: Answer
+    description: >-
+      The answer about a batch of quotations: every quotation it was sent, by its number.
+    annotations:
+      asking: quote_english
+    attributes:
+      quotations:
+        multivalued: true
+        range: QuoteEnglishQuotedEnglish
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Quotations
+        description: >-
+          The quotations field in the Answer response.
+        annotations:
+          description_in_wire: false

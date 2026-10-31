@@ -166,6 +166,44 @@
       "title": "Group",
       "type": "object"
     },
+    "QuoteEnglishAnswer": {
+      "additionalProperties": false,
+      "description": "The answer about a batch of quotations: every quotation it was sent, by its number.",
+      "properties": {
+        "quotations": {
+          "items": {
+            "$ref": "#/$defs/QuoteEnglishQuotedEnglish"
+          },
+          "title": "Quotations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "quotations"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "QuoteEnglishQuotedEnglish": {
+      "additionalProperties": false,
+      "description": "One quotation's English, with the number it was sent under.",
+      "properties": {
+        "english": {
+          "title": "English",
+          "type": "string"
+        },
+        "number": {
+          "title": "Number",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "number",
+        "english"
+      ],
+      "title": "QuotedEnglish",
+      "type": "object"
+    },
     "ReadLatinAnswer": {
       "additionalProperties": false,
       "description": "The model's answer to one message: a line for each picture, empty where it saw no text.",
@@ -534,6 +572,8 @@
     "FindItemsAnswerItem": "schema/answers.yaml",
     "JoinPeopleAnswer": "schema/answers.yaml",
     "JoinPeopleGroup": "schema/answers.yaml",
+    "QuoteEnglishAnswer": "schema/answers.yaml",
+    "QuoteEnglishQuotedEnglish": "schema/answers.yaml",
     "ReadLatinAnswer": "schema/answers.yaml",
     "ReadLatinLine": "schema/answers.yaml",
     "WriteEnglishAnswer": "schema/answers.yaml",
