@@ -3,12 +3,7 @@ search:
   boost: 5.0
 ---
 
-# Slot: English (english) 
-
-
-_The english field in the AnsweredPiece response._
-
-
+# Slot: english 
 
 <div data-search-exclude markdown="1">
 
@@ -26,6 +21,7 @@ URI: [pc:english](https://pruzhany.org/ns/sourced-entities#english)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [WriteEnglishAnsweredPiece](WriteEnglishAnsweredPiece.md) | A piece of the answer, with the number it was sent under. |  no  |
+| [QuoteEnglishQuotedEnglish](QuoteEnglishQuotedEnglish.md) | One quotation's English, with the number it was sent under. |  no  |
 
 
 
@@ -39,21 +35,7 @@ URI: [pc:english](https://pruzhany.org/ns/sourced-entities#english)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [WriteEnglishAnsweredPiece](WriteEnglishAnsweredPiece.md) |
-### Cardinality and Requirements
-
-| Property | Value |
-| --- | --- |
-| Required | Yes |
-
-
-### Slot Characteristics
-
-| Property | Value |
-| --- | --- |
-| Owner | [WriteEnglishAnsweredPiece](WriteEnglishAnsweredPiece.md) |
-
-
+| Domain Of | [WriteEnglishAnsweredPiece](WriteEnglishAnsweredPiece.md), [QuoteEnglishQuotedEnglish](QuoteEnglishQuotedEnglish.md) |
 
 
 
@@ -67,20 +49,6 @@ URI: [pc:english](https://pruzhany.org/ns/sourced-entities#english)
 ## Identifier and Mapping Information
 
 
-
-### Annotations
-
-| property | value |
-| --- | --- |
-| description_in_wire | False |
-
-
-
-
-### Schema Source
-
-
-* from schema: https://pruzhany.org/ns/answers
 
 
 
@@ -100,19 +68,10 @@ URI: [pc:english](https://pruzhany.org/ns/sourced-entities#english)
 <details>
 ```yaml
 name: english
-annotations:
-  description_in_wire:
-    tag: description_in_wire
-    value: false
-description: The english field in the AnsweredPiece response.
-title: English
-from_schema: https://pruzhany.org/ns/answers
-rank: 1000
-owner: WriteEnglishAnsweredPiece
 domain_of:
 - WriteEnglishAnsweredPiece
+- QuoteEnglishQuotedEnglish
 range: string
-required: true
 
 ```
 </details></div>

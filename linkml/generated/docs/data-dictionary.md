@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `d33223d483be8e7d7873830f77ffdd4edcf2bbf4a427d63cf8db8312ee00b7f6`.
+Definition fingerprint: `a6a0a788c2f92b695c99d5d59157353326500d32aaca94d2c49b493dee8a676f`.
 
 ## What the Pruzhany issue documents share
 
@@ -1610,6 +1610,31 @@ Meaning: No direct mapping recorded.
 | `name` | The fullest English name the edition gives the person. | string | Yes | No direct mapping recorded |
 | `names` | The numbers of the names that are one person. | list of integer | Yes | No direct mapping recorded |
 | `why` | In a few words. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### QuoteEnglishAnswer
+
+The answer about a batch of quotations: every quotation it was sent, by its number.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `quotations` | The quotations field in the Answer response. | list of QuoteEnglishQuotedEnglish | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### QuoteEnglishQuotedEnglish
+
+One quotation's English, with the number it was sent under.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `english` | The english field in the QuotedEnglish response. | string | Yes | No direct mapping recorded |
+| `number` | The number field in the QuotedEnglish response. | integer | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/answers.yaml`.
 

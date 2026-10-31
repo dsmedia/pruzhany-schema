@@ -1,7 +1,7 @@
 {
-  "contract_sha256": "89bc88215fa588aff87e99d4a23250a4f4f36f83772059dfb5c1f2468082e215",
+  "contract_sha256": "f56a758ef73e74489cec0aaed302c56ab3db07928dfbb7a60de7891ab0ad22b6",
   "inputs": {
-    "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
+    "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
     "linkml/schema/content_items.yaml": "24c90f09ff8def4281f4173e38b598da3ae618742d82ef88658d02d2d263f181",
     "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
@@ -306,6 +306,69 @@
       "parent": null,
       "source": "linkml/schema/answers.yaml",
       "yaml": "  JoinPeopleGroup:\n    title: Group\n    description: >-\n      Names that are one person, and the name the person is given.\n    attributes:\n      names:\n        multivalued: true\n        range: integer\n        required: true\n        title: Names\n        description: >-\n          The numbers of the names that are one person.\n      name:\n        range: string\n        required: true\n        title: Name\n        description: >-\n          The fullest English name the edition gives the person.\n      certainty:\n        range: string\n        required: true\n        title: Certainty\n        equals_string_in:\n        - certain\n        - likely\n        description: >-\n          The certainty field in the Group response.\n        annotations:\n          description_in_wire: false\n      why:\n        range: string\n        required: true\n        title: Why\n        description: >-\n          In a few words.\n"
+    },
+    "QuoteEnglishAnswer": {
+      "description": "The answer about a batch of quotations: every quotation it was sent, by its number.",
+      "fields": [
+        {
+          "description": "The quotations field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "quotations",
+          "range": "QuoteEnglishQuotedEnglish",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/QuoteEnglishQuotedEnglish"
+            },
+            "title": "Quotations",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  QuoteEnglishAnswer:\n    title: Answer\n    description: >-\n      The answer about a batch of quotations: every quotation it was sent, by its number.\n    annotations:\n      asking: quote_english\n    attributes:\n      quotations:\n        multivalued: true\n        range: QuoteEnglishQuotedEnglish\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Quotations\n        description: >-\n          The quotations field in the Answer response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "QuoteEnglishQuotedEnglish": {
+      "description": "One quotation's English, with the number it was sent under.",
+      "fields": [
+        {
+          "description": "The english field in the QuotedEnglish response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "english",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "English",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The number field in the QuotedEnglish response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "number",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Number",
+            "type": "integer"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  QuoteEnglishQuotedEnglish:\n    title: QuotedEnglish\n    description: >-\n      One quotation's English, with the number it was sent under.\n    attributes:\n      number:\n        range: integer\n        required: true\n        title: Number\n        description: >-\n          The number field in the QuotedEnglish response.\n        annotations:\n          description_in_wire: false\n      english:\n        range: string\n        required: true\n        title: English\n        description: >-\n          The english field in the QuotedEnglish response.\n        annotations:\n          description_in_wire: false\n"
     },
     "ReadLatinAnswer": {
       "description": "The model's answer to one message: a line for each picture, empty where it saw no text.",

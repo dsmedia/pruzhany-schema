@@ -15,13 +15,14 @@ from support import LINKML, load
 backend = load('answer_generator')
 generate = load('generate')
 
-# Immutable SHA-256 of the four current steps answer.schema.json files inspected
-# 30 October 2026. These are procedural schemas, never real answers or prompt text.
+# Immutable SHA-256 of the current steps answer.schema.json files: four inspected 30 October 2026,
+# quote_english (steps prompts/quote_english/3cb9e3e4cd4ad29d) on 31 October 2026. These are procedural schemas, never real answers or prompt text.
 BASELINE = {
     'find_items': (1542, 'b44547bd3d88515a54d9c8544cdd8595d2308b4cf9112ce8af862463d43560b0'),
     'read_latin': (635, '529977c7df7b63f79a97d8e975ef5043e5cfc0257727736262342acf4fc3097e'),
     'write_english': (4565, '8bd979a3c233cc8dc0e20d27a38d8c176e4687eca9560e2a5176630791e91b59'),
     'join_people': (950, '2d73aab39f5b878e66d1bd465feff0064c469a3b2e0f227699756d01335d9297'),
+    'quote_english': (649, 'b59b12bcecfb09dd34482d1fb63b8be2e8d3feb66d5c78bcd988b214600bc3d9'),
 }
 
 
@@ -40,7 +41,7 @@ class Answers(unittest.TestCase):
     def save(self):
         self.source.write_text(yaml.safe_dump(self.data, sort_keys=False), encoding='utf-8')
 
-    def test_all_four_wire_strings_equal_the_released_bytes(self):
+    def test_every_wire_string_equals_the_released_bytes(self):
         answers, _ = backend.build(self.source)
         self.assertEqual(answers.keys(), BASELINE.keys())
         for asking, text in answers.items():

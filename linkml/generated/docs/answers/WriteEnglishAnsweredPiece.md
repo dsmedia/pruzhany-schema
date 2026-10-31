@@ -237,6 +237,7 @@ attributes:
     rank: 1000
     domain_of:
     - WriteEnglishAnsweredPiece
+    - QuoteEnglishQuotedEnglish
     range: string
     required: true
   people:
@@ -336,6 +337,7 @@ attributes:
     rank: 1000
     domain_of:
     - WriteEnglishAnsweredPiece
+    - QuoteEnglishQuotedEnglish
     range: integer
     required: true
 
@@ -420,6 +422,7 @@ attributes:
     owner: WriteEnglishAnsweredPiece
     domain_of:
     - WriteEnglishAnsweredPiece
+    - QuoteEnglishQuotedEnglish
     range: string
     required: true
   people:
@@ -525,6 +528,7 @@ attributes:
     owner: WriteEnglishAnsweredPiece
     domain_of:
     - WriteEnglishAnsweredPiece
+    - QuoteEnglishQuotedEnglish
     range: integer
     required: true
 
