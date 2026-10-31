@@ -1,0 +1,15 @@
+{
+  "repo": "IIIF/presentation-validator",
+  "commit": "3891f47ce7dbaa896027a5fab5f63a109de4bd70",
+  "read_on": "2026-10-31",
+  "version": "Presentation 3.0.0; upstream main (untagged pin)",
+  "license": "not redistributed: the upstream repository grants no licence",
+  "attribution": "IIIF/presentation-validator contributors",
+  "files": {
+    "iiif_3_0.json": {
+      "path": "schema/iiif_3_0.json",
+      "url": "https://raw.githubusercontent.com/IIIF/presentation-validator/3891f47ce7dbaa896027a5fab5f63a109de4bd70/schema/iiif_3_0.json",
+      "sha256": "14dd7ee8aee25d959be4b12feddb4179c726909fc85b925f6707f4ab3bfe2ad6"
+    }
+  }
+}
