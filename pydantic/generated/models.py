@@ -113,7 +113,7 @@ class ContentItemsData(Strict):
     "One issue's content items document: the issue's date, the vocabulary version its values are from, its content items and its printed sections."
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     issue_date: Annotated[Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')], AfterValidator(partial(_typed_call, 'sourced_entities', 'valid_date', [], True))] = Field(default=...)
-    vocabulary_version: Literal['0.1.0', '1.0.0'] = Field(default=...)
+    vocabulary_version: Literal['0.1.0', '1.0.0', '1.1.0'] = Field(default=...)
     content_items: list[ContentItem] = Field(default=...)
     sections: list[PrintedSection] = Field(default=...)
 

@@ -9,7 +9,7 @@ search:
 
 
 
-_Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.0.0._
+_Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.1.0._
 
 
 
@@ -76,7 +76,7 @@ URI: [pc:ContentItemSubtypes](https://pruzhany.org/ns/sourced-entities#ContentIt
 ```yaml
 name: ContentItemSubtypes
 description: 'Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json,
-  version 1.0.0.'
+  version 1.1.0.'
 from_schema: https://pruzhany.org/ns/sourced_entities
 rank: 1000
 permissible_values:

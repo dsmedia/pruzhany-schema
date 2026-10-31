@@ -16,7 +16,7 @@ import {
 
 const pattern1 = /\S/;
 const pattern2 = /^\d{4}-\d{2}-\d{2}$/;
-const pattern3 = /^(0\.1\.0|1\.0\.0)$(?![\s\S])/;
+const pattern3 = /^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])/;
 
 export const ReadingStatusShape = z.strictObject({
 	text: ReadingStatusValueEnum.nullish(),

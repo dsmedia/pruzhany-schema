@@ -9,7 +9,7 @@ search:
 
 
 
-_Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here._
+_Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here._
 
 
 
@@ -68,7 +68,7 @@ URI: [pc:ImpressoTypes](https://pruzhany.org/ns/sourced-entities#ImpressoTypes)
 ```yaml
 name: ImpressoTypes
 description: 'Impresso types: the content-item types of Impresso as vocabulary/site-content.json,
-  version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema,
+  version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema,
   not an ontology, so they carry no meaning here.'
 from_schema: https://pruzhany.org/ns/vocabulary
 rank: 1000

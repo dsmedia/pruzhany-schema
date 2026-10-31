@@ -69,14 +69,16 @@ life-event, enrichment and edition-bundle persisted models and exports are retir
 the mixed `pydantic/project_output.py` module is gone. Released sourced vocabulary,
 its compatibility helpers, `llm_output.py` and `bbox_review.py` remain available.
 
-`vocabulary/site-content.json` is **1.0.0, released 2026-10-25** for the owner's
-approved subtypes and subjects, separate from sourced-entities **1.3.0, released
-2026-10-26**. The new `condolence` content-unit role records a notice of sympathy
+`vocabulary/site-content.json` is **1.1.0, released 2026-10-31** for the owner's
+approved subtypes, subjects and printed/supplied title types, separate from
+sourced-entities **1.3.0, released 2026-10-26**. The new `condolence` content-unit role records a notice of sympathy
 sent to the mourners as a community response to a death. On 26 October 2026 the
 owner answered: **"The other two points on husband and wife and the condolences, your suggestions are accepted"**.
-This release adds only the condolence role; its local mapping and approval are in
+Sourced-entities 1.3.0 adds only the condolence role; its local mapping and approval are in
 the [vocabulary approval record](docs/vocabulary-approvals.md).
-Title types remain proposed. See the [release record](docs/design/2026-10-25-site-content-release.md)
+The owner approved both title types on 31 October 2026 ("Approve both"); their
+existing mappings are retained. See the [approval record](docs/vocabulary-approvals.md)
+and the earlier [release record](docs/design/2026-10-25-site-content-release.md)
 and [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.
 

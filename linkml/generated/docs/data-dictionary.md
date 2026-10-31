@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `398f63e40fe9f514b46053ef2bc8796fb3ff859af292ce7959870de08a675764`.
+Definition fingerprint: `f7ee4aff1c449defbdebf13a6d09e6087ced7f287a6cdab40a8d0ef8a4772ab6`.
 
 ## What the Pruzhany issue documents share
 
@@ -267,7 +267,7 @@ Meaning: No direct mapping recorded.
 | `content_items` | The issue's content items. | list of ContentItem | Yes | No direct mapping recorded |
 | `issue_date` | The issue's date, written YYYY-MM-DD. | IsoDay | Yes | No direct mapping recorded |
 | `sections` | The issue's printed sections. | list of PrintedSection | Yes | No direct mapping recorded |
-| `vocabulary_version` | The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible. | string; pattern: ^(0\.1\.0\|1\.0\.0)$(?![\s\S]) | Yes | No direct mapping recorded |
+| `vocabulary_version` | The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible. | string; pattern: ^(0\.1\.0\|1\.0\.0\|1\.1\.0)$(?![\s\S]) | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/content_items.yaml`.
 
@@ -1640,7 +1640,7 @@ Confidence: the values of confidence in vocabulary/sourced-entities.json, versio
 
 ### ContentItemSubtypes
 
-Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.0.0.
+Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.1.0.
 
 | Value | Meaning | Standard mapping |
 | --- | --- | --- |
@@ -1795,7 +1795,7 @@ Identifier types approved in ADR 0001 and linked-data ticket 03.
 
 ### ImpressoTypes
 
-Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.
+Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.
 
 | Value | Meaning | Standard mapping |
 | --- | --- | --- |
@@ -1949,7 +1949,7 @@ Source kinds: the values of source_kinds in vocabulary/sourced-entities.json, ve
 
 ### Subjects
 
-Subjects: the values of subjects in vocabulary/site-content.json, version 1.0.0.
+Subjects: the values of subjects in vocabulary/site-content.json, version 1.1.0.
 
 | Value | Meaning | Standard mapping |
 | --- | --- | --- |
@@ -1967,7 +1967,7 @@ Subjects: the values of subjects in vocabulary/site-content.json, version 1.0.0.
 
 ### TitleTypes
 
-Title types: the values of title_types in vocabulary/site-content.json, version 1.0.0.
+Title types: the values of title_types in vocabulary/site-content.json, version 1.1.0.
 
 | Value | Meaning | Standard mapping |
 | --- | --- | --- |

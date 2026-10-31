@@ -158,7 +158,7 @@ attributes:
     domain_of:
     - ContentItemsData
     required: true
-    pattern: ^(0\.1\.0|1\.0\.0)$(?![\s\S])
+    pattern: ^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])
   content_items:
     name: content_items
     description: The issue's content items.
@@ -222,7 +222,7 @@ attributes:
     - ContentItemsData
     range: string
     required: true
-    pattern: ^(0\.1\.0|1\.0\.0)$(?![\s\S])
+    pattern: ^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])
   content_items:
     name: content_items
     description: The issue's content items.

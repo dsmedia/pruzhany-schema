@@ -1,9 +1,11 @@
 # Sourced entities vocabulary
 
-`site-content.json` is a separate **1.0.0, released 2026-10-25** vocabulary.
+`site-content.json` is a separate **1.1.0, released 2026-10-31** vocabulary.
 The owner approved its 21 content-item subtypes and 11 subjects as proposed
-(steps decision 164, item 1); `released_groups` records those two groups. The
-existing title types remain proposed, with `status: proposed` on their entries.
+(steps decision 164, item 1), then approved both `printed` and `supplied` title
+types on 31 October 2026: **"Approve both"**, answering **"Approve them as released
+vocabulary?"**. `released_groups` records all three groups; both title entries
+now have `status: released`. See the [approval record](../docs/vocabulary-approvals.md).
 The 38 unresolved inventory values stay `other` with their `proposed_type` in the
 producer's retained records; they are not new subtype or subject identifiers.
 This release does not change sourced-entities or its generated enums. The generator writes the separate
@@ -26,12 +28,11 @@ by `rico:hasDocumentaryFormType`; it is not equivalent to the whole ontology cla
 Subjects are declared local SKOS concepts reached by `rico:hasOrHadSubject` because
 the pinned ontologies do not enumerate what these content items are about. Printed and supplied titles
 use `rico:hasOrHadTitle` / `rico:Title`, with two declared concepts typed
-`rico:TitleType` via `rico:hasTitleType`. Every proposed concept's reason is in
-`site-content.profile.ttl`, marked with the release version and day while retaining
-the title types' proposed status. The released
+`rico:TitleType` via `rico:hasTitleType`. Every concept's reason is in
+`site-content.profile.ttl`, marked with the current release version and day.
+The title types' identifiers, definitions and mappings are unchanged. The released
 life-event parts, `memorial` and the `supplied` name kind moved to
-`sourced-entities.json` and `profile.ttl` in 1.2.0; the proposed subtypes, subjects
-and title types' identifiers and mappings are unchanged.
+`sourced-entities.json` and `profile.ttl` in 1.2.0; the site-content identifiers and mappings are unchanged.
 New shape mappings are also recorded in `site-content.json` and checked by the
 alignment gate. Existing sourced-entity mappings continue to apply to reused fields.
 
@@ -74,8 +75,8 @@ Site-content follows the same release path, with independent snapshots named
 `released/site-content-<version>.json`. Its current released snapshot must equal
 `site-content.json`, and historical identifiers are retained. Run the generator;
 never edit snapshots or generated contracts by hand. `compatible_versions`
-explicitly retains the existing `0.1.0` content-document stamp alongside `1.0.0`;
-both twins consume the generated version set and reject other stamps. New writers
+explicitly retains the existing `0.1.0` and `1.0.0` content-document stamps
+alongside `1.1.0`; both twins consume the generated version set and reject other stamps. New writers
 use the generated current version. This lets the existing site data pass before
 the later steps refresh and site pin. See the [release record](../docs/design/2026-10-25-site-content-release.md).
 

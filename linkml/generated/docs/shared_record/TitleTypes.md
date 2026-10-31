@@ -9,7 +9,7 @@ search:
 
 
 
-_Title types: the values of title_types in vocabulary/site-content.json, version 1.0.0._
+_Title types: the values of title_types in vocabulary/site-content.json, version 1.1.0._
 
 
 
@@ -57,7 +57,7 @@ URI: [pc:TitleTypes](https://pruzhany.org/ns/sourced-entities#TitleTypes)
 ```yaml
 name: TitleTypes
 description: 'Title types: the values of title_types in vocabulary/site-content.json,
-  version 1.0.0.'
+  version 1.1.0.'
 from_schema: https://pruzhany.org/ns/shared_record
 rank: 1000
 permissible_values:
@@ -69,7 +69,7 @@ permissible_values:
     comments:
     - Distinguishes words printed in the source from a supplied name; RiC-O defines
       TitleType but not this controlled value.
-    status: proposed
+    status: released
   supplied:
     text: supplied
     description: An attributed English name pinned to the text it was made from.
@@ -78,7 +78,7 @@ permissible_values:
     comments:
     - Distinguishes an attributed English name from printed words; RiC-O defines TitleType
       but not this controlled value.
-    status: proposed
+    status: released
 
 ```
 </details>

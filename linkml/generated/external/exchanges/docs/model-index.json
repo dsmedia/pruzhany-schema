@@ -2,7 +2,7 @@
   "contract_sha256": "eccdfd49e295819250198c8562b69602c39399285fb8be5835a8822a746630d7",
   "inputs": {
     "linkml/schema/answers.yaml": "32af37fef8d5246dcd62ac73936830c2c669aace1e3a21984d036c078ac1cc7e",
-    "linkml/schema/content_items.yaml": "8200c92b412a4695becfafb8dafcdcdeda2114291d334efd5fa4c2ca82ea4b2c",
+    "linkml/schema/content_items.yaml": "24c90f09ff8def4281f4173e38b598da3ae618742d82ef88658d02d2d263f181",
     "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
@@ -15,7 +15,7 @@
     "linkml/schema/site_common.yaml": "ce327a7c6b9d9417c48d675fab9b92d80d20499355a54b0355911f25c915c556",
     "linkml/schema/sourced_entities.yaml": "de110382032adafe5fd255d4ce82f84c049a8627c255651b47e8b574afbbb0f8",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
-    "linkml/schema/vocabulary.yaml": "4b2890c16c7200d6357c15ef8fd07e9f634dee24f6600798f195156fb1797d84"
+    "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4"
   },
   "models": {
     "KeptAsking": {

@@ -58,7 +58,7 @@ URI: [pc:vocabulary_version](https://pruzhany.org/ns/sourced-entities#vocabulary
 
 | Property | Value |
 | --- | --- |
-| Regex Pattern | `^(0\.1\.0|1\.0\.0)$(?![\s\S])` |
+| Regex Pattern | `^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])` |
 
 
 
@@ -109,7 +109,7 @@ domain_of:
 - ContentItemsData
 range: string
 required: true
-pattern: ^(0\.1\.0|1\.0\.0)$(?![\s\S])
+pattern: ^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])
 
 ```
 </details></div>

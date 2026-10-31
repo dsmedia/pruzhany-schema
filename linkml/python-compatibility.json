@@ -3049,15 +3049,15 @@
 			"model": "ContentItemsData",
 			"field": "vocabulary_version",
 			"definition": {
-				"pattern": "^(0\\.1\\.0|1\\.0\\.0)$",
+				"pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0)$",
 				"type": "string"
 			},
 			"python": {
-				"enum": ["0.1.0", "1.0.0"],
+				"enum": ["0.1.0", "1.0.0", "1.1.0"],
 				"type": "string"
 			},
 			"reason": "Expose the vocabulary release stamp as its existing Python Literal values instead of a regular expression; both spellings accept the same versions.",
-			"source": "pydantic/content_item.py:ContentItemsData.vocabulary_version at 182eb478bf22bed0e312457fdc082730515d297c"
+			"source": "pydantic/content_item.py:ContentItemsData.vocabulary_version at 182eb478bf22bed0e312457fdc082730515d297c; site-content 1.1.0 approved by the owner on 2026-10-31, docs/vocabulary-approvals.md, https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11"
 		},
 		{
 			"model": "EnglishCheck",
