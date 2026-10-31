@@ -78,3 +78,16 @@ each fact kept as its source gives it and never merged; the event cites no piece
 life events above stands: one event per happening, the person's death date derived from it. Building the event is the
 next piece of work; until it lands, such a death stays the facts alone.
 
+
+## Amendment of 31 October 2026: validate exported persons with EHRI's shapes
+
+The owner's 30–31 October instruction in steps `PLAN.md`, “1.0 is done when”,
+requires every product to validate against its outside standard in CI, naming
+EHRI's SHACL and ShEx. This supersedes the 23 October deferral above, within the
+bounded public person export. The unchanged 1.1 person shapes are now pinned in
+`standards/ehri-people-1.1-1c2325f9/`, with provenance and licence. Both validators
+run on the isolated pilot in `bin/verify linkml`; the private steps gate checks a
+fictional public export with these same pins. The data's stored identity and
+vocabulary rules do not change. Passing a shape still proves neither historical
+truth nor EHRI ingestion acceptance. See `standards/README.md` for the upstream
+ShEx address-stem limitation.

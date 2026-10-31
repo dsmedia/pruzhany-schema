@@ -102,9 +102,8 @@ class PilotTests(unittest.TestCase):
         self.assertFalse(list(graph.triples((None, rico.hasOrHadSpouse, None))))
         self.assertFalse(list(graph.triples((None, rico.isOrWasParticipantIn, None))))
         self.assertEqual(len(list(graph.subjects(RDF.type, RDF.Statement))), 7)  # six facts, one relationship
-        self.assertEqual(len(list(graph.subjects(RDF.type, rico.Person))), 12)
-        self.assertEqual(set(graph.subjects(RDF.type, rico.Person)),
-                         set(graph.subjects(RDF.type, Namespace(EHRI).Person)))
+        self.assertEqual(len(list(graph.subjects(RDF.type, Namespace(EHRI).Person))), 12)
+        self.assertFalse(list(graph.subjects(RDF.type, rico.Person)))
 
     def test_ehri_people_and_fictional_place_kinds(self):
         data = synthetic()

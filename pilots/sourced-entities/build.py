@@ -297,7 +297,10 @@ def rico_export(data):
             node["rdfs:seeAlso"] = {"@id": c["url"]}
         graph.append(node)
     for p in data["people"]:
-        graph.append({**ref(p["id"]), "@type": ["rico:Person", "ehri:Person"], "rdfs:label": p["display_name"], "pc:presumedLiving": p["presumed_living"]})
+        # EHRI people shapes 1.1, commit 1c2325f9, read 2026-10-31:
+        # https://github.com/EHRI/ehri-kg-mapping/tree/1c2325f9d2267a8a0c639cd041be54ec9a73e517/src/shapes/1.1
+        # Every rdf:type must be ehri:Person, with exactly one plain rico:name.
+        graph.append({**ref(p["id"]), "@type": "ehri:Person", "rico:name": p["display_name"], "rdfs:label": p["display_name"], "pc:presumedLiving": p["presumed_living"]})
         for index, name in enumerate(p["names"]):
             nid = f"{p['id']}-name-{index + 1}"
             graph.append({**ref(nid), "@type": "rico:AgentName", "rico:name": {"@value": name["value"], "@language": name["lang"]},

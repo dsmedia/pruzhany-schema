@@ -32,3 +32,27 @@ All `vocabulary/**/*.ttl` profiles are checked, including the released
 2026-10-25; printed and supplied title types released 2026-10-31). Local mappings use the
 vocabulary's matching `<name>.profile.ttl` when present, otherwise its directory's
 `profile.ttl`. Tests check terms and local declarations in the separate proposed profile.
+
+## EHRI person shapes (1.1)
+
+At the owner's word of 30–31 October 2026 (steps `PLAN.md`, “1.0 is done when”),
+`ehri-people-1.1-1c2325f9/` pins the **unchanged** `people.shacl.ttl` and
+`people.shex` from `EHRI/ehri-kg-mapping`, `src/shapes/1.1/`, develop commit
+`1c2325f9d2267a8a0c639cd041be54ec9a73e517`, read **2026-10-31**.
+`pin.json` records each source URL, SHA-256, date, attribution and EUPL-1.2
+licence; the upstream licence travels with the files. This is a separate mapping
+repository pin, not a change to the EHRI 0.2.0 or RiC-O 1.1 ontology pins.
+Never edit these files in place; a later pin needs its own directory.
+
+`bin/verify standards` checks their bytes and provenance. `bin/verify linkml`
+checks the isolated pilot and fictional controls against both unmodified shapes,
+using pySHACL 0.30.1 and PyShEx 0.9.0 already in `linkml/requirements.lock`.
+The pilot's person has only `ehri:Person` as type and exactly one plain
+`rico:name`. Its source-scoped printed names remain `rico:AgentName` observations;
+no unreviewed name association is promoted to a canonical alternate name.
+
+The SHACL and ShEx are **not equivalent**: ShEx's linked alternate/parallel names
+and birth/death dates require inverse edges to EHRI's own person IRI stem;
+SHACL requires an IRI there. Fictional controls exercise those nested shapes and
+that difference. Passing the person focuses does not claim standalone name-shape
+conformance for our addresses, RiC-O conformance, or acceptance by EHRI.
