@@ -19,8 +19,31 @@ type SchemaKey = {
 	[K in keyof typeof frozen]: (typeof frozen)[K] extends z.ZodType ? K : never;
 }[keyof typeof frozen];
 type Inferred<S> = S extends z.ZodType ? z.infer<S> : never;
+// Owner-approved site-content 1.1.0, 31 October 2026 (docs/vocabulary-approvals.md).
+// Keep the migration baseline frozen; prescribe only this exact version addition.
+const titleReleaseVersions = ['0.1.0', '1.0.0', '1.1.0'] as const;
+type ApprovedContentVersion<T> = {
+	[K in keyof T]: K extends 'vocabulary_version' ? (typeof titleReleaseVersions)[number] : T[K];
+};
+type ApprovedIssueVersion<T> = {
+	[K in keyof T]: K extends 'content_items' ? ApprovedContentVersion<T[K]> : T[K];
+};
+type ApprovedArchiveVersion<T> = {
+	[K in keyof T]: K extends 'issues'
+		? T[K] extends (infer Issue)[]
+			? ApprovedIssueVersion<Issue>[]
+			: never
+		: T[K];
+};
+type ApprovedBaseline<K extends SchemaKey> = K extends 'ContentItemsDataSchema'
+	? ApprovedContentVersion<Inferred<(typeof frozen)[K]>>
+	: K extends 'SiteIssueSchema'
+		? ApprovedIssueVersion<Inferred<(typeof frozen)[K]>>
+		: K extends 'SiteArchiveSchema'
+			? ApprovedArchiveVersion<Inferred<(typeof frozen)[K]>>
+			: Inferred<(typeof frozen)[K]>;
 const typeEquality: {
-	[K in SchemaKey]: Equal<Inferred<(typeof current)[K]>, Inferred<(typeof frozen)[K]>>;
+	[K in SchemaKey]: Equal<Inferred<(typeof current)[K]>, ApprovedBaseline<K>>;
 } = {
 	AttributionSchema: true,
 	AuthorshipSchema: true,
@@ -108,6 +131,20 @@ const equalityControls: [
 	Equal<'en', string>,
 ] = [false, false, false, false];
 
+const titleReleasePaths: Partial<Record<SchemaKey, string[]>> = {
+	ContentItemsDataSchema: ['properties', 'vocabulary_version'],
+	SiteIssueSchema: ['properties', 'content_items', 'properties', 'vocabulary_version'],
+	SiteArchiveSchema: [
+		'properties',
+		'issues',
+		'items',
+		'properties',
+		'content_items',
+		'properties',
+		'vocabulary_version',
+	],
+};
+
 // Ticket 20's revised measure permits generated constraints to tighten exports.
 // Normalize only these measured, non-widening changes; everything else must match.
 function expectTightening(before: unknown, after: unknown, key = ''): void {
@@ -167,14 +204,22 @@ describe('generated shapes preserve the released Zod API', () => {
 		expect(equalityControls).toEqual([false, false, false, false]);
 	});
 	for (const name of Object.keys(typeEquality) as SchemaKey[]) {
-		it(name + ' keeps its schema kind and never widens its JSON export', () => {
-			expect(current[name].constructor.name).toBe(frozen[name].constructor.name);
-			const options = { target: 'draft-2020-12', io: 'output' } as const;
-			expectTightening(
-				z.toJSONSchema(frozen[name], options),
-				z.toJSONSchema(current[name], options)
-			);
-		});
+		it(
+			name + ' keeps its schema kind and JSON contract with the approved vocabulary release',
+			() => {
+				expect(current[name].constructor.name).toBe(frozen[name].constructor.name);
+				const options = { target: 'draft-2020-12', io: 'output' } as const;
+				const baseline = z.toJSONSchema(frozen[name], options);
+				const versionPath = titleReleasePaths[name];
+				if (versionPath) {
+					let version = baseline as Record<string, unknown>;
+					for (const key of versionPath) version = version[key] as Record<string, unknown>;
+					expect(version.enum).toEqual(['0.1.0', '1.0.0']);
+					version.enum = [...titleReleaseVersions];
+				}
+				expectTightening(baseline, z.toJSONSchema(current[name], options));
+			}
+		);
 	}
 });
 

@@ -41,6 +41,9 @@ class VocabularyTests(unittest.TestCase):
         self.site_path = self.root / 'vocabulary/site-content.json'
         self.site = json.loads(self.site_path.read_text(encoding='utf-8'))
         self.site_released = self.site['version']
+        self.site_released_on = self.site['released_on']
+        major, minor, _ = (int(part) for part in self.site_released.split('.'))
+        self.site_following = f'{major}.{minor + 1}.0'
 
     def check(self):
         self.path.write_text(json.dumps(self.data), encoding='utf-8')
@@ -265,12 +268,13 @@ class VocabularyTests(unittest.TestCase):
         return validator.check(self.root)
 
     def site_proposal(self):
-        self.site.update(version='1.1.0', status='proposed')
+        self.site.update(version=self.site_following, status='proposed')
         self.site.pop('released_on', None)
         self.site.pop('approved_by', None)
         path = self.root / 'vocabulary/site-content.profile.ttl'
         path.write_text(path.read_text().replace(
-            f'{self.site_released} released 2026-10-25', '1.1.0 proposed; unreleased'))
+            f'{self.site_released} released {self.site_released_on}',
+            f'{self.site_following} proposed; unreleased'))
 
     def test_site_release_requires_snapshot_date_and_approval(self):
         snapshot = self.root / f'vocabulary/released/site-content-{self.site_released}.json'
@@ -307,16 +311,29 @@ class VocabularyTests(unittest.TestCase):
         self.site['released_on'] = '2026-10-26'
         self.assertTrue(any('proposed vocabulary cannot have a release date' in e for e in self.site_check()))
         self.site.pop('released_on')
-        (self.root / 'vocabulary/released/site-content-1.1.0.json').write_text(json.dumps(self.site))
+        (self.root / f'vocabulary/released/site-content-{self.site_following}.json').write_text(json.dumps(self.site))
         self.assertTrue(any('proposed vocabulary cannot have a release snapshot' in e for e in self.site_check()))
 
     def test_site_released_entry_cannot_remain_proposed(self):
-        self.site['groups']['subjects'][0]['status'] = 'proposed'
-        self.assertTrue(any('released entry cannot remain proposed' in e for e in self.site_check()))
+        for group in self.site['released_groups']:
+            for entry in self.site['groups'][group]:
+                with self.subTest(group=group, id=entry['id']):
+                    original = entry.get('status')
+                    entry['status'] = 'proposed'
+                    self.assertTrue(any('released entry cannot remain proposed' in e for e in self.site_check()))
+                    if original is None:
+                        entry.pop('status')
+                    else:
+                        entry['status'] = original
 
-    def test_site_release_names_approved_groups_and_keeps_titles_proposed(self):
-        self.assertEqual(self.site['released_groups'], ['content_item_subtypes', 'subjects'])
-        self.assertTrue(all(e['status'] == 'proposed' for e in self.site['groups']['title_types']))
+    def test_site_release_names_approved_groups_and_releases_both_titles(self):
+        self.assertEqual(self.site['released_groups'], ['content_item_subtypes', 'subjects', 'title_types'])
+        self.assertEqual({e['id']: e['status'] for e in self.site['groups']['title_types']},
+                         {'printed': 'released', 'supplied': 'released'})
+        # A future unapproved group must still retain its proposal status.
+        self.site['released_groups'].remove('title_types')
+        for entry in self.site['groups']['title_types']:
+            entry['status'] = 'proposed'
         self.site['groups']['title_types'][0].pop('status')
         self.assertTrue(any('unapproved entry must remain proposed' in e for e in self.site_check()))
         for groups in [[], ['missing'], ['subjects', 'subjects'], [None], 'subjects']:
@@ -406,7 +423,8 @@ class VocabularyTests(unittest.TestCase):
     def test_profile_must_match_release_status(self):
         path = self.root / 'vocabulary/site-content.profile.ttl'
         path.write_text(path.read_text().replace(
-            f'{self.site_released} released 2026-10-25', f'{self.site_released} proposed; unreleased'))
+            f'{self.site_released} released {self.site_released_on}',
+            f'{self.site_released} proposed; unreleased'))
         self.assertTrue(any('profile must match vocabulary version and release status' in e for e in self.check()))
 
     def test_proposed_bindings_need_declared_reasons(self):
@@ -479,7 +497,8 @@ class VocabularyTests(unittest.TestCase):
         self.assertEqual(schema['enums']['LocationTypes']['permissible_values']['city']['meaning'], 'ehri:City')
         parenthood = schema['enums']['FactTypes']['permissible_values']['parenthood']
         self.assertTrue(parenthood['deprecated'].startswith('Deprecated in 1.2.0; replaced by parent_of'))
-        self.assertEqual(schema['enums']['TitleTypes']['permissible_values']['printed']['status'], 'proposed')
+        for title in ('printed', 'supplied'):
+            self.assertEqual(schema['enums']['TitleTypes']['permissible_values'][title]['status'], 'released')
         self.assertIn(self.released, schema['version'])
         self.assertIn(self.site_released, schema['version'])
 

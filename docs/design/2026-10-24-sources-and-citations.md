@@ -212,8 +212,8 @@ Citation `note` and `locator`; a `private` source as a document, and its quotes 
 letters or privately obtained copies; a `private` holder's name (a paid researcher) and fees; a staff member of an
 institution named in private correspondence; a living submitter of a Page of Testimony; email and postal details in
 letters; `work_id` values that are file names. The projection publishes `public_note`, `short_name`, `author` where it
-is an institution, the holder's name where its kind is `institution` or `family`, `reference_code`, `record_id`,
-`record_type`, `page`.
+is an institution, an institution holder's name or the generic family credit (§9), `reference_code`, `record_id`,
+`record_type`, `page`. Family holder names stay private.
 
 ## 8. Not now
 
@@ -223,7 +223,10 @@ sources with EHRI ARKs, CSL-JSON "cite this", an EHRI micro-archive of the famil
 
 ## 9. Open
 
-- Whether a `family` holder is shown by name ("the Sorid family") or as "the family": the owner's.
+- **Settled, 31 October 2026:** the owner's word is **"Held by the family"**,
+  with no surname, for a `family` holder. The site projects the generic words
+  `the family` into its credit line; the holder's name and other private fields
+  stay private. Approval: [the owner's session](https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11).
 - The institution credit is the council's default; the owner may say otherwise.
 
 ## 10. The owner's rules of 24 October 2026, evening

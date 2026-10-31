@@ -474,7 +474,7 @@ PLANTED = {
         'a key no shape has': _set((*BLOCK, 'words'), []),
     },
     'content_items': {
-        'an unknown vocabulary version': _set(('vocabulary_version',), '1.1.0'),
+        'an unknown vocabulary version': _set(('vocabulary_version',), '1.2.0'),
         'a version with a line end after it': _set(('vocabulary_version',), '1.0.0\n'),
         'an issue date written otherwise': _set(('issue_date',), '16.12.1938'),
         'a blank content item id': _set((*ITEM, 'id'), ' '),

@@ -615,7 +615,7 @@
             "type": "object"
         },
         "ContentItemSubtypes": {
-            "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.0.0.",
+            "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.1.0.",
             "enum": [
                 "wedding_greeting",
                 "engagement_greeting",
@@ -667,7 +667,7 @@
                 },
                 "vocabulary_version": {
                     "description": "The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible.",
-                    "pattern": "^(0\\.1\\.0|1\\.0\\.0)$(?![\\s\\S])",
+                    "pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0)$(?![\\s\\S])",
                     "type": "string"
                 }
             },
@@ -1259,7 +1259,7 @@
             "type": "string"
         },
         "ImpressoTypes": {
-            "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.0.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+            "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
             "enum": [
                 "article",
                 "ad",
@@ -2252,7 +2252,7 @@
             "type": "string"
         },
         "Subjects": {
-            "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.0.0.",
+            "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.1.0.",
             "enum": [
                 "education",
                 "culture",
@@ -2382,7 +2382,7 @@
             "type": "object"
         },
         "TitleTypes": {
-            "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.0.0.",
+            "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.1.0.",
             "enum": [
                 "printed",
                 "supplied"
@@ -2506,7 +2506,7 @@
         },
         "vocabulary_version": {
             "description": "The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible.",
-            "pattern": "^(0\\.1\\.0|1\\.0\\.0)$(?![\\s\\S])",
+            "pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0)$(?![\\s\\S])",
             "type": "string"
         }
     },

@@ -64,10 +64,28 @@ approve publication of evidence or private notes.
   [`profile.ttl`](../vocabulary/profile.ttl). See
   [`released/1.3.0.json`](../vocabulary/released/1.3.0.json).
 
+- **31 October 2026 — site-content vocabulary 1.1.0.** Asked
+  **"Approve them as released vocabulary?"** for `title_types.printed` and
+  `title_types.supplied`, the owner answered **"Approve both"** in
+  [the private session](https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11).
+  `printed` means the printed words naming a content item or section;
+  `supplied` means an attributed English name pinned to the text it was made
+  from. The private evidence and discussion stay in pruzhany-steps and that
+  session; no personal examples are published here. The existing mappings are
+  retained: `pc:title_type_printed` and `pc:title_type_supplied`, declared local
+  SKOS concepts typed `rico:TitleType`, reached through `rico:hasTitleType`
+  from a `rico:Title` (`rico:hasOrHadTitle`). The pinned EHRI 0.2.0 and RiC-O
+  1.1 lists, read **31 October 2026**, supply no controlled value distinguishing
+  printed words from an attributed supplied title; each local reason remains
+  in [`site-content.profile.ttl`](../vocabulary/site-content.profile.ttl).
+  Identifiers, definitions, mappings and original `added_in` values are
+  unchanged. Earlier document stamps `0.1.0` and `1.0.0` remain accepted; the
+  subtypes and subjects retain their earlier approval. See
+  [`released/site-content-1.1.0.json`](../vocabulary/released/site-content-1.1.0.json).
+
 Later proposals, including the two source kinds in the
 [sources-and-citations design](design/2026-10-24-sources-and-citations.md),
-follow the process above. This migration releases no vocabulary and changes no
-approval's scope.
+follow the process above and need their own owner approval.
 
 ## Stage-1 plan and review, retained as history
 

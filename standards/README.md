@@ -29,6 +29,6 @@ Output is sorted, UTF-8 with LF, and deterministic. `check_alignment.py` scans p
 
 All `vocabulary/**/*.ttl` profiles are checked, including the released
 `profile.ttl` and `site-content.profile.ttl` (subtypes and subjects released
-2026-10-25; title types remain proposed). Local mappings use the
+2026-10-25; printed and supplied title types released 2026-10-31). Local mappings use the
 vocabulary's matching `<name>.profile.ttl` when present, otherwise its directory's
 `profile.ttl`. Tests check terms and local declarations in the separate proposed profile.

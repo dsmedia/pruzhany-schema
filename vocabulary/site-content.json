@@ -1,7 +1,7 @@
 {
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"status": "released",
-	"scope": "Site content subtypes and subjects approved on 2026-10-25; existing title types remain proposed and site shape bindings are retained. Released life-event parts, memorial and supplied names belong to sourced-entities 1.2.0.",
+	"scope": "Site content subtypes and subjects approved on 2026-10-25; printed and supplied title types approved on 2026-10-31. Site shape bindings are retained. Released life-event parts, memorial and supplied names belong to sourced-entities 1.2.0.",
 	"impresso_types": [
 		"article",
 		"ad",
@@ -490,7 +490,7 @@
 					"local": "pc:title_type_printed",
 					"reason": "Distinguishes words printed in the source from a supplied name; RiC-O defines TitleType but not this controlled value."
 				},
-				"status": "proposed"
+				"status": "released"
 			},
 			{
 				"id": "supplied",
@@ -502,7 +502,7 @@
 					"local": "pc:title_type_supplied",
 					"reason": "Distinguishes an attributed English name from printed words; RiC-O defines TitleType but not this controlled value."
 				},
-				"status": "proposed"
+				"status": "released"
 			}
 		]
 	},
@@ -1109,13 +1109,15 @@
 			}
 		}
 	],
-	"released_on": "2026-10-25",
-	"approved_by": "Owner, 2026-10-25: pruzhany-steps decision 164, item 1; release the proposed subtypes and subjects as they stand. The 38 unresolved values stay other with their proposed_type.",
+	"released_on": "2026-10-31",
+	"approved_by": "Owner, 2026-10-31: asked 'Approve them as released vocabulary?', answered 'Approve both' for title_types.printed and title_types.supplied in https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11; see docs/vocabulary-approvals.md. Subtypes and subjects retain the owner's 2026-10-25 approval (pruzhany-steps decision 164, item 1). The 38 unresolved values stay other with their proposed_type.",
 	"compatible_versions": [
-		"0.1.0"
+		"0.1.0",
+		"1.0.0"
 	],
 	"released_groups": [
 		"content_item_subtypes",
-		"subjects"
+		"subjects",
+		"title_types"
 	]
 }
