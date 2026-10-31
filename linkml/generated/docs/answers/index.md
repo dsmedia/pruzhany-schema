@@ -17,6 +17,8 @@ Name: pruzhany_answers
 | [FindItemsAnswerItem](FindItemsAnswerItem.md) | One item as the model gives it: its parts in order, its kind, language and headline. |
 | [JoinPeopleAnswer](JoinPeopleAnswer.md) | The groups of names that are one person; a name in no group is a person of its own. |
 | [JoinPeopleGroup](JoinPeopleGroup.md) | Names that are one person, and the name the person is given. |
+| [QuoteEnglishAnswer](QuoteEnglishAnswer.md) | The answer about a batch of quotations: every quotation it was sent, by its number. |
+| [QuoteEnglishQuotedEnglish](QuoteEnglishQuotedEnglish.md) | One quotation's English, with the number it was sent under. |
 | [ReadLatinAnswer](ReadLatinAnswer.md) | The model's answer to one message: a line for each picture, empty where it saw no text. |
 | [ReadLatinLine](ReadLatinLine.md) | One picture as the model answers for it: the picture's number and the text printed in it. |
 | [WriteEnglishAnswer](WriteEnglishAnswer.md) | The answer about one page: every piece it was sent, by its number. |
@@ -64,6 +66,7 @@ Name: pruzhany_answers
 | [places](places.md) | The places field in the AnsweredPiece response. |
 | [principals](principals.md) | Their English names as in people. |
 | [printed](printed.md) | The printed field in the Doubt response. |
+| [quotations](quotations.md) | The quotations field in the Answer response. |
 | [role](role.md) | What the person is in this piece, in a few words. |
 | [running_head](running_head.md) | The running_head field in the Answer response. |
 | [text](text.md) | The text field in the Line response. |
