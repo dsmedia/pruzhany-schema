@@ -15,7 +15,7 @@
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
     "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
     "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",
-    "linkml/schema/sourced_entities.yaml": "d302997e92587794d1e12b36418c3d39122af0cd9e78d53442b6fb9f1762771a",
+    "linkml/schema/sourced_entities.yaml": "a1ff33b46438af29d46c29f0085a0d7bb4c566b5440764de6739c9d7e82f2871",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
     "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4"
   },

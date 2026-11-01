@@ -56,11 +56,19 @@ const translation = {
 	attribution: { kind: 'person', by: 'Fictional translator', on: '2000-01-01' },
 };
 
-describe('one staged quote-English switch', () => {
-	it('leaves the released contract off', () => {
-		expect(REQUIRE_NON_ENGLISH_QUOTE_ENGLISH).toBe(false);
+describe('one active quote-English switch', () => {
+	it('turns the released contract on', () => {
+		expect(REQUIRE_NON_ENGLISH_QUOTE_ENGLISH).toBe(true);
 		expect(
 			schemas.CitationSchema.safeParse({ source_id: 's', page: '1', quote: original }).success
+		).toBe(false);
+		expect(
+			schemas.CitationSchema.safeParse({
+				source_id: 's',
+				page: '1',
+				quote: original,
+				quote_english: translation,
+			}).success
 		).toBe(true);
 	});
 	for (const base of [schemas.CitationSchema, schemas.SiteCitationSchema]) {

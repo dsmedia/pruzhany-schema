@@ -24,8 +24,7 @@ def activated_schema():
                                          top_class='SharedRecord', not_closed=False)
     rule, = [r for r in generator.schemaview.get_class('Citation').rules
              if r.title == 'require_non_english_quote_english']
-    assert rule.deactivated
-    rule.deactivated = False
+    assert rule.deactivated is False
     return json.loads(backend.release_rules(generator).serialize())
 
 
@@ -37,7 +36,7 @@ def validator(schema, name):
 class WordsEnglish(unittest.TestCase):
     def test_the_one_source_switch_generates_both_runtime_values(self):
         active, pairs = words.policy(LINKML)
-        self.assertFalse(active)
+        self.assertTrue(active)
         self.assertEqual(pairs['Citation'], {'quote_english': 'quote'})
         self.assertEqual(sum(len(fields) for cls, fields in pairs.items()
                              if cls != 'SiteCitation'), 3)
@@ -47,11 +46,11 @@ class WordsEnglish(unittest.TestCase):
             shutil.copyfile(LINKML / 'modules.json', root / 'modules.json')
             source = root / 'schema/sourced_entities.yaml'
             text = source.read_text()
-            self.assertEqual(text.count('deactivated: true'), 1)
-            source.write_text(text.replace('deactivated: true', 'deactivated: false'))
+            self.assertEqual(text.count('deactivated: false'), 1)
+            source.write_text(text.replace('deactivated: false', 'deactivated: true'))
             python, ts = words.outputs(root)
-            self.assertIn('REQUIRE_NON_ENGLISH_QUOTE_ENGLISH = True', python)
-            self.assertIn('REQUIRE_NON_ENGLISH_QUOTE_ENGLISH = true', ts)
+            self.assertIn('REQUIRE_NON_ENGLISH_QUOTE_ENGLISH = False', python)
+            self.assertIn('REQUIRE_NON_ENGLISH_QUOTE_ENGLISH = false', ts)
             self.assertEqual(words.policy(root)[1], pairs)
 
     def test_active_rule_agrees_with_both_twins_including_inherited_citations(self):
@@ -76,7 +75,7 @@ class WordsEnglish(unittest.TestCase):
                         value['quote_english'] = translation
                     expected = translation is english or language in ('en', 'en-US', 'EN-gb')
                     with self.subTest(model=model, language=repr(language), english=translation is english):
-                        self.assertTrue(validator(released, model).is_valid(value))
+                        self.assertEqual(validator(released, model).is_valid(value), expected)
                         self.assertEqual(active_validator.is_valid(value), expected)
                         with patch.object(runtime, 'REQUIRE_NON_ENGLISH_QUOTE_ENGLISH', True):
                             try:

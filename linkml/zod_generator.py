@@ -78,9 +78,14 @@ def reference(value, definitions, path):
 def check_condition(value, path):
     """Recognize the pinned generator's condition grammar, without emitting rules."""
     checked_keys(value, CONDITIONS | {'properties', 'required', 'const', 'enum', 'pattern',
-                                     'type', 'items'}, path)
+                                     'type', 'items', '$ref'}, path)
     for key, child in value.items():
-        if key in {'allOf', 'anyOf', 'oneOf'}:
+        if key == '$ref':
+            # A typed rule condition names an owned class (json_schema_typed_range); the class is
+            # enforced by the retained refinement words-english.ts, so only its address is checked.
+            if not (isinstance(child, str) and child.startswith('#/$defs/')):
+                refuse(path, 'external reference')
+        elif key in {'allOf', 'anyOf', 'oneOf'}:
             for i, branch in enumerate(child):
                 check_condition(branch, f'{path}.{key}[{i}]')
         elif key in {'not', 'if', 'then', 'else', 'items'}:

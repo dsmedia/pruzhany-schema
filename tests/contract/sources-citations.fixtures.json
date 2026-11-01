@@ -906,7 +906,8 @@
 					"path": [],
 					"value": {
 						"source_id": "original",
-						"quote": "Fictional words"
+						"quote": "Fictional words",
+						"quote_language": "en"
 					}
 				}
 			]
@@ -1316,6 +1317,22 @@
 							"locator": "part two"
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "sources-citations: non-English citation without English is refused",
+			"model": "Citation",
+			"valid": false,
+			"error": "needs quote_english",
+			"changes": [
+				{
+					"path": ["quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["quote_language"],
+					"value": "yi-Latn"
 				}
 			]
 		}

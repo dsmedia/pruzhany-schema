@@ -4,12 +4,14 @@ import { statementCitationShortfalls } from '../../zod/citation-requirements';
 const cases = JSON.parse(readFileSync(0, 'utf8'));
 console.log(
 	JSON.stringify(
-		cases.map((c: { citation: unknown; source: unknown; via?: unknown }) =>
-			statementCitationShortfalls(
-				CitationSchema.parse(c.citation),
-				SourceSchema.parse(c.source),
-				c.via ? SourceSchema.parse(c.via) : undefined
-			)
+		cases.map((c: { citation: unknown; source: unknown; via?: unknown; valid?: boolean }) =>
+			c.valid === false
+				? { valid: CitationSchema.safeParse(c.citation).success }
+				: statementCitationShortfalls(
+						CitationSchema.parse(c.citation),
+						SourceSchema.parse(c.source),
+						c.via ? SourceSchema.parse(c.via) : undefined
+					)
 		)
 	)
 );

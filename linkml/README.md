@@ -165,7 +165,7 @@ Backend tests plant unknown constructs, drift, missing/extra
 files and cycles. `bin/verify zod` typechecks imported generated/test subfolders and checks their
 formatting recursively; `bin/verify linkml` checks generation and runs the backend tests.
 
-### Source words and English (staged)
+### Source words and English
 
 Citation, MediaFamilyWords and Source title English use `CitedTranslation is_a Translation`
 from `site_common.yaml`. Its `CitedTextBasis is_a TextBasis` makes addresses optional;
@@ -176,13 +176,16 @@ The `english_of` annotation records each exact sibling-text binding; generation 
 inventory for both twins. Attribution lives in site_common so the dependency stays acyclic;
 the existing public imports remain available.
 
-The single switch is the `deactivated: true` flag on Citation's
+The single switch is the `deactivated: false` flag on Citation's
 `require_non_english_quote_english` rule in `schema/sourced_entities.yaml`. Generation derives
 the runtime constants in `zod/generated/words_policy.ts` and
-`pydantic/generated/words_policy.py`. Existing files still validate. Present English is always
-bound to the exact original; source metadata binding runs at SharedRecord so the site's
-`SourceSchema.pick()` API remains usable. The later data rollout enables quote coverage and
-reviews the existing Python condition inventory, with fictional tests already covering both states.
+`pydantic/generated/words_policy.py`, both now true. It was switched on **1 November 2026**
+after pruzhany-steps decision 268 reported **0 quotes not marked English without English**.
+Nonblank quotes now require English unless explicitly marked `en` or an `en-*` tag.
+Present English is always bound to the exact original; source metadata binding runs at SharedRecord so the site's
+`SourceSchema.pick()` API remains usable. The Python condition inventory has been reviewed;
+the retained `validate_english` enforces coverage. Fictional tests cover the active rule and
+generation of both switch states.
 
 Read **31 October 2026**: LinkML [Advanced features, Rules](https://linkml.io/linkml/schemas/advanced.html#rules),
 [Slots](https://linkml.io/linkml/schemas/slots.html),

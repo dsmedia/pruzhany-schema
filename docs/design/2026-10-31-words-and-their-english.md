@@ -125,19 +125,24 @@ Candidates for an owner's future batch (not added):
 
 The rule named **`require_non_english_quote_english`**, under
 `Citation.rules` in `linkml/schema/sourced_entities.yaml`, has
-**`deactivated: true`**. This is the sole switch. Generation derives
-`REQUIRE_NON_ENGLISH_QUOTE_ENGLISH = false` in both
+**`deactivated: false`**. This is the sole switch. Generation derives
+`REQUIRE_NON_ENGLISH_QUOTE_ENGLISH = true` in both
 `zod/generated/words_policy.ts` and `pydantic/generated/words_policy.py`.
 No environment variable or independent runtime flag controls release behavior.
 
-When activated, a nonblank quote requires a non-null CitedTranslation unless its
+The rule was initially staged off on **31 October 2026**. It was switched on
+**1 November 2026**, after pruzhany-steps decision 268 reported **0 quotes not
+marked English without English**. The emitted Python condition inventory was
+reviewed; coverage remains enforced by the retained `validate_english`.
+
+A nonblank quote requires a non-null CitedTranslation unless its
 explicit language is `en` or an `en-*` tag (case insensitive). An omitted/null
 language is conservatively **not an English exemption**: Citation alone cannot
 resolve Source.language. Thus ordinary inherited non-English quotes are covered
 without changing what quote_language means. English quotes with no override also
-need a rendering under this conservative local rule; the later data rollout must
-resolve that case explicitly. Missing/null/blank quotes need no rendering.
-SiteCitation inherits the rule. MediaFamilyWords gains English now; the staged
+need a rendering under this conservative local rule; the data rollout resolved
+that case explicitly. Missing/null/blank quotes need no rendering.
+SiteCitation inherits the rule. MediaFamilyWords gains English now; the
 Citation requirement does not independently make family quotes mandatory.
 
 The original YAML retains the real LinkML rule. Pinned LinkML 1.12.1's JSON
@@ -145,13 +150,13 @@ Schema emitter ignores `deactivated`, so `external_schema.ReleaseGenerator`
 honors it before generation. Typed conditions explicitly opt into preserving
 their declared ranges (`json_schema_typed_range`): otherwise this emitter drops
 the range and lets a required translation be null. Unannotated existing rules
-retain their behavior. Fictional tests activate the actual rule and compare it
+retain their behavior. Fictional tests check the active rule and compare it
 with both twins, including absent/null language/English and inherited citations.
 
-To enable later, set `deactivated: false`, regenerate, and land the populated
-data together. The existing conditional-inventory guard still requires review of
+The rollout set `deactivated: false` and regenerated the contracts after the data
+was populated. The existing conditional-inventory guard requires review of
 Python enforcement when emitted conditions change; it is not another switch.
-Exact-text bindings already reject stale English while coverage is off.
+Exact-text bindings rejected stale English even during the initial off stage.
 
 Documentation read **31 October 2026** beside this implementation:
 [Slots](https://linkml.io/linkml/schemas/slots.html),
@@ -166,21 +171,22 @@ emitter's actual behavior.
 
 ## Consumer findings
 
-Read steps' `publish/site_writer.py` (`_pin`, notice quotation flow),
+At the **31 October 2026** audit, read steps' `publish/site_writer.py` (`_pin`, notice quotation flow),
 `identity/people_registers.py` (Citation writer), `publish/site_evidence.py`,
 and `identity/site_event_children.py`; read the site's `PersonFate.svelte`,
 `CitedRecord.svelte`, `record-words.ts`, `data/public.schema.ts`, and
-`src/lib/privacy/` projection/evidence modules. The writer currently locates
-quotes and preserves their exact words; it does not emit English for quotes.
-The site currently reads the quote and source label. This change only gives the
+`src/lib/privacy/` projection/evidence modules. At that time the writer located
+quotes and preserved their exact words without emitting English for quotes.
+The site read the quote and source label. The initial schema change gave the
 later writer and renderer a validated place to put the English.
 
-The privacy projection rebuilds citations and sources with explicit
-`CITATION_FIELDS`/`SOURCE_FIELDS` allowlists. It omits the new fields (and the
-quote-language override today); it does not spread Translation or its
+At that audit, the privacy projection rebuilt citations and sources with explicit
+`CITATION_FIELDS`/`SOURCE_FIELDS` allowlists. It omitted the new fields (and the
+quote-language override); it did not spread Translation or its
 attribution to the browser. The schema's RDF profile likewise explicitly omits
 new English fields. The website follow-up must deliberately project safe English
 and attribution, never private notes, locator paths, translator identities or
-raw basis objects. Current site files validate while the switch is off. The
-consumer checks use master exported with `git archive`, a real frozen-lockfile
-install, and this worktree's schema symlink; neither reference checkout is edited.
+raw basis objects. Site files validated during the initial off stage; decision 268's
+coverage report preceded activation. The initial consumer checks used master
+exported with `git archive`, a real frozen-lockfile install, and that worktree's
+schema symlink; neither reference checkout was edited.

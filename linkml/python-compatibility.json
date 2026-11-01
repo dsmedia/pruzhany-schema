@@ -161,7 +161,37 @@
 						},
 						"required": ["reference_code"]
 					}
-				]
+				],
+				"if": {
+					"not": {
+						"anyOf": [
+							{
+								"properties": {
+									"quote_language": {
+										"pattern": "^[eE][nN](-|$)",
+										"type": "string"
+									}
+								},
+								"required": ["quote_language"]
+							}
+						]
+					},
+					"properties": {
+						"quote": {
+							"pattern": "\\S",
+							"type": "string"
+						}
+					},
+					"required": ["quote"]
+				},
+				"then": {
+					"properties": {
+						"quote_english": {
+							"$ref": "#/$defs/CitedTranslation"
+						}
+					},
+					"required": ["quote_english"]
+				}
 			}
 		},
 		"ContentItem": {
@@ -2378,6 +2408,62 @@
 				}
 			},
 			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"addresses": {}
+							},
+							"required": ["addresses"]
+						},
+						"then": {
+							"properties": {
+								"edition_date": {
+									"pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+								},
+								"quote": {
+									"pattern": "\\S"
+								},
+								"unit_id": {
+									"pattern": "\\S"
+								}
+							},
+							"required": ["unit_id", "edition_date", "quote"]
+						}
+					},
+					{
+						"if": {
+							"not": {
+								"anyOf": [
+									{
+										"properties": {
+											"quote_language": {
+												"pattern": "^[eE][nN](-|$)",
+												"type": "string"
+											}
+										},
+										"required": ["quote_language"]
+									}
+								]
+							},
+							"properties": {
+								"quote": {
+									"pattern": "\\S",
+									"type": "string"
+								}
+							},
+							"required": ["quote"]
+						},
+						"then": {
+							"properties": {
+								"quote_english": {
+									"$ref": "#/$defs/CitedTranslation"
+								}
+							},
+							"required": ["quote_english"]
+						}
+					}
+				],
 				"anyOf": [
 					{
 						"properties": {
@@ -2437,27 +2523,7 @@
 						},
 						"required": ["reference_code"]
 					}
-				],
-				"if": {
-					"properties": {
-						"addresses": {}
-					},
-					"required": ["addresses"]
-				},
-				"then": {
-					"properties": {
-						"edition_date": {
-							"pattern": "^\\d{4}-\\d{2}-\\d{2}$"
-						},
-						"quote": {
-							"pattern": "\\S"
-						},
-						"unit_id": {
-							"pattern": "\\S"
-						}
-					},
-					"required": ["unit_id", "edition_date", "quote"]
-				}
+				]
 			}
 		},
 		"Source": {

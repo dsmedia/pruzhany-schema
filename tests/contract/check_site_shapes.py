@@ -103,6 +103,9 @@ def check_site_shapes(package):
     zod_advisory = json.loads(subprocess.run(['bun', str(ROOT / 'tests/contract/check_citation_requirements.ts')],
         input=json.dumps(advisory), capture_output=True, text=True, check=True, cwd=ROOT).stdout)
     for case, actual in zip(advisory, zod_advisory, strict=True):
+        if case.get('valid') is False:
+            assert_citation_rejected(package, case, actual)
+            continue
         citation = package.Citation.model_validate_json(json.dumps(case['citation']))
         source = package.Source.model_validate_json(json.dumps(case['source']))
         via = package.Source.model_validate_json(json.dumps(case['via'])) if case.get('via') else None
@@ -113,9 +116,22 @@ def check_site_shapes(package):
     zod_quotes = json.loads(subprocess.run(['bun', str(ROOT / 'tests/contract/check_quote_publication.ts')],
         input=json.dumps(quotes), capture_output=True, text=True, check=True, cwd=ROOT).stdout)
     for case, actual in zip(quotes, zod_quotes, strict=True):
+        if case.get('valid') is False:
+            assert_citation_rejected(package, case, actual)
+            continue
         citation = package.Citation.model_validate_json(json.dumps(case['citation']))
         source = package.Source.model_validate_json(json.dumps(case['source']))
         via = package.Source.model_validate_json(json.dumps(case['via'])) if case.get('via') else None
         python = package.quote_shown(citation, source, via, case['corroborated'])
         assert python == actual == case['shown'], (case['name'], python, actual, case['shown'])
     print(f'contract: {len(quotes)} quote publication cases agree')
+
+
+def assert_citation_rejected(package, case, actual):
+    try:
+        package.Citation.model_validate_json(json.dumps(case['citation']))
+    except ValueError as exc:
+        assert 'needs quote_english' in str(exc), (case['name'], str(exc))
+    else:
+        raise AssertionError(f'{case["name"]}: Pydantic must refuse the citation')
+    assert actual == {'valid': False}, (case['name'], actual)

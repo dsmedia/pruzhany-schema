@@ -539,10 +539,11 @@ classes:
     # LinkML Advanced features (Rules), Slots, JSON Schema (Rules), and metamodel
     # deactivated, read 31 October 2026: https://linkml.io/linkml/schemas/advanced.html
     # and https://linkml.io/linkml-model/latest/docs/deactivated/.
-    # One switch: set this rule's deactivated to false and regenerate with the data rollout.
+    # One switch, switched on 1 November 2026 with the data rollout (pruzhany-steps decision 268:
+    # every quote not marked English carries quote_english, 0 missing).
     rules:
       - title: require_non_english_quote_english
-        deactivated: true
+        deactivated: false
         description: >-
           A quote not explicitly marked as English carries quote_english.
         preconditions:

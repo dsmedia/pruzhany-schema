@@ -4,13 +4,22 @@ import { quoteShown } from '../../zod/quote-publication';
 const cases = JSON.parse(readFileSync(0, 'utf8'));
 console.log(
 	JSON.stringify(
-		cases.map((c: { citation: unknown; source: unknown; via?: unknown; corroborated: boolean }) =>
-			quoteShown(
-				CitationSchema.parse(c.citation),
-				SourceSchema.parse(c.source),
-				c.via ? SourceSchema.parse(c.via) : undefined,
-				c.corroborated
-			)
+		cases.map(
+			(c: {
+				citation: unknown;
+				source: unknown;
+				via?: unknown;
+				corroborated: boolean;
+				valid?: boolean;
+			}) =>
+				c.valid === false
+					? { valid: CitationSchema.safeParse(c.citation).success }
+					: quoteShown(
+							CitationSchema.parse(c.citation),
+							SourceSchema.parse(c.source),
+							c.via ? SourceSchema.parse(c.via) : undefined,
+							c.corroborated
+						)
 		)
 	)
 );

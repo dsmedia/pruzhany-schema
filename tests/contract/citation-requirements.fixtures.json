@@ -27,7 +27,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -57,7 +58,8 @@
 				"accessed": "2026-10-24",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.unit_id"]
 		},
@@ -87,7 +89,8 @@
 				"accessed": "2026-10-24",
 				"unit_id": "item-one",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.edition_date"]
 		},
@@ -148,7 +151,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -178,7 +182,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.record_id"]
 		},
@@ -238,7 +243,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.accessed"]
 		},
@@ -268,7 +274,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.url"]
 		},
@@ -299,7 +306,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -329,7 +337,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.page"]
 		},
@@ -390,7 +399,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -419,7 +429,8 @@
 				"accessed": "2026-10-24",
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.time or citation.page"]
 		},
@@ -480,7 +491,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -510,7 +522,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.page"]
 		},
@@ -571,7 +584,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -601,7 +615,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.page"]
 		},
@@ -661,7 +676,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["source.private"]
 		},
@@ -688,7 +704,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["source.dated"]
 		},
@@ -715,7 +732,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["source.quotes_cleared"]
 		},
@@ -746,7 +764,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -806,7 +825,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.accessed"]
 		},
@@ -836,7 +856,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.url"]
 		},
@@ -867,7 +888,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -897,7 +919,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.page"]
 		},
@@ -958,7 +981,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -987,7 +1011,8 @@
 				"accessed": "2026-10-24",
 				"unit_id": "item-one",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.page or citation.edition_date"]
 		},
@@ -1048,7 +1073,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -1078,7 +1104,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.page"]
 		},
@@ -1138,7 +1165,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.accessed"]
 		},
@@ -1167,7 +1195,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -1197,7 +1226,8 @@
 				"accessed": "2026-10-24",
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
-				"time": "00:10"
+				"time": "00:10",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.record_type"]
 		},
@@ -1227,7 +1257,8 @@
 				"accessed": "2026-10-24",
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
-				"time": "00:10"
+				"time": "00:10",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -1257,7 +1288,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["source.host"]
 		},
@@ -1288,7 +1320,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.url on source.host"]
 		},
@@ -1319,7 +1352,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -1351,7 +1385,8 @@
 				"edition_date": "1938-01-01",
 				"time": "00:10",
 				"record_type": "list",
-				"via": "transcript"
+				"via": "transcript",
+				"quote_language": "en"
 			},
 			"via": {
 				"id": "transcript",
@@ -1389,7 +1424,8 @@
 				"edition_date": "1938-01-01",
 				"time": "00:10",
 				"record_type": "list",
-				"via": "transcript"
+				"via": "transcript",
+				"quote_language": "en"
 			},
 			"via": {
 				"id": "transcript",
@@ -1436,7 +1472,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": ["cite original with citation.via for family transcript"]
 		},
@@ -1460,7 +1497,8 @@
 			"citation": {
 				"source_id": "fictional",
 				"quote": "Fictional words",
-				"locator": "typed transcript"
+				"locator": "typed transcript",
+				"quote_language": "en"
 			},
 			"shortfalls": ["citation.time or citation.page"]
 		},
@@ -1497,7 +1535,8 @@
 				"unit_id": "item-one",
 				"edition_date": "1938-01-01",
 				"time": "00:10",
-				"record_type": "list"
+				"record_type": "list",
+				"quote_language": "en"
 			},
 			"shortfalls": []
 		},
@@ -1526,7 +1565,8 @@
 			"citation": {
 				"source_id": "judewicz-kaplan",
 				"locator": "person-fictional",
-				"quote": "Fictional words"
+				"quote": "Fictional words",
+				"quote_language": "en"
 			},
 			"shortfalls": ["source.quotes_cleared"]
 		},
@@ -1543,6 +1583,38 @@
 				"record_id": "7"
 			},
 			"shortfalls": ["citation.locator"]
+		},
+		{
+			"name": "citation-requirements: non-English citation without English is refused",
+			"source": {
+				"id": "fictional",
+				"kind": "the_paper",
+				"title": "Fictional source",
+				"host": "example.org",
+				"private": true,
+				"dated": {
+					"start": "1983",
+					"precision": "year"
+				},
+				"quotes_cleared": {
+					"by": "fictional owner",
+					"on": "2026-10-24"
+				}
+			},
+			"citation": {
+				"source_id": "fictional",
+				"record_id": "7",
+				"page": "part one",
+				"quote": "Fiktive verter.",
+				"url": "https://example.org/7",
+				"accessed": "2026-10-24",
+				"unit_id": "item-one",
+				"edition_date": "1938-01-01",
+				"time": "00:10",
+				"record_type": "list",
+				"quote_language": "yi-Latn"
+			},
+			"valid": false
 		}
 	]
 }
