@@ -28,6 +28,21 @@ When piping a check's output, use `set -o pipefail` so a failed check stays a fa
 `bin/verify <step>...` runs selected steps for iteration; the full `bin/verify`
 remains the check before merging. Do not skip or loosen checks.
 
+The `zod` step also runs `tests/documentation/`: CHANGELOG heading/date checks,
+the README quick-start extractor and planted failures. The fresh-clone workflow
+runs the extracted commands on `ubuntu-24.04`, with no sibling checkouts or restored
+tool/dependency caches. It uses ci.yml's Bun 1.3.11 and uv 0.11.13 setup actions,
+plus mise 2026.10.25; the README's `mise install` installs the `mise.toml` tools
+(Bun 1.3.11, Python 3.11, gitleaks 8.24.3 and just 1.56.0). Bash, Git, Node.js
+and coreutils come from the runner; its inventory step prints their versions.
+uv provisions Python 3.11 environments and the Python dependencies
+named in `bin/verify`; LinkML uses its hashed requirements and build constraints.
+Vitest 4.1.9, TypeScript 5.9.3, Prettier 3.8.0, Zod 4.3.5 and Node types 22.19.0
+come from `package.json`/`bun.lock` through `bun install --frozen-lockfile`.
+Vitest/tsc/Prettier run through their Node shebangs; newcomers need Node.js 22.
+Read 1 November 2026: [Bun's bunx shebang behaviour](https://bun.sh/docs/pm/bunx).
+Neither the website nor Playwright is needed for this workflow.
+
 ## Consumer checks
 
 Before a change here merges, run these in pruzhany-svelte with its

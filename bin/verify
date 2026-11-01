@@ -12,7 +12,7 @@
 #   zod       bun install --frozen-lockfile (package.json pins the same zod, prettier,
 #             vitest and typescript versions as pruzhany-svelte's bun.lock),
 #             then the zod/*.test.ts suite under vitest and a strict tsc
-#             typecheck of zod/.
+#             typecheck of zod/; documentation form and quick-start extraction tests.
 #   pydantic  loads the pydantic/ package (under a non-shadowing name) with
 #             the pinned pydantic version, and generates the JSON Schema of
 #             every model it defines.
@@ -49,15 +49,22 @@ step_scan() {
 }
 
 step_zod() {
+	# CLI/options documentation read 1 November 2026:
+	# https://vitest.dev/guide/cli.html#dir
+	# https://www.typescriptlang.org/docs/handbook/compiler-options.html
+	# https://prettier.io/docs/cli
 	bun install --frozen-lockfile
 	# --dir keeps vitest from collecting tests inside .claude/worktrees/.
 	bun x vitest run --dir zod
+	bun x vitest run --dir tests/documentation
 	bun x tsc --noEmit --strict --target es2022 --module esnext \
 		--moduleResolution bundler --resolveJsonModule --skipLibCheck zod/*.ts
 	echo "tsc: zod/ typechecks"
 	# pruzhany-svelte runs `prettier --check src/`, and src/lib/schemas is this zod/:
 	# the same prettier version and options, so an unformatted file fails here first.
-	bun x prettier --check zod tests pilots/sourced-entities/*.ts
+	bun x tsc --noEmit --strict --target es2022 --module esnext \
+		--moduleResolution bundler --skipLibCheck bin/*.ts tests/documentation/*.ts
+	bun x prettier --check zod tests bin/*.ts pilots/sourced-entities/*.ts
 }
 
 step_pydantic() {

@@ -39,7 +39,40 @@ for field names, stored-format correspondences and validation responsibilities.
 
 A type is changed in the LinkML definition first (an enum in `vocabulary/*.json`, through its generator), then `linkml/generate.py` makes the JSON Schemas, the Python fields in `pydantic/generated/` and the RDF view again; generated files are never edited by hand. The hand-written Zod schema and any retained Python rule are then brought into step with the definition, and Zod and Pydantic models are kept in lock-step with each other — a contract test compares the two via JSON Schema, and compares LinkML with Zod for every mapped model, to catch drift.
 
+## Quick start
+
+Clone [this repository](https://github.com/dsmedia/pruzhany-schema) and open Bash
+at its root. First install Git, Node.js 22, [mise](https://mise.jdx.dev/getting-started.html)
+with its [shell integration](https://mise.jdx.dev/installing-mise.html#shells)
+activated, and [uv](https://docs.astral.sh/uv/getting-started/installation/)
+(CI uses 0.11.13). `mise.toml` supplies Bun 1.3.11, Python 3.11, gitleaks 8.24.3
+and the optional just 1.56.0 runner. No sibling repository is needed.
+
+<!-- quick-start:begin -->
+```sh
+mise install
+bun install --frozen-lockfile
+bin/verify
+```
+<!-- quick-start:end -->
+
+The [fresh-clone workflow](.github/workflows/fresh-clone.yml) runs these exact
+commands on a clean GitHub runner weekly, on demand and for README changes.
+See [CONTRIBUTING.md](CONTRIBUTING.md) to report model errors or propose changes,
+[CHANGELOG.md](CHANGELOG.md) for notable changes, and
+[verification](docs/agents/verification.md) for setup details and consumer checks.
+
+<!-- Quick-start commands checked against mise install (https://mise.jdx.dev/cli/install.html),
+Bun install (https://bun.sh/docs/pm/cli/install) and uv Commands
+(https://docs.astral.sh/uv/reference/cli/), read 1 November 2026.
+Tool versions come from mise.toml and the existing CI pins, not the docs' latest releases. -->
+<!-- Bun's bunx shebang behaviour (https://bun.sh/docs/pm/bunx), read 1 November 2026:
+Vitest, tsc and Prettier use Node; Bun alone does not supply that prerequisite. -->
+
 ## Verify
+
+The `zod` step also checks the changelog form and README command extraction,
+including planted failures, in `tests/documentation/`.
 
 `bin/verify` is the one verify entry point, and CI runs all nine steps (`gitleaks.yml` runs `scan`, `ci.yml` the rest): history secret scanning; Zod tests, strict typechecking and formatting; Pydantic model loading and JSON Schema emission; the cross-language contract; the isolated pilot; standards alignment; released vocabulary and generation checks; sourced-entity parity in the current `SiteArchive` carrier, including its exported JSON Schema; and the LinkML definition, in a locked environment of its own. The toolchain is pinned in `package.json`/`bun.lock` to pruzhany-svelte's versions. The Zod↔Pydantic lockstep check moved here from pruzhany-press on 2026-10-22.
 
