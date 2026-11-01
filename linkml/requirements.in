@@ -1,6 +1,13 @@
-# The one direct requirement of the linkml step. Compile it into requirements.lock
+# Direct requirements of the linkml step. Compile them into requirements.lock
 # with the command named at the top of that file; never edit the lock by hand.
 linkml==1.12.1
 
 # Validate the generated project export profile, not EHRI ingestion shapes.
 pyshacl==0.30.1
+
+# Offline JSON-LD expansion: refuse properties the context would silently drop.
+pyld==3.3.0
+
+# Supply-chain rule: releases must be at least two weeks old; read 2026-11-01.
+cachetools==7.2.3
+frozendict==2.4.7
