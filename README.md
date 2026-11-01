@@ -52,7 +52,7 @@ and the optional just 1.56.0 runner. No sibling repository is needed.
 ```sh
 mise install
 bun install --frozen-lockfile
-bin/verify
+bin/verify-does-not-exist
 ```
 <!-- quick-start:end -->
 
