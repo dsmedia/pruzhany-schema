@@ -8,11 +8,13 @@ Checked against installed locked libraries on 2026-10-29. No remote contexts or 
 import hashlib
 import json
 import math
+import re
 import runpy
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
 from jsonschema import Draft201909Validator, FormatChecker
+from pyld import jsonld
 from pyshacl import validate
 from rdflib import Graph, Literal, RDF, URIRef
 
@@ -395,10 +397,88 @@ def check_terms(graph, profile):
         raise ValueError("export contains an unprofiled node")
 
 
+def check_jsonld(document):
+    """Expand offline and refuse unmapped properties and relative type/identity IRIs.
+
+    Read 2026-11-01: W3C JSON-LD 1.1 Processing Algorithms and API, Expansion
+    Algorithm (13.3 drops unmapped properties; 13.4.3 rejects non-string @id):
+    https://www.w3.org/TR/json-ld11-api/#expansion-algorithm
+    PyLD 3.3.0 README, Document Loader and Handling ignored properties:
+    https://github.com/digitalbazaar/pyld/tree/v3.3.0#advanced-topics
+    jsonld.js README, Safe Mode: https://github.com/digitalbazaar/jsonld.js#safe-mode
+    Safe mode is a jsonld.js option, not a W3C API option or a PyLD option.
+    PyLD's callback covers properties, not @type; check expanded IRIs as well.
+    """
+    if not isinstance(document, dict) or not isinstance(
+        document.get("@context"), dict
+    ):
+        raise ValueError("export requires its inline generated @context")
+
+    def inline_context(context):
+        if isinstance(context, str):
+            raise ValueError("JSON-LD @context must be inline; remote contexts forbidden")
+        if isinstance(context, list):
+            for part in context:
+                inline_context(part)
+
+    def check_contexts(value):
+        if isinstance(value, list):
+            for child in value:
+                check_contexts(child)
+        elif isinstance(value, dict):
+            for key, child in value.items():
+                if key == "@value" and value.get("@type") == "@json":
+                    continue  # Opaque JSON literals contain data, not JSON-LD contexts.
+                if key == "@context":
+                    inline_context(child)
+                if key == "@import":
+                    raise ValueError("JSON-LD @import forbidden; contexts must be inline")
+                check_contexts(child)
+
+    def no_loader(url, options):
+        raise ValueError("JSON-LD remote @context/@import loading forbidden")
+
+    def dropped(key):
+        raise ValueError(f"JSON-LD unmapped property: {key}")
+
+    def check_iris(value):
+        if isinstance(value, list):
+            for child in value:
+                check_iris(child)
+        elif isinstance(value, dict):
+            for key, child in value.items():
+                if key in ("@type", "@id"):
+                    for term in child if isinstance(child, list) else [child]:
+                        if term != "@json" and not re.match(
+                            r"^[A-Za-z][A-Za-z0-9+.-]*:", term
+                        ):
+                            raise ValueError(
+                                f"JSON-LD unmapped or relative {key}: {term}"
+                            )
+                if key != "@value":
+                    check_iris(child)
+
+    # Check even unused type-scoped contexts before either processor can see them.
+    check_contexts(document)
+    try:
+        expanded = jsonld.expand(
+            document,
+            {
+                "processingMode": "json-ld-1.1",
+                # 3.3.0 supplies a placeholder base by default, hiding undefined types.
+                "base": None,
+                "documentLoader": no_loader,
+            },
+            on_property_dropped=dropped,
+        )
+    except jsonld.JsonLdError as error:
+        raise ValueError(f"JSON-LD expansion failed: {error}") from error
+    check_iris(expanded)
+
+
 def check_graph(document, shapes, profile=None):
     """No inference, remote contexts, JS, imports or EHRI ingestion validation."""
-    if not isinstance(document.get("@context"), dict):
-        raise ValueError("export requires its inline generated context")
+    check_jsonld(document)
     graph = Graph().parse(data=encoded(document), format="json-ld")
     if not len(graph):
         raise ValueError("empty export graph")

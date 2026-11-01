@@ -1,4 +1,9 @@
-# What uv builds the three packages of requirements.lock that PyPI holds only as source
-# (antlr4-python3-runtime, cfgraph, pytest-logging) with: their setup.py asks for setuptools.
+# Build tools for requirements.lock, including the three packages PyPI holds only as source
+# (antlr4-python3-runtime, cfgraph, pytest-logging); their setup.py asks for setuptools.
 # Compile it into build-constraints.txt with the command at the top of that file.
 setuptools==84.2.1
+
+# PyLD's new transitive dependencies, if a platform builds their source archives:
+# cachetools 7.2.3 asks for setuptools-scm >=8.2; lxml 6.1.3 for Cython >=3.2.9,<3.3.
+setuptools-scm==10.3.4
+Cython==3.2.9

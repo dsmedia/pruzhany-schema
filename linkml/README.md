@@ -22,7 +22,7 @@ What LinkML cannot say about the shapes is listed in
 | `generated/docs/data-dictionary.md` | One readable page of classes, fields, descriptions, requirements, vocabulary, mappings and remaining validator duties. |
 | `planned.yaml` | Source-cited future requirements for the dictionary only; never imported by document schemas. |
 | `requirements.in`, `requirements.lock` | The locked environment: LinkML and everything it brings, by hash. |
-| `build-constraints.in`, `build-constraints.txt` | The one build tool, setuptools, by hash. |
+| `build-constraints.in`, `build-constraints.txt` | Build tools and their dependencies, by hash. |
 | `checks/documents.yaml` | Each check the twins of the issue documents and the catalog make beyond their shapes (every Zod refinement and Pydantic validator), and how the definition holds it: a LinkML rule, a rule of pruzhany-steps' `record/rules.yaml` (cited or proposed), or the twins alone; `tests/test_documents_checks.py` counts them. |
 | `checks/record.yaml` | The same for the twins of the shared record, the sourced entities and media; `tests/test_record_checks.py` counts them. |
 | `schema/physical.yaml` | Impresso's stored physical page contract, separate from the website's pages: page, region, paragraph, line, word and the shared array-valued box slot, with the computed identifier rule. |
@@ -275,7 +275,7 @@ its private source quotations are checked by `record check --catalog` with both 
 | jsonschema | 4.26.0 |
 | PyYAML | 6.0.3 |
 
-`requirements.lock` holds 90 packages (95 entries: a few differ by Python version), each pinned
+`requirements.lock` holds 102 packages (106 entries: a few differ by Python version), each pinned
 and with the hash of every file PyPI has for it, resolved once for every platform (`--universal`)
 and Python 3.11 or later. It is made from `requirements.in` by the command at its top:
 
@@ -297,6 +297,15 @@ pytest-logging 2015.11.4), so installing them builds them, with setuptools; `bui
 pins setuptools by hash. uv's `pip sync` has no switch that requires a hash for every build tool:
 a build tool these packages took up later, and that is not in that file, would be installed
 without one.
+
+PyLD **3.3.0** checks the public JSON-LD export in this same environment. Its
+dependencies cachetools **7.2.3**, frozendict **2.4.7** and lxml **6.1.3** are also
+hash-locked. The two transitive pins enforce the two-week minimum release age
+(read 1 November 2026; released 17 October 2026 and 11 November 2025, respectively).
+The build constraints additionally cover setuptools-scm and Cython
+for cachetools/lxml source builds, including the build tools' dependencies.
+The new packages install as wheels on the tested Linux/Python 3.11 platform;
+other platforms' native lxml build prerequisites were not tested here.
 
 ## The physical page contract
 
@@ -703,7 +712,27 @@ a description is marked `Reference` with its expected model and no private label
 This does not establish identity, resolve names or mint an ARK. No `owl:sameAs`
 edges are inferred. The lasting public namespace is still an owner decision.
 
-Validation combines enabled JSON Schema format checking, generated closed SHACL,
+Validation first expands JSON-LD offline with PyLD, refusing unmapped properties,
+undefined type terms and invalid JSON-LD syntax before RDFLib can drop them.
+An explicit null base and checks of expanded identity/type IRIs keep PyLD's
+placeholder base from hiding undefined terms. Remote contexts and imports,
+including unused type-scoped contexts, are refused before parsing; a deny-only
+loader also prevents fetching. JSON literals remain opaque data. This check
+runs inside `rdf_runtime.check_graph`, including calls from steps' RDF exporter;
+callers using their own Python environment must also install `pyld==3.3.0`.
+
+Read **1 November 2026**: W3C [JSON-LD 1.1 Processing Algorithms and API,
+Expansion Algorithm](https://www.w3.org/TR/json-ld11-api/#expansion-algorithm);
+PyLD [3.3.0 README, Document Loader and Handling ignored properties](https://github.com/digitalbazaar/pyld/tree/v3.3.0#advanced-topics)
+and its [expansion implementation](https://github.com/digitalbazaar/pyld/blob/v3.3.0/lib/pyld/jsonld.py);
+jsonld.js [Safe Mode](https://github.com/digitalbazaar/jsonld.js#safe-mode);
+RDFLib [JSON-LD parser API](https://rdflib.readthedocs.io/en/stable/apidocs/rdflib.plugins.parsers.jsonld/).
+Safe mode is a jsonld.js option rather than a W3C API or PyLD option. PyLD's
+dropped-property callback needs the additional expanded-IRI check for undefined
+`@type` terms. Fictional planted cases and offline/preservation controls run in
+`tests/test_jsonld.py`; the existing pilot remains isolated from production SHACL.
+
+Validation also combines enabled JSON Schema format checking, generated closed SHACL,
 strict RDF-list structure checks and checks of the derived evidence/type/role
 edges. Unsupported formats fail. Source and generated artifact hashes are checked
 before export; generated profile fields are recomputed from their sources.
