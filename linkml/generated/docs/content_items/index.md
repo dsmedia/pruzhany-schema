@@ -61,7 +61,7 @@ Name: pruzhany_content_items
 | [judgement_id](judgement_id.md) | The kept judgement, by an id without spaces followed by the field it judged, :title or :text. |
 | [judgement_sha256](judgement_sha256.md) | The SHA-256 digest of the kept judgement file's exact bytes. |
 | [kind](kind.md) | Whether a person or a model wrote it. |
-| [language](language.md) | The title's language, always English (en). |
+| [language](language.md) | The language most of the item is printed in, as the reading step judged it, as a two- or three-letter ISO 639 code (Impresso's lg). |
 | [location_ids](location_ids.md) | The places the content item names, by their ids in the shared record. |
 | [note](note.md) | A note on how or why. |
 | [on](on.md) | The day it was made or allowed. |

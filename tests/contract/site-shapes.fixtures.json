@@ -409,6 +409,243 @@
 	},
 	"cases": [
 		{
+			"name": "ContentItem language: omitted",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "ContentItem language: \"he\"",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "he"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"yi\"",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "yi"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"pl\"",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "pl"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"heb\"",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "heb"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"HE\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "HE"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"yi\" with a trailing newline",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "yi\n"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"he-IL\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "he-IL"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"zh-Hant-TW\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "zh-Hant-TW"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"en-u-ca-gregory\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "en-u-ca-gregory"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"x-fiction\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "x-fiction"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"i-klingon\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "i-klingon"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: null",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"yiddish\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "yiddish"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"en_US\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "en_US"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"he-IL\\n\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "he-IL\n"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"en-a\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "en-a"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: \"he-abcdefghi\"",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": "he-abcdefghi"
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: [\"he\", \"yi\"]",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": ["he", "yi"]
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: 42",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["language"],
+					"value": 42
+				}
+			]
+		},
+		{
+			"name": "ContentItem language: no languages list",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["languages"],
+					"value": ["he", "yi"]
+				}
+			]
+		},
+		{
 			"name": "PrintedAddress: valid shape",
 			"model": "PrintedAddress",
 			"valid": true,

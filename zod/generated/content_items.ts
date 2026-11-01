@@ -15,8 +15,9 @@ import {
 } from './site_common';
 
 const pattern1 = /\S/;
-const pattern2 = /^\d{4}-\d{2}-\d{2}$/;
-const pattern3 = /^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])/;
+const pattern2 = /^[a-z]{2,3}$(?![\s\S])/;
+const pattern3 = /^\d{4}-\d{2}-\d{2}$/;
+const pattern4 = /^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])/;
 
 export const ReadingStatusShape = z.strictObject({
 	text: ReadingStatusValueEnum.nullish(),
@@ -40,6 +41,7 @@ export const ContentItemShape = z.strictObject({
 	organization_ids: z.array(z.string().regex(pattern1)),
 	cross_references: z.array(CrossReferenceShape),
 	event_id: z.string().regex(pattern1).nullish(),
+	language: z.string().regex(pattern2).nullish(),
 });
 
 export const PrintedSectionShape = z.strictObject({
@@ -51,8 +53,8 @@ export const PrintedSectionShape = z.strictObject({
 });
 
 export const ContentItemsDataShape = z.strictObject({
-	issue_date: z.string().regex(pattern2),
-	vocabulary_version: z.string().regex(pattern3),
+	issue_date: z.string().regex(pattern3),
+	vocabulary_version: z.string().regex(pattern4),
 	content_items: z.array(ContentItemShape),
 	sections: z.array(PrintedSectionShape),
 });

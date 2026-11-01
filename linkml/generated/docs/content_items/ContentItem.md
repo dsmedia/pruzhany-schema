@@ -43,6 +43,8 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
         
       ContentItem : id
         
+      ContentItem : language
+        
       ContentItem : location_ids
         
       ContentItem : organization_ids
@@ -172,6 +174,7 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
 | [organization_ids](organization_ids.md) | 1..* <br/> [NonBlankText](NonBlankText.md) | The organisations the content item names, by their ids in the shared record. | direct |
 | [cross_references](cross_references.md) | 1..* <br/> [CrossReference](CrossReference.md) | Links from this content item to others in the issue. | direct |
 | [event_id](event_id.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The life event the content item prints, by the event's id, where it prints one. | direct |
+| [language](language.md) | 0..1 <br/> [LanguageTag](LanguageTag.md) | The language most of the item is printed in, as the reading step judged it, as a two- or three-letter ISO 639 code (Impresso's lg). | direct |
 
 
 
@@ -474,6 +477,24 @@ attributes:
     domain_of:
     - ContentItem
     range: NonBlankText
+  language:
+    name: language
+    annotations:
+      impresso:
+        tag: impresso
+        value: The content item's language (lg in paper_contentitem.schema.json and
+          issue.schema.json, standards/impresso-329323c, read 1 November 2026).
+    description: The language most of the item is printed in, as the reading step
+      judged it, as a two- or three-letter ISO 639 code (Impresso's lg).
+    from_schema: https://pruzhany.org/ns/content_items
+    rank: 1000
+    slot_uri: rico:hasOrHadLanguage
+    domain_of:
+    - ContentItem
+    - SuppliedTitle
+    - Translation
+    range: LanguageTag
+    pattern: ^[a-z]{2,3}$(?![\s\S])
 class_uri: ehri:RecordResource
 rules:
 - preconditions:
@@ -773,6 +794,25 @@ attributes:
     domain_of:
     - ContentItem
     range: NonBlankText
+  language:
+    name: language
+    annotations:
+      impresso:
+        tag: impresso
+        value: The content item's language (lg in paper_contentitem.schema.json and
+          issue.schema.json, standards/impresso-329323c, read 1 November 2026).
+    description: The language most of the item is printed in, as the reading step
+      judged it, as a two- or three-letter ISO 639 code (Impresso's lg).
+    from_schema: https://pruzhany.org/ns/content_items
+    rank: 1000
+    slot_uri: rico:hasOrHadLanguage
+    owner: ContentItem
+    domain_of:
+    - ContentItem
+    - SuppliedTitle
+    - Translation
+    range: LanguageTag
+    pattern: ^[a-z]{2,3}$(?![\s\S])
 class_uri: ehri:RecordResource
 rules:
 - preconditions:

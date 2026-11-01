@@ -167,6 +167,26 @@ formatting recursively; `bin/verify linkml` checks generation and runs the backe
 
 ### Source words and English
 
+`ContentItem.language` is optional and single-valued: the two- or three-letter ISO 639
+code for the language most of the item is printed in, as the reading step judged it
+(issue #56). It reuses the `source_language` binding and `rico:hasOrHadLanguage`,
+with Impresso's `lg`
+correspondence. Its field pattern is Impresso's `^[a-z]{2,3}$`: `yi`, `he` and `pl`
+are accepted; `yiddish`, `he-IL` and `HE` are refused. The shared `LanguageTag` type
+and existing source/citation contracts retain their behavior. Missing and null
+remain accepted; no `languages` list is added.
+
+Read **1 November 2026**: the pinned Impresso
+[`paper_contentitem.schema.json`](../standards/impresso-329323c/paper_contentitem.schema.json)
+(`lg` pattern) and `issue.schema.json` under `standards/impresso-329323c/`;
+LinkML [Slots](https://linkml.io/linkml/schemas/slots.html) and
+[Constraints](https://linkml.io/linkml/schemas/constraints.html).
+The generation commands below were checked against uv's
+[Commands](https://docs.astral.sh/uv/reference/cli/) (`venv`, `pip sync`,
+`--require-hashes`, `--build-constraints`) and Bun's
+[bun install](https://bun.sh/docs/pm/cli/install) (`--frozen-lockfile`) on the same
+day; versions remain locked.
+
 Citation, MediaFamilyWords and Source title English use `CitedTranslation is_a Translation`
 from `site_common.yaml`. Its `CitedTextBasis is_a TextBasis` makes addresses optional;
 piece Translation and TextBasis still require them.

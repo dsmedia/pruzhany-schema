@@ -17,6 +17,9 @@ from support import LINKML, ROOT, load
 backend = load('python_generator')
 inventory = load('python_inventory')
 
+# Issue #56: exact new constraint; the frozen migration snapshot stays unchanged.
+CONTENT_ITEM_LANGUAGE_PATTERN = r'^[a-z]{2,3}$'
+
 
 def package():
     name = 'generation_tests_schema'
@@ -53,6 +56,10 @@ class PythonGeneration(unittest.TestCase):
         # Ticket 03's exact optional additions, applied to the immutable baseline and
         # its nested definitions. All previous constraints/defaults/config remain checked.
         additions = {
+            # Issue #56: optional printed language, prescribed independently of the emitter.
+            'ContentItem': {'language': {'anyOf': [
+                {'type': 'string', 'pattern': CONTENT_ITEM_LANGUAGE_PATTERN},
+                {'type': 'null'}], 'default': None}},
             'PlaceIdentifier': {'type': {'anyOf': [
                 {'const': 'old_identifier', 'type': 'string'}, {'type': 'null'}], 'default': None}},
             **{name: {'identifiers': {'anyOf': [

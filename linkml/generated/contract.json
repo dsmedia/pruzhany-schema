@@ -659,6 +659,14 @@
           "pattern": "\\S",
           "type": "string"
         },
+        "language": {
+          "description": "The language most of the item is printed in, as the reading step judged it, as a two- or three-letter ISO 639 code (Impresso's lg).",
+          "pattern": "^[a-z]{2,3}$(?![\\s\\S])",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "location_ids": {
           "description": "The places the content item names, by their ids in the shared record.",
           "items": {

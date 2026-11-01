@@ -188,6 +188,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: CitedTranslation
     domain_of:
+    - ContentItem
     - SuppliedTitle
     - Translation
     range: string

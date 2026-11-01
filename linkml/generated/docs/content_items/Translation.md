@@ -167,6 +167,7 @@ attributes:
     description: The translation's language, always English (en).
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
+    - ContentItem
     - SuppliedTitle
     - Translation
     required: true
@@ -239,6 +240,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: Translation
     domain_of:
+    - ContentItem
     - SuppliedTitle
     - Translation
     range: string
