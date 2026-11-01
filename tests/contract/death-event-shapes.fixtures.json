@@ -79,7 +79,8 @@
 						{
 							"source_id": "record",
 							"record_id": "entry-1",
-							"quote": "Fictional death, 1945"
+							"quote": "Fictional death, 1945",
+							"quote_language": "en"
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -113,7 +114,8 @@
 						{
 							"source_id": "record",
 							"record_id": "entry-2",
-							"quote": "Fictional death, 1943"
+							"quote": "Fictional death, 1943",
+							"quote_language": "en"
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -146,7 +148,8 @@
 						{
 							"source_id": "record",
 							"record_id": "entry-1",
-							"quote": "Fictional death, 1945"
+							"quote": "Fictional death, 1945",
+							"quote_language": "en"
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -1502,6 +1505,22 @@
 				}
 			],
 			"error": "death must put its one preferred record date first"
+		},
+		{
+			"name": "record death citation without English is refused",
+			"model": "SiteArchive",
+			"valid": false,
+			"error": "needs quote_english",
+			"changes": [
+				{
+					"path": ["shared_record", "facts", 0, "citations", 0, "quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["shared_record", "facts", 0, "citations", 0, "quote_language"],
+					"value": "yi-Latn"
+				}
+			]
 		}
 	]
 }

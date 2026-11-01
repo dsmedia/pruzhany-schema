@@ -213,6 +213,32 @@
         }
       ],
       "description": "Where in one source a statement's evidence lies: the source, and the record, page, scan, time, piece of the paper, address or pointer within it, with the quoted words.",
+      "if": {
+        "not": {
+          "anyOf": [
+            {
+              "properties": {
+                "quote_language": {
+                  "pattern": "^[eE][nN](-|$)",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "quote_language"
+              ]
+            }
+          ]
+        },
+        "properties": {
+          "quote": {
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "required": [
+          "quote"
+        ]
+      },
       "properties": {
         "accessed": {
           "description": "The day a person read the record.",
@@ -355,6 +381,16 @@
       "required": [
         "source_id"
       ],
+      "then": {
+        "properties": {
+          "quote_english": {
+            "$ref": "#/$defs/CitedTranslation"
+          }
+        },
+        "required": [
+          "quote_english"
+        ]
+      },
       "title": "Citation",
       "type": "object"
     },
@@ -5154,6 +5190,74 @@
     },
     "SiteCitation": {
       "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "addresses": {}
+            },
+            "required": [
+              "addresses"
+            ]
+          },
+          "then": {
+            "properties": {
+              "edition_date": {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "quote": {
+                "pattern": "\\S"
+              },
+              "unit_id": {
+                "pattern": "\\S"
+              }
+            },
+            "required": [
+              "unit_id",
+              "edition_date",
+              "quote"
+            ]
+          }
+        },
+        {
+          "if": {
+            "not": {
+              "anyOf": [
+                {
+                  "properties": {
+                    "quote_language": {
+                      "pattern": "^[eE][nN](-|$)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "quote_language"
+                  ]
+                }
+              ]
+            },
+            "properties": {
+              "quote": {
+                "pattern": "\\S",
+                "type": "string"
+              }
+            },
+            "required": [
+              "quote"
+            ]
+          },
+          "then": {
+            "properties": {
+              "quote_english": {
+                "$ref": "#/$defs/CitedTranslation"
+              }
+            },
+            "required": [
+              "quote_english"
+            ]
+          }
+        }
+      ],
       "anyOf": [
         {
           "properties": {
@@ -5231,14 +5335,6 @@
         }
       ],
       "description": "A citation as the shared record keeps it: an older one as it was written, or one the site writer locates on the printed page, with the addresses of the words it quotes.",
-      "if": {
-        "properties": {
-          "addresses": {}
-        },
-        "required": [
-          "addresses"
-        ]
-      },
       "properties": {
         "accessed": {
           "description": "The day a person read the record.",
@@ -5392,24 +5488,6 @@
       "required": [
         "source_id"
       ],
-      "then": {
-        "properties": {
-          "edition_date": {
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
-          },
-          "quote": {
-            "pattern": "\\S"
-          },
-          "unit_id": {
-            "pattern": "\\S"
-          }
-        },
-        "required": [
-          "unit_id",
-          "edition_date",
-          "quote"
-        ]
-      },
       "title": "SiteCitation",
       "type": "object"
     },

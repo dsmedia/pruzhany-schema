@@ -2237,7 +2237,8 @@
 						"record_id": "4695",
 						"quote": "Fictional Person, died 1945",
 						"note": "The entry has no address of its own.",
-						"accessed": "2026-10-24"
+						"accessed": "2026-10-24",
+						"quote_language": "en"
 					}
 				}
 			]
@@ -8616,6 +8617,22 @@
 				{
 					"path": ["reading_status"],
 					"value": true
+				}
+			]
+		},
+		{
+			"name": "site-shapes: non-English citation without English is refused",
+			"model": "SharedFact",
+			"valid": false,
+			"error": "needs quote_english",
+			"changes": [
+				{
+					"path": ["citations", 0, "quote"],
+					"value": "Fiktive verter."
+				},
+				{
+					"path": ["citations", 0, "quote_language"],
+					"value": "yi-Latn"
 				}
 			]
 		}

@@ -5,7 +5,8 @@
 			"citation": {
 				"source_id": "fam",
 				"quote": "Fictional words",
-				"locator": "x"
+				"locator": "x",
+				"quote_language": "en"
 			},
 			"source": {
 				"id": "fam",
@@ -21,7 +22,8 @@
 			"citation": {
 				"source_id": "fam",
 				"quote": "Fictional words",
-				"locator": "x"
+				"locator": "x",
+				"quote_language": "en"
 			},
 			"source": {
 				"id": "fam",
@@ -41,7 +43,8 @@
 			"citation": {
 				"source_id": "fam",
 				"quote": "Fictional words",
-				"locator": "x"
+				"locator": "x",
+				"quote_language": "en"
 			},
 			"source": {
 				"id": "fam",
@@ -62,7 +65,8 @@
 			"citation": {
 				"source_id": "fam",
 				"quote": "Fictional words",
-				"locator": "x"
+				"locator": "x",
+				"quote_language": "en"
 			},
 			"source": {
 				"id": "fam",
@@ -84,7 +88,8 @@
 				"source_id": "pub",
 				"via": "fam",
 				"quote": "Fictional words",
-				"time": "00:10"
+				"time": "00:10",
+				"quote_language": "en"
 			},
 			"source": {
 				"id": "pub",
@@ -105,7 +110,8 @@
 			"citation": {
 				"source_id": "pub",
 				"quote": "Fictional words",
-				"time": "00:10"
+				"time": "00:10",
+				"quote_language": "en"
 			},
 			"source": {
 				"id": "pub",
@@ -128,6 +134,23 @@
 			},
 			"corroborated": false,
 			"shown": false
+		},
+		{
+			"name": "quote-publication: non-English citation without English is refused",
+			"citation": {
+				"source_id": "fam",
+				"quote": "Fiktive verter.",
+				"locator": "x",
+				"quote_language": "yi-Latn"
+			},
+			"source": {
+				"id": "fam",
+				"kind": "oral_history",
+				"title": "Fictional transcript",
+				"private": true
+			},
+			"corroborated": false,
+			"valid": false
 		}
 	]
 }

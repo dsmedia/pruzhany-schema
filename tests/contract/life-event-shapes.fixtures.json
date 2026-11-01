@@ -42,7 +42,19 @@
 											"bbox": [10, 10, 80, 20],
 											"text": "זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							]
 						}
@@ -105,7 +117,19 @@
 									"bbox": [10, 10, 80, 20],
 									"text": "זייער טעכטערל"
 								}
-							]
+							],
+							"quote_english": {
+								"text": "their little daughter",
+								"language": "en",
+								"based_on": {
+									"source_text": "זייער טעכטערל"
+								},
+								"attribution": {
+									"kind": "person",
+									"by": "Fictional translator",
+									"on": "2026-11-01"
+								}
+							}
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -143,7 +167,19 @@
 									"bbox": [0, 0, 100, 100],
 									"text": "ריבטשע משה זייער טעכטערל"
 								}
-							]
+							],
+							"quote_english": {
+								"text": "Rivtche Moshe their little daughter",
+								"language": "en",
+								"based_on": {
+									"source_text": "ריבטשע משה זייער טעכטערל"
+								},
+								"attribution": {
+									"kind": "person",
+									"by": "Fictional translator",
+									"on": "2026-11-01"
+								}
+							}
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -176,7 +212,19 @@
 									"bbox": [0, 0, 100, 100],
 									"text": "ריבטשע משה זייער טעכטערל"
 								}
-							]
+							],
+							"quote_english": {
+								"text": "Rivtche Moshe their little daughter",
+								"language": "en",
+								"based_on": {
+									"source_text": "ריבטשע משה זייער טעכטערל"
+								},
+								"attribution": {
+									"kind": "person",
+									"by": "Fictional translator",
+									"on": "2026-11-01"
+								}
+							}
 						}
 					],
 					"evidence_confidence": "confirmed",
@@ -642,7 +690,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							]
 						},
@@ -663,7 +723,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "צעסקעלע"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Tseskele",
+										"language": "en",
+										"based_on": {
+											"source_text": "צעסקעלע"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							]
 						}
@@ -1228,7 +1300,8 @@
 													"bbox": [0, 0, 100, 100],
 													"text": "Hilde, the bride's mother"
 												}
-											]
+											],
+											"quote_language": "en"
 										}
 									],
 									"evidence_confidence": "confirmed",
@@ -1714,7 +1787,8 @@
 													"bbox": [0, 0, 100, 100],
 													"text": "Hilde, the bride's mother"
 												}
-											]
+											],
+											"quote_language": "en"
 										}
 									],
 									"evidence_confidence": "confirmed",
@@ -2409,7 +2483,8 @@
 													"bbox": [0, 0, 100, 100],
 													"text": "Hilde, the bride's mother"
 												}
-											]
+											],
+											"quote_language": "en"
 										}
 									],
 									"evidence_confidence": "confirmed",
@@ -2622,7 +2697,8 @@
 													"bbox": [0, 0, 100, 100],
 													"text": "Hilde, the bride's mother"
 												}
-											]
+											],
+											"quote_language": "en"
 										}
 									],
 									"evidence_confidence": "confirmed",
@@ -2953,7 +3029,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -2998,6 +3086,14 @@
 				{
 					"path": ["shared_record", "relations", 0, "citations", 0, "addresses", 0, "text"],
 					"value": "not printed here"
+				},
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "quote_english"],
+					"remove": true
+				},
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "quote_language"],
+					"value": "en"
 				}
 			],
 			"error": "citation quote must occur in content item"
@@ -3027,7 +3123,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -3060,7 +3168,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -3093,7 +3213,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -3327,7 +3459,19 @@
 										"bbox": [0, 0, 100, 100],
 										"text": "ריבטשע משה זייער טעכטערל"
 									}
-								]
+								],
+								"quote_english": {
+									"text": "Rivtche Moshe their little daughter",
+									"language": "en",
+									"based_on": {
+										"source_text": "ריבטשע משה זייער טעכטערל"
+									},
+									"attribution": {
+										"kind": "person",
+										"by": "Fictional translator",
+										"on": "2026-11-01"
+									}
+								}
 							}
 						]
 					}
@@ -3380,7 +3524,19 @@
 													"bbox": [0, 0, 100, 100],
 													"text": "ריבטשע משה זייער טעכטערל"
 												}
-											]
+											],
+											"quote_english": {
+												"text": "Rivtche Moshe their little daughter",
+												"language": "en",
+												"based_on": {
+													"source_text": "ריבטשע משה זייער טעכטערל"
+												},
+												"attribution": {
+													"kind": "person",
+													"by": "Fictional translator",
+													"on": "2026-11-01"
+												}
+											}
 										}
 									]
 								}
@@ -3466,6 +3622,10 @@
 				{
 					"path": ["shared_record", "relations", 0, "citations", 0, "quote"],
 					"value": null
+				},
+				{
+					"path": ["shared_record", "relations", 0, "citations", 0, "quote_english"],
+					"remove": true
 				}
 			],
 			"error": "located notice citation needs content item, issue date and quote"
@@ -3636,7 +3796,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -3665,7 +3837,8 @@
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
 									"unit_id": "notice-1938-12-16",
-									"quote": "Earlier reading retained verbatim"
+									"quote": "Earlier reading retained verbatim",
+									"quote_language": "en"
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -3709,7 +3882,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -3739,7 +3924,8 @@
 									"edition_date": "1938-12-16",
 									"unit_id": "old-content-item-id",
 									"quote": "Earlier reading retained verbatim",
-									"record_id": "original-record"
+									"record_id": "original-record",
+									"quote_language": "en"
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -3783,7 +3969,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -3816,7 +4014,19 @@
 											"bbox": [0, 0, 100, 100],
 											"text": "ריבטשע משה זייער טעכטערל"
 										}
-									]
+									],
+									"quote_english": {
+										"text": "Rivtche Moshe their little daughter",
+										"language": "en",
+										"based_on": {
+											"source_text": "ריבטשע משה זייער טעכטערל"
+										},
+										"attribution": {
+											"kind": "person",
+											"by": "Fictional translator",
+											"on": "2026-11-01"
+										}
+									}
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -4062,6 +4272,10 @@
 			"changes": [
 				{
 					"path": ["quote"],
+					"remove": true
+				},
+				{
+					"path": ["quote_english"],
 					"remove": true
 				}
 			],
@@ -4413,7 +4627,19 @@
 								"source_id": "paper",
 								"edition_date": "1938-12-16",
 								"unit_id": "notice-1938-12-16",
-								"quote": "זייער טעכטערל"
+								"quote": "זייער טעכטערל",
+								"quote_english": {
+									"text": "their little daughter",
+									"language": "en",
+									"based_on": {
+										"source_text": "זייער טעכטערל"
+									},
+									"attribution": {
+										"kind": "person",
+										"by": "Fictional translator",
+										"on": "2026-11-01"
+									}
+								}
 							}
 						],
 						"evidence_confidence": "confirmed",
@@ -4431,6 +4657,18 @@
 							"child_count": "1"
 						}
 					}
+				}
+			]
+		},
+		{
+			"name": "located non-English citation without English is refused",
+			"model": "SiteCitation",
+			"valid": false,
+			"error": "needs quote_english",
+			"changes": [
+				{
+					"path": ["quote_english"],
+					"remove": true
 				}
 			]
 		}

@@ -22,6 +22,7 @@ describe('statement citation shortfalls are advisory', () => {
 			source_id: 'judewicz-kaplan',
 			locator: 'person-x',
 			quote: 'Fictional words',
+			quote_language: 'en',
 		});
 		expect(statementCitationShortfalls(citation, register)).toEqual(['source.quotes_cleared']);
 	});

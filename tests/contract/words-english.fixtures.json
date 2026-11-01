@@ -157,12 +157,12 @@
 			"source_id": "paper",
 			"edition_date": "1938-12-16",
 			"unit_id": "notice-1938-12-16",
-			"quote": "\u05d6\u05d9\u05d9\u05e2\u05e8 \u05d8\u05e2\u05db\u05d8\u05e2\u05e8\u05dc",
+			"quote": "זייער טעכטערל",
 			"addresses": [
 				{
 					"image_uri": "page-1938-12-16.png",
 					"bbox": [10, 10, 80, 20],
-					"text": "\u05d6\u05d9\u05d9\u05e2\u05e8 \u05d8\u05e2\u05db\u05d8\u05e2\u05e8\u05dc"
+					"text": "זייער טעכטערל"
 				}
 			]
 		},
@@ -215,9 +215,9 @@
 	},
 	"cases": [
 		{
-			"name": "English staging: old Citation",
+			"name": "English required: a Citation quote without English is refused",
 			"model": "Citation",
-			"valid": true,
+			"valid": false,
 			"changes": []
 		},
 		{
@@ -391,7 +391,7 @@
 			]
 		},
 		{
-			"name": "English staging: old MediaFamilyWords",
+			"name": "MediaFamilyWords English remains optional",
 			"model": "MediaFamilyWords",
 			"valid": true,
 			"changes": []
@@ -611,9 +611,9 @@
 			]
 		},
 		{
-			"name": "Citation release accepts legacy quote yi",
+			"name": "Citation release refuses a quote without English, yi",
 			"model": "Citation",
-			"valid": true,
+			"valid": false,
 			"changes": [
 				{
 					"path": ["quote"],
@@ -626,7 +626,7 @@
 			]
 		},
 		{
-			"name": "Citation release accepts legacy quote en",
+			"name": "Citation release exempts an English quote, en",
 			"model": "Citation",
 			"valid": true,
 			"changes": [
@@ -641,7 +641,7 @@
 			]
 		},
 		{
-			"name": "Citation release accepts legacy quote en-US",
+			"name": "Citation release exempts an English quote, en-US",
 			"model": "Citation",
 			"valid": true,
 			"changes": [
@@ -656,9 +656,9 @@
 			]
 		},
 		{
-			"name": "Citation release accepts legacy quote None",
+			"name": "Citation release refuses a quote without English, None",
 			"model": "Citation",
-			"valid": true,
+			"valid": false,
 			"changes": [
 				{
 					"path": ["quote"],
@@ -671,9 +671,9 @@
 			]
 		},
 		{
-			"name": "SiteCitation release accepts legacy quote yi",
+			"name": "SiteCitation release refuses a quote without English, yi",
 			"model": "SiteCitation",
-			"valid": true,
+			"valid": false,
 			"changes": [
 				{
 					"path": ["quote"],
@@ -690,7 +690,7 @@
 			]
 		},
 		{
-			"name": "SiteCitation release accepts legacy quote en",
+			"name": "SiteCitation release exempts an English quote, en",
 			"model": "SiteCitation",
 			"valid": true,
 			"changes": [
@@ -709,7 +709,7 @@
 			]
 		},
 		{
-			"name": "SiteCitation release accepts legacy quote en-US",
+			"name": "SiteCitation release exempts an English quote, en-US",
 			"model": "SiteCitation",
 			"valid": true,
 			"changes": [
@@ -728,9 +728,9 @@
 			]
 		},
 		{
-			"name": "SiteCitation release accepts legacy quote None",
+			"name": "SiteCitation release refuses a quote without English, None",
 			"model": "SiteCitation",
-			"valid": true,
+			"valid": false,
 			"changes": [
 				{
 					"path": ["quote"],

@@ -144,12 +144,8 @@ def instance(base, changes):
     return made
 
 
-def errors(class_name, value, staged=False):
-    if staged:
-        from test_words_english import activated_schema
-        schema = activated_schema()
-    else:
-        schema = SCHEMA
+def errors(class_name, value):
+    schema = SCHEMA
     validator = Draft201909Validator({'$schema': schema['$schema'], '$defs': schema['$defs'],
                                       '$ref': f'#/$defs/{class_name}'})
     return [error.message for error in validator.iter_errors(value)]
@@ -261,8 +257,8 @@ class TheRules(unittest.TestCase):
         for part in self.parts:
             with self.subTest(part=part['holds']):
                 base = self.bases[part['class']]
-                self.assertEqual(errors(part['class'], instance(base, part['passes']), part.get('staged', False)), [])
-                self.assertNotEqual(errors(part['class'], instance(base, part['fails']), part.get('staged', False)), [])
+                self.assertEqual(errors(part['class'], instance(base, part['passes'])), [])
+                self.assertNotEqual(errors(part['class'], instance(base, part['fails'])), [])
 
 
 class TheCatalogRules(unittest.TestCase):

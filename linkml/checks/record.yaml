@@ -392,17 +392,16 @@ checks:
           LinkML cannot compare sibling string values. Exact byte equality is checked by
           the retained twins; words-english.fixtures.json supplies passing and failing cases.
       - holds: >-
-          When the single rollout switch is enabled, a quote without an explicit English
+          Under the active rollout rule, a quote without an explicit English
           language exemption carries non-null quote_english; SiteCitation inherits this.
         how: linkml_rule
         class: Citation
         rule: A quote not explicitly marked as English carries quote_english.
-        staged: true
         passes:
           quote: Fictional source words
           quote_language: en
         fails:
-          quote: Fictional source words
+          quote: Fiktive verter.
           quote_language: yi
 
 
@@ -614,6 +613,15 @@ checks:
           unit_id: cu-1
           edition_date: '1938-12-16'
           quote: זייער טעכטערל
+          quote_english:
+            text: their little daughter
+            language: en
+            based_on:
+              source_text: זייער טעכטערל
+            attribution:
+              kind: person
+              by: Fictional translator
+              'on': '2026-11-01'
           addresses:
             - image_uri: pruzst19381216-01.1.1.png
               bbox: [10, 20, 30, 40]
@@ -622,6 +630,15 @@ checks:
           page: ~
           unit_id: cu-1
           quote: זייער טעכטערל
+          quote_english:
+            text: their little daughter
+            language: en
+            based_on:
+              source_text: זייער טעכטערל
+            attribution:
+              kind: person
+              by: Fictional translator
+              'on': '2026-11-01'
           addresses:
             - image_uri: pruzst19381216-01.1.1.png
               bbox: [10, 20, 30, 40]

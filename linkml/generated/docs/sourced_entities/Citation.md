@@ -412,7 +412,7 @@ rules:
             value: true
         range: CitedTranslation
         required: true
-  deactivated: true
+  deactivated: false
   description: A quote not explicitly marked as English carries quote_english.
   title: require_non_english_quote_english
 any_of:
@@ -692,7 +692,7 @@ rules:
             value: true
         range: CitedTranslation
         required: true
-  deactivated: true
+  deactivated: false
   description: A quote not explicitly marked as English carries quote_english.
   title: require_non_english_quote_english
 any_of:
