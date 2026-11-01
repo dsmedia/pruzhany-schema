@@ -32,4 +32,13 @@ jobs:
         with:
           version: '0.11.13'
 
+      - name: Cache the pinned IIIF schema
+        # actions/cache GitHub releases and README, read 1 November 2026:
+        # https://github.com/actions/cache/releases/tag/v6.1.0
+        # https://github.com/actions/cache/blob/v6.1.0/README.md
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: standards/.cache/iiif-presentation-3-3891f47/
+          key: ${{ runner.os }}-iiif-schema-${{ hashFiles('standards/iiif-presentation-3-3891f47/pin.json') }}
+
       - run: bin/verify zod pydantic contract pilot standards vocabulary entities linkml
