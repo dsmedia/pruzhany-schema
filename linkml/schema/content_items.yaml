@@ -186,6 +186,21 @@ classes:
         range: NonBlankText
         description: >-
           The life event the content item prints, by the event's id, where it prints one.
+      language:
+        # vocabulary/site-content.json, binding source_language.
+        slot_uri: rico:hasOrHadLanguage
+        range: LanguageTag
+        # standards/impresso-329323c/paper_contentitem.schema.json, lg,
+        # read 1 November 2026: two- or three-letter lowercase ISO 639 codes; the end guard
+        # refuses a trailing newline, which a bare $ lets through in Python.
+        pattern: '^[a-z]{2,3}$(?![\s\S])'
+        description: >-
+          The language most of the item is printed in, as the reading step judged it,
+          as a two- or three-letter ISO 639 code (Impresso's lg).
+        annotations:
+          impresso: >-
+            The content item's language (lg in paper_contentitem.schema.json and
+            issue.schema.json, standards/impresso-329323c, read 1 November 2026).
     rules:
       - description: >-
           A greeting, thanks, notice, announcement, appeal or commercial advertisement is an

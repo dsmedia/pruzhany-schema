@@ -90,6 +90,7 @@ class ContentItem(Strict):
     organization_ids: list[Annotated[str, Field(pattern='\\S')]] = Field(default=...)
     cross_references: list[CrossReference] = Field(default=...)
     event_id: Annotated[str, Field(pattern='\\S')] | None = Field(default=None)
+    language: Annotated[str, Field(pattern='^[a-z]{2,3}$')] | None = Field(default=None)
 
     @model_validator(mode='after')
     def content_contract(self):

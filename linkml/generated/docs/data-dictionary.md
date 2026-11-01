@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `25086684ce426e523a18b4965c4bda778f3231169d0dd8e04b67e449e33ee52c`.
+Definition fingerprint: `c87f0ceb6720d32b63ac3ac40339f1fb35c3e098aac6d4936a6150fa1b920253`.
 
 ## What the Pruzhany issue documents share
 
@@ -285,6 +285,7 @@ Meaning: ehri:RecordResource (class uri).
 | `event_id` | The life event the content item prints, by the event's id, where it prints one. | NonBlankText | No | No direct mapping recorded |
 | `full_text` | The content item's printed text, a copy made for the site from the lines of its regions. | string | Yes | pc:site_site_copy (related mappings) |
 | `id` | The content item's id within the issue. | NonBlankText | Yes | No direct mapping recorded |
+| `language` | The language most of the item is printed in, as the reading step judged it, as a two- or three-letter ISO 639 code (Impresso's lg). | LanguageTag; pattern: ^[a-z]{2,3}$(?![\s\S]) | No | rico:hasOrHadLanguage (slot uri) |
 | `location_ids` | The places the content item names, by their ids in the shared record. | list of NonBlankText | Yes | No direct mapping recorded |
 | `organization_ids` | The organisations the content item names, by their ids in the shared record. | list of NonBlankText | Yes | No direct mapping recorded |
 | `page_blocks` | The regions the content item is printed in, page by page, in reading order. | list of ContentItemBlockRef; minimum items: 1 | Yes | pc:site_site_copy (related mappings) |
