@@ -3,7 +3,7 @@ id: https://pruzhany.org/ns/answers
 name: pruzhany_answers
 title: Current structured model answers
 description: >-
-  The six current paid answer shapes. Procedural descriptions and titles are the exact strings sent by
+  The seven current paid answer shapes. Procedural descriptions and titles are the exact strings sent by
   steps; no prompt text or answer data is included.
 prefixes:
   linkml: https://w3id.org/linkml/

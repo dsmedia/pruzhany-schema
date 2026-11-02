@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `4259ea92b2d3de45ecbe93bae4dfedce73f311ab56fe58f95940a4445579554a`.
+Definition fingerprint: `58c670fd716403493b8e5776782e268b6de0de2d804580f82cefc95fc3aa6a88`.
 
 ## What the Pruzhany issue documents share
 
