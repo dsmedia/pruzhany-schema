@@ -34,7 +34,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "זייער טעכטערל",
 									"addresses": [
 										{
@@ -109,7 +109,7 @@
 						{
 							"source_id": "paper",
 							"edition_date": "1938-12-16",
-							"unit_id": "notice-1938-12-16",
+							"unit_id": "cu-1938-12-16-i0001",
 							"quote": "זייער טעכטערל",
 							"addresses": [
 								{
@@ -159,7 +159,7 @@
 						{
 							"source_id": "paper",
 							"edition_date": "1938-12-16",
-							"unit_id": "notice-1938-12-16",
+							"unit_id": "cu-1938-12-16-i0001",
 							"quote": "ריבטשע משה זייער טעכטערל",
 							"addresses": [
 								{
@@ -204,7 +204,7 @@
 						{
 							"source_id": "paper",
 							"edition_date": "1938-12-16",
-							"unit_id": "notice-1938-12-16",
+							"unit_id": "cu-1938-12-16-i0001",
 							"quote": "ריבטשע משה זייער טעכטערל",
 							"addresses": [
 								{
@@ -248,19 +248,20 @@
 					"edition_date": "1938-12-16",
 					"pages": [
 						{
-							"id": "page-1938-12-16",
+							"id": "page-1938-12-16-1",
 							"issue_date": "1938-12-16",
 							"page_number": 1,
 							"image_uri": "page-1938-12-16.png",
 							"dimensions": [200, 300],
 							"blocks": [
 								{
-									"id": "block",
+									"id": "blk-2000-01-01-p1-r001",
 									"bbox": [0, 0, 100, 100],
 									"transcription": "ריבטשע משה זייער טעכטערל",
-									"unit_id": "notice-1938-12-16"
+									"unit_id": "cu-1938-12-16-i0001"
 								}
-							]
+							],
+							"newspaper": "fictional-first-paper"
 						}
 					]
 				},
@@ -269,7 +270,7 @@
 					"vocabulary_version": "0.1.0",
 					"content_items": [
 						{
-							"id": "notice-1938-12-16",
+							"id": "cu-1938-12-16-i0001",
 							"type": "ad",
 							"subtype": "birth_greeting",
 							"supplied_title": {
@@ -295,15 +296,16 @@
 							"block_breaks": [],
 							"page_blocks": [
 								{
-									"page_id": "page-1938-12-16",
-									"block_ids": ["block"]
+									"page_id": "page-1938-12-16-1",
+									"block_ids": ["blk-2000-01-01-p1-r001"]
 								}
 							],
 							"location_ids": [],
 							"organization_ids": [],
 							"subject_ids": [],
 							"cross_references": [],
-							"event_id": "event-judewicz-birth"
+							"event_id": "event-judewicz-birth",
+							"newspaper": "fictional-first-paper"
 						}
 					],
 					"sections": []
@@ -314,7 +316,7 @@
 						{
 							"id": "mention-1938-12-16-0",
 							"person_id": "person-rivtche-judewicz",
-							"content_item_id": "notice-1938-12-16",
+							"content_item_id": "cu-1938-12-16-i0001",
 							"printed_name": "ריבטשע",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -329,7 +331,7 @@
 						{
 							"id": "mention-1938-12-16-1",
 							"person_id": "person-moshe-judewicz",
-							"content_item_id": "notice-1938-12-16",
+							"content_item_id": "cu-1938-12-16-i0001",
 							"printed_name": "משה",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -344,7 +346,7 @@
 						{
 							"id": "mention-1938-12-16-2",
 							"person_id": "person-judewicz-daughter-1938",
-							"content_item_id": "notice-1938-12-16",
+							"content_item_id": "cu-1938-12-16-i0001",
 							"printed_name": "זייער טעכטערל",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -365,7 +367,7 @@
 							"id": "event-judewicz-birth",
 							"content_items": [
 								{
-									"content_item_id": "notice-1938-12-16",
+									"content_item_id": "cu-1938-12-16-i0001",
 									"role": "congratulation"
 								}
 							]
@@ -378,19 +380,20 @@
 					"edition_date": "1938-12-23",
 					"pages": [
 						{
-							"id": "page-1938-12-23",
+							"id": "page-1938-12-23-1",
 							"issue_date": "1938-12-23",
 							"page_number": 1,
 							"image_uri": "page-1938-12-23.png",
 							"dimensions": [200, 300],
 							"blocks": [
 								{
-									"id": "block",
+									"id": "blk-2000-01-01-p1-r001",
 									"bbox": [0, 0, 100, 100],
 									"transcription": "ריבטשע משה זייער טעכטערל",
-									"unit_id": "notice-1938-12-23"
+									"unit_id": "cu-1938-12-23-i0001"
 								}
-							]
+							],
+							"newspaper": "fictional-first-paper"
 						}
 					]
 				},
@@ -399,7 +402,7 @@
 					"vocabulary_version": "0.1.0",
 					"content_items": [
 						{
-							"id": "notice-1938-12-23",
+							"id": "cu-1938-12-23-i0001",
 							"type": "ad",
 							"subtype": "birth_greeting",
 							"supplied_title": {
@@ -425,15 +428,16 @@
 							"block_breaks": [],
 							"page_blocks": [
 								{
-									"page_id": "page-1938-12-23",
-									"block_ids": ["block"]
+									"page_id": "page-1938-12-23-1",
+									"block_ids": ["blk-2000-01-01-p1-r001"]
 								}
 							],
 							"location_ids": [],
 							"organization_ids": [],
 							"subject_ids": [],
 							"cross_references": [],
-							"event_id": "event-judewicz-birth"
+							"event_id": "event-judewicz-birth",
+							"newspaper": "fictional-first-paper"
 						}
 					],
 					"sections": []
@@ -444,7 +448,7 @@
 						{
 							"id": "mention-1938-12-23-0",
 							"person_id": "person-rivtche-judewicz",
-							"content_item_id": "notice-1938-12-23",
+							"content_item_id": "cu-1938-12-23-i0001",
 							"printed_name": "ריבטשע",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -459,7 +463,7 @@
 						{
 							"id": "mention-1938-12-23-1",
 							"person_id": "person-moshe-judewicz",
-							"content_item_id": "notice-1938-12-23",
+							"content_item_id": "cu-1938-12-23-i0001",
 							"printed_name": "משה",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -474,7 +478,7 @@
 						{
 							"id": "mention-1938-12-23-2",
 							"person_id": "person-judewicz-daughter-1938",
-							"content_item_id": "notice-1938-12-23",
+							"content_item_id": "cu-1938-12-23-i0001",
 							"printed_name": "זייער טעכטערל",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -495,7 +499,7 @@
 							"id": "event-judewicz-birth",
 							"content_items": [
 								{
-									"content_item_id": "notice-1938-12-23",
+									"content_item_id": "cu-1938-12-23-i0001",
 									"role": "congratulation"
 								}
 							]
@@ -508,19 +512,20 @@
 					"edition_date": "1938-12-30",
 					"pages": [
 						{
-							"id": "page-1938-12-30",
+							"id": "page-1938-12-30-1",
 							"issue_date": "1938-12-30",
 							"page_number": 1,
 							"image_uri": "page-1938-12-30.png",
 							"dimensions": [200, 300],
 							"blocks": [
 								{
-									"id": "block",
+									"id": "blk-2000-01-01-p1-r001",
 									"bbox": [0, 0, 100, 100],
 									"transcription": "ריבטשע משה זייער טעכטערל",
-									"unit_id": "notice-1938-12-30"
+									"unit_id": "cu-1938-12-30-i0001"
 								}
-							]
+							],
+							"newspaper": "fictional-first-paper"
 						}
 					]
 				},
@@ -529,7 +534,7 @@
 					"vocabulary_version": "0.1.0",
 					"content_items": [
 						{
-							"id": "notice-1938-12-30",
+							"id": "cu-1938-12-30-i0001",
 							"type": "ad",
 							"subtype": "birth_greeting",
 							"supplied_title": {
@@ -555,15 +560,16 @@
 							"block_breaks": [],
 							"page_blocks": [
 								{
-									"page_id": "page-1938-12-30",
-									"block_ids": ["block"]
+									"page_id": "page-1938-12-30-1",
+									"block_ids": ["blk-2000-01-01-p1-r001"]
 								}
 							],
 							"location_ids": [],
 							"organization_ids": [],
 							"subject_ids": [],
 							"cross_references": [],
-							"event_id": "event-judewicz-birth"
+							"event_id": "event-judewicz-birth",
+							"newspaper": "fictional-first-paper"
 						}
 					],
 					"sections": []
@@ -574,7 +580,7 @@
 						{
 							"id": "mention-1938-12-30-0",
 							"person_id": "person-rivtche-judewicz",
-							"content_item_id": "notice-1938-12-30",
+							"content_item_id": "cu-1938-12-30-i0001",
 							"printed_name": "ריבטשע",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -589,7 +595,7 @@
 						{
 							"id": "mention-1938-12-30-1",
 							"person_id": "person-moshe-judewicz",
-							"content_item_id": "notice-1938-12-30",
+							"content_item_id": "cu-1938-12-30-i0001",
 							"printed_name": "משה",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -604,7 +610,7 @@
 						{
 							"id": "mention-1938-12-30-2",
 							"person_id": "person-judewicz-daughter-1938",
-							"content_item_id": "notice-1938-12-30",
+							"content_item_id": "cu-1938-12-30-i0001",
 							"printed_name": "זייער טעכטערל",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -625,7 +631,7 @@
 							"id": "event-judewicz-birth",
 							"content_items": [
 								{
-									"content_item_id": "notice-1938-12-30",
+									"content_item_id": "cu-1938-12-30-i0001",
 									"role": "congratulation"
 								}
 							]
@@ -682,7 +688,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -715,7 +721,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1939-04-14",
-									"unit_id": "notice-1939-04-14",
+									"unit_id": "cu-1939-04-14-i0001",
 									"quote": "צעסקעלע",
 									"addresses": [
 										{
@@ -749,19 +755,20 @@
 								"edition_date": "1938-12-16",
 								"pages": [
 									{
-										"id": "page-1938-12-16",
+										"id": "page-1938-12-16-1",
 										"issue_date": "1938-12-16",
 										"page_number": 1,
 										"image_uri": "page-1938-12-16.png",
 										"dimensions": [200, 300],
 										"blocks": [
 											{
-												"id": "block",
+												"id": "blk-2000-01-01-p1-r001",
 												"bbox": [0, 0, 100, 100],
 												"transcription": "ריבטשע משה זייער טעכטערל",
-												"unit_id": "notice-1938-12-16"
+												"unit_id": "cu-1938-12-16-i0001"
 											}
-										]
+										],
+										"newspaper": "fictional-first-paper"
 									}
 								]
 							},
@@ -770,7 +777,7 @@
 								"vocabulary_version": "0.1.0",
 								"content_items": [
 									{
-										"id": "notice-1938-12-16",
+										"id": "cu-1938-12-16-i0001",
 										"type": "ad",
 										"subtype": "birth_greeting",
 										"supplied_title": {
@@ -796,15 +803,16 @@
 										"block_breaks": [],
 										"page_blocks": [
 											{
-												"page_id": "page-1938-12-16",
-												"block_ids": ["block"]
+												"page_id": "page-1938-12-16-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
 											}
 										],
 										"location_ids": [],
 										"organization_ids": [],
 										"subject_ids": [],
 										"cross_references": [],
-										"event_id": "event-judewicz-birth"
+										"event_id": "event-judewicz-birth",
+										"newspaper": "fictional-first-paper"
 									}
 								],
 								"sections": []
@@ -815,7 +823,7 @@
 									{
 										"id": "mention-1938-12-16-0",
 										"person_id": "person-rivtche-judewicz",
-										"content_item_id": "notice-1938-12-16",
+										"content_item_id": "cu-1938-12-16-i0001",
 										"printed_name": "ריבטשע",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -830,7 +838,7 @@
 									{
 										"id": "mention-1938-12-16-1",
 										"person_id": "person-moshe-judewicz",
-										"content_item_id": "notice-1938-12-16",
+										"content_item_id": "cu-1938-12-16-i0001",
 										"printed_name": "משה",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -845,7 +853,7 @@
 									{
 										"id": "mention-1938-12-16-2",
 										"person_id": "person-judewicz-daughter-1938",
-										"content_item_id": "notice-1938-12-16",
+										"content_item_id": "cu-1938-12-16-i0001",
 										"printed_name": "זייער טעכטערל",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -866,7 +874,7 @@
 										"id": "event-judewicz-birth",
 										"content_items": [
 											{
-												"content_item_id": "notice-1938-12-16",
+												"content_item_id": "cu-1938-12-16-i0001",
 												"role": "congratulation"
 											}
 										]
@@ -879,19 +887,20 @@
 								"edition_date": "1938-12-23",
 								"pages": [
 									{
-										"id": "page-1938-12-23",
+										"id": "page-1938-12-23-1",
 										"issue_date": "1938-12-23",
 										"page_number": 1,
 										"image_uri": "page-1938-12-23.png",
 										"dimensions": [200, 300],
 										"blocks": [
 											{
-												"id": "block",
+												"id": "blk-2000-01-01-p1-r001",
 												"bbox": [0, 0, 100, 100],
 												"transcription": "ריבטשע משה זייער טעכטערל",
-												"unit_id": "notice-1938-12-23"
+												"unit_id": "cu-1938-12-23-i0001"
 											}
-										]
+										],
+										"newspaper": "fictional-first-paper"
 									}
 								]
 							},
@@ -900,7 +909,7 @@
 								"vocabulary_version": "0.1.0",
 								"content_items": [
 									{
-										"id": "notice-1938-12-23",
+										"id": "cu-1938-12-23-i0001",
 										"type": "ad",
 										"subtype": "birth_greeting",
 										"supplied_title": {
@@ -926,15 +935,16 @@
 										"block_breaks": [],
 										"page_blocks": [
 											{
-												"page_id": "page-1938-12-23",
-												"block_ids": ["block"]
+												"page_id": "page-1938-12-23-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
 											}
 										],
 										"location_ids": [],
 										"organization_ids": [],
 										"subject_ids": [],
 										"cross_references": [],
-										"event_id": "event-judewicz-birth"
+										"event_id": "event-judewicz-birth",
+										"newspaper": "fictional-first-paper"
 									}
 								],
 								"sections": []
@@ -945,7 +955,7 @@
 									{
 										"id": "mention-1938-12-23-0",
 										"person_id": "person-rivtche-judewicz",
-										"content_item_id": "notice-1938-12-23",
+										"content_item_id": "cu-1938-12-23-i0001",
 										"printed_name": "ריבטשע",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -960,7 +970,7 @@
 									{
 										"id": "mention-1938-12-23-1",
 										"person_id": "person-moshe-judewicz",
-										"content_item_id": "notice-1938-12-23",
+										"content_item_id": "cu-1938-12-23-i0001",
 										"printed_name": "משה",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -975,7 +985,7 @@
 									{
 										"id": "mention-1938-12-23-2",
 										"person_id": "person-judewicz-daughter-1938",
-										"content_item_id": "notice-1938-12-23",
+										"content_item_id": "cu-1938-12-23-i0001",
 										"printed_name": "זייער טעכטערל",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -996,7 +1006,7 @@
 										"id": "event-judewicz-birth",
 										"content_items": [
 											{
-												"content_item_id": "notice-1938-12-23",
+												"content_item_id": "cu-1938-12-23-i0001",
 												"role": "congratulation"
 											}
 										]
@@ -1009,19 +1019,20 @@
 								"edition_date": "1938-12-30",
 								"pages": [
 									{
-										"id": "page-1938-12-30",
+										"id": "page-1938-12-30-1",
 										"issue_date": "1938-12-30",
 										"page_number": 1,
 										"image_uri": "page-1938-12-30.png",
 										"dimensions": [200, 300],
 										"blocks": [
 											{
-												"id": "block",
+												"id": "blk-2000-01-01-p1-r001",
 												"bbox": [0, 0, 100, 100],
 												"transcription": "ריבטשע משה זייער טעכטערל",
-												"unit_id": "notice-1938-12-30"
+												"unit_id": "cu-1938-12-30-i0001"
 											}
-										]
+										],
+										"newspaper": "fictional-first-paper"
 									}
 								]
 							},
@@ -1030,7 +1041,7 @@
 								"vocabulary_version": "0.1.0",
 								"content_items": [
 									{
-										"id": "notice-1938-12-30",
+										"id": "cu-1938-12-30-i0001",
 										"type": "ad",
 										"subtype": "birth_greeting",
 										"supplied_title": {
@@ -1056,15 +1067,16 @@
 										"block_breaks": [],
 										"page_blocks": [
 											{
-												"page_id": "page-1938-12-30",
-												"block_ids": ["block"]
+												"page_id": "page-1938-12-30-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
 											}
 										],
 										"location_ids": [],
 										"organization_ids": [],
 										"subject_ids": [],
 										"cross_references": [],
-										"event_id": "event-judewicz-birth"
+										"event_id": "event-judewicz-birth",
+										"newspaper": "fictional-first-paper"
 									}
 								],
 								"sections": []
@@ -1075,7 +1087,7 @@
 									{
 										"id": "mention-1938-12-30-0",
 										"person_id": "person-rivtche-judewicz",
-										"content_item_id": "notice-1938-12-30",
+										"content_item_id": "cu-1938-12-30-i0001",
 										"printed_name": "ריבטשע",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -1090,7 +1102,7 @@
 									{
 										"id": "mention-1938-12-30-1",
 										"person_id": "person-moshe-judewicz",
-										"content_item_id": "notice-1938-12-30",
+										"content_item_id": "cu-1938-12-30-i0001",
 										"printed_name": "משה",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -1105,7 +1117,7 @@
 									{
 										"id": "mention-1938-12-30-2",
 										"person_id": "person-judewicz-daughter-1938",
-										"content_item_id": "notice-1938-12-30",
+										"content_item_id": "cu-1938-12-30-i0001",
 										"printed_name": "זייער טעכטערל",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -1126,7 +1138,7 @@
 										"id": "event-judewicz-birth",
 										"content_items": [
 											{
-												"content_item_id": "notice-1938-12-30",
+												"content_item_id": "cu-1938-12-30-i0001",
 												"role": "congratulation"
 											}
 										]
@@ -1139,19 +1151,20 @@
 								"edition_date": "1939-04-14",
 								"pages": [
 									{
-										"id": "page-1939-04-14",
+										"id": "page-1939-04-14-1",
 										"issue_date": "1939-04-14",
 										"page_number": 1,
 										"image_uri": "page-1939-04-14.png",
 										"dimensions": [200, 300],
 										"blocks": [
 											{
-												"id": "block",
+												"id": "blk-2000-01-01-p1-r001",
 												"bbox": [0, 0, 100, 100],
 												"transcription": "צעסקעלע",
-												"unit_id": "notice-1939-04-14"
+												"unit_id": "cu-1939-04-14-i0001"
 											}
-										]
+										],
+										"newspaper": "fictional-first-paper"
 									}
 								]
 							},
@@ -1160,7 +1173,7 @@
 								"vocabulary_version": "0.1.0",
 								"content_items": [
 									{
-										"id": "notice-1939-04-14",
+										"id": "cu-1939-04-14-i0001",
 										"type": "ad",
 										"subtype": "birth_greeting",
 										"supplied_title": {
@@ -1186,14 +1199,15 @@
 										"block_breaks": [],
 										"page_blocks": [
 											{
-												"page_id": "page-1939-04-14",
-												"block_ids": ["block"]
+												"page_id": "page-1939-04-14-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
 											}
 										],
 										"location_ids": [],
 										"organization_ids": [],
 										"subject_ids": [],
-										"cross_references": []
+										"cross_references": [],
+										"newspaper": "fictional-first-paper"
 									}
 								],
 								"sections": []
@@ -1204,7 +1218,7 @@
 									{
 										"id": "mention-1939-04-14-0",
 										"person_id": "person-judewicz-daughter-1938",
-										"content_item_id": "notice-1939-04-14",
+										"content_item_id": "cu-1939-04-14-i0001",
 										"printed_name": "צעסקעלע",
 										"roles": ["subject"],
 										"address_grain": "words",
@@ -1292,7 +1306,7 @@
 										{
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
-											"unit_id": "notice-1938-12-16",
+											"unit_id": "cu-1938-12-16-i0001",
 											"quote": "Hilde, the bride's mother",
 											"addresses": [
 												{
@@ -1325,19 +1339,20 @@
 									"edition_date": "1938-12-16",
 									"pages": [
 										{
-											"id": "page-1938-12-16",
+											"id": "page-1938-12-16-1",
 											"issue_date": "1938-12-16",
 											"page_number": 1,
 											"image_uri": "page-1938-12-16.png",
 											"dimensions": [200, 300],
 											"blocks": [
 												{
-													"id": "block",
+													"id": "blk-2000-01-01-p1-r001",
 													"bbox": [0, 0, 100, 100],
 													"transcription": "Hilde, the bride's mother",
-													"unit_id": "notice-1938-12-16"
+													"unit_id": "cu-1938-12-16-i0001"
 												}
-											]
+											],
+											"newspaper": "fictional-first-paper"
 										}
 									]
 								},
@@ -1346,7 +1361,7 @@
 									"vocabulary_version": "0.1.0",
 									"content_items": [
 										{
-											"id": "notice-1938-12-16",
+											"id": "cu-1938-12-16-i0001",
 											"type": "ad",
 											"subtype": "birth_greeting",
 											"supplied_title": {
@@ -1372,15 +1387,16 @@
 											"block_breaks": [],
 											"page_blocks": [
 												{
-													"page_id": "page-1938-12-16",
-													"block_ids": ["block"]
+													"page_id": "page-1938-12-16-1",
+													"block_ids": ["blk-2000-01-01-p1-r001"]
 												}
 											],
 											"location_ids": [],
 											"organization_ids": [],
 											"subject_ids": [],
 											"cross_references": [],
-											"event_id": "event-judewicz-birth"
+											"event_id": "event-judewicz-birth",
+											"newspaper": "fictional-first-paper"
 										}
 									],
 									"sections": []
@@ -1391,7 +1407,7 @@
 										{
 											"id": "mention-1938-12-16-0",
 											"person_id": "mother",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "Hilde",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -1406,7 +1422,7 @@
 										{
 											"id": "mention-1938-12-16-1",
 											"person_id": "bride",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "bride",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -1427,7 +1443,7 @@
 											"id": "event-judewicz-birth",
 											"content_items": [
 												{
-													"content_item_id": "notice-1938-12-16",
+													"content_item_id": "cu-1938-12-16-i0001",
 													"role": "congratulation"
 												}
 											]
@@ -1514,19 +1530,20 @@
 									"edition_date": "1938-12-16",
 									"pages": [
 										{
-											"id": "page-1938-12-16",
+											"id": "page-1938-12-16-1",
 											"issue_date": "1938-12-16",
 											"page_number": 1,
 											"image_uri": "page-1938-12-16.png",
 											"dimensions": [200, 300],
 											"blocks": [
 												{
-													"id": "block",
+													"id": "blk-2000-01-01-p1-r001",
 													"bbox": [0, 0, 100, 100],
 													"transcription": "Yosef",
-													"unit_id": "notice-1938-12-16"
+													"unit_id": "cu-1938-12-16-i0001"
 												}
-											]
+											],
+											"newspaper": "fictional-first-paper"
 										}
 									]
 								},
@@ -1535,7 +1552,7 @@
 									"vocabulary_version": "0.1.0",
 									"content_items": [
 										{
-											"id": "notice-1938-12-16",
+											"id": "cu-1938-12-16-i0001",
 											"type": "ad",
 											"subtype": "birth_greeting",
 											"supplied_title": {
@@ -1561,15 +1578,16 @@
 											"block_breaks": [],
 											"page_blocks": [
 												{
-													"page_id": "page-1938-12-16",
-													"block_ids": ["block"]
+													"page_id": "page-1938-12-16-1",
+													"block_ids": ["blk-2000-01-01-p1-r001"]
 												}
 											],
 											"location_ids": [],
 											"organization_ids": [],
 											"subject_ids": [],
 											"cross_references": [],
-											"event_id": "death"
+											"event_id": "death",
+											"newspaper": "fictional-first-paper"
 										}
 									],
 									"sections": []
@@ -1580,7 +1598,7 @@
 										{
 											"id": "mention-1938-12-16-0",
 											"person_id": "yosef",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "Yosef",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -1601,7 +1619,7 @@
 											"id": "death",
 											"content_items": [
 												{
-													"content_item_id": "notice-1938-12-16",
+													"content_item_id": "cu-1938-12-16-i0001",
 													"role": "congratulation"
 												}
 											]
@@ -1614,19 +1632,20 @@
 									"edition_date": "1939-01-16",
 									"pages": [
 										{
-											"id": "page-1939-01-16",
+											"id": "page-1939-01-16-1",
 											"issue_date": "1939-01-16",
 											"page_number": 1,
 											"image_uri": "page-1939-01-16.png",
 											"dimensions": [200, 300],
 											"blocks": [
 												{
-													"id": "block",
+													"id": "blk-2000-01-01-p1-r001",
 													"bbox": [0, 0, 100, 100],
 													"transcription": "Yosef",
-													"unit_id": "notice-1939-01-16"
+													"unit_id": "cu-1939-01-16-i0001"
 												}
-											]
+											],
+											"newspaper": "fictional-first-paper"
 										}
 									]
 								},
@@ -1635,7 +1654,7 @@
 									"vocabulary_version": "0.1.0",
 									"content_items": [
 										{
-											"id": "notice-1939-01-16",
+											"id": "cu-1939-01-16-i0001",
 											"type": "ad",
 											"subtype": "birth_greeting",
 											"supplied_title": {
@@ -1661,15 +1680,16 @@
 											"block_breaks": [],
 											"page_blocks": [
 												{
-													"page_id": "page-1939-01-16",
-													"block_ids": ["block"]
+													"page_id": "page-1939-01-16-1",
+													"block_ids": ["blk-2000-01-01-p1-r001"]
 												}
 											],
 											"location_ids": [],
 											"organization_ids": [],
 											"subject_ids": [],
 											"cross_references": [],
-											"event_id": "memorial"
+											"event_id": "memorial",
+											"newspaper": "fictional-first-paper"
 										}
 									],
 									"sections": []
@@ -1680,7 +1700,7 @@
 										{
 											"id": "mention-1939-01-16-0",
 											"person_id": "yosef",
-											"content_item_id": "notice-1939-01-16",
+											"content_item_id": "cu-1939-01-16-i0001",
 											"printed_name": "Yosef",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -1701,7 +1721,7 @@
 											"id": "memorial",
 											"content_items": [
 												{
-													"content_item_id": "notice-1939-01-16",
+													"content_item_id": "cu-1939-01-16-i0001",
 													"role": "mention"
 												}
 											]
@@ -1779,7 +1799,7 @@
 										{
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
-											"unit_id": "notice-1938-12-16",
+											"unit_id": "cu-1938-12-16-i0001",
 											"quote": "Hilde, the bride's mother",
 											"addresses": [
 												{
@@ -1812,19 +1832,20 @@
 									"edition_date": "1938-12-16",
 									"pages": [
 										{
-											"id": "page-1938-12-16",
+											"id": "page-1938-12-16-1",
 											"issue_date": "1938-12-16",
 											"page_number": 1,
 											"image_uri": "page-1938-12-16.png",
 											"dimensions": [200, 300],
 											"blocks": [
 												{
-													"id": "block",
+													"id": "blk-2000-01-01-p1-r001",
 													"bbox": [0, 0, 100, 100],
 													"transcription": "Hilde, the bride's mother",
-													"unit_id": "notice-1938-12-16"
+													"unit_id": "cu-1938-12-16-i0001"
 												}
-											]
+											],
+											"newspaper": "fictional-first-paper"
 										}
 									]
 								},
@@ -1833,7 +1854,7 @@
 									"vocabulary_version": "0.1.0",
 									"content_items": [
 										{
-											"id": "notice-1938-12-16",
+											"id": "cu-1938-12-16-i0001",
 											"type": "ad",
 											"subtype": "birth_greeting",
 											"supplied_title": {
@@ -1859,15 +1880,16 @@
 											"block_breaks": [],
 											"page_blocks": [
 												{
-													"page_id": "page-1938-12-16",
-													"block_ids": ["block"]
+													"page_id": "page-1938-12-16-1",
+													"block_ids": ["blk-2000-01-01-p1-r001"]
 												}
 											],
 											"location_ids": [],
 											"organization_ids": [],
 											"subject_ids": [],
 											"cross_references": [],
-											"event_id": "event-judewicz-birth"
+											"event_id": "event-judewicz-birth",
+											"newspaper": "fictional-first-paper"
 										}
 									],
 									"sections": []
@@ -1878,7 +1900,7 @@
 										{
 											"id": "mention-1938-12-16-0",
 											"person_id": "mother",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "Hilde",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -1893,7 +1915,7 @@
 										{
 											"id": "mention-1938-12-16-1",
 											"person_id": "bride",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "bride",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -1914,7 +1936,7 @@
 											"id": "event-judewicz-birth",
 											"content_items": [
 												{
-													"content_item_id": "notice-1938-12-16",
+													"content_item_id": "cu-1938-12-16-i0001",
 													"role": "congratulation"
 												}
 											]
@@ -2173,19 +2195,20 @@
 									"edition_date": "1938-12-16",
 									"pages": [
 										{
-											"id": "page-1938-12-16",
+											"id": "page-1938-12-16-1",
 											"issue_date": "1938-12-16",
 											"page_number": 1,
 											"image_uri": "page-1938-12-16.png",
 											"dimensions": [200, 300],
 											"blocks": [
 												{
-													"id": "block",
+													"id": "blk-2000-01-01-p1-r001",
 													"bbox": [0, 0, 100, 100],
 													"transcription": "Yosef",
-													"unit_id": "notice-1938-12-16"
+													"unit_id": "cu-1938-12-16-i0001"
 												}
-											]
+											],
+											"newspaper": "fictional-first-paper"
 										}
 									]
 								},
@@ -2194,7 +2217,7 @@
 									"vocabulary_version": "0.1.0",
 									"content_items": [
 										{
-											"id": "notice-1938-12-16",
+											"id": "cu-1938-12-16-i0001",
 											"type": "ad",
 											"subtype": "birth_greeting",
 											"supplied_title": {
@@ -2220,15 +2243,16 @@
 											"block_breaks": [],
 											"page_blocks": [
 												{
-													"page_id": "page-1938-12-16",
-													"block_ids": ["block"]
+													"page_id": "page-1938-12-16-1",
+													"block_ids": ["blk-2000-01-01-p1-r001"]
 												}
 											],
 											"location_ids": [],
 											"organization_ids": [],
 											"subject_ids": [],
 											"cross_references": [],
-											"event_id": "death"
+											"event_id": "death",
+											"newspaper": "fictional-first-paper"
 										}
 									],
 									"sections": []
@@ -2239,7 +2263,7 @@
 										{
 											"id": "mention-1938-12-16-0",
 											"person_id": "yosef",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "Yosef",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -2260,7 +2284,7 @@
 											"id": "death",
 											"content_items": [
 												{
-													"content_item_id": "notice-1938-12-16",
+													"content_item_id": "cu-1938-12-16-i0001",
 													"role": "congratulation"
 												}
 											]
@@ -2273,19 +2297,20 @@
 									"edition_date": "1939-01-16",
 									"pages": [
 										{
-											"id": "page-1939-01-16",
+											"id": "page-1939-01-16-1",
 											"issue_date": "1939-01-16",
 											"page_number": 1,
 											"image_uri": "page-1939-01-16.png",
 											"dimensions": [200, 300],
 											"blocks": [
 												{
-													"id": "block",
+													"id": "blk-2000-01-01-p1-r001",
 													"bbox": [0, 0, 100, 100],
 													"transcription": "Yosef",
-													"unit_id": "notice-1939-01-16"
+													"unit_id": "cu-1939-01-16-i0001"
 												}
-											]
+											],
+											"newspaper": "fictional-first-paper"
 										}
 									]
 								},
@@ -2294,7 +2319,7 @@
 									"vocabulary_version": "0.1.0",
 									"content_items": [
 										{
-											"id": "notice-1939-01-16",
+											"id": "cu-1939-01-16-i0001",
 											"type": "ad",
 											"subtype": "birth_greeting",
 											"supplied_title": {
@@ -2320,15 +2345,16 @@
 											"block_breaks": [],
 											"page_blocks": [
 												{
-													"page_id": "page-1939-01-16",
-													"block_ids": ["block"]
+													"page_id": "page-1939-01-16-1",
+													"block_ids": ["blk-2000-01-01-p1-r001"]
 												}
 											],
 											"location_ids": [],
 											"organization_ids": [],
 											"subject_ids": [],
 											"cross_references": [],
-											"event_id": "memorial"
+											"event_id": "memorial",
+											"newspaper": "fictional-first-paper"
 										}
 									],
 									"sections": []
@@ -2339,7 +2365,7 @@
 										{
 											"id": "mention-1939-01-16-0",
 											"person_id": "yosef",
-											"content_item_id": "notice-1939-01-16",
+											"content_item_id": "cu-1939-01-16-i0001",
 											"printed_name": "Yosef",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -2360,7 +2386,7 @@
 											"id": "memorial",
 											"content_items": [
 												{
-													"content_item_id": "notice-1939-01-16",
+													"content_item_id": "cu-1939-01-16-i0001",
 													"role": "mention"
 												}
 											]
@@ -2475,7 +2501,7 @@
 										{
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
-											"unit_id": "notice-1938-12-16",
+											"unit_id": "cu-1938-12-16-i0001",
 											"quote": "Hilde, the bride's mother",
 											"addresses": [
 												{
@@ -2508,19 +2534,20 @@
 									"edition_date": "1938-12-16",
 									"pages": [
 										{
-											"id": "page-1938-12-16",
+											"id": "page-1938-12-16-1",
 											"issue_date": "1938-12-16",
 											"page_number": 1,
 											"image_uri": "page-1938-12-16.png",
 											"dimensions": [200, 300],
 											"blocks": [
 												{
-													"id": "block",
+													"id": "blk-2000-01-01-p1-r001",
 													"bbox": [0, 0, 100, 100],
 													"transcription": "Hilde, the bride's mother",
-													"unit_id": "notice-1938-12-16"
+													"unit_id": "cu-1938-12-16-i0001"
 												}
-											]
+											],
+											"newspaper": "fictional-first-paper"
 										}
 									]
 								},
@@ -2529,7 +2556,7 @@
 									"vocabulary_version": "0.1.0",
 									"content_items": [
 										{
-											"id": "notice-1938-12-16",
+											"id": "cu-1938-12-16-i0001",
 											"type": "ad",
 											"subtype": "birth_greeting",
 											"supplied_title": {
@@ -2555,15 +2582,16 @@
 											"block_breaks": [],
 											"page_blocks": [
 												{
-													"page_id": "page-1938-12-16",
-													"block_ids": ["block"]
+													"page_id": "page-1938-12-16-1",
+													"block_ids": ["blk-2000-01-01-p1-r001"]
 												}
 											],
 											"location_ids": [],
 											"organization_ids": [],
 											"subject_ids": [],
 											"cross_references": [],
-											"event_id": "event-judewicz-birth"
+											"event_id": "event-judewicz-birth",
+											"newspaper": "fictional-first-paper"
 										}
 									],
 									"sections": []
@@ -2574,7 +2602,7 @@
 										{
 											"id": "mention-1938-12-16-0",
 											"person_id": "mother",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "Hilde",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -2589,7 +2617,7 @@
 										{
 											"id": "mention-1938-12-16-1",
 											"person_id": "bride",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "bride",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -2610,7 +2638,7 @@
 											"id": "event-judewicz-birth",
 											"content_items": [
 												{
-													"content_item_id": "notice-1938-12-16",
+													"content_item_id": "cu-1938-12-16-i0001",
 													"role": "congratulation"
 												}
 											]
@@ -2689,7 +2717,7 @@
 										{
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
-											"unit_id": "notice-1938-12-16",
+											"unit_id": "cu-1938-12-16-i0001",
 											"quote": "Hilde, the bride's mother",
 											"addresses": [
 												{
@@ -2723,19 +2751,20 @@
 									"edition_date": "1938-12-16",
 									"pages": [
 										{
-											"id": "page-1938-12-16",
+											"id": "page-1938-12-16-1",
 											"issue_date": "1938-12-16",
 											"page_number": 1,
 											"image_uri": "page-1938-12-16.png",
 											"dimensions": [200, 300],
 											"blocks": [
 												{
-													"id": "block",
+													"id": "blk-2000-01-01-p1-r001",
 													"bbox": [0, 0, 100, 100],
 													"transcription": "Hilde, the bride's mother",
-													"unit_id": "notice-1938-12-16"
+													"unit_id": "cu-1938-12-16-i0001"
 												}
-											]
+											],
+											"newspaper": "fictional-first-paper"
 										}
 									]
 								},
@@ -2744,7 +2773,7 @@
 									"vocabulary_version": "0.1.0",
 									"content_items": [
 										{
-											"id": "notice-1938-12-16",
+											"id": "cu-1938-12-16-i0001",
 											"type": "ad",
 											"subtype": "birth_greeting",
 											"supplied_title": {
@@ -2770,15 +2799,16 @@
 											"block_breaks": [],
 											"page_blocks": [
 												{
-													"page_id": "page-1938-12-16",
-													"block_ids": ["block"]
+													"page_id": "page-1938-12-16-1",
+													"block_ids": ["blk-2000-01-01-p1-r001"]
 												}
 											],
 											"location_ids": [],
 											"organization_ids": [],
 											"subject_ids": [],
 											"cross_references": [],
-											"event_id": "event-judewicz-birth"
+											"event_id": "event-judewicz-birth",
+											"newspaper": "fictional-first-paper"
 										}
 									],
 									"sections": []
@@ -2789,7 +2819,7 @@
 										{
 											"id": "mention-1938-12-16-0",
 											"person_id": "mother",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "Hilde",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -2804,7 +2834,7 @@
 										{
 											"id": "mention-1938-12-16-1",
 											"person_id": "bride",
-											"content_item_id": "notice-1938-12-16",
+											"content_item_id": "cu-1938-12-16-i0001",
 											"printed_name": "bride",
 											"roles": ["subject"],
 											"address_grain": "words",
@@ -2825,7 +2855,7 @@
 											"id": "event-judewicz-birth",
 											"content_items": [
 												{
-													"content_item_id": "notice-1938-12-16",
+													"content_item_id": "cu-1938-12-16-i0001",
 													"role": "congratulation"
 												}
 											]
@@ -2890,7 +2920,7 @@
 						{
 							"id": "mention-1938-12-16-0",
 							"person_id": "person-rivtche-judewicz",
-							"content_item_id": "notice-1938-12-16",
+							"content_item_id": "cu-1938-12-16-i0001",
 							"printed_name": "ריבטשע",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -2905,7 +2935,7 @@
 						{
 							"id": "mention-1938-12-16-1",
 							"person_id": "person-moshe-judewicz",
-							"content_item_id": "notice-1938-12-16",
+							"content_item_id": "cu-1938-12-16-i0001",
 							"printed_name": "משה",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -2925,7 +2955,7 @@
 						{
 							"id": "mention-1938-12-23-0",
 							"person_id": "person-rivtche-judewicz",
-							"content_item_id": "notice-1938-12-23",
+							"content_item_id": "cu-1938-12-23-i0001",
 							"printed_name": "ריבטשע",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -2940,7 +2970,7 @@
 						{
 							"id": "mention-1938-12-23-1",
 							"person_id": "person-moshe-judewicz",
-							"content_item_id": "notice-1938-12-23",
+							"content_item_id": "cu-1938-12-23-i0001",
 							"printed_name": "משה",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -2960,7 +2990,7 @@
 						{
 							"id": "mention-1938-12-30-0",
 							"person_id": "person-rivtche-judewicz",
-							"content_item_id": "notice-1938-12-30",
+							"content_item_id": "cu-1938-12-30-i0001",
 							"printed_name": "ריבטשע",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -2975,7 +3005,7 @@
 						{
 							"id": "mention-1938-12-30-1",
 							"person_id": "person-moshe-judewicz",
-							"content_item_id": "notice-1938-12-30",
+							"content_item_id": "cu-1938-12-30-i0001",
 							"printed_name": "משה",
 							"roles": ["subject"],
 							"address_grain": "words",
@@ -3021,7 +3051,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -3115,7 +3145,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -3160,7 +3190,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -3205,7 +3235,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -3451,7 +3481,7 @@
 							{
 								"source_id": "paper",
 								"edition_date": "1938-12-16",
-								"unit_id": "notice-1938-12-16",
+								"unit_id": "cu-1938-12-16-i0001",
 								"quote": "ריבטשע משה זייער טעכטערל",
 								"addresses": [
 									{
@@ -3516,7 +3546,7 @@
 										{
 											"source_id": "paper",
 											"edition_date": "1938-12-16",
-											"unit_id": "notice-1938-12-16",
+											"unit_id": "cu-1938-12-16-i0001",
 											"quote": "ריבטשע משה זייער טעכטערל",
 											"addresses": [
 												{
@@ -3788,7 +3818,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -3836,7 +3866,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "Earlier reading retained verbatim",
 									"quote_language": "en"
 								}
@@ -3874,7 +3904,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -3961,7 +3991,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -4006,7 +4036,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16",
+									"unit_id": "cu-1938-12-16-i0001",
 									"quote": "ריבטשע משה זייער טעכטערל",
 									"addresses": [
 										{
@@ -4051,7 +4081,7 @@
 								{
 									"source_id": "paper",
 									"edition_date": "1938-12-16",
-									"unit_id": "notice-1938-12-16"
+									"unit_id": "cu-1938-12-16-i0001"
 								}
 							],
 							"evidence_confidence": "confirmed",
@@ -4080,11 +4110,11 @@
 					"path": ["content_items"],
 					"value": [
 						{
-							"content_item_id": "notice-1938-12-16",
+							"content_item_id": "cu-1938-12-16-i0001",
 							"role": "congratulation"
 						},
 						{
-							"content_item_id": "notice-1938-12-16",
+							"content_item_id": "cu-1938-12-16-i0001",
 							"role": "advertisement"
 						}
 					]
@@ -4146,7 +4176,7 @@
 							"id": "event-judewicz-birth",
 							"content_items": [
 								{
-									"content_item_id": "notice-1938-12-16",
+									"content_item_id": "cu-1938-12-16-i0001",
 									"role": "congratulation"
 								}
 							]
@@ -4155,7 +4185,7 @@
 							"id": "unresolved-second-birth",
 							"content_items": [
 								{
-									"content_item_id": "notice-1938-12-16",
+									"content_item_id": "cu-1938-12-16-i0001",
 									"role": "congratulation"
 								}
 							]
@@ -4626,7 +4656,7 @@
 							{
 								"source_id": "paper",
 								"edition_date": "1938-12-16",
-								"unit_id": "notice-1938-12-16",
+								"unit_id": "cu-1938-12-16-i0001",
 								"quote": "זייער טעכטערל",
 								"quote_english": {
 									"text": "their little daughter",

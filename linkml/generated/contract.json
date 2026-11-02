@@ -104,7 +104,8 @@
           ]
         },
         "id": {
-          "description": "The region's id, such as blk-p4-001.",
+          "description": "The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001.",
+          "pattern": "^blk-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-p\\d+-r\\d{3}$(?![\\s\\S])",
           "type": "string"
         },
         "image_crop": {
@@ -656,7 +657,7 @@
         },
         "id": {
           "description": "The content item's id within the issue.",
-          "pattern": "\\S",
+          "pattern": "^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])",
           "type": "string"
         },
         "language": {
@@ -674,6 +675,11 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "newspaper": {
+          "description": "The paper this content item belongs to, by its id in the source register.",
+          "pattern": "\\S",
+          "type": "string"
         },
         "organization_ids": {
           "description": "The organisations the content item names, by their ids in the shared record.",
@@ -769,7 +775,8 @@
         "page_blocks",
         "location_ids",
         "organization_ids",
-        "cross_references"
+        "cross_references",
+        "newspaper"
       ],
       "title": "ContentItem",
       "type": "object"
@@ -960,13 +967,25 @@
             "string",
             "null"
           ]
+        },
+        "key": {
+          "description": "The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code.",
+          "pattern": "^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])",
+          "type": "string"
+        },
+        "newspaper": {
+          "description": "The paper this edition belongs to, by its id in the source register.",
+          "pattern": "\\S",
+          "type": "string"
         }
       },
       "required": [
         "date",
         "hebrewDate",
         "hebrewMonth",
-        "hebrewYear"
+        "hebrewYear",
+        "newspaper",
+        "key"
       ],
       "title": "Edition",
       "type": "object"
@@ -3412,6 +3431,7 @@
         },
         "id": {
           "description": "The page's id, such as page-1938-12-16-4.",
+          "pattern": "^page-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-\\d+$(?![\\s\\S])",
           "type": "string"
         },
         "image_uri": {
@@ -3420,6 +3440,11 @@
         },
         "issue_date": {
           "description": "The date of the issue the page belongs to, written YYYY-MM-DD.",
+          "type": "string"
+        },
+        "newspaper": {
+          "description": "The paper this page belongs to, by its id in the source register.",
+          "pattern": "\\S",
           "type": "string"
         },
         "page_number": {
@@ -3433,7 +3458,8 @@
         "page_number",
         "image_uri",
         "dimensions",
-        "blocks"
+        "blocks",
+        "newspaper"
       ],
       "title": "Page",
       "type": "object"

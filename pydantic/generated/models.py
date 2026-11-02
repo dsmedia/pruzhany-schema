@@ -36,7 +36,7 @@ class Attribution(Strict):
 class Block(BaseModel):
     'One region of print on a page, its box and the words read in it, belonging to one content item, or to no item when it is a section heading.'
     model_config = ConfigDict(**{})
-    id: str = Field(default=...)
+    id: Annotated[str, Field(pattern='^blk-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-p\\d+-r\\d{3}$')] = Field(default=...)
     bbox: Annotated[tuple[int, int, int, int], Field(min_length=4, max_length=4)] = Field(default=...)
     transcription: str = Field(default=...)
     confidence: None | float = Field(default=None)
@@ -74,7 +74,7 @@ class Citation(Strict):
 class ContentItem(Strict):
     'One article, notice, greeting or advertisement of the issue: its kind, its titles, its text and English, the regions it is printed in and what it names.'
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
-    id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    id: Annotated[str, Field(pattern='^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$')] = Field(default=...)
     type: Literal['ad', 'article', 'chapter', 'chronicle', 'death_notice', 'discussion', 'entertainment', 'image', 'page', 'radio_broadcast_episode', 'radio_bulletin', 'table', 'weather'] = Field(default=...)
     subtype: Literal['announcement', 'appeal', 'bar_mitzvah_greeting', 'birth_greeting', 'commercial_advertisement', 'condolence', 'death_announcement', 'departure_greeting', 'editorial', 'engagement_greeting', 'greeting', 'humour', 'letter', 'meeting_notice', 'memorial_notice', 'new_year_greeting', 'opinion', 'poem', 'sketch', 'thanks', 'wedding_greeting'] | None = Field(default=None)
     printed_title: PrintedTitle | None = Field(default=None)
@@ -91,6 +91,7 @@ class ContentItem(Strict):
     cross_references: list[CrossReference] = Field(default=...)
     event_id: Annotated[str, Field(pattern='\\S')] | None = Field(default=None)
     language: Annotated[str, Field(pattern='^[a-z]{2,3}$')] | None = Field(default=None)
+    newspaper: Annotated[str, Field(pattern='\\S')] = Field(default=...)
 
     @model_validator(mode='after')
     def content_contract(self):
@@ -141,6 +142,12 @@ class Edition(Strict):
     hebrewMonth: Annotated[Annotated[int, Field(ge=1, le=13)], BeforeValidator(partial(_typed_call, 'content_item', 'integer_offset', [], False))] = Field(default=...)
     hebrewYear: Annotated[Annotated[int, Field(ge=-9007199254740991, le=9007199254740991)], BeforeValidator(partial(_typed_call, 'content_item', 'integer_offset', [], False))] = Field(default=...)
     holiday: Annotated[None | str, BeforeValidator(partial(_typed_call, 'editions', 'present_value', [], False))] = Field(default=None, exclude_if=lambda value: value is None)
+    newspaper: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    key: Annotated[str, Field(pattern='^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$')] = Field(default=...)
+
+    @model_validator(mode='after')
+    def key_date(self):
+        return _call('editions', '_Edition__key_date', self)
 
 
 class EditionsCatalog(Strict):
@@ -464,12 +471,13 @@ class Name(Strict):
 class Page(BaseModel):
     'One printed page of the issue: its picture, its size and its regions of print.'
     model_config = ConfigDict(**{})
-    id: str = Field(default=...)
+    id: Annotated[str, Field(pattern='^page-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-\\d+$')] = Field(default=...)
     issue_date: str = Field(default=...)
     page_number: int = Field(default=...)
     image_uri: str = Field(default=...)
     dimensions: Annotated[tuple[int, int], Field(min_length=2, max_length=2)] = Field(default=...)
     blocks: list[Block] = Field(default=...)
+    newspaper: Annotated[str, Field(pattern='\\S')] = Field(default=...)
 
 
 class PagesData(BaseModel):

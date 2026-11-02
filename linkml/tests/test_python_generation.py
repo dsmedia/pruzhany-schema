@@ -67,6 +67,16 @@ class PythonGeneration(unittest.TestCase):
                 {'type': 'null'}], 'default': None}}
                for name in ('SharedPerson', 'SharedOrganization')},
         }
+        # Ticket 01: exact required paper fields and optional-code id patterns.
+        for name in ('Edition', 'Page', 'ContentItem'):
+            additions.setdefault(name, {})['newspaper'] = {'type': 'string', 'pattern': r'\S'}
+        additions['Edition']['key'] = {
+            'type': 'string', 'pattern': r'^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$'}
+        id_patterns = {
+            'ContentItem': r'^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$',
+            'Page': r'^page-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-\d+$',
+            'Block': r'^blk-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-p\d+-r\d{3}$',
+        }
         # Ticket 02: exact optional Translation additions, including inherited fields.
         # Expected field names are independent of generated declarations.
         english_fields = {
@@ -91,6 +101,12 @@ class PythonGeneration(unittest.TestCase):
                     target = expected if class_name == name else expected.get('$defs', {}).get(class_name)
                     if target is not None:
                         target['properties'].update(copy.deepcopy(fields))
+                        target.setdefault('required', []).extend(
+                            field for field in fields if field in ('newspaper', 'key'))
+                for class_name, pattern in id_patterns.items():
+                    target = expected if class_name == name else expected.get('$defs', {}).get(class_name)
+                    if target is not None:
+                        target['properties']['id']['pattern'] = pattern
                 if name in ('SharedPerson', 'SharedOrganization'):
                     expected.setdefault('$defs', {}).update(copy.deepcopy(
                         previous['models']['PlaceIdentifier']['schema'].get('$defs', {})))
@@ -150,7 +166,7 @@ class PythonGeneration(unittest.TestCase):
             self.assertNotIn('import linkml', text)
 
     def test_missing_nullable_key_and_nested_bad_coordinates_fail(self):
-        block = dict(id='b', bbox=[0, 0, 1, 1], transcription='words', unit_id=None)
+        block = dict(id='blk-2001-02-03-p1-r001', bbox=[0, 0, 1, 1], transcription='words', unit_id=None)
         parsed = models().Block.model_validate_json(json.dumps(block))
         self.assertIsInstance(parsed.bbox, tuple)
         del block['unit_id']
@@ -181,7 +197,8 @@ class PythonGeneration(unittest.TestCase):
                 models().ContentItem.model_validate_json(json.dumps(item))
 
     def test_catalog_aliases_omissions_unknowns_and_bounds(self):
-        catalog = {'editions':[{'date':'1938-12-16','hebrewDate':'date','hebrewMonth':9,'hebrewYear':5699}],
+        catalog = {'editions':[{'date':'1938-12-16','hebrewDate':'date','hebrewMonth':9,'hebrewYear':5699,
+                                'newspaper':'fictional-first-paper','key':'1938-12-16'}],
                    'holidays':[], 'historicalEvents':[], 'availableDates':['1938-12-16']}
         model = package().EditionsCatalog.model_validate_json(json.dumps(catalog))
         self.assertEqual(model.model_dump(mode='json'), catalog)

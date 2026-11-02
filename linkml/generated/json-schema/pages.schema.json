@@ -23,7 +23,8 @@
                     ]
                 },
                 "id": {
-                    "description": "The region's id, such as blk-p4-001.",
+                    "description": "The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001.",
+                    "pattern": "^blk-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-p\\d+-r\\d{3}$(?![\\s\\S])",
                     "type": "string"
                 },
                 "image_crop": {
@@ -75,6 +76,7 @@
                 },
                 "id": {
                     "description": "The page's id, such as page-1938-12-16-4.",
+                    "pattern": "^page-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-\\d+$(?![\\s\\S])",
                     "type": "string"
                 },
                 "image_uri": {
@@ -83,6 +85,11 @@
                 },
                 "issue_date": {
                     "description": "The date of the issue the page belongs to, written YYYY-MM-DD.",
+                    "type": "string"
+                },
+                "newspaper": {
+                    "description": "The paper this page belongs to, by its id in the source register.",
+                    "pattern": "\\S",
                     "type": "string"
                 },
                 "page_number": {
@@ -96,7 +103,8 @@
                 "page_number",
                 "image_uri",
                 "dimensions",
-                "blocks"
+                "blocks",
+                "newspaper"
             ],
             "title": "Page",
             "type": "object"

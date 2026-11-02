@@ -31,6 +31,7 @@ Name: pruzhany_pages
 | [image_crop](image_crop.md) | A picture of the region alone, by its path, where one was made. |
 | [image_uri](image_uri.md) | The page's picture, by its name or address. |
 | [issue_date](issue_date.md) | The date of the issue the page belongs to, written YYYY-MM-DD. |
+| [newspaper](newspaper.md) | The paper this page belongs to, by its id in the source register. |
 | [page_number](page_number.md) | The page's number within the issue, from 1. |
 | [pages](pages.md) | The issue's pages. |
 | [transcription](transcription.md) | The words read in the region, its lines separated by line breaks. |

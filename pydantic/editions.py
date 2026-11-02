@@ -2,6 +2,14 @@
 from .generated.models import Edition, EditionsCatalog, HistoricalEvent, Holiday
 
 
+def _Edition__key_date(self):
+    # Pydantic Validators, read 2 November 2026:
+    # https://docs.pydantic.dev/latest/concepts/validators/ (after model validator).
+    if self.key[-10:] != self.date:
+        raise ValueError('edition key must agree with date')
+    return self
+
+
 def present_value(value):
     """Zod's optional catalog keys may be absent, but never explicit null."""
     if value is None:

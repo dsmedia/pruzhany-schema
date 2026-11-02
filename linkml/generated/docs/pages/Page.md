@@ -43,6 +43,8 @@ URI: [pc:Page](https://pruzhany.org/ns/sourced-entities#Page)
         
       Page : issue_date
         
+      Page : newspaper
+        
       Page : page_number
         
       
@@ -63,6 +65,7 @@ URI: [pc:Page](https://pruzhany.org/ns/sourced-entities#Page)
 | [image_uri](image_uri.md) | 1 <br/> [String](String.md) | The page's picture, by its name or address. | direct |
 | [dimensions](dimensions.md) | 1..* <br/> [Integer](Integer.md) | The picture's width and height, in its pixels. | direct |
 | [blocks](blocks.md) | 1..* <br/> [Block](Block.md) | The regions of print on the page. | direct |
+| [newspaper](newspaper.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The paper this page belongs to, by its id in the source register. | direct |
 
 
 
@@ -152,6 +155,7 @@ attributes:
     - Page
     - Block
     required: true
+    pattern: ^page-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-\d+$(?![\s\S])
   issue_date:
     name: issue_date
     description: The date of the issue the page belongs to, written YYYY-MM-DD.
@@ -208,6 +212,22 @@ attributes:
     required: true
     multivalued: true
     inlined_as_list: true
+  newspaper:
+    name: newspaper
+    annotations:
+      impresso:
+        tag: impresso
+        value: The media alias carried by Impresso's canonical id. The pinned schemas
+          have no separate media-alias property; site_newspaper keeps the source register
+          id.
+    description: The paper this page belongs to, by its id in the source register.
+    from_schema: https://pruzhany.org/ns/pages
+    rank: 1000
+    slot_uri: pc:site_newspaper
+    domain_of:
+    - Page
+    range: NonBlankText
+    required: true
 
 ```
 </details>
@@ -243,6 +263,7 @@ attributes:
     - Block
     range: string
     required: true
+    pattern: ^page-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-\d+$(?![\s\S])
   issue_date:
     name: issue_date
     description: The date of the issue the page belongs to, written YYYY-MM-DD.
@@ -307,6 +328,23 @@ attributes:
     multivalued: true
     inlined: true
     inlined_as_list: true
+  newspaper:
+    name: newspaper
+    annotations:
+      impresso:
+        tag: impresso
+        value: The media alias carried by Impresso's canonical id. The pinned schemas
+          have no separate media-alias property; site_newspaper keeps the source register
+          id.
+    description: The paper this page belongs to, by its id in the source register.
+    from_schema: https://pruzhany.org/ns/pages
+    rank: 1000
+    slot_uri: pc:site_newspaper
+    owner: Page
+    domain_of:
+    - Page
+    range: NonBlankText
+    required: true
 
 ```
 </details></div>

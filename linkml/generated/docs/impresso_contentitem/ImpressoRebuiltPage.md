@@ -141,7 +141,7 @@ attributes:
     domain_of:
     - ImpressoContentItem
     - ImpressoRebuiltPage
-    pattern: ^[A-Za-z_]+-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$
+    pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$
   page_number:
     name: page_number
     annotations:
@@ -221,7 +221,7 @@ attributes:
     - ImpressoContentItem
     - ImpressoRebuiltPage
     range: string
-    pattern: ^[A-Za-z_]+-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$
+    pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$
   page_number:
     name: page_number
     annotations:

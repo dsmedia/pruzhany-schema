@@ -34,6 +34,10 @@ URI: [pc:Edition](https://pruzhany.org/ns/sourced-entities#Edition)
         
       Edition : holiday
         
+      Edition : key
+        
+      Edition : newspaper
+        
       
 ```
 
@@ -51,6 +55,8 @@ URI: [pc:Edition](https://pruzhany.org/ns/sourced-entities#Edition)
 | [hebrew_month](hebrew_month.md) | 1 <br/> [Integer](Integer.md) | The Hebrew month, by its number from 1 to 13, counted from Nisan. | direct |
 | [hebrew_year](hebrew_year.md) | 1 <br/> [Integer](Integer.md) | The Hebrew year, such as 5699. | direct |
 | [holiday](holiday.md) | 0..1 <br/> [String](String.md) | The holiday the edition falls on or near, where there is one. | direct |
+| [newspaper](newspaper.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The paper this edition belongs to, by its id in the source register. | direct |
+| [key](key.md) | 1 <br/> [String](String.md) | The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code. | direct |
 
 
 
@@ -167,6 +173,33 @@ attributes:
     rank: 1000
     domain_of:
     - Edition
+  newspaper:
+    name: newspaper
+    annotations:
+      impresso:
+        tag: impresso
+        value: The media alias carried by Impresso's canonical id. The pinned schemas
+          have no separate media-alias property; site_newspaper keeps the source register
+          id.
+    description: The paper this edition belongs to, by its id in the source register.
+    from_schema: https://pruzhany.org/ns/editions
+    rank: 1000
+    slot_uri: pc:site_newspaper
+    domain_of:
+    - Edition
+    range: NonBlankText
+    required: true
+  key:
+    name: key
+    description: 'The edition''s key: its date alone for the first paper, or the paper''s
+      code and a hyphen before that date for any other paper. Its date must equal
+      date; the source register supplies the paper''s code.'
+    from_schema: https://pruzhany.org/ns/editions
+    rank: 1000
+    domain_of:
+    - Edition
+    required: true
+    pattern: ^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$(?![\s\S])
 
 ```
 </details>
@@ -241,6 +274,36 @@ attributes:
     domain_of:
     - Edition
     range: string
+  newspaper:
+    name: newspaper
+    annotations:
+      impresso:
+        tag: impresso
+        value: The media alias carried by Impresso's canonical id. The pinned schemas
+          have no separate media-alias property; site_newspaper keeps the source register
+          id.
+    description: The paper this edition belongs to, by its id in the source register.
+    from_schema: https://pruzhany.org/ns/editions
+    rank: 1000
+    slot_uri: pc:site_newspaper
+    owner: Edition
+    domain_of:
+    - Edition
+    range: NonBlankText
+    required: true
+  key:
+    name: key
+    description: 'The edition''s key: its date alone for the first paper, or the paper''s
+      code and a hyphen before that date for any other paper. Its date must equal
+      date; the source register supplies the paper''s code.'
+    from_schema: https://pruzhany.org/ns/editions
+    rank: 1000
+    owner: Edition
+    domain_of:
+    - Edition
+    range: string
+    required: true
+    pattern: ^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$(?![\s\S])
 
 ```
 </details></div>

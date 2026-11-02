@@ -95,7 +95,15 @@ class ImpressoContracts(unittest.TestCase):
             inventory = json.loads((LINKML / f'generated/external/{module}/contract.json').read_text())
             self.assertEqual(set(inventory['classes']), set(paths))
             self.assertEqual(set(view.all_classes(imports=False)), set(paths))
-            self.assertEqual(shape(upstream, upstream), shape(made, made))
+            expected = copy.deepcopy(upstream)
+            if kind == 'contentitem':
+                # Ticket 01 deliberately corrects this one upstream field; the pin stays intact.
+                page_id = expected['properties']['ppreb']['items']['properties']['id']
+                self.assertEqual(page_id['pattern'],
+                                 r'^[A-Za-z_]+-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$')
+                page_id['pattern'] = (
+                    r'^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$')
+            self.assertEqual(shape(expected, expected), shape(made, made))
             for name, path in paths.items():
                 with self.subTest(kind=kind, cls=name):
                     self.assertEqual({slot.alias or slot.name for slot in view.class_induced_slots(name)},
@@ -167,6 +175,20 @@ class ImpressoContracts(unittest.TestCase):
                 doc['ro'] = order
             self.agree('contentitem', doc, order is MISSING or
                        (type(order) is int and (order == 1 or source == 'newspaper')))
+
+    def test_rebuilt_page_title_code_uses_the_issue_rule_including_digits(self):
+        upstream, made = self.checkers['contentitem']
+        issue = self.checkers['issue'][1]
+        for code, accepted in [('ABCD', True), ('AB2_CD', True), ('A2', True),
+                               ('2ABCD', False), ('_ABCD', False), ('AB-CD', False)]:
+            doc = copy.deepcopy(self.cases['contentitem'][2])
+            doc['ppreb'][0]['id'] = f'{code}-2001-02-03-a-p0001'
+            with self.subTest(code=code):
+                self.assertEqual(made.is_valid(doc), accepted)
+                self.assertEqual(issue.is_valid({'id': f'{code}-2001-02-03-a',
+                                                  'cdt': '', 'i': []}), accepted)
+                if code in ('AB2_CD', 'A2'):
+                    self.assertFalse(upstream.is_valid(doc))
 
     def test_every_metadata_dependency_is_enforced_on_minimal_controls(self):
         for trigger, needs in (('consolidated_reocr_run_id',

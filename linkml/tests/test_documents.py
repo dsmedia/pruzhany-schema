@@ -351,8 +351,8 @@ class Mappings(unittest.TestCase):
                 counts['class_uri'] += bool(cls.class_uri)
                 counts['slot_uri'] += sum(bool(slot.slot_uri) for slot in (cls.attributes or {}).values())
         # Issue #56 adds one RiC-O language mapping and its Impresso lg correspondence.
-        self.assertEqual(counts, {'class_uri': 6, 'slot_uri': 14, 'exact_mappings': 9, 'close_mappings': 3,
-                                  'related_mappings': 3, 'impresso': 22})
+        self.assertEqual(counts, {'class_uri': 6, 'slot_uri': 17, 'exact_mappings': 9, 'close_mappings': 3,
+                                 'related_mappings': 3, 'impresso': 25})
 
 
 class _scratch_schema:

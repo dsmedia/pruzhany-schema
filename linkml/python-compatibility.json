@@ -217,7 +217,8 @@
 				"organization_ids",
 				"cross_references",
 				"event_id",
-				"language"
+				"language",
+				"newspaper"
 			],
 			"validators": [
 				{
@@ -384,7 +385,7 @@
 				"strict": true,
 				"extra": "forbid"
 			},
-			"order": ["date", "hebrewDate", "hebrewMonth", "hebrewYear", "holiday"],
+			"order": ["date", "hebrewDate", "hebrewMonth", "hebrewYear", "holiday", "newspaper", "key"],
 			"fields": {
 				"holiday": {
 					"exclude_none": true,
@@ -417,7 +418,15 @@
 						}
 					]
 				}
-			}
+			},
+			"validators": [
+				{
+					"name": "key_date",
+					"module": "editions",
+					"function": "_Edition__key_date",
+					"mode": "after"
+				}
+			]
 		},
 		"EditionsCatalog": {
 			"module": "editions",
@@ -1559,7 +1568,7 @@
 		"Page": {
 			"module": "page",
 			"config": {},
-			"order": ["id", "issue_date", "page_number", "image_uri", "dimensions", "blocks"]
+			"order": ["id", "issue_date", "page_number", "image_uri", "dimensions", "blocks", "newspaper"]
 		},
 		"PagesData": {
 			"module": "page",

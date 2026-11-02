@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { z } from 'zod/v4';
 import * as current from './index';
-import * as frozen from './tests/content-item-language-baseline';
+import * as frozen from './tests/newspaper-baseline';
 import { BlockShape } from './generated/pages';
 import { TitleCheckShape, TextBasisShape } from './generated/site_common';
 import { SourcedRelationShape } from './generated/shared_record';
@@ -241,7 +241,7 @@ it('keeps the published mention property, required-key and parsed key order', ()
 		addresses: [{ image_uri: 'fictional.png', bbox: [0, 0, 1, 1], text: 'Fictional name' }],
 		roles: ['named'],
 		address_grain: 'words',
-		content_item_id: 'fictional-item',
+		content_item_id: 'cu-2000-01-01-i0001',
 		wkd_id: null,
 		function: null,
 		title: null,
@@ -425,9 +425,15 @@ it('keeps formerly strict printed addresses strict', () => {
 });
 
 it('retains generated integer ranges and box bounds in public pages', () => {
-	const block = { id: 'fictional-block', bbox: [0, 0, 2, 3], transcription: '', unit_id: null };
+	const block = {
+		id: 'blk-2000-01-01-p1-r001',
+		bbox: [0, 0, 2, 3],
+		transcription: '',
+		unit_id: null,
+	};
 	const page = {
-		id: 'fictional-page',
+		id: 'page-2000-01-01-1',
+		newspaper: 'fictional-first-paper',
 		issue_date: '2000-01-01',
 		page_number: 1,
 		image_uri: 'fictional.png',
@@ -448,7 +454,7 @@ it('retains generated integer ranges and box bounds in public pages', () => {
 });
 
 it('enforces generated bounds, array cardinality, map values and closedness', () => {
-	const block = { id: 'fictional-block', bbox: [0, 0, 2, 3], transcription: '' };
+	const block = { id: 'blk-2000-01-01-p1-r001', bbox: [0, 0, 2, 3], transcription: '' };
 	expect(BlockShape.safeParse(block).success).toBe(true);
 	for (const bbox of [
 		[0, 0, 2],

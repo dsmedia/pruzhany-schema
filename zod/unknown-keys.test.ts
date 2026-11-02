@@ -1,16 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import * as current from './index';
-import * as frozen from './tests/frozen';
+import * as frozen from './tests/newspaper-baseline';
 
 const extension = { fictional: 'producer metadata' };
 const block = {
-	id: 'fictional-block',
+	id: 'blk-2000-01-01-p1-r001',
 	bbox: [0, 0, 20, 30],
 	transcription: 'Fictional text',
-	unit_id: 'fictional-item',
+	unit_id: 'cu-2000-01-01-i0001',
 };
 const page = {
-	id: 'fictional-page',
+	id: 'page-2000-01-01-1',
+	newspaper: 'fictional-first-paper',
 	issue_date: '2000-01-01',
 	page_number: 1,
 	image_uri: 'fictional.png',
@@ -19,13 +20,15 @@ const page = {
 };
 const pages = { edition_date: '2000-01-01', pages: [page] };
 const crossReference = {
-	target_id: 'fictional-item',
+	target_id: 'cu-2000-01-01-i0001',
 	confidence: 1,
 	relationship: 'Fictional link',
 	evidence: 'Fictional evidence',
 };
 const edition = {
 	date: '2000-01-01',
+	newspaper: 'fictional-first-paper',
+	key: '2000-01-01',
 	hebrewDate: 'Fictional date',
 	hebrewMonth: 1,
 	hebrewYear: 5760,
@@ -87,7 +90,8 @@ describe('the nine formerly stripping schemas accept and strip extensions', () =
 
 const address = { image_uri: page.image_uri, bbox: block.bbox, text: block.transcription };
 const contentItem = {
-	id: 'fictional-item',
+	id: 'cu-2000-01-01-i0001',
+	newspaper: 'fictional-first-paper',
 	type: 'article',
 	supplied_title: {
 		text: 'Fictional title',

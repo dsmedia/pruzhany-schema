@@ -279,7 +279,9 @@ classes:
         description: Page canonical ID
         annotations:
           impresso: content.ppreb[].id
-        pattern: ^[A-Za-z_]+-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$
+        # Local correction to the pinned rebuilt-page pattern: use the canonical issue's
+        # title-code rule, including digits after its initial letter (read 2 November 2026).
+        pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$
       page_number:
         alias: n
         description: page number

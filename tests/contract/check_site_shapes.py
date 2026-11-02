@@ -11,7 +11,7 @@ def fixture_cases():
     for filename in ['site-shapes.fixtures.json', 'life-event-shapes.fixtures.json',
                      'death-event-shapes.fixtures.json', 'sources-citations.fixtures.json',
                      'media-shapes.fixtures.json', 'identifiers.fixtures.json',
-                     'words-english.fixtures.json']:
+                     'words-english.fixtures.json', 'newspaper.fixtures.json']:
         yield from cases_from_file(filename)
 
 

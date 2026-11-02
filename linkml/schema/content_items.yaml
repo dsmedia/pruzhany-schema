@@ -72,6 +72,7 @@ classes:
       id:
         range: NonBlankText
         required: true
+        pattern: '^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])'
         description: >-
           The content item's id within the issue.
         annotations:
@@ -201,6 +202,16 @@ classes:
           impresso: >-
             The content item's language (lg in paper_contentitem.schema.json and
             issue.schema.json, standards/impresso-329323c, read 1 November 2026).
+      newspaper:
+        range: NonBlankText
+        required: true
+        slot_uri: pc:site_newspaper
+        description: >-
+          The paper this content item belongs to, by its id in the source register.
+        annotations:
+          impresso: >-
+            The media alias carried by Impresso's canonical id. The pinned schemas have
+            no separate media-alias property; site_newspaper keeps the source register id.
     rules:
       - description: >-
           A greeting, thanks, notice, announcement, appeal or commercial advertisement is an

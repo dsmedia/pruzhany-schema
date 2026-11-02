@@ -48,7 +48,7 @@ URI: [pc:Block](https://pruzhany.org/ns/sourced-entities#Block)
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [id](id.md) | 1 <br/> [String](String.md) | The region's id, such as blk-p4-001. | direct |
+| [id](id.md) | 1 <br/> [String](String.md) | The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001. | direct |
 | [bbox](bbox.md) | 1..* <br/> [NonNegativeInteger](NonNegativeInteger.md) | The region's box on the page picture: left, top, width and height, in the picture's pixels. | direct |
 | [transcription](transcription.md) | 1 <br/> [String](String.md) | The words read in the region, its lines separated by line breaks. | direct |
 | [confidence](confidence.md) | 0..1 <br/> [Float](Float.md) | How sure the reading is, from 0 to 1, where it was recorded. | direct |
@@ -129,12 +129,13 @@ rank: 1000
 attributes:
   id:
     name: id
-    description: The region's id, such as blk-p4-001.
+    description: The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001.
     from_schema: https://pruzhany.org/ns/pages
     domain_of:
     - Page
     - Block
     required: true
+    pattern: ^blk-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-p\d+-r\d{3}$(?![\s\S])
   bbox:
     name: bbox
     annotations:
@@ -207,7 +208,7 @@ rank: 1000
 attributes:
   id:
     name: id
-    description: The region's id, such as blk-p4-001.
+    description: The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001.
     from_schema: https://pruzhany.org/ns/pages
     owner: Block
     domain_of:
@@ -215,6 +216,7 @@ attributes:
     - Block
     range: string
     required: true
+    pattern: ^blk-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-p\d+-r\d{3}$(?![\s\S])
   bbox:
     name: bbox
     annotations:
