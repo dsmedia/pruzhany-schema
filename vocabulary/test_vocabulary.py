@@ -3,10 +3,12 @@ import ast
 import re
 import copy
 import importlib.util
+import html
 import json
 import shutil
 import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -444,6 +446,89 @@ class VocabularyTests(unittest.TestCase):
         path.write_text(json.dumps(data), encoding='utf-8')
         self.assertTrue(any('not repeat the definition' in e for e in self.check()))
 
+
+    def test_readable_list_covers_terms_and_field_mappings(self):
+        text = generator.generated(self.root)[self.root / generator.READABLE_VOCABULARY]
+        groups = self.linkml_groups()
+        for filename in ('site-content', 'media'):
+            data = json.loads((self.root / f'vocabulary/{filename}.json').read_text(encoding='utf-8'))
+            groups.append((filename, 'bindings', data['bindings']))
+        reading = json.loads((self.root / 'vocabulary/reading-status.json').read_text(encoding='utf-8'))
+        groups.append(('reading-status', 'field', [{'id': 'reading_status', **reading['reading_status']}]))
+        rows = [html.unescape(re.sub(r'\\(.)', r'\1', row)) for row in text.splitlines()]
+        self.assertEqual(Counter(re.findall(r'\(`([^`]+)`\) \|', text)),
+                         Counter(entry['id'] for _, _, entries in groups for entry in entries))
+        for source, group, entries in groups:
+            with self.subTest(source=source, group=group):
+                self.assertIn(f'[{source}.json](../vocabulary/{source}.json)', text)
+                for entry in entries:
+                    matching = [row for row in rows if row.startswith('| ') and
+                                f'(`{entry["id"]}`) |' in row]
+                    self.assertTrue(matching, entry['id'])
+                    self.assertTrue(any(entry.get('label', '') in row and
+                                        entry.get('definition', '') in row for row in matching), entry['id'])
+                    for value in entry.get('mapping', {}).values():
+                        self.assertTrue(any(value in row for row in matching), (entry['id'], value))
+        self.assertIn(f'Version: {self.released}.', text)
+        self.assertIn(f'Version: {self.site_released}.', text)
+        self.assertEqual(text.count('Version: unversioned (no version declared in the JSON).'), 4)
+        self.assertIn('[`rico:hasBirthDate`](https://www.ica.org/standards/RiC/ontology#hasBirthDate)', text)
+        self.assertIn('[`ehri:Person`](http://lod.ehri-project-test.eu/ontology#Person)', text)
+        self.assertIn('Qualified through [`rico:MembershipRelation`]', text)
+        self.assertIn('Concept type: [`rico:DocumentaryFormType`]', text)
+        self.assertIn('Broader property: [`rico:affectsOrAffected`]', text)
+        self.assertIn('Deprecated in 1.2.0; replace with relationship\\_types.parent\\_of:', text)
+        self.assertIn('[released snapshots](../vocabulary/released/)', text)
+        self.assertIn('[approval history](vocabulary-approvals.md)', text)
+        self.assertNotIn('approved_by', text)
+        self.assertNotIn('source_overrides', text)
+
+    def test_readable_list_follows_json_and_preserves_literal_text(self):
+        entry = self.data['groups']['fact_types'][0]
+        entry.update(label='Fictional | label', definition='Literal <text> and *words*.\nSecond line.')
+        entry['mapping'] = {'rico': 'hasBirthDate', 'via': 'AgentToAgentRelation'}
+        self.next_proposal()
+        self.path.write_text(json.dumps(self.data), encoding='utf-8')
+        text = generator.generated(self.root)[self.root / generator.READABLE_VOCABULARY]
+        self.assertIn(f'Version: {self.following}.', text)
+        self.assertIn('Status: proposed.', text)
+        self.assertIn('Fictional \\| label (`birth`)', text)
+        self.assertIn('Literal &lt;text&gt; and \\*words\\*.<br>Second line.', text)
+        self.assertIn('Qualified through [`rico:AgentToAgentRelation`]', text)
+        self.assertNotIn('Release date: None', text)
+
+    def test_readable_list_links_resolve_locally(self):
+        from urllib.parse import urlsplit, unquote
+        text = generator.generated()[HERE.parent / generator.READABLE_VOCABULARY]
+        for link in re.findall(r'\]\(([^)]+)\)', text):
+            parts = urlsplit(link)
+            if parts.scheme:
+                continue
+            with self.subTest(link=link):
+                if parts.path:
+                    self.assertTrue((HERE.parent / 'docs' / unquote(parts.path)).exists())
+                elif parts.fragment:
+                    self.assertIn(f'<a id="{parts.fragment}"></a>', text)
+
+    def test_a_stale_or_missing_readable_list_fails_the_check(self):
+        generator.main([], root=self.root)
+        target = self.root / generator.READABLE_VOCABULARY
+        original = target.read_bytes()
+        self.assertIsNone(generator.main(['--check'], root=self.root))
+        for edited in (original.replace(b'# Vocabulary', b'# Stale vocabulary', 1),
+                       original.replace(b'\n', b'\r\n'), original.rstrip(b'\n')):
+            with self.subTest(edit=edited[:100]):
+                target.write_bytes(edited)
+                with self.assertRaises(SystemExit) as stopped:
+                    generator.main(['--check'], root=self.root)
+                self.assertEqual(str(stopped.exception), 'stale generated vocabulary: docs/vocabulary.md')
+        target.unlink()
+        with self.assertRaises(SystemExit) as stopped:
+            generator.main(['--check'], root=self.root)
+        self.assertEqual(str(stopped.exception), 'stale generated vocabulary: docs/vocabulary.md')
+        generator.main([], root=self.root)
+        self.assertEqual(target.read_bytes(), original)
+        self.assertIsNone(generator.main(['--check'], root=self.root))
 
     # The LinkML form of the vocabulary (linkml/schema/vocabulary.yaml). These tests need the
     # standard library alone; linkml/tests/test_vocabulary.py reads the same file with PyYAML
