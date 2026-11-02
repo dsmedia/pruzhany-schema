@@ -73,7 +73,7 @@ bin/verify
 Use the versions in `mise.toml`; bash, git and uv are also required. See
 [verification](docs/agents/verification.md) for setup details and consumer commands.
 `bin/verify` is the single verification entry point, including standards alignment;
-its header describes all nine steps and their toolchain. `bin/verify <step>...`
+its header describes all ten steps and their toolchain. `bin/verify <step>...`
 runs selected steps while working; run the full check before merging. The `entities`
 step checks sourced assertions in the current `SiteArchive` carrier, and `contract`
 runs Zod↔Pydantic lockstep here.

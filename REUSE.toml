@@ -1,0 +1,71 @@
+# REUSE Specification 3.3, REUSE.toml format 1; read 2 November 2026:
+# https://reuse.software/spec-3.3/
+# Keep generated and pinned bytes intact by annotating them here.
+# Tables below narrow the code defaults to data and upstream-owned material.
+# No catch-all at the root: a new unclassified file must fail reuse lint.
+version = 1
+
+[[annotations]]
+path = [
+  ".claude/rules/**", ".github/workflows/**", ".gitignore",
+  ".pre-commit-config.yaml", ".prettierrc", "AGENTS.md", "CLAUDE.md",
+  "CHANGELOG.md", "CONTRIBUTING.md", "README.md", "NOTICE",
+  "bun.lock", "justfile", "mise.toml", "package.json", "bin/**", "tools/**",
+  "docs/**", "zod/**", "pydantic/**", "tests/**", "linkml/**",
+  "pilots/sourced-entities/**", "vocabulary/*.py", "vocabulary/README.md",
+  "conformance/README.md", "standards/*.py", "standards/README.md",
+  "standards/*/pin.json", "standards/iiif-presentation-3-3891f47/README.md",
+]
+SPDX-FileCopyrightText = "2026 the Pruzhany project contributors"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = [
+  "vocabulary/*.json", "vocabulary/*.ttl", "vocabulary/released/*.json",
+  "vocabulary/crosswalks/*.json",
+  "conformance/*.json", "tests/**/*.json", "linkml/tests/fixtures/**.json",
+  "linkml/tests/fixtures/**.yaml",
+  "linkml/generated/**", "linkml/schema/vocabulary.yaml", "linkml/trials/*.json",
+  "docs/design/*.json", "standards/media-rights.json",
+  "pilots/sourced-entities/input/**", "pilots/sourced-entities/generated/**",
+  "pilots/sourced-entities/*.json", "pilots/sourced-entities/*.ttl",
+]
+SPDX-FileCopyrightText = "2026 the Pruzhany project contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = ["standards/ehri-0.1.1.json", "standards/ehri-0.2.0.json"]
+SPDX-FileCopyrightText = ["EHRI/ehri-kg-ontology contributors", "2026 the Pruzhany project contributors"]
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileComment = "Term extracts; original creator/publisher attribution is retained in ontology_metadata. See NOTICE for immutable sources."
+
+[[annotations]]
+path = ["standards/rico-1.0.2.json", "standards/rico-1.1.json", "standards/rico-1.1-axioms.json"]
+SPDX-FileCopyrightText = ["2019- International Council on Archives (ICA)", "2026 the Pruzhany project contributors"]
+SPDX-License-Identifier = "CC-BY-4.0"
+SPDX-FileComment = "Term and axiom extracts; original attribution is retained in ontology_metadata of the term lists. See NOTICE."
+
+[[annotations]]
+path = [
+  "standards/ehri-people-1.1-1c2325f9/*.ttl", "standards/ehri-people-1.1-1c2325f9/*.shex",
+  "standards/ehri-cb-1.1-1c2325f9/*.ttl", "standards/ehri-cb-1.1-1c2325f9/*.shex",
+  "standards/ehri-holdings-1.1-1c2325f9/*.ttl", "standards/ehri-holdings-1.1-1c2325f9/*.shex",
+]
+SPDX-FileCopyrightText = "EHRI/ehri-kg-mapping contributors"
+SPDX-License-Identifier = "EUPL-1.2"
+
+[[annotations]]
+path = "standards/ead3-1.1.1-c3576974/ead3.xsd"
+SPDX-FileCopyrightText = "SAA Technical Subcommittee for Encoded Archival Standards"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "standards/impresso-329323c/*.schema.json"
+SPDX-FileCopyrightText = "2026 The impresso team"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = "linkml/tests/fixtures/physical/IMPRESSO-LICENSE"
+SPDX-FileCopyrightText = "2007 Free Software Foundation, Inc."
+SPDX-License-Identifier = "LicenseRef-FSF-Verbatim"
+SPDX-FileComment = "This is a copy of the AGPL licence text itself; its opening notice permits verbatim redistribution."

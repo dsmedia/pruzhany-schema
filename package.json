@@ -1,6 +1,7 @@
 {
 	"name": "pruzhany-schema-verify",
 	"private": true,
+	"license": "MIT",
 	"type": "module",
 	"description": "Dev-only toolchain so bin/verify can run the zod/ tests, typecheck and format check standalone. Versions match pruzhany-svelte's bun.lock; this repo is never published.",
 	"devDependencies": {

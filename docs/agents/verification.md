@@ -1,7 +1,7 @@
 # Setup and verification
 
 Run commands from the schema checkout's root unless stated otherwise. Read
-`bin/verify`'s header for its nine steps and [README.md](../../README.md#verify)
+`bin/verify`'s header for its ten steps and [README.md](../../README.md#verify)
 for the contracts they protect.
 
 ## Setup
@@ -20,6 +20,29 @@ step also calls `python3` from PATH. The LinkML step creates and removes a separ
 environment, syncing `linkml/requirements.lock` with required hashes and
 `linkml/build-constraints.txt`; do not replace that with an unlocked install.
 For generation commands, read [linkml/README.md](../../linkml/README.md#commands).
+
+The `reuse` step follows LinkML's separate temporary uv environment and
+`pip sync --require-hashes` pattern. `tools/reuse/requirements.in` pins REUSE
+6.2.0 (released 27 October 2025); `requirements.lock` also pins and hashes its
+dependencies, resolved with a 19 October 2026 cutoff. This gives the whole tool
+environment a two-week minimum release age, rather than pinning only REUSE with
+`uvx`. No system REUSE installation is needed on CI or locally.
+The lock's header records its regeneration command.
+
+Read **2 November 2026**: [REUSE Specification 3.3](https://reuse.software/spec-3.3/),
+[REUSE 6.2.0 release](https://pypi.org/project/reuse/6.2.0/),
+[reuse-lint](https://reuse.readthedocs.io/en/v6.2.0/man/reuse-lint.html), and
+[uv Commands](https://docs.astral.sh/uv/reference/cli/) (`pip compile --universal
+--python-version --generate-hashes --exclude-newer --output-file`, `venv`,
+`pip sync --require-hashes`). Root `LICENSE` and `LICENSE-DATA` are ignored
+under the specification's “Covered and ignored Files” and “License Files” rules;
+`NOTICE` is covered by `REUSE.toml`. Keep `LICENSES/` copies for REUSE.
+
+There is no `pyproject.toml` to update. For any future Python package, use
+`license = "MIT"` as an SPDX expression, with the applicable `license-files`,
+as described in the Python Packaging User Guide,
+[Writing your pyproject.toml: license and license-files](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license-and-license-files),
+read **2 November 2026** (PEP 639; the old licence table is deprecated).
 
 If the default uv cache is outside the writable sandbox, set `UV_CACHE_DIR` to a
 dedicated directory inside the worktree for the check, then remove that directory.

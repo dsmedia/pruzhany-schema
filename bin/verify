@@ -2,12 +2,12 @@
 # bin/verify — the one verify entry point for pruzhany-schema; run it locally
 # before pushing. CI runs it verbatim, split across two workflows so the
 # history is scanned once: gitleaks.yml runs `bin/verify scan` (every push to
-# every branch) and ci.yml runs `bin/verify zod pydantic contract pilot standards vocabulary entities linkml`.
+# every branch) and ci.yml runs `bin/verify zod pydantic contract pilot standards vocabulary entities linkml reuse`.
 #
 #   bin/verify            run every step below
-#   bin/verify <step>...  run only the named steps (scan, zod, pydantic, contract, pilot, standards, vocabulary, entities, linkml)
+#   bin/verify <step>...  run only the named steps (scan, zod, pydantic, contract, pilot, standards, vocabulary, entities, linkml, reuse)
 #
-# Steps (self-contained by default; LinkML also checks available sibling data and catalogs):
+# Ten steps (self-contained by default; LinkML also checks available sibling data and catalogs):
 #   scan      gitleaks over the full git history, secrets redacted.
 #   zod       bun install --frozen-lockfile (package.json pins the same zod, prettier,
 #             vitest and typescript versions as pruzhany-svelte's bun.lock),
@@ -33,9 +33,13 @@
 #             linkml/generated/, the canaries that fail when LinkML's behaviour
 #             changes, then the tests (including the pilot against both pinned
 #             EHRI person shapes, using PyShEx/pySHACL in this hashed lock).
+#   reuse     REUSE 3.3 copyright/licence coverage with REUSE 6.2.0, installed
+#             from tools/reuse/requirements.lock with every hash required.
 #
-# Tools: bash, git, bun, uv, gitleaks (versions pinned in mise.toml; CI
-# installs the same ones).
+# Tools: bash, git, Node.js 22, coreutils (mktemp/rm), bun 1.3.11, uv
+# (CI: 0.11.13), gitleaks 8.24.3, and Python 3.11 provisioned by uv.
+# vocabulary also uses python3 from PATH. mise.toml pins Bun/Python/gitleaks;
+# CI installs Bun/uv/gitleaks and obtains the other system tools from its runner.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -200,13 +204,28 @@ step_linkml() {
 	"$py" -I -B -m unittest discover -s linkml/tests -p 'test_*.py'
 }
 
-ALL_STEPS=(scan zod pydantic contract pilot standards vocabulary entities linkml)
+step_reuse() {
+	# Same isolated, hash-required uv pattern as LinkML, including transitive pins.
+	# REUSE 6.2.0 reuse-lint and uv Commands, read 2 November 2026:
+	# https://reuse.readthedocs.io/en/v6.2.0/man/reuse-lint.html
+	# https://docs.astral.sh/uv/reference/cli/ (venv, pip sync --require-hashes)
+	local reuse_env reuse_python
+	reuse_env=$(mktemp -d)
+	trap "rm -rf '$reuse_env'" RETURN EXIT
+	uv venv --quiet --python "$PYTHON_VERSION" "$reuse_env"
+	reuse_python="$reuse_env/bin/python"
+	[ -x "$reuse_python" ] || reuse_python="$reuse_env/Scripts/python.exe"
+	uv pip sync --quiet --python "$reuse_python" --require-hashes tools/reuse/requirements.lock
+	"$reuse_python" -I -m reuse lint
+}
+
+ALL_STEPS=(scan zod pydantic contract pilot standards vocabulary entities linkml reuse)
 steps=("$@")
 [ ${#steps[@]} -eq 0 ] && steps=("${ALL_STEPS[@]}")
 
 for step in "${steps[@]}"; do
 	case "$step" in
-	scan | zod | pydantic | contract | pilot | standards | vocabulary | entities | linkml) ;;
+	scan | zod | pydantic | contract | pilot | standards | vocabulary | entities | linkml | reuse) ;;
 	*)
 		echo "bin/verify: unknown step '$step' (expected: ${ALL_STEPS[*]})" >&2
 		exit 2
