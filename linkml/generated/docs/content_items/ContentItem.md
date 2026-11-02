@@ -47,6 +47,8 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
         
       ContentItem : location_ids
         
+      ContentItem : newspaper
+        
       ContentItem : organization_ids
         
       ContentItem : page_blocks
@@ -187,6 +189,7 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
 | [event_id](event_id.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The life event the content item prints, by the event's id, where it prints one. | direct |
 | [language](language.md) | 0..1 <br/> [LanguageTag](LanguageTag.md) | The language most of the item is printed in, as the reading step judged it, as a two- or three-letter ISO 639 code (Impresso's lg). | direct |
 | [summary](summary.md) | 0..1 <br/> [Summary](Summary.md) | A short English summary of the content item, written from its English translation, where one has been written and upheld. | direct |
+| [newspaper](newspaper.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The paper this content item belongs to, by its id in the source register. | direct |
 
 
 
@@ -318,6 +321,7 @@ attributes:
     - PrintedSection
     range: NonBlankText
     required: true
+    pattern: ^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])
   type:
     name: type
     annotations:
@@ -527,6 +531,22 @@ attributes:
     - ContentItem
     range: Summary
     inlined: true
+  newspaper:
+    name: newspaper
+    annotations:
+      impresso:
+        tag: impresso
+        value: The media alias carried by Impresso's canonical id. The pinned schemas
+          have no separate media-alias property; site_newspaper keeps the source register
+          id.
+    description: The paper this content item belongs to, by its id in the source register.
+    from_schema: https://pruzhany.org/ns/content_items
+    rank: 1000
+    slot_uri: pc:site_newspaper
+    domain_of:
+    - ContentItem
+    range: NonBlankText
+    required: true
 class_uri: ehri:RecordResource
 rules:
 - preconditions:
@@ -654,6 +674,7 @@ attributes:
     - PrintedSection
     range: NonBlankText
     required: true
+    pattern: ^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])
   type:
     name: type
     annotations:
@@ -883,6 +904,23 @@ attributes:
     - ContentItem
     range: Summary
     inlined: true
+  newspaper:
+    name: newspaper
+    annotations:
+      impresso:
+        tag: impresso
+        value: The media alias carried by Impresso's canonical id. The pinned schemas
+          have no separate media-alias property; site_newspaper keeps the source register
+          id.
+    description: The paper this content item belongs to, by its id in the source register.
+    from_schema: https://pruzhany.org/ns/content_items
+    rank: 1000
+    slot_uri: pc:site_newspaper
+    owner: ContentItem
+    domain_of:
+    - ContentItem
+    range: NonBlankText
+    required: true
 class_uri: ehri:RecordResource
 rules:
 - preconditions:

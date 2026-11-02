@@ -31,13 +31,25 @@
                         "string",
                         "null"
                     ]
+                },
+                "key": {
+                    "description": "The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code.",
+                    "pattern": "^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "newspaper": {
+                    "description": "The paper this edition belongs to, by its id in the source register.",
+                    "pattern": "\\S",
+                    "type": "string"
                 }
             },
             "required": [
                 "date",
                 "hebrewDate",
                 "hebrewMonth",
-                "hebrewYear"
+                "hebrewYear",
+                "newspaper",
+                "key"
             ],
             "title": "Edition",
             "type": "object"

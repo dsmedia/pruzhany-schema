@@ -83,8 +83,9 @@ class TheAccount(unittest.TestCase):
         self.assertEqual(pydantic, sum('pydantic' in entry for entry in entries),
                          'Pydantic validators and entries differ')
         # Measured on 28 October 2026; a change in the twins shows here first.
-        # The fates list (2 November 2026) adds two refinements, two validators and two entries.
-        self.assertEqual((zod, pydantic, len(entries)), (12, 14, 14))
+        # The fates list (2 November 2026) adds two refinements, two validators and two entries;
+        # one issue naming one paper adds one of each.
+        self.assertEqual((zod, pydantic, len(entries)), (13, 15, 15))
 
     def test_each_entry_names_one_refinement_or_validator_where_it_is(self):
         for entry in CHECKS['checks']:
@@ -138,7 +139,7 @@ class TheAccount(unittest.TestCase):
                     tally['existing' if 'rule' in part else 'proposed'] += 1
                 else:
                     tally[part['how']] += 1
-        self.assertEqual(tally, {'linkml_rule': 5, 'existing': 40, 'proposed': 0, 'twin_only': 3})
+        self.assertEqual(tally, {'linkml_rule': 5, 'existing': 40, 'proposed': 0, 'twin_only': 4})
 
     def test_it_passes_the_house_lint(self):
         self.assertEqual(load('lint').lint(CHECKS_FILE), [])

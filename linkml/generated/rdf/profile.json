@@ -5,8 +5,8 @@
     "ontology.ttl": "61d32d991d656f5570a2ed2776cde0fc40551060ace7bc92154729aeb47363ec",
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
-  "contract_sha256": "d9e5e2a37246e48f157887cd8e47c7f3d684704c6ec7dd2f97cd28449cd045a5",
-  "index_sha256": "b02eadac3154a8a5347202a7bfe0353bb121167bcbbf66d7d516328a718e09b5",
+  "contract_sha256": "0d01343d0afe519b29d8c96a5739a32e880758265e8b6e2d507cd134e77f0c99",
+  "index_sha256": "46c5b609535e8a98861b7b38ccf90a5c2ff7352f5fd70c0623147fc389c38f76",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -2335,16 +2335,16 @@
   "profile_sha256": "83de534323e4e201c8df4d8a128a3012057e1051aeae21fcf208082923a8511f",
   "source_sha256": {
     "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
-    "linkml/schema/content_items.yaml": "ec37017a3cac2e0345828a89e23bc3d8378d4a4815948f52fedb90f1bb7eff53",
-    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/content_items.yaml": "b2e332fdf8bb5f036ac1c5e29419d61ad96fd917aea174c14db9e4e56c6bdb25",
+    "linkml/schema/editions.yaml": "80114ffa9810e31da37cc106361a74e1bdceb849105ab4d01b334c3a6fe011c4",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
-    "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
+    "linkml/schema/impresso_contentitem.yaml": "2042ddcf9a440e33a6d685c6610782a77f5c530bcdbe6c0b2d5e9b21f663c024",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
     "linkml/schema/media.yaml": "514410702d9db8b741df691c9266c14f86c12cbb8959fa1225e4edb7499496e5",
     "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
-    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/pages.yaml": "7c5fafb3a46b207d1ccb45577f294ca8f02f40ef47f09b0caff48df0ac011636",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
     "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",

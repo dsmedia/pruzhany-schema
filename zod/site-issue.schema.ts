@@ -150,6 +150,14 @@ function printedAddressErrors(
 	return errors;
 }
 
+// The papers an issue's pages and pieces name; one issue belongs to one paper.
+function issuePapers(v: SiteIssue): string[] {
+	return [
+		...v.pages.pages.map((p) => p.newspaper),
+		...v.content_items.content_items.map((i) => i.newspaper),
+	];
+}
+
 function siteIssueErrors(v: SiteIssue): string[] {
 	const errors: string[] = [];
 	const date = v.content_items.issue_date;
@@ -162,6 +170,7 @@ function siteIssueErrors(v: SiteIssue): string[] {
 		].some((d) => d !== date)
 	)
 		errors.push('issue dates disagree');
+	if (new Set(issuePapers(v)).size > 1) errors.push('issue papers disagree');
 	errors.push(
 		...uniqueIds(
 			v.pages.pages.map((p) => p.id),
@@ -374,7 +383,8 @@ export const SiteArchiveSchema = z
 	})
 	.superRefine((v, ctx) => {
 		const errors = uniqueIds(
-			v.issues.map((i) => i.content_items.issue_date),
+			// Two papers may print on one day: an issue is its paper and its date.
+			v.issues.map((i) => JSON.stringify([issuePapers(i)[0] ?? '', i.content_items.issue_date])),
 			'issue date'
 		);
 		const people = new Set(v.shared_record.persons.map((p) => p.id));

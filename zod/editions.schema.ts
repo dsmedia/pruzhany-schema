@@ -8,10 +8,16 @@ import { z } from 'zod/v4';
 
 // known-looser: these optional keys reject null; retain their generated constraints.
 // Today's documents carry extensions; the old shape stripped unknown keys.
-export const EditionSchema = z.object({
-	...EditionShape.shape,
-	holiday: EditionShape.shape.holiday.unwrap().unwrap().optional(),
-});
+export const EditionSchema = z
+	.object({
+		...EditionShape.shape,
+		holiday: EditionShape.shape.holiday.unwrap().unwrap().optional(),
+	})
+	.superRefine((v, ctx) => {
+		// Zod, Defining schemas (https://zod.dev/api), read 2 November 2026.
+		if (v.key.slice(-10) !== v.date)
+			ctx.addIssue({ code: 'custom', path: ['key'], message: 'edition key must agree with date' });
+	});
 export type Edition = z.infer<typeof EditionSchema>;
 
 // Today's documents carry extensions; the old shape stripped unknown keys.

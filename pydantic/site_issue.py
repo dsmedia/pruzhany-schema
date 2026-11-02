@@ -1,4 +1,5 @@
 """Per-issue site documents and their joins to the shared record."""
+import json
 from .generated.models import ContentItemRef, IssueLifeEvent, IssueLifeEventsData, IssueMention, IssueMentionsData
 from typing import Annotated, Literal
 from pydantic import Field, model_validator
@@ -90,12 +91,20 @@ def printed_address_errors(addresses, refs, pages, match):
     return errors
 
 
+def issue_papers(value):
+    """Give the papers an issue's pages and pieces name; one issue belongs to one paper."""
+    return [*[p.newspaper for p in value.pages.pages],
+            *[i.newspaper for i in value.content_items.content_items]]
+
+
 def site_issue_errors(value):
     errors = []
     date = value.content_items.issue_date
     if any(d != date for d in [value.pages.edition_date, value.mentions.issue_date,
                                value.life_events.issue_date, *[p.issue_date for p in value.pages.pages]]):
         errors.append('issue dates disagree')
+    if len(set(issue_papers(value))) > 1:
+        errors.append('issue papers disagree')
     errors += unique_ids([p.id for p in value.pages.pages], 'page id')
     pages = {p.id: p for p in value.pages.pages}
     items = {i.id: i for i in value.content_items.content_items}
@@ -235,7 +244,9 @@ class SiteArchive(Strict):
 
     @model_validator(mode='after')
     def shared_references(self):
-        errors = unique_ids([i.content_items.issue_date for i in self.issues], 'issue date')
+        # Two papers may print on one day: an issue is its paper and its date.
+        errors = unique_ids([json.dumps([(issue_papers(i) or [''])[0], i.content_items.issue_date])
+                             for i in self.issues], 'issue date')
         people = {p.id for p in self.shared_record.persons}
         places = {p.id for p in self.shared_record.places}
         organizations = {o.id for o in self.shared_record.organizations}

@@ -5,7 +5,7 @@
 			"id": "m-1",
 			"person_id": "person-1",
 			"printed_name": "second",
-			"content_item_id": "cu-1",
+			"content_item_id": "cu-1938-12-16-i0001",
 			"address_grain": "words",
 			"roles": [
 				"subject",
@@ -32,7 +32,7 @@
 			"title": null,
 			"function": "well-wisher",
 			"wkd_id": null,
-			"content_item_id": "cu-1",
+			"content_item_id": "cu-1938-12-16-i0001",
 			"address_grain": "regions",
 			"roles": [
 				"named"

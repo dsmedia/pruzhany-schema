@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `58c670fd716403493b8e5776782e268b6de0de2d804580f82cefc95fc3aa6a88`.
+Definition fingerprint: `83b1fcbae8259b690e0d7fe4235e00e4a3fee037b5d9582b9ca35e878d094348`.
 
 ## What the Pruzhany issue documents share
 
@@ -233,7 +233,7 @@ Meaning: No direct mapping recorded.
 | --- | --- | --- | --- | --- |
 | `bbox` | The region's box on the page picture: left, top, width and height, in the picture's pixels. | list of NonNegativeInteger; minimum items: 4; maximum items: 4 | Yes | No direct mapping recorded |
 | `confidence` | How sure the reading is, from 0 to 1, where it was recorded. | float | No | No direct mapping recorded |
-| `id` | The region's id, such as blk-p4-001. | string | Yes | No direct mapping recorded |
+| `id` | The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001. | string; pattern: ^blk-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-p\d+-r\d{3}$(?![\s\S]) | Yes | No direct mapping recorded |
 | `image_crop` | A picture of the region alone, by its path, where one was made. | string | No | No direct mapping recorded |
 | `transcription` | The words read in the region, its lines separated by line breaks. | string | Yes | No direct mapping recorded |
 | `unit_id` | The content item the region belongs to, by its id; null for a region that is a section's heading. | string | No | No direct mapping recorded |
@@ -250,9 +250,10 @@ Meaning: schema:CreativeWork (close mappings).
 | --- | --- | --- | --- | --- |
 | `blocks` | The regions of print on the page. | list of Block | Yes | No direct mapping recorded |
 | `dimensions` | The picture's width and height, in its pixels. | list of integer; minimum items: 2; maximum items: 2 | Yes | No direct mapping recorded |
-| `id` | The page's id, such as page-1938-12-16-4. | string | Yes | No direct mapping recorded |
+| `id` | The page's id, such as page-1938-12-16-4. | string; pattern: ^page-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-\d+$(?![\s\S]) | Yes | No direct mapping recorded |
 | `image_uri` | The page's picture, by its name or address. | string | Yes | No direct mapping recorded |
 | `issue_date` | The date of the issue the page belongs to, written YYYY-MM-DD. | string | Yes | No direct mapping recorded |
+| `newspaper` | The paper this page belongs to, by its id in the source register. | NonBlankText | Yes | pc:site_newspaper (slot uri) |
 | `page_number` | The page's number within the issue, from 1. | integer | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/pages.yaml`.
@@ -284,9 +285,10 @@ Meaning: ehri:RecordResource (class uri).
 | `cross_references` | Links from this content item to others in the issue. | list of CrossReference | Yes | No direct mapping recorded |
 | `event_id` | The life event the content item prints, by the event's id, where it prints one. | NonBlankText | No | No direct mapping recorded |
 | `full_text` | The content item's printed text, a copy made for the site from the lines of its regions. | string | Yes | pc:site_site_copy (related mappings) |
-| `id` | The content item's id within the issue. | NonBlankText | Yes | No direct mapping recorded |
+| `id` | The content item's id within the issue. | NonBlankText; pattern: ^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S]) | Yes | No direct mapping recorded |
 | `language` | The language most of the item is printed in, as the reading step judged it, as a two- or three-letter ISO 639 code (Impresso's lg). | LanguageTag; pattern: ^[a-z]{2,3}$(?![\s\S]) | No | rico:hasOrHadLanguage (slot uri) |
 | `location_ids` | The places the content item names, by their ids in the shared record. | list of NonBlankText | Yes | No direct mapping recorded |
+| `newspaper` | The paper this content item belongs to, by its id in the source register. | NonBlankText | Yes | pc:site_newspaper (slot uri) |
 | `organization_ids` | The organisations the content item names, by their ids in the shared record. | list of NonBlankText | Yes | No direct mapping recorded |
 | `page_blocks` | The regions the content item is printed in, page by page, in reading order. | list of ContentItemBlockRef; minimum items: 1 | Yes | pc:site_site_copy (related mappings) |
 | `printed_title` | The title as printed above the content item, where it has one. | PrintedTitle | No | rico:hasOrHadTitle (slot uri) |
@@ -481,6 +483,8 @@ Meaning: schema:PublicationIssue (close mappings).
 | `hebrewMonth` | The Hebrew month, by its number from 1 to 13, counted from Nisan. | integer; minimum: 1; maximum: 13 | Yes | No direct mapping recorded |
 | `hebrewYear` | The Hebrew year, such as 5699. | integer; minimum: -9007199254740991; maximum: 9007199254740991 | Yes | No direct mapping recorded |
 | `holiday` | The holiday the edition falls on or near, where there is one. | string | No | No direct mapping recorded |
+| `key` | The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code. | string; pattern: ^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$(?![\s\S]) | Yes | No direct mapping recorded |
+| `newspaper` | The paper this edition belongs to, by its id in the source register. | NonBlankText | Yes | pc:site_newspaper (slot uri) |
 
 Source: `linkml/schema/editions.yaml`.
 
@@ -1711,7 +1715,7 @@ Meaning: No direct mapping recorded.
 
 | Field | What it holds | Value | Required | Standard mapping |
 | --- | --- | --- | --- | --- |
-| `id` | Page canonical ID | string; pattern: ^[A-Za-z_]+-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$ | No | No direct mapping recorded |
+| `id` | Page canonical ID | string; pattern: ^[A-Za-z][A-Za-z0-9_]*-\d{4}-\d{2}-\d{2}-[a-z]{1,2}-p[0-9]{4}$ | No | No direct mapping recorded |
 | `n` | page number | integer | No | No direct mapping recorded |
 | `r` | List of region coordinates. | integer | No | No direct mapping recorded |
 | `t` | List of tokens | list of ImpressoRebuiltToken | No | No direct mapping recorded |

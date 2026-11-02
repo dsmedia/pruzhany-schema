@@ -12,7 +12,7 @@
 			],
 			"blocks": [
 				{
-					"id": "blk-p1-001",
+					"id": "blk-1938-12-16-p1-r001",
 					"bbox": [
 						100,
 						120,
@@ -23,7 +23,7 @@
 					"unit_id": null
 				},
 				{
-					"id": "blk-p1-002",
+					"id": "blk-1938-12-16-p1-r002",
 					"bbox": [
 						100,
 						200,
@@ -33,9 +33,10 @@
 					"transcription": "first line\nsecond line",
 					"confidence": 0.9,
 					"image_crop": null,
-					"unit_id": "cu-1"
+					"unit_id": "cu-1938-12-16-i0001"
 				}
-			]
+			],
+			"newspaper": "fictional-first-paper"
 		}
 	]
 }

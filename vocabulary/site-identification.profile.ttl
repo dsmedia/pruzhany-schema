@@ -1,0 +1,7 @@
+@prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+pc:site_newspaper a owl:DatatypeProperty ;
+  rdfs:label "Newspaper source register id"@en ;
+  rdfs:comment "Local field for the newspaper's source register id on an edition, page or content item. It corresponds to Impresso's media alias in canonical ids; the pinned Impresso schemas declare no separate media-alias property with an RDF IRI. The source register id is not the title code or a record-set object, so no pinned EHRI or RiC-O property expresses this literal directly. Read standards/impresso-329323c, ehri-0.2.0.json and rico-1.1.json on 2 November 2026."@en .

@@ -240,6 +240,34 @@ rules, emitted policy and both runtime validators against the actual activated L
 
 ### Commands
 
+The two-paper contract requires `newspaper` (a nonblank source register id) on
+`Edition`, `Page` and `ContentItem`, and `key` on `Edition`. The first paper's key
+is its date; later papers prefix their code, for example `abcd-2001-02-03`.
+Both runtime twins check that the key's date equals `date`; JSON Schema holds
+the pattern but cannot compare sibling values. The register's code-to-id lookup
+remains the writer's responsibility. Site page, block and content-item ids put
+the optional lowercase paper code immediately after their kind.
+
+The local `pc:site_newspaper` property is declared and explained in
+`vocabulary/site-identification.profile.ttl`. The unchanged pinned Impresso
+schemas describe the media alias through canonical ids but declare no separate
+media-alias RDF property to use as a `close_mappings` target. The external
+rebuilt-content contract corrects only its page-id title code to the canonical
+issue rule (`[A-Za-z][A-Za-z0-9_]*`); the original upstream pattern and all other
+fields stay checked against the pin, with explicit fictional digit controls.
+
+Read **2 November 2026**: the three schemas in
+[`standards/impresso-329323c/`](../standards/impresso-329323c/), pinned EHRI 0.2.0
+and RiC-O 1.1 term lists; LinkML [Slots](https://linkml.io/linkml/schemas/slots.html);
+Zod [Defining schemas](https://zod.dev/api) (`superRefine` and `safeExtend`);
+Pydantic [Validators](https://docs.pydantic.dev/latest/concepts/validators/)
+(after model validators); uv [Commands](https://docs.astral.sh/uv/reference/cli/)
+(`venv`, `pip sync --require-hashes --build-constraints`), Bun
+[bun install](https://bun.sh/docs/pm/cli/install) (`--frozen-lockfile`), and pytest
+[Temporary directories](https://docs.pytest.org/en/stable/how-to/tmp_path.html)
+(`--basetemp`, kept separately under `cache/` and removed after the run).
+Versions remain the repository pins.
+
 `bin/verify linkml` runs everything, in this order: `linkml lint` on every schema file, the house
 lint, every generated file made again in a temporary folder and compared byte for byte with
 `generated/` (it fails naming each file that differs, is missing or is extra), the canaries, then

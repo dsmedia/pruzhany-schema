@@ -1,0 +1,537 @@
+{
+	"description": "Entirely fictional two-paper contracts; abcd is an invented second paper code.",
+	"example": {
+		"Edition": {
+			"date": "2001-02-03",
+			"hebrewDate": "Fictional date",
+			"hebrewMonth": 1,
+			"hebrewYear": 5761,
+			"newspaper": "fictional-second-paper",
+			"key": "abcd-2001-02-03"
+		},
+		"Page": {
+			"id": "page-abcd-2001-02-03-1",
+			"issue_date": "2001-02-03",
+			"page_number": 1,
+			"image_uri": "fictional.png",
+			"dimensions": [10, 10],
+			"blocks": [
+				{
+					"id": "blk-abcd-2001-02-03-p1-r001",
+					"bbox": [0, 0, 10, 10],
+					"transcription": "Fictional text",
+					"confidence": 1,
+					"image_crop": null,
+					"unit_id": null
+				}
+			],
+			"newspaper": "fictional-second-paper"
+		},
+		"Block": {
+			"id": "blk-abcd-2001-02-03-p1-r001",
+			"bbox": [0, 0, 10, 10],
+			"transcription": "Fictional text",
+			"confidence": 1,
+			"image_crop": null,
+			"unit_id": null
+		},
+		"ContentItem": {
+			"id": "cu-abcd-2001-02-03-i0001",
+			"type": "ad",
+			"subtype": "thanks",
+			"printed_title": {
+				"text": "Fictional Person sends thanks.",
+				"addresses": [
+					{
+						"image_uri": "fictional-page.png",
+						"bbox": [10, 20, 100, 30],
+						"text": "Fictional Person sends thanks."
+					}
+				]
+			},
+			"supplied_title": {
+				"text": "Thanks from Fictional Person",
+				"language": "en",
+				"based_on": {
+					"source_text": "Fictional Person sends thanks.",
+					"addresses": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fictional Person sends thanks."
+						}
+					]
+				},
+				"attribution": {
+					"by": "fictional writer",
+					"on": "2026-10-22",
+					"kind": "person"
+				},
+				"checked_against": {
+					"reading_id": "cu-2000-01-01-i0001",
+					"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+					"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+					"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+					"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+					"attribution": {
+						"by": "Fictional checker",
+						"on": "2026-01-03",
+						"kind": "person"
+					}
+				}
+			},
+			"subject_ids": ["community_affairs"],
+			"section_id": "fictional-section",
+			"full_text": "Fictional Person sends thanks.",
+			"translation": {
+				"text": "Fictional translated thanks.",
+				"language": "en",
+				"based_on": {
+					"source_text": "Fictional Person sends thanks.",
+					"addresses": [
+						{
+							"image_uri": "fictional-page.png",
+							"bbox": [10, 20, 100, 30],
+							"text": "Fictional Person sends thanks."
+						}
+					]
+				},
+				"attribution": {
+					"by": "fictional writer",
+					"on": "2026-10-22",
+					"kind": "person"
+				},
+				"checked_against": {
+					"reading_id": "cu-2000-01-01-i0001",
+					"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+					"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+					"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+					"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+					"attribution": {
+						"by": "Fictional checker",
+						"on": "2026-01-03",
+						"kind": "person"
+					}
+				}
+			},
+			"block_breaks": [],
+			"page_blocks": [
+				{
+					"page_id": "page-2000-01-01-1",
+					"block_ids": ["blk-2000-01-01-p1-r001"]
+				}
+			],
+			"location_ids": ["fictional-place"],
+			"organization_ids": ["fictional-organization"],
+			"cross_references": [],
+			"event_id": "fictional-event",
+			"newspaper": "fictional-second-paper"
+		}
+	},
+	"models": {
+		"Edition": ["Edition"],
+		"Page": ["Page"],
+		"Block": ["Block"],
+		"ContentItem": ["ContentItem"]
+	},
+	"cases": [
+		{
+			"name": "newspaper: Edition coded",
+			"model": "Edition",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "newspaper: Edition date only",
+			"model": "Edition",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "2001-02-03"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition code after date",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "2001-02-03-abcd"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition trailing newline",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "abcd-2001-02-03\n"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition uppercase code",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "ABCD-2001-02-03"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition missing newspaper",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition newspaper ''",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition newspaper ' \\n\\t'",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": " \n\t"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition newspaper None",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition newspaper 12",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": 12
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page coded",
+			"model": "Page",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "newspaper: Page date only",
+			"model": "Page",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "page-2001-02-03-1"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page code after date",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "page-2001-02-03-abcd-1"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page trailing newline",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "page-abcd-2001-02-03-1\n"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page uppercase code",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "page-ABCD-2001-02-03-1"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page missing newspaper",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page newspaper ''",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page newspaper ' \\n\\t'",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": " \n\t"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page newspaper None",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "newspaper: Page newspaper 12",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": 12
+				}
+			]
+		},
+		{
+			"name": "newspaper: Block coded",
+			"model": "Block",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "newspaper: Block date only",
+			"model": "Block",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "blk-2001-02-03-p1-r001"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Block code after date",
+			"model": "Block",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "blk-2001-02-03-abcd-p1-r001"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Block trailing newline",
+			"model": "Block",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "blk-abcd-2001-02-03-p1-r001\n"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Block uppercase code",
+			"model": "Block",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "blk-ABCD-2001-02-03-p1-r001"
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem coded",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "newspaper: ContentItem date only",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "cu-2001-02-03-i0001"
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem code after date",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "cu-2001-02-03-abcd-i0001"
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem trailing newline",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "cu-abcd-2001-02-03-i0001\n"
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem uppercase code",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["id"],
+					"value": "cu-ABCD-2001-02-03-i0001"
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem missing newspaper",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem newspaper ''",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": ""
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem newspaper ' \\n\\t'",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": " \n\t"
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem newspaper None",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "newspaper: ContentItem newspaper 12",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["newspaper"],
+					"value": 12
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition missing key",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition key date disagrees 2001-02-04",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "2001-02-04"
+				}
+			]
+		},
+		{
+			"name": "newspaper: Edition key date disagrees abcd-2001-02-04",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["key"],
+					"value": "abcd-2001-02-04"
+				}
+			]
+		}
+	]
+}

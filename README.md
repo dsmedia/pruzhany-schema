@@ -88,6 +88,11 @@ The [vocabulary approval record](docs/vocabulary-approvals.md) is the continuing
 
 ## Current site files
 
+Every `Edition`, `Page` and `ContentItem` requires `newspaper`, the paper's source
+register id. Each catalog edition also requires `key`: its date for the first paper,
+or `<code>-<date>` for another paper, with the date matching `date`. Page, block and
+content-item ids accept that same optional paper code immediately after their kind.
+
 The owner approved the site switch on 2026-10-24. `content-item.schema.ts` defines content
 items with printed and supplied titles, Impresso types, subtypes, subjects, an optional
 model-written English summary bound to the translation it was written from, and printed

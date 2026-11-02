@@ -35,6 +35,7 @@ twins:
     - zod/site-content.vocabulary.ts
     - zod/fates-list.schema.ts
   pydantic:
+    - pydantic/editions.py
     - pydantic/page.py
     - pydantic/content_item.py
     - pydantic/site_common.py
@@ -42,6 +43,23 @@ twins:
     - pydantic/fates_list.py
 
 checks:
+  - id: edition-key-date
+    holds: >-
+      The date at the end of an edition key equals the edition's date.
+    zod:
+      file: zod/editions.schema.ts
+      schema: EditionSchema
+    pydantic:
+      file: pydantic/editions.py
+      validator: Edition.key_date
+    parts:
+      - holds: >-
+          The key's final YYYY-MM-DD equals date.
+        how: twin_only
+        why: >-
+          LinkML's generated JSON Schema cannot compare two sibling string values.
+          The key's pattern is in the definition; the twins compare its date.
+
   - id: printed-title
     holds: >-
       A printed title's text is the words at its addresses, joined by line breaks.

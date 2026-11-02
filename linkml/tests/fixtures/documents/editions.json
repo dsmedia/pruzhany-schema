@@ -4,14 +4,18 @@
 			"date": "1938-12-16",
 			"hebrewDate": "ב׳ טֵבֵת תרצ״ט",
 			"hebrewMonth": 10,
-			"hebrewYear": 5699
+			"hebrewYear": 5699,
+			"newspaper": "fictional-first-paper",
+			"key": "1938-12-16"
 		},
 		{
 			"date": "1938-12-23",
 			"hebrewDate": "ט׳ טֵבֵת תרצ״ט",
 			"hebrewMonth": 10,
 			"hebrewYear": 5699,
-			"holiday": "Fast of Tevet"
+			"holiday": "Fast of Tevet",
+			"newspaper": "fictional-first-paper",
+			"key": "1938-12-23"
 		}
 	],
 	"holidays": [

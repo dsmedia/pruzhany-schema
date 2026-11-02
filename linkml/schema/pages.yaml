@@ -1,7 +1,7 @@
 # The pages document of one issue (pruzhany-svelte static/data/<date>-pages.json), as
 # zod/page.schema.ts and pydantic/page.py shape it. Its JSON Schema is made with the top class
-# PagesData (modules.json). The twins keep this document's older, looser shape: plain text for
-# ids and dates, with no pattern; where Zod says a number and Pydantic a whole number (a page's
+# PagesData (modules.json). Page and block ids allow a paper code just after their kind;
+# dates retain their older plain-text shape. Where Zod says a number and Pydantic a whole number (a page's
 # number, its size, a region's box), the definition says a whole number, as the real files hold.
 # Impresso governs pages and regions (docs/adr/0001-which-standard-governs-what.md); its field
 # is named in an `impresso` annotation, in words.
@@ -54,6 +54,7 @@ classes:
     attributes:
       id:
         required: true
+        pattern: '^page-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-\d+$(?![\s\S])'
         description: >-
           The page's id, such as page-1938-12-16-4.
         annotations:
@@ -93,6 +94,16 @@ classes:
         annotations:
           impresso: >-
             The page file's regions (r).
+      newspaper:
+        range: NonBlankText
+        required: true
+        slot_uri: pc:site_newspaper
+        description: >-
+          The paper this page belongs to, by its id in the source register.
+        annotations:
+          impresso: >-
+            The media alias carried by Impresso's canonical id. The pinned schemas have
+            no separate media-alias property; site_newspaper keeps the source register id.
 
   Block:
     description: >-
@@ -104,8 +115,9 @@ classes:
     attributes:
       id:
         required: true
+        pattern: '^blk-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-p\d+-r\d{3}$(?![\s\S])'
         description: >-
-          The region's id, such as blk-p4-001.
+          The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001.
       bbox:
         range: NonNegativeInteger
         multivalued: true

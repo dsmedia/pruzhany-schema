@@ -35,7 +35,9 @@ Name: pruzhany_editions
 | [historical_events](historical_events.md) | Events in the world outside the town that the calendar marks. |
 | [holiday](holiday.md) | The holiday the edition falls on or near, where there is one. |
 | [holidays](holidays.md) | The Jewish holidays of the paper's years. |
+| [key](key.md) | The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code. |
 | [name](name.md) | The holiday's name in Latin letters, such as Purim or Pesach. |
+| [newspaper](newspaper.md) | The paper this edition belongs to, by its id in the source register. |
 
 
 ## Enumerations

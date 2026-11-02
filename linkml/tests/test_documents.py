@@ -367,9 +367,10 @@ class Mappings(unittest.TestCase):
                 counts['slot_uri'] += sum(bool(slot.slot_uri) for slot in (cls.attributes or {}).values())
         # Issue #56 adds one RiC-O language mapping and its Impresso lg correspondence. The fates
         # list adds three class URIs, two slot URIs, three close and four related mappings. The
+        # newspaper of an edition, page and piece adds three slot URIs and three Impresso fields; the
         # content item's summary adds two slot URIs: rico:scopeAndContent and its basis's digest.
-        self.assertEqual(counts, {'class_uri': 9, 'slot_uri': 18, 'exact_mappings': 9, 'close_mappings': 6,
-                                  'related_mappings': 7, 'impresso': 22})
+        self.assertEqual(counts, {'class_uri': 9, 'slot_uri': 21, 'exact_mappings': 9, 'close_mappings': 6,
+                                  'related_mappings': 7, 'impresso': 25})
 
 
 class _scratch_schema:

@@ -644,25 +644,26 @@
 								"edition_date": "1938-01-01",
 								"pages": [
 									{
-										"id": "fictional-page",
+										"id": "page-2000-01-01-1",
 										"issue_date": "1938-01-01",
 										"page_number": 1,
 										"image_uri": "fictional-page.png",
 										"dimensions": [200, 300],
 										"blocks": [
 											{
-												"id": "fictional-heading",
+												"id": "blk-2000-01-01-p1-r004",
 												"bbox": [10, 0, 100, 10],
 												"transcription": "Fictional notices",
 												"unit_id": null
 											},
 											{
-												"id": "fictional-block",
+												"id": "blk-2000-01-01-p1-r001",
 												"bbox": [10, 20, 100, 30],
 												"transcription": "Fictional Person sends thanks.",
-												"unit_id": "fictional-item"
+												"unit_id": "cu-2000-01-01-i0001"
 											}
-										]
+										],
+										"newspaper": "fictional-first-paper"
 									}
 								]
 							},
@@ -671,7 +672,7 @@
 								"vocabulary_version": "0.1.0",
 								"content_items": [
 									{
-										"id": "fictional-item",
+										"id": "cu-2000-01-01-i0001",
 										"type": "ad",
 										"subtype": "thanks",
 										"printed_title": {
@@ -703,7 +704,7 @@
 												"kind": "person"
 											},
 											"checked_against": {
-												"reading_id": "fictional-item",
+												"reading_id": "cu-2000-01-01-i0001",
 												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
@@ -737,7 +738,7 @@
 												"kind": "person"
 											},
 											"checked_against": {
-												"reading_id": "fictional-item",
+												"reading_id": "cu-2000-01-01-i0001",
 												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
@@ -752,14 +753,15 @@
 										"block_breaks": [],
 										"page_blocks": [
 											{
-												"page_id": "fictional-page",
-												"block_ids": ["fictional-block"]
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
 											}
 										],
 										"location_ids": [],
 										"organization_ids": [],
 										"cross_references": [],
-										"event_id": "event-fictional-death"
+										"event_id": "event-fictional-death",
+										"newspaper": "fictional-first-paper"
 									}
 								],
 								"sections": [
@@ -794,11 +796,11 @@
 												"kind": "person"
 											}
 										},
-										"content_item_ids": ["fictional-item"],
+										"content_item_ids": ["cu-2000-01-01-i0001"],
 										"heading_blocks": [
 											{
-												"page_id": "fictional-page",
-												"block_ids": ["fictional-heading"]
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r004"]
 											}
 										]
 									}
@@ -810,7 +812,7 @@
 									{
 										"id": "fictional-mention",
 										"person_id": "person-fictional-deceased",
-										"content_item_id": "fictional-item",
+										"content_item_id": "cu-2000-01-01-i0001",
 										"printed_name": "Fictional Person",
 										"roles": ["signer", "donor"],
 										"addresses": [
@@ -831,7 +833,7 @@
 										"id": "event-fictional-death",
 										"content_items": [
 											{
-												"content_item_id": "fictional-item",
+												"content_item_id": "cu-2000-01-01-i0001",
 												"role": "mention"
 											}
 										]
@@ -857,25 +859,26 @@
 								"edition_date": "1938-01-01",
 								"pages": [
 									{
-										"id": "fictional-page",
+										"id": "page-2000-01-01-1",
 										"issue_date": "1938-01-01",
 										"page_number": 1,
 										"image_uri": "fictional-page.png",
 										"dimensions": [200, 300],
 										"blocks": [
 											{
-												"id": "fictional-heading",
+												"id": "blk-2000-01-01-p1-r004",
 												"bbox": [10, 0, 100, 10],
 												"transcription": "Fictional notices",
 												"unit_id": null
 											},
 											{
-												"id": "fictional-block",
+												"id": "blk-2000-01-01-p1-r001",
 												"bbox": [10, 20, 100, 30],
 												"transcription": "Fictional Person sends thanks.",
-												"unit_id": "fictional-item"
+												"unit_id": "cu-2000-01-01-i0001"
 											}
-										]
+										],
+										"newspaper": "fictional-first-paper"
 									}
 								]
 							},
@@ -884,7 +887,7 @@
 								"vocabulary_version": "0.1.0",
 								"content_items": [
 									{
-										"id": "fictional-item",
+										"id": "cu-2000-01-01-i0001",
 										"type": "ad",
 										"subtype": "thanks",
 										"printed_title": {
@@ -916,7 +919,7 @@
 												"kind": "person"
 											},
 											"checked_against": {
-												"reading_id": "fictional-item",
+												"reading_id": "cu-2000-01-01-i0001",
 												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
@@ -950,7 +953,7 @@
 												"kind": "person"
 											},
 											"checked_against": {
-												"reading_id": "fictional-item",
+												"reading_id": "cu-2000-01-01-i0001",
 												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
@@ -965,14 +968,15 @@
 										"block_breaks": [],
 										"page_blocks": [
 											{
-												"page_id": "fictional-page",
-												"block_ids": ["fictional-block"]
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
 											}
 										],
 										"location_ids": [],
 										"organization_ids": [],
 										"cross_references": [],
-										"event_id": "event-fictional-death"
+										"event_id": "event-fictional-death",
+										"newspaper": "fictional-first-paper"
 									}
 								],
 								"sections": [
@@ -1007,11 +1011,11 @@
 												"kind": "person"
 											}
 										},
-										"content_item_ids": ["fictional-item"],
+										"content_item_ids": ["cu-2000-01-01-i0001"],
 										"heading_blocks": [
 											{
-												"page_id": "fictional-page",
-												"block_ids": ["fictional-heading"]
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r004"]
 											}
 										]
 									}
@@ -1023,7 +1027,7 @@
 									{
 										"id": "fictional-mention",
 										"person_id": "person-fictional-deceased",
-										"content_item_id": "fictional-item",
+										"content_item_id": "cu-2000-01-01-i0001",
 										"printed_name": "Fictional Person",
 										"roles": ["signer", "donor"],
 										"addresses": [
@@ -1060,25 +1064,26 @@
 								"edition_date": "1938-01-01",
 								"pages": [
 									{
-										"id": "fictional-page",
+										"id": "page-2000-01-01-1",
 										"issue_date": "1938-01-01",
 										"page_number": 1,
 										"image_uri": "fictional-page.png",
 										"dimensions": [200, 300],
 										"blocks": [
 											{
-												"id": "fictional-heading",
+												"id": "blk-2000-01-01-p1-r004",
 												"bbox": [10, 0, 100, 10],
 												"transcription": "Fictional notices",
 												"unit_id": null
 											},
 											{
-												"id": "fictional-block",
+												"id": "blk-2000-01-01-p1-r001",
 												"bbox": [10, 20, 100, 30],
 												"transcription": "Fictional Person sends thanks.",
-												"unit_id": "fictional-item"
+												"unit_id": "cu-2000-01-01-i0001"
 											}
-										]
+										],
+										"newspaper": "fictional-first-paper"
 									}
 								]
 							},
@@ -1087,7 +1092,7 @@
 								"vocabulary_version": "0.1.0",
 								"content_items": [
 									{
-										"id": "fictional-item",
+										"id": "cu-2000-01-01-i0001",
 										"type": "ad",
 										"subtype": "thanks",
 										"printed_title": {
@@ -1119,7 +1124,7 @@
 												"kind": "person"
 											},
 											"checked_against": {
-												"reading_id": "fictional-item",
+												"reading_id": "cu-2000-01-01-i0001",
 												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
@@ -1153,7 +1158,7 @@
 												"kind": "person"
 											},
 											"checked_against": {
-												"reading_id": "fictional-item",
+												"reading_id": "cu-2000-01-01-i0001",
 												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
@@ -1168,14 +1173,15 @@
 										"block_breaks": [],
 										"page_blocks": [
 											{
-												"page_id": "fictional-page",
-												"block_ids": ["fictional-block"]
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
 											}
 										],
 										"location_ids": [],
 										"organization_ids": [],
 										"cross_references": [],
-										"event_id": "event-fictional-death"
+										"event_id": "event-fictional-death",
+										"newspaper": "fictional-first-paper"
 									}
 								],
 								"sections": [
@@ -1210,11 +1216,11 @@
 												"kind": "person"
 											}
 										},
-										"content_item_ids": ["fictional-item"],
+										"content_item_ids": ["cu-2000-01-01-i0001"],
 										"heading_blocks": [
 											{
-												"page_id": "fictional-page",
-												"block_ids": ["fictional-heading"]
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r004"]
 											}
 										]
 									}
@@ -1226,7 +1232,7 @@
 									{
 										"id": "fictional-mention",
 										"person_id": "person-fictional-deceased",
-										"content_item_id": "fictional-item",
+										"content_item_id": "cu-2000-01-01-i0001",
 										"printed_name": "Fictional Person",
 										"roles": ["signer", "donor"],
 										"addresses": [
@@ -1247,7 +1253,7 @@
 										"id": "event-fictional-death",
 										"content_items": [
 											{
-												"content_item_id": "fictional-item",
+												"content_item_id": "cu-2000-01-01-i0001",
 												"role": "mention"
 											}
 										]
@@ -1289,25 +1295,26 @@
 								"edition_date": "1938-01-01",
 								"pages": [
 									{
-										"id": "fictional-page",
+										"id": "page-2000-01-01-1",
 										"issue_date": "1938-01-01",
 										"page_number": 1,
 										"image_uri": "fictional-page.png",
 										"dimensions": [200, 300],
 										"blocks": [
 											{
-												"id": "fictional-heading",
+												"id": "blk-2000-01-01-p1-r004",
 												"bbox": [10, 0, 100, 10],
 												"transcription": "Fictional notices",
 												"unit_id": null
 											},
 											{
-												"id": "fictional-block",
+												"id": "blk-2000-01-01-p1-r001",
 												"bbox": [10, 20, 100, 30],
 												"transcription": "Fictional Person sends thanks.",
-												"unit_id": "fictional-item"
+												"unit_id": "cu-2000-01-01-i0001"
 											}
-										]
+										],
+										"newspaper": "fictional-first-paper"
 									}
 								]
 							},
@@ -1316,7 +1323,7 @@
 								"vocabulary_version": "0.1.0",
 								"content_items": [
 									{
-										"id": "fictional-item",
+										"id": "cu-2000-01-01-i0001",
 										"type": "ad",
 										"subtype": "thanks",
 										"printed_title": {
@@ -1348,7 +1355,7 @@
 												"kind": "person"
 											},
 											"checked_against": {
-												"reading_id": "fictional-item",
+												"reading_id": "cu-2000-01-01-i0001",
 												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
@@ -1382,7 +1389,7 @@
 												"kind": "person"
 											},
 											"checked_against": {
-												"reading_id": "fictional-item",
+												"reading_id": "cu-2000-01-01-i0001",
 												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
@@ -1397,14 +1404,15 @@
 										"block_breaks": [],
 										"page_blocks": [
 											{
-												"page_id": "fictional-page",
-												"block_ids": ["fictional-block"]
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
 											}
 										],
 										"location_ids": [],
 										"organization_ids": [],
 										"cross_references": [],
-										"event_id": "event-fictional-death"
+										"event_id": "event-fictional-death",
+										"newspaper": "fictional-first-paper"
 									}
 								],
 								"sections": [
@@ -1439,11 +1447,11 @@
 												"kind": "person"
 											}
 										},
-										"content_item_ids": ["fictional-item"],
+										"content_item_ids": ["cu-2000-01-01-i0001"],
 										"heading_blocks": [
 											{
-												"page_id": "fictional-page",
-												"block_ids": ["fictional-heading"]
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r004"]
 											}
 										]
 									}
@@ -1455,7 +1463,7 @@
 									{
 										"id": "fictional-mention",
 										"person_id": "person-fictional-deceased",
-										"content_item_id": "fictional-item",
+										"content_item_id": "cu-2000-01-01-i0001",
 										"printed_name": "Fictional Person",
 										"roles": ["signer", "donor"],
 										"addresses": [
@@ -1476,7 +1484,7 @@
 										"id": "event-fictional-death",
 										"content_items": [
 											{
-												"content_item_id": "fictional-item",
+												"content_item_id": "cu-2000-01-01-i0001",
 												"role": "mention"
 											}
 										]

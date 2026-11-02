@@ -358,7 +358,7 @@
                 },
                 "id": {
                     "description": "The content item's id within the issue.",
-                    "pattern": "\\S",
+                    "pattern": "^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])",
                     "type": "string"
                 },
                 "language": {
@@ -376,6 +376,11 @@
                         "type": "string"
                     },
                     "type": "array"
+                },
+                "newspaper": {
+                    "description": "The paper this content item belongs to, by its id in the source register.",
+                    "pattern": "\\S",
+                    "type": "string"
                 },
                 "organization_ids": {
                     "description": "The organisations the content item names, by their ids in the shared record.",
@@ -482,7 +487,8 @@
                 "page_blocks",
                 "location_ids",
                 "organization_ids",
-                "cross_references"
+                "cross_references",
+                "newspaper"
             ],
             "title": "ContentItem",
             "type": "object"

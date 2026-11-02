@@ -1,17 +1,17 @@
 {
-  "contract_sha256": "d9e5e2a37246e48f157887cd8e47c7f3d684704c6ec7dd2f97cd28449cd045a5",
+  "contract_sha256": "0d01343d0afe519b29d8c96a5739a32e880758265e8b6e2d507cd134e77f0c99",
   "inputs": {
     "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
-    "linkml/schema/content_items.yaml": "ec37017a3cac2e0345828a89e23bc3d8378d4a4815948f52fedb90f1bb7eff53",
-    "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
+    "linkml/schema/content_items.yaml": "b2e332fdf8bb5f036ac1c5e29419d61ad96fd917aea174c14db9e4e56c6bdb25",
+    "linkml/schema/editions.yaml": "80114ffa9810e31da37cc106361a74e1bdceb849105ab4d01b334c3a6fe011c4",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
-    "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
+    "linkml/schema/impresso_contentitem.yaml": "2042ddcf9a440e33a6d685c6610782a77f5c530bcdbe6c0b2d5e9b21f663c024",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
     "linkml/schema/media.yaml": "514410702d9db8b741df691c9266c14f86c12cbb8959fa1225e4edb7499496e5",
     "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
-    "linkml/schema/pages.yaml": "3b2c2b14fcc5138a801d5e593a7bd20d98d3e5eeb9a8a313f2af41202ebe6b69",
+    "linkml/schema/pages.yaml": "7c5fafb3a46b207d1ccb45577f294ca8f02f40ef47f09b0caff48df0ac011636",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
     "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
@@ -194,7 +194,7 @@
           }
         },
         {
-          "description": "The region's id, such as blk-p4-001.",
+          "description": "The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001.",
           "mappings": [],
           "multivalued": false,
           "name": "id",
@@ -203,7 +203,8 @@
           "relationship": "value",
           "required": true,
           "shape": {
-            "description": "The region's id, such as blk-p4-001.",
+            "description": "The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001.",
+            "pattern": "^blk-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-p\\d+-r\\d{3}$(?![\\s\\S])",
             "type": "string"
           }
         },
@@ -259,7 +260,7 @@
       "mappings": [],
       "parent": null,
       "source": "linkml/schema/pages.yaml",
-      "yaml": "  Block:\n    description: >-\n      One region of print on a page, its box and the words read in it, belonging to one\n      content item, or to no item when it is a section heading.\n    annotations:\n      impresso: >-\n        A page region (page.schema.json r[]).\n    attributes:\n      id:\n        required: true\n        description: >-\n          The region's id, such as blk-p4-001.\n      bbox:\n        range: NonNegativeInteger\n        multivalued: true\n        required: true\n        minimum_cardinality: 4\n        maximum_cardinality: 4\n        description: >-\n          The region's box on the page picture: left, top, width and height, in the picture's\n          pixels.\n        annotations:\n          impresso: >-\n            The region's coordinates (r[].c).\n      transcription:\n        required: true\n        description: >-\n          The words read in the region, its lines separated by line breaks.\n      confidence:\n        range: float\n        description: >-\n          How sure the reading is, from 0 to 1, where it was recorded.\n      image_crop:\n        description: >-\n          A picture of the region alone, by its path, where one was made.\n      unit_id:\n        description: >-\n          The content item the region belongs to, by its id; null for a region that is a\n          section's heading.\n        annotations:\n          impresso: >-\n            The content item a region belongs to (r[].pOf).\n"
+      "yaml": "  Block:\n    description: >-\n      One region of print on a page, its box and the words read in it, belonging to one\n      content item, or to no item when it is a section heading.\n    annotations:\n      impresso: >-\n        A page region (page.schema.json r[]).\n    attributes:\n      id:\n        required: true\n        pattern: '^blk-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-p\\d+-r\\d{3}$(?![\\s\\S])'\n        description: >-\n          The region's id, such as blk-2001-02-03-p4-r001 or blk-abcd-2001-02-03-p4-r001.\n      bbox:\n        range: NonNegativeInteger\n        multivalued: true\n        required: true\n        minimum_cardinality: 4\n        maximum_cardinality: 4\n        description: >-\n          The region's box on the page picture: left, top, width and height, in the picture's\n          pixels.\n        annotations:\n          impresso: >-\n            The region's coordinates (r[].c).\n      transcription:\n        required: true\n        description: >-\n          The words read in the region, its lines separated by line breaks.\n      confidence:\n        range: float\n        description: >-\n          How sure the reading is, from 0 to 1, where it was recorded.\n      image_crop:\n        description: >-\n          A picture of the region alone, by its path, where one was made.\n      unit_id:\n        description: >-\n          The content item the region belongs to, by its id; null for a region that is a\n          section's heading.\n        annotations:\n          impresso: >-\n            The content item a region belongs to (r[].pOf).\n"
     },
     "Citation": {
       "description": "Where in one source a statement's evidence lies: the source, and the record, page, scan, time, piece of the paper, address or pointer within it, with the quoted words.",
@@ -858,7 +859,7 @@
           "required": true,
           "shape": {
             "description": "The content item's id within the issue.",
-            "pattern": "\\S",
+            "pattern": "^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])",
             "type": "string"
           }
         },
@@ -901,6 +902,26 @@
               "type": "string"
             },
             "type": "array"
+          }
+        },
+        {
+          "description": "The paper this content item belongs to, by its id in the source register.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_newspaper"
+            }
+          ],
+          "multivalued": false,
+          "name": "newspaper",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The paper this content item belongs to, by its id in the source register.",
+            "pattern": "\\S",
+            "type": "string"
           }
         },
         {
@@ -1151,7 +1172,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/content_items.yaml",
-      "yaml": "  ContentItem:\n    description: >-\n      One article, notice, greeting or advertisement of the issue: its kind, its titles, its\n      text and English, the regions it is printed in and what it names.\n    class_uri: ehri:RecordResource\n    annotations:\n      impresso: >-\n        A content item file (paper_contentitem.schema.json).\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The content item's id within the issue.\n        annotations:\n          impresso: >-\n            The content item's id.\n      type:\n        range: ImpressoTypes\n        required: true\n        description: >-\n          The content item's kind, one of Impresso's content item types.\n        annotations:\n          impresso: >-\n            The content item's type (tp).\n      subtype:\n        range: ContentItemSubtypes\n        slot_uri: rico:hasDocumentaryFormType\n        description: >-\n          The narrower form the content item takes within its kind, such as a wedding\n          greeting within advertisements, where one is known.\n      printed_title:\n        range: PrintedTitle\n        inlined: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          The title as printed above the content item, where it has one.\n        annotations:\n          impresso: >-\n            The content item's title.\n      supplied_title:\n        range: SuppliedTitle\n        inlined: true\n        required: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          A title in English supplied for the content item.\n      subject_ids:\n        range: Subjects\n        multivalued: true\n        required: true\n        slot_uri: rico:hasOrHadSubject\n        description: >-\n          What the content item is about, as subjects of the site-content vocabulary.\n      section_id:\n        range: NonBlankText\n        description: >-\n          The printed section the content item stands under, by the section's id, where it\n          stands under one.\n      full_text:\n        required: true\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          The content item's printed text, a copy made for the site from the lines of its\n          regions.\n        annotations:\n          impresso: >-\n            The content item's rebuilt full text (ft).\n      translation:\n        range: Translation\n        inlined: true\n        description: >-\n          The content item's text in English, where it has been translated.\n      reading_status:\n        range: ReadingStatus\n        inlined: true\n        exact_mappings:\n          - pc:site_reading_status\n        description: >-\n          How far the text and the English have been checked; left out or null where it is\n          not recorded.\n      block_breaks:\n        range: NonNegativeInteger\n        multivalued: true\n        required: true\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          Where each region's text begins in the full text, counted in Unicode code points.\n        annotations:\n          impresso: >-\n            The text offsets of page regions (rb).\n      page_blocks:\n        range: ContentItemBlockRef\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        minimum_cardinality: 1\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          The regions the content item is printed in, page by page, in reading order.\n      location_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          The places the content item names, by their ids in the shared record.\n      organization_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          The organisations the content item names, by their ids in the shared record.\n      cross_references:\n        range: CrossReference\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Links from this content item to others in the issue.\n      event_id:\n        range: NonBlankText\n        description: >-\n          The life event the content item prints, by the event's id, where it prints one.\n      language:\n        # vocabulary/site-content.json, binding source_language.\n        slot_uri: rico:hasOrHadLanguage\n        range: LanguageTag\n        # standards/impresso-329323c/paper_contentitem.schema.json, lg,\n        # read 1 November 2026: two- or three-letter lowercase ISO 639 codes; the end guard\n        # refuses a trailing newline, which a bare $ lets through in Python.\n        pattern: '^[a-z]{2,3}$(?![\\s\\S])'\n        description: >-\n          The language most of the item is printed in, as the reading step judged it,\n          as a two- or three-letter ISO 639 code (Impresso's lg).\n        annotations:\n          impresso: >-\n            The content item's language (lg in paper_contentitem.schema.json and\n            issue.schema.json, standards/impresso-329323c, read 1 November 2026).\n      summary:\n        range: Summary\n        inlined: true\n        # RiC-O 1.1 scopeAndContent (standards/rico-1.1-axioms.json, read 2 November 2026): a\n        # datatype property of a RecordResource, whose range is a literal; ehri:RecordResource,\n        # this class's class_uri, is a RiC-O RecordResource (standards/ehri-0.2.0.json). The\n        # pinned EHRI holdings profile carries it as a language-tagged string\n        # (standards/ehri-holdings-1.1-1c2325f9: holdings.shacl.ttl and holdings.shex). The\n        # summary's text, tagged with its language, is that string; its basis and attribution\n        # are this project's provenance, which neither pinned ontology has a term for.\n        slot_uri: rico:scopeAndContent\n        description: >-\n          A short English summary of the content item, written from its English translation,\n          where one has been written and upheld.\n    rules:\n      - description: >-\n          A greeting, thanks, notice, announcement, appeal or commercial advertisement is an\n          advertisement (ad).\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - wedding_greeting\n                - engagement_greeting\n                - birth_greeting\n                - bar_mitzvah_greeting\n                - new_year_greeting\n                - departure_greeting\n                - greeting\n                - thanks\n                - meeting_notice\n                - announcement\n                - appeal\n                - commercial_advertisement\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: ad\n      - description: >-\n          A condolence, memorial notice or death announcement is a death notice (death_notice).\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - condolence\n                - memorial_notice\n                - death_announcement\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: death_notice\n      - description: >-\n          An editorial, opinion, letter, poem, sketch, masthead or imprint is an article.\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - editorial\n                - opinion\n                - letter\n                - poem\n                - sketch\n                - masthead\n                - imprint\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: article\n      - description: >-\n          A humorous piece (humour) is entertainment.\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - humour\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: entertainment\n      # Typed ranges (external_schema.ReleaseGenerator) keep null out of both sides, as the\n      # twins read it: a null summary asks nothing, and a null translation does not answer.\n      - description: >-\n          A content item with a summary has the translation the summary was written from.\n        preconditions:\n          slot_conditions:\n            summary:\n              annotations:\n                json_schema_typed_range: true\n              range: Summary\n              required: true\n        postconditions:\n          slot_conditions:\n            translation:\n              annotations:\n                json_schema_typed_range: true\n              range: Translation\n              required: true\n"
+      "yaml": "  ContentItem:\n    description: >-\n      One article, notice, greeting or advertisement of the issue: its kind, its titles, its\n      text and English, the regions it is printed in and what it names.\n    class_uri: ehri:RecordResource\n    annotations:\n      impresso: >-\n        A content item file (paper_contentitem.schema.json).\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        pattern: '^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])'\n        description: >-\n          The content item's id within the issue.\n        annotations:\n          impresso: >-\n            The content item's id.\n      type:\n        range: ImpressoTypes\n        required: true\n        description: >-\n          The content item's kind, one of Impresso's content item types.\n        annotations:\n          impresso: >-\n            The content item's type (tp).\n      subtype:\n        range: ContentItemSubtypes\n        slot_uri: rico:hasDocumentaryFormType\n        description: >-\n          The narrower form the content item takes within its kind, such as a wedding\n          greeting within advertisements, where one is known.\n      printed_title:\n        range: PrintedTitle\n        inlined: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          The title as printed above the content item, where it has one.\n        annotations:\n          impresso: >-\n            The content item's title.\n      supplied_title:\n        range: SuppliedTitle\n        inlined: true\n        required: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          A title in English supplied for the content item.\n      subject_ids:\n        range: Subjects\n        multivalued: true\n        required: true\n        slot_uri: rico:hasOrHadSubject\n        description: >-\n          What the content item is about, as subjects of the site-content vocabulary.\n      section_id:\n        range: NonBlankText\n        description: >-\n          The printed section the content item stands under, by the section's id, where it\n          stands under one.\n      full_text:\n        required: true\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          The content item's printed text, a copy made for the site from the lines of its\n          regions.\n        annotations:\n          impresso: >-\n            The content item's rebuilt full text (ft).\n      translation:\n        range: Translation\n        inlined: true\n        description: >-\n          The content item's text in English, where it has been translated.\n      reading_status:\n        range: ReadingStatus\n        inlined: true\n        exact_mappings:\n          - pc:site_reading_status\n        description: >-\n          How far the text and the English have been checked; left out or null where it is\n          not recorded.\n      block_breaks:\n        range: NonNegativeInteger\n        multivalued: true\n        required: true\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          Where each region's text begins in the full text, counted in Unicode code points.\n        annotations:\n          impresso: >-\n            The text offsets of page regions (rb).\n      page_blocks:\n        range: ContentItemBlockRef\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        minimum_cardinality: 1\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          The regions the content item is printed in, page by page, in reading order.\n      location_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          The places the content item names, by their ids in the shared record.\n      organization_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          The organisations the content item names, by their ids in the shared record.\n      cross_references:\n        range: CrossReference\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Links from this content item to others in the issue.\n      event_id:\n        range: NonBlankText\n        description: >-\n          The life event the content item prints, by the event's id, where it prints one.\n      language:\n        # vocabulary/site-content.json, binding source_language.\n        slot_uri: rico:hasOrHadLanguage\n        range: LanguageTag\n        # standards/impresso-329323c/paper_contentitem.schema.json, lg,\n        # read 1 November 2026: two- or three-letter lowercase ISO 639 codes; the end guard\n        # refuses a trailing newline, which a bare $ lets through in Python.\n        pattern: '^[a-z]{2,3}$(?![\\s\\S])'\n        description: >-\n          The language most of the item is printed in, as the reading step judged it,\n          as a two- or three-letter ISO 639 code (Impresso's lg).\n        annotations:\n          impresso: >-\n            The content item's language (lg in paper_contentitem.schema.json and\n            issue.schema.json, standards/impresso-329323c, read 1 November 2026).\n      summary:\n        range: Summary\n        inlined: true\n        # RiC-O 1.1 scopeAndContent (standards/rico-1.1-axioms.json, read 2 November 2026): a\n        # datatype property of a RecordResource, whose range is a literal; ehri:RecordResource,\n        # this class's class_uri, is a RiC-O RecordResource (standards/ehri-0.2.0.json). The\n        # pinned EHRI holdings profile carries it as a language-tagged string\n        # (standards/ehri-holdings-1.1-1c2325f9: holdings.shacl.ttl and holdings.shex). The\n        # summary's text, tagged with its language, is that string; its basis and attribution\n        # are this project's provenance, which neither pinned ontology has a term for.\n        slot_uri: rico:scopeAndContent\n        description: >-\n          A short English summary of the content item, written from its English translation,\n          where one has been written and upheld.\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this content item belongs to, by its id in the source register.\n        annotations:\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n    rules:\n      - description: >-\n          A greeting, thanks, notice, announcement, appeal or commercial advertisement is an\n          advertisement (ad).\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - wedding_greeting\n                - engagement_greeting\n                - birth_greeting\n                - bar_mitzvah_greeting\n                - new_year_greeting\n                - departure_greeting\n                - greeting\n                - thanks\n                - meeting_notice\n                - announcement\n                - appeal\n                - commercial_advertisement\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: ad\n      - description: >-\n          A condolence, memorial notice or death announcement is a death notice (death_notice).\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - condolence\n                - memorial_notice\n                - death_announcement\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: death_notice\n      - description: >-\n          An editorial, opinion, letter, poem, sketch, masthead or imprint is an article.\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - editorial\n                - opinion\n                - letter\n                - poem\n                - sketch\n                - masthead\n                - imprint\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: article\n      - description: >-\n          A humorous piece (humour) is entertainment.\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - humour\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: entertainment\n      # Typed ranges (external_schema.ReleaseGenerator) keep null out of both sides, as the\n      # twins read it: a null summary asks nothing, and a null translation does not answer.\n      - description: >-\n          A content item with a summary has the translation the summary was written from.\n        preconditions:\n          slot_conditions:\n            summary:\n              annotations:\n                json_schema_typed_range: true\n              range: Summary\n              required: true\n        postconditions:\n          slot_conditions:\n            translation:\n              annotations:\n                json_schema_typed_range: true\n              range: Translation\n              required: true\n"
     },
     "ContentItemBlockRef": {
       "description": "The regions of one page that a content item or a section heading covers, in reading order.",
@@ -1452,6 +1473,41 @@
               "null"
             ]
           }
+        },
+        {
+          "description": "The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "key",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code.",
+            "pattern": "^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The paper this edition belongs to, by its id in the source register.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_newspaper"
+            }
+          ],
+          "multivalued": false,
+          "name": "newspaper",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The paper this edition belongs to, by its id in the source register.",
+            "pattern": "\\S",
+            "type": "string"
+          }
         }
       ],
       "mappings": [
@@ -1462,7 +1518,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/editions.yaml",
-      "yaml": "  Edition:\n    description: >-\n      One edition of the paper: its date in the common calendar and in the Hebrew one, and\n      the holiday it falls on, if any.\n    close_mappings:\n      - schema:PublicationIssue\n    attributes:\n      date:\n        range: IsoDay\n        required: true\n        description: >-\n          The edition's date, written YYYY-MM-DD.\n      hebrew_date:\n        alias: hebrewDate\n        required: true\n        description: >-\n          The edition's date in the Hebrew calendar, written in Hebrew letters.\n      hebrew_month:\n        alias: hebrewMonth\n        range: integer\n        required: true\n        minimum_value: 1\n        maximum_value: 13\n        description: >-\n          The Hebrew month, by its number from 1 to 13, counted from Nisan.\n      hebrew_year:\n        alias: hebrewYear\n        range: integer\n        required: true\n        minimum_value: -9007199254740991\n        maximum_value: 9007199254740991\n        description: >-\n          The Hebrew year, such as 5699.\n      holiday:\n        description: >-\n          The holiday the edition falls on or near, where there is one.\n"
+      "yaml": "  Edition:\n    description: >-\n      One edition of the paper: its date in the common calendar and in the Hebrew one, and\n      the holiday it falls on, if any.\n    close_mappings:\n      - schema:PublicationIssue\n    attributes:\n      date:\n        range: IsoDay\n        required: true\n        description: >-\n          The edition's date, written YYYY-MM-DD.\n      hebrew_date:\n        alias: hebrewDate\n        required: true\n        description: >-\n          The edition's date in the Hebrew calendar, written in Hebrew letters.\n      hebrew_month:\n        alias: hebrewMonth\n        range: integer\n        required: true\n        minimum_value: 1\n        maximum_value: 13\n        description: >-\n          The Hebrew month, by its number from 1 to 13, counted from Nisan.\n      hebrew_year:\n        alias: hebrewYear\n        range: integer\n        required: true\n        minimum_value: -9007199254740991\n        maximum_value: 9007199254740991\n        description: >-\n          The Hebrew year, such as 5699.\n      holiday:\n        description: >-\n          The holiday the edition falls on or near, where there is one.\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this edition belongs to, by its id in the source register.\n        annotations:\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n      key:\n        required: true\n        pattern: '^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])'\n        description: >-\n          The edition's key: its date alone for the first paper, or the paper's code and a\n          hyphen before that date for any other paper. Its date must equal date; the source\n          register supplies the paper's code.\n"
     },
     "EditionsCatalog": {
       "description": "The catalog of editions: every edition, the holidays and historical events beside them, and the dates available on the site.",
@@ -5592,6 +5648,7 @@
           "required": true,
           "shape": {
             "description": "The page's id, such as page-1938-12-16-4.",
+            "pattern": "^page-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-\\d+$(?![\\s\\S])",
             "type": "string"
           }
         },
@@ -5624,6 +5681,26 @@
           }
         },
         {
+          "description": "The paper this page belongs to, by its id in the source register.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_newspaper"
+            }
+          ],
+          "multivalued": false,
+          "name": "newspaper",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The paper this page belongs to, by its id in the source register.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
           "description": "The page's number within the issue, from 1.",
           "mappings": [],
           "multivalued": false,
@@ -5646,7 +5723,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/pages.yaml",
-      "yaml": "  Page:\n    description: >-\n      One printed page of the issue: its picture, its size and its regions of print.\n    close_mappings:\n      - schema:CreativeWork\n    annotations:\n      impresso: >-\n        A page file (page.schema.json).\n    attributes:\n      id:\n        required: true\n        description: >-\n          The page's id, such as page-1938-12-16-4.\n        annotations:\n          impresso: >-\n            The page file's id.\n      issue_date:\n        required: true\n        description: >-\n          The date of the issue the page belongs to, written YYYY-MM-DD.\n      page_number:\n        range: integer\n        required: true\n        description: >-\n          The page's number within the issue, from 1.\n      image_uri:\n        required: true\n        description: >-\n          The page's picture, by its name or address.\n      dimensions:\n        range: integer\n        multivalued: true\n        required: true\n        minimum_cardinality: 2\n        maximum_cardinality: 2\n        description: >-\n          The picture's width and height, in its pixels.\n        annotations:\n          impresso: >-\n            The page file's fw and fh, the width and height of the facsimile.\n      blocks:\n        range: Block\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The regions of print on the page.\n        annotations:\n          impresso: >-\n            The page file's regions (r).\n"
+      "yaml": "  Page:\n    description: >-\n      One printed page of the issue: its picture, its size and its regions of print.\n    close_mappings:\n      - schema:CreativeWork\n    annotations:\n      impresso: >-\n        A page file (page.schema.json).\n    attributes:\n      id:\n        required: true\n        pattern: '^page-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-\\d+$(?![\\s\\S])'\n        description: >-\n          The page's id, such as page-1938-12-16-4.\n        annotations:\n          impresso: >-\n            The page file's id.\n      issue_date:\n        required: true\n        description: >-\n          The date of the issue the page belongs to, written YYYY-MM-DD.\n      page_number:\n        range: integer\n        required: true\n        description: >-\n          The page's number within the issue, from 1.\n      image_uri:\n        required: true\n        description: >-\n          The page's picture, by its name or address.\n      dimensions:\n        range: integer\n        multivalued: true\n        required: true\n        minimum_cardinality: 2\n        maximum_cardinality: 2\n        description: >-\n          The picture's width and height, in its pixels.\n        annotations:\n          impresso: >-\n            The page file's fw and fh, the width and height of the facsimile.\n      blocks:\n        range: Block\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The regions of print on the page.\n        annotations:\n          impresso: >-\n            The page file's regions (r).\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this page belongs to, by its id in the source register.\n        annotations:\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n"
     },
     "PagesData": {
       "description": "One issue's pages document: the issue's date and its pages in order.",
