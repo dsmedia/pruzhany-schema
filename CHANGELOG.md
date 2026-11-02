@@ -16,6 +16,7 @@ yet. The vocabularies are versioned on their own; their releases are recorded in
 - LinkML definitions, generated contracts, data dictionary and public RDF view ([#29](https://github.com/dsmedia/pruzhany-schema/pull/29), [#32](https://github.com/dsmedia/pruzhany-schema/pull/32)).
 - Physical pages, model exchanges and structured answers in LinkML ([#36](https://github.com/dsmedia/pruzhany-schema/pull/36), [#39](https://github.com/dsmedia/pruzhany-schema/pull/39), [#44](https://github.com/dsmedia/pruzhany-schema/pull/44)).
 - Person/organisation identifiers and retained merged identifiers; content-item language ([#47](https://github.com/dsmedia/pruzhany-schema/pull/47), [#57](https://github.com/dsmedia/pruzhany-schema/pull/57)).
+- Site-content vocabulary 1.2.0: the owner-approved `masthead` and `imprint` content-item subtypes under Impresso `article` ([approval record](docs/vocabulary-approvals.md)).
 
 ### Changed
 

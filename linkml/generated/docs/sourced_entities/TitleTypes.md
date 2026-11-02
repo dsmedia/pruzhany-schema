@@ -9,7 +9,7 @@ search:
 
 
 
-_Title types: the values of title_types in vocabulary/site-content.json, version 1.1.0._
+_Title types: the values of title_types in vocabulary/site-content.json, version 1.2.0._
 
 
 
@@ -57,7 +57,7 @@ URI: [pc:TitleTypes](https://pruzhany.org/ns/sourced-entities#TitleTypes)
 ```yaml
 name: TitleTypes
 description: 'Title types: the values of title_types in vocabulary/site-content.json,
-  version 1.1.0.'
+  version 1.2.0.'
 from_schema: https://pruzhany.org/ns/sourced_entities
 rank: 1000
 permissible_values:

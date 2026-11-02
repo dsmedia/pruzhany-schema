@@ -91,6 +91,29 @@ approve publication of evidence or private notes.
   subtypes and subjects retain their earlier approval. See
   [`released/site-content-1.1.0.json`](../vocabulary/released/site-content-1.1.0.json).
 
+- **2 November 2026 — site-content vocabulary 1.2.0.** The batch is two
+  content-item subtypes, `content_item_subtypes.masthead` and
+  `content_item_subtypes.imprint`. The owner approved both kinds on 2 November 2026
+  in [the private session](https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11).
+  `masthead` is the paper's own name-plate at the head of an issue or a page: its
+  title, number, date, price, subscription and address lines. `imprint` is the
+  printer's and publisher's line, usually at the foot of the last page: editor,
+  publisher, composing room and press. Both have the Impresso parent `article`,
+  fixed by the owner with the approval. They map to `pc:subtype_masthead` and
+  `pc:subtype_imprint`, declared local SKOS concepts typed
+  `rico:DocumentaryFormType` and reached through `rico:hasDocumentaryFormType`,
+  as the other subtypes are. Read **2 November 2026**: the pinned Impresso
+  `issue.schema.json` (`standards/impresso-329323c/`, `metadata.tp`) lists 13
+  types and none for a masthead or an imprint, and Impresso's `page` is a whole
+  page; the pinned EHRI 0.2.0 and RiC-O 1.1 lists enumerate no documentary forms.
+  Each local reason is in
+  [`site-content.profile.ttl`](../vocabulary/site-content.profile.ttl).
+  The real examples, their English and the private proposal stay in pruzhany-steps
+  (`.scratch/vocabulary/masthead-and-imprint.md`); none are published here. No
+  released identifier is renamed or removed, and no existing definition or mapping
+  changes. Document stamps `0.1.0`, `1.0.0` and `1.1.0` remain accepted. See
+  [`released/site-content-1.2.0.json`](../vocabulary/released/site-content-1.2.0.json).
+
 Later proposals, including the two source kinds in the
 [sources-and-citations design](design/2026-10-24-sources-and-citations.md),
 follow the process above and need their own owner approval.

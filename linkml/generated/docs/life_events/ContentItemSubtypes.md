@@ -9,7 +9,7 @@ search:
 
 
 
-_Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.1.0._
+_Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.2.0._
 
 
 
@@ -41,6 +41,8 @@ URI: [pc:ContentItemSubtypes](https://pruzhany.org/ns/sourced-entities#ContentIt
 | poem | pc:subtype_poem | A composition in verse. | Title: Poem<br>|
 | sketch | pc:subtype_sketch | A short literary sketch. | Title: Sketch<br>|
 | humour | pc:subtype_humour | A joke or short humorous composition. | Title: Humour<br>|
+| masthead | pc:subtype_masthead | The paper's own name-plate at the head of an issue or a page: its title, number, date, price, subscription and address lines. | Title: Masthead<br>|
+| imprint | pc:subtype_imprint | The printer's and publisher's line, usually at the foot of the last page: editor, publisher, composing room and press. | Title: Imprint<br>|
 
 
 
@@ -76,7 +78,7 @@ URI: [pc:ContentItemSubtypes](https://pruzhany.org/ns/sourced-entities#ContentIt
 ```yaml
 name: ContentItemSubtypes
 description: 'Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json,
-  version 1.1.0.'
+  version 1.2.0.'
 from_schema: https://pruzhany.org/ns/life_events
 rank: 1000
 permissible_values:
@@ -245,6 +247,24 @@ permissible_values:
     description: A joke or short humorous composition.
     meaning: pc:subtype_humour
     title: Humour
+    comments:
+    - A local documentary form concept refines one Impresso type; the pinned ontologies
+      do not enumerate this newspaper's forms.
+  masthead:
+    text: masthead
+    description: 'The paper''s own name-plate at the head of an issue or a page: its
+      title, number, date, price, subscription and address lines.'
+    meaning: pc:subtype_masthead
+    title: Masthead
+    comments:
+    - A local documentary form concept refines one Impresso type; the pinned ontologies
+      do not enumerate this newspaper's forms.
+  imprint:
+    text: imprint
+    description: 'The printer''s and publisher''s line, usually at the foot of the
+      last page: editor, publisher, composing room and press.'
+    meaning: pc:subtype_imprint
+    title: Imprint
     comments:
     - A local documentary form concept refines one Impresso type; the pinned ontologies
       do not enumerate this newspaper's forms.
