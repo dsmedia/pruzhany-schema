@@ -1,0 +1,12 @@
+@prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Local terms of the fates list (linkml/schema/fates_list.yaml), each with its reason.
+pc:fates_list a owl:NamedIndividual ; rdfs:comment "EHRI RecordSet groups held records; neither pinned ontology describes a list derived from the record of a newspaper's people by their fate." .
+pc:fates_list_death a owl:NamedIndividual ; rdfs:comment "rico:hasDeathDate names a date alone; a fate detail of a death may give its place without a date, from the death statement or the death event it names." .
+pc:fates_list_age a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology records how a person's age is known: one year of birth, a birth the paper announced, or years that disagree." .
+pc:fates_list_child a owl:NamedIndividual ; rdfs:comment "Neither pinned ontology records that a person was a child at a given time; the mark is this list's, from a year of birth of 1925 or later or a birth the paper announced." .
+pc:fates_list_age_birth_year a owl:NamedIndividual ; rdfs:comment "Application-specific basis of an age, not a value defined in either pinned ontology." .
+pc:fates_list_age_birth_announced a owl:NamedIndividual ; rdfs:comment "Application-specific basis of an age, not a value defined in either pinned ontology." .
+pc:fates_list_age_birth_years_disagree a owl:NamedIndividual ; rdfs:comment "Application-specific basis of an age, not a value defined in either pinned ontology." .

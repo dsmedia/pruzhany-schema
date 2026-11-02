@@ -1,0 +1,486 @@
+# The fates list (pruzhany-svelte static/data/fates-list.json), as zod/fates-list.schema.ts and
+# pydantic/fates_list.py define it: everyone printed in the paper whose fate the record knows
+# (perished or survived, confirmed or probable), each with where and when the record places the
+# fate, the archives' records about them, how their age is known and whether it marks a child,
+# and the list's counts and notes, so that a page never counts for itself. pruzhany-steps'
+# site_writer makes it from the shared record and the published mentions; its JSON Schema is
+# made with the top class FatesList (modules.json).
+#
+# Meaning: a row describes a person (ehri:Person) by the shared record's id; a fate detail is an
+# event (rico:Event), its place and date the shared record's (rico:PlaceRelation, rico:Date);
+# an outside record is a record (rico:Record) its archive holds (rico:hasOrHadHolder), with its
+# identifier (rico:hasOrHadIdentifier) and its documentary form as the archive names it
+# (rico:hasDocumentaryFormType, the binding citation_record_type). The first mention is the
+# site's printed mention (pc:site_mention). The list itself, a fate detail's kind, the age and
+# the child mark are local terms declared with their reasons in vocabulary/fates-list.profile.ttl.
+# The outcome and confidence values mean what the shared record's do. Mapped to RiC-O 1.1 as
+# EHRI 0.2.0 imports it; no conformance is claimed.
+id: https://pruzhany.org/ns/fates_list
+name: pruzhany_fates_list
+title: The fates list of the Pruzhany record
+description: >-
+  Everyone printed in the paper whose fate the record knows, with where and when, the
+  archives' records about them, how their age is known and whether they were children, and the
+  list's counts and notes.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  rico: https://www.ica.org/standards/RiC/ontology#
+  ehri: http://lod.ehri-project-test.eu/ontology#
+  pc: https://pruzhany.org/ns/sourced-entities#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+  - sourced_entities
+
+types:
+  BirthYear:
+    typeof: integer
+    minimum_value: 1800
+    maximum_value: 2100
+    description: >-
+      A year of birth, from 1800 to 2100.
+  ArchiveAddress:
+    typeof: string
+    pattern: '^https://[^\s/?#]+[^\s]*$'
+    description: >-
+      A record's address at its archive: it begins https:// and holds no white space. A pattern
+      alone, as the twins' address checks say it, without LinkML's uri format.
+
+enums:
+  FatesListOutcome:
+    description: >-
+      The fates the list holds: the shared record's fate outcomes perished and survived.
+    permissible_values:
+      perished:
+        description: >-
+          The person perished, as the shared record's fate says.
+        meaning: pc:fate_outcomes_perished
+      survived:
+        description: >-
+          The person survived, as the shared record's fate says.
+        meaning: pc:fate_outcomes_survived
+  FatesListConfidence:
+    description: >-
+      How sure the fate is: the shared record's confidences confirmed and probable.
+    permissible_values:
+      confirmed:
+        description: >-
+          The evidence establishes the fate.
+        meaning: pc:confidence_confirmed
+      probable:
+        description: >-
+          The evidence supports the fate with remaining uncertainty.
+        meaning: pc:confidence_probable
+  FateDetailKind:
+    description: >-
+      The kind of statement a fate detail comes from: a death, a survival or a deportation.
+    permissible_values:
+      death:
+        description: >-
+          The person's death, or the death event it names.
+        meaning: pc:fates_list_death
+      survival:
+        description: >-
+          Evidence that the person was alive at a time and place.
+        meaning: pc:fact_types_survival
+      deportation:
+        description: >-
+          The person's forced removal.
+        meaning: pc:fact_types_deportation
+  AgeKnownBy:
+    description: >-
+      How a person's age is known.
+    permissible_values:
+      birth_year:
+        description: >-
+          The person's own records give one year of birth.
+        meaning: pc:fates_list_age_birth_year
+      birth_announced:
+        description: >-
+          The paper announced the person's birth: the person is the baby of a birth the paper
+          printed.
+        meaning: pc:fates_list_age_birth_announced
+      birth_years_disagree:
+        description: >-
+          The person's own records give years of birth that disagree, so the age is not known.
+        meaning: pc:fates_list_age_birth_years_disagree
+
+classes:
+  FatesList:
+    tree_root: true
+    class_uri: pc:fates_list
+    description: >-
+      The fates list: its people, its counts and its notes.
+    attributes:
+      people:
+        range: FatesListPerson
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          Everyone printed in the paper whose fate the record knows, by name as shown.
+      counts:
+        range: FatesListCounts
+        inlined: true
+        required: true
+        description: >-
+          The list's counts, so that a page never counts for itself.
+      notes:
+        range: NonBlankText
+        multivalued: true
+        required: true
+        description: >-
+          What the counts count, in plain English, the people with no age among them.
+
+  FatesListPerson:
+    close_mappings:
+      - ehri:Person
+    description: >-
+      One person on the list: who, the fate, where the paper first prints them, where and when
+      the fate is placed, the archives' records about them and how their age is known.
+    attributes:
+      person_id:
+        required: true
+        pattern: '^person-[A-Za-z0-9_-]+$'
+        description: >-
+          The person's id in the shared record; the site's person page has this address.
+      name:
+        range: NonBlankText
+        required: true
+        description: >-
+          The person's name as the site shows it.
+      printed_name:
+        range: NonBlankText
+        description: >-
+          The person's name in Yiddish as the paper prints it, where the record has it.
+      outcome:
+        range: FatesListOutcome
+        required: true
+        description: >-
+          The record's fate: perished or survived.
+      confidence:
+        range: FatesListConfidence
+        required: true
+        description: >-
+          How sure the fate is: confirmed or probable.
+      first_mention:
+        range: FatesListPiece
+        inlined: true
+        required: true
+        slot_uri: pc:site_mention
+        description: >-
+          The earliest published piece that prints the person.
+      fate_details:
+        range: FatesListFateDetail
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          Where and when the person's own death, survival and deportation statements place the
+          fate, as the record holds them structured.
+      outside_records:
+        range: FatesListOutsideRecord
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+        description: >-
+          The archives' records about the person that the record cites.
+      age:
+        range: FatesListAge
+        inlined: true
+        description: >-
+          How the person's age is known; absent where the record gives no age.
+
+  FatesListPiece:
+    description: >-
+      A published piece of an edition of the paper.
+    attributes:
+      edition_date:
+        range: IsoDay
+        required: true
+        description: >-
+          The edition's day, written YYYY-MM-DD.
+      content_item_id:
+        required: true
+        pattern: '^cu-\d{4}-\d{2}-\d{2}-i\d{4}$'
+        description: >-
+          The piece's id, such as cu-1938-12-16-i0105.
+
+  FatesListFateDetail:
+    close_mappings:
+      - rico:Event
+    description: >-
+      Where or when one of the person's own fate statements, or the death event it names,
+      places the fate.
+    attributes:
+      kind:
+        range: FateDetailKind
+        required: true
+        description: >-
+          The kind of statement: death, survival or deportation.
+      place_id:
+        pattern: '^location-[A-Za-z0-9_-]+$'
+        related_mappings:
+          - rico:PlaceRelation
+        description: >-
+          The place's id in the shared record.
+      place_name:
+        range: NonBlankText
+        description: >-
+          The place's name in the shared record.
+      date:
+        range: FatesListDate
+        inlined: true
+        description: >-
+          The date, as the record holds it structured; its printed words are never carried.
+    rules:
+      - description: >-
+          A fate detail places the fate, dates it, or both: one without a place has a date.
+        preconditions:
+          slot_conditions:
+            place_id:
+              value_presence: ABSENT
+        postconditions:
+          slot_conditions:
+            date:
+              required: true
+
+  FatesListDate:
+    class_uri: rico:Date
+    description: >-
+      A normalized date: its start, how precise it is and, for a range, its end.
+    attributes:
+      start:
+        range: IsoYearMonthOrDay
+        required: true
+        description: >-
+          The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.
+      precision:
+        range: SourcedDatePrecision
+        description: >-
+          How much of the date is known: year, month, day or range.
+      end:
+        range: IsoYearMonthOrDay
+        description: >-
+          The end of a range of dates, written as the start is.
+
+  FatesListOutsideRecord:
+    close_mappings:
+      - rico:Record
+    description: >-
+      A record an archive holds about the person: the archive, the database it is in, the
+      record's type and id as the archive gives them, and its own address where the record has
+      one.
+    attributes:
+      source_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The archive's database as the shared record's source id, such as yad-vashem.
+      archive:
+        range: NonBlankText
+        required: true
+        related_mappings:
+          - rico:hasOrHadHolder
+        description: >-
+          The archive's name, as the shared record's holder gives it.
+      collection:
+        range: NonBlankText
+        required: true
+        description: >-
+          The database's title, as the shared record's source gives it.
+      record_type:
+        range: NonBlankText
+        related_mappings:
+          - rico:hasDocumentaryFormType
+        description: >-
+          The record's type as the archive names it, from the record's citations, such as Page
+          of Testimony; absent where they name none.
+      record_id:
+        range: NonBlankText
+        required: true
+        related_mappings:
+          - rico:hasOrHadIdentifier
+        description: >-
+          The archive's id for the record.
+      url:
+        range: ArchiveAddress
+        description: >-
+          The record's own address at the archive, never a scan or file address; absent where
+          the record has none.
+
+  FatesListAge:
+    class_uri: pc:fates_list_age
+    description: >-
+      How a person's age is known, and whether it marks a child.
+    attributes:
+      known_by:
+        range: AgeKnownBy
+        required: true
+        description: >-
+          How the age is known: one year of birth, a birth the paper announced, or years that
+          disagree.
+      child:
+        range: boolean
+        required: true
+        slot_uri: pc:fates_list_child
+        description: >-
+          True for a child: one year of birth of 1925 or later, or a birth the paper announced.
+      birth_year:
+        range: BirthYear
+        description: >-
+          The one year of birth the person's own records give.
+      birth_years:
+        range: BirthYear
+        multivalued: true
+        minimum_cardinality: 2
+        description: >-
+          The years of birth that disagree, in order.
+      fact_ids:
+        range: NonBlankText
+        multivalued: true
+        minimum_cardinality: 1
+        description: >-
+          The shared record's birth statements that give the year.
+      announced:
+        range: FatesListPiece
+        inlined: true
+        description: >-
+          The earliest published piece that announced the person's birth.
+    rules:
+      - description: >-
+          An age known by one year of birth gives that year and its statements.
+        preconditions:
+          slot_conditions:
+            known_by:
+              equals_string: birth_year
+        postconditions:
+          slot_conditions:
+            birth_year:
+              required: true
+            fact_ids:
+              required: true
+      - description: >-
+          A birth the paper announced names the piece that announced it.
+        preconditions:
+          slot_conditions:
+            known_by:
+              equals_string: birth_announced
+        postconditions:
+          slot_conditions:
+            announced:
+              required: true
+      - description: >-
+          Years that disagree are given.
+        preconditions:
+          slot_conditions:
+            known_by:
+              equals_string: birth_years_disagree
+        postconditions:
+          slot_conditions:
+            birth_years:
+              required: true
+
+  FatesListCounts:
+    description: >-
+      The list's counts.
+    attributes:
+      people:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people on the list.
+      perished_confirmed:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people who perished.
+      perished_probable:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people who probably perished.
+      survived_confirmed:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people who survived.
+      survived_probable:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people who probably survived.
+      children:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people marked as children.
+      children_by_birth_year:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The children marked by one year of birth of 1925 or later.
+      children_by_announcement:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The children marked because the paper announced their birth.
+      birth_year_known:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people whose own records give one year of birth, children or not.
+      birth_years_disagree:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people whose own records give years of birth that disagree.
+      no_age:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people with no age in the record; they are not marked as children.
+      with_place:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people whose fate the record places somewhere.
+      with_date:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people whose fate the record dates.
+      outside_records:
+        range: FatesListArchiveCount
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        description: >-
+          For each archive's database, how many people its records name.
+
+  FatesListArchiveCount:
+    description: >-
+      How many people an archive's database names, and how many of them with an address.
+    attributes:
+      source_id:
+        range: NonBlankText
+        required: true
+        description: >-
+          The database as the shared record's source id.
+      archive:
+        range: NonBlankText
+        required: true
+        description: >-
+          The archive's name.
+      people:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people its records name.
+      people_with_address:
+        range: NonNegativeInteger
+        required: true
+        description: >-
+          The people with at least one of its records at the record's own address.

@@ -83,7 +83,8 @@ class TheAccount(unittest.TestCase):
         self.assertEqual(pydantic, sum('pydantic' in entry for entry in entries),
                          'Pydantic validators and entries differ')
         # Measured on 28 October 2026; a change in the twins shows here first.
-        self.assertEqual((zod, pydantic, len(entries)), (10, 12, 12))
+        # The fates list (2 November 2026) adds two refinements, two validators and two entries.
+        self.assertEqual((zod, pydantic, len(entries)), (12, 14, 14))
 
     def test_each_entry_names_one_refinement_or_validator_where_it_is(self):
         for entry in CHECKS['checks']:
@@ -137,7 +138,7 @@ class TheAccount(unittest.TestCase):
                     tally['existing' if 'rule' in part else 'proposed'] += 1
                 else:
                     tally[part['how']] += 1
-        self.assertEqual(tally, {'linkml_rule': 2, 'existing': 40, 'proposed': 0, 'twin_only': 2})
+        self.assertEqual(tally, {'linkml_rule': 4, 'existing': 40, 'proposed': 0, 'twin_only': 3})
 
     def test_it_passes_the_house_lint(self):
         self.assertEqual(load('lint').lint(CHECKS_FILE), [])
@@ -165,7 +166,8 @@ class LinkMLRules(unittest.TestCase):
                 if part['how'] == 'linkml_rule':
                     cited[part['class']] = cited.get(part['class'], 0) + part['rules']
         found = {}
-        for module in ('site_common', 'pages', 'content_items', 'mentions', 'life_events', 'editions'):
+        for module in ('site_common', 'pages', 'content_items', 'mentions', 'life_events', 'editions',
+                       'fates_list'):
             for name, cls in SchemaView(str(LINKML / 'schema' / f'{module}.yaml')).all_classes(imports=False).items():
                 if cls.rules:
                     found[name] = len(cls.rules)
@@ -217,6 +219,39 @@ class LinkMLRules(unittest.TestCase):
         absent = copy.deepcopy(fixture('mentions'))
         del absent['mentions'][1]['printed_name']
         self.assertEqual(refusals(schema, absent), [])
+
+    def test_a_fate_detail_with_neither_place_nor_date_is_refused(self):
+        schema = generated('fates_list')
+        control = copy.deepcopy(schema)
+        for key in ('if', 'then'):
+            control['$defs']['FatesListFateDetail'].pop(key)
+        document = copy.deepcopy(fixture('fates_list'))
+        del document['people'][0]['fate_details'][1]['date']   # a deportation with neither
+        self.assertEqual(refusals(control, document), [])
+        self.assertNotEqual(refusals(schema, document), [])
+        # What the rule cannot say (documents.yaml says so): a place written null.
+        null_place = copy.deepcopy(fixture('fates_list'))
+        null_place['people'][0]['fate_details'][1].update(place_id=None)
+        del null_place['people'][0]['fate_details'][1]['date']
+        self.assertEqual(refusals(schema, null_place), [])
+
+    def test_an_age_without_what_its_basis_needs_is_refused(self):
+        schema = generated('fates_list')
+        control = self.without_rules(schema, 'FatesListAge')
+        plants = {
+            'one year without the year': {'birth_year': ...},
+            'one year without its statements': {'fact_ids': ...},
+            'an announced birth without its piece': {'known_by': 'birth_announced'},
+            'years that disagree, not given': {'known_by': 'birth_years_disagree'},
+        }
+        for name, changes in plants.items():
+            document = copy.deepcopy(fixture('fates_list'))
+            age = document['people'][0]['age']
+            for key, value in changes.items():
+                age.pop(key) if value is ... else age.update({key: value})
+            with self.subTest(name):
+                self.assertEqual(refusals(control, document), [])
+                self.assertNotEqual(refusals(schema, document), [])
 
 
 def subtype_parents():

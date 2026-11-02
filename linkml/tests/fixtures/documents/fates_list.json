@@ -1,0 +1,92 @@
+{
+	"people": [
+		{
+			"person_id": "person-example-child",
+			"name": "Example Child",
+			"printed_name": "בײַשפּיל קינד",
+			"outcome": "perished",
+			"confidence": "probable",
+			"first_mention": {
+				"edition_date": "1938-12-16",
+				"content_item_id": "cu-1938-12-16-i0100"
+			},
+			"fate_details": [
+				{
+					"kind": "death",
+					"place_id": "location-example-camp",
+					"place_name": "Example Camp",
+					"date": {
+						"start": "1943-02",
+						"precision": "month"
+					}
+				},
+				{
+					"kind": "deportation",
+					"date": {
+						"start": "1943-01-28",
+						"precision": "day"
+					}
+				}
+			],
+			"outside_records": [
+				{
+					"source_id": "example-archive",
+					"archive": "Example Archives",
+					"collection": "Example names records",
+					"record_type": "Example form",
+					"record_id": "1000001",
+					"url": "https://archive.example.org/names/1000001"
+				},
+				{
+					"source_id": "example-archive",
+					"archive": "Example Archives",
+					"collection": "Example names records",
+					"record_id": "case no. 7 (a description, without an address)"
+				}
+			],
+			"age": {
+				"known_by": "birth_year",
+				"child": true,
+				"birth_year": 1930,
+				"fact_ids": ["fact-person-example-child-0001"]
+			}
+		},
+		{
+			"person_id": "person-example-survivor",
+			"name": "Example Survivor",
+			"outcome": "survived",
+			"confidence": "confirmed",
+			"first_mention": {
+				"edition_date": "1934-01-26",
+				"content_item_id": "cu-1934-01-26-i0101"
+			}
+		}
+	],
+	"counts": {
+		"people": 2,
+		"perished_confirmed": 0,
+		"perished_probable": 1,
+		"survived_confirmed": 1,
+		"survived_probable": 0,
+		"children": 1,
+		"children_by_birth_year": 1,
+		"children_by_announcement": 0,
+		"birth_year_known": 1,
+		"birth_years_disagree": 0,
+		"no_age": 1,
+		"with_place": 1,
+		"with_date": 1,
+		"outside_records": [
+			{
+				"source_id": "example-archive",
+				"archive": "Example Archives",
+				"people": 1,
+				"people_with_address": 1
+			}
+		]
+	},
+	"notes": [
+		"2 people printed in the paper whose fate the record knows.",
+		"1 person with no age in the record."
+	]
+}

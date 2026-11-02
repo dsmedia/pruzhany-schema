@@ -3,6 +3,8 @@ import { z } from 'zod/v4';
 
 export const AddressGrainEnum = z.enum(['words', 'regions']);
 
+export const AgeKnownByEnum = z.enum(['birth_year', 'birth_announced', 'birth_years_disagree']);
+
 export const AuthorshipKindEnum = z.enum(['person', 'model']);
 
 export const CitationRemarkKindsEnum = z.enum(['private_source_remark']);
@@ -111,6 +113,8 @@ export const FactTypesEnum = z.enum([
 	'kinship',
 ]);
 
+export const FateDetailKindEnum = z.enum(['death', 'survival', 'deportation']);
+
 export const FateOutcomesEnum = z.enum([
 	'unknown',
 	'perished',
@@ -118,6 +122,10 @@ export const FateOutcomesEnum = z.enum([
 	'died_before',
 	'not_applicable',
 ]);
+
+export const FatesListConfidenceEnum = z.enum(['confirmed', 'probable']);
+
+export const FatesListOutcomeEnum = z.enum(['perished', 'survived']);
 
 export const GenderEnum = z.enum(['male', 'female', 'unknown']);
 

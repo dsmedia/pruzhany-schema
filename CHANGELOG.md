@@ -11,6 +11,7 @@ yet. The vocabularies are versioned on their own; their releases are recorded in
 
 ### Added
 
+- The fates list: everyone printed in the paper whose fate the record knows, with places, dates, archive records and a child mark, in LinkML with its Zod and Python twins and fictional cases.
 - A readable vocabulary list generated from the source JSON, with definitions, standards mappings and a freshness check.
 - MIT code and CC BY 4.0 data licences, a path and upstream licence notice, and hash-locked REUSE checks locally and in CI.
 - LinkML definitions, generated contracts, data dictionary and public RDF view ([#29](https://github.com/dsmedia/pruzhany-schema/pull/29), [#32](https://github.com/dsmedia/pruzhany-schema/pull/32)).

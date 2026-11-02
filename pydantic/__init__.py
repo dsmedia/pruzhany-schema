@@ -72,3 +72,7 @@ from .media import MediaRegion, MediaDepicted, MediaPortrait, MediaWithdrawal, M
 __all__ += ['MediaRegion', 'MediaDepicted', 'MediaPortrait', 'MediaWithdrawal', 'MediaConsentScope', 'MediaConsent', 'MediaFamilyWords', 'MediaFixity']
 from .identifiers_vocabulary import IdentifierTypes
 __all__ += ['IdentifierTypes']
+
+from .fates_list import FatesList, FatesListAge, FatesListArchiveCount, FatesListCounts, FatesListDate, FatesListFateDetail, FatesListOutsideRecord, FatesListPerson, FatesListPiece
+
+__all__ += ['FatesList', 'FatesListAge', 'FatesListArchiveCount', 'FatesListCounts', 'FatesListDate', 'FatesListFateDetail', 'FatesListOutsideRecord', 'FatesListPerson', 'FatesListPiece']

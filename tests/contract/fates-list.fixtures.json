@@ -1,0 +1,537 @@
+{
+	"description": "Entirely fictional. Each case changes the example at its model path; both runtimes validate the resulting JSON.",
+	"example": {
+		"people": [
+			{
+				"person_id": "person-example-child",
+				"name": "Example Child",
+				"printed_name": "בײַשפּיל קינד",
+				"outcome": "perished",
+				"confidence": "probable",
+				"first_mention": {
+					"edition_date": "1938-12-16",
+					"content_item_id": "cu-1938-12-16-i0100"
+				},
+				"fate_details": [
+					{
+						"kind": "death",
+						"place_id": "location-example-camp",
+						"place_name": "Example Camp",
+						"date": {
+							"start": "1943-02",
+							"precision": "month"
+						}
+					},
+					{
+						"kind": "deportation",
+						"date": {
+							"start": "1943-01-28",
+							"precision": "day"
+						}
+					}
+				],
+				"outside_records": [
+					{
+						"source_id": "example-archive",
+						"archive": "Example Archives",
+						"collection": "Example names records",
+						"record_type": "Example form",
+						"record_id": "1000001",
+						"url": "https://archive.example.org/names/1000001"
+					},
+					{
+						"source_id": "example-archive",
+						"archive": "Example Archives",
+						"collection": "Example names records",
+						"record_id": "case no. 7 (a description, without an address)"
+					}
+				],
+				"age": {
+					"known_by": "birth_year",
+					"child": true,
+					"birth_year": 1930,
+					"fact_ids": ["fact-person-example-child-0001"]
+				}
+			},
+			{
+				"person_id": "person-example-survivor",
+				"name": "Example Survivor",
+				"outcome": "survived",
+				"confidence": "confirmed",
+				"first_mention": {
+					"edition_date": "1934-01-26",
+					"content_item_id": "cu-1934-01-26-i0101"
+				}
+			}
+		],
+		"counts": {
+			"people": 2,
+			"perished_confirmed": 0,
+			"perished_probable": 1,
+			"survived_confirmed": 1,
+			"survived_probable": 0,
+			"children": 1,
+			"children_by_birth_year": 1,
+			"children_by_announcement": 0,
+			"birth_year_known": 1,
+			"birth_years_disagree": 0,
+			"no_age": 1,
+			"with_place": 1,
+			"with_date": 1,
+			"outside_records": [
+				{
+					"source_id": "example-archive",
+					"archive": "Example Archives",
+					"people": 1,
+					"people_with_address": 1
+				}
+			]
+		},
+		"notes": [
+			"2 people printed in the paper whose fate the record knows.",
+			"1 person with no age in the record."
+		]
+	},
+	"models": {
+		"FatesList": [],
+		"FatesListPerson": ["people", 0],
+		"FatesListPiece": ["people", 0, "first_mention"],
+		"FatesListFateDetail": ["people", 0, "fate_details", 0],
+		"FatesListDate": ["people", 0, "fate_details", 0, "date"],
+		"FatesListOutsideRecord": ["people", 0, "outside_records", 0],
+		"FatesListAge": ["people", 0, "age"],
+		"FatesListCounts": ["counts"],
+		"FatesListArchiveCount": ["counts", "outside_records", 0]
+	},
+	"cases": [
+		{
+			"name": "FatesList: the example",
+			"model": "FatesList",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "FatesList: no one on it",
+			"model": "FatesList",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["people"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "FatesList: counts are required",
+			"model": "FatesList",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["counts"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesList: an unknown key",
+			"model": "FatesList",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["generated_on"],
+					"value": "2026-11-02"
+				}
+			]
+		},
+		{
+			"name": "FatesList: a blank note",
+			"model": "FatesList",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["notes", 0],
+					"value": " "
+				}
+			]
+		},
+		{
+			"name": "FatesListPerson: the example",
+			"model": "FatesListPerson",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "FatesListPerson: died before is not on the list",
+			"model": "FatesListPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["outcome"],
+					"value": "died_before"
+				}
+			]
+		},
+		{
+			"name": "FatesListPerson: a possible fate is not on the list",
+			"model": "FatesListPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["confidence"],
+					"value": "possible"
+				}
+			]
+		},
+		{
+			"name": "FatesListPerson: a person id",
+			"model": "FatesListPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["person_id"],
+					"value": "org-example"
+				}
+			]
+		},
+		{
+			"name": "FatesListPerson: a first mention is required",
+			"model": "FatesListPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["first_mention"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListPerson: an empty list of outside records is left out",
+			"model": "FatesListPerson",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["outside_records"],
+					"value": []
+				}
+			]
+		},
+		{
+			"name": "FatesListPiece: a piece id",
+			"model": "FatesListPiece",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_item_id"],
+					"value": "cu-5787"
+				}
+			]
+		},
+		{
+			"name": "FatesListFateDetail: a place alone",
+			"model": "FatesListFateDetail",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["date"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListFateDetail: a date alone",
+			"model": "FatesListFateDetail",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["place_id"],
+					"remove": true
+				},
+				{
+					"path": ["place_name"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListFateDetail: neither a place nor a date",
+			"model": "FatesListFateDetail",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["place_id"],
+					"remove": true
+				},
+				{
+					"path": ["place_name"],
+					"remove": true
+				},
+				{
+					"path": ["date"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListFateDetail: a residence is not a fate",
+			"model": "FatesListFateDetail",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["kind"],
+					"value": "residence"
+				}
+			]
+		},
+		{
+			"name": "FatesListFateDetail: printed words are never carried",
+			"model": "FatesListFateDetail",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["date", "printed"],
+					"value": "02/02/1943"
+				}
+			]
+		},
+		{
+			"name": "FatesListDate: a year",
+			"model": "FatesListDate",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["start"],
+					"value": "1943"
+				},
+				{
+					"path": ["precision"],
+					"value": "year"
+				}
+			]
+		},
+		{
+			"name": "FatesListDate: a day that is not written YYYY-MM-DD",
+			"model": "FatesListDate",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["start"],
+					"value": "2/2/1943"
+				}
+			]
+		},
+		{
+			"name": "FatesListOutsideRecord: without an address",
+			"model": "FatesListOutsideRecord",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["url"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListOutsideRecord: an address that is not https",
+			"model": "FatesListOutsideRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "http://archive.example.org/names/1000001"
+				}
+			]
+		},
+		{
+			"name": "FatesListOutsideRecord: an address with a space",
+			"model": "FatesListOutsideRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["url"],
+					"value": "https://archive.example.org/names/1000 001"
+				}
+			]
+		},
+		{
+			"name": "FatesListOutsideRecord: a record id is required",
+			"model": "FatesListOutsideRecord",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["record_id"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: one year of birth",
+			"model": "FatesListAge",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "FatesListAge: one year of birth needs the year",
+			"model": "FatesListAge",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["birth_year"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: one year of birth needs its statements",
+			"model": "FatesListAge",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["fact_ids"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: a year before 1800",
+			"model": "FatesListAge",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["birth_year"],
+					"value": 1700
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: a birth the paper announced",
+			"model": "FatesListAge",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["known_by"],
+					"value": "birth_announced"
+				},
+				{
+					"path": ["fact_ids"],
+					"remove": true
+				},
+				{
+					"path": ["birth_year"],
+					"remove": true
+				},
+				{
+					"path": ["announced"],
+					"value": {
+						"edition_date": "1938-12-16",
+						"content_item_id": "cu-1938-12-16-i0129"
+					}
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: a birth the paper announced names its piece",
+			"model": "FatesListAge",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["known_by"],
+					"value": "birth_announced"
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: years that disagree",
+			"model": "FatesListAge",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["known_by"],
+					"value": "birth_years_disagree"
+				},
+				{
+					"path": ["child"],
+					"value": false
+				},
+				{
+					"path": ["birth_year"],
+					"remove": true
+				},
+				{
+					"path": ["fact_ids"],
+					"remove": true
+				},
+				{
+					"path": ["birth_years"],
+					"value": [1923, 1925]
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: years that disagree are given",
+			"model": "FatesListAge",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["known_by"],
+					"value": "birth_years_disagree"
+				},
+				{
+					"path": ["birth_year"],
+					"remove": true
+				},
+				{
+					"path": ["fact_ids"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: one year cannot disagree",
+			"model": "FatesListAge",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["known_by"],
+					"value": "birth_years_disagree"
+				},
+				{
+					"path": ["birth_years"],
+					"value": [1925]
+				}
+			]
+		},
+		{
+			"name": "FatesListAge: the child mark is required",
+			"model": "FatesListAge",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["child"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "FatesListCounts: a negative count",
+			"model": "FatesListCounts",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["no_age"],
+					"value": -1
+				}
+			]
+		},
+		{
+			"name": "FatesListArchiveCount: a count that is not whole",
+			"model": "FatesListArchiveCount",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["people"],
+					"value": 1.5
+				}
+			]
+		}
+	]
+}

@@ -217,6 +217,110 @@ class Fate(Strict):
         return _call('sourced_entities', '_Fate__validate_contract', self)
 
 
+class FatesList(Strict):
+    'The fates list: its people, its counts and its notes.'
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    people: list[FatesListPerson] = Field(default=...)
+    counts: FatesListCounts = Field(default=...)
+    notes: list[Annotated[str, Field(pattern='\\S')]] = Field(default=...)
+
+
+class FatesListAge(Strict):
+    "How a person's age is known, and whether it marks a child."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    known_by: Literal['birth_announced', 'birth_year', 'birth_years_disagree'] = Field(default=...)
+    child: bool = Field(default=...)
+    birth_year: Annotated[int, Field(ge=1800, le=2100)] | None = Field(default=None)
+    birth_years: Annotated[list[Annotated[int, Field(ge=1800, le=2100)]], Field(min_length=2)] | None = Field(default=None)
+    fact_ids: Annotated[list[Annotated[str, Field(pattern='\\S')]], Field(min_length=1)] | None = Field(default=None)
+    announced: FatesListPiece | None = Field(default=None)
+
+    @model_validator(mode='after')
+    def basis(self):
+        return _call('fates_list', '_FatesListAge__basis', self)
+
+
+class FatesListArchiveCount(Strict):
+    "How many people an archive's database names, and how many of them with an address."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    source_id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    archive: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    people: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    people_with_address: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+
+
+class FatesListCounts(Strict):
+    "The list's counts."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    people: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    perished_confirmed: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    perished_probable: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    survived_confirmed: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    survived_probable: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    children: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    children_by_birth_year: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    children_by_announcement: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    birth_year_known: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    birth_years_disagree: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    no_age: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    with_place: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    with_date: Annotated[int, Field(ge=0, le=9007199254740991)] = Field(default=...)
+    outside_records: list[FatesListArchiveCount] = Field(default=...)
+
+
+class FatesListDate(Strict):
+    'A normalized date: its start, how precise it is and, for a range, its end.'
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    start: Annotated[str, Field(pattern='^\\d{4}(-\\d{2}(-\\d{2})?)?$')] = Field(default=...)
+    precision: Literal['day', 'month', 'range', 'year'] | None = Field(default=None)
+    end: Annotated[str, Field(pattern='^\\d{4}(-\\d{2}(-\\d{2})?)?$')] | None = Field(default=None)
+
+
+class FatesListFateDetail(Strict):
+    "Where or when one of the person's own fate statements, or the death event it names, places the fate."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    kind: Literal['death', 'deportation', 'survival'] = Field(default=...)
+    place_id: Annotated[str, Field(pattern='^location-[A-Za-z0-9_-]+$')] | None = Field(default=None)
+    place_name: Annotated[str, Field(pattern='\\S')] | None = Field(default=None)
+    date: FatesListDate | None = Field(default=None)
+
+    @model_validator(mode='after')
+    def place_or_date(self):
+        return _call('fates_list', '_FatesListFateDetail__place_or_date', self)
+
+
+class FatesListOutsideRecord(Strict):
+    "A record an archive holds about the person: the archive, the database it is in, the record's type and id as the archive gives them, and its own address where the record has one."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    source_id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    archive: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    collection: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    record_type: Annotated[str, Field(pattern='\\S')] | None = Field(default=None)
+    record_id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    url: Annotated[str, Field(pattern='^https://[^\\s/?#]+[^\\s]*$')] | None = Field(default=None)
+
+
+class FatesListPerson(Strict):
+    "One person on the list: who, the fate, where the paper first prints them, where and when the fate is placed, the archives' records about them and how their age is known."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    person_id: Annotated[str, Field(pattern='^person-[A-Za-z0-9_-]+$')] = Field(default=...)
+    name: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    printed_name: Annotated[str, Field(pattern='\\S')] | None = Field(default=None)
+    outcome: Literal['perished', 'survived'] = Field(default=...)
+    confidence: Literal['confirmed', 'probable'] = Field(default=...)
+    first_mention: FatesListPiece = Field(default=...)
+    fate_details: Annotated[list[FatesListFateDetail], Field(min_length=1)] | None = Field(default=None)
+    outside_records: Annotated[list[FatesListOutsideRecord], Field(min_length=1)] | None = Field(default=None)
+    age: FatesListAge | None = Field(default=None)
+
+
+class FatesListPiece(Strict):
+    'A published piece of an edition of the paper.'
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    edition_date: Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')] = Field(default=...)
+    content_item_id: Annotated[str, Field(pattern='^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$')] = Field(default=...)
+
+
 class HistoricalEvent(Strict):
     'An event in the world outside the town, such as Kristallnacht, on a day or over a span of days.'
     model_config = ConfigDict(**{'strict': True, 'extra': 'forbid'})
@@ -936,6 +1040,15 @@ EnglishCheck.model_rebuild()
 ExternalReference.model_rebuild()
 Fact.model_rebuild()
 Fate.model_rebuild()
+FatesList.model_rebuild()
+FatesListAge.model_rebuild()
+FatesListArchiveCount.model_rebuild()
+FatesListCounts.model_rebuild()
+FatesListDate.model_rebuild()
+FatesListFateDetail.model_rebuild()
+FatesListOutsideRecord.model_rebuild()
+FatesListPerson.model_rebuild()
+FatesListPiece.model_rebuild()
 HistoricalEvent.model_rebuild()
 Holder.model_rebuild()
 Holiday.model_rebuild()
@@ -988,4 +1101,4 @@ TitleCheck.model_rebuild()
 Translation.model_rebuild()
 TranslationCheck.model_rebuild()
 
-__all__ = ['Attribution', 'Authorship', 'Block', 'Citation', 'CitedTextBasis', 'CitedTranslation', 'ContentItem', 'ContentItemBlockRef', 'ContentItemRef', 'ContentItemsData', 'CrossReference', 'Edition', 'EditionsCatalog', 'EnglishCheck', 'ExternalReference', 'Fact', 'FactQualifiers', 'Fate', 'HistoricalEvent', 'Holder', 'Holiday', 'IssueLifeEvent', 'IssueLifeEventsData', 'IssueMention', 'IssueMentionsData', 'LifeEventDate', 'LifeEventMainPerson', 'Media', 'MediaConsent', 'MediaConsentScope', 'MediaDecision', 'MediaDepicted', 'MediaDerivative', 'MediaFamilyWords', 'MediaFixity', 'MediaMaster', 'MediaPortrait', 'MediaRegion', 'MediaText', 'MediaWithdrawal', 'Mention', 'Name', 'Page', 'PagesData', 'PlaceIdentifier', 'PrintedAddress', 'PrintedSection', 'PrintedTitle', 'PublicMedia', 'ReadingStatus', 'Review', 'SharedEvent', 'SharedFact', 'SharedFamily', 'SharedName', 'SharedOrganization', 'SharedPerson', 'SharedPlace', 'SharedRecord', 'SiteCitation', 'Source', 'SourceDerivation', 'SourcedDate', 'SourcedRelation', 'SuppliedTitle', 'TextBasis', 'TitleCheck', 'Translation', 'TranslationCheck']
+__all__ = ['Attribution', 'Authorship', 'Block', 'Citation', 'CitedTextBasis', 'CitedTranslation', 'ContentItem', 'ContentItemBlockRef', 'ContentItemRef', 'ContentItemsData', 'CrossReference', 'Edition', 'EditionsCatalog', 'EnglishCheck', 'ExternalReference', 'Fact', 'FactQualifiers', 'Fate', 'FatesList', 'FatesListAge', 'FatesListArchiveCount', 'FatesListCounts', 'FatesListDate', 'FatesListFateDetail', 'FatesListOutsideRecord', 'FatesListPerson', 'FatesListPiece', 'HistoricalEvent', 'Holder', 'Holiday', 'IssueLifeEvent', 'IssueLifeEventsData', 'IssueMention', 'IssueMentionsData', 'LifeEventDate', 'LifeEventMainPerson', 'Media', 'MediaConsent', 'MediaConsentScope', 'MediaDecision', 'MediaDepicted', 'MediaDerivative', 'MediaFamilyWords', 'MediaFixity', 'MediaMaster', 'MediaPortrait', 'MediaRegion', 'MediaText', 'MediaWithdrawal', 'Mention', 'Name', 'Page', 'PagesData', 'PlaceIdentifier', 'PrintedAddress', 'PrintedSection', 'PrintedTitle', 'PublicMedia', 'ReadingStatus', 'Review', 'SharedEvent', 'SharedFact', 'SharedFamily', 'SharedName', 'SharedOrganization', 'SharedPerson', 'SharedPlace', 'SharedRecord', 'SiteCitation', 'Source', 'SourceDerivation', 'SourcedDate', 'SourcedRelation', 'SuppliedTitle', 'TextBasis', 'TitleCheck', 'Translation', 'TranslationCheck']

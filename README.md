@@ -96,6 +96,12 @@ names, sources, fate and standing for one shared record. `site-issue.schema.ts` 
 per-issue mentions and life events, plus checks of the four documents and their shared
 references. Each module has a Pydantic twin.
 
+`fates-list.schema.ts` and `pydantic/fates_list.py` shape the fates list
+(`static/data/fates-list.json`, written by pruzhany-steps' site writer): everyone printed in the
+paper whose fate is perished or survived, confirmed or probable, with where and when the
+record places the fate, the archives' records about them with their own addresses, how
+their age is known and a child mark, and the list's counts and notes. Fictional cases only.
+
 `PagesData`, `Page` and `Block` live in `zod/page.schema.ts` and `pydantic/page.py`;
 `CrossReference` lives in the site-common modules, and `ExternalReference` in the
 shared modules. Their wire behavior is unchanged, including existing field names,

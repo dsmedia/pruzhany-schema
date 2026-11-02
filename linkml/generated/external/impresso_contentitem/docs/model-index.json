@@ -5,6 +5,7 @@
     "linkml/schema/content_items.yaml": "c2f8776f0e2cb666afc087d1131ce027f741432b1eb5280b4da30975fca6a878",
     "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
+    "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
     "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
