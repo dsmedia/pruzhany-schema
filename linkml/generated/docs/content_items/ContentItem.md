@@ -106,6 +106,17 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
     
 
         
+      ContentItem : summary
+        
+          
+    
+        
+        
+        ContentItem --> "0..1" Summary : summary
+        click Summary href "../Summary/"
+    
+
+        
       ContentItem : supplied_title
         
           
@@ -175,6 +186,7 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
 | [cross_references](cross_references.md) | 1..* <br/> [CrossReference](CrossReference.md) | Links from this content item to others in the issue. | direct |
 | [event_id](event_id.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The life event the content item prints, by the event's id, where it prints one. | direct |
 | [language](language.md) | 0..1 <br/> [LanguageTag](LanguageTag.md) | The language most of the item is printed in, as the reading step judged it, as a two- or three-letter ISO 639 code (Impresso's lg). | direct |
+| [summary](summary.md) | 0..1 <br/> [Summary](Summary.md) | A short English summary of the content item, written from its English translation, where one has been written and upheld. | direct |
 
 
 
@@ -221,6 +233,14 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
 | Rule Applied | Preconditions | Postconditions | Elseconditions |
 |--------------|---------------|----------------|----------------|
 | slot_conditions |```{'subtype': {'equals_string_in': ['humour']}}``` |```{'type': {'equals_string': 'entertainment'}}``` | |
+
+
+
+### 
+
+| Rule Applied | Preconditions | Postconditions | Elseconditions |
+|--------------|---------------|----------------|----------------|
+| slot_conditions |```{'summary': {'annotations': {'json_schema_typed_range': {'tag': 'json_schema_typed_range', 'value': True}}, 'range': 'Summary', 'required': True}}``` |```{'translation': {'annotations': {'json_schema_typed_range': {'tag': 'json_schema_typed_range', 'value': True}}, 'range': 'Translation', 'required': True}}``` | |
 
 
 
@@ -491,10 +511,22 @@ attributes:
     slot_uri: rico:hasOrHadLanguage
     domain_of:
     - ContentItem
+    - Summary
     - SuppliedTitle
     - Translation
     range: LanguageTag
     pattern: ^[a-z]{2,3}$(?![\s\S])
+  summary:
+    name: summary
+    description: A short English summary of the content item, written from its English
+      translation, where one has been written and upheld.
+    from_schema: https://pruzhany.org/ns/content_items
+    rank: 1000
+    slot_uri: rico:scopeAndContent
+    domain_of:
+    - ContentItem
+    range: Summary
+    inlined: true
 class_uri: ehri:RecordResource
 rules:
 - preconditions:
@@ -567,6 +599,28 @@ rules:
         name: type
         equals_string: entertainment
   description: A humorous piece (humour) is entertainment.
+- preconditions:
+    slot_conditions:
+      summary:
+        name: summary
+        annotations:
+          json_schema_typed_range:
+            tag: json_schema_typed_range
+            value: true
+        range: Summary
+        required: true
+  postconditions:
+    slot_conditions:
+      translation:
+        name: translation
+        annotations:
+          json_schema_typed_range:
+            tag: json_schema_typed_range
+            value: true
+        range: Translation
+        required: true
+  description: A content item with a summary has the translation the summary was written
+    from.
 
 ```
 </details>
@@ -812,10 +866,23 @@ attributes:
     owner: ContentItem
     domain_of:
     - ContentItem
+    - Summary
     - SuppliedTitle
     - Translation
     range: LanguageTag
     pattern: ^[a-z]{2,3}$(?![\s\S])
+  summary:
+    name: summary
+    description: A short English summary of the content item, written from its English
+      translation, where one has been written and upheld.
+    from_schema: https://pruzhany.org/ns/content_items
+    rank: 1000
+    slot_uri: rico:scopeAndContent
+    owner: ContentItem
+    domain_of:
+    - ContentItem
+    range: Summary
+    inlined: true
 class_uri: ehri:RecordResource
 rules:
 - preconditions:
@@ -888,6 +955,28 @@ rules:
         name: type
         equals_string: entertainment
   description: A humorous piece (humour) is entertainment.
+- preconditions:
+    slot_conditions:
+      summary:
+        name: summary
+        annotations:
+          json_schema_typed_range:
+            tag: json_schema_typed_range
+            value: true
+        range: Summary
+        required: true
+  postconditions:
+    slot_conditions:
+      translation:
+        name: translation
+        annotations:
+          json_schema_typed_range:
+            tag: json_schema_typed_range
+            value: true
+        range: Translation
+        required: true
+  description: A content item with a summary has the translation the summary was written
+    from.
 
 ```
 </details></div>

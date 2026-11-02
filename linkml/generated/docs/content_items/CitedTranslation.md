@@ -175,6 +175,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: CitedTranslation
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
@@ -189,6 +190,7 @@ attributes:
     owner: CitedTranslation
     domain_of:
     - ContentItem
+    - Summary
     - SuppliedTitle
     - Translation
     range: string
@@ -201,6 +203,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/content_items
     owner: CitedTranslation
     domain_of:
+    - Summary
     - SuppliedTitle
     - Translation
     range: CitedTextBasis
@@ -212,6 +215,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: CitedTranslation
     domain_of:
+    - Summary
     - EnglishCheck
     - SuppliedTitle
     - Translation

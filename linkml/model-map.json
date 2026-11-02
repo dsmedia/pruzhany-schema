@@ -284,6 +284,18 @@
 			"zod": "SourcedRelation",
 			"pointer": ""
 		},
+		"Summary": {
+			"zod": "Summary",
+			"pointer": ""
+		},
+		"SummaryAuthorship": {
+			"zod": "SummaryAuthorship",
+			"pointer": ""
+		},
+		"SummaryBasis": {
+			"zod": "SummaryBasis",
+			"pointer": ""
+		},
 		"SuppliedTitle": {
 			"zod": "SuppliedTitle",
 			"pointer": ""

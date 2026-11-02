@@ -20,6 +20,7 @@ URI: [pc:attribution](https://pruzhany.org/ns/sourced-entities#attribution)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [Summary](Summary.md) | A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it. |  no  |
 | [EnglishCheck](EnglishCheck.md) | A later, separate check of one English field against one exact reading of the printed text, bound to both and to the judgement kept by their digests. |  no  |
 | [TitleCheck](TitleCheck.md) | A check of a supplied title's English. |  no  |
 | [TranslationCheck](TranslationCheck.md) | A check of a translation's English. |  no  |
@@ -39,7 +40,7 @@ URI: [pc:attribution](https://pruzhany.org/ns/sourced-entities#attribution)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [EnglishCheck](EnglishCheck.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
+| Domain Of | [Summary](Summary.md), [EnglishCheck](EnglishCheck.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
 
 
 
@@ -73,6 +74,7 @@ URI: [pc:attribution](https://pruzhany.org/ns/sourced-entities#attribution)
 ```yaml
 name: attribution
 domain_of:
+- Summary
 - EnglishCheck
 - SuppliedTitle
 - Translation

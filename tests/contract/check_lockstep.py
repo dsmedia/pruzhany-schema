@@ -32,6 +32,7 @@ SITE_MODELS |= {'MediaDecision', 'MediaText', 'MediaMaster', 'MediaDerivative', 
 # rename on one side is a visible one-line change and never a silent skip.
 SITE_MODELS |= {'MediaFamilyWords', 'MediaConsent', 'MediaFixity', 'MediaConsentScope', 'MediaPortrait', 'MediaDepicted', 'MediaWithdrawal', 'MediaRegion'}
 SITE_MODELS |= {'Edition', 'EditionsCatalog', 'HistoricalEvent', 'Holiday'}
+SITE_MODELS |= {'Summary', 'SummaryBasis', 'SummaryAuthorship'}
 SITE_MODELS |= {'FatesList', 'FatesListAge', 'FatesListArchiveCount', 'FatesListCounts', 'FatesListDate', 'FatesListFateDetail', 'FatesListOutsideRecord', 'FatesListPerson', 'FatesListPiece'}
 
 MODEL_PAIRS = {
@@ -78,6 +79,9 @@ MODEL_PAIRS = {
     "ContentItem": "ContentItem",
     "PrintedSection": "PrintedSection",
     "ContentItemsData": "ContentItemsData",
+    "Summary": "Summary",
+    "SummaryBasis": "SummaryBasis",
+    "SummaryAuthorship": "SummaryAuthorship",
     "SharedFact": "SharedFact",
     "SourcedRelation": "SourcedRelation",
     "SharedPerson": "SharedPerson",

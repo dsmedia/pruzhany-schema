@@ -179,10 +179,10 @@ attributes:
     name: english_sha256
     description: The SHA-256 digest of the checked English field's exact UTF-8 bytes.
     from_schema: https://pruzhany.org/ns/site_common
-    rank: 1000
     slot_uri: pc:site_english_sha256
     owner: TranslationCheck
     domain_of:
+    - SummaryBasis
     - EnglishCheck
     range: Sha256Hex
     required: true
@@ -213,9 +213,9 @@ attributes:
     name: attribution
     description: Who checked it, and on which day.
     from_schema: https://pruzhany.org/ns/site_common
-    rank: 1000
     owner: TranslationCheck
     domain_of:
+    - Summary
     - EnglishCheck
     - SuppliedTitle
     - Translation

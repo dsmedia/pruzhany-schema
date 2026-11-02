@@ -159,6 +159,7 @@ attributes:
     domain_of:
     - WriteEnglishDoubt
     - JoinPeopleGroup
+    - JudgeOpeningSentenceVerdict
     range: string
     required: true
 
@@ -228,6 +229,7 @@ attributes:
     domain_of:
     - WriteEnglishDoubt
     - JoinPeopleGroup
+    - JudgeOpeningSentenceVerdict
     range: string
     required: true
 

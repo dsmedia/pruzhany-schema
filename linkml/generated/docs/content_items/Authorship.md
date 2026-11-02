@@ -27,6 +27,11 @@ URI: [pc:Authorship](https://pruzhany.org/ns/sourced-entities#Authorship)
       Attribution <|-- Authorship
         click Attribution href "../Attribution/"
       
+
+      Authorship <|-- SummaryAuthorship
+        click SummaryAuthorship href "../SummaryAuthorship/"
+      
+
       Authorship : by
         
       Authorship : kind
@@ -54,6 +59,7 @@ URI: [pc:Authorship](https://pruzhany.org/ns/sourced-entities#Authorship)
 ## Inheritance
 * [Attribution](Attribution.md)
     * **Authorship**
+        * [SummaryAuthorship](SummaryAuthorship.md)
 
 
 ## Slots

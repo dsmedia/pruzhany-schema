@@ -201,6 +201,20 @@ classes:
           impresso: >-
             The content item's language (lg in paper_contentitem.schema.json and
             issue.schema.json, standards/impresso-329323c, read 1 November 2026).
+      summary:
+        range: Summary
+        inlined: true
+        # RiC-O 1.1 scopeAndContent (standards/rico-1.1-axioms.json, read 2 November 2026): a
+        # datatype property of a RecordResource, whose range is a literal; ehri:RecordResource,
+        # this class's class_uri, is a RiC-O RecordResource (standards/ehri-0.2.0.json). The
+        # pinned EHRI holdings profile carries it as a language-tagged string
+        # (standards/ehri-holdings-1.1-1c2325f9: holdings.shacl.ttl and holdings.shex). The
+        # summary's text, tagged with its language, is that string; its basis and attribution
+        # are this project's provenance, which neither pinned ontology has a term for.
+        slot_uri: rico:scopeAndContent
+        description: >-
+          A short English summary of the content item, written from its English translation,
+          where one has been written and upheld.
     rules:
       - description: >-
           A greeting, thanks, notice, announcement, appeal or commercial advertisement is an
@@ -266,6 +280,89 @@ classes:
           slot_conditions:
             type:
               equals_string: entertainment
+      # Typed ranges (external_schema.ReleaseGenerator) keep null out of both sides, as the
+      # twins read it: a null summary asks nothing, and a null translation does not answer.
+      - description: >-
+          A content item with a summary has the translation the summary was written from.
+        preconditions:
+          slot_conditions:
+            summary:
+              annotations:
+                json_schema_typed_range: true
+              range: Summary
+              required: true
+        postconditions:
+          slot_conditions:
+            translation:
+              annotations:
+                json_schema_typed_range: true
+              range: Translation
+              required: true
+
+  Summary:
+    description: >-
+      A short summary in English of a content item, written from its English translation, with
+      the digest of the exact English it was written from and who wrote it.
+    attributes:
+      text:
+        range: NonBlankText
+        required: true
+        description: >-
+          The summary's English.
+      language:
+        equals_string: en
+        required: true
+        description: >-
+          The summary's language, always English (en).
+      based_on:
+        range: SummaryBasis
+        inlined: true
+        required: true
+        description: >-
+          The exact English the summary was written from, by its digest.
+      attribution:
+        range: SummaryAuthorship
+        inlined: true
+        required: true
+        description: >-
+          The model that wrote the summary, how hard it was told to think, on which day, and
+          whether a person has checked it.
+
+  SummaryBasis:
+    description: >-
+      The exact English a summary was written from, by its digest, so that a summary of an
+      English since changed can be told apart from a current one.
+    attributes:
+      english_sha256:
+        range: Sha256Hex
+        required: true
+        slot_uri: pc:site_english_sha256
+        description: >-
+          The SHA-256 digest of the exact UTF-8 bytes of the content item's translation text
+          that the summary was written from.
+
+  SummaryAuthorship:
+    is_a: Authorship
+    description: >-
+      Who wrote a summary, always a model, on which day, how hard it was told to think, and
+      whether a person has checked the summary against the English.
+    slot_usage:
+      kind:
+        equals_string_in:
+          - model
+        description: >-
+          Always a model (model).
+    attributes:
+      effort:
+        range: NonBlankText
+        required: true
+        description: >-
+          How hard the model was told to think, in its service's own word, such as low.
+      checked_by_person:
+        range: boolean
+        required: true
+        description: >-
+          Whether a person has checked the summary against the English; false until one has.
 
   ReadingStatus:
     description: >-

@@ -140,6 +140,7 @@ attributes:
       no readable line.
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
@@ -193,6 +194,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: PrintedAddress
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
