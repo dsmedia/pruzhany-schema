@@ -43,7 +43,7 @@ DOCUMENTS = {
     # The fates list is made here the same way, until pruzhany-steps keeps its export.
     'fates_list': ('FatesList', None, 'zod/fates-list.schema.ts', 'FatesListSchema'),
 }
-MODULES = ['site_common', *DOCUMENTS]
+MODULES = ['site_common', 'picture_source', *DOCUMENTS]
 # Stage two includes the catalog's generated Python models.
 NO_PYDANTIC_TWIN = set()
 KNOWN = yaml.safe_load((LINKML / 'known-looser.yaml').read_text(encoding='utf-8'))
@@ -139,7 +139,9 @@ def mapping_faults(module_view):
         elif prefix == 'pc':
             if curie not in local:
                 faults.append(f'{where}: {curie} is declared in no vocabulary profile')
-        elif prefix != 'schema':
+        # The pinned EHRI holdings.shex uses rdfs:seeAlso for a descriptive URL.
+        # Permit that term alone as the new credit fields' close mapping.
+        elif prefix != 'schema' and curie != 'rdfs:seeAlso':
             faults.append(f'{where}: {curie} has a prefix no mapping here may use')
 
     elements = []
@@ -347,7 +349,8 @@ class Mappings(unittest.TestCase):
         text = (LINKML / 'schema' / 'life_events.yaml').read_text(encoding='utf-8')
         for planted, found in (('rico:Event', 'rico:NoSuchEvent is not in the pinned list'),
                                ('rico:Event', 'rico:hasEventType is a object property, not a class'),
-                               ('rico:Event', 'pc:site_no_such_term is declared in no vocabulary profile')):
+                               ('rico:Event', 'pc:site_no_such_term is declared in no vocabulary profile'),
+                               ('rico:Event', 'rdfs:noSuchProperty has a prefix no mapping here may use')):
             replacement = found.split(' ', 1)[0]
             with self.subTest(planted=replacement), _scratch_schema(text.replace(f'class_uri: {planted}',
                                                                                  f'class_uri: {replacement}')) as path:
@@ -369,7 +372,8 @@ class Mappings(unittest.TestCase):
         # list adds three class URIs, two slot URIs, three close and four related mappings. The
         # newspaper of an edition, page and piece adds three slot URIs and three Impresso fields; the
         # content item's summary adds two slot URIs: rico:scopeAndContent and its basis's digest.
-        self.assertEqual(counts, {'class_uri': 9, 'slot_uri': 21, 'exact_mappings': 9, 'close_mappings': 6,
+        # Picture sources: two classes, twelve slots and three close mappings (holder name and URLs).
+        self.assertEqual(counts, {'class_uri': 11, 'slot_uri': 33, 'exact_mappings': 9, 'close_mappings': 9,
                                   'related_mappings': 7, 'impresso': 25})
 
 

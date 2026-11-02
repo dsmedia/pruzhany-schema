@@ -47,6 +47,17 @@ URI: [pc:Page](https://pruzhany.org/ns/sourced-entities#Page)
         
       Page : page_number
         
+      Page : picture_source
+        
+          
+    
+        
+        
+        Page --> "0..1" PictureSource : picture_source
+        click PictureSource href "../PictureSource/"
+    
+
+        
       
 ```
 
@@ -66,6 +77,7 @@ URI: [pc:Page](https://pruzhany.org/ns/sourced-entities#Page)
 | [dimensions](dimensions.md) | 1..* <br/> [Integer](Integer.md) | The picture's width and height, in its pixels. | direct |
 | [blocks](blocks.md) | 1..* <br/> [Block](Block.md) | The regions of print on the page. | direct |
 | [newspaper](newspaper.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The paper this page belongs to, by its id in the source register. | direct |
+| [picture_source](picture_source.md) | 0..1 <br/> [PictureSource](PictureSource.md) | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields. | direct |
 
 
 
@@ -228,6 +240,18 @@ attributes:
     - Page
     range: NonBlankText
     required: true
+  picture_source:
+    name: picture_source
+    description: The picture's credit when it differs from the paper's catalog entry.
+      Absence means to use that entry; a present credit supplies its own holder and
+      any route, shelf mark and link, rather than merging individual fields.
+    from_schema: https://pruzhany.org/ns/pages
+    rank: 1000
+    slot_uri: pc:page_picture_source
+    domain_of:
+    - Page
+    range: PictureSource
+    inlined: true
 
 ```
 </details>
@@ -345,6 +369,19 @@ attributes:
     - Page
     range: NonBlankText
     required: true
+  picture_source:
+    name: picture_source
+    description: The picture's credit when it differs from the paper's catalog entry.
+      Absence means to use that entry; a present credit supplies its own holder and
+      any route, shelf mark and link, rather than merging individual fields.
+    from_schema: https://pruzhany.org/ns/pages
+    rank: 1000
+    slot_uri: pc:page_picture_source
+    owner: Page
+    domain_of:
+    - Page
+    range: PictureSource
+    inlined: true
 
 ```
 </details></div>

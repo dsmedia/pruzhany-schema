@@ -41,6 +41,14 @@
                     "description": "The paper this edition belongs to, by its id in the source register.",
                     "pattern": "\\S",
                     "type": "string"
+                },
+                "object_url": {
+                    "description": "The holder's descriptive page for this one issue.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 }
             },
             "required": [
@@ -86,6 +94,16 @@
                         "$ref": "#/$defs/Holiday"
                     },
                     "type": "array"
+                },
+                "newspapers": {
+                    "description": "The papers these editions belong to, one entry per source-register id, with their default picture credits. When present, every edition's newspaper must name one of these ids. The runtime twins enforce id uniqueness and membership; LinkML's generated JSON Schema cannot compare values across these lists.",
+                    "items": {
+                        "$ref": "#/$defs/Newspaper"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 }
             },
             "required": [
@@ -158,6 +176,120 @@
             ],
             "title": "Holiday",
             "type": "object"
+        },
+        "Newspaper": {
+            "additionalProperties": false,
+            "description": "One newspaper in the source register, with its site title, code and default picture credit. A page may supply a different credit through picture_source.",
+            "properties": {
+                "code": {
+                    "description": "The paper's lowercase alphabetic code used in site keys and routes.",
+                    "pattern": "^[a-z]+$(?![\\s\\S])",
+                    "type": "string"
+                },
+                "holder": {
+                    "description": "The name of the institution holding the pages the pictures were made from.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "The paper's source-register id, the same value as Edition.newspaper.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "rights": {
+                    "description": "The rights statement for the pictures, as text.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "rights_url": {
+                    "description": "The address where the rights statement was read.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "route": {
+                    "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "shelf_mark": {
+                    "description": "The holder's shelf mark or call number for the pages.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "description": "The paper's title as the site shows it.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "The pages' descriptive page at the holder or access route.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "code",
+                "title",
+                "holder"
+            ],
+            "title": "Newspaper",
+            "type": "object"
+        },
+        "PictureSource": {
+            "additionalProperties": false,
+            "description": "The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere.",
+            "properties": {
+                "holder": {
+                    "description": "The name of the institution holding the pages the pictures were made from.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "route": {
+                    "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "shelf_mark": {
+                    "description": "The holder's shelf mark or call number for the pages.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "description": "The pages' descriptive page at the holder or access route.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "holder"
+            ],
+            "title": "PictureSource",
+            "type": "object"
         }
     },
     "$id": "https://pruzhany.org/ns/editions",
@@ -194,6 +326,16 @@
                 "$ref": "#/$defs/Holiday"
             },
             "type": "array"
+        },
+        "newspapers": {
+            "description": "The papers these editions belong to, one entry per source-register id, with their default picture credits. When present, every edition's newspaper must name one of these ids. The runtime twins enforce id uniqueness and membership; LinkML's generated JSON Schema cannot compare values across these lists.",
+            "items": {
+                "$ref": "#/$defs/Newspaper"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
         }
     },
     "required": [

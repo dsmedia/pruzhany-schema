@@ -95,6 +95,17 @@
                 "page_number": {
                     "description": "The page's number within the issue, from 1.",
                     "type": "integer"
+                },
+                "picture_source": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/PictureSource"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields."
                 }
             },
             "required": [
@@ -130,6 +141,46 @@
                 "pages"
             ],
             "title": "PagesData",
+            "type": "object"
+        },
+        "PictureSource": {
+            "additionalProperties": false,
+            "description": "The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere.",
+            "properties": {
+                "holder": {
+                    "description": "The name of the institution holding the pages the pictures were made from.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "route": {
+                    "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "shelf_mark": {
+                    "description": "The holder's shelf mark or call number for the pages.",
+                    "pattern": "\\S",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "description": "The pages' descriptive page at the holder or access route.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "holder"
+            ],
+            "title": "PictureSource",
             "type": "object"
         }
     },

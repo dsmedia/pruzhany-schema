@@ -31,11 +31,13 @@ SITE_MODELS |= {'MediaDecision', 'MediaText', 'MediaMaster', 'MediaDerivative', 
 # Pydantic class name -> Zod export key. Identical today, kept explicit so that a
 # rename on one side is a visible one-line change and never a silent skip.
 SITE_MODELS |= {'MediaFamilyWords', 'MediaConsent', 'MediaFixity', 'MediaConsentScope', 'MediaPortrait', 'MediaDepicted', 'MediaWithdrawal', 'MediaRegion'}
-SITE_MODELS |= {'Edition', 'EditionsCatalog', 'HistoricalEvent', 'Holiday'}
+SITE_MODELS |= {'Edition', 'EditionsCatalog', 'HistoricalEvent', 'Holiday', 'Newspaper', 'PictureSource'}
 SITE_MODELS |= {'Summary', 'SummaryBasis', 'SummaryAuthorship'}
 SITE_MODELS |= {'FatesList', 'FatesListAge', 'FatesListArchiveCount', 'FatesListCounts', 'FatesListDate', 'FatesListFateDetail', 'FatesListOutsideRecord', 'FatesListPerson', 'FatesListPiece'}
 
 MODEL_PAIRS = {
+    "Newspaper": "Newspaper",
+    "PictureSource": "PictureSource",
     "Edition": "Edition",
     "EditionsCatalog": "EditionsCatalog",
     "HistoricalEvent": "HistoricalEvent",

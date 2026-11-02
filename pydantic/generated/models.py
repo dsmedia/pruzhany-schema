@@ -4,7 +4,13 @@ from __future__ import annotations
 from functools import cache, partial
 from importlib import import_module
 from typing import Annotated, Literal
-from pydantic import AfterValidator, BeforeValidator, BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import AfterValidator, AnyUrl, BeforeValidator, BaseModel, ConfigDict, Field, TypeAdapter, field_validator, model_validator
+
+_uri_adapter = TypeAdapter(AnyUrl)
+
+def _uri(value):
+    _uri_adapter.validate_python(value)
+    return value
 
 @cache
 def _resolve(module, function):
@@ -145,6 +151,7 @@ class Edition(Strict):
     holiday: Annotated[None | str, BeforeValidator(partial(_typed_call, 'editions', 'present_value', [], False))] = Field(default=None, exclude_if=lambda value: value is None)
     newspaper: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     key: Annotated[str, Field(pattern='^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$')] = Field(default=...)
+    object_url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
 
     @model_validator(mode='after')
     def key_date(self):
@@ -158,6 +165,11 @@ class EditionsCatalog(Strict):
     editions: list[Edition] = Field(default=...)
     historicalEvents: list[HistoricalEvent] = Field(default=...)
     holidays: list[Holiday] = Field(default=...)
+    newspapers: list[Newspaper] | None = Field(default=None, exclude_if=lambda value: value is None)
+
+    @model_validator(mode='after')
+    def newspaper_references(self):
+        return _call('editions', '_EditionsCatalog__newspaper_references', self)
 
 
 class EnglishCheck(Strict):
@@ -583,6 +595,7 @@ class Page(BaseModel):
     dimensions: Annotated[tuple[int, int], Field(min_length=2, max_length=2)] = Field(default=...)
     blocks: list[Block] = Field(default=...)
     newspaper: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    picture_source: PictureSource | None = Field(default=None, exclude_if=lambda value: value is None)
 
 
 class PagesData(BaseModel):
@@ -590,6 +603,15 @@ class PagesData(BaseModel):
     model_config = ConfigDict(**{})
     edition_date: str = Field(default=...)
     pages: list[Page] = Field(default=...)
+
+
+class PictureSource(Strict):
+    "The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere."
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    holder: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    route: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
+    shelf_mark: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
+    url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
 
 
 class PlaceIdentifier(Strict):
@@ -903,6 +925,20 @@ class Media(PublicMedia):
         return _call('media', '_Media__consent_state', self)
 
 
+class Newspaper(PictureSource):
+    'One newspaper in the source register, with its site title, code and default picture credit. A page may supply a different credit through picture_source.'
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    holder: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    route: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
+    shelf_mark: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
+    url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
+    id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    code: Annotated[str, Field(pattern='^[a-z]+$')] = Field(default=...)
+    title: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    rights: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
+    rights_url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
+
+
 class SharedFact(Fact):
     "One source's statement as the shared record keeps it: a fact with its subject, its form and its evidence located on the printed page where the site writer found it."
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
@@ -1108,8 +1144,10 @@ MediaText.model_rebuild()
 MediaWithdrawal.model_rebuild()
 Mention.model_rebuild()
 Name.model_rebuild()
+Newspaper.model_rebuild()
 Page.model_rebuild()
 PagesData.model_rebuild()
+PictureSource.model_rebuild()
 PlaceIdentifier.model_rebuild()
 PrintedAddress.model_rebuild()
 PrintedSection.model_rebuild()
@@ -1139,4 +1177,4 @@ TitleCheck.model_rebuild()
 Translation.model_rebuild()
 TranslationCheck.model_rebuild()
 
-__all__ = ['Attribution', 'Authorship', 'Block', 'Citation', 'CitedTextBasis', 'CitedTranslation', 'ContentItem', 'ContentItemBlockRef', 'ContentItemRef', 'ContentItemsData', 'CrossReference', 'Edition', 'EditionsCatalog', 'EnglishCheck', 'ExternalReference', 'Fact', 'FactQualifiers', 'Fate', 'FatesList', 'FatesListAge', 'FatesListArchiveCount', 'FatesListCounts', 'FatesListDate', 'FatesListFateDetail', 'FatesListOutsideRecord', 'FatesListPerson', 'FatesListPiece', 'HistoricalEvent', 'Holder', 'Holiday', 'IssueLifeEvent', 'IssueLifeEventsData', 'IssueMention', 'IssueMentionsData', 'LifeEventDate', 'LifeEventMainPerson', 'Media', 'MediaConsent', 'MediaConsentScope', 'MediaDecision', 'MediaDepicted', 'MediaDerivative', 'MediaFamilyWords', 'MediaFixity', 'MediaMaster', 'MediaPortrait', 'MediaRegion', 'MediaText', 'MediaWithdrawal', 'Mention', 'Name', 'Page', 'PagesData', 'PlaceIdentifier', 'PrintedAddress', 'PrintedSection', 'PrintedTitle', 'PublicMedia', 'ReadingStatus', 'Review', 'SharedEvent', 'SharedFact', 'SharedFamily', 'SharedName', 'SharedOrganization', 'SharedPerson', 'SharedPlace', 'SharedRecord', 'SiteCitation', 'Source', 'SourceDerivation', 'SourcedDate', 'SourcedRelation', 'Summary', 'SummaryAuthorship', 'SummaryBasis', 'SuppliedTitle', 'TextBasis', 'TitleCheck', 'Translation', 'TranslationCheck']
+__all__ = ['Attribution', 'Authorship', 'Block', 'Citation', 'CitedTextBasis', 'CitedTranslation', 'ContentItem', 'ContentItemBlockRef', 'ContentItemRef', 'ContentItemsData', 'CrossReference', 'Edition', 'EditionsCatalog', 'EnglishCheck', 'ExternalReference', 'Fact', 'FactQualifiers', 'Fate', 'FatesList', 'FatesListAge', 'FatesListArchiveCount', 'FatesListCounts', 'FatesListDate', 'FatesListFateDetail', 'FatesListOutsideRecord', 'FatesListPerson', 'FatesListPiece', 'HistoricalEvent', 'Holder', 'Holiday', 'IssueLifeEvent', 'IssueLifeEventsData', 'IssueMention', 'IssueMentionsData', 'LifeEventDate', 'LifeEventMainPerson', 'Media', 'MediaConsent', 'MediaConsentScope', 'MediaDecision', 'MediaDepicted', 'MediaDerivative', 'MediaFamilyWords', 'MediaFixity', 'MediaMaster', 'MediaPortrait', 'MediaRegion', 'MediaText', 'MediaWithdrawal', 'Mention', 'Name', 'Newspaper', 'Page', 'PagesData', 'PictureSource', 'PlaceIdentifier', 'PrintedAddress', 'PrintedSection', 'PrintedTitle', 'PublicMedia', 'ReadingStatus', 'Review', 'SharedEvent', 'SharedFact', 'SharedFamily', 'SharedName', 'SharedOrganization', 'SharedPerson', 'SharedPlace', 'SharedRecord', 'SiteCitation', 'Source', 'SourceDerivation', 'SourcedDate', 'SourcedRelation', 'Summary', 'SummaryAuthorship', 'SummaryBasis', 'SuppliedTitle', 'TextBasis', 'TitleCheck', 'Translation', 'TranslationCheck']

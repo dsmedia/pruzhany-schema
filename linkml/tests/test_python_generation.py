@@ -73,6 +73,10 @@ class PythonGeneration(unittest.TestCase):
         # Ticket 01: exact required paper fields and optional-code id patterns.
         for name in ('Edition', 'Page', 'ContentItem'):
             additions.setdefault(name, {})['newspaper'] = {'type': 'string', 'pattern': r'\S'}
+        additions['Page']['picture_source'] = {'anyOf': [
+            {'$ref': '#/$defs/PictureSource'}, {'type': 'null'}], 'default': None}
+        additions['Edition']['object_url'] = {'anyOf': [
+            {'type': 'string', 'format': 'uri'}, {'type': 'null'}], 'default': None}
         additions['Edition']['key'] = {
             'type': 'string', 'pattern': r'^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$'}
         id_patterns = {
@@ -137,6 +141,16 @@ class PythonGeneration(unittest.TestCase):
                     basis['properties']['addresses'] = {'anyOf': [addresses, {'type': 'null'}], 'default': None}
                     expected['$defs']['CitedTextBasis'] = basis
                     expected['$defs']['CitedTranslation'] = translation
+                if name == 'Page' or 'Page' in expected.get('$defs', {}):
+                    expected.setdefault('$defs', {})['PictureSource'] = {
+                        'type': 'object', 'additionalProperties': False, 'required': ['holder'],
+                        'properties': {
+                            'holder': {'type': 'string', 'pattern': r'\S'},
+                            **{field: {'anyOf': [{'type': 'string', 'pattern': r'\S'}, {'type': 'null'}], 'default': None}
+                               for field in ('route', 'shelf_mark')},
+                            'url': {'anyOf': [{'type': 'string', 'format': 'uri'}, {'type': 'null'}], 'default': None},
+                        },
+                    }
                 model = getattr(models(), name)
                 new = model.model_json_schema()
                 self.assertEqual(backend.canonical(new, new.get('$defs', {})),
@@ -261,7 +275,7 @@ class PythonGeneration(unittest.TestCase):
                 getattr(package(), model).model_validate_json(json.dumps(value))
 
     def test_unhandled_constraints_cannot_be_silently_dropped(self):
-        for shape in [{'type':'string','format':'uri'}, {'type':'integer','multipleOf':2},
+        for shape in [{'type':'string','format':'email'}, {'type':'integer','multipleOf':2},
                       {'$ref':'#/$defs/Page','minimum':1}, {'anyOf':[{'type':'string'}],'pattern':'x'},
                       {'type':'array','items':False}]:
             with self.subTest(shape=shape), self.assertRaises(ValueError):

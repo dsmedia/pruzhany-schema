@@ -20,6 +20,7 @@ default_range: string
 imports:
   - linkml:types
   - types
+  - picture_source
 
 classes:
   PagesData:
@@ -104,6 +105,14 @@ classes:
           impresso: >-
             The media alias carried by Impresso's canonical id. The pinned schemas have
             no separate media-alias property; site_newspaper keeps the source register id.
+      picture_source:
+        range: PictureSource
+        inlined: true
+        slot_uri: pc:page_picture_source
+        description: >-
+          The picture's credit when it differs from the paper's catalog entry. Absence
+          means to use that entry; a present credit supplies its own holder and any
+          route, shelf mark and link, rather than merging individual fields.
 
   Block:
     description: >-

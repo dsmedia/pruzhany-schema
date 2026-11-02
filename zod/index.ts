@@ -15,10 +15,12 @@ export {
 	HolidaySchema,
 	HistoricalEventSchema,
 	EditionsCatalogSchema,
+	NewspaperSchema,
 	type Edition,
 	type Holiday,
 	type HistoricalEvent,
 	type EditionsCatalog,
+	type Newspaper,
 } from './editions.schema';
 
 // Physical pages and blocks
@@ -53,3 +55,5 @@ export * from './identifiers.vocabulary';
 
 // The fates list: everyone printed in the paper whose fate the record knows.
 export * from './fates-list.schema';
+
+export * from './picture-source.schema';

@@ -38,6 +38,8 @@ URI: [pc:Edition](https://pruzhany.org/ns/sourced-entities#Edition)
         
       Edition : newspaper
         
+      Edition : object_url
+        
       
 ```
 
@@ -57,6 +59,7 @@ URI: [pc:Edition](https://pruzhany.org/ns/sourced-entities#Edition)
 | [holiday](holiday.md) | 0..1 <br/> [String](String.md) | The holiday the edition falls on or near, where there is one. | direct |
 | [newspaper](newspaper.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The paper this edition belongs to, by its id in the source register. | direct |
 | [key](key.md) | 1 <br/> [String](String.md) | The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code. | direct |
+| [object_url](object_url.md) | 0..1 <br/> [Uri](Uri.md) | The holder's descriptive page for this one issue. | direct |
 
 
 
@@ -176,6 +179,9 @@ attributes:
   newspaper:
     name: newspaper
     annotations:
+      references:
+        tag: references
+        value: Newspaper.id
       impresso:
         tag: impresso
         value: The media alias carried by Impresso's canonical id. The pinned schemas
@@ -200,6 +206,17 @@ attributes:
     - Edition
     required: true
     pattern: ^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$(?![\s\S])
+  object_url:
+    name: object_url
+    description: The holder's descriptive page for this one issue.
+    from_schema: https://pruzhany.org/ns/editions
+    close_mappings:
+    - rdfs:seeAlso
+    rank: 1000
+    slot_uri: pc:holding_object_url
+    domain_of:
+    - Edition
+    range: uri
 
 ```
 </details>
@@ -277,6 +294,9 @@ attributes:
   newspaper:
     name: newspaper
     annotations:
+      references:
+        tag: references
+        value: Newspaper.id
       impresso:
         tag: impresso
         value: The media alias carried by Impresso's canonical id. The pinned schemas
@@ -304,6 +324,18 @@ attributes:
     range: string
     required: true
     pattern: ^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$(?![\s\S])
+  object_url:
+    name: object_url
+    description: The holder's descriptive page for this one issue.
+    from_schema: https://pruzhany.org/ns/editions
+    close_mappings:
+    - rdfs:seeAlso
+    rank: 1000
+    slot_uri: pc:holding_object_url
+    owner: Edition
+    domain_of:
+    - Edition
+    range: uri
 
 ```
 </details></div>

@@ -16,6 +16,8 @@ Name: pruzhany_editions
 | [EditionsCatalog](EditionsCatalog.md) | The catalog of editions: every edition, the holidays and historical events beside them, and the dates available on the site. |
 | [HistoricalEvent](HistoricalEvent.md) | An event in the world outside the town, such as Kristallnacht, on a day or over a span of days. |
 | [Holiday](Holiday.md) | A Jewish holiday on a given day. |
+| [Newspaper](Newspaper.md) | One newspaper in the source register, with its site title, code and default picture credit. A page may supply a different credit through picture_source. |
+| [PictureSource](PictureSource.md) | The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere. |
 
 
 
@@ -24,6 +26,7 @@ Name: pruzhany_editions
 | Slot | Description |
 | --- | --- |
 | [available_dates](available_dates.md) | The dates of the editions whose pages are on the site. |
+| [code](code.md) | The paper's lowercase alphabetic code used in site keys and routes. |
 | [date](date.md) | The edition's date, written YYYY-MM-DD. |
 | [description](description.md) | What happened, in a sentence or two. |
 | [editions](editions.md) | Every edition of the paper, with its Hebrew date. |
@@ -33,11 +36,21 @@ Name: pruzhany_editions
 | [hebrew_name](hebrew_name.md) | The holiday's name in Hebrew letters, where it is given. |
 | [hebrew_year](hebrew_year.md) | The Hebrew year, such as 5699. |
 | [historical_events](historical_events.md) | Events in the world outside the town that the calendar marks. |
+| [holder](holder.md) | The name of the institution holding the pages the pictures were made from. |
 | [holiday](holiday.md) | The holiday the edition falls on or near, where there is one. |
 | [holidays](holidays.md) | The Jewish holidays of the paper's years. |
+| [id](id.md) | The paper's source-register id, the same value as Edition.newspaper. |
 | [key](key.md) | The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code. |
 | [name](name.md) | The holiday's name in Latin letters, such as Purim or Pesach. |
 | [newspaper](newspaper.md) | The paper this edition belongs to, by its id in the source register. |
+| [newspapers](newspapers.md) | The papers these editions belong to, one entry per source-register id, with their default picture credits. When present, every edition's newspaper must name one of these ids. The runtime twins enforce id uniqueness and membership; LinkML's generated JSON Schema cannot compare values across these lists. |
+| [object_url](object_url.md) | The holder's descriptive page for this one issue. |
+| [rights](rights.md) | The rights statement for the pictures, as text. |
+| [rights_url](rights_url.md) | The address where the rights statement was read. |
+| [route](route.md) | The name of the service or collection readers reach the pages through, when it differs from the holder itself. |
+| [shelf_mark](shelf_mark.md) | The holder's shelf mark or call number for the pages. |
+| [title](title.md) | The paper's title as the site shows it. |
+| [url](url.md) | The pages' descriptive page at the holder or access route. |
 
 
 ## Enumerations

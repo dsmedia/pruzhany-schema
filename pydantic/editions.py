@@ -1,5 +1,5 @@
 """The catalog's generated Python models and its optional-key policy."""
-from .generated.models import Edition, EditionsCatalog, HistoricalEvent, Holiday
+from .generated.models import Edition, EditionsCatalog, HistoricalEvent, Holiday, Newspaper
 
 
 def _Edition__key_date(self):
@@ -10,6 +10,20 @@ def _Edition__key_date(self):
     return self
 
 
+def _EditionsCatalog__newspaper_references(self):
+    if self.newspapers is None:
+        return self
+    ids = set()
+    for paper in self.newspapers:
+        if paper.id in ids:
+            raise ValueError('duplicate newspaper id')
+        ids.add(paper.id)
+    for edition in self.editions:
+        if edition.newspaper not in ids:
+            raise ValueError('edition newspaper is not listed in newspapers')
+    return self
+
+
 def present_value(value):
     """Zod's optional catalog keys may be absent, but never explicit null."""
     if value is None:
@@ -17,4 +31,4 @@ def present_value(value):
     return value
 
 
-__all__ = ['Edition', 'EditionsCatalog', 'HistoricalEvent', 'Holiday']
+__all__ = ['Edition', 'EditionsCatalog', 'HistoricalEvent', 'Holiday', 'Newspaper']

@@ -34,6 +34,7 @@
 		{ "schema": "schema/types.yaml", "name": "types", "top_class": null },
 		{ "schema": "schema/vocabulary.yaml", "name": "vocabulary", "top_class": null },
 		{ "schema": "schema/site_common.yaml", "name": "site_common", "top_class": null },
+		{ "schema": "schema/picture_source.yaml", "name": "picture_source", "top_class": null },
 		{ "schema": "schema/pages.yaml", "name": "pages", "top_class": "PagesData" },
 		{
 			"schema": "schema/content_items.yaml",

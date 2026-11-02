@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { z } from 'zod/v4';
 import * as current from './index';
-import * as frozen from './tests/newspaper-baseline';
+import * as frozen from './tests/picture-source-baseline';
 import { BlockShape } from './generated/pages';
 import { TitleCheckShape, TextBasisShape } from './generated/site_common';
 import { SourcedRelationShape } from './generated/shared_record';
@@ -60,6 +60,8 @@ const typeEquality: {
 	CrossReferenceSchema: true,
 	EditionSchema: true,
 	EditionsCatalogSchema: true,
+	NewspaperSchema: true,
+	PictureSourceSchema: true,
 	EnglishCheckSchema: true,
 	ExternalReferenceSchema: true,
 	FactSchema: true,

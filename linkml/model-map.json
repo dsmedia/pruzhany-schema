@@ -317,7 +317,15 @@
 			"pointer": ""
 		},
 		"CitedTextBasis": { "zod": "CitedTextBasis", "pointer": "" },
-		"CitedTranslation": { "zod": "CitedTranslation", "pointer": "" }
+		"CitedTranslation": { "zod": "CitedTranslation", "pointer": "" },
+		"PictureSource": {
+			"zod": "PictureSource",
+			"pointer": ""
+		},
+		"Newspaper": {
+			"zod": "Newspaper",
+			"pointer": ""
+		}
 	},
 	"required_exceptions": {
 		"Block.unit_id": "schemas/site/pages.schema.json#/properties/pages/items/properties/blocks/items/properties/unit_id",

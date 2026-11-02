@@ -1,0 +1,41 @@
+@prefix pc: <https://pruzhany.org/ns/sourced-entities#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+# Read standards/ehri-0.2.0.json, rico-1.1.json, rico-1.1-axioms.json and
+# ehri-holdings-1.1-1c2325f9/holdings.shex and holdings.shacl.ttl, 2 November 2026.
+# The holdings profile's hasOrHadHolder is an IRI (an Agent in RiC-O); identifier
+# is a literal, title and conditionsOfUse are text, and seeAlso is an IRI.
+# These local terms describe the site's flattened credit and access convention.
+
+pc:PictureSource a owl:Class ;
+  rdfs:label "Picture source credit"@en ;
+  rdfs:comment "A flattened credit carrying the holder's name, access route, shelf mark and descriptive URL. No pinned EHRI or RiC-O class represents this presentation record; it is neither the holding nor its holder. Newspaper separately uses ehri:RecordSet."@en .
+
+pc:picture_holder_name a owl:DatatypeProperty ;
+  rdfs:label "Picture holding institution name"@en ;
+  rdfs:comment "The literal name of the institution holding the pages photographed. RiC-O hasOrHadHolder has Agent range and EHRI's holdings profile requires an IRI; neither expresses this literal. The LinkML close mapping documents the conceptual relation without asserting an object property with a string value."@en .
+
+pc:picture_access_route a owl:DatatypeProperty ;
+  rdfs:label "Picture access route"@en ;
+  rdfs:comment "The name of a service or collection through which readers reach the pictures, distinct from the holding institution. No pinned EHRI or RiC-O property expresses this access-service label; it does not assert custody or ownership."@en .
+
+pc:catalog_newspapers a owl:ObjectProperty ;
+  rdfs:label "Catalog newspapers"@en ;
+  rdfs:comment "The catalog's optional list of newspaper credit entries. No pinned EHRI or RiC-O relation describes this site's catalog configuration list; it does not assert that a catalog holds or contains the archival records."@en .
+
+pc:newspaper_code a owl:DatatypeProperty ;
+  rdfs:label "Newspaper site code"@en ;
+  rdfs:comment "A lowercase code used in site keys and routes. This site routing convention is distinct from the source-register id and the holder's archival identifier, so no pinned EHRI or RiC-O identifier property expresses its specific role."@en .
+
+pc:picture_rights_url a owl:ObjectProperty ;
+  rdfs:label "Picture rights statement source URL"@en ;
+  rdfs:comment "The address where the picture rights statement was read. RiC-O conditionsOfUse holds the statement as text; no pinned EHRI or RiC-O property specifically carries its reading location. It does not identify an intellectual property rights holder."@en .
+
+pc:page_picture_source a owl:ObjectProperty ;
+  rdfs:label "Page picture source override"@en ;
+  rdfs:comment "A page's complete replacement credit when its picture source differs from its newspaper's default. The pinned EHRI and RiC-O relations do not express this site-specific default and override convention."@en .
+
+pc:holding_object_url a owl:ObjectProperty ;
+  rdfs:label "Holding descriptive page URL"@en ;
+  rdfs:comment "The descriptive page at the holder or access route for a paper's holding or a particular issue/page. No pinned EHRI or RiC-O property specifically carries this address. The EHRI holdings profile uses the broader rdfs:seeAlso IRI, retained as a close mapping rather than treating the URL as an archival identifier."@en .

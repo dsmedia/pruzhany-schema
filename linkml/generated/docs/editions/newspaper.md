@@ -73,6 +73,7 @@ URI: [pc:site_newspaper](https://pruzhany.org/ns/sourced-entities#site_newspaper
 
 | property | value |
 | --- | --- |
+| references | Newspaper.id |
 | impresso | The media alias carried by Impresso's canonical id. The pinned schemas have no separate media-alias property; site_newspaper keeps the source register id. |
 
 
@@ -102,6 +103,9 @@ URI: [pc:site_newspaper](https://pruzhany.org/ns/sourced-entities#site_newspaper
 ```yaml
 name: newspaper
 annotations:
+  references:
+    tag: references
+    value: Newspaper.id
   impresso:
     tag: impresso
     value: The media alias carried by Impresso's canonical id. The pinned schemas
