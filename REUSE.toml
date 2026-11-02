@@ -26,7 +26,7 @@ path = [
   "conformance/*.json", "tests/**/*.json", "linkml/tests/fixtures/**.json",
   "linkml/tests/fixtures/**.yaml",
   "linkml/generated/**", "linkml/schema/vocabulary.yaml", "linkml/trials/*.json",
-  "docs/design/*.json", "standards/media-rights.json",
+  "docs/design/*.json", "docs/vocabulary.md", "standards/media-rights.json",
   "pilots/sourced-entities/input/**", "pilots/sourced-entities/generated/**",
   "pilots/sourced-entities/*.json", "pilots/sourced-entities/*.ttl",
 ]

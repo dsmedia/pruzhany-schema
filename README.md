@@ -83,6 +83,7 @@ Project code and supporting documentation use the [MIT licence](LICENSE); projec
 
 The [2026-04-25 cross-edition design](docs/design/2026-04-25-cross-edition-entities.md) is historical; [ADR 0001](docs/adr/0001-which-standard-governs-what.md) settles identity across issues.
 The [2026-10-19 people, facts and sources proposal](docs/design/2026-10-19-people-facts-and-sources.md) includes the decisions and changes of 20 October.
+The generated [vocabulary list](docs/vocabulary.md) gives each term's label, definition and standards mapping.
 The [vocabulary approval record](docs/vocabulary-approvals.md) is the continuing channel for the owner's batches and keeps the release approval history.
 
 ## Current site files

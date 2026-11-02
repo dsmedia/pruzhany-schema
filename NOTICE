@@ -8,7 +8,8 @@ Project-authored files are classified by purpose, not just extension:
   snapshots; conformance/*.json; JSON test fixtures and the JSON/YAML data in
   linkml/tests/fixtures/;
   linkml/generated/ (JSON Schemas, RDF and reference documentation), generated
-  linkml/schema/vocabulary.yaml, linkml/trials/*.json, docs/design/*.json;
+  linkml/schema/vocabulary.yaml and docs/vocabulary.md,
+  linkml/trials/*.json, docs/design/*.json;
   the pilot's input/, generated/, JSON and TTL data; standards/media-rights.json
   (a project-assembled URI list).
 The distinction is executable definitions/implementation versus reusable data

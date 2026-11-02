@@ -1,5 +1,8 @@
 # Sourced entities vocabulary
 
+For a readable account of the terms, their definitions and standards mappings, see
+the generated [vocabulary list](../docs/vocabulary.md).
+
 `site-content.json` is a separate **1.1.0, released 2026-10-31** vocabulary.
 The owner approved its 21 content-item subtypes and 11 subjects as proposed
 (steps decision 164, item 1), then approved both `printed` and `supplied` title
@@ -176,7 +179,17 @@ bin/verify vocabulary
 python3 -I -B standards/check_alignment.py
 ```
 
-`generate.py --check` checks exact UTF-8/LF bytes. It generates a Zod enum per
+`generate.py --check` checks exact UTF-8/LF bytes, including the readable
+`docs/vocabulary.md` list. The list uses the same loaded JSON as the contracts;
+extending this generator keeps generation and freshness checking in one place,
+without another parser or command. Files without a version, label, definition or
+mapping are marked explicitly (readable labels fall back to identifier words).
+Snapshots and approval history are linked, not reproduced. Field mappings and
+advisory citation rules are distinguished from released controlled values.
+The page is a reusable data export under NOTICE's purpose-based rule and uses
+CC BY 4.0, as recorded in `REUSE.toml`.
+
+The generator also writes a Zod enum per
 group and Python Literals plus the vocabulary version, and `linkml/schema/vocabulary.yaml`:
 a LinkML enum per group, Impresso's types and the reading states, named as the other
 contracts name them, each value with its definition, its `meaning` (the `rico:`, `ehri:`
