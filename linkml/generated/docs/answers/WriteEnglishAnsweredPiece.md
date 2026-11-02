@@ -338,6 +338,7 @@ attributes:
     domain_of:
     - WriteEnglishAnsweredPiece
     - QuoteEnglishQuotedEnglish
+    - JudgeOpeningSentenceVerdict
     range: integer
     required: true
 
@@ -529,6 +530,7 @@ attributes:
     domain_of:
     - WriteEnglishAnsweredPiece
     - QuoteEnglishQuotedEnglish
+    - JudgeOpeningSentenceVerdict
     range: integer
     required: true
 

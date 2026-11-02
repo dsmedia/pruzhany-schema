@@ -1,7 +1,7 @@
 {
-  "contract_sha256": "f56a758ef73e74489cec0aaed302c56ab3db07928dfbb7a60de7891ab0ad22b6",
+  "contract_sha256": "aae5203057bad9611d7b912b69eaea4cfa5aa1bba8e6032e927c189ddc0d00a3",
   "inputs": {
-    "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
+    "linkml/schema/answers.yaml": "14c43f30130c00060b3bb7ad38367f3c16ffdfbd86e3c90b1a8df4bdfa763dd0",
     "linkml/schema/content_items.yaml": "c2f8776f0e2cb666afc087d1131ce027f741432b1eb5280b4da30975fca6a878",
     "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
@@ -307,6 +307,84 @@
       "parent": null,
       "source": "linkml/schema/answers.yaml",
       "yaml": "  JoinPeopleGroup:\n    title: Group\n    description: >-\n      Names that are one person, and the name the person is given.\n    attributes:\n      names:\n        multivalued: true\n        range: integer\n        required: true\n        title: Names\n        description: >-\n          The numbers of the names that are one person.\n      name:\n        range: string\n        required: true\n        title: Name\n        description: >-\n          The fullest English name the edition gives the person.\n      certainty:\n        range: string\n        required: true\n        title: Certainty\n        equals_string_in:\n        - certain\n        - likely\n        description: >-\n          The certainty field in the Group response.\n        annotations:\n          description_in_wire: false\n      why:\n        range: string\n        required: true\n        title: Why\n        description: >-\n          In a few words.\n"
+    },
+    "JudgeOpeningAnswer": {
+      "description": "The verdict on one opening: one for each of its sentences.",
+      "fields": [
+        {
+          "description": "The sentences field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "sentences",
+          "range": "JudgeOpeningSentenceVerdict",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/JudgeOpeningSentenceVerdict"
+            },
+            "title": "Sentences",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  JudgeOpeningAnswer:\n    title: Answer\n    description: >-\n      The verdict on one opening: one for each of its sentences.\n    annotations:\n      asking: judge_opening\n    attributes:\n      sentences:\n        multivalued: true\n        range: JudgeOpeningSentenceVerdict\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Sentences\n        description: >-\n          The sentences field in the Answer response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "JudgeOpeningSentenceVerdict": {
+      "description": "Whether one sentence of the opening, by its number, is supported, and why.",
+      "fields": [
+        {
+          "description": "The number field in the SentenceVerdict response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "number",
+          "range": "integer",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Number",
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The supported field in the SentenceVerdict response.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "supported",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "title": "Supported",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "One short sentence.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "why",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "One short sentence.",
+            "title": "Why",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  JudgeOpeningSentenceVerdict:\n    title: SentenceVerdict\n    description: >-\n      Whether one sentence of the opening, by its number, is supported, and why.\n    attributes:\n      number:\n        range: integer\n        required: true\n        title: Number\n        description: >-\n          The number field in the SentenceVerdict response.\n        annotations:\n          description_in_wire: false\n      supported:\n        range: boolean\n        required: true\n        title: Supported\n        description: >-\n          The supported field in the SentenceVerdict response.\n        annotations:\n          description_in_wire: false\n      why:\n        range: string\n        required: true\n        title: Why\n        description: >-\n          One short sentence.\n"
     },
     "QuoteEnglishAnswer": {
       "description": "The answer about a batch of quotations: every quotation it was sent, by its number.",
@@ -1036,6 +1114,74 @@
       "parent": null,
       "source": "linkml/schema/answers.yaml",
       "yaml": "  WriteEnglishPlace:\n    title: Place\n    description: >-\n      A place a piece names.\n    attributes:\n      name:\n        range: string\n        required: true\n        title: Name\n        description: >-\n          Its usual English name.\n      printed:\n        range: string\n        required: true\n        title: Printed\n        description: >-\n          As in the text.\n      kind:\n        range: string\n        required: true\n        title: Kind\n        equals_string_in:\n        - city\n        - town\n        - village\n        - shtetl\n        - street\n        - address\n        - landmark\n        - country\n        - region\n        - district\n        description: >-\n          The kind field in the Place response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "WriteOpeningAnswer": {
+      "description": "The opening of one piece: its sentences, in order.",
+      "fields": [
+        {
+          "description": "The sentences field in the Answer response.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "sentences",
+          "range": "WriteOpeningOpeningSentence",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "items": {
+              "$ref": "#/$defs/WriteOpeningOpeningSentence"
+            },
+            "title": "Sentences",
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteOpeningAnswer:\n    title: Answer\n    description: >-\n      The opening of one piece: its sentences, in order.\n    annotations:\n      asking: write_opening\n    attributes:\n      sentences:\n        multivalued: true\n        range: WriteOpeningOpeningSentence\n        inlined: true\n        inlined_as_list: true\n        required: true\n        title: Sentences\n        description: >-\n          The sentences field in the Answer response.\n        annotations:\n          description_in_wire: false\n"
+    },
+    "WriteOpeningOpeningSentence": {
+      "description": "One sentence of the opening, with the exact words of the English it rests on.",
+      "fields": [
+        {
+          "description": "The passages of the English the sentence rests on, each copied exactly.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "quotes",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The passages of the English the sentence rests on, each copied exactly.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Quotes",
+            "type": "array"
+          }
+        },
+        {
+          "description": "The sentence, as the reader will read it.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "text",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The sentence, as the reader will read it.",
+            "title": "Text",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/answers.yaml",
+      "yaml": "  WriteOpeningOpeningSentence:\n    title: OpeningSentence\n    description: >-\n      One sentence of the opening, with the exact words of the English it rests on.\n    attributes:\n      text:\n        range: string\n        required: true\n        title: Text\n        description: >-\n          The sentence, as the reader will read it.\n      quotes:\n        multivalued: true\n        range: string\n        required: true\n        title: Quotes\n        description: >-\n          The passages of the English the sentence rests on, each copied exactly.\n"
     }
   },
   "types": {},

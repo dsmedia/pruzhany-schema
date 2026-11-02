@@ -28,7 +28,7 @@ What LinkML cannot say about the shapes is listed in
 | `schema/physical.yaml` | Impresso's stored physical page contract, separate from the website's pages: page, region, paragraph, line, word and the shared array-valued box slot, with the computed identifier rule. |
 | `external_schema.py`, `generated/external/physical/` | Explicit-null JSON Schema adapter and the physical contract's own class inventory and learning index. The external contract is checked against Impresso rather than the site's Zod/Pydantic twins. |
 | `schema/exchanges.yaml`, `generated/external/exchanges/` | Prompt-version metadata and references to kept answers in steps, with their own external inventory and learning index; prompt text and answer payloads stay outside this repository. |
-| `schema/answers.yaml`, `answer_generator.py`, `generated/external/answers/` | The four current structured-answer contracts and their exact request JSON Schema strings, plus an external class inventory and learning index. These procedural contracts have no EHRI/RiC-O mapping; the module explains why. |
+| `schema/answers.yaml`, `answer_generator.py`, `generated/external/answers/` | The six current structured-answer contracts and their exact request JSON Schema strings, plus an external class inventory and learning index. These procedural contracts have no EHRI/RiC-O mapping; the module explains why. |
 | `tests/` | The canaries (`canary_*.py`), the tests (`test_*.py`) and their planted files (`fixtures/`). |
 
 ## Running it
@@ -37,11 +37,11 @@ What LinkML cannot say about the shapes is listed in
 
 The `model-answers` manifest entry has no single top class: each class annotated
 with `asking` defines one independent response document. `generate.py` and its
-`--check` include all four `external/answers/<asking>.schema.json` files. Unlike
+`--check` include all six `external/answers/<asking>.schema.json` files. Unlike
 the readable generated files, these contain the exact `json.dumps` request string,
 with no final newline. Their titles, descriptions, property/required/enum order,
 closedness and defaults reproduce the released Pydantic **2.13.5** serialization
-layout. The emitter needs no Pydantic runtime. The schema gate records all four
+layout. The emitter needs no Pydantic runtime. The schema gate records all six
 baseline byte counts and SHA-256 values; steps also compares the actual bytes.
 
 `answer_generator.py` accepts only inline attributes, string/integer/boolean

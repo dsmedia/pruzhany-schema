@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `9e936981fafad9e6ec1fb4cedb79199c205caeac97171ccf66ee0a2867ec3d97`.
+Definition fingerprint: `88bc8d09f027405f89aee39ac23b71c71c48479b88b73b4715833a9ec809656e`.
 
 ## What the Pruzhany issue documents share
 
@@ -1799,6 +1799,32 @@ Meaning: No direct mapping recorded.
 
 Source: `linkml/schema/answers.yaml`.
 
+### JudgeOpeningAnswer
+
+The verdict on one opening: one for each of its sentences.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `sentences` | The sentences field in the Answer response. | list of JudgeOpeningSentenceVerdict | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### JudgeOpeningSentenceVerdict
+
+Whether one sentence of the opening, by its number, is supported, and why.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `number` | The number field in the SentenceVerdict response. | integer | Yes | No direct mapping recorded |
+| `supported` | The supported field in the SentenceVerdict response. | boolean | Yes | No direct mapping recorded |
+| `why` | One short sentence. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
 ### QuoteEnglishAnswer
 
 The answer about a batch of quotations: every quotation it was sent, by its number.
@@ -1955,6 +1981,31 @@ Meaning: No direct mapping recorded.
 | `kind` | The kind field in the Place response. | string; one of: ['city', 'town', 'village', 'shtetl', 'street', 'address', 'landmark', 'country', 'region', 'district'] | Yes | No direct mapping recorded |
 | `name` | Its usual English name. | string | Yes | No direct mapping recorded |
 | `printed` | As in the text. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteOpeningAnswer
+
+The opening of one piece: its sentences, in order.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `sentences` | The sentences field in the Answer response. | list of WriteOpeningOpeningSentence | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteOpeningOpeningSentence
+
+One sentence of the opening, with the exact words of the English it rests on.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `quotes` | The passages of the English the sentence rests on, each copied exactly. | list of string | Yes | No direct mapping recorded |
+| `text` | The sentence, as the reader will read it. | string | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/answers.yaml`.
 

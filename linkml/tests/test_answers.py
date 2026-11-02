@@ -16,13 +16,17 @@ backend = load('answer_generator')
 generate = load('generate')
 
 # Immutable SHA-256 of the current steps answer.schema.json files: four inspected 30 October 2026,
-# quote_english (steps prompts/quote_english/3cb9e3e4cd4ad29d) on 31 October 2026. These are procedural schemas, never real answers or prompt text.
+# quote_english (steps prompts/quote_english/3cb9e3e4cd4ad29d) on 31 October 2026, write_opening
+# (steps prompts/write_opening/92bab454746463d2) and judge_opening (steps prompts/judge_opening/af17f8f728167e53)
+# on 2 November 2026. These are procedural schemas, never real answers or prompt text.
 BASELINE = {
     'find_items': (1542, 'b44547bd3d88515a54d9c8544cdd8595d2308b4cf9112ce8af862463d43560b0'),
     'read_latin': (635, '529977c7df7b63f79a97d8e975ef5043e5cfc0257727736262342acf4fc3097e'),
     'write_english': (4565, '8bd979a3c233cc8dc0e20d27a38d8c176e4687eca9560e2a5176630791e91b59'),
     'join_people': (950, '2d73aab39f5b878e66d1bd465feff0064c469a3b2e0f227699756d01335d9297'),
     'quote_english': (649, 'b59b12bcecfb09dd34482d1fb63b8be2e8d3feb66d5c78bcd988b214600bc3d9'),
+    'write_opening': (805, '66b55a5223e8f874375499396b4bb819aea6c7b579e35759b4592807e7577d07'),
+    'judge_opening': (737, '877d50263f88019ab148a8261e559b23578296ad1c3c05b5c7bdacdb6902671b'),
 }
 
 

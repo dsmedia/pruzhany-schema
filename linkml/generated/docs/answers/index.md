@@ -1,6 +1,6 @@
 # Current structured model answers
 
-The four current paid answer shapes. Procedural descriptions and titles are the exact strings sent by steps; no prompt text or answer data is included.
+The six current paid answer shapes. Procedural descriptions and titles are the exact strings sent by steps; no prompt text or answer data is included.
 
 URI: https://pruzhany.org/ns/answers
 
@@ -17,6 +17,8 @@ Name: pruzhany_answers
 | [FindItemsAnswerItem](FindItemsAnswerItem.md) | One item as the model gives it: its parts in order, its kind, language and headline. |
 | [JoinPeopleAnswer](JoinPeopleAnswer.md) | The groups of names that are one person; a name in no group is a person of its own. |
 | [JoinPeopleGroup](JoinPeopleGroup.md) | Names that are one person, and the name the person is given. |
+| [JudgeOpeningAnswer](JudgeOpeningAnswer.md) | The verdict on one opening: one for each of its sentences. |
+| [JudgeOpeningSentenceVerdict](JudgeOpeningSentenceVerdict.md) | Whether one sentence of the opening, by its number, is supported, and why. |
 | [QuoteEnglishAnswer](QuoteEnglishAnswer.md) | The answer about a batch of quotations: every quotation it was sent, by its number. |
 | [QuoteEnglishQuotedEnglish](QuoteEnglishQuotedEnglish.md) | One quotation's English, with the number it was sent under. |
 | [ReadLatinAnswer](ReadLatinAnswer.md) | The model's answer to one message: a line for each picture, empty where it saw no text. |
@@ -28,6 +30,8 @@ Name: pruzhany_answers
 | [WriteEnglishOrganization](WriteEnglishOrganization.md) | An organisation, institution or named business a piece names. |
 | [WriteEnglishPerson](WriteEnglishPerson.md) | A person a piece names. |
 | [WriteEnglishPlace](WriteEnglishPlace.md) | A place a piece names. |
+| [WriteOpeningAnswer](WriteOpeningAnswer.md) | The opening of one piece: its sentences, in order. |
+| [WriteOpeningOpeningSentence](WriteOpeningOpeningSentence.md) | One sentence of the opening, with the exact words of the English it rests on. |
 
 
 
@@ -67,8 +71,11 @@ Name: pruzhany_answers
 | [principals](principals.md) | Their English names as in people. |
 | [printed](printed.md) | The printed field in the Doubt response. |
 | [quotations](quotations.md) | The quotations field in the Answer response. |
+| [quotes](quotes.md) | The passages of the English the sentence rests on, each copied exactly. |
 | [role](role.md) | What the person is in this piece, in a few words. |
 | [running_head](running_head.md) | The running_head field in the Answer response. |
+| [sentences](sentences.md) | The sentences field in the Answer response. |
+| [supported](supported.md) | The supported field in the SentenceVerdict response. |
 | [text](text.md) | The text field in the Line response. |
 | [title](title.md) | The title field in the AnsweredPiece response. |
 | [why](why.md) | The why field in the Doubt response. |
