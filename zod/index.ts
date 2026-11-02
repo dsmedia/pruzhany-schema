@@ -50,3 +50,6 @@ export * from './citation-requirements';
 export * from './media.schema';
 export * from './quote-publication';
 export * from './identifiers.vocabulary';
+
+// The fates list: everyone printed in the paper whose fate the record knows.
+export * from './fates-list.schema';

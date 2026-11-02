@@ -663,6 +663,194 @@
 				}
 			]
 		},
+		"FatesList": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["people", "counts", "notes"]
+		},
+		"FatesListAge": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["known_by", "child", "birth_year", "birth_years", "fact_ids", "announced"],
+			"validators": [
+				{
+					"name": "basis",
+					"module": "fates_list",
+					"function": "_FatesListAge__basis",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"known_by": {
+									"enum": ["birth_year"]
+								}
+							},
+							"required": ["known_by"]
+						},
+						"then": {
+							"properties": {
+								"birth_year": {},
+								"fact_ids": {
+									"items": {},
+									"type": "array"
+								}
+							},
+							"required": ["birth_year", "fact_ids"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"known_by": {
+									"enum": ["birth_announced"]
+								}
+							},
+							"required": ["known_by"]
+						},
+						"then": {
+							"properties": {
+								"announced": {}
+							},
+							"required": ["announced"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"known_by": {
+									"enum": ["birth_years_disagree"]
+								}
+							},
+							"required": ["known_by"]
+						},
+						"then": {
+							"properties": {
+								"birth_years": {
+									"items": {},
+									"type": "array"
+								}
+							},
+							"required": ["birth_years"]
+						}
+					}
+				]
+			}
+		},
+		"FatesListArchiveCount": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_id", "archive", "people", "people_with_address"]
+		},
+		"FatesListCounts": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"people",
+				"perished_confirmed",
+				"perished_probable",
+				"survived_confirmed",
+				"survived_probable",
+				"children",
+				"children_by_birth_year",
+				"children_by_announcement",
+				"birth_year_known",
+				"birth_years_disagree",
+				"no_age",
+				"with_place",
+				"with_date",
+				"outside_records"
+			]
+		},
+		"FatesListDate": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["start", "precision", "end"]
+		},
+		"FatesListFateDetail": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["kind", "place_id", "place_name", "date"],
+			"validators": [
+				{
+					"name": "place_or_date",
+					"module": "fates_list",
+					"function": "_FatesListFateDetail__place_or_date",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"if": {
+					"not": {
+						"required": ["place_id"]
+					},
+					"properties": {
+						"place_id": {}
+					}
+				},
+				"then": {
+					"properties": {
+						"date": {}
+					},
+					"required": ["date"]
+				}
+			}
+		},
+		"FatesListOutsideRecord": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_id", "archive", "collection", "record_type", "record_id", "url"]
+		},
+		"FatesListPerson": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"person_id",
+				"name",
+				"printed_name",
+				"outcome",
+				"confidence",
+				"first_mention",
+				"fate_details",
+				"outside_records",
+				"age"
+			]
+		},
+		"FatesListPiece": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["edition_date", "content_item_id"]
+		},
 		"HistoricalEvent": {
 			"module": "editions",
 			"config": {

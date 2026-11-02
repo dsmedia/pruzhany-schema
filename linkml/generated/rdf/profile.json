@@ -1,12 +1,12 @@
 {
   "artifacts_sha256": {
     "context.jsonld": "a212e549e680de4a71b0601b94fbf5314e640ede8fe06d46a879ade811405ade",
-    "coverage.md": "3a03d4e08546f3e493e719edf0426da4d53a72bcb1e401693621109203a6b3dc",
+    "coverage.md": "7d89dbba96de370be40edb746d0d00d7f2fa5623a2e758a6b1eb126314750fdc",
     "ontology.ttl": "61d32d991d656f5570a2ed2776cde0fc40551060ace7bc92154729aeb47363ec",
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
-  "contract_sha256": "f726b931cbcf85619635d2afa437a32e2a09c24a8a0081ee22d5749d6f7de9e1",
-  "index_sha256": "0d40e489a4e0643dfed64dce1ffa6af62d28016b01c406bb6d6b28bf5e4c43e0",
+  "contract_sha256": "d1e4c06bf2d01b0f7dfbeb1267a931f421e9bd04d49921d0709ec77341a05098",
+  "index_sha256": "851491ef88e2b571330338560bb6cbe51889436bcb0cf3caad2d88969f6aa99e",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -2281,6 +2281,15 @@
     "Fact": "Outside the public shared-record export; this layer keeps its current format.",
     "FactQualifiers": "Outside the public shared-record export; this layer keeps its current format.",
     "Fate": "Outside the public shared-record export; this layer keeps its current format.",
+    "FatesList": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
+    "FatesListAge": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
+    "FatesListArchiveCount": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
+    "FatesListCounts": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
+    "FatesListDate": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
+    "FatesListFateDetail": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
+    "FatesListOutsideRecord": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
+    "FatesListPerson": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
+    "FatesListPiece": "A list made from the shared record for one page; its people, places and records are exported from the shared record itself.",
     "HistoricalEvent": "Outside the public shared-record export; this layer keeps its current format.",
     "Holder": "Outside the public shared-record export; this layer keeps its current format.",
     "Holiday": "Outside the public shared-record export; this layer keeps its current format.",
@@ -2320,12 +2329,13 @@
     "Translation": "Outside the public shared-record export; this layer keeps its current format.",
     "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format."
   },
-  "profile_sha256": "49305bc3a5c3e39453750482cdcf552f5f24f2e972cd8d6060707b6646d1cd49",
+  "profile_sha256": "365ab48e8130901a7f7808553b9c01af79115a5eb4ede229b1a35edb0ddc2d7e",
   "source_sha256": {
     "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
     "linkml/schema/content_items.yaml": "c2f8776f0e2cb666afc087d1131ce027f741432b1eb5280b4da30975fca6a878",
     "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
+    "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
     "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
@@ -2359,6 +2369,46 @@
         }
       ]
     },
+    "AgeKnownBy": {
+      "description": "How a person's age is known.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The person's own records give one year of birth.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fates_list_age_birth_year"
+            }
+          ],
+          "value": "birth_year"
+        },
+        {
+          "description": "The paper announced the person's birth: the person is the baby of a birth the paper printed.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fates_list_age_birth_announced"
+            }
+          ],
+          "value": "birth_announced"
+        },
+        {
+          "description": "The person's own records give years of birth that disagree, so the age is not known.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fates_list_age_birth_years_disagree"
+            }
+          ],
+          "value": "birth_years_disagree"
+        }
+      ]
+    },
+    "ArchiveAddress": {
+      "description": "A record's address at its archive: it begins https:// and holds no white space. A pattern alone, as the twins' address checks say it, without LinkML's uri format.",
+      "mappings": []
+    },
     "AuthorshipKind": {
       "description": "Whether a person or a program wrote a supplied title or a translation.",
       "mappings": [],
@@ -2374,6 +2424,10 @@
           "value": "model"
         }
       ]
+    },
+    "BirthYear": {
+      "description": "A year of birth, from 1800 to 2100.",
+      "mappings": []
     },
     "CitationRemarkKinds": {
       "description": "Citation remark kinds: the values of citation_remark_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
@@ -3309,6 +3363,42 @@
         }
       ]
     },
+    "FateDetailKind": {
+      "description": "The kind of statement a fate detail comes from: a death, a survival or a deportation.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The person's death, or the death event it names.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fates_list_death"
+            }
+          ],
+          "value": "death"
+        },
+        {
+          "description": "Evidence that the person was alive at a time and place.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_survival"
+            }
+          ],
+          "value": "survival"
+        },
+        {
+          "description": "The person's forced removal.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_deportation"
+            }
+          ],
+          "value": "deportation"
+        }
+      ]
+    },
     "FateOutcomes": {
       "description": "Fate outcomes: the values of fate_outcomes in vocabulary/sourced-entities.json, version 1.3.0.",
       "mappings": [],
@@ -3362,6 +3452,58 @@
             }
           ],
           "value": "not_applicable"
+        }
+      ]
+    },
+    "FatesListConfidence": {
+      "description": "How sure the fate is: the shared record's confidences confirmed and probable.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The evidence establishes the fate.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:confidence_confirmed"
+            }
+          ],
+          "value": "confirmed"
+        },
+        {
+          "description": "The evidence supports the fate with remaining uncertainty.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:confidence_probable"
+            }
+          ],
+          "value": "probable"
+        }
+      ]
+    },
+    "FatesListOutcome": {
+      "description": "The fates the list holds: the shared record's fate outcomes perished and survived.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The person perished, as the shared record's fate says.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_perished"
+            }
+          ],
+          "value": "perished"
+        },
+        {
+          "description": "The person survived, as the shared record's fate says.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_survived"
+            }
+          ],
+          "value": "survived"
         }
       ]
     },

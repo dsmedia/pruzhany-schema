@@ -1,10 +1,11 @@
 {
-  "contract_sha256": "f726b931cbcf85619635d2afa437a32e2a09c24a8a0081ee22d5749d6f7de9e1",
+  "contract_sha256": "d1e4c06bf2d01b0f7dfbeb1267a931f421e9bd04d49921d0709ec77341a05098",
   "inputs": {
     "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
     "linkml/schema/content_items.yaml": "c2f8776f0e2cb666afc087d1131ce027f741432b1eb5280b4da30975fca6a878",
     "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
+    "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
     "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
@@ -2165,6 +2166,1000 @@
       "parent": null,
       "source": "linkml/schema/sourced_entities.yaml",
       "yaml": "  Fate:\n    description: >-\n      What became of a person in the Holocaust, as far as the record shows, the facts it rests\n      on and its review.\n    attributes:\n      outcome:\n        range: FateOutcomes\n        required: true\n        description: >-\n          What became of the person: unknown, perished, survived, died before, or not\n          applicable.\n      confidence:\n        range: Confidence\n        required: true\n        description: >-\n          How sure the outcome is.\n      rests_on:\n        range: string\n        multivalued: true\n        required: true\n        description: >-\n          The facts the outcome rests on, by their ids in the record.\n      review:\n        range: Review\n        inlined: true\n        required: true\n        description: >-\n          Whether a person has reviewed the outcome.\n      summary:\n        range: string\n        description: >-\n          A short summary in words.\n"
+    },
+    "FatesList": {
+      "description": "The fates list: its people, its counts and its notes.",
+      "fields": [
+        {
+          "description": "The list's counts, so that a page never counts for itself.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "counts",
+          "range": "FatesListCounts",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/FatesListCounts",
+            "description": "The list's counts, so that a page never counts for itself."
+          }
+        },
+        {
+          "description": "What the counts count, in plain English, the people with no age among them.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "notes",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "What the counts count, in plain English, the people with no age among them.",
+            "items": {
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "Everyone printed in the paper whose fate the record knows, by name as shown.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "people",
+          "range": "FatesListPerson",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "description": "Everyone printed in the paper whose fate the record knows, by name as shown.",
+            "items": {
+              "$ref": "#/$defs/FatesListPerson"
+            },
+            "type": "array"
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "kind": "class_uri",
+          "term": "pc:fates_list"
+        }
+      ],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesList:\n    tree_root: true\n    class_uri: pc:fates_list\n    description: >-\n      The fates list: its people, its counts and its notes.\n    attributes:\n      people:\n        range: FatesListPerson\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Everyone printed in the paper whose fate the record knows, by name as shown.\n      counts:\n        range: FatesListCounts\n        inlined: true\n        required: true\n        description: >-\n          The list's counts, so that a page never counts for itself.\n      notes:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          What the counts count, in plain English, the people with no age among them.\n"
+    },
+    "FatesListAge": {
+      "description": "How a person's age is known, and whether it marks a child.",
+      "fields": [
+        {
+          "description": "The earliest published piece that announced the person's birth.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "announced",
+          "range": "FatesListPiece",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/FatesListPiece"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The earliest published piece that announced the person's birth."
+          }
+        },
+        {
+          "description": "The one year of birth the person's own records give.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "birth_year",
+          "range": "BirthYear",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The one year of birth the person's own records give.",
+            "maximum": 2100,
+            "minimum": 1800,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The years of birth that disagree, in order.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "birth_years",
+          "range": "BirthYear",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The years of birth that disagree, in order.",
+            "items": {
+              "maximum": 2100,
+              "minimum": 1800,
+              "type": "integer"
+            },
+            "minItems": 2,
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "True for a child: one year of birth of 1925 or later, or a birth the paper announced.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:fates_list_child"
+            }
+          ],
+          "multivalued": false,
+          "name": "child",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "True for a child: one year of birth of 1925 or later, or a birth the paper announced.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "The shared record's birth statements that give the year.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "fact_ids",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The shared record's birth statements that give the year.",
+            "items": {
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "How the age is known: one year of birth, a birth the paper announced, or years that disagree.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "known_by",
+          "range": "AgeKnownBy",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/AgeKnownBy",
+            "description": "How the age is known: one year of birth, a birth the paper announced, or years that disagree."
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "kind": "class_uri",
+          "term": "pc:fates_list_age"
+        }
+      ],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesListAge:\n    class_uri: pc:fates_list_age\n    description: >-\n      How a person's age is known, and whether it marks a child.\n    attributes:\n      known_by:\n        range: AgeKnownBy\n        required: true\n        description: >-\n          How the age is known: one year of birth, a birth the paper announced, or years that\n          disagree.\n      child:\n        range: boolean\n        required: true\n        slot_uri: pc:fates_list_child\n        description: >-\n          True for a child: one year of birth of 1925 or later, or a birth the paper announced.\n      birth_year:\n        range: BirthYear\n        description: >-\n          The one year of birth the person's own records give.\n      birth_years:\n        range: BirthYear\n        multivalued: true\n        minimum_cardinality: 2\n        description: >-\n          The years of birth that disagree, in order.\n      fact_ids:\n        range: NonBlankText\n        multivalued: true\n        minimum_cardinality: 1\n        description: >-\n          The shared record's birth statements that give the year.\n      announced:\n        range: FatesListPiece\n        inlined: true\n        description: >-\n          The earliest published piece that announced the person's birth.\n    rules:\n      - description: >-\n          An age known by one year of birth gives that year and its statements.\n        preconditions:\n          slot_conditions:\n            known_by:\n              equals_string: birth_year\n        postconditions:\n          slot_conditions:\n            birth_year:\n              required: true\n            fact_ids:\n              required: true\n      - description: >-\n          A birth the paper announced names the piece that announced it.\n        preconditions:\n          slot_conditions:\n            known_by:\n              equals_string: birth_announced\n        postconditions:\n          slot_conditions:\n            announced:\n              required: true\n      - description: >-\n          Years that disagree are given.\n        preconditions:\n          slot_conditions:\n            known_by:\n              equals_string: birth_years_disagree\n        postconditions:\n          slot_conditions:\n            birth_years:\n              required: true\n"
+    },
+    "FatesListArchiveCount": {
+      "description": "How many people an archive's database names, and how many of them with an address.",
+      "fields": [
+        {
+          "description": "The archive's name.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "archive",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The archive's name.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The people its records name.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "people",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people its records name.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people with at least one of its records at the record's own address.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "people_with_address",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people with at least one of its records at the record's own address.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The database as the shared record's source id.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "source_id",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The database as the shared record's source id.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesListArchiveCount:\n    description: >-\n      How many people an archive's database names, and how many of them with an address.\n    attributes:\n      source_id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The database as the shared record's source id.\n      archive:\n        range: NonBlankText\n        required: true\n        description: >-\n          The archive's name.\n      people:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people its records name.\n      people_with_address:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people with at least one of its records at the record's own address.\n"
+    },
+    "FatesListCounts": {
+      "description": "The list's counts.",
+      "fields": [
+        {
+          "description": "The people whose own records give one year of birth, children or not.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "birth_year_known",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people whose own records give one year of birth, children or not.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people whose own records give years of birth that disagree.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "birth_years_disagree",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people whose own records give years of birth that disagree.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people marked as children.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "children",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people marked as children.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The children marked because the paper announced their birth.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "children_by_announcement",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The children marked because the paper announced their birth.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The children marked by one year of birth of 1925 or later.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "children_by_birth_year",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The children marked by one year of birth of 1925 or later.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people with no age in the record; they are not marked as children.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "no_age",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people with no age in the record; they are not marked as children.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "For each archive's database, how many people its records name.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "outside_records",
+          "range": "FatesListArchiveCount",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "description": "For each archive's database, how many people its records name.",
+            "items": {
+              "$ref": "#/$defs/FatesListArchiveCount"
+            },
+            "type": "array"
+          }
+        },
+        {
+          "description": "The people on the list.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "people",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people on the list.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people who perished.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "perished_confirmed",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people who perished.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people who probably perished.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "perished_probable",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people who probably perished.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people who survived.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "survived_confirmed",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people who survived.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people who probably survived.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "survived_probable",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people who probably survived.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people whose fate the record dates.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "with_date",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people whose fate the record dates.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        {
+          "description": "The people whose fate the record places somewhere.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "with_place",
+          "range": "NonNegativeInteger",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The people whose fate the record places somewhere.",
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesListCounts:\n    description: >-\n      The list's counts.\n    attributes:\n      people:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people on the list.\n      perished_confirmed:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people who perished.\n      perished_probable:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people who probably perished.\n      survived_confirmed:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people who survived.\n      survived_probable:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people who probably survived.\n      children:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people marked as children.\n      children_by_birth_year:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The children marked by one year of birth of 1925 or later.\n      children_by_announcement:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The children marked because the paper announced their birth.\n      birth_year_known:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people whose own records give one year of birth, children or not.\n      birth_years_disagree:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people whose own records give years of birth that disagree.\n      no_age:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people with no age in the record; they are not marked as children.\n      with_place:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people whose fate the record places somewhere.\n      with_date:\n        range: NonNegativeInteger\n        required: true\n        description: >-\n          The people whose fate the record dates.\n      outside_records:\n        range: FatesListArchiveCount\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          For each archive's database, how many people its records name.\n"
+    },
+    "FatesListDate": {
+      "description": "A normalized date: its start, how precise it is and, for a range, its end.",
+      "fields": [
+        {
+          "description": "The end of a range of dates, written as the start is.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "end",
+          "range": "IsoYearMonthOrDay",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The end of a range of dates, written as the start is.",
+            "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "How much of the date is known: year, month, day or range.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "precision",
+          "range": "SourcedDatePrecision",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/SourcedDatePrecision"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "How much of the date is known: year, month, day or range."
+          }
+        },
+        {
+          "description": "The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "start",
+          "range": "IsoYearMonthOrDay",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.",
+            "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "kind": "class_uri",
+          "term": "rico:Date"
+        }
+      ],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesListDate:\n    class_uri: rico:Date\n    description: >-\n      A normalized date: its start, how precise it is and, for a range, its end.\n    attributes:\n      start:\n        range: IsoYearMonthOrDay\n        required: true\n        description: >-\n          The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.\n      precision:\n        range: SourcedDatePrecision\n        description: >-\n          How much of the date is known: year, month, day or range.\n      end:\n        range: IsoYearMonthOrDay\n        description: >-\n          The end of a range of dates, written as the start is.\n"
+    },
+    "FatesListFateDetail": {
+      "description": "Where or when one of the person's own fate statements, or the death event it names, places the fate.",
+      "fields": [
+        {
+          "description": "The date, as the record holds it structured; its printed words are never carried.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "date",
+          "range": "FatesListDate",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/FatesListDate"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The date, as the record holds it structured; its printed words are never carried."
+          }
+        },
+        {
+          "description": "The kind of statement: death, survival or deportation.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "kind",
+          "range": "FateDetailKind",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/FateDetailKind",
+            "description": "The kind of statement: death, survival or deportation."
+          }
+        },
+        {
+          "description": "The place's id in the shared record.",
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "rico:PlaceRelation"
+            }
+          ],
+          "multivalued": false,
+          "name": "place_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The place's id in the shared record.",
+            "pattern": "^location-[A-Za-z0-9_-]+$",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The place's name in the shared record.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "place_name",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The place's name in the shared record.",
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "kind": "close_mappings",
+          "term": "rico:Event"
+        }
+      ],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesListFateDetail:\n    close_mappings:\n      - rico:Event\n    description: >-\n      Where or when one of the person's own fate statements, or the death event it names,\n      places the fate.\n    attributes:\n      kind:\n        range: FateDetailKind\n        required: true\n        description: >-\n          The kind of statement: death, survival or deportation.\n      place_id:\n        pattern: '^location-[A-Za-z0-9_-]+$'\n        related_mappings:\n          - rico:PlaceRelation\n        description: >-\n          The place's id in the shared record.\n      place_name:\n        range: NonBlankText\n        description: >-\n          The place's name in the shared record.\n      date:\n        range: FatesListDate\n        inlined: true\n        description: >-\n          The date, as the record holds it structured; its printed words are never carried.\n    rules:\n      - description: >-\n          A fate detail places the fate, dates it, or both: one without a place has a date.\n        preconditions:\n          slot_conditions:\n            place_id:\n              value_presence: ABSENT\n        postconditions:\n          slot_conditions:\n            date:\n              required: true\n"
+    },
+    "FatesListOutsideRecord": {
+      "description": "A record an archive holds about the person: the archive, the database it is in, the record's type and id as the archive gives them, and its own address where the record has one.",
+      "fields": [
+        {
+          "description": "The archive's name, as the shared record's holder gives it.",
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "rico:hasOrHadHolder"
+            }
+          ],
+          "multivalued": false,
+          "name": "archive",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The archive's name, as the shared record's holder gives it.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The database's title, as the shared record's source gives it.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "collection",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The database's title, as the shared record's source gives it.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The archive's id for the record.",
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "rico:hasOrHadIdentifier"
+            }
+          ],
+          "multivalued": false,
+          "name": "record_id",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The archive's id for the record.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The record's type as the archive names it, from the record's citations, such as Page of Testimony; absent where they name none.",
+          "mappings": [
+            {
+              "kind": "related_mappings",
+              "term": "rico:hasDocumentaryFormType"
+            }
+          ],
+          "multivalued": false,
+          "name": "record_type",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The record's type as the archive names it, from the record's citations, such as Page of Testimony; absent where they name none.",
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The archive's database as the shared record's source id, such as yad-vashem.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "source_id",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The archive's database as the shared record's source id, such as yad-vashem.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The record's own address at the archive, never a scan or file address; absent where the record has none.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "url",
+          "range": "ArchiveAddress",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The record's own address at the archive, never a scan or file address; absent where the record has none.",
+            "pattern": "^https://[^\\s/?#]+[^\\s]*$",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "kind": "close_mappings",
+          "term": "rico:Record"
+        }
+      ],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesListOutsideRecord:\n    close_mappings:\n      - rico:Record\n    description: >-\n      A record an archive holds about the person: the archive, the database it is in, the\n      record's type and id as the archive gives them, and its own address where the record has\n      one.\n    attributes:\n      source_id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The archive's database as the shared record's source id, such as yad-vashem.\n      archive:\n        range: NonBlankText\n        required: true\n        related_mappings:\n          - rico:hasOrHadHolder\n        description: >-\n          The archive's name, as the shared record's holder gives it.\n      collection:\n        range: NonBlankText\n        required: true\n        description: >-\n          The database's title, as the shared record's source gives it.\n      record_type:\n        range: NonBlankText\n        related_mappings:\n          - rico:hasDocumentaryFormType\n        description: >-\n          The record's type as the archive names it, from the record's citations, such as Page\n          of Testimony; absent where they name none.\n      record_id:\n        range: NonBlankText\n        required: true\n        related_mappings:\n          - rico:hasOrHadIdentifier\n        description: >-\n          The archive's id for the record.\n      url:\n        range: ArchiveAddress\n        description: >-\n          The record's own address at the archive, never a scan or file address; absent where\n          the record has none.\n"
+    },
+    "FatesListPerson": {
+      "description": "One person on the list: who, the fate, where the paper first prints them, where and when the fate is placed, the archives' records about them and how their age is known.",
+      "fields": [
+        {
+          "description": "How the person's age is known; absent where the record gives no age.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "age",
+          "range": "FatesListAge",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/FatesListAge"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "How the person's age is known; absent where the record gives no age."
+          }
+        },
+        {
+          "description": "How sure the fate is: confirmed or probable.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "confidence",
+          "range": "FatesListConfidence",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/FatesListConfidence",
+            "description": "How sure the fate is: confirmed or probable."
+          }
+        },
+        {
+          "description": "Where and when the person's own death, survival and deportation statements place the fate, as the record holds them structured.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "fate_details",
+          "range": "FatesListFateDetail",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "Where and when the person's own death, survival and deportation statements place the fate, as the record holds them structured.",
+            "items": {
+              "$ref": "#/$defs/FatesListFateDetail"
+            },
+            "minItems": 1,
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The earliest published piece that prints the person.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_mention"
+            }
+          ],
+          "multivalued": false,
+          "name": "first_mention",
+          "range": "FatesListPiece",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/FatesListPiece",
+            "description": "The earliest published piece that prints the person."
+          }
+        },
+        {
+          "description": "The person's name as the site shows it.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "name",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The person's name as the site shows it.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The record's fate: perished or survived.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "outcome",
+          "range": "FatesListOutcome",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/FatesListOutcome",
+            "description": "The record's fate: perished or survived."
+          }
+        },
+        {
+          "description": "The archives' records about the person that the record cites.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "outside_records",
+          "range": "FatesListOutsideRecord",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "The archives' records about the person that the record cites.",
+            "items": {
+              "$ref": "#/$defs/FatesListOutsideRecord"
+            },
+            "minItems": 1,
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The person's id in the shared record; the site's person page has this address.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "person_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The person's id in the shared record; the site's person page has this address.",
+            "pattern": "^person-[A-Za-z0-9_-]+$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The person's name in Yiddish as the paper prints it, where the record has it.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "printed_name",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The person's name in Yiddish as the paper prints it, where the record has it.",
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "kind": "close_mappings",
+          "term": "ehri:Person"
+        }
+      ],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesListPerson:\n    close_mappings:\n      - ehri:Person\n    description: >-\n      One person on the list: who, the fate, where the paper first prints them, where and when\n      the fate is placed, the archives' records about them and how their age is known.\n    attributes:\n      person_id:\n        required: true\n        pattern: '^person-[A-Za-z0-9_-]+$'\n        description: >-\n          The person's id in the shared record; the site's person page has this address.\n      name:\n        range: NonBlankText\n        required: true\n        description: >-\n          The person's name as the site shows it.\n      printed_name:\n        range: NonBlankText\n        description: >-\n          The person's name in Yiddish as the paper prints it, where the record has it.\n      outcome:\n        range: FatesListOutcome\n        required: true\n        description: >-\n          The record's fate: perished or survived.\n      confidence:\n        range: FatesListConfidence\n        required: true\n        description: >-\n          How sure the fate is: confirmed or probable.\n      first_mention:\n        range: FatesListPiece\n        inlined: true\n        required: true\n        slot_uri: pc:site_mention\n        description: >-\n          The earliest published piece that prints the person.\n      fate_details:\n        range: FatesListFateDetail\n        multivalued: true\n        inlined_as_list: true\n        minimum_cardinality: 1\n        description: >-\n          Where and when the person's own death, survival and deportation statements place the\n          fate, as the record holds them structured.\n      outside_records:\n        range: FatesListOutsideRecord\n        multivalued: true\n        inlined_as_list: true\n        minimum_cardinality: 1\n        description: >-\n          The archives' records about the person that the record cites.\n      age:\n        range: FatesListAge\n        inlined: true\n        description: >-\n          How the person's age is known; absent where the record gives no age.\n"
+    },
+    "FatesListPiece": {
+      "description": "A published piece of an edition of the paper.",
+      "fields": [
+        {
+          "description": "The piece's id, such as cu-1938-12-16-i0105.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "content_item_id",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The piece's id, such as cu-1938-12-16-i0105.",
+            "pattern": "^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The edition's day, written YYYY-MM-DD.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "edition_date",
+          "range": "IsoDay",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The edition's day, written YYYY-MM-DD.",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/fates_list.yaml",
+      "yaml": "  FatesListPiece:\n    description: >-\n      A published piece of an edition of the paper.\n    attributes:\n      edition_date:\n        range: IsoDay\n        required: true\n        description: >-\n          The edition's day, written YYYY-MM-DD.\n      content_item_id:\n        required: true\n        pattern: '^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$'\n        description: >-\n          The piece's id, such as cu-1938-12-16-i0105.\n"
     },
     "HistoricalEvent": {
       "description": "An event in the world outside the town, such as Kristallnacht, on a day or over a span of days.",
@@ -9009,6 +10004,46 @@
         }
       ]
     },
+    "AgeKnownBy": {
+      "description": "How a person's age is known.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The person's own records give one year of birth.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fates_list_age_birth_year"
+            }
+          ],
+          "value": "birth_year"
+        },
+        {
+          "description": "The paper announced the person's birth: the person is the baby of a birth the paper printed.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fates_list_age_birth_announced"
+            }
+          ],
+          "value": "birth_announced"
+        },
+        {
+          "description": "The person's own records give years of birth that disagree, so the age is not known.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fates_list_age_birth_years_disagree"
+            }
+          ],
+          "value": "birth_years_disagree"
+        }
+      ]
+    },
+    "ArchiveAddress": {
+      "description": "A record's address at its archive: it begins https:// and holds no white space. A pattern alone, as the twins' address checks say it, without LinkML's uri format.",
+      "mappings": []
+    },
     "AuthorshipKind": {
       "description": "Whether a person or a program wrote a supplied title or a translation.",
       "mappings": [],
@@ -9024,6 +10059,10 @@
           "value": "model"
         }
       ]
+    },
+    "BirthYear": {
+      "description": "A year of birth, from 1800 to 2100.",
+      "mappings": []
     },
     "CitationRemarkKinds": {
       "description": "Citation remark kinds: the values of citation_remark_kinds in vocabulary/sourced-entities.json, version 1.3.0.",
@@ -9959,6 +10998,42 @@
         }
       ]
     },
+    "FateDetailKind": {
+      "description": "The kind of statement a fate detail comes from: a death, a survival or a deportation.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The person's death, or the death event it names.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fates_list_death"
+            }
+          ],
+          "value": "death"
+        },
+        {
+          "description": "Evidence that the person was alive at a time and place.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_survival"
+            }
+          ],
+          "value": "survival"
+        },
+        {
+          "description": "The person's forced removal.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fact_types_deportation"
+            }
+          ],
+          "value": "deportation"
+        }
+      ]
+    },
     "FateOutcomes": {
       "description": "Fate outcomes: the values of fate_outcomes in vocabulary/sourced-entities.json, version 1.3.0.",
       "mappings": [],
@@ -10012,6 +11087,58 @@
             }
           ],
           "value": "not_applicable"
+        }
+      ]
+    },
+    "FatesListConfidence": {
+      "description": "How sure the fate is: the shared record's confidences confirmed and probable.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The evidence establishes the fate.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:confidence_confirmed"
+            }
+          ],
+          "value": "confirmed"
+        },
+        {
+          "description": "The evidence supports the fate with remaining uncertainty.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:confidence_probable"
+            }
+          ],
+          "value": "probable"
+        }
+      ]
+    },
+    "FatesListOutcome": {
+      "description": "The fates the list holds: the shared record's fate outcomes perished and survived.",
+      "mappings": [],
+      "values": [
+        {
+          "description": "The person perished, as the shared record's fate says.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_perished"
+            }
+          ],
+          "value": "perished"
+        },
+        {
+          "description": "The person survived, as the shared record's fate says.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:fate_outcomes_survived"
+            }
+          ],
+          "value": "survived"
         }
       ]
     },

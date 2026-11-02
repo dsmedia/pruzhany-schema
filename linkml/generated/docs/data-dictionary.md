@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `6c6b296bb22cc49d5bb648c86950b082b1e1312213ec7630b4dc562393b02b25`.
+Definition fingerprint: `9e936981fafad9e6ec1fb4cedb79199c205caeac97171ccf66ee0a2867ec3d97`.
 
 ## What the Pruzhany issue documents share
 
@@ -1232,6 +1232,158 @@ Meaning: No direct mapping recorded.
 
 Source: `linkml/schema/shared.yaml`.
 
+## The fates list of the Pruzhany record
+
+### FatesList
+
+The fates list: its people, its counts and its notes.
+
+Meaning: pc:fates_list (class uri).
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `counts` | The list's counts, so that a page never counts for itself. | FatesListCounts | Yes | No direct mapping recorded |
+| `notes` | What the counts count, in plain English, the people with no age among them. | list of NonBlankText | Yes | No direct mapping recorded |
+| `people` | Everyone printed in the paper whose fate the record knows, by name as shown. | list of FatesListPerson | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
+### FatesListAge
+
+How a person's age is known, and whether it marks a child.
+
+Meaning: pc:fates_list_age (class uri).
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `announced` | The earliest published piece that announced the person's birth. | FatesListPiece | No | No direct mapping recorded |
+| `birth_year` | The one year of birth the person's own records give. | BirthYear | No | No direct mapping recorded |
+| `birth_years` | The years of birth that disagree, in order. | list of BirthYear; minimum items: 2 | No | No direct mapping recorded |
+| `child` | True for a child: one year of birth of 1925 or later, or a birth the paper announced. | boolean | Yes | pc:fates_list_child (slot uri) |
+| `fact_ids` | The shared record's birth statements that give the year. | list of NonBlankText; minimum items: 1 | No | No direct mapping recorded |
+| `known_by` | How the age is known: one year of birth, a birth the paper announced, or years that disagree. | AgeKnownBy | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
+### FatesListArchiveCount
+
+How many people an archive's database names, and how many of them with an address.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `archive` | The archive's name. | NonBlankText | Yes | No direct mapping recorded |
+| `people` | The people its records name. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `people_with_address` | The people with at least one of its records at the record's own address. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `source_id` | The database as the shared record's source id. | NonBlankText | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
+### FatesListCounts
+
+The list's counts.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `birth_year_known` | The people whose own records give one year of birth, children or not. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `birth_years_disagree` | The people whose own records give years of birth that disagree. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `children` | The people marked as children. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `children_by_announcement` | The children marked because the paper announced their birth. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `children_by_birth_year` | The children marked by one year of birth of 1925 or later. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `no_age` | The people with no age in the record; they are not marked as children. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `outside_records` | For each archive's database, how many people its records name. | list of FatesListArchiveCount | Yes | No direct mapping recorded |
+| `people` | The people on the list. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `perished_confirmed` | The people who perished. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `perished_probable` | The people who probably perished. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `survived_confirmed` | The people who survived. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `survived_probable` | The people who probably survived. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `with_date` | The people whose fate the record dates. | NonNegativeInteger | Yes | No direct mapping recorded |
+| `with_place` | The people whose fate the record places somewhere. | NonNegativeInteger | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
+### FatesListDate
+
+A normalized date: its start, how precise it is and, for a range, its end.
+
+Meaning: rico:Date (class uri).
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `end` | The end of a range of dates, written as the start is. | IsoYearMonthOrDay | No | No direct mapping recorded |
+| `precision` | How much of the date is known: year, month, day or range. | SourcedDatePrecision | No | No direct mapping recorded |
+| `start` | The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD. | IsoYearMonthOrDay | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
+### FatesListFateDetail
+
+Where or when one of the person's own fate statements, or the death event it names, places the fate.
+
+Meaning: rico:Event (close mappings).
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `date` | The date, as the record holds it structured; its printed words are never carried. | FatesListDate | No | No direct mapping recorded |
+| `kind` | The kind of statement: death, survival or deportation. | FateDetailKind | Yes | No direct mapping recorded |
+| `place_id` | The place's id in the shared record. | string; pattern: ^location-[A-Za-z0-9_-]+$ | No | rico:PlaceRelation (related mappings) |
+| `place_name` | The place's name in the shared record. | NonBlankText | No | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
+### FatesListOutsideRecord
+
+A record an archive holds about the person: the archive, the database it is in, the record's type and id as the archive gives them, and its own address where the record has one.
+
+Meaning: rico:Record (close mappings).
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `archive` | The archive's name, as the shared record's holder gives it. | NonBlankText | Yes | rico:hasOrHadHolder (related mappings) |
+| `collection` | The database's title, as the shared record's source gives it. | NonBlankText | Yes | No direct mapping recorded |
+| `record_id` | The archive's id for the record. | NonBlankText | Yes | rico:hasOrHadIdentifier (related mappings) |
+| `record_type` | The record's type as the archive names it, from the record's citations, such as Page of Testimony; absent where they name none. | NonBlankText | No | rico:hasDocumentaryFormType (related mappings) |
+| `source_id` | The archive's database as the shared record's source id, such as yad-vashem. | NonBlankText | Yes | No direct mapping recorded |
+| `url` | The record's own address at the archive, never a scan or file address; absent where the record has none. | ArchiveAddress | No | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
+### FatesListPerson
+
+One person on the list: who, the fate, where the paper first prints them, where and when the fate is placed, the archives' records about them and how their age is known.
+
+Meaning: ehri:Person (close mappings).
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `age` | How the person's age is known; absent where the record gives no age. | FatesListAge | No | No direct mapping recorded |
+| `confidence` | How sure the fate is: confirmed or probable. | FatesListConfidence | Yes | No direct mapping recorded |
+| `fate_details` | Where and when the person's own death, survival and deportation statements place the fate, as the record holds them structured. | list of FatesListFateDetail; minimum items: 1 | No | No direct mapping recorded |
+| `first_mention` | The earliest published piece that prints the person. | FatesListPiece | Yes | pc:site_mention (slot uri) |
+| `name` | The person's name as the site shows it. | NonBlankText | Yes | No direct mapping recorded |
+| `outcome` | The record's fate: perished or survived. | FatesListOutcome | Yes | No direct mapping recorded |
+| `outside_records` | The archives' records about the person that the record cites. | list of FatesListOutsideRecord; minimum items: 1 | No | No direct mapping recorded |
+| `person_id` | The person's id in the shared record; the site's person page has this address. | string; pattern: ^person-[A-Za-z0-9_-]+$ | Yes | No direct mapping recorded |
+| `printed_name` | The person's name in Yiddish as the paper prints it, where the record has it. | NonBlankText | No | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
+### FatesListPiece
+
+A published piece of an edition of the paper.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `content_item_id` | The piece's id, such as cu-1938-12-16-i0105. | string; pattern: ^cu-\d{4}-\d{2}-\d{2}-i\d{4}$ | Yes | No direct mapping recorded |
+| `edition_date` | The edition's day, written YYYY-MM-DD. | IsoDay | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/fates_list.yaml`.
+
 ## The physical page in Impresso's stored format
 
 ### PhysicalLine
@@ -2405,6 +2557,56 @@ The form a fact is kept in: a structured statement, retained prose, or an image 
 | `structured` | A structured statement of a released type. | No direct mapping recorded |
 | `prose` | Retained prose, kept as other with a proposed type until it is reviewed. | No direct mapping recorded |
 | `image` | An image path, kept as other with a proposed type. | No direct mapping recorded |
+
+### ArchiveAddress
+
+A record's address at its archive: it begins https:// and holds no white space. A pattern alone, as the twins' address checks say it, without LinkML's uri format.
+
+string; pattern: ^https://[^\s/?#]+[^\s]*$
+
+### BirthYear
+
+A year of birth, from 1800 to 2100.
+
+integer; minimum: 1800; maximum: 2100
+
+### AgeKnownBy
+
+How a person's age is known.
+
+| Value | Meaning | Standard mapping |
+| --- | --- | --- |
+| `birth_year` | The person's own records give one year of birth. | pc:fates_list_age_birth_year (meaning) |
+| `birth_announced` | The paper announced the person's birth: the person is the baby of a birth the paper printed. | pc:fates_list_age_birth_announced (meaning) |
+| `birth_years_disagree` | The person's own records give years of birth that disagree, so the age is not known. | pc:fates_list_age_birth_years_disagree (meaning) |
+
+### FateDetailKind
+
+The kind of statement a fate detail comes from: a death, a survival or a deportation.
+
+| Value | Meaning | Standard mapping |
+| --- | --- | --- |
+| `death` | The person's death, or the death event it names. | pc:fates_list_death (meaning) |
+| `survival` | Evidence that the person was alive at a time and place. | pc:fact_types_survival (meaning) |
+| `deportation` | The person's forced removal. | pc:fact_types_deportation (meaning) |
+
+### FatesListConfidence
+
+How sure the fate is: the shared record's confidences confirmed and probable.
+
+| Value | Meaning | Standard mapping |
+| --- | --- | --- |
+| `confirmed` | The evidence establishes the fate. | pc:confidence_confirmed (meaning) |
+| `probable` | The evidence supports the fate with remaining uncertainty. | pc:confidence_probable (meaning) |
+
+### FatesListOutcome
+
+The fates the list holds: the shared record's fate outcomes perished and survived.
+
+| Value | Meaning | Standard mapping |
+| --- | --- | --- |
+| `perished` | The person perished, as the shared record's fate says. | pc:fate_outcomes_perished (meaning) |
+| `survived` | The person survived, as the shared record's fate says. | pc:fate_outcomes_survived (meaning) |
 
 ### ExchangeCode
 

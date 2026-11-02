@@ -1,5 +1,6 @@
-"""The four issue documents and the editions catalog in LinkML (linkml/schema/site_common.yaml,
-pages.yaml, content_items.yaml, mentions.yaml, life_events.yaml and editions.yaml).
+"""The four issue documents, the editions catalog and the fates list in LinkML
+(linkml/schema/site_common.yaml, pages.yaml, content_items.yaml, mentions.yaml, life_events.yaml,
+editions.yaml and fates_list.yaml).
 
 Checked here: each document is a module of the manifest with its top class; the classes are the
 twins' classes by name; every mapping names a term of the pinned standards or a declared local
@@ -39,6 +40,8 @@ DOCUMENTS = {
                     'zod/site-issue.schema.ts', 'IssueLifeEventsDataSchema'),
     # pruzhany-steps keeps no export of the catalog; it is made here as export_zod.ts makes the others.
     'editions': ('EditionsCatalog', None, 'zod/editions.schema.ts', 'EditionsCatalogSchema'),
+    # The fates list is made here the same way, until pruzhany-steps keeps its export.
+    'fates_list': ('FatesList', None, 'zod/fates-list.schema.ts', 'FatesListSchema'),
 }
 MODULES = ['site_common', *DOCUMENTS]
 # Stage two includes the catalog's generated Python models.
@@ -181,6 +184,12 @@ LEAF = ('type', 'pattern', 'enum', 'const', 'minimum', 'maximum', 'exclusiveMini
 GUARD = '(?![\\s\\S])'
 
 
+def unescaped(pattern):
+    """A regular expression as the definition writes it: a Zod export gives RegExp.source, which
+    escapes each '/' as '\\/' (ECMAScript EscapeRegExpPattern); the escape matches the same text."""
+    return pattern.replace('\\/', '/')
+
+
 def shape_differences(old, new, old_root, new_root, pointer='', out=None):
     """Every difference of the generated schema `new` from the export `old`, as (pointer, kind, detail).
 
@@ -225,6 +234,8 @@ def shape_differences(old, new, old_root, new_root, pointer='', out=None):
     if (old_leaf.get('minLength') == old_leaf.get('maxLength') == 64 and 'pattern' in old_leaf
             and new_leaf.get('pattern') == old_leaf['pattern'] + GUARD):
         del old_leaf['minLength'], old_leaf['maxLength'], old_leaf['pattern'], new_leaf['pattern']
+    if 'pattern' in old_leaf:
+        old_leaf['pattern'] = unescaped(old_leaf['pattern'])
     if old_leaf != new_leaf:
         out.append((pointer, 'leaf', json.dumps([old_leaf, new_leaf])))
     return out
@@ -350,9 +361,10 @@ class Mappings(unittest.TestCase):
                     counts['impresso'] += 'impresso' in element.annotations
                 counts['class_uri'] += bool(cls.class_uri)
                 counts['slot_uri'] += sum(bool(slot.slot_uri) for slot in (cls.attributes or {}).values())
-        # Issue #56 adds one RiC-O language mapping and its Impresso lg correspondence.
-        self.assertEqual(counts, {'class_uri': 6, 'slot_uri': 14, 'exact_mappings': 9, 'close_mappings': 3,
-                                  'related_mappings': 3, 'impresso': 22})
+        # Issue #56 adds one RiC-O language mapping and its Impresso lg correspondence. The fates
+        # list adds three class URIs, two slot URIs, three close and four related mappings.
+        self.assertEqual(counts, {'class_uri': 9, 'slot_uri': 16, 'exact_mappings': 9, 'close_mappings': 6,
+                                  'related_mappings': 7, 'impresso': 22})
 
 
 class _scratch_schema:
@@ -378,7 +390,8 @@ class Patterns(unittest.TestCase):
     def test_every_pattern_is_one_the_exports_use(self):
         """Character for character: one the exports use, or a regular expression the Zod module writes
         (EnglishCheck's, which no document uses but through its two narrower checks)."""
-        patterns = {node['pattern'] for module in DOCUMENTS for node in _nodes(zod_export(module)) if 'pattern' in node}
+        patterns = {unescaped(node['pattern']) for module in DOCUMENTS for node in _nodes(zod_export(module))
+                    if 'pattern' in node}
         patterns |= set(re.findall(r'\.regex\(/(.+?)/\)', (ROOT / 'zod' / 'site-common.schema.ts').read_text(encoding='utf-8')))
         for module in MODULES:
             for name, cls in view(module).all_classes(imports=False).items():
@@ -530,6 +543,23 @@ PLANTED = {
         'an available date written otherwise': _set(('availableDates',), ['16.12.1938']),
         'a historical event without its description': _set(('historicalEvents', 0, 'description'), _DELETE),
         'no list of historical events': _set(('historicalEvents',), _DELETE),
+    },
+    'fates_list': {
+        'a fate the list does not hold': _set(('people', 0, 'outcome'), 'died_before'),
+        'a possible fate': _set(('people', 0, 'confidence'), 'possible'),
+        'an id that is not a person': _set(('people', 0, 'person_id'), 'org-example'),
+        'no first mention': _set(('people', 0, 'first_mention'), _DELETE),
+        'a piece id of the earlier project': _set(('people', 0, 'first_mention', 'content_item_id'), 'cu-5787'),
+        'a fate detail with neither place nor date': _set(('people', 0, 'fate_details', 1, 'date'), _DELETE),
+        'a date with its printed words': _set(('people', 0, 'fate_details', 0, 'date', 'printed'), '2/1943'),
+        'an address that is not https': _set(('people', 0, 'outside_records', 0, 'url'), 'http://archive.example.org/1'),
+        'an age by one year without the year': _set(('people', 0, 'age', 'birth_year'), _DELETE),
+        'an age by one year without its statements': _set(('people', 0, 'age', 'fact_ids'), _DELETE),
+        'a year of birth before 1800': _set(('people', 0, 'age', 'birth_year'), 1700),
+        'no counts': _set(('counts',), _DELETE),
+        'a count below nought': _set(('counts', 'no_age'), -1),
+        'a blank note': _set(('notes', 0), ' '),
+        'a key no shape has': _set(('generated_on',), '2026-11-02'),
     },
 }
 
