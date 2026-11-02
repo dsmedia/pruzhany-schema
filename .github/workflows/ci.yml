@@ -41,4 +41,5 @@ jobs:
           path: standards/.cache/iiif-presentation-3-3891f47/
           key: ${{ runner.os }}-iiif-schema-${{ hashFiles('standards/iiif-presentation-3-3891f47/pin.json') }}
 
-      - run: bin/verify zod pydantic contract pilot standards vocabulary entities linkml
+      # The reuse step provisions Python 3.11 and its hash-locked packages with uv.
+      - run: bin/verify zod pydantic contract pilot standards vocabulary entities linkml reuse

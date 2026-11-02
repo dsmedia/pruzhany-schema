@@ -74,11 +74,12 @@ Vitest, tsc and Prettier use Node; Bun alone does not supply that prerequisite. 
 The `zod` step also checks the changelog form and README command extraction,
 including planted failures, in `tests/documentation/`.
 
-`bin/verify` is the one verify entry point, and CI runs all nine steps (`gitleaks.yml` runs `scan`, `ci.yml` the rest): history secret scanning; Zod tests, strict typechecking and formatting; Pydantic model loading and JSON Schema emission; the cross-language contract; the isolated pilot; standards alignment; released vocabulary and generation checks; sourced-entity parity in the current `SiteArchive` carrier, including its exported JSON Schema; and the LinkML definition, in a locked environment of its own. The toolchain is pinned in `package.json`/`bun.lock` to pruzhany-svelte's versions. The Zod↔Pydantic lockstep check moved here from pruzhany-press on 2026-10-22.
+`bin/verify` is the one verify entry point, and CI runs all ten steps (`gitleaks.yml` runs `scan`, `ci.yml` the rest): history secret scanning; Zod tests, strict typechecking and formatting; Pydantic model loading and JSON Schema emission; the cross-language contract; the isolated pilot; standards alignment; released vocabulary and generation checks; sourced-entity parity in the current `SiteArchive` carrier, including its exported JSON Schema; the LinkML definition, in a locked environment of its own; and REUSE copyright and licence coverage, in its own hash-locked environment. The toolchain is pinned in `package.json`/`bun.lock` to pruzhany-svelte's versions. The Zod↔Pydantic lockstep check moved here from pruzhany-press on 2026-10-22.
 
 ## License
 
-TBD.
+Project code and supporting documentation use the [MIT licence](LICENSE); project data uses
+[CC BY 4.0](LICENSE-DATA). [NOTICE](NOTICE) describes the paths and the pinned standards' own licences.
 
 The [2026-04-25 cross-edition design](docs/design/2026-04-25-cross-edition-entities.md) is historical; [ADR 0001](docs/adr/0001-which-standard-governs-what.md) settles identity across issues.
 The [2026-10-19 people, facts and sources proposal](docs/design/2026-10-19-people-facts-and-sources.md) includes the decisions and changes of 20 October.

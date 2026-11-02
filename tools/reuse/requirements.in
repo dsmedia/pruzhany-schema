@@ -1,0 +1,6 @@
+# REUSE 6.2.0 (released 2025-10-27; more than two weeks old on 2026-11-02).
+# PyPI release page and reuse-lint CLI, read 2 November 2026:
+# https://pypi.org/project/reuse/6.2.0/
+# https://reuse.readthedocs.io/en/v6.2.0/man/reuse-lint.html
+# Compile with the command at the top of requirements.lock; never edit the lock.
+reuse==6.2.0

@@ -1,0 +1,62 @@
+Copyright (c) 2026 the Pruzhany project contributors.
+
+Project-authored files are classified by purpose, not just extension:
+- MIT (LICENSE): source definitions in linkml/schema/ (except generated
+  vocabulary.yaml), Zod/Python code including generated code, tests, generators,
+  tooling/configuration, and supporting Markdown documentation.
+- CC-BY-4.0 (LICENSE-DATA): vocabulary/*.json, vocabulary/*.ttl and released
+  snapshots; conformance/*.json; JSON test fixtures and the JSON/YAML data in
+  linkml/tests/fixtures/;
+  linkml/generated/ (JSON Schemas, RDF and reference documentation), generated
+  linkml/schema/vocabulary.yaml, linkml/trials/*.json, docs/design/*.json;
+  the pilot's input/, generated/, JSON and TTL data; standards/media-rights.json
+  (a project-assembled URI list).
+The distinction is executable definitions/implementation versus reusable data
+and exported artifacts. REUSE.toml records the exact paths and upstream exceptions.
+This repository contains no page pictures; the Library's picture permission does
+not apply here.
+
+Pinned standards retain their own licences, not the project's defaults.
+All upstream pages below were read on 2 November 2026; original attribution,
+source URLs and hashes remain in the pins. Project-written pin.json files and
+pin READMEs use MIT. Extracted lists are adaptations; vendored schemas/shapes
+are unchanged.
+
+- standards/ehri-0.1.1.json and ehri-0.2.0.json: CC-BY-4.0, EHRI ontology
+  contributors / EHRI-ERIC. Licence and original attribution in each ontology:
+  https://github.com/EHRI/ehri-kg-ontology/blob/5d42d2505661bdfb04b3634b27c7b9e73392fe07/ontology/ehri.owl
+  https://github.com/EHRI/ehri-kg-ontology/blob/4b275a7d8066b7084dda1e76a16ec0cc7a0a5455/ontology/ehri.owl
+- standards/rico-1.0.2.json, rico-1.1.json and rico-1.1-axioms.json:
+  CC-BY-4.0, Copyright 2019-, International Council on Archives (ICA),
+  created by ICA EGAD. Licence and attribution in the source ontology files:
+  https://github.com/ICA-EGAD/RiC-O/blob/06912e1e20343f2e88e51f1b55fa232cb30b6b5b/ontology/previous-versions/RiC-O_v-1-0-2_release/RiC-O_1-0-2.rdf
+  https://github.com/ICA-EGAD/RiC-O/blob/06912e1e20343f2e88e51f1b55fa232cb30b6b5b/ontology/current-version/RiC-O_1-1.rdf
+- standards/ehri-{people,cb,holdings}-1.1-1c2325f9/: SHACL/ShEx files use
+  EUPL-1.2, EHRI/ehri-kg-mapping contributors; each retains LICENSE.md:
+  https://github.com/EHRI/ehri-kg-mapping/blob/1c2325f9d2267a8a0c639cd041be54ec9a73e517/LICENSE.md
+- standards/ead3-1.1.1-c3576974/ead3.xsd: CC0-1.0, SAA Technical Subcommittee
+  for Encoded Archival Standards; the pinned LICENSE is retained:
+  https://github.com/SAA-SDT/EAD3/blob/master/LICENSE
+  https://www.loc.gov/ead/ead3schema.html
+- standards/impresso-329323c/*.schema.json: AGPL-3.0-or-later, Copyright (C)
+  2026 The impresso team; the pinned LICENSE is retained:
+  https://github.com/impresso/impresso-schemas/blob/329323c73712c33110e28531726847210617c418/LICENSE
+  linkml/tests/fixtures/physical/IMPRESSO-LICENSE is another copy of that licence
+  text, under its own opening verbatim-copy permission (LicenseRef-FSF-Verbatim).
+- standards/iiif-presentation-3-3891f47/: upstream licence not found in the
+  pinned README or Python package metadata of IIIF/presentation-validator:
+  https://github.com/IIIF/presentation-validator/blob/3891f47ce7dbaa896027a5fab5f63a109de4bd70/README.md
+  https://github.com/IIIF/presentation-validator/blob/3891f47ce7dbaa896027a5fab5f63a109de4bd70/pyproject.toml
+  Only project-written provenance/README files are distributed here. The schema
+  is fetched into an ignored cache; no redistribution licence is inferred from
+  the IIIF specification's separate terms.
+
+Licence texts read 2 November 2026:
+- Open Source Initiative, The MIT License (SPDX MIT):
+  https://opensource.org/license/mit
+- Creative Commons, Attribution 4.0 International, plain-text legal code
+  (verbatim in LICENSE-DATA and LICENSES/CC-BY-4.0.txt):
+  https://creativecommons.org/licenses/by/4.0/legalcode.txt
+- REUSE Specification, current version 3.3 (2024-11-14), including its licence
+  file exemptions and REUSE.toml format 1:
+  https://reuse.software/spec-3.3/
