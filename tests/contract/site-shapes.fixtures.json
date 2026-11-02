@@ -8892,6 +8892,849 @@
 					"value": "yi-Latn"
 				}
 			]
+		},
+		{
+			"name": "issue papers differ",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["pages", "pages", 0, "newspaper"],
+					"value": "fictional-second-paper"
+				}
+			]
+		},
+		{
+			"name": "two papers on one day",
+			"model": "SiteArchive",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["issues"],
+					"value": [
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "page-2000-01-01-1",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "blk-2000-01-01-p1-r004",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "blk-2000-01-01-p1-r001",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "cu-2000-01-01-i0001"
+											}
+										],
+										"newspaper": "fictional-first-paper"
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "cu-2000-01-01-i0001",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "cu-2000-01-01-i0001",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "cu-2000-01-01-i0001",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
+											}
+										],
+										"location_ids": ["fictional-place"],
+										"organization_ids": ["fictional-organization"],
+										"cross_references": [],
+										"event_id": "fictional-event",
+										"newspaper": "fictional-first-paper"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["cu-2000-01-01-i0001"],
+										"heading_blocks": [
+											{
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r004"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "fictional-person",
+										"content_item_id": "cu-2000-01-01-i0001",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										],
+										"address_grain": "words"
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "fictional-event",
+										"content_items": [
+											{
+												"content_item_id": "cu-2000-01-01-i0001",
+												"role": "mention"
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "page-abcd-2000-01-01-1",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "blk-abcd-2000-01-01-p1-r004",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "blk-abcd-2000-01-01-p1-r001",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "cu-abcd-2000-01-01-i0001"
+											}
+										],
+										"newspaper": "fictional-second-paper"
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "cu-abcd-2000-01-01-i0001",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "cu-abcd-2000-01-01-i0001",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "cu-abcd-2000-01-01-i0001",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "page-abcd-2000-01-01-1",
+												"block_ids": ["blk-abcd-2000-01-01-p1-r001"]
+											}
+										],
+										"location_ids": ["fictional-place"],
+										"organization_ids": ["fictional-organization"],
+										"cross_references": [],
+										"event_id": "fictional-event",
+										"newspaper": "fictional-second-paper"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["cu-abcd-2000-01-01-i0001"],
+										"heading_blocks": [
+											{
+												"page_id": "page-abcd-2000-01-01-1",
+												"block_ids": ["blk-abcd-2000-01-01-p1-r004"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "fictional-person",
+										"content_item_id": "cu-abcd-2000-01-01-i0001",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										],
+										"address_grain": "words"
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "fictional-event",
+										"content_items": [
+											{
+												"content_item_id": "cu-abcd-2000-01-01-i0001",
+												"role": "mention"
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "one paper twice on one day",
+			"model": "SiteArchive",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["issues"],
+					"value": [
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "page-2000-01-01-1",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "blk-2000-01-01-p1-r004",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "blk-2000-01-01-p1-r001",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "cu-2000-01-01-i0001"
+											}
+										],
+										"newspaper": "fictional-first-paper"
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "cu-2000-01-01-i0001",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "cu-2000-01-01-i0001",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "cu-2000-01-01-i0001",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
+											}
+										],
+										"location_ids": ["fictional-place"],
+										"organization_ids": ["fictional-organization"],
+										"cross_references": [],
+										"event_id": "fictional-event",
+										"newspaper": "fictional-first-paper"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["cu-2000-01-01-i0001"],
+										"heading_blocks": [
+											{
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r004"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "fictional-person",
+										"content_item_id": "cu-2000-01-01-i0001",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										],
+										"address_grain": "words"
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "fictional-event",
+										"content_items": [
+											{
+												"content_item_id": "cu-2000-01-01-i0001",
+												"role": "mention"
+											}
+										]
+									}
+								]
+							}
+						},
+						{
+							"pages": {
+								"edition_date": "1938-01-01",
+								"pages": [
+									{
+										"id": "page-2000-01-01-1",
+										"issue_date": "1938-01-01",
+										"page_number": 1,
+										"image_uri": "fictional-page.png",
+										"dimensions": [200, 300],
+										"blocks": [
+											{
+												"id": "blk-2000-01-01-p1-r004",
+												"bbox": [10, 0, 100, 10],
+												"transcription": "Fictional notices",
+												"unit_id": null
+											},
+											{
+												"id": "blk-2000-01-01-p1-r001",
+												"bbox": [10, 20, 100, 30],
+												"transcription": "Fictional Person sends thanks.",
+												"unit_id": "cu-2000-01-01-i0001"
+											}
+										],
+										"newspaper": "fictional-first-paper"
+									}
+								]
+							},
+							"content_items": {
+								"issue_date": "1938-01-01",
+								"vocabulary_version": "0.1.0",
+								"content_items": [
+									{
+										"id": "cu-2000-01-01-i0001",
+										"type": "ad",
+										"subtype": "thanks",
+										"printed_title": {
+											"text": "Fictional Person sends thanks.",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 20, 100, 30],
+													"text": "Fictional Person sends thanks."
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Thanks from Fictional Person",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "cu-2000-01-01-i0001",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:title",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"subject_ids": ["community_affairs"],
+										"section_id": "fictional-section",
+										"full_text": "Fictional Person sends thanks.",
+										"translation": {
+											"text": "Fictional translated thanks.",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional Person sends thanks.",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 20, 100, 30],
+														"text": "Fictional Person sends thanks."
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											},
+											"checked_against": {
+												"reading_id": "cu-2000-01-01-i0001",
+												"reading_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+												"english_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+												"judgement_id": "corrections/english-choice/1900-01-05.json#J0001:text",
+												"judgement_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+												"attribution": {
+													"by": "Fictional checker",
+													"on": "2026-01-03",
+													"kind": "person"
+												}
+											}
+										},
+										"block_breaks": [],
+										"page_blocks": [
+											{
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r001"]
+											}
+										],
+										"location_ids": ["fictional-place"],
+										"organization_ids": ["fictional-organization"],
+										"cross_references": [],
+										"event_id": "fictional-event",
+										"newspaper": "fictional-first-paper"
+									}
+								],
+								"sections": [
+									{
+										"id": "fictional-section",
+										"printed_title": {
+											"text": "Fictional notices",
+											"addresses": [
+												{
+													"image_uri": "fictional-page.png",
+													"bbox": [10, 0, 100, 10],
+													"text": "Fictional notices"
+												}
+											]
+										},
+										"supplied_title": {
+											"text": "Public notices",
+											"language": "en",
+											"based_on": {
+												"source_text": "Fictional notices",
+												"addresses": [
+													{
+														"image_uri": "fictional-page.png",
+														"bbox": [10, 0, 100, 10],
+														"text": "Fictional notices"
+													}
+												]
+											},
+											"attribution": {
+												"by": "fictional writer",
+												"on": "2026-10-22",
+												"kind": "person"
+											}
+										},
+										"content_item_ids": ["cu-2000-01-01-i0001"],
+										"heading_blocks": [
+											{
+												"page_id": "page-2000-01-01-1",
+												"block_ids": ["blk-2000-01-01-p1-r004"]
+											}
+										]
+									}
+								]
+							},
+							"mentions": {
+								"issue_date": "1938-01-01",
+								"mentions": [
+									{
+										"id": "fictional-mention",
+										"person_id": "fictional-person",
+										"content_item_id": "cu-2000-01-01-i0001",
+										"printed_name": "Fictional Person",
+										"roles": ["signer", "donor"],
+										"addresses": [
+											{
+												"image_uri": "fictional-page.png",
+												"bbox": [10, 20, 100, 30],
+												"text": "Fictional Person sends thanks."
+											}
+										],
+										"address_grain": "words"
+									}
+								]
+							},
+							"life_events": {
+								"issue_date": "1938-01-01",
+								"life_events": [
+									{
+										"id": "fictional-event",
+										"content_items": [
+											{
+												"content_item_id": "cu-2000-01-01-i0001",
+												"role": "mention"
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			]
 		}
 	]
 }
