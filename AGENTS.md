@@ -24,8 +24,8 @@ file holds.
 ## Privacy and vocabulary
 
 - **During the build-out, this public repository and its issues hold no facts about real people.**
-  Notes, examples and evidence about real people go to pruzhany-steps; issues, design notes and tests here name the type,
-  the field and its mapping, with fictional examples. What is already here stays (steps decision 214).
+  Notes, examples and evidence about real people go to pruzhany-steps; issues, design notes and tests
+  here name the type, the field and its mapping, with fictional examples. What is already here stays (steps decision 214).
 - New vocabulary types need the owner's approval in batches, each with its mapping, in the
   [approval record](docs/vocabulary-approvals.md); their real examples stay in pruzhany-steps and are
   shown to the owner privately. Until approval a fact stays `other` with its `proposed_type`. A
