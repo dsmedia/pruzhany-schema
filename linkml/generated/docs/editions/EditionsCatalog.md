@@ -59,6 +59,17 @@ URI: [pc:EditionsCatalog](https://pruzhany.org/ns/sourced-entities#EditionsCatal
     
 
         
+      EditionsCatalog : newspapers
+        
+          
+    
+        
+        
+        EditionsCatalog --> "*" Newspaper : newspapers
+        click Newspaper href "../Newspaper/"
+    
+
+        
       
 ```
 
@@ -82,6 +93,7 @@ URI: [pc:EditionsCatalog](https://pruzhany.org/ns/sourced-entities#EditionsCatal
 | [holidays](holidays.md) | 1..* <br/> [Holiday](Holiday.md) | The Jewish holidays of the paper's years. | direct |
 | [historical_events](historical_events.md) | 1..* <br/> [HistoricalEvent](HistoricalEvent.md) | Events in the world outside the town that the calendar marks. | direct |
 | [available_dates](available_dates.md) | 1..* <br/> [IsoDay](IsoDay.md) | The dates of the editions whose pages are on the site. | direct |
+| [newspapers](newspapers.md) | * <br/> [Newspaper](Newspaper.md) | The papers these editions belong to, one entry per source-register id, with their default picture credits. When present, every edition's newspaper must name one of these ids. The runtime twins enforce id uniqueness and membership; LinkML's generated JSON Schema cannot compare values across these lists. | direct |
 
 
 
@@ -182,6 +194,20 @@ attributes:
     range: IsoDay
     required: true
     multivalued: true
+  newspapers:
+    name: newspapers
+    description: The papers these editions belong to, one entry per source-register
+      id, with their default picture credits. When present, every edition's newspaper
+      must name one of these ids. The runtime twins enforce id uniqueness and membership;
+      LinkML's generated JSON Schema cannot compare values across these lists.
+    from_schema: https://pruzhany.org/ns/editions
+    rank: 1000
+    slot_uri: pc:catalog_newspapers
+    domain_of:
+    - EditionsCatalog
+    range: Newspaper
+    multivalued: true
+    inlined_as_list: true
 tree_root: true
 
 ```
@@ -249,6 +275,22 @@ attributes:
     range: IsoDay
     required: true
     multivalued: true
+  newspapers:
+    name: newspapers
+    description: The papers these editions belong to, one entry per source-register
+      id, with their default picture credits. When present, every edition's newspaper
+      must name one of these ids. The runtime twins enforce id uniqueness and membership;
+      LinkML's generated JSON Schema cannot compare values across these lists.
+    from_schema: https://pruzhany.org/ns/editions
+    rank: 1000
+    slot_uri: pc:catalog_newspapers
+    owner: EditionsCatalog
+    domain_of:
+    - EditionsCatalog
+    range: Newspaper
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
 tree_root: true
 
 ```

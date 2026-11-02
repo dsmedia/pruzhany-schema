@@ -219,7 +219,6 @@
 				"event_id",
 				"language",
 				"summary",
-
 				"newspaper"
 			],
 			"validators": [
@@ -413,7 +412,16 @@
 				"strict": true,
 				"extra": "forbid"
 			},
-			"order": ["date", "hebrewDate", "hebrewMonth", "hebrewYear", "holiday", "newspaper", "key"],
+			"order": [
+				"date",
+				"hebrewDate",
+				"hebrewMonth",
+				"hebrewYear",
+				"holiday",
+				"newspaper",
+				"key",
+				"object_url"
+			],
 			"fields": {
 				"holiday": {
 					"exclude_none": true,
@@ -445,6 +453,9 @@
 							"path": []
 						}
 					]
+				},
+				"object_url": {
+					"exclude_none": true
 				}
 			},
 			"validators": [
@@ -462,7 +473,20 @@
 				"strict": true,
 				"extra": "forbid"
 			},
-			"order": ["availableDates", "editions", "historicalEvents", "holidays"]
+			"order": ["availableDates", "editions", "historicalEvents", "holidays", "newspapers"],
+			"validators": [
+				{
+					"name": "newspaper_references",
+					"module": "editions",
+					"function": "_EditionsCatalog__newspaper_references",
+					"mode": "after"
+				}
+			],
+			"fields": {
+				"newspapers": {
+					"exclude_none": true
+				}
+			}
 		},
 		"EnglishCheck": {
 			"module": "site_common",
@@ -1784,7 +1808,21 @@
 		"Page": {
 			"module": "page",
 			"config": {},
-			"order": ["id", "issue_date", "page_number", "image_uri", "dimensions", "blocks", "newspaper"]
+			"order": [
+				"id",
+				"issue_date",
+				"page_number",
+				"image_uri",
+				"dimensions",
+				"blocks",
+				"newspaper",
+				"picture_source"
+			],
+			"fields": {
+				"picture_source": {
+					"exclude_none": true
+				}
+			}
 		},
 		"PagesData": {
 			"module": "page",
@@ -3338,6 +3376,61 @@
 			"parent": "Translation",
 			"fields": {
 				"checked_against": {
+					"exclude_none": true
+				}
+			}
+		},
+		"PictureSource": {
+			"module": "picture_source",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["holder", "route", "shelf_mark", "url"],
+			"fields": {
+				"route": {
+					"exclude_none": true
+				},
+				"shelf_mark": {
+					"exclude_none": true
+				},
+				"url": {
+					"exclude_none": true
+				}
+			}
+		},
+		"Newspaper": {
+			"module": "editions",
+			"parent": "PictureSource",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"holder",
+				"route",
+				"shelf_mark",
+				"url",
+				"id",
+				"code",
+				"title",
+				"rights",
+				"rights_url"
+			],
+			"fields": {
+				"route": {
+					"exclude_none": true
+				},
+				"shelf_mark": {
+					"exclude_none": true
+				},
+				"url": {
+					"exclude_none": true
+				},
+				"rights": {
+					"exclude_none": true
+				},
+				"rights_url": {
 					"exclude_none": true
 				}
 			}

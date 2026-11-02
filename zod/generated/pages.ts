@@ -1,5 +1,6 @@
 // Generated from LinkML by linkml/generate.py (zod_generator.py). Do not edit.
 import { z } from 'zod/v4';
+import { PictureSourceShape } from './picture_source';
 
 const pattern1 = /^blk-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-p\d+-r\d{3}$(?![\s\S])/;
 const pattern2 = /^page-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-\d+$(?![\s\S])/;
@@ -22,6 +23,7 @@ export const PageShape = z.strictObject({
 	dimensions: z.array(z.number().int()).min(2).max(2),
 	blocks: z.array(BlockShape),
 	newspaper: z.string().regex(pattern3),
+	picture_source: PictureSourceShape.nullish(),
 });
 
 export const PagesDataShape = z.strictObject({

@@ -1,0 +1,56 @@
+# Shared picture-credit fields for editions.yaml and pages.yaml.
+id: https://pruzhany.org/ns/picture_source
+name: pruzhany_picture_source
+title: Where the page pictures come from
+description: >-
+  The holder, access route, shelf mark and descriptive link shared by a newspaper's
+  default credit and a page whose picture comes from elsewhere.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pc: https://pruzhany.org/ns/sourced-entities#
+  rico: https://www.ica.org/standards/RiC/ontology#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+default_prefix: pc
+default_range: string
+imports:
+  - linkml:types
+  - types
+
+classes:
+  PictureSource:
+    class_uri: pc:PictureSource
+    description: >-
+      The credit for pictures made from a holding: its holder's name, a separate access
+      service or collection, the shelf mark and a link. Shared by a newspaper's default
+      credit and a page whose picture comes from elsewhere.
+    # Read standards/ehri-0.2.0.json, rico-1.1.json, rico-1.1-axioms.json and
+    # ehri-holdings-1.1-1c2325f9/holdings.shex on 2 November 2026: no class for this
+    # flattened credit. hasOrHadHolder takes an Agent/IRI, not the literal name here;
+    # identifier takes a literal and seeAlso an IRI in the holdings profile.
+    attributes:
+      holder:
+        range: NonBlankText
+        required: true
+        slot_uri: pc:picture_holder_name
+        close_mappings:
+          - rico:hasOrHadHolder
+        description: >-
+          The name of the institution holding the pages the pictures were made from.
+      route:
+        range: NonBlankText
+        slot_uri: pc:picture_access_route
+        description: >-
+          The name of the service or collection readers reach the pages through, when
+          it differs from the holder itself.
+      shelf_mark:
+        range: NonBlankText
+        slot_uri: rico:identifier
+        description: >-
+          The holder's shelf mark or call number for the pages.
+      url:
+        range: uri
+        slot_uri: pc:holding_object_url
+        close_mappings:
+          - rdfs:seeAlso
+        description: >-
+          The pages' descriptive page at the holder or access route.

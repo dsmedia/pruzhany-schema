@@ -1,9 +1,9 @@
 {
-  "contract_sha256": "0d01343d0afe519b29d8c96a5739a32e880758265e8b6e2d507cd134e77f0c99",
+  "contract_sha256": "19474726161af53501d5552d62e2bca7cb76c602db6e86a8f73f11d428ca1c73",
   "inputs": {
     "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
     "linkml/schema/content_items.yaml": "b2e332fdf8bb5f036ac1c5e29419d61ad96fd917aea174c14db9e4e56c6bdb25",
-    "linkml/schema/editions.yaml": "80114ffa9810e31da37cc106361a74e1bdceb849105ab4d01b334c3a6fe011c4",
+    "linkml/schema/editions.yaml": "e603775bdb1f5b18970c1f2a40f98213bf84626e02d407be820c0241647f1985",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
     "linkml/schema/impresso_contentitem.yaml": "2042ddcf9a440e33a6d685c6610782a77f5c530bcdbe6c0b2d5e9b21f663c024",
@@ -11,8 +11,9 @@
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
     "linkml/schema/media.yaml": "514410702d9db8b741df691c9266c14f86c12cbb8959fa1225e4edb7499496e5",
     "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
-    "linkml/schema/pages.yaml": "7c5fafb3a46b207d1ccb45577f294ca8f02f40ef47f09b0caff48df0ac011636",
+    "linkml/schema/pages.yaml": "ef8c9c29f2de2b833eae078bef511ed8ff3936574784befce52a719474839292",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
+    "linkml/schema/picture_source.yaml": "1a201555c434f5720f7fd0eeaea48a952079dd841af000554ec5e662f0fddd71",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
     "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
     "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",
@@ -1500,13 +1501,42 @@
           "multivalued": false,
           "name": "newspaper",
           "range": "NonBlankText",
-          "references": [],
-          "relationship": "value",
+          "references": [
+            "Newspaper.id"
+          ],
+          "relationship": "reference",
           "required": true,
           "shape": {
             "description": "The paper this edition belongs to, by its id in the source register.",
             "pattern": "\\S",
             "type": "string"
+          }
+        },
+        {
+          "description": "The holder's descriptive page for this one issue.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:holding_object_url"
+            },
+            {
+              "kind": "close_mappings",
+              "term": "rdfs:seeAlso"
+            }
+          ],
+          "multivalued": false,
+          "name": "object_url",
+          "range": "uri",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The holder's descriptive page for this one issue.",
+            "format": "uri",
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       ],
@@ -1518,7 +1548,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/editions.yaml",
-      "yaml": "  Edition:\n    description: >-\n      One edition of the paper: its date in the common calendar and in the Hebrew one, and\n      the holiday it falls on, if any.\n    close_mappings:\n      - schema:PublicationIssue\n    attributes:\n      date:\n        range: IsoDay\n        required: true\n        description: >-\n          The edition's date, written YYYY-MM-DD.\n      hebrew_date:\n        alias: hebrewDate\n        required: true\n        description: >-\n          The edition's date in the Hebrew calendar, written in Hebrew letters.\n      hebrew_month:\n        alias: hebrewMonth\n        range: integer\n        required: true\n        minimum_value: 1\n        maximum_value: 13\n        description: >-\n          The Hebrew month, by its number from 1 to 13, counted from Nisan.\n      hebrew_year:\n        alias: hebrewYear\n        range: integer\n        required: true\n        minimum_value: -9007199254740991\n        maximum_value: 9007199254740991\n        description: >-\n          The Hebrew year, such as 5699.\n      holiday:\n        description: >-\n          The holiday the edition falls on or near, where there is one.\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this edition belongs to, by its id in the source register.\n        annotations:\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n      key:\n        required: true\n        pattern: '^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])'\n        description: >-\n          The edition's key: its date alone for the first paper, or the paper's code and a\n          hyphen before that date for any other paper. Its date must equal date; the source\n          register supplies the paper's code.\n"
+      "yaml": "  Edition:\n    description: >-\n      One edition of the paper: its date in the common calendar and in the Hebrew one, and\n      the holiday it falls on, if any.\n    close_mappings:\n      - schema:PublicationIssue\n    attributes:\n      date:\n        range: IsoDay\n        required: true\n        description: >-\n          The edition's date, written YYYY-MM-DD.\n      hebrew_date:\n        alias: hebrewDate\n        required: true\n        description: >-\n          The edition's date in the Hebrew calendar, written in Hebrew letters.\n      hebrew_month:\n        alias: hebrewMonth\n        range: integer\n        required: true\n        minimum_value: 1\n        maximum_value: 13\n        description: >-\n          The Hebrew month, by its number from 1 to 13, counted from Nisan.\n      hebrew_year:\n        alias: hebrewYear\n        range: integer\n        required: true\n        minimum_value: -9007199254740991\n        maximum_value: 9007199254740991\n        description: >-\n          The Hebrew year, such as 5699.\n      holiday:\n        description: >-\n          The holiday the edition falls on or near, where there is one.\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this edition belongs to, by its id in the source register.\n        annotations:\n          references: Newspaper.id\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n      key:\n        required: true\n        pattern: '^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])'\n        description: >-\n          The edition's key: its date alone for the first paper, or the paper's code and a\n          hyphen before that date for any other paper. Its date must equal date; the source\n          register supplies the paper's code.\n      object_url:\n        range: uri\n        slot_uri: pc:holding_object_url\n        close_mappings:\n          - rdfs:seeAlso\n        description: >-\n          The holder's descriptive page for this one issue.\n        # Read standards/ehri-holdings-1.1-1c2325f9/holdings.shex: rdfs:seeAlso IRI.\n"
     },
     "EditionsCatalog": {
       "description": "The catalog of editions: every edition, the holidays and historical events beside them, and the dates available on the site.",
@@ -1591,12 +1621,37 @@
             },
             "type": "array"
           }
+        },
+        {
+          "description": "The papers these editions belong to, one entry per source-register id, with their default picture credits. When present, every edition's newspaper must name one of these ids. The runtime twins enforce id uniqueness and membership; LinkML's generated JSON Schema cannot compare values across these lists.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:catalog_newspapers"
+            }
+          ],
+          "multivalued": true,
+          "name": "newspapers",
+          "range": "Newspaper",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "description": "The papers these editions belong to, one entry per source-register id, with their default picture credits. When present, every edition's newspaper must name one of these ids. The runtime twins enforce id uniqueness and membership; LinkML's generated JSON Schema cannot compare values across these lists.",
+            "items": {
+              "$ref": "#/$defs/Newspaper"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
         }
       ],
       "mappings": [],
       "parent": null,
       "source": "linkml/schema/editions.yaml",
-      "yaml": "  EditionsCatalog:\n    tree_root: true\n    description: >-\n      The catalog of editions: every edition, the holidays and historical events beside them,\n      and the dates available on the site.\n    attributes:\n      editions:\n        range: Edition\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Every edition of the paper, with its Hebrew date.\n      holidays:\n        range: Holiday\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The Jewish holidays of the paper's years.\n      historical_events:\n        alias: historicalEvents\n        range: HistoricalEvent\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Events in the world outside the town that the calendar marks.\n      available_dates:\n        alias: availableDates\n        range: IsoDay\n        multivalued: true\n        required: true\n        description: >-\n          The dates of the editions whose pages are on the site.\n"
+      "yaml": "  EditionsCatalog:\n    tree_root: true\n    description: >-\n      The catalog of editions: every edition, the holidays and historical events beside them,\n      and the dates available on the site.\n    attributes:\n      editions:\n        range: Edition\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Every edition of the paper, with its Hebrew date.\n      holidays:\n        range: Holiday\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The Jewish holidays of the paper's years.\n      historical_events:\n        alias: historicalEvents\n        range: HistoricalEvent\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Events in the world outside the town that the calendar marks.\n      available_dates:\n        alias: availableDates\n        range: IsoDay\n        multivalued: true\n        required: true\n        description: >-\n          The dates of the editions whose pages are on the site.\n      newspapers:\n        range: Newspaper\n        multivalued: true\n        inlined_as_list: true\n        slot_uri: pc:catalog_newspapers\n        description: >-\n          The papers these editions belong to, one entry per source-register id, with\n          their default picture credits. When present, every edition's newspaper must\n          name one of these ids. The runtime twins enforce id uniqueness and membership;\n          LinkML's generated JSON Schema cannot compare values across these lists.\n"
     },
     "EnglishCheck": {
       "description": "A later, separate check of one English field against one exact reading of the printed text, bound to both and to the judgement kept by their digests.",
@@ -5598,6 +5653,223 @@
       "source": "linkml/schema/sourced_entities.yaml",
       "yaml": "  Name:\n    description: >-\n      One name of a person, a family, an organisation or a place, of one kind (printed, birth,\n      married, supplied and so on), in one script. A person's, a family's and an\n      organisation's names are agent names and a place's are place names (vocabulary/\n      site-content.json, bindings agent_name and place_name), so the class itself names no\n      single term.\n    attributes:\n      value:\n        range: NonBlankText\n        required: true\n        description: >-\n          The name, as written.\n      kind:\n        range: NameKinds\n        required: true\n        description: >-\n          What kind of name it is: printed, birth, married, supplied and so on.\n      script:\n        range: ScriptCode\n        required: true\n        description: >-\n          The script it is written in, as a four-letter ISO 15924 code such as Hebr or Latn.\n      lang:\n        range: SimpleLanguageTag\n        description: >-\n          Its language, as a language tag such as yi or en.\n      citations:\n        range: Citation\n        multivalued: true\n        inlined_as_list: true\n        description: >-\n          Where the name is found.\n      attribution:\n        range: Attribution\n        inlined: true\n        description: >-\n          For a supplied name only: who wrote the description, and on what day.\n    rules:\n      - description: >-\n          A supplied name has its attribution and its citations.\n        preconditions:\n          slot_conditions:\n            kind:\n              equals_string: supplied\n        postconditions:\n          slot_conditions:\n            attribution:\n              required: true\n            citations:\n              required: true\n      - description: >-\n          Only a supplied name has an attribution.\n        preconditions:\n          slot_conditions:\n            attribution:\n              value_presence: PRESENT\n        postconditions:\n          slot_conditions:\n            kind:\n              equals_string: supplied\n"
     },
+    "Newspaper": {
+      "description": "One newspaper in the source register, with its site title, code and default picture credit. A page may supply a different credit through picture_source.",
+      "fields": [
+        {
+          "description": "The paper's lowercase alphabetic code used in site keys and routes.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:newspaper_code"
+            }
+          ],
+          "multivalued": false,
+          "name": "code",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The paper's lowercase alphabetic code used in site keys and routes.",
+            "pattern": "^[a-z]+$(?![\\s\\S])",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The name of the institution holding the pages the pictures were made from.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:picture_holder_name"
+            },
+            {
+              "kind": "close_mappings",
+              "term": "rico:hasOrHadHolder"
+            }
+          ],
+          "multivalued": false,
+          "name": "holder",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The name of the institution holding the pages the pictures were made from.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The paper's source-register id, the same value as Edition.newspaper.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_newspaper"
+            }
+          ],
+          "multivalued": false,
+          "name": "id",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The paper's source-register id, the same value as Edition.newspaper.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The rights statement for the pictures, as text.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:conditionsOfUse"
+            }
+          ],
+          "multivalued": false,
+          "name": "rights",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The rights statement for the pictures, as text.",
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The address where the rights statement was read.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:picture_rights_url"
+            }
+          ],
+          "multivalued": false,
+          "name": "rights_url",
+          "range": "uri",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The address where the rights statement was read.",
+            "format": "uri",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:picture_access_route"
+            }
+          ],
+          "multivalued": false,
+          "name": "route",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The holder's shelf mark or call number for the pages.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:identifier"
+            }
+          ],
+          "multivalued": false,
+          "name": "shelf_mark",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The holder's shelf mark or call number for the pages.",
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The paper's title as the site shows it.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:title"
+            }
+          ],
+          "multivalued": false,
+          "name": "title",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The paper's title as the site shows it.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The pages' descriptive page at the holder or access route.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:holding_object_url"
+            },
+            {
+              "kind": "close_mappings",
+              "term": "rdfs:seeAlso"
+            }
+          ],
+          "multivalued": false,
+          "name": "url",
+          "range": "uri",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The pages' descriptive page at the holder or access route.",
+            "format": "uri",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "kind": "class_uri",
+          "term": "ehri:RecordSet"
+        }
+      ],
+      "parent": "PictureSource",
+      "source": "linkml/schema/editions.yaml",
+      "yaml": "  Newspaper:\n    is_a: PictureSource\n    class_uri: ehri:RecordSet\n    description: >-\n      One newspaper in the source register, with its site title, code and default picture\n      credit. A page may supply a different credit through picture_source.\n    # Read standards/ehri-0.2.0.json: RecordSet subclasses EHRI RecordResource and RiC-O\n    # RecordSet. Read rico-1.1.json and rico-1.1-axioms.json: title and conditionsOfUse\n    # have literal ranges; standards/ehri-holdings-1.1-1c2325f9/holdings.shex uses them\n    # on ehri:RecordSet. id retains the local source-register meaning of pc:site_newspaper; code is a site routing code.\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper's source-register id, the same value as Edition.newspaper.\n      code:\n        range: NonBlankText\n        required: true\n        pattern: '^[a-z]+$(?![\\s\\S])'\n        slot_uri: pc:newspaper_code\n        description: >-\n          The paper's lowercase alphabetic code used in site keys and routes.\n      title:\n        range: NonBlankText\n        required: true\n        slot_uri: rico:title\n        description: >-\n          The paper's title as the site shows it.\n      rights:\n        range: NonBlankText\n        slot_uri: rico:conditionsOfUse\n        description: >-\n          The rights statement for the pictures, as text.\n      rights_url:\n        range: uri\n        slot_uri: pc:picture_rights_url\n        description: >-\n          The address where the rights statement was read.\n"
+    },
     "Page": {
       "description": "One printed page of the issue: its picture, its size and its regions of print.",
       "fields": [
@@ -5713,6 +5985,32 @@
             "description": "The page's number within the issue, from 1.",
             "type": "integer"
           }
+        },
+        {
+          "description": "The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:page_picture_source"
+            }
+          ],
+          "multivalued": false,
+          "name": "picture_source",
+          "range": "PictureSource",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/PictureSource"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields."
+          }
         }
       ],
       "mappings": [
@@ -5723,7 +6021,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/pages.yaml",
-      "yaml": "  Page:\n    description: >-\n      One printed page of the issue: its picture, its size and its regions of print.\n    close_mappings:\n      - schema:CreativeWork\n    annotations:\n      impresso: >-\n        A page file (page.schema.json).\n    attributes:\n      id:\n        required: true\n        pattern: '^page-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-\\d+$(?![\\s\\S])'\n        description: >-\n          The page's id, such as page-1938-12-16-4.\n        annotations:\n          impresso: >-\n            The page file's id.\n      issue_date:\n        required: true\n        description: >-\n          The date of the issue the page belongs to, written YYYY-MM-DD.\n      page_number:\n        range: integer\n        required: true\n        description: >-\n          The page's number within the issue, from 1.\n      image_uri:\n        required: true\n        description: >-\n          The page's picture, by its name or address.\n      dimensions:\n        range: integer\n        multivalued: true\n        required: true\n        minimum_cardinality: 2\n        maximum_cardinality: 2\n        description: >-\n          The picture's width and height, in its pixels.\n        annotations:\n          impresso: >-\n            The page file's fw and fh, the width and height of the facsimile.\n      blocks:\n        range: Block\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The regions of print on the page.\n        annotations:\n          impresso: >-\n            The page file's regions (r).\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this page belongs to, by its id in the source register.\n        annotations:\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n"
+      "yaml": "  Page:\n    description: >-\n      One printed page of the issue: its picture, its size and its regions of print.\n    close_mappings:\n      - schema:CreativeWork\n    annotations:\n      impresso: >-\n        A page file (page.schema.json).\n    attributes:\n      id:\n        required: true\n        pattern: '^page-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-\\d+$(?![\\s\\S])'\n        description: >-\n          The page's id, such as page-1938-12-16-4.\n        annotations:\n          impresso: >-\n            The page file's id.\n      issue_date:\n        required: true\n        description: >-\n          The date of the issue the page belongs to, written YYYY-MM-DD.\n      page_number:\n        range: integer\n        required: true\n        description: >-\n          The page's number within the issue, from 1.\n      image_uri:\n        required: true\n        description: >-\n          The page's picture, by its name or address.\n      dimensions:\n        range: integer\n        multivalued: true\n        required: true\n        minimum_cardinality: 2\n        maximum_cardinality: 2\n        description: >-\n          The picture's width and height, in its pixels.\n        annotations:\n          impresso: >-\n            The page file's fw and fh, the width and height of the facsimile.\n      blocks:\n        range: Block\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The regions of print on the page.\n        annotations:\n          impresso: >-\n            The page file's regions (r).\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this page belongs to, by its id in the source register.\n        annotations:\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n      picture_source:\n        range: PictureSource\n        inlined: true\n        slot_uri: pc:page_picture_source\n        description: >-\n          The picture's credit when it differs from the paper's catalog entry. Absence\n          means to use that entry; a present credit supplies its own holder and any\n          route, shelf mark and link, rather than merging individual fields.\n"
     },
     "PagesData": {
       "description": "One issue's pages document: the issue's date and its pages in order.",
@@ -5764,6 +6062,117 @@
       "parent": null,
       "source": "linkml/schema/pages.yaml",
       "yaml": "  PagesData:\n    tree_root: true\n    description: >-\n      One issue's pages document: the issue's date and its pages in order.\n    annotations:\n      impresso: >-\n        The page files of one issue (page.schema.json), and the issue file's list of its pages\n        (issue.schema.json pp).\n    attributes:\n      edition_date:\n        required: true\n        description: >-\n          The issue's date, written YYYY-MM-DD.\n      pages:\n        range: Page\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The issue's pages.\n"
+    },
+    "PictureSource": {
+      "description": "The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere.",
+      "fields": [
+        {
+          "description": "The name of the institution holding the pages the pictures were made from.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:picture_holder_name"
+            },
+            {
+              "kind": "close_mappings",
+              "term": "rico:hasOrHadHolder"
+            }
+          ],
+          "multivalued": false,
+          "name": "holder",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The name of the institution holding the pages the pictures were made from.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:picture_access_route"
+            }
+          ],
+          "multivalued": false,
+          "name": "route",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The holder's shelf mark or call number for the pages.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:identifier"
+            }
+          ],
+          "multivalued": false,
+          "name": "shelf_mark",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The holder's shelf mark or call number for the pages.",
+            "pattern": "\\S",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The pages' descriptive page at the holder or access route.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:holding_object_url"
+            },
+            {
+              "kind": "close_mappings",
+              "term": "rdfs:seeAlso"
+            }
+          ],
+          "multivalued": false,
+          "name": "url",
+          "range": "uri",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The pages' descriptive page at the holder or access route.",
+            "format": "uri",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "kind": "class_uri",
+          "term": "pc:PictureSource"
+        }
+      ],
+      "parent": null,
+      "source": "linkml/schema/picture_source.yaml",
+      "yaml": "  PictureSource:\n    class_uri: pc:PictureSource\n    description: >-\n      The credit for pictures made from a holding: its holder's name, a separate access\n      service or collection, the shelf mark and a link. Shared by a newspaper's default\n      credit and a page whose picture comes from elsewhere.\n    # Read standards/ehri-0.2.0.json, rico-1.1.json, rico-1.1-axioms.json and\n    # ehri-holdings-1.1-1c2325f9/holdings.shex on 2 November 2026: no class for this\n    # flattened credit. hasOrHadHolder takes an Agent/IRI, not the literal name here;\n    # identifier takes a literal and seeAlso an IRI in the holdings profile.\n    attributes:\n      holder:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:picture_holder_name\n        close_mappings:\n          - rico:hasOrHadHolder\n        description: >-\n          The name of the institution holding the pages the pictures were made from.\n      route:\n        range: NonBlankText\n        slot_uri: pc:picture_access_route\n        description: >-\n          The name of the service or collection readers reach the pages through, when\n          it differs from the holder itself.\n      shelf_mark:\n        range: NonBlankText\n        slot_uri: rico:identifier\n        description: >-\n          The holder's shelf mark or call number for the pages.\n      url:\n        range: uri\n        slot_uri: pc:holding_object_url\n        close_mappings:\n          - rdfs:seeAlso\n        description: >-\n          The pages' descriptive page at the holder or access route.\n"
     },
     "PlaceIdentifier": {
       "description": "One identifier of a person, organisation, place or holder, carried only on evidence, never from a match of names. Outside ids are read on their authority's own pages; merged local ids cite the registered source of the adjudicated merge.",

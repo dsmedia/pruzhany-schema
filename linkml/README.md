@@ -8,7 +8,7 @@ What LinkML cannot say about the shapes is listed in
 
 | File | What it is |
 | --- | --- |
-| `schema/*.yaml` | The definition: `types.yaml` (the shared types), `vocabulary.yaml` (the vocabulary's enums, generated), `site_common.yaml`, `pages.yaml`, `content_items.yaml`, `mentions.yaml`, `life_events.yaml`, `editions.yaml` (the issue documents and the catalog), `fates_list.yaml` (the fates list), `sourced_entities.yaml`, `media.yaml`, `shared.yaml`, `shared_record.yaml` (the shared record). Imports run types/vocabulary <- site_common <- sourced_entities <- shared_record; media imports site_common. |
+| `schema/*.yaml` | The definition: `types.yaml` (the shared types), `vocabulary.yaml` (the vocabulary's enums, generated), `site_common.yaml`, `picture_source.yaml` (the shared picture credit), `pages.yaml`, `content_items.yaml`, `mentions.yaml`, `life_events.yaml`, `editions.yaml` (the issue documents and the catalog), `fates_list.yaml` (the fates list), `sourced_entities.yaml`, `media.yaml`, `shared.yaml`, `shared_record.yaml` (the shared record). Imports run types/vocabulary <- site_common <- sourced_entities <- shared_record; media imports site_common. |
 | `schema/vocabulary.yaml` | Written by `vocabulary/generate.py` from `vocabulary/*.json`, one enum a group, never edited by hand: change the JSON, run that generator, then `linkml/generate.py` for its docs. That generator's `--check` (`bin/verify vocabulary`) fails on a hand edit. |
 | `modules.json` | The manifest: each schema file, its top class (or `null`) and the name its outputs take. |
 | `generated/` | What `generate.py` makes from the manifest, committed: `json-schema/<name>.schema.json` for a module with a top class, `docs/<name>/` (gen-doc) for every module. Never edited by hand. |
@@ -89,6 +89,12 @@ Generation emits no LinkML runtime dependency. The Python gate uses Pydantic **2
 the private steps environment; LinkML keeps its separate locked environment. The generation check
 covers `linkml/generated/`, `pydantic/generated/` and `zod/generated/`. Regenerate through `linkml/generate.py`,
 never by editing emitted classes. `bin/verify pydantic` visits generated subpackages as well.
+
+New URI fields use an annotated string validated with Pydantic `AnyUrl`, preserving the
+supplied spelling and emitting `format: uri`. Existing URI compatibility adjustments keep
+their released behavior. Read 2 November 2026: Pydantic
+[Network Types](https://docs.pydantic.dev/latest/api/networks/#pydantic.networks.AnyUrl) and
+[annotated validation](https://docs.pydantic.dev/latest/concepts/types/#adding-validation-and-serialization).
 
 The original behavior corpus remains in the contract gate. The Python generation tests additionally
 compare every previous field contract and public import, exercise every retained validator with a

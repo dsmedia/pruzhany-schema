@@ -17,6 +17,8 @@ import * as site from '../../zod/index';
 import { ReadingStatusSchema } from '../../zod/content-item.schema';
 
 const targets: Record<string, unknown> = {
+	Newspaper: site.NewspaperSchema,
+	PictureSource: site.PictureSourceSchema,
 	ReadingStatus: ReadingStatusSchema,
 	EditionsCatalog: site.EditionsCatalogSchema,
 	Edition: site.EditionSchema,

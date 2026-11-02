@@ -1,5 +1,5 @@
 # The editions catalog (pruzhany-svelte static/data/editions-catalog.json), as
-# zod/editions.schema.ts shapes it; it has no Pydantic twin. Its JSON Schema is made with the
+# zod/editions.schema.ts and pydantic/editions.py shape it. Its JSON Schema is made with the
 # top class EditionsCatalog (modules.json). Its keys are written in camelCase, which LinkML's
 # lint refuses as slot names, so each such slot is named in snake_case and carries the key as
 # its alias, which is the property name in the generated JSON Schema.
@@ -14,11 +14,14 @@ prefixes:
   pc: https://pruzhany.org/ns/sourced-entities#
   rico: https://www.ica.org/standards/RiC/ontology#
   schema: http://schema.org/
+  ehri: http://lod.ehri-project-test.eu/ontology#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
 default_prefix: pc
 default_range: string
 imports:
   - linkml:types
   - types
+  - picture_source
 
 classes:
   EditionsCatalog:
@@ -56,6 +59,57 @@ classes:
         required: true
         description: >-
           The dates of the editions whose pages are on the site.
+      newspapers:
+        range: Newspaper
+        multivalued: true
+        inlined_as_list: true
+        slot_uri: pc:catalog_newspapers
+        description: >-
+          The papers these editions belong to, one entry per source-register id, with
+          their default picture credits. When present, every edition's newspaper must
+          name one of these ids. The runtime twins enforce id uniqueness and membership;
+          LinkML's generated JSON Schema cannot compare values across these lists.
+
+  Newspaper:
+    is_a: PictureSource
+    class_uri: ehri:RecordSet
+    description: >-
+      One newspaper in the source register, with its site title, code and default picture
+      credit. A page may supply a different credit through picture_source.
+    # Read standards/ehri-0.2.0.json: RecordSet subclasses EHRI RecordResource and RiC-O
+    # RecordSet. Read rico-1.1.json and rico-1.1-axioms.json: title and conditionsOfUse
+    # have literal ranges; standards/ehri-holdings-1.1-1c2325f9/holdings.shex uses them
+    # on ehri:RecordSet. id retains the local source-register meaning of pc:site_newspaper; code is a site routing code.
+    attributes:
+      id:
+        range: NonBlankText
+        required: true
+        slot_uri: pc:site_newspaper
+        description: >-
+          The paper's source-register id, the same value as Edition.newspaper.
+      code:
+        range: NonBlankText
+        required: true
+        pattern: '^[a-z]+$(?![\s\S])'
+        slot_uri: pc:newspaper_code
+        description: >-
+          The paper's lowercase alphabetic code used in site keys and routes.
+      title:
+        range: NonBlankText
+        required: true
+        slot_uri: rico:title
+        description: >-
+          The paper's title as the site shows it.
+      rights:
+        range: NonBlankText
+        slot_uri: rico:conditionsOfUse
+        description: >-
+          The rights statement for the pictures, as text.
+      rights_url:
+        range: uri
+        slot_uri: pc:picture_rights_url
+        description: >-
+          The address where the rights statement was read.
 
   Edition:
     description: >-
@@ -100,6 +154,7 @@ classes:
         description: >-
           The paper this edition belongs to, by its id in the source register.
         annotations:
+          references: Newspaper.id
           impresso: >-
             The media alias carried by Impresso's canonical id. The pinned schemas have
             no separate media-alias property; site_newspaper keeps the source register id.
@@ -110,6 +165,14 @@ classes:
           The edition's key: its date alone for the first paper, or the paper's code and a
           hyphen before that date for any other paper. Its date must equal date; the source
           register supplies the paper's code.
+      object_url:
+        range: uri
+        slot_uri: pc:holding_object_url
+        close_mappings:
+          - rdfs:seeAlso
+        description: >-
+          The holder's descriptive page for this one issue.
+        # Read standards/ehri-holdings-1.1-1c2325f9/holdings.shex: rdfs:seeAlso IRI.
 
   Holiday:
     description: >-

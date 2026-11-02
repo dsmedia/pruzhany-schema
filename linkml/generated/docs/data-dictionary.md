@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `83b1fcbae8259b690e0d7fe4235e00e4a3fee037b5d9582b9ca35e878d094348`.
+Definition fingerprint: `b98c3d25902588c79d7ff2f23eb85fb23fc9c3b88d620bbd0d55ee7c6840ba23`.
 
 ## What the Pruzhany issue documents share
 
@@ -221,6 +221,23 @@ Meaning: No direct mapping recorded.
 
 Source: `linkml/schema/site_common.yaml`.
 
+## Where the page pictures come from
+
+### PictureSource
+
+The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere.
+
+Meaning: pc:PictureSource (class uri).
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `holder` | The name of the institution holding the pages the pictures were made from. | NonBlankText | Yes | pc:picture_holder_name (slot uri); rico:hasOrHadHolder (close mappings) |
+| `route` | The name of the service or collection readers reach the pages through, when it differs from the holder itself. | NonBlankText | No | pc:picture_access_route (slot uri) |
+| `shelf_mark` | The holder's shelf mark or call number for the pages. | NonBlankText | No | rico:identifier (slot uri) |
+| `url` | The pages' descriptive page at the holder or access route. | uri | No | pc:holding_object_url (slot uri); rdfs:seeAlso (close mappings) |
+
+Source: `linkml/schema/picture_source.yaml`.
+
 ## The pages document of a Pruzhany issue
 
 ### Block
@@ -255,6 +272,7 @@ Meaning: schema:CreativeWork (close mappings).
 | `issue_date` | The date of the issue the page belongs to, written YYYY-MM-DD. | string | Yes | No direct mapping recorded |
 | `newspaper` | The paper this page belongs to, by its id in the source register. | NonBlankText | Yes | pc:site_newspaper (slot uri) |
 | `page_number` | The page's number within the issue, from 1. | integer | Yes | No direct mapping recorded |
+| `picture_source` | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields. | PictureSource | No | pc:page_picture_source (slot uri) |
 
 Source: `linkml/schema/pages.yaml`.
 
@@ -485,6 +503,7 @@ Meaning: schema:PublicationIssue (close mappings).
 | `holiday` | The holiday the edition falls on or near, where there is one. | string | No | No direct mapping recorded |
 | `key` | The edition's key: its date alone for the first paper, or the paper's code and a hyphen before that date for any other paper. Its date must equal date; the source register supplies the paper's code. | string; pattern: ^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$(?![\s\S]) | Yes | No direct mapping recorded |
 | `newspaper` | The paper this edition belongs to, by its id in the source register. | NonBlankText | Yes | pc:site_newspaper (slot uri) |
+| `object_url` | The holder's descriptive page for this one issue. | uri | No | pc:holding_object_url (slot uri); rdfs:seeAlso (close mappings) |
 
 Source: `linkml/schema/editions.yaml`.
 
@@ -500,6 +519,7 @@ Meaning: No direct mapping recorded.
 | `editions` | Every edition of the paper, with its Hebrew date. | list of Edition | Yes | No direct mapping recorded |
 | `historicalEvents` | Events in the world outside the town that the calendar marks. | list of HistoricalEvent | Yes | No direct mapping recorded |
 | `holidays` | The Jewish holidays of the paper's years. | list of Holiday | Yes | No direct mapping recorded |
+| `newspapers` | The papers these editions belong to, one entry per source-register id, with their default picture credits. When present, every edition's newspaper must name one of these ids. The runtime twins enforce id uniqueness and membership; LinkML's generated JSON Schema cannot compare values across these lists. | list of Newspaper | No | pc:catalog_newspapers (slot uri) |
 
 Source: `linkml/schema/editions.yaml`.
 
@@ -529,6 +549,26 @@ Meaning: No direct mapping recorded.
 | `date` | The holiday's day, written YYYY-MM-DD. | IsoDay | Yes | No direct mapping recorded |
 | `hebrewName` | The holiday's name in Hebrew letters, where it is given. | string | No | No direct mapping recorded |
 | `name` | The holiday's name in Latin letters, such as Purim or Pesach. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/editions.yaml`.
+
+### Newspaper
+
+One newspaper in the source register, with its site title, code and default picture credit. A page may supply a different credit through picture_source.
+
+Meaning: ehri:RecordSet (class uri).
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `code` | The paper's lowercase alphabetic code used in site keys and routes. | NonBlankText; pattern: ^[a-z]+$(?![\s\S]) | Yes | pc:newspaper_code (slot uri) |
+| `holder` | The name of the institution holding the pages the pictures were made from. | NonBlankText | Yes | pc:picture_holder_name (slot uri); rico:hasOrHadHolder (close mappings) |
+| `id` | The paper's source-register id, the same value as Edition.newspaper. | NonBlankText | Yes | pc:site_newspaper (slot uri) |
+| `rights` | The rights statement for the pictures, as text. | NonBlankText | No | rico:conditionsOfUse (slot uri) |
+| `rights_url` | The address where the rights statement was read. | uri | No | pc:picture_rights_url (slot uri) |
+| `route` | The name of the service or collection readers reach the pages through, when it differs from the holder itself. | NonBlankText | No | pc:picture_access_route (slot uri) |
+| `shelf_mark` | The holder's shelf mark or call number for the pages. | NonBlankText | No | rico:identifier (slot uri) |
+| `title` | The paper's title as the site shows it. | NonBlankText | Yes | rico:title (slot uri) |
+| `url` | The pages' descriptive page at the holder or access route. | uri | No | pc:holding_object_url (slot uri); rdfs:seeAlso (close mappings) |
 
 Source: `linkml/schema/editions.yaml`.
 

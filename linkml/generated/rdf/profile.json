@@ -1,12 +1,12 @@
 {
   "artifacts_sha256": {
     "context.jsonld": "a212e549e680de4a71b0601b94fbf5314e640ede8fe06d46a879ade811405ade",
-    "coverage.md": "bd3006fb571c1816001f713cfac56f72dae9c4a8536a766d33fffe18612af332",
+    "coverage.md": "c1bba4df13824df169b83e360b9bcb091474f61757255e5d41f305f9537ff9a3",
     "ontology.ttl": "61d32d991d656f5570a2ed2776cde0fc40551060ace7bc92154729aeb47363ec",
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
-  "contract_sha256": "0d01343d0afe519b29d8c96a5739a32e880758265e8b6e2d507cd134e77f0c99",
-  "index_sha256": "46c5b609535e8a98861b7b38ccf90a5c2ff7352f5fd70c0623147fc389c38f76",
+  "contract_sha256": "19474726161af53501d5552d62e2bca7cb76c602db6e86a8f73f11d428ca1c73",
+  "index_sha256": "e4aafd3a9eb407bb8950dd2cae1758bcb46cabd0dc60a706a769daf385d0ec72",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -2312,8 +2312,10 @@
     "MediaWithdrawal": "Outside the public shared-record export; this layer keeps its current format.",
     "Mention": "Outside the public shared-record export; this layer keeps its current format.",
     "Name": "Outside the public shared-record export; this layer keeps its current format.",
+    "Newspaper": "The catalog and its picture credits are outside the public shared-record export.",
     "Page": "Outside the public shared-record export; this layer keeps its current format.",
     "PagesData": "Outside the public shared-record export; this layer keeps its current format.",
+    "PictureSource": "Picture credits are outside the public shared-record export.",
     "PrintedSection": "Outside the public shared-record export; this layer keeps its current format.",
     "PrintedTitle": "Outside the public shared-record export; this layer keeps its current format.",
     "PublicMedia": "Outside the public shared-record export; this layer keeps its current format.",
@@ -2332,11 +2334,11 @@
     "Translation": "Outside the public shared-record export; this layer keeps its current format.",
     "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format."
   },
-  "profile_sha256": "83de534323e4e201c8df4d8a128a3012057e1051aeae21fcf208082923a8511f",
+  "profile_sha256": "0b7feec91ba445ea436233dd5578c1db99301cd30ccaf16a768fb5f2505f5060",
   "source_sha256": {
     "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
     "linkml/schema/content_items.yaml": "b2e332fdf8bb5f036ac1c5e29419d61ad96fd917aea174c14db9e4e56c6bdb25",
-    "linkml/schema/editions.yaml": "80114ffa9810e31da37cc106361a74e1bdceb849105ab4d01b334c3a6fe011c4",
+    "linkml/schema/editions.yaml": "e603775bdb1f5b18970c1f2a40f98213bf84626e02d407be820c0241647f1985",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
     "linkml/schema/impresso_contentitem.yaml": "2042ddcf9a440e33a6d685c6610782a77f5c530bcdbe6c0b2d5e9b21f663c024",
@@ -2344,8 +2346,9 @@
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
     "linkml/schema/media.yaml": "514410702d9db8b741df691c9266c14f86c12cbb8959fa1225e4edb7499496e5",
     "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
-    "linkml/schema/pages.yaml": "7c5fafb3a46b207d1ccb45577f294ca8f02f40ef47f09b0caff48df0ac011636",
+    "linkml/schema/pages.yaml": "ef8c9c29f2de2b833eae078bef511ed8ff3936574784befce52a719474839292",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
+    "linkml/schema/picture_source.yaml": "1a201555c434f5720f7fd0eeaea48a952079dd841af000554ec5e662f0fddd71",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
     "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
     "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",

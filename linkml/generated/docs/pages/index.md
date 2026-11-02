@@ -15,6 +15,7 @@ Name: pruzhany_pages
 | [Block](Block.md) | One region of print on a page, its box and the words read in it, belonging to one content item, or to no item when it is a section heading. |
 | [Page](Page.md) | One printed page of the issue: its picture, its size and its regions of print. |
 | [PagesData](PagesData.md) | One issue's pages document: the issue's date and its pages in order. |
+| [PictureSource](PictureSource.md) | The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere. |
 
 
 
@@ -27,6 +28,7 @@ Name: pruzhany_pages
 | [confidence](confidence.md) | How sure the reading is, from 0 to 1, where it was recorded. |
 | [dimensions](dimensions.md) | The picture's width and height, in its pixels. |
 | [edition_date](edition_date.md) | The issue's date, written YYYY-MM-DD. |
+| [holder](holder.md) | The name of the institution holding the pages the pictures were made from. |
 | [id](id.md) | The page's id, such as page-1938-12-16-4. |
 | [image_crop](image_crop.md) | A picture of the region alone, by its path, where one was made. |
 | [image_uri](image_uri.md) | The page's picture, by its name or address. |
@@ -34,8 +36,12 @@ Name: pruzhany_pages
 | [newspaper](newspaper.md) | The paper this page belongs to, by its id in the source register. |
 | [page_number](page_number.md) | The page's number within the issue, from 1. |
 | [pages](pages.md) | The issue's pages. |
+| [picture_source](picture_source.md) | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields. |
+| [route](route.md) | The name of the service or collection readers reach the pages through, when it differs from the holder itself. |
+| [shelf_mark](shelf_mark.md) | The holder's shelf mark or call number for the pages. |
 | [transcription](transcription.md) | The words read in the region, its lines separated by line breaks. |
 | [unit_id](unit_id.md) | The content item the region belongs to, by its id; null for a region that is a section's heading. |
+| [url](url.md) | The pages' descriptive page at the holder or access route. |
 
 
 ## Enumerations

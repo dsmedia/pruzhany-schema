@@ -276,6 +276,8 @@ Public required field `relationship_type`: The displayed direction must be expli
 - `ContentItemRef`: Outside the public shared-record export; this layer keeps its current format.
 - `ContentItemsData`: Outside the public shared-record export; this layer keeps its current format.
 - `CrossReference`: Outside the public shared-record export; this layer keeps its current format.
+- `PictureSource`: Picture credits are outside the public shared-record export.
+- `Newspaper`: The catalog and its picture credits are outside the public shared-record export.
 - `Edition`: Outside the public shared-record export; this layer keeps its current format.
 - `EditionsCatalog`: Outside the public shared-record export; this layer keeps its current format.
 - `EnglishCheck`: Outside the public shared-record export; this layer keeps its current format.

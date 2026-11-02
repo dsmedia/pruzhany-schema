@@ -99,9 +99,13 @@ def expression(shape, path='field'):
     else:
         raise ValueError(f'{path}: unsupported Python type {kind!r}')
     if 'format' in shape:
-        # Existing Python URI policy is a pattern plus the named runtime check.
-        # New format-bearing fields cannot silently become plain strings.
-        raise ValueError(f'{path}: format needs an explicit Python compatibility entry')
+        if kind != 'string' or shape['format'] != 'uri':
+            raise ValueError(f'{path}: unsupported Python format {shape["format"]!r}')
+        # Pydantic AnyUrl and annotated validators, read 2 November 2026:
+        # https://docs.pydantic.dev/latest/api/networks/#pydantic.networks.AnyUrl
+        # https://docs.pydantic.dev/latest/concepts/types/#adding-validation-and-serialization
+        # Validate the URI while retaining the string and its exact spelling on the wire.
+        result = f"Annotated[{result}, AfterValidator(_uri), Field(json_schema_extra={{'format': 'uri'}})]"
     args = [f'{target}={shape[source]!r}' for source, target in BOUNDS.items() if source in shape]
     if args:
         result = f"Annotated[{result}, Field({', '.join(args)})]"
@@ -144,7 +148,11 @@ def build_python(linkml_dir, index):
         'from functools import cache, partial',
         'from importlib import import_module',
         'from typing import Annotated, Literal',
-        'from pydantic import AfterValidator, BeforeValidator, BaseModel, ConfigDict, Field, field_validator, model_validator', '',
+        'from pydantic import AfterValidator, AnyUrl, BeforeValidator, BaseModel, ConfigDict, Field, TypeAdapter, field_validator, model_validator', '',
+        '_uri_adapter = TypeAdapter(AnyUrl)', '',
+        'def _uri(value):',
+        '    _uri_adapter.validate_python(value)',
+        '    return value', '',
         '@cache',
         'def _resolve(module, function):',
         '    return getattr(import_module(".." + module, __package__), function)', '',

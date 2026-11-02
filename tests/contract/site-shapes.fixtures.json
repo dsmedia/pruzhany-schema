@@ -407,7 +407,12 @@
 			"translation",
 			"checked_against"
 		],
-		"PlaceIdentifier": ["shared_record", "places", 0, "identifiers", 0]
+		"PlaceIdentifier": ["shared_record", "places", 0, "identifiers", 0],
+		"EditionsCatalog": [],
+		"Edition": [],
+		"PictureSource": [],
+		"Newspaper": [],
+		"Page": []
 	},
 	"cases": [
 		{
@@ -10292,6 +10297,1507 @@
 							}
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "picture source: two papers and an edition of each",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"newspapers": [
+							{
+								"holder": "Fictional National Library",
+								"route": "Fictional Digital Collections",
+								"shelf_mark": "FNL Periodicals 42",
+								"url": "https://library.example.org/papers/first",
+								"id": "fictional-first-paper",
+								"code": "first",
+								"title": "Fictional First Gazette",
+								"rights": "Fictional permission statement.",
+								"rights_url": "https://library.example.org/rights"
+							},
+							{
+								"id": "fictional-second-paper",
+								"code": "second",
+								"title": "Fictional Second Gazette",
+								"holder": "Fictional Municipal Library"
+							}
+						],
+						"editions": [
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-first-paper",
+								"key": "2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							},
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-second-paper",
+								"key": "second-2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							}
+						],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": ["2001-02-03"]
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: complete paper credit",
+			"model": "Newspaper",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: minimal paper credit",
+			"model": "Newspaper",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "fictional-second-paper",
+						"code": "second",
+						"title": "Fictional Second Gazette",
+						"holder": "Fictional Municipal Library"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: complete page override",
+			"model": "Page",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "page-2001-02-03-1",
+						"issue_date": "2001-02-03",
+						"page_number": 1,
+						"image_uri": "fictional.png",
+						"dimensions": [200, 300],
+						"blocks": [],
+						"newspaper": "fictional-first-paper",
+						"picture_source": {
+							"holder": "Fictional Regional Archive",
+							"route": "Fictional Digital Collections",
+							"shelf_mark": "FNL Periodicals 42",
+							"url": "https://library.example.org/papers/first"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: standalone credit",
+			"model": "PictureSource",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: issue object URL",
+			"model": "Edition",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"date": "2001-02-03",
+						"hebrewDate": "Fictional calendar date",
+						"hebrewMonth": 1,
+						"hebrewYear": 5761,
+						"newspaper": "fictional-first-paper",
+						"key": "2001-02-03",
+						"object_url": "https://library.example.org/issues/42"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: older catalog without credits",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"editions": [
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-first-paper",
+								"key": "2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							},
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-second-paper",
+								"key": "second-2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							}
+						],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": ["2001-02-03"]
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: empty catalog with empty newspaper list",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"newspapers": [],
+						"editions": [],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": ["2001-02-03"]
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: null optional newspaper list",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"newspapers": null,
+						"editions": [
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-first-paper",
+								"key": "2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							},
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-second-paper",
+								"key": "second-2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							}
+						],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": ["2001-02-03"]
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: duplicate id with different metadata",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"newspapers": [
+							{
+								"holder": "Fictional National Library",
+								"route": "Fictional Digital Collections",
+								"shelf_mark": "FNL Periodicals 42",
+								"url": "https://library.example.org/papers/first",
+								"id": "fictional-first-paper",
+								"code": "first",
+								"title": "Fictional First Gazette",
+								"rights": "Fictional permission statement.",
+								"rights_url": "https://library.example.org/rights"
+							},
+							{
+								"id": "fictional-first-paper",
+								"code": "second",
+								"title": "Fictional Second Gazette",
+								"holder": "Fictional Municipal Library"
+							}
+						],
+						"editions": [
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-first-paper",
+								"key": "2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							},
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-second-paper",
+								"key": "second-2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							}
+						],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": ["2001-02-03"]
+					}
+				}
+			],
+			"error": "duplicate newspaper id"
+		},
+		{
+			"name": "picture source: edition paper missing from list",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"newspapers": [
+							{
+								"holder": "Fictional National Library",
+								"route": "Fictional Digital Collections",
+								"shelf_mark": "FNL Periodicals 42",
+								"url": "https://library.example.org/papers/first",
+								"id": "fictional-first-paper",
+								"code": "first",
+								"title": "Fictional First Gazette",
+								"rights": "Fictional permission statement.",
+								"rights_url": "https://library.example.org/rights"
+							},
+							{
+								"id": "fictional-second-paper",
+								"code": "second",
+								"title": "Fictional Second Gazette",
+								"holder": "Fictional Municipal Library"
+							}
+						],
+						"editions": [
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-first-paper",
+								"key": "2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							},
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-unlisted-paper",
+								"key": "second-2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							}
+						],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": ["2001-02-03"]
+					}
+				}
+			],
+			"error": "edition newspaper is not listed"
+		},
+		{
+			"name": "picture source: empty list refuses editions",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"newspapers": [],
+						"editions": [
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-first-paper",
+								"key": "2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							},
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-second-paper",
+								"key": "second-2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							}
+						],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": ["2001-02-03"]
+					}
+				}
+			],
+			"error": "edition newspaper is not listed"
+		},
+		{
+			"name": "picture source: paper blank id''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank id' \\t\\n'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": " \t\n",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank code''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank code' \\t\\n'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": " \t\n",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank title''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank title' \\t\\n'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": " \t\n",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank holder''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank holder' \\t\\n'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": " \t\n",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank route''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank route' \\t\\n'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": " \t\n",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank shelf_mark''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank shelf_mark' \\t\\n'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": " \t\n",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank rights''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper blank rights' \\t\\n'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": " \t\n",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper missing holder",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper missing id",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper missing code",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: paper missing title",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: override blank holder''",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: override blank holder' \\t\\n'",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": " \t\n",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: override blank route''",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: override blank route' \\t\\n'",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": " \t\n",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: override blank shelf_mark''",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "",
+						"url": "https://library.example.org/papers/first"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: override blank shelf_mark' \\t\\n'",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": " \t\n",
+						"url": "https://library.example.org/papers/first"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: override missing holder",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: invalid lowercase code 'ABC'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "ABC",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: invalid lowercase code 'a1'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "a1",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: invalid lowercase code 'first-paper'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first-paper",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: invalid lowercase code 'first\\n'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first\n",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: PictureSource invalid url 'not a URI'",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "not a URI"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: PictureSource invalid url '/relative/path'",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "/relative/path"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: PictureSource invalid url ''",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": ""
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: PictureSource invalid url ' \\t'",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": " \t"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: PictureSource non-HTTP URI url",
+			"model": "PictureSource",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "urn:fictional:holding:42"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid url 'not a URI'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "not a URI",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid url '/relative/path'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "/relative/path",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid url ''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid url ' \\t'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": " \t",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper non-HTTP URI url",
+			"model": "Newspaper",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "urn:fictional:holding:42",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "https://library.example.org/rights"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid rights_url 'not a URI'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "not a URI"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid rights_url '/relative/path'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "/relative/path"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid rights_url ''",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": ""
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid rights_url ' \\t'",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": " \t"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper non-HTTP URI rights_url",
+			"model": "Newspaper",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": "Fictional Digital Collections",
+						"shelf_mark": "FNL Periodicals 42",
+						"url": "https://library.example.org/papers/first",
+						"id": "fictional-first-paper",
+						"code": "first",
+						"title": "Fictional First Gazette",
+						"rights": "Fictional permission statement.",
+						"rights_url": "urn:fictional:holding:42"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Edition invalid object_url 'not a URI'",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"date": "2001-02-03",
+						"hebrewDate": "Fictional calendar date",
+						"hebrewMonth": 1,
+						"hebrewYear": 5761,
+						"newspaper": "fictional-first-paper",
+						"key": "2001-02-03",
+						"object_url": "not a URI"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Edition invalid object_url '/relative/path'",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"date": "2001-02-03",
+						"hebrewDate": "Fictional calendar date",
+						"hebrewMonth": 1,
+						"hebrewYear": 5761,
+						"newspaper": "fictional-first-paper",
+						"key": "2001-02-03",
+						"object_url": "/relative/path"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Edition invalid object_url ''",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"date": "2001-02-03",
+						"hebrewDate": "Fictional calendar date",
+						"hebrewMonth": 1,
+						"hebrewYear": 5761,
+						"newspaper": "fictional-first-paper",
+						"key": "2001-02-03",
+						"object_url": ""
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Edition invalid object_url ' \\t'",
+			"model": "Edition",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"date": "2001-02-03",
+						"hebrewDate": "Fictional calendar date",
+						"hebrewMonth": 1,
+						"hebrewYear": 5761,
+						"newspaper": "fictional-first-paper",
+						"key": "2001-02-03",
+						"object_url": " \t"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Edition non-HTTP URI object_url",
+			"model": "Edition",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"date": "2001-02-03",
+						"hebrewDate": "Fictional calendar date",
+						"hebrewMonth": 1,
+						"hebrewYear": 5761,
+						"newspaper": "fictional-first-paper",
+						"key": "2001-02-03",
+						"object_url": "urn:fictional:holding:42"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: blank catalog holder",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"newspapers": [
+							{
+								"holder": "Fictional National Library",
+								"route": "Fictional Digital Collections",
+								"shelf_mark": "FNL Periodicals 42",
+								"url": "https://library.example.org/papers/first",
+								"id": "fictional-first-paper",
+								"code": "first",
+								"title": "Fictional First Gazette",
+								"rights": "Fictional permission statement.",
+								"rights_url": "https://library.example.org/rights"
+							},
+							{
+								"id": "fictional-second-paper",
+								"code": "second",
+								"title": "Fictional Second Gazette",
+								"holder": " \t\n"
+							}
+						],
+						"editions": [
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-first-paper",
+								"key": "2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							},
+							{
+								"date": "2001-02-03",
+								"hebrewDate": "Fictional calendar date",
+								"hebrewMonth": 1,
+								"hebrewYear": 5761,
+								"newspaper": "fictional-second-paper",
+								"key": "second-2001-02-03",
+								"object_url": "https://library.example.org/issues/42"
+							}
+						],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": ["2001-02-03"]
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: blank page override holder",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "page-2001-02-03-1",
+						"issue_date": "2001-02-03",
+						"page_number": 1,
+						"image_uri": "fictional.png",
+						"dimensions": [200, 300],
+						"blocks": [],
+						"newspaper": "fictional-first-paper",
+						"picture_source": {
+							"holder": " \t",
+							"route": "Fictional Digital Collections",
+							"shelf_mark": "FNL Periodicals 42",
+							"url": "https://library.example.org/papers/first"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: invalid page override URL",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "page-2001-02-03-1",
+						"issue_date": "2001-02-03",
+						"page_number": 1,
+						"image_uri": "fictional.png",
+						"dimensions": [200, 300],
+						"blocks": [],
+						"newspaper": "fictional-first-paper",
+						"picture_source": {
+							"holder": "Fictional Regional Archive",
+							"route": "Fictional Digital Collections",
+							"shelf_mark": "FNL Periodicals 42",
+							"url": "relative"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: page uses newspaper default",
+			"model": "Page",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "page-2001-02-03-1",
+						"issue_date": "2001-02-03",
+						"page_number": 1,
+						"image_uri": "fictional.png",
+						"dimensions": [200, 300],
+						"blocks": [],
+						"newspaper": "fictional-first-paper"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: minimal override",
+			"model": "Page",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "page-2001-02-03-1",
+						"issue_date": "2001-02-03",
+						"page_number": 1,
+						"image_uri": "fictional.png",
+						"dimensions": [200, 300],
+						"blocks": [],
+						"newspaper": "fictional-first-paper",
+						"picture_source": {
+							"holder": "Fictional University Library"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: nullable optional credit fields",
+			"model": "PictureSource",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional National Library",
+						"route": null,
+						"shelf_mark": null,
+						"url": null
+					}
 				}
 			]
 		}

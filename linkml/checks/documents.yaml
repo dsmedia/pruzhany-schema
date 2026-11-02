@@ -43,6 +43,31 @@ twins:
     - pydantic/fates_list.py
 
 checks:
+  - id: catalog-newspaper-references
+    holds: >-
+      A catalog's newspaper ids are unique and, when its newspaper list is supplied,
+      every edition names one of them.
+    zod:
+      file: zod/editions.schema.ts
+      schema: EditionsCatalogSchema
+    pydantic:
+      file: pydantic/editions.py
+      validator: EditionsCatalog.newspaper_references
+    parts:
+      - holds: >-
+          No two newspaper entries have the same id.
+        how: twin_only
+        why: >-
+          LinkML's JSON Schema generator does not enforce unique_keys or compare one
+          field across list members. The twins compare the ids, including entries with
+          different credit fields.
+      - holds: >-
+          With a newspaper list supplied, every edition's newspaper is in that list.
+        how: twin_only
+        why: >-
+          LinkML's generated JSON Schema cannot compare values in separate lists.
+          The definition records the identifier link; the twins enforce membership.
+
   - id: edition-key-date
     holds: >-
       The date at the end of an edition key equals the edition's date.

@@ -1,0 +1,223 @@
+---
+search:
+  boost: 10.0
+---
+
+# Class: PictureSource 
+
+
+_The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere._
+
+
+
+<div data-search-exclude markdown="1">
+
+
+
+URI: [pc:PictureSource](https://pruzhany.org/ns/sourced-entities#PictureSource)
+
+
+
+
+
+```mermaid
+ classDiagram
+    class PictureSource
+    click PictureSource href "../PictureSource/"
+      PictureSource : holder
+        
+      PictureSource : route
+        
+      PictureSource : shelf_mark
+        
+      PictureSource : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+## Class Properties
+
+| Property | Value |
+| --- | --- |
+| Class URI | [pc:PictureSource](https://pruzhany.org/ns/sourced-entities#PictureSource) |
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Inheritance |
+| ---  | --- | --- | --- |
+| [holder](holder.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The name of the institution holding the pages the pictures were made from. | direct |
+| [route](route.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The name of the service or collection readers reach the pages through, when it differs from the holder itself. | direct |
+| [shelf_mark](shelf_mark.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The holder's shelf mark or call number for the pages. | direct |
+| [url](url.md) | 0..1 <br/> [Uri](Uri.md) | The pages' descriptive page at the holder or access route. | direct |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://pruzhany.org/ns/picture_source
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | pc:PictureSource |
+| native | pc:PictureSource |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: PictureSource
+description: 'The credit for pictures made from a holding: its holder''s name, a separate
+  access service or collection, the shelf mark and a link. Shared by a newspaper''s
+  default credit and a page whose picture comes from elsewhere.'
+from_schema: https://pruzhany.org/ns/picture_source
+rank: 1000
+attributes:
+  holder:
+    name: holder
+    description: The name of the institution holding the pages the pictures were made
+      from.
+    from_schema: https://pruzhany.org/ns/picture_source
+    close_mappings:
+    - rico:hasOrHadHolder
+    rank: 1000
+    slot_uri: pc:picture_holder_name
+    domain_of:
+    - PictureSource
+    range: NonBlankText
+    required: true
+  route:
+    name: route
+    description: The name of the service or collection readers reach the pages through,
+      when it differs from the holder itself.
+    from_schema: https://pruzhany.org/ns/picture_source
+    rank: 1000
+    slot_uri: pc:picture_access_route
+    domain_of:
+    - PictureSource
+    range: NonBlankText
+  shelf_mark:
+    name: shelf_mark
+    description: The holder's shelf mark or call number for the pages.
+    from_schema: https://pruzhany.org/ns/picture_source
+    rank: 1000
+    slot_uri: rico:identifier
+    domain_of:
+    - PictureSource
+    range: NonBlankText
+  url:
+    name: url
+    description: The pages' descriptive page at the holder or access route.
+    from_schema: https://pruzhany.org/ns/picture_source
+    close_mappings:
+    - rdfs:seeAlso
+    rank: 1000
+    slot_uri: pc:holding_object_url
+    domain_of:
+    - PictureSource
+    range: uri
+class_uri: pc:PictureSource
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: PictureSource
+description: 'The credit for pictures made from a holding: its holder''s name, a separate
+  access service or collection, the shelf mark and a link. Shared by a newspaper''s
+  default credit and a page whose picture comes from elsewhere.'
+from_schema: https://pruzhany.org/ns/picture_source
+rank: 1000
+attributes:
+  holder:
+    name: holder
+    description: The name of the institution holding the pages the pictures were made
+      from.
+    from_schema: https://pruzhany.org/ns/picture_source
+    close_mappings:
+    - rico:hasOrHadHolder
+    rank: 1000
+    slot_uri: pc:picture_holder_name
+    owner: PictureSource
+    domain_of:
+    - PictureSource
+    range: NonBlankText
+    required: true
+  route:
+    name: route
+    description: The name of the service or collection readers reach the pages through,
+      when it differs from the holder itself.
+    from_schema: https://pruzhany.org/ns/picture_source
+    rank: 1000
+    slot_uri: pc:picture_access_route
+    owner: PictureSource
+    domain_of:
+    - PictureSource
+    range: NonBlankText
+  shelf_mark:
+    name: shelf_mark
+    description: The holder's shelf mark or call number for the pages.
+    from_schema: https://pruzhany.org/ns/picture_source
+    rank: 1000
+    slot_uri: rico:identifier
+    owner: PictureSource
+    domain_of:
+    - PictureSource
+    range: NonBlankText
+  url:
+    name: url
+    description: The pages' descriptive page at the holder or access route.
+    from_schema: https://pruzhany.org/ns/picture_source
+    close_mappings:
+    - rdfs:seeAlso
+    rank: 1000
+    slot_uri: pc:holding_object_url
+    owner: PictureSource
+    domain_of:
+    - PictureSource
+    range: uri
+class_uri: pc:PictureSource
+
+```
+</details></div>
