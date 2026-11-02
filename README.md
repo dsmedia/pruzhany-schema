@@ -101,6 +101,12 @@ names, sources, fate and standing for one shared record. `site-issue.schema.ts` 
 per-issue mentions and life events, plus checks of the four documents and their shared
 references. Each module has a Pydantic twin.
 
+`fates-list.schema.ts` and `pydantic/fates_list.py` shape the fates list
+(`static/data/fates-list.json`, written by pruzhany-steps' site writer): everyone printed in the
+paper whose fate is perished or survived, confirmed or probable, with where and when the
+record places the fate, the archives' records about them with their own addresses, how
+their age is known and a child mark, and the list's counts and notes. Fictional cases only.
+
 `PagesData`, `Page` and `Block` live in `zod/page.schema.ts` and `pydantic/page.py`;
 `CrossReference` lives in the site-common modules, and `ExternalReference` in the
 shared modules. Their wire behavior is unchanged, including existing field names,
@@ -109,15 +115,17 @@ life-event, enrichment and edition-bundle persisted models and exports are retir
 the mixed `pydantic/project_output.py` module is gone. Released sourced vocabulary,
 its compatibility helpers, `llm_output.py` and `bbox_review.py` remain available.
 
-`vocabulary/site-content.json` is **1.1.0, released 2026-10-31** for the owner's
-approved subtypes, subjects and printed/supplied title types, separate from
+`vocabulary/site-content.json` is **1.2.0, released 2026-11-02** for the owner's
+approved subtypes (now 23, with `masthead` and `imprint`), subjects and printed/supplied
+title types, separate from
 sourced-entities **1.3.0, released 2026-10-26**. The new `condolence` content-unit role records a notice of sympathy
 sent to the mourners as a community response to a death. On 26 October 2026 the
 owner answered: **"The other two points on husband and wife and the condolences, your suggestions are accepted"**.
 Sourced-entities 1.3.0 adds only the condolence role; its local mapping and approval are in
 the [vocabulary approval record](docs/vocabulary-approvals.md).
 The owner approved both title types on 31 October 2026 ("Approve both"); their
-existing mappings are retained. See the [approval record](docs/vocabulary-approvals.md)
+existing mappings are retained. On 2 November 2026 the owner approved the `masthead` and
+`imprint` subtypes under Impresso `article`. See the [approval record](docs/vocabulary-approvals.md)
 and the earlier [release record](docs/design/2026-10-25-site-content-release.md)
 and [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.

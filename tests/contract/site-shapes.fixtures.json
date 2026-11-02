@@ -3628,6 +3628,58 @@
 			]
 		},
 		{
+			"name": "subtype masthead parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "masthead"
+				}
+			]
+		},
+		{
+			"name": "subtype masthead wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "masthead"
+				}
+			]
+		},
+		{
+			"name": "subtype imprint parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "imprint"
+				}
+			]
+		},
+		{
+			"name": "subtype imprint wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["subtype"],
+					"value": "imprint"
+				}
+			]
+		},
+		{
 			"name": "Impresso article",
 			"model": "ContentItem",
 			"valid": true,
@@ -8703,7 +8755,7 @@
 			]
 		},
 		{
-			"name": "ContentItemsData: previous released vocabulary stamp",
+			"name": "ContentItemsData: earlier released vocabulary stamp",
 			"model": "ContentItemsData",
 			"valid": true,
 			"changes": [
@@ -8714,13 +8766,24 @@
 			]
 		},
 		{
-			"name": "ContentItemsData: released vocabulary stamp",
+			"name": "ContentItemsData: previous released vocabulary stamp",
 			"model": "ContentItemsData",
 			"valid": true,
 			"changes": [
 				{
 					"path": ["vocabulary_version"],
 					"value": "1.1.0"
+				}
+			]
+		},
+		{
+			"name": "ContentItemsData: released vocabulary stamp",
+			"model": "ContentItemsData",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["vocabulary_version"],
+					"value": "1.2.0"
 				}
 			]
 		},
@@ -8742,7 +8805,7 @@
 			"changes": [
 				{
 					"path": ["subtype"],
-					"value": "masthead"
+					"value": "fictional_unreleased_form"
 				}
 			]
 		},

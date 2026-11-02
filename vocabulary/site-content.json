@@ -1,7 +1,7 @@
 {
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"status": "released",
-	"scope": "Site content subtypes and subjects approved on 2026-10-25; printed and supplied title types approved on 2026-10-31. Site shape bindings are retained. Released life-event parts, memorial and supplied names belong to sourced-entities 1.2.0.",
+	"scope": "Site content subtypes and subjects approved on 2026-10-25; printed and supplied title types approved on 2026-10-31; the masthead and imprint subtypes approved on 2026-11-02. Site shape bindings are retained. Released life-event parts, memorial and supplied names belong to sourced-entities 1.2.0.",
 	"impresso_types": [
 		"article",
 		"ad",
@@ -353,6 +353,38 @@
 				"owner_fixed_parent": {
 					"type": "entertainment",
 					"on": "2026-10-22"
+				}
+			},
+			{
+				"id": "masthead",
+				"label": "Masthead",
+				"definition": "The paper's own name-plate at the head of an issue or a page: its title, number, date, price, subscription and address lines.",
+				"added_in": "1.2.0",
+				"concept_class": "rico:DocumentaryFormType",
+				"mapping": {
+					"local": "pc:subtype_masthead",
+					"reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+				},
+				"parent_type": "article",
+				"owner_fixed_parent": {
+					"type": "article",
+					"on": "2026-11-02"
+				}
+			},
+			{
+				"id": "imprint",
+				"label": "Imprint",
+				"definition": "The printer's and publisher's line, usually at the foot of the last page: editor, publisher, composing room and press.",
+				"added_in": "1.2.0",
+				"concept_class": "rico:DocumentaryFormType",
+				"mapping": {
+					"local": "pc:subtype_imprint",
+					"reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+				},
+				"parent_type": "article",
+				"owner_fixed_parent": {
+					"type": "article",
+					"on": "2026-11-02"
 				}
 			}
 		],
@@ -1109,11 +1141,12 @@
 			}
 		}
 	],
-	"released_on": "2026-10-31",
-	"approved_by": "Owner, 2026-10-31: asked 'Approve them as released vocabulary?', answered 'Approve both' for title_types.printed and title_types.supplied in https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11; see docs/vocabulary-approvals.md. Subtypes and subjects retain the owner's 2026-10-25 approval (pruzhany-steps decision 164, item 1). The 38 unresolved values stay other with their proposed_type.",
+	"released_on": "2026-11-02",
+	"approved_by": "Owner, 2026-11-02: approved both proposed kinds, content_item_subtypes.masthead and content_item_subtypes.imprint, each under the Impresso type article and mapped to pc:subtype_masthead and pc:subtype_imprint via rico:hasDocumentaryFormType, in https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11; see docs/vocabulary-approvals.md. Title types retain the owner's 2026-10-31 approval ('Approve both'); the other subtypes and subjects retain the owner's 2026-10-25 approval (pruzhany-steps decision 164, item 1). The 38 unresolved values stay other with their proposed_type.",
 	"compatible_versions": [
 		"0.1.0",
-		"1.0.0"
+		"1.0.0",
+		"1.1.0"
 	],
 	"released_groups": [
 		"content_item_subtypes",

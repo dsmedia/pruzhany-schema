@@ -295,7 +295,15 @@
 						"if": {
 							"properties": {
 								"subtype": {
-									"enum": ["editorial", "letter", "opinion", "poem", "sketch"]
+									"enum": [
+										"editorial",
+										"imprint",
+										"letter",
+										"masthead",
+										"opinion",
+										"poem",
+										"sketch"
+									]
 								}
 							},
 							"required": ["subtype"]
@@ -663,6 +671,194 @@
 					"mode": "after"
 				}
 			]
+		},
+		"FatesList": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["people", "counts", "notes"]
+		},
+		"FatesListAge": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["known_by", "child", "birth_year", "birth_years", "fact_ids", "announced"],
+			"validators": [
+				{
+					"name": "basis",
+					"module": "fates_list",
+					"function": "_FatesListAge__basis",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"allOf": [
+					{
+						"if": {
+							"properties": {
+								"known_by": {
+									"enum": ["birth_year"]
+								}
+							},
+							"required": ["known_by"]
+						},
+						"then": {
+							"properties": {
+								"birth_year": {},
+								"fact_ids": {
+									"items": {},
+									"type": "array"
+								}
+							},
+							"required": ["birth_year", "fact_ids"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"known_by": {
+									"enum": ["birth_announced"]
+								}
+							},
+							"required": ["known_by"]
+						},
+						"then": {
+							"properties": {
+								"announced": {}
+							},
+							"required": ["announced"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"known_by": {
+									"enum": ["birth_years_disagree"]
+								}
+							},
+							"required": ["known_by"]
+						},
+						"then": {
+							"properties": {
+								"birth_years": {
+									"items": {},
+									"type": "array"
+								}
+							},
+							"required": ["birth_years"]
+						}
+					}
+				]
+			}
+		},
+		"FatesListArchiveCount": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_id", "archive", "people", "people_with_address"]
+		},
+		"FatesListCounts": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"people",
+				"perished_confirmed",
+				"perished_probable",
+				"survived_confirmed",
+				"survived_probable",
+				"children",
+				"children_by_birth_year",
+				"children_by_announcement",
+				"birth_year_known",
+				"birth_years_disagree",
+				"no_age",
+				"with_place",
+				"with_date",
+				"outside_records"
+			]
+		},
+		"FatesListDate": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["start", "precision", "end"]
+		},
+		"FatesListFateDetail": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["kind", "place_id", "place_name", "date"],
+			"validators": [
+				{
+					"name": "place_or_date",
+					"module": "fates_list",
+					"function": "_FatesListFateDetail__place_or_date",
+					"mode": "after"
+				}
+			],
+			"conditions": {
+				"if": {
+					"not": {
+						"required": ["place_id"]
+					},
+					"properties": {
+						"place_id": {}
+					}
+				},
+				"then": {
+					"properties": {
+						"date": {}
+					},
+					"required": ["date"]
+				}
+			}
+		},
+		"FatesListOutsideRecord": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["source_id", "archive", "collection", "record_type", "record_id", "url"]
+		},
+		"FatesListPerson": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": [
+				"person_id",
+				"name",
+				"printed_name",
+				"outcome",
+				"confidence",
+				"first_mention",
+				"fate_details",
+				"outside_records",
+				"age"
+			]
+		},
+		"FatesListPiece": {
+			"module": "fates_list",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["edition_date", "content_item_id"]
 		},
 		"HistoricalEvent": {
 			"module": "editions",
@@ -3159,15 +3355,15 @@
 			"model": "ContentItemsData",
 			"field": "vocabulary_version",
 			"definition": {
-				"pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0)$",
+				"pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0|1\\.2\\.0)$",
 				"type": "string"
 			},
 			"python": {
-				"enum": ["0.1.0", "1.0.0", "1.1.0"],
+				"enum": ["0.1.0", "1.0.0", "1.1.0", "1.2.0"],
 				"type": "string"
 			},
 			"reason": "Expose the vocabulary release stamp as its existing Python Literal values instead of a regular expression; both spellings accept the same versions.",
-			"source": "pydantic/content_item.py:ContentItemsData.vocabulary_version at 182eb478bf22bed0e312457fdc082730515d297c; site-content 1.1.0 approved by the owner on 2026-10-31, docs/vocabulary-approvals.md, https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11"
+			"source": "pydantic/content_item.py:ContentItemsData.vocabulary_version at 182eb478bf22bed0e312457fdc082730515d297c; site-content 1.1.0 approved by the owner on 2026-10-31 and 1.2.0 on 2026-11-02, docs/vocabulary-approvals.md, https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11"
 		},
 		{
 			"model": "EnglishCheck",

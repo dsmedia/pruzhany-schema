@@ -41,7 +41,7 @@ classes:
           The issue's date, written YYYY-MM-DD.
       vocabulary_version:
         required: true
-        pattern: '^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])'
+        pattern: '^(0\.1\.0|1\.0\.0|1\.1\.0|1\.2\.0)$(?![\s\S])'
         description: >-
           The version of the site-content vocabulary whose values the document uses: one of
           the versions the current vocabulary accepts as compatible.
@@ -250,7 +250,7 @@ classes:
             type:
               equals_string: death_notice
       - description: >-
-          An editorial, opinion, letter, poem or sketch is an article.
+          An editorial, opinion, letter, poem, sketch, masthead or imprint is an article.
         preconditions:
           slot_conditions:
             subtype:
@@ -260,6 +260,8 @@ classes:
                 - letter
                 - poem
                 - sketch
+                - masthead
+                - imprint
         postconditions:
           slot_conditions:
             type:

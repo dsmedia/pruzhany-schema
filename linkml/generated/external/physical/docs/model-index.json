@@ -2,9 +2,10 @@
   "contract_sha256": "a87011252f9d70d2b991a93da2a9c7b202957a313a571e3261caa14b1b28b5f9",
   "inputs": {
     "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
-    "linkml/schema/content_items.yaml": "8d882cbd8582a90ddd4daf476ef3d5c11276c00b9e6a65761a6494c8c365a3f9",
+    "linkml/schema/content_items.yaml": "ae9047ecfc53620deefcfd5a608915cd6f33313a3ec84ef2f31843b075b40e60",
     "linkml/schema/editions.yaml": "80114ffa9810e31da37cc106361a74e1bdceb849105ab4d01b334c3a6fe011c4",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
+    "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
     "linkml/schema/impresso_contentitem.yaml": "2042ddcf9a440e33a6d685c6610782a77f5c530bcdbe6c0b2d5e9b21f663c024",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
@@ -17,7 +18,7 @@
     "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",
     "linkml/schema/sourced_entities.yaml": "a1ff33b46438af29d46c29f0085a0d7bb4c566b5440764de6739c9d7e82f2871",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
-    "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4"
+    "linkml/schema/vocabulary.yaml": "5051ac3682daa3ef66f50e3b3b2b799ff4143d62f54f5a4dedba8402a5812d7e"
   },
   "models": {
     "PhysicalLine": {

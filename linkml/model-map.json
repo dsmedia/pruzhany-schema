@@ -64,6 +64,42 @@
 			"zod": "Fate",
 			"pointer": ""
 		},
+		"FatesList": {
+			"zod": "FatesList",
+			"pointer": ""
+		},
+		"FatesListAge": {
+			"zod": "FatesListAge",
+			"pointer": ""
+		},
+		"FatesListArchiveCount": {
+			"zod": "FatesListArchiveCount",
+			"pointer": ""
+		},
+		"FatesListCounts": {
+			"zod": "FatesListCounts",
+			"pointer": ""
+		},
+		"FatesListDate": {
+			"zod": "FatesListDate",
+			"pointer": ""
+		},
+		"FatesListFateDetail": {
+			"zod": "FatesListFateDetail",
+			"pointer": ""
+		},
+		"FatesListOutsideRecord": {
+			"zod": "FatesListOutsideRecord",
+			"pointer": ""
+		},
+		"FatesListPerson": {
+			"zod": "FatesListPerson",
+			"pointer": ""
+		},
+		"FatesListPiece": {
+			"zod": "FatesListPiece",
+			"pointer": ""
+		},
 		"HistoricalEvent": {
 			"zod": "HistoricalEvent",
 			"pointer": ""

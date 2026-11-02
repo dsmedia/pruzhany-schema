@@ -215,7 +215,7 @@ URI: [ehri:RecordResource](http://lod.ehri-project-test.eu/ontology#RecordResour
 
 | Rule Applied | Preconditions | Postconditions | Elseconditions |
 |--------------|---------------|----------------|----------------|
-| slot_conditions |```{'subtype': {'equals_string_in': ['editorial', 'opinion', 'letter', 'poem', 'sketch']}}``` |```{'type': {'equals_string': 'article'}}``` | |
+| slot_conditions |```{'subtype': {'equals_string_in': ['editorial', 'opinion', 'letter', 'poem', 'sketch', 'masthead', 'imprint']}}``` |```{'type': {'equals_string': 'article'}}``` | |
 
 
 
@@ -566,12 +566,15 @@ rules:
         - letter
         - poem
         - sketch
+        - masthead
+        - imprint
   postconditions:
     slot_conditions:
       type:
         name: type
         equals_string: article
-  description: An editorial, opinion, letter, poem or sketch is an article.
+  description: An editorial, opinion, letter, poem, sketch, masthead or imprint is
+    an article.
 - preconditions:
     slot_conditions:
       subtype:
@@ -902,12 +905,15 @@ rules:
         - letter
         - poem
         - sketch
+        - masthead
+        - imprint
   postconditions:
     slot_conditions:
       type:
         name: type
         equals_string: article
-  description: An editorial, opinion, letter, poem or sketch is an article.
+  description: An editorial, opinion, letter, poem, sketch, masthead or imprint is
+    an article.
 - preconditions:
     slot_conditions:
       subtype:

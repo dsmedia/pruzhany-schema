@@ -1,4 +1,5 @@
-# Every check the twins of the four issue documents and the catalog make beyond their shapes,
+# Every check the twins of the four issue documents, the catalog and the fates list make beyond
+# their shapes,
 # and how the LinkML definition holds it: each Zod refinement (.refine, .superRefine, .check)
 # and each Pydantic validator (@model_validator, @field_validator, and the validators given in
 # a type, BeforeValidator and the like) of the modules under `twins`, one entry each, a Zod
@@ -32,12 +33,14 @@ twins:
     - zod/site-issue.schema.ts
     - zod/editions.schema.ts
     - zod/site-content.vocabulary.ts
+    - zod/fates-list.schema.ts
   pydantic:
     - pydantic/editions.py
     - pydantic/page.py
     - pydantic/content_item.py
     - pydantic/site_common.py
     - pydantic/site_issue.py
+    - pydantic/fates_list.py
 
 checks:
   - id: edition-key-date
@@ -464,3 +467,45 @@ checks:
         statement: >-
           A child named only by description rests on one birth notice, cited by the birth
           fact, the supplied name, a designating mention and every parent's relation.
+
+  - id: fates-list-place-or-date
+    holds: >-
+      A fate detail of the fates list places the fate, dates it, or both.
+    zod:
+      file: zod/fates-list.schema.ts
+      schema: FatesListFateDetailSchema
+    pydantic:
+      file: pydantic/fates_list.py
+      validator: FatesListFateDetail.place_or_date
+    parts:
+      - holds: >-
+          A fate detail without a place_id key has a date.
+        how: linkml_rule
+        class: FatesListFateDetail
+        rules: 1
+        planted: test_documents_checks.LinkMLRules.test_a_fate_detail_with_neither_place_nor_date_is_refused
+      - holds: >-
+          A place_id written as null counts as no place.
+        how: twin_only
+        why: >-
+          LinkML has no null apart from absence: its generated JSON Schema lets an optional
+          slot be null, and the rule's precondition sees a key written null as present. The
+          writer leaves an absent field out (pruzhany-steps site_fates).
+
+  - id: fates-list-age-basis
+    holds: >-
+      An age of the fates list gives what its way of knowing it needs.
+    zod:
+      file: zod/fates-list.schema.ts
+      schema: FatesListAgeSchema
+    pydantic:
+      file: pydantic/fates_list.py
+      validator: FatesListAge.basis
+    parts:
+      - holds: >-
+          One year of birth gives the year and its statements; a birth the paper announced
+          names its piece; years that disagree are given.
+        how: linkml_rule
+        class: FatesListAge
+        rules: 3
+        planted: test_documents_checks.LinkMLRules.test_an_age_without_what_its_basis_needs_is_refused

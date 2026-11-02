@@ -8,7 +8,7 @@ What LinkML cannot say about the shapes is listed in
 
 | File | What it is |
 | --- | --- |
-| `schema/*.yaml` | The definition: `types.yaml` (the shared types), `vocabulary.yaml` (the vocabulary's enums, generated), `site_common.yaml`, `pages.yaml`, `content_items.yaml`, `mentions.yaml`, `life_events.yaml`, `editions.yaml` (the issue documents and the catalog), `sourced_entities.yaml`, `media.yaml`, `shared.yaml`, `shared_record.yaml` (the shared record). Imports run types/vocabulary <- site_common <- sourced_entities <- shared_record; media imports site_common. |
+| `schema/*.yaml` | The definition: `types.yaml` (the shared types), `vocabulary.yaml` (the vocabulary's enums, generated), `site_common.yaml`, `pages.yaml`, `content_items.yaml`, `mentions.yaml`, `life_events.yaml`, `editions.yaml` (the issue documents and the catalog), `fates_list.yaml` (the fates list), `sourced_entities.yaml`, `media.yaml`, `shared.yaml`, `shared_record.yaml` (the shared record). Imports run types/vocabulary <- site_common <- sourced_entities <- shared_record; media imports site_common. |
 | `schema/vocabulary.yaml` | Written by `vocabulary/generate.py` from `vocabulary/*.json`, one enum a group, never edited by hand: change the JSON, run that generator, then `linkml/generate.py` for its docs. That generator's `--check` (`bin/verify vocabulary`) fails on a hand edit. |
 | `modules.json` | The manifest: each schema file, its top class (or `null`) and the name its outputs take. |
 | `generated/` | What `generate.py` makes from the manifest, committed: `json-schema/<name>.schema.json` for a module with a top class, `docs/<name>/` (gen-doc) for every module. Never edited by hand. |
@@ -156,8 +156,11 @@ exported inferred schema type with that baseline, including all six documents, a
 site's `.pick`, `.extend`, `.shape`, `.safeExtend` and `.omit` projections. The bun-only tests compare
 each public schema's kind and verify its JSON contract against those frozen shapes,
 allowing only the measured tightenings and equivalent integer/digest spellings. The owner's
-31 October 2026 site-content 1.1.0 release adds exactly that document-version literal to the
-three affected type and JSON comparisons; the frozen files stay unchanged. Negative controls
+31 October 2026 site-content 1.1.0 and 2 November 2026 1.2.0 releases add exactly their
+document-version literals to the three affected type and JSON comparisons; 1.2.0's `masthead`
+and `imprint` subtypes are appended to the baseline's subtype enum in
+`zod/tests/masthead-imprint-baseline.ts`, and the Python comparison prescribes the same two
+values. The frozen files stay unchanged. Negative controls
 reject weakened types, patterns, bounds, URI formats and required keys. Round one's obsolete
 byte-identity/stripping assertions follow ticket 20's revised measure. Existing behavior tests
 continue to exercise retained refinements.

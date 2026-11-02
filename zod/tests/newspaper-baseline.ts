@@ -1,9 +1,9 @@
-// Ticket 01's exact additions to the immutable migration baseline.
+// Ticket 01's exact additions to the 1.2.0 release baseline.
 // Zod, Defining schemas (https://zod.dev/api), read 2 November 2026:
 // safeExtend retains ancestor refinements; the frozen sources remain untouched.
 import { z } from 'zod/v4';
-import * as frozen from './content-item-language-baseline';
-export * from './content-item-language-baseline';
+import * as frozen from './masthead-imprint-baseline';
+export * from './masthead-imprint-baseline';
 
 const newspaper = z.string().regex(/\S/);
 export const BlockSchema = frozen.BlockSchema.extend({

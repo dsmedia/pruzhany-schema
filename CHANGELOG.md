@@ -11,11 +11,13 @@ yet. The vocabularies are versioned on their own; their releases are recorded in
 
 ### Added
 
+- The fates list: everyone printed in the paper whose fate the record knows, with places, dates, archive records and a child mark, in LinkML with its Zod and Python twins and fictional cases.
 - A readable vocabulary list generated from the source JSON, with definitions, standards mappings and a freshness check.
 - MIT code and CC BY 4.0 data licences, a path and upstream licence notice, and hash-locked REUSE checks locally and in CI.
 - LinkML definitions, generated contracts, data dictionary and public RDF view ([#29](https://github.com/dsmedia/pruzhany-schema/pull/29), [#32](https://github.com/dsmedia/pruzhany-schema/pull/32)).
 - Physical pages, model exchanges and structured answers in LinkML ([#36](https://github.com/dsmedia/pruzhany-schema/pull/36), [#39](https://github.com/dsmedia/pruzhany-schema/pull/39), [#44](https://github.com/dsmedia/pruzhany-schema/pull/44)).
 - Person/organisation identifiers and retained merged identifiers; content-item language ([#47](https://github.com/dsmedia/pruzhany-schema/pull/47), [#57](https://github.com/dsmedia/pruzhany-schema/pull/57)).
+- Site-content vocabulary 1.2.0: the owner-approved `masthead` and `imprint` content-item subtypes under Impresso `article` ([approval record](docs/vocabulary-approvals.md)).
 
 ### Changed
 

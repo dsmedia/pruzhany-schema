@@ -9,6 +9,16 @@
       "title": "AddressGrain",
       "type": "string"
     },
+    "AgeKnownBy": {
+      "description": "How a person's age is known.",
+      "enum": [
+        "birth_year",
+        "birth_announced",
+        "birth_years_disagree"
+      ],
+      "title": "AgeKnownBy",
+      "type": "string"
+    },
     "Attribution": {
       "additionalProperties": false,
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -581,7 +591,9 @@
                   "opinion",
                   "letter",
                   "poem",
-                  "sketch"
+                  "sketch",
+                  "masthead",
+                  "imprint"
                 ]
               }
             },
@@ -829,7 +841,7 @@
       "type": "object"
     },
     "ContentItemSubtypes": {
-      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.1.0.",
+      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.2.0.",
       "enum": [
         "wedding_greeting",
         "engagement_greeting",
@@ -851,7 +863,9 @@
         "letter",
         "poem",
         "sketch",
-        "humour"
+        "humour",
+        "masthead",
+        "imprint"
       ],
       "title": "ContentItemSubtypes",
       "type": "string"
@@ -881,7 +895,7 @@
         },
         "vocabulary_version": {
           "description": "The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible.",
-          "pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0)$(?![\\s\\S])",
+          "pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0|1\\.2\\.0)$(?![\\s\\S])",
           "type": "string"
         }
       },
@@ -1576,6 +1590,16 @@
       "title": "Fate",
       "type": "object"
     },
+    "FateDetailKind": {
+      "description": "The kind of statement a fate detail comes from: a death, a survival or a deportation.",
+      "enum": [
+        "death",
+        "survival",
+        "deportation"
+      ],
+      "title": "FateDetailKind",
+      "type": "string"
+    },
     "FateOutcomes": {
       "description": "Fate outcomes: the values of fate_outcomes in vocabulary/sourced-entities.json, version 1.3.0.",
       "enum": [
@@ -1587,6 +1611,581 @@
       ],
       "title": "FateOutcomes",
       "type": "string"
+    },
+    "FatesList": {
+      "additionalProperties": false,
+      "description": "The fates list: its people, its counts and its notes.",
+      "properties": {
+        "counts": {
+          "$ref": "#/$defs/FatesListCounts",
+          "description": "The list's counts, so that a page never counts for itself."
+        },
+        "notes": {
+          "description": "What the counts count, in plain English, the people with no age among them.",
+          "items": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "people": {
+          "description": "Everyone printed in the paper whose fate the record knows, by name as shown.",
+          "items": {
+            "$ref": "#/$defs/FatesListPerson"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "people",
+        "counts",
+        "notes"
+      ],
+      "title": "FatesList",
+      "type": "object"
+    },
+    "FatesListAge": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "known_by": {
+                "const": "birth_year"
+              }
+            },
+            "required": [
+              "known_by"
+            ]
+          },
+          "then": {
+            "properties": {
+              "birth_year": {},
+              "fact_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "birth_year",
+              "fact_ids"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "known_by": {
+                "const": "birth_announced"
+              }
+            },
+            "required": [
+              "known_by"
+            ]
+          },
+          "then": {
+            "properties": {
+              "announced": {}
+            },
+            "required": [
+              "announced"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "known_by": {
+                "const": "birth_years_disagree"
+              }
+            },
+            "required": [
+              "known_by"
+            ]
+          },
+          "then": {
+            "properties": {
+              "birth_years": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "birth_years"
+            ]
+          }
+        }
+      ],
+      "description": "How a person's age is known, and whether it marks a child.",
+      "properties": {
+        "announced": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FatesListPiece"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The earliest published piece that announced the person's birth."
+        },
+        "birth_year": {
+          "description": "The one year of birth the person's own records give.",
+          "maximum": 2100,
+          "minimum": 1800,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "birth_years": {
+          "description": "The years of birth that disagree, in order.",
+          "items": {
+            "maximum": 2100,
+            "minimum": 1800,
+            "type": "integer"
+          },
+          "minItems": 2,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "child": {
+          "description": "True for a child: one year of birth of 1925 or later, or a birth the paper announced.",
+          "type": "boolean"
+        },
+        "fact_ids": {
+          "description": "The shared record's birth statements that give the year.",
+          "items": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "known_by": {
+          "$ref": "#/$defs/AgeKnownBy",
+          "description": "How the age is known: one year of birth, a birth the paper announced, or years that disagree."
+        }
+      },
+      "required": [
+        "known_by",
+        "child"
+      ],
+      "title": "FatesListAge",
+      "type": "object"
+    },
+    "FatesListArchiveCount": {
+      "additionalProperties": false,
+      "description": "How many people an archive's database names, and how many of them with an address.",
+      "properties": {
+        "archive": {
+          "description": "The archive's name.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "people": {
+          "description": "The people its records name.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "people_with_address": {
+          "description": "The people with at least one of its records at the record's own address.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source_id": {
+          "description": "The database as the shared record's source id.",
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "archive",
+        "people",
+        "people_with_address"
+      ],
+      "title": "FatesListArchiveCount",
+      "type": "object"
+    },
+    "FatesListConfidence": {
+      "description": "How sure the fate is: the shared record's confidences confirmed and probable.",
+      "enum": [
+        "confirmed",
+        "probable"
+      ],
+      "title": "FatesListConfidence",
+      "type": "string"
+    },
+    "FatesListCounts": {
+      "additionalProperties": false,
+      "description": "The list's counts.",
+      "properties": {
+        "birth_year_known": {
+          "description": "The people whose own records give one year of birth, children or not.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "birth_years_disagree": {
+          "description": "The people whose own records give years of birth that disagree.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "children": {
+          "description": "The people marked as children.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "children_by_announcement": {
+          "description": "The children marked because the paper announced their birth.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "children_by_birth_year": {
+          "description": "The children marked by one year of birth of 1925 or later.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "no_age": {
+          "description": "The people with no age in the record; they are not marked as children.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "outside_records": {
+          "description": "For each archive's database, how many people its records name.",
+          "items": {
+            "$ref": "#/$defs/FatesListArchiveCount"
+          },
+          "type": "array"
+        },
+        "people": {
+          "description": "The people on the list.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "perished_confirmed": {
+          "description": "The people who perished.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "perished_probable": {
+          "description": "The people who probably perished.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "survived_confirmed": {
+          "description": "The people who survived.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "survived_probable": {
+          "description": "The people who probably survived.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "with_date": {
+          "description": "The people whose fate the record dates.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "with_place": {
+          "description": "The people whose fate the record places somewhere.",
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "people",
+        "perished_confirmed",
+        "perished_probable",
+        "survived_confirmed",
+        "survived_probable",
+        "children",
+        "children_by_birth_year",
+        "children_by_announcement",
+        "birth_year_known",
+        "birth_years_disagree",
+        "no_age",
+        "with_place",
+        "with_date",
+        "outside_records"
+      ],
+      "title": "FatesListCounts",
+      "type": "object"
+    },
+    "FatesListDate": {
+      "additionalProperties": false,
+      "description": "A normalized date: its start, how precise it is and, for a range, its end.",
+      "properties": {
+        "end": {
+          "description": "The end of a range of dates, written as the start is.",
+          "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "precision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourcedDatePrecision"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How much of the date is known: year, month, day or range."
+        },
+        "start": {
+          "description": "The date's start, as far as it is known: YYYY, YYYY-MM or YYYY-MM-DD.",
+          "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start"
+      ],
+      "title": "FatesListDate",
+      "type": "object"
+    },
+    "FatesListFateDetail": {
+      "additionalProperties": false,
+      "description": "Where or when one of the person's own fate statements, or the death event it names, places the fate.",
+      "if": {
+        "not": {
+          "required": [
+            "place_id"
+          ]
+        },
+        "properties": {
+          "place_id": {}
+        }
+      },
+      "properties": {
+        "date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FatesListDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The date, as the record holds it structured; its printed words are never carried."
+        },
+        "kind": {
+          "$ref": "#/$defs/FateDetailKind",
+          "description": "The kind of statement: death, survival or deportation."
+        },
+        "place_id": {
+          "description": "The place's id in the shared record.",
+          "pattern": "^location-[A-Za-z0-9_-]+$",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "place_name": {
+          "description": "The place's name in the shared record.",
+          "pattern": "\\S",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "then": {
+        "properties": {
+          "date": {}
+        },
+        "required": [
+          "date"
+        ]
+      },
+      "title": "FatesListFateDetail",
+      "type": "object"
+    },
+    "FatesListOutcome": {
+      "description": "The fates the list holds: the shared record's fate outcomes perished and survived.",
+      "enum": [
+        "perished",
+        "survived"
+      ],
+      "title": "FatesListOutcome",
+      "type": "string"
+    },
+    "FatesListOutsideRecord": {
+      "additionalProperties": false,
+      "description": "A record an archive holds about the person: the archive, the database it is in, the record's type and id as the archive gives them, and its own address where the record has one.",
+      "properties": {
+        "archive": {
+          "description": "The archive's name, as the shared record's holder gives it.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "collection": {
+          "description": "The database's title, as the shared record's source gives it.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "record_id": {
+          "description": "The archive's id for the record.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "record_type": {
+          "description": "The record's type as the archive names it, from the record's citations, such as Page of Testimony; absent where they name none.",
+          "pattern": "\\S",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_id": {
+          "description": "The archive's database as the shared record's source id, such as yad-vashem.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "url": {
+          "description": "The record's own address at the archive, never a scan or file address; absent where the record has none.",
+          "pattern": "^https://[^\\s/?#]+[^\\s]*$",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "source_id",
+        "archive",
+        "collection",
+        "record_id"
+      ],
+      "title": "FatesListOutsideRecord",
+      "type": "object"
+    },
+    "FatesListPerson": {
+      "additionalProperties": false,
+      "description": "One person on the list: who, the fate, where the paper first prints them, where and when the fate is placed, the archives' records about them and how their age is known.",
+      "properties": {
+        "age": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FatesListAge"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the person's age is known; absent where the record gives no age."
+        },
+        "confidence": {
+          "$ref": "#/$defs/FatesListConfidence",
+          "description": "How sure the fate is: confirmed or probable."
+        },
+        "fate_details": {
+          "description": "Where and when the person's own death, survival and deportation statements place the fate, as the record holds them structured.",
+          "items": {
+            "$ref": "#/$defs/FatesListFateDetail"
+          },
+          "minItems": 1,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "first_mention": {
+          "$ref": "#/$defs/FatesListPiece",
+          "description": "The earliest published piece that prints the person."
+        },
+        "name": {
+          "description": "The person's name as the site shows it.",
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/FatesListOutcome",
+          "description": "The record's fate: perished or survived."
+        },
+        "outside_records": {
+          "description": "The archives' records about the person that the record cites.",
+          "items": {
+            "$ref": "#/$defs/FatesListOutsideRecord"
+          },
+          "minItems": 1,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "person_id": {
+          "description": "The person's id in the shared record; the site's person page has this address.",
+          "pattern": "^person-[A-Za-z0-9_-]+$",
+          "type": "string"
+        },
+        "printed_name": {
+          "description": "The person's name in Yiddish as the paper prints it, where the record has it.",
+          "pattern": "\\S",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "person_id",
+        "name",
+        "outcome",
+        "confidence",
+        "first_mention"
+      ],
+      "title": "FatesListPerson",
+      "type": "object"
+    },
+    "FatesListPiece": {
+      "additionalProperties": false,
+      "description": "A published piece of an edition of the paper.",
+      "properties": {
+        "content_item_id": {
+          "description": "The piece's id, such as cu-1938-12-16-i0105.",
+          "pattern": "^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$",
+          "type": "string"
+        },
+        "edition_date": {
+          "description": "The edition's day, written YYYY-MM-DD.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "edition_date",
+        "content_item_id"
+      ],
+      "title": "FatesListPiece",
+      "type": "object"
     },
     "Gender": {
       "description": "Gender: the values of gender in vocabulary/sourced-entities.json, version 1.3.0.",
@@ -1765,7 +2364,7 @@
       "type": "string"
     },
     "ImpressoTypes": {
-      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.2.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
       "enum": [
         "article",
         "ad",
@@ -6434,7 +7033,7 @@
       "type": "object"
     },
     "Subjects": {
-      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.1.0.",
+      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.2.0.",
       "enum": [
         "education",
         "culture",
@@ -6564,7 +7163,7 @@
       "type": "object"
     },
     "TitleTypes": {
-      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.1.0.",
+      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.2.0.",
       "enum": [
         "printed",
         "supplied"
@@ -6681,6 +7280,15 @@
     "Fact": "schema/sourced_entities.yaml",
     "FactQualifiers": "schema/sourced_entities.yaml",
     "Fate": "schema/sourced_entities.yaml",
+    "FatesList": "schema/fates_list.yaml",
+    "FatesListAge": "schema/fates_list.yaml",
+    "FatesListArchiveCount": "schema/fates_list.yaml",
+    "FatesListCounts": "schema/fates_list.yaml",
+    "FatesListDate": "schema/fates_list.yaml",
+    "FatesListFateDetail": "schema/fates_list.yaml",
+    "FatesListOutsideRecord": "schema/fates_list.yaml",
+    "FatesListPerson": "schema/fates_list.yaml",
+    "FatesListPiece": "schema/fates_list.yaml",
     "HistoricalEvent": "schema/editions.yaml",
     "Holder": "schema/shared_record.yaml",
     "Holiday": "schema/editions.yaml",

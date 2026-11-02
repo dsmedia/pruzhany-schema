@@ -343,6 +343,31 @@ class VocabularyTests(unittest.TestCase):
                 self.site['released_groups'] = groups
                 self.assertTrue(any('release must name its approved concept groups' in e for e in self.site_check()))
 
+    def test_site_1_2_0_adds_masthead_and_imprint_under_article(self):
+        # Owner-approved site-content 1.2.0, 2 November 2026 (docs/vocabulary-approvals.md).
+        subtypes = {e['id']: e for e in self.site['groups']['content_item_subtypes']}
+        earlier = json.loads((self.root / 'vocabulary/released/site-content-1.1.0.json').read_text(encoding='utf-8'))
+        earlier_ids = [e['id'] for e in earlier['groups']['content_item_subtypes']]
+        self.assertEqual(len(earlier_ids), 21)
+        self.assertEqual(list(subtypes)[:21], earlier_ids)
+        for name in ('masthead', 'imprint'):
+            with self.subTest(name=name):
+                self.assertNotIn(name, earlier_ids)
+                entry = subtypes[name]
+                self.assertEqual(entry['added_in'], '1.2.0')
+                self.assertEqual(entry['concept_class'], 'rico:DocumentaryFormType')
+                self.assertEqual(entry['mapping']['local'], f'pc:subtype_{name}')
+                self.assertEqual(entry['mapping']['reason'], subtypes['poem']['mapping']['reason'])
+                self.assertEqual(entry['parent_type'], 'article')
+                self.assertEqual(entry['owner_fixed_parent'], {'type': 'article', 'on': '2026-11-02'})
+        self.assertIn('1.1.0', self.site['compatible_versions'])
+        # The owner fixed the parent: another parent is refused.
+        path = self.root / 'vocabulary/site-content.json'
+        data = json.loads(path.read_text(encoding='utf-8'))
+        next(e for e in data['groups']['content_item_subtypes'] if e['id'] == 'masthead')['parent_type'] = 'ad'
+        path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('owner decision' in e for e in self.check()))
+
     def test_site_compatible_versions_are_explicit(self):
         for versions in [['0.1.0', '0.1.0'], [self.site_released], [''], [None], '0.1.0']:
             with self.subTest(versions=versions):

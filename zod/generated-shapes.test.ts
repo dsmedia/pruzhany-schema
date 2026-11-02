@@ -19,11 +19,12 @@ type SchemaKey = {
 	[K in keyof typeof frozen]: (typeof frozen)[K] extends z.ZodType ? K : never;
 }[keyof typeof frozen];
 type Inferred<S> = S extends z.ZodType ? z.infer<S> : never;
-// Owner-approved site-content 1.1.0, 31 October 2026 (docs/vocabulary-approvals.md).
-// Keep the migration baseline frozen; prescribe only this exact version addition.
-const titleReleaseVersions = ['0.1.0', '1.0.0', '1.1.0'] as const;
+// Owner-approved site-content 1.1.0, 31 October 2026, and 1.2.0, 2 November 2026
+// (docs/vocabulary-approvals.md). Keep the migration baseline frozen; prescribe only
+// these exact version additions. 1.2.0's two subtypes are in tests/masthead-imprint-baseline.ts.
+const approvedReleaseVersions = ['0.1.0', '1.0.0', '1.1.0', '1.2.0'] as const;
 type ApprovedContentVersion<T> = {
-	[K in keyof T]: K extends 'vocabulary_version' ? (typeof titleReleaseVersions)[number] : T[K];
+	[K in keyof T]: K extends 'vocabulary_version' ? (typeof approvedReleaseVersions)[number] : T[K];
 };
 type ApprovedIssueVersion<T> = {
 	[K in keyof T]: K extends 'content_items' ? ApprovedContentVersion<T[K]> : T[K];
@@ -131,7 +132,7 @@ const equalityControls: [
 	Equal<'en', string>,
 ] = [false, false, false, false];
 
-const titleReleasePaths: Partial<Record<SchemaKey, string[]>> = {
+const releaseVersionPaths: Partial<Record<SchemaKey, string[]>> = {
 	ContentItemsDataSchema: ['properties', 'vocabulary_version'],
 	SiteIssueSchema: ['properties', 'content_items', 'properties', 'vocabulary_version'],
 	SiteArchiveSchema: [
@@ -210,12 +211,12 @@ describe('generated shapes preserve the released Zod API', () => {
 				expect(current[name].constructor.name).toBe(frozen[name].constructor.name);
 				const options = { target: 'draft-2020-12', io: 'output' } as const;
 				const baseline = z.toJSONSchema(frozen[name], options);
-				const versionPath = titleReleasePaths[name];
+				const versionPath = releaseVersionPaths[name];
 				if (versionPath) {
 					let version = baseline as Record<string, unknown>;
 					for (const key of versionPath) version = version[key] as Record<string, unknown>;
 					expect(version.enum).toEqual(['0.1.0', '1.0.0']);
-					version.enum = [...titleReleaseVersions];
+					version.enum = [...approvedReleaseVersions];
 				}
 				expectTightening(baseline, z.toJSONSchema(current[name], options));
 			}

@@ -18,7 +18,7 @@ const pattern1 = /^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])/;
 const pattern2 = /\S/;
 const pattern3 = /^[a-z]{2,3}$(?![\s\S])/;
 const pattern4 = /^\d{4}-\d{2}-\d{2}$/;
-const pattern5 = /^(0\.1\.0|1\.0\.0|1\.1\.0)$(?![\s\S])/;
+const pattern5 = /^(0\.1\.0|1\.0\.0|1\.1\.0|1\.2\.0)$(?![\s\S])/;
 
 export const ReadingStatusShape = z.strictObject({
 	text: ReadingStatusValueEnum.nullish(),
