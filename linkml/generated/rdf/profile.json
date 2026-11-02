@@ -5,8 +5,8 @@
     "ontology.ttl": "61d32d991d656f5570a2ed2776cde0fc40551060ace7bc92154729aeb47363ec",
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
-  "contract_sha256": "6ad9aea1c1e0f094f9ab3262a517aaddb37a2cb32fc0ccf864a60c032310c329",
-  "index_sha256": "122022cb84ba711e7ceb8034512169d01ed1056924cfe9bf7e0a269665eb63f0",
+  "contract_sha256": "f726b931cbcf85619635d2afa437a32e2a09c24a8a0081ee22d5749d6f7de9e1",
+  "index_sha256": "0d40e489a4e0643dfed64dce1ffa6af62d28016b01c406bb6d6b28bf5e4c43e0",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -2323,7 +2323,7 @@
   "profile_sha256": "49305bc3a5c3e39453750482cdcf552f5f24f2e972cd8d6060707b6646d1cd49",
   "source_sha256": {
     "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
-    "linkml/schema/content_items.yaml": "41f0f5a359365e256aa61770a1183e564ecf287231b27d6e6e3d2c47fcd34fa9",
+    "linkml/schema/content_items.yaml": "c2f8776f0e2cb666afc087d1131ce027f741432b1eb5280b4da30975fca6a878",
     "linkml/schema/editions.yaml": "2248e61359f5d343f84cd70fd45ed194482788d3b2a5a3c643254248a3635762",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/impresso_contentitem.yaml": "92f29738ec4cfc89882036396401e003611418aeefcd31f1be1d1e20c2d8efb0",
@@ -2338,7 +2338,7 @@
     "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",
     "linkml/schema/sourced_entities.yaml": "a1ff33b46438af29d46c29f0085a0d7bb4c566b5440764de6739c9d7e82f2871",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
-    "linkml/schema/vocabulary.yaml": "92f15351f314f05c1424d1b12fe046b42a443a122337567d16e2b679ecf2b3f4",
+    "linkml/schema/vocabulary.yaml": "5051ac3682daa3ef66f50e3b3b2b799ff4143d62f54f5a4dedba8402a5812d7e",
     "vocabulary/profile.ttl": "44fc01c3a5672de7152928466ec2221b029454679446dc5925bedaf7afd84778"
   },
   "version": 1,
@@ -2560,7 +2560,7 @@
       ]
     },
     "ContentItemSubtypes": {
-      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.1.0.",
+      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.2.0.",
       "mappings": [],
       "values": [
         {
@@ -2772,6 +2772,26 @@
             }
           ],
           "value": "humour"
+        },
+        {
+          "description": "The paper's own name-plate at the head of an issue or a page: its title, number, date, price, subscription and address lines.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_masthead"
+            }
+          ],
+          "value": "masthead"
+        },
+        {
+          "description": "The printer's and publisher's line, usually at the foot of the last page: editor, publisher, composing room and press.",
+          "mappings": [
+            {
+              "kind": "meaning",
+              "term": "pc:subtype_imprint"
+            }
+          ],
+          "value": "imprint"
         }
       ]
     },
@@ -3518,7 +3538,7 @@
       ]
     },
     "ImpressoTypes": {
-      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.2.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
       "mappings": [],
       "values": [
         {
@@ -4718,7 +4738,7 @@
       ]
     },
     "Subjects": {
-      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.1.0.",
+      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.2.0.",
       "mappings": [],
       "values": [
         {
@@ -4834,7 +4854,7 @@
       ]
     },
     "TitleTypes": {
-      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.1.0.",
+      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.2.0.",
       "mappings": [],
       "values": [
         {

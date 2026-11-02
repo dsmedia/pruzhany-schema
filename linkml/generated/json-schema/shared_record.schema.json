@@ -472,7 +472,7 @@
             "type": "object"
         },
         "ContentItemSubtypes": {
-            "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.1.0.",
+            "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.2.0.",
             "enum": [
                 "wedding_greeting",
                 "engagement_greeting",
@@ -494,7 +494,9 @@
                 "letter",
                 "poem",
                 "sketch",
-                "humour"
+                "humour",
+                "masthead",
+                "imprint"
             ],
             "title": "ContentItemSubtypes",
             "type": "string"
@@ -1168,7 +1170,7 @@
             "type": "string"
         },
         "ImpressoTypes": {
-            "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.1.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+            "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.2.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
             "enum": [
                 "article",
                 "ad",
@@ -5484,7 +5486,7 @@
             "type": "object"
         },
         "Subjects": {
-            "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.1.0.",
+            "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.2.0.",
             "enum": [
                 "education",
                 "culture",
@@ -5614,7 +5616,7 @@
             "type": "object"
         },
         "TitleTypes": {
-            "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.1.0.",
+            "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.2.0.",
             "enum": [
                 "printed",
                 "supplied"
