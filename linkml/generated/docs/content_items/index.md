@@ -25,6 +25,9 @@ Name: pruzhany_content_items
 | [PrintedSection](PrintedSection.md) | A printed heading and the content items that stand beneath it, such as the title "What is heard in town?" over the town's news. |
 | [PrintedTitle](PrintedTitle.md) | A title as printed in the paper: its words and where each line of them stands. |
 | [ReadingStatus](ReadingStatus.md) | How far a content item's text and its English have been checked, each recorded on its own; null for either means it is not recorded, not that it was reviewed. |
+| [Summary](Summary.md) | A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it. |
+| [SummaryAuthorship](SummaryAuthorship.md) | Who wrote a summary, always a model, on which day, how hard it was told to think, and whether a person has checked the summary against the English. |
+| [SummaryBasis](SummaryBasis.md) | The exact English a summary was written from, by its digest, so that a summary of an English since changed can be told apart from a current one. |
 | [SuppliedTitle](SuppliedTitle.md) | A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check. |
 | [TextBasis](TextBasis.md) | The exact text a translation or supplied title was made from, and where it is printed, kept even after the text is read again. |
 | [TitleCheck](TitleCheck.md) | A check of a supplied title's English. |
@@ -38,19 +41,21 @@ Name: pruzhany_content_items
 | Slot | Description |
 | --- | --- |
 | [addresses](addresses.md) | Where that text is printed, one address a line or patch. |
-| [attribution](attribution.md) | Who checked it, and on which day. |
-| [based_on](based_on.md) | The exact printed text the title was made from, and where it is printed. |
+| [attribution](attribution.md) | The model that wrote the summary, how hard it was told to think, on which day, and whether a person has checked it. |
+| [based_on](based_on.md) | The exact English the summary was written from, by its digest. |
 | [bbox](bbox.md) | The box on the picture: left, top, width and height, in the picture's pixels. |
 | [block_breaks](block_breaks.md) | Where each region's text begins in the full text, counted in Unicode code points. |
 | [block_ids](block_ids.md) | The regions on that page, by their ids in the pages document, in reading order. |
 | [by](by.md) | Who made it or allowed it: a person, a session or a program. |
 | [checked_against](checked_against.md) | A later check of this title against the reading, where one was made. |
+| [checked_by_person](checked_by_person.md) | Whether a person has checked the summary against the English; false until one has. |
 | [confidence](confidence.md) | How sure the link is, from 0 to 1. |
 | [content_item_ids](content_item_ids.md) | The content items beneath the heading, by their ids. |
 | [content_items](content_items.md) | The issue's content items. |
 | [cross_references](cross_references.md) | Links from this content item to others in the issue. |
+| [effort](effort.md) | How hard the model was told to think, in its service's own word, such as low. |
 | [english](english.md) | How far the English has been checked; null where not recorded. |
-| [english_sha256](english_sha256.md) | The SHA-256 digest of the checked English field's exact UTF-8 bytes. |
+| [english_sha256](english_sha256.md) | The SHA-256 digest of the exact UTF-8 bytes of the content item's translation text that the summary was written from. |
 | [event_id](event_id.md) | The life event the content item prints, by the event's id, where it prints one. |
 | [evidence](evidence.md) | What shows the link, in words. |
 | [full_text](full_text.md) | The content item's printed text, a copy made for the site from the lines of its regions. |
@@ -78,9 +83,10 @@ Name: pruzhany_content_items
 | [source_text](source_text.md) | The text used, exactly, never normalised or replaced by a later reading. |
 | [subject_ids](subject_ids.md) | What the content item is about, as subjects of the site-content vocabulary. |
 | [subtype](subtype.md) | The narrower form the content item takes within its kind, such as a wedding greeting within advertisements, where one is known. |
+| [summary](summary.md) | A short English summary of the content item, written from its English translation, where one has been written and upheld. |
 | [supplied_title](supplied_title.md) | A title in English supplied for the content item. |
 | [target_id](target_id.md) | The id of the content item linked to. |
-| [text](text.md) | How far the printed text has been checked; null where not recorded. |
+| [text](text.md) | The summary's English. |
 | [translation](translation.md) | The content item's text in English, where it has been translated. |
 | [type](type.md) | The content item's kind, one of Impresso's content item types. |
 | [vocabulary_version](vocabulary_version.md) | The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible. |

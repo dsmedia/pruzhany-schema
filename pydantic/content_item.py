@@ -1,5 +1,5 @@
 """Content items and printed sections in the current site documents."""
-from .generated.models import ContentItem, ContentItemsData, PrintedSection, ReadingStatus
+from .generated.models import ContentItem, ContentItemsData, PrintedSection, ReadingStatus, Summary, SummaryAuthorship, SummaryBasis
 from typing import Annotated, Literal
 from pydantic import BeforeValidator, Field, model_validator
 from .sourced_entities import Strict, Text, Day
@@ -25,6 +25,8 @@ def _ContentItem__content_contract(self):
     if any(n > len(self.full_text) or (i > 0 and n <= self.block_breaks[i - 1])
            for i, n in enumerate(self.block_breaks)):
         errors.append('block breaks must be ordered offsets within full_text')
+    if self.summary is not None and self.translation is None:
+        errors.append('a summary needs the translation it was written from')
     if errors:
         raise ValueError('; '.join(errors))
     return self

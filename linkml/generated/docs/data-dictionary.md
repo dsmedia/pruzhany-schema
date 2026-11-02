@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `88bc8d09f027405f89aee39ac23b71c71c48479b88b73b4715833a9ec809656e`.
+Definition fingerprint: `4259ea92b2d3de45ecbe93bae4dfedce73f311ab56fe58f95940a4445579554a`.
 
 ## What the Pruzhany issue documents share
 
@@ -294,6 +294,7 @@ Meaning: ehri:RecordResource (class uri).
 | `section_id` | The printed section the content item stands under, by the section's id, where it stands under one. | NonBlankText | No | No direct mapping recorded |
 | `subject_ids` | What the content item is about, as subjects of the site-content vocabulary. | list of Subjects | Yes | rico:hasOrHadSubject (slot uri) |
 | `subtype` | The narrower form the content item takes within its kind, such as a wedding greeting within advertisements, where one is known. | ContentItemSubtypes | No | rico:hasDocumentaryFormType (slot uri) |
+| `summary` | A short English summary of the content item, written from its English translation, where one has been written and upheld. | Summary | No | rico:scopeAndContent (slot uri) |
 | `supplied_title` | A title in English supplied for the content item. | SuppliedTitle | Yes | rico:hasOrHadTitle (slot uri) |
 | `translation` | The content item's text in English, where it has been translated. | Translation | No | No direct mapping recorded |
 | `type` | The content item's kind, one of Impresso's content item types. | ImpressoTypes | Yes | No direct mapping recorded |
@@ -341,6 +342,50 @@ Meaning: pc:site_reading_status (exact mappings).
 | --- | --- | --- | --- | --- |
 | `english` | How far the English has been checked; null where not recorded. | ReadingStatusValue | No | No direct mapping recorded |
 | `text` | How far the printed text has been checked; null where not recorded. | ReadingStatusValue | No | No direct mapping recorded |
+
+Source: `linkml/schema/content_items.yaml`.
+
+### Summary
+
+A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `attribution` | The model that wrote the summary, how hard it was told to think, on which day, and whether a person has checked it. | SummaryAuthorship | Yes | No direct mapping recorded |
+| `based_on` | The exact English the summary was written from, by its digest. | SummaryBasis | Yes | No direct mapping recorded |
+| `language` | The summary's language, always English (en). | string; fixed value: en | Yes | No direct mapping recorded |
+| `text` | The summary's English. | NonBlankText | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/content_items.yaml`.
+
+### SummaryAuthorship
+
+Who wrote a summary, always a model, on which day, how hard it was told to think, and whether a person has checked the summary against the English.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `by` | Who made it or allowed it: a person, a session or a program. | NonBlankText | Yes | No direct mapping recorded |
+| `checked_by_person` | Whether a person has checked the summary against the English; false until one has. | boolean | Yes | No direct mapping recorded |
+| `effort` | How hard the model was told to think, in its service's own word, such as low. | NonBlankText | Yes | No direct mapping recorded |
+| `kind` | Always a model (model). | AuthorshipKind; one of: ['model'] | Yes | No direct mapping recorded |
+| `note` | A note on how or why. | string | No | No direct mapping recorded |
+| `on` | The day it was made or allowed. | IsoDay | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/content_items.yaml`.
+
+### SummaryBasis
+
+The exact English a summary was written from, by its digest, so that a summary of an English since changed can be told apart from a current one.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `english_sha256` | The SHA-256 digest of the exact UTF-8 bytes of the content item's translation text that the summary was written from. | Sha256Hex | Yes | pc:site_english_sha256 (slot uri) |
 
 Source: `linkml/schema/content_items.yaml`.
 

@@ -57,9 +57,12 @@ class PythonGeneration(unittest.TestCase):
         # its nested definitions. All previous constraints/defaults/config remain checked.
         additions = {
             # Issue #56: optional printed language, prescribed independently of the emitter.
+            # Openings (2 November 2026): an optional summary after it; its own shape is
+            # prescribed in test_the_summary_is_exactly_its_prescribed_shape.
             'ContentItem': {'language': {'anyOf': [
                 {'type': 'string', 'pattern': CONTENT_ITEM_LANGUAGE_PATTERN},
-                {'type': 'null'}], 'default': None}},
+                {'type': 'null'}], 'default': None},
+                'summary': {'anyOf': [{'$ref': '#/$defs/Summary'}, {'type': 'null'}], 'default': None}},
             'PlaceIdentifier': {'type': {'anyOf': [
                 {'const': 'old_identifier', 'type': 'string'}, {'type': 'null'}], 'default': None}},
             **{name: {'identifiers': {'anyOf': [
@@ -138,6 +141,37 @@ class PythonGeneration(unittest.TestCase):
                     self.assertEqual(before.get('default'), after.get('default'))
                 module = __import__(f'generation_tests_schema.{old["module"]}', fromlist=[name])
                 self.assertIs(getattr(module, name), model)
+
+    def test_the_summary_is_exactly_its_prescribed_shape(self):
+        # Openings (2 November 2026), prescribed independently of the emitter: the summary,
+        # its basis by digest, and a model's authorship with its effort and the person check.
+        text = {'pattern': '\\S', 'type': 'string'}
+        expected = {
+            'Summary': ({'text': text, 'language': {'enum': ['en'], 'type': 'string'},
+                         'based_on': {'$ref': '#/$defs/SummaryBasis'},
+                         'attribution': {'$ref': '#/$defs/SummaryAuthorship'}},
+                        ['text', 'language', 'based_on', 'attribution']),
+            'SummaryBasis': ({'english_sha256': {'pattern': '^[0-9a-f]{64}$', 'type': 'string'}},
+                             ['english_sha256']),
+            'SummaryAuthorship': ({'by': text, 'on': {'pattern': '^\\d{4}-\\d{2}-\\d{2}$', 'type': 'string'},
+                                   'note': {'anyOf': [{'type': 'null'}, {'type': 'string'}]},
+                                   'kind': {'enum': ['model'], 'type': 'string'}, 'effort': text,
+                                   'checked_by_person': {'type': 'boolean'}},
+                                  ['by', 'on', 'kind', 'effort', 'checked_by_person']),
+        }
+        for name, (properties, required) in expected.items():
+            with self.subTest(model=name):
+                model = getattr(package(), name)
+                self.assertIs(model, getattr(models(), name))
+                schema = model.model_json_schema()
+                self.assertEqual(backend.canonical(schema, schema.get('$defs', {})), {
+                    'additionalProperties': False, 'properties': properties, 'required': required,
+                    'type': 'object'})
+                self.assertEqual(list(model.model_fields), list(properties))
+        self.assertTrue(issubclass(models().SummaryAuthorship, models().Authorship))
+        with self.assertRaises(ValidationError):
+            models().SummaryAuthorship.model_validate_json(json.dumps(dict(
+                by='fictional-model', on='2026-02-30', kind='model', effort='low', checked_by_person=False)))
 
     def test_the_package_has_exactly_the_definition_classes(self):
         self.assertEqual(set(models().__all__), set(self.index['classes']))

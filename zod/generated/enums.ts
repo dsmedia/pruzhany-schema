@@ -332,3 +332,5 @@ export const MediaConsentBasisEnum = z.enum([
 export const MediaConsentScopeUseEnum = z.enum(['site', 'site+download']);
 
 export const SourcedRelationTypeEnum = z.enum(['kinship', 'other']);
+
+export const SummaryAuthorshipKindEnum = z.enum(['model']);

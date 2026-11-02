@@ -154,6 +154,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     slot_uri: rico:textualValue
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
@@ -167,6 +168,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
     - ContentItem
+    - Summary
     - SuppliedTitle
     - Translation
     required: true
@@ -175,8 +177,8 @@ attributes:
     name: based_on
     description: The exact printed text the title was made from, and where it is printed.
     from_schema: https://pruzhany.org/ns/site_common
-    rank: 1000
     domain_of:
+    - Summary
     - SuppliedTitle
     - Translation
     range: TextBasis
@@ -187,6 +189,7 @@ attributes:
     description: Who wrote the title, and on which day.
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
+    - Summary
     - EnglishCheck
     - SuppliedTitle
     - Translation
@@ -227,6 +230,7 @@ attributes:
     slot_uri: rico:textualValue
     owner: SuppliedTitle
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
@@ -241,6 +245,7 @@ attributes:
     owner: SuppliedTitle
     domain_of:
     - ContentItem
+    - Summary
     - SuppliedTitle
     - Translation
     range: string
@@ -250,9 +255,9 @@ attributes:
     name: based_on
     description: The exact printed text the title was made from, and where it is printed.
     from_schema: https://pruzhany.org/ns/site_common
-    rank: 1000
     owner: SuppliedTitle
     domain_of:
+    - Summary
     - SuppliedTitle
     - Translation
     range: TextBasis
@@ -264,6 +269,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: SuppliedTitle
     domain_of:
+    - Summary
     - EnglishCheck
     - SuppliedTitle
     - Translation

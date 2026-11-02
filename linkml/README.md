@@ -190,6 +190,23 @@ The generation commands below were checked against uv's
 [bun install](https://bun.sh/docs/pm/cli/install) (`--frozen-lockfile`) on the same
 day; versions remain locked.
 
+`ContentItem.summary` is optional: a short English summary of the item (the website's
+"opening"), written by a model from the item's translation, approved by the coordinator on
+2 November 2026. Its `Summary` holds `text`, `language` (always `en`), `based_on` and
+`attribution`, as `SuppliedTitle` does; `based_on` is a `SummaryBasis` whose `english_sha256`
+is the SHA-256 of the exact UTF-8 bytes of `translation.text` it was written from (pruzhany-steps
+writes a summary only while that digest is the current English's), and `attribution` is a
+`SummaryAuthorship is_a Authorship` whose `kind` is only `model`, with the model's `effort` and
+`checked_by_person`. A ContentItem rule, with typed ranges so that null reads as the twins
+read it, requires the `translation` beside a `summary`; the Zod refinement and the retained
+Python validator make the same check. The slot maps to `rico:scopeAndContent`, which RiC-O 1.1
+gives a RecordResource (the content item's `ehri:RecordResource`) with a literal value and the
+pinned EHRI holdings profile carries as a language-tagged string: the summary's text tagged
+with its language; its basis and attribution have no pinned term, and the new classes stay out
+of the RDF view as ContentItem does. `standards/test_summary_meaning.py` reads those pins.
+Read **2 November 2026**: `standards/rico-1.1-axioms.json`, `standards/ehri-0.2.0.json` and
+`standards/ehri-holdings-1.1-1c2325f9/` (`holdings.shacl.ttl`, `holdings.shex`).
+
 Citation, MediaFamilyWords and Source title English use `CitedTranslation is_a Translation`
 from `site_common.yaml`. Its `CitedTextBasis is_a TextBasis` makes addresses optional;
 piece Translation and TextBasis still require them.

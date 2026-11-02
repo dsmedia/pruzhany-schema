@@ -21,6 +21,7 @@ URI: [pc:language](https://pruzhany.org/ns/sourced-entities#language)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [ContentItem](ContentItem.md) | One article, notice, greeting or advertisement of the issue: its kind, its titles, its text and English, the regions it is printed in and what it names. |  no  |
+| [Summary](Summary.md) | A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it. |  no  |
 | [SuppliedTitle](SuppliedTitle.md) | A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check. |  no  |
 | [Translation](Translation.md) | An English translation of exact source words, with the exact text it was made from, who made it and, where one was made, its later check. |  no  |
 | [CitedTranslation](CitedTranslation.md) | English of a citation's quote or a source title, located by its containing record. Reuses Translation's English, attribution and check contract without requiring an image and box for a book page or archive record. |  no  |
@@ -37,7 +38,7 @@ URI: [pc:language](https://pruzhany.org/ns/sourced-entities#language)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [ContentItem](ContentItem.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
+| Domain Of | [ContentItem](ContentItem.md), [Summary](Summary.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
 
 
 
@@ -72,6 +73,7 @@ URI: [pc:language](https://pruzhany.org/ns/sourced-entities#language)
 name: language
 domain_of:
 - ContentItem
+- Summary
 - SuppliedTitle
 - Translation
 range: string

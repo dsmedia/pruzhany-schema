@@ -3,6 +3,9 @@ import {
 	ContentItemShape,
 	PrintedSectionShape,
 	ContentItemsDataShape,
+	SummaryShape,
+	SummaryBasisShape,
+	SummaryAuthorshipShape,
 } from './generated/content_items';
 import { z } from 'zod/v4';
 import {
@@ -25,6 +28,15 @@ export const ReadingStatusSchema = ReadingStatusShape.extend({
 });
 export type ReadingStatus = z.infer<typeof ReadingStatusSchema>;
 
+// A summary written by a model from the item's English, bound to that English by its digest.
+// Keep the retained calendar refinement inside the generated attribution.
+export const SummaryAuthorshipSchema = SummaryAuthorshipShape.extend({ on: siteDay });
+export type SummaryAuthorship = z.infer<typeof SummaryAuthorshipSchema>;
+export const SummaryBasisSchema = SummaryBasisShape;
+export type SummaryBasis = z.infer<typeof SummaryBasisSchema>;
+export const SummarySchema = SummaryShape.extend({ attribution: SummaryAuthorshipSchema });
+export type Summary = z.infer<typeof SummarySchema>;
+
 // Rebind children to retain address, null, calendar and text checks in the document.
 export const ContentItemSchema = ContentItemShape.extend({
 	printed_title: PrintedTitleSchema.nullish(),
@@ -32,6 +44,7 @@ export const ContentItemSchema = ContentItemShape.extend({
 	translation: TranslationSchema.nullish(),
 	reading_status: ReadingStatusSchema.nullish(),
 	cross_references: z.array(CrossReferenceSchema),
+	summary: SummarySchema.nullish(),
 }).superRefine((v, ctx) => {
 	if (v.subtype && subtypeParents[v.subtype] !== v.type)
 		ctx.addIssue({ code: 'custom', message: 'subtype has a different Impresso parent' });
@@ -39,6 +52,8 @@ export const ContentItemSchema = ContentItemShape.extend({
 	const length = [...v.full_text].length; // Unicode code points, as in Python.
 	if (v.block_breaks.some((n, i) => n > length || (i > 0 && n <= v.block_breaks[i - 1])))
 		errors.push('block breaks must be ordered offsets within full_text');
+	if (v.summary != null && v.translation == null)
+		errors.push('a summary needs the translation it was written from');
 	for (const message of errors) ctx.addIssue({ code: 'custom', message });
 });
 export type ContentItem = z.infer<typeof ContentItemSchema>;

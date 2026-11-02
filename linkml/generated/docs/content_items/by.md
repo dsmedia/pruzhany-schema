@@ -25,6 +25,7 @@ URI: [pc:by](https://pruzhany.org/ns/sourced-entities#by)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [SummaryAuthorship](SummaryAuthorship.md) | Who wrote a summary, always a model, on which day, how hard it was told to think, and whether a person has checked the summary against the English. |  no  |
 | [Attribution](Attribution.md) | Who made or allowed something, on what day, with an optional note. |  no  |
 | [Authorship](Authorship.md) | Who wrote a supplied title, a translation or a check of one, a person or a model, and on which day. |  no  |
 

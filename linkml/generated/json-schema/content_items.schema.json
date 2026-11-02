@@ -302,6 +302,28 @@
                             "type"
                         ]
                     }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "summary": {
+                                "$ref": "#/$defs/Summary"
+                            }
+                        },
+                        "required": [
+                            "summary"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "translation": {
+                                "$ref": "#/$defs/Translation"
+                            }
+                        },
+                        "required": [
+                            "translation"
+                        ]
+                    }
                 }
             ],
             "description": "One article, notice, greeting or advertisement of the issue: its kind, its titles, its text and English, the regions it is printed in and what it names.",
@@ -418,6 +440,17 @@
                         }
                     ],
                     "description": "The narrower form the content item takes within its kind, such as a wedding greeting within advertisements, where one is known."
+                },
+                "summary": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Summary"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A short English summary of the content item, written from its English translation, where one has been written and upheld."
                 },
                 "supplied_title": {
                     "$ref": "#/$defs/SuppliedTitle",
@@ -1059,6 +1092,102 @@
             ],
             "title": "Subjects",
             "type": "string"
+        },
+        "Summary": {
+            "additionalProperties": false,
+            "description": "A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it.",
+            "properties": {
+                "attribution": {
+                    "$ref": "#/$defs/SummaryAuthorship",
+                    "description": "The model that wrote the summary, how hard it was told to think, on which day, and whether a person has checked it."
+                },
+                "based_on": {
+                    "$ref": "#/$defs/SummaryBasis",
+                    "description": "The exact English the summary was written from, by its digest."
+                },
+                "language": {
+                    "const": "en",
+                    "description": "The summary's language, always English (en).",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "The summary's English.",
+                    "pattern": "\\S",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "text",
+                "language",
+                "based_on",
+                "attribution"
+            ],
+            "title": "Summary",
+            "type": "object"
+        },
+        "SummaryAuthorship": {
+            "additionalProperties": false,
+            "description": "Who wrote a summary, always a model, on which day, how hard it was told to think, and whether a person has checked the summary against the English.",
+            "properties": {
+                "by": {
+                    "description": "Who made it or allowed it: a person, a session or a program.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "checked_by_person": {
+                    "description": "Whether a person has checked the summary against the English; false until one has.",
+                    "type": "boolean"
+                },
+                "effort": {
+                    "description": "How hard the model was told to think, in its service's own word, such as low.",
+                    "pattern": "\\S",
+                    "type": "string"
+                },
+                "kind": {
+                    "$ref": "#/$defs/AuthorshipKind",
+                    "description": "Always a model (model).",
+                    "enum": [
+                        "model"
+                    ]
+                },
+                "note": {
+                    "description": "A note on how or why.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "on": {
+                    "description": "The day it was made or allowed.",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "effort",
+                "checked_by_person",
+                "kind",
+                "by",
+                "on"
+            ],
+            "title": "SummaryAuthorship",
+            "type": "object"
+        },
+        "SummaryBasis": {
+            "additionalProperties": false,
+            "description": "The exact English a summary was written from, by its digest, so that a summary of an English since changed can be told apart from a current one.",
+            "properties": {
+                "english_sha256": {
+                    "description": "The SHA-256 digest of the exact UTF-8 bytes of the content item's translation text that the summary was written from.",
+                    "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "english_sha256"
+            ],
+            "title": "SummaryBasis",
+            "type": "object"
         },
         "SuppliedTitle": {
             "additionalProperties": false,

@@ -129,8 +129,8 @@ attributes:
     name: text
     description: How far the printed text has been checked; null where not recorded.
     from_schema: https://pruzhany.org/ns/content_items
-    rank: 1000
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
@@ -165,9 +165,9 @@ attributes:
     name: text
     description: How far the printed text has been checked; null where not recorded.
     from_schema: https://pruzhany.org/ns/content_items
-    rank: 1000
     owner: ReadingStatus
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
