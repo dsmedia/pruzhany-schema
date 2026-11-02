@@ -3,8 +3,11 @@
 This repository holds the LinkML data model and the contracts both other repositories consume.
 `pruzhany-steps` holds the record, the pipeline, the one plan (`PLAN.md`) and the shared decision
 record (`decisions/`); `pruzhany-svelte` is the website, whose data steps generates. Read
-[README.md](README.md) and [linkml/README.md](linkml/README.md) before changing the model. Where a
-skill's or tool's defaults differ from this file, this file holds.
+[README.md](README.md) and [linkml/README.md](linkml/README.md) before changing the model. The model
+must grow to cover every kind of data and exchange: physical pages, regions, lines, words and boxes;
+semantic items and what they name; provenance (sources, readings, corrections); model exchanges; and
+products (pruzhany-steps decision 214). Where a skill's or tool's defaults differ from this file, this
+file holds.
 
 ## Standards
 
@@ -20,8 +23,8 @@ skill's or tool's defaults differ from this file, this file holds.
 
 ## Privacy and vocabulary
 
-- **This public repository and its issues hold no facts about real people.** Notes, examples and
-  evidence about real people go to pruzhany-steps; issues, design notes and tests here name the type,
+- **During the build-out, this public repository and its issues hold no facts about real people.**
+  Notes, examples and evidence about real people go to pruzhany-steps; issues, design notes and tests here name the type,
   the field and its mapping, with fictional examples. What is already here stays (steps decision 214).
 - New vocabulary types need the owner's approval in batches, each with its mapping, in the
   [approval record](docs/vocabulary-approvals.md); their real examples stay in pruzhany-steps and are
@@ -38,7 +41,7 @@ skill's or tool's defaults differ from this file, this file holds.
 - Keep the wire behaviour of pages and blocks, cross-references and external references; keep released
   vocabulary and snapshots, standards pins, the LLM extraction models and the sourced-entities pilot,
   which stays isolated from production models ([current site files](README.md#current-site-files)).
-- Tests under `zod/` need nothing but bun ([rules](.claude/rules/zod-tests.md)).
+- Read the [bun-only test rules](.claude/rules/zod-tests.md) before adding or changing tests under `zod/`.
 
 ## Verify
 
