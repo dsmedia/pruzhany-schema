@@ -411,6 +411,502 @@
 	},
 	"cases": [
 		{
+			"name": "ContentItem summary: written by a model, unchecked",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: left out",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "ContentItem summary: null",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: null, with no translation",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": null
+				},
+				{
+					"path": ["translation"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: with a note, checked by a person",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": true,
+							"note": "Fictional note."
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: without a translation",
+			"model": "ContentItem",
+			"valid": false,
+			"error": "a summary needs the translation it was written from",
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				},
+				{
+					"path": ["translation"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: with a null translation",
+			"model": "ContentItem",
+			"valid": false,
+			"error": "a summary needs the translation it was written from",
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				},
+				{
+					"path": ["translation"],
+					"value": null
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: written by a person",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "person",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: in French",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "fr",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: blank text",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": " \n",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: an uppercase digest",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: a digest one digit short",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: a digest with a trailing newline",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\n"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: the printed text instead of a digest",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"source_text": "Fictional words."
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: no basis",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: no effort",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: blank effort",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": " ",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: the person check as a string",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": "false"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: no person check",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: a day not in the calendar",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-02-30",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: an unknown key",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false
+						},
+						"quotes": ["Fictional words."]
+					}
+				}
+			]
+		},
+		{
+			"name": "ContentItem summary: an unknown attribution key",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["summary"],
+					"value": {
+						"text": "A fictional society chose a new board.",
+						"language": "en",
+						"based_on": {
+							"english_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+						},
+						"attribution": {
+							"by": "fictional-model",
+							"on": "2026-11-02",
+							"kind": "model",
+							"effort": "low",
+							"checked_by_person": false,
+							"model_version": "fictional"
+						}
+					}
+				}
+			]
+		},
+		{
 			"name": "ContentItem language: omitted",
 			"model": "ContentItem",
 			"valid": true,

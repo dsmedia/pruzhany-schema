@@ -1,8 +1,8 @@
 {
-  "contract_sha256": "2f3c343e8b01b75defe5bba9fad04487c7253ec70b0ccb1d80f9d7042fbcb4f9",
+  "contract_sha256": "0d01343d0afe519b29d8c96a5739a32e880758265e8b6e2d507cd134e77f0c99",
   "inputs": {
-    "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
-    "linkml/schema/content_items.yaml": "ae9047ecfc53620deefcfd5a608915cd6f33313a3ec84ef2f31843b075b40e60",
+    "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
+    "linkml/schema/content_items.yaml": "b2e332fdf8bb5f036ac1c5e29419d61ad96fd917aea174c14db9e4e56c6bdb25",
     "linkml/schema/editions.yaml": "80114ffa9810e31da37cc106361a74e1bdceb849105ab4d01b334c3a6fe011c4",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
@@ -1084,6 +1084,32 @@
           }
         },
         {
+          "description": "A short English summary of the content item, written from its English translation, where one has been written and upheld.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "rico:scopeAndContent"
+            }
+          ],
+          "multivalued": false,
+          "name": "summary",
+          "range": "Summary",
+          "references": [],
+          "relationship": "contains",
+          "required": false,
+          "shape": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Summary"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A short English summary of the content item, written from its English translation, where one has been written and upheld."
+          }
+        },
+        {
           "description": "A title in English supplied for the content item.",
           "mappings": [
             {
@@ -1146,7 +1172,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/content_items.yaml",
-      "yaml": "  ContentItem:\n    description: >-\n      One article, notice, greeting or advertisement of the issue: its kind, its titles, its\n      text and English, the regions it is printed in and what it names.\n    class_uri: ehri:RecordResource\n    annotations:\n      impresso: >-\n        A content item file (paper_contentitem.schema.json).\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        pattern: '^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])'\n        description: >-\n          The content item's id within the issue.\n        annotations:\n          impresso: >-\n            The content item's id.\n      type:\n        range: ImpressoTypes\n        required: true\n        description: >-\n          The content item's kind, one of Impresso's content item types.\n        annotations:\n          impresso: >-\n            The content item's type (tp).\n      subtype:\n        range: ContentItemSubtypes\n        slot_uri: rico:hasDocumentaryFormType\n        description: >-\n          The narrower form the content item takes within its kind, such as a wedding\n          greeting within advertisements, where one is known.\n      printed_title:\n        range: PrintedTitle\n        inlined: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          The title as printed above the content item, where it has one.\n        annotations:\n          impresso: >-\n            The content item's title.\n      supplied_title:\n        range: SuppliedTitle\n        inlined: true\n        required: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          A title in English supplied for the content item.\n      subject_ids:\n        range: Subjects\n        multivalued: true\n        required: true\n        slot_uri: rico:hasOrHadSubject\n        description: >-\n          What the content item is about, as subjects of the site-content vocabulary.\n      section_id:\n        range: NonBlankText\n        description: >-\n          The printed section the content item stands under, by the section's id, where it\n          stands under one.\n      full_text:\n        required: true\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          The content item's printed text, a copy made for the site from the lines of its\n          regions.\n        annotations:\n          impresso: >-\n            The content item's rebuilt full text (ft).\n      translation:\n        range: Translation\n        inlined: true\n        description: >-\n          The content item's text in English, where it has been translated.\n      reading_status:\n        range: ReadingStatus\n        inlined: true\n        exact_mappings:\n          - pc:site_reading_status\n        description: >-\n          How far the text and the English have been checked; left out or null where it is\n          not recorded.\n      block_breaks:\n        range: NonNegativeInteger\n        multivalued: true\n        required: true\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          Where each region's text begins in the full text, counted in Unicode code points.\n        annotations:\n          impresso: >-\n            The text offsets of page regions (rb).\n      page_blocks:\n        range: ContentItemBlockRef\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        minimum_cardinality: 1\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          The regions the content item is printed in, page by page, in reading order.\n      location_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          The places the content item names, by their ids in the shared record.\n      organization_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          The organisations the content item names, by their ids in the shared record.\n      cross_references:\n        range: CrossReference\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Links from this content item to others in the issue.\n      event_id:\n        range: NonBlankText\n        description: >-\n          The life event the content item prints, by the event's id, where it prints one.\n      language:\n        # vocabulary/site-content.json, binding source_language.\n        slot_uri: rico:hasOrHadLanguage\n        range: LanguageTag\n        # standards/impresso-329323c/paper_contentitem.schema.json, lg,\n        # read 1 November 2026: two- or three-letter lowercase ISO 639 codes; the end guard\n        # refuses a trailing newline, which a bare $ lets through in Python.\n        pattern: '^[a-z]{2,3}$(?![\\s\\S])'\n        description: >-\n          The language most of the item is printed in, as the reading step judged it,\n          as a two- or three-letter ISO 639 code (Impresso's lg).\n        annotations:\n          impresso: >-\n            The content item's language (lg in paper_contentitem.schema.json and\n            issue.schema.json, standards/impresso-329323c, read 1 November 2026).\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this content item belongs to, by its id in the source register.\n        annotations:\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n    rules:\n      - description: >-\n          A greeting, thanks, notice, announcement, appeal or commercial advertisement is an\n          advertisement (ad).\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - wedding_greeting\n                - engagement_greeting\n                - birth_greeting\n                - bar_mitzvah_greeting\n                - new_year_greeting\n                - departure_greeting\n                - greeting\n                - thanks\n                - meeting_notice\n                - announcement\n                - appeal\n                - commercial_advertisement\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: ad\n      - description: >-\n          A condolence, memorial notice or death announcement is a death notice (death_notice).\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - condolence\n                - memorial_notice\n                - death_announcement\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: death_notice\n      - description: >-\n          An editorial, opinion, letter, poem, sketch, masthead or imprint is an article.\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - editorial\n                - opinion\n                - letter\n                - poem\n                - sketch\n                - masthead\n                - imprint\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: article\n      - description: >-\n          A humorous piece (humour) is entertainment.\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - humour\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: entertainment\n"
+      "yaml": "  ContentItem:\n    description: >-\n      One article, notice, greeting or advertisement of the issue: its kind, its titles, its\n      text and English, the regions it is printed in and what it names.\n    class_uri: ehri:RecordResource\n    annotations:\n      impresso: >-\n        A content item file (paper_contentitem.schema.json).\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        pattern: '^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])'\n        description: >-\n          The content item's id within the issue.\n        annotations:\n          impresso: >-\n            The content item's id.\n      type:\n        range: ImpressoTypes\n        required: true\n        description: >-\n          The content item's kind, one of Impresso's content item types.\n        annotations:\n          impresso: >-\n            The content item's type (tp).\n      subtype:\n        range: ContentItemSubtypes\n        slot_uri: rico:hasDocumentaryFormType\n        description: >-\n          The narrower form the content item takes within its kind, such as a wedding\n          greeting within advertisements, where one is known.\n      printed_title:\n        range: PrintedTitle\n        inlined: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          The title as printed above the content item, where it has one.\n        annotations:\n          impresso: >-\n            The content item's title.\n      supplied_title:\n        range: SuppliedTitle\n        inlined: true\n        required: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          A title in English supplied for the content item.\n      subject_ids:\n        range: Subjects\n        multivalued: true\n        required: true\n        slot_uri: rico:hasOrHadSubject\n        description: >-\n          What the content item is about, as subjects of the site-content vocabulary.\n      section_id:\n        range: NonBlankText\n        description: >-\n          The printed section the content item stands under, by the section's id, where it\n          stands under one.\n      full_text:\n        required: true\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          The content item's printed text, a copy made for the site from the lines of its\n          regions.\n        annotations:\n          impresso: >-\n            The content item's rebuilt full text (ft).\n      translation:\n        range: Translation\n        inlined: true\n        description: >-\n          The content item's text in English, where it has been translated.\n      reading_status:\n        range: ReadingStatus\n        inlined: true\n        exact_mappings:\n          - pc:site_reading_status\n        description: >-\n          How far the text and the English have been checked; left out or null where it is\n          not recorded.\n      block_breaks:\n        range: NonNegativeInteger\n        multivalued: true\n        required: true\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          Where each region's text begins in the full text, counted in Unicode code points.\n        annotations:\n          impresso: >-\n            The text offsets of page regions (rb).\n      page_blocks:\n        range: ContentItemBlockRef\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        minimum_cardinality: 1\n        related_mappings:\n          - pc:site_site_copy\n        description: >-\n          The regions the content item is printed in, page by page, in reading order.\n      location_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          The places the content item names, by their ids in the shared record.\n      organization_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        description: >-\n          The organisations the content item names, by their ids in the shared record.\n      cross_references:\n        range: CrossReference\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Links from this content item to others in the issue.\n      event_id:\n        range: NonBlankText\n        description: >-\n          The life event the content item prints, by the event's id, where it prints one.\n      language:\n        # vocabulary/site-content.json, binding source_language.\n        slot_uri: rico:hasOrHadLanguage\n        range: LanguageTag\n        # standards/impresso-329323c/paper_contentitem.schema.json, lg,\n        # read 1 November 2026: two- or three-letter lowercase ISO 639 codes; the end guard\n        # refuses a trailing newline, which a bare $ lets through in Python.\n        pattern: '^[a-z]{2,3}$(?![\\s\\S])'\n        description: >-\n          The language most of the item is printed in, as the reading step judged it,\n          as a two- or three-letter ISO 639 code (Impresso's lg).\n        annotations:\n          impresso: >-\n            The content item's language (lg in paper_contentitem.schema.json and\n            issue.schema.json, standards/impresso-329323c, read 1 November 2026).\n      summary:\n        range: Summary\n        inlined: true\n        # RiC-O 1.1 scopeAndContent (standards/rico-1.1-axioms.json, read 2 November 2026): a\n        # datatype property of a RecordResource, whose range is a literal; ehri:RecordResource,\n        # this class's class_uri, is a RiC-O RecordResource (standards/ehri-0.2.0.json). The\n        # pinned EHRI holdings profile carries it as a language-tagged string\n        # (standards/ehri-holdings-1.1-1c2325f9: holdings.shacl.ttl and holdings.shex). The\n        # summary's text, tagged with its language, is that string; its basis and attribution\n        # are this project's provenance, which neither pinned ontology has a term for.\n        slot_uri: rico:scopeAndContent\n        description: >-\n          A short English summary of the content item, written from its English translation,\n          where one has been written and upheld.\n      newspaper:\n        range: NonBlankText\n        required: true\n        slot_uri: pc:site_newspaper\n        description: >-\n          The paper this content item belongs to, by its id in the source register.\n        annotations:\n          impresso: >-\n            The media alias carried by Impresso's canonical id. The pinned schemas have\n            no separate media-alias property; site_newspaper keeps the source register id.\n    rules:\n      - description: >-\n          A greeting, thanks, notice, announcement, appeal or commercial advertisement is an\n          advertisement (ad).\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - wedding_greeting\n                - engagement_greeting\n                - birth_greeting\n                - bar_mitzvah_greeting\n                - new_year_greeting\n                - departure_greeting\n                - greeting\n                - thanks\n                - meeting_notice\n                - announcement\n                - appeal\n                - commercial_advertisement\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: ad\n      - description: >-\n          A condolence, memorial notice or death announcement is a death notice (death_notice).\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - condolence\n                - memorial_notice\n                - death_announcement\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: death_notice\n      - description: >-\n          An editorial, opinion, letter, poem, sketch, masthead or imprint is an article.\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - editorial\n                - opinion\n                - letter\n                - poem\n                - sketch\n                - masthead\n                - imprint\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: article\n      - description: >-\n          A humorous piece (humour) is entertainment.\n        preconditions:\n          slot_conditions:\n            subtype:\n              equals_string_in:\n                - humour\n        postconditions:\n          slot_conditions:\n            type:\n              equals_string: entertainment\n      # Typed ranges (external_schema.ReleaseGenerator) keep null out of both sides, as the\n      # twins read it: a null summary asks nothing, and a null translation does not answer.\n      - description: >-\n          A content item with a summary has the translation the summary was written from.\n        preconditions:\n          slot_conditions:\n            summary:\n              annotations:\n                json_schema_typed_range: true\n              range: Summary\n              required: true\n        postconditions:\n          slot_conditions:\n            translation:\n              annotations:\n                json_schema_typed_range: true\n              range: Translation\n              required: true\n"
     },
     "ContentItemBlockRef": {
       "description": "The regions of one page that a content item or a section heading covers, in reading order.",
@@ -9589,6 +9615,204 @@
       "parent": "Fact",
       "source": "linkml/schema/shared_record.yaml",
       "yaml": "  SourcedRelation:\n    # vocabulary/site-content.json, binding relation.\n    class_uri: rico:Relation\n    is_a: Fact\n    description: >-\n      One source's statement that a person is related to another, from the subject to the\n      relative, of a released kinship type, or of type other with a proposed type.\n    attributes:\n      type:\n        range: FactTypes\n        equals_string_in:\n          - kinship\n          - other\n        required: true\n        description: >-\n          kinship for a released relationship type; other, with a proposed type, for one not\n          yet released.\n      citations:\n        range: SiteCitation\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        minimum_cardinality: 1\n        description: >-\n          The evidence: where in which sources the relation is found.\n      subject_id:\n        # vocabulary/site-content.json, binding fact_subject.\n        slot_uri: pc:site_fact_subject\n        range: NonBlankText\n        required: true\n        description: >-\n          The person the relation goes from, by the person's id.\n      family_id:\n        range: NonBlankText\n        description: >-\n          The family the relation concerns, by its id.\n      shown:\n        # vocabulary/site-content.json, binding display_permission.\n        slot_uri: pc:site_display_permission\n        range: Attribution\n        inlined: true\n        description: >-\n          Who allowed the relative to be shown on the person's page, and on what day; never\n          evidence of a death.\n    any_of:\n      - description: >-\n          A relation names the relative as a person or by an unresolved name.\n        slot_conditions:\n          related_person_id:\n            required: true\n      - slot_conditions:\n          related_name:\n            required: true\n    rules:\n      - description: >-\n          A relation of type other has no released relationship type.\n        preconditions:\n          slot_conditions:\n            type:\n              equals_string: other\n        postconditions:\n          slot_conditions:\n            relationship_type:\n              value_presence: ABSENT\n"
+    },
+    "Summary": {
+      "description": "A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it.",
+      "fields": [
+        {
+          "description": "The model that wrote the summary, how hard it was told to think, on which day, and whether a person has checked it.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "attribution",
+          "range": "SummaryAuthorship",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/SummaryAuthorship",
+            "description": "The model that wrote the summary, how hard it was told to think, on which day, and whether a person has checked it."
+          }
+        },
+        {
+          "description": "The exact English the summary was written from, by its digest.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "based_on",
+          "range": "SummaryBasis",
+          "references": [],
+          "relationship": "contains",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/SummaryBasis",
+            "description": "The exact English the summary was written from, by its digest."
+          }
+        },
+        {
+          "description": "The summary's language, always English (en).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "language",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "const": "en",
+            "description": "The summary's language, always English (en).",
+            "type": "string"
+          }
+        },
+        {
+          "description": "The summary's English.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "text",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The summary's English.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/content_items.yaml",
+      "yaml": "  Summary:\n    description: >-\n      A short summary in English of a content item, written from its English translation, with\n      the digest of the exact English it was written from and who wrote it.\n    attributes:\n      text:\n        range: NonBlankText\n        required: true\n        description: >-\n          The summary's English.\n      language:\n        equals_string: en\n        required: true\n        description: >-\n          The summary's language, always English (en).\n      based_on:\n        range: SummaryBasis\n        inlined: true\n        required: true\n        description: >-\n          The exact English the summary was written from, by its digest.\n      attribution:\n        range: SummaryAuthorship\n        inlined: true\n        required: true\n        description: >-\n          The model that wrote the summary, how hard it was told to think, on which day, and\n          whether a person has checked it.\n"
+    },
+    "SummaryAuthorship": {
+      "description": "Who wrote a summary, always a model, on which day, how hard it was told to think, and whether a person has checked the summary against the English.",
+      "fields": [
+        {
+          "description": "Who made it or allowed it: a person, a session or a program.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "by",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Who made it or allowed it: a person, a session or a program.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Whether a person has checked the summary against the English; false until one has.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "checked_by_person",
+          "range": "boolean",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "Whether a person has checked the summary against the English; false until one has.",
+            "type": "boolean"
+          }
+        },
+        {
+          "description": "How hard the model was told to think, in its service's own word, such as low.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "effort",
+          "range": "NonBlankText",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "How hard the model was told to think, in its service's own word, such as low.",
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        {
+          "description": "Always a model (model).",
+          "mappings": [],
+          "multivalued": false,
+          "name": "kind",
+          "range": "AuthorshipKind",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "$ref": "#/$defs/AuthorshipKind",
+            "description": "Always a model (model).",
+            "enum": [
+              "model"
+            ]
+          }
+        },
+        {
+          "description": "A note on how or why.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "note",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "A note on how or why.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "description": "The day it was made or allowed.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "on",
+          "range": "IsoDay",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The day it was made or allowed.",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": "Authorship",
+      "source": "linkml/schema/content_items.yaml",
+      "yaml": "  SummaryAuthorship:\n    is_a: Authorship\n    description: >-\n      Who wrote a summary, always a model, on which day, how hard it was told to think, and\n      whether a person has checked the summary against the English.\n    slot_usage:\n      kind:\n        equals_string_in:\n          - model\n        description: >-\n          Always a model (model).\n    attributes:\n      effort:\n        range: NonBlankText\n        required: true\n        description: >-\n          How hard the model was told to think, in its service's own word, such as low.\n      checked_by_person:\n        range: boolean\n        required: true\n        description: >-\n          Whether a person has checked the summary against the English; false until one has.\n"
+    },
+    "SummaryBasis": {
+      "description": "The exact English a summary was written from, by its digest, so that a summary of an English since changed can be told apart from a current one.",
+      "fields": [
+        {
+          "description": "The SHA-256 digest of the exact UTF-8 bytes of the content item's translation text that the summary was written from.",
+          "mappings": [
+            {
+              "kind": "slot_uri",
+              "term": "pc:site_english_sha256"
+            }
+          ],
+          "multivalued": false,
+          "name": "english_sha256",
+          "range": "Sha256Hex",
+          "references": [],
+          "relationship": "value",
+          "required": true,
+          "shape": {
+            "description": "The SHA-256 digest of the exact UTF-8 bytes of the content item's translation text that the summary was written from.",
+            "pattern": "^[0-9a-f]{64}$(?![\\s\\S])",
+            "type": "string"
+          }
+        }
+      ],
+      "mappings": [],
+      "parent": null,
+      "source": "linkml/schema/content_items.yaml",
+      "yaml": "  SummaryBasis:\n    description: >-\n      The exact English a summary was written from, by its digest, so that a summary of an\n      English since changed can be told apart from a current one.\n    attributes:\n      english_sha256:\n        range: Sha256Hex\n        required: true\n        slot_uri: pc:site_english_sha256\n        description: >-\n          The SHA-256 digest of the exact UTF-8 bytes of the content item's translation text\n          that the summary was written from.\n"
     },
     "SuppliedTitle": {
       "description": "A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check.",

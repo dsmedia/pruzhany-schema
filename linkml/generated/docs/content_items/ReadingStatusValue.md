@@ -31,7 +31,6 @@ URI: [pc:ReadingStatusValue](https://pruzhany.org/ns/sourced-entities#ReadingSta
 
 | Name | Description |
 | ---  | --- |
-| [text](text.md) | How far the printed text has been checked; null where not recorded. |
 | [english](english.md) | How far the English has been checked; null where not recorded. |
 
 

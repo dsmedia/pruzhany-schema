@@ -22,6 +22,7 @@ URI: [pc:number](https://pruzhany.org/ns/sourced-entities#number)
 | --- | --- | --- |
 | [WriteEnglishAnsweredPiece](WriteEnglishAnsweredPiece.md) | A piece of the answer, with the number it was sent under. |  no  |
 | [QuoteEnglishQuotedEnglish](QuoteEnglishQuotedEnglish.md) | One quotation's English, with the number it was sent under. |  no  |
+| [JudgeOpeningSentenceVerdict](JudgeOpeningSentenceVerdict.md) | Whether one sentence of the opening, by its number, is supported, and why. |  no  |
 
 
 
@@ -35,7 +36,7 @@ URI: [pc:number](https://pruzhany.org/ns/sourced-entities#number)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [WriteEnglishAnsweredPiece](WriteEnglishAnsweredPiece.md), [QuoteEnglishQuotedEnglish](QuoteEnglishQuotedEnglish.md) |
+| Domain Of | [WriteEnglishAnsweredPiece](WriteEnglishAnsweredPiece.md), [QuoteEnglishQuotedEnglish](QuoteEnglishQuotedEnglish.md), [JudgeOpeningSentenceVerdict](JudgeOpeningSentenceVerdict.md) |
 
 
 
@@ -71,6 +72,7 @@ name: number
 domain_of:
 - WriteEnglishAnsweredPiece
 - QuoteEnglishQuotedEnglish
+- JudgeOpeningSentenceVerdict
 range: string
 
 ```

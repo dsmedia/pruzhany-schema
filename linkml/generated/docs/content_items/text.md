@@ -20,6 +20,7 @@ URI: [pc:text](https://pruzhany.org/ns/sourced-entities#text)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [Summary](Summary.md) | A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it. |  no  |
 | [ReadingStatus](ReadingStatus.md) | How far a content item's text and its English have been checked, each recorded on its own; null for either means it is not recorded, not that it was reviewed. |  no  |
 | [PrintedAddress](PrintedAddress.md) | Where some printed words stand: the page picture, a box on it in the picture's own pixels, and the words read in that box. |  no  |
 | [PrintedTitle](PrintedTitle.md) | A title as printed in the paper: its words and where each line of them stands. |  no  |
@@ -39,7 +40,7 @@ URI: [pc:text](https://pruzhany.org/ns/sourced-entities#text)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [ReadingStatus](ReadingStatus.md), [PrintedAddress](PrintedAddress.md), [PrintedTitle](PrintedTitle.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
+| Domain Of | [Summary](Summary.md), [ReadingStatus](ReadingStatus.md), [PrintedAddress](PrintedAddress.md), [PrintedTitle](PrintedTitle.md), [SuppliedTitle](SuppliedTitle.md), [Translation](Translation.md) |
 
 
 
@@ -73,6 +74,7 @@ URI: [pc:text](https://pruzhany.org/ns/sourced-entities#text)
 ```yaml
 name: text
 domain_of:
+- Summary
 - ReadingStatus
 - PrintedAddress
 - PrintedTitle

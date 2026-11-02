@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `88c5153b5aff3dad4f6cfac6a49be10ce338f1dfc19ce8f3020125c7cb847a48`.
+Definition fingerprint: `83b1fcbae8259b690e0d7fe4235e00e4a3fee037b5d9582b9ca35e878d094348`.
 
 ## What the Pruzhany issue documents share
 
@@ -296,6 +296,7 @@ Meaning: ehri:RecordResource (class uri).
 | `section_id` | The printed section the content item stands under, by the section's id, where it stands under one. | NonBlankText | No | No direct mapping recorded |
 | `subject_ids` | What the content item is about, as subjects of the site-content vocabulary. | list of Subjects | Yes | rico:hasOrHadSubject (slot uri) |
 | `subtype` | The narrower form the content item takes within its kind, such as a wedding greeting within advertisements, where one is known. | ContentItemSubtypes | No | rico:hasDocumentaryFormType (slot uri) |
+| `summary` | A short English summary of the content item, written from its English translation, where one has been written and upheld. | Summary | No | rico:scopeAndContent (slot uri) |
 | `supplied_title` | A title in English supplied for the content item. | SuppliedTitle | Yes | rico:hasOrHadTitle (slot uri) |
 | `translation` | The content item's text in English, where it has been translated. | Translation | No | No direct mapping recorded |
 | `type` | The content item's kind, one of Impresso's content item types. | ImpressoTypes | Yes | No direct mapping recorded |
@@ -343,6 +344,50 @@ Meaning: pc:site_reading_status (exact mappings).
 | --- | --- | --- | --- | --- |
 | `english` | How far the English has been checked; null where not recorded. | ReadingStatusValue | No | No direct mapping recorded |
 | `text` | How far the printed text has been checked; null where not recorded. | ReadingStatusValue | No | No direct mapping recorded |
+
+Source: `linkml/schema/content_items.yaml`.
+
+### Summary
+
+A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `attribution` | The model that wrote the summary, how hard it was told to think, on which day, and whether a person has checked it. | SummaryAuthorship | Yes | No direct mapping recorded |
+| `based_on` | The exact English the summary was written from, by its digest. | SummaryBasis | Yes | No direct mapping recorded |
+| `language` | The summary's language, always English (en). | string; fixed value: en | Yes | No direct mapping recorded |
+| `text` | The summary's English. | NonBlankText | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/content_items.yaml`.
+
+### SummaryAuthorship
+
+Who wrote a summary, always a model, on which day, how hard it was told to think, and whether a person has checked the summary against the English.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `by` | Who made it or allowed it: a person, a session or a program. | NonBlankText | Yes | No direct mapping recorded |
+| `checked_by_person` | Whether a person has checked the summary against the English; false until one has. | boolean | Yes | No direct mapping recorded |
+| `effort` | How hard the model was told to think, in its service's own word, such as low. | NonBlankText | Yes | No direct mapping recorded |
+| `kind` | Always a model (model). | AuthorshipKind; one of: ['model'] | Yes | No direct mapping recorded |
+| `note` | A note on how or why. | string | No | No direct mapping recorded |
+| `on` | The day it was made or allowed. | IsoDay | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/content_items.yaml`.
+
+### SummaryBasis
+
+The exact English a summary was written from, by its digest, so that a summary of an English since changed can be told apart from a current one.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `english_sha256` | The SHA-256 digest of the exact UTF-8 bytes of the content item's translation text that the summary was written from. | Sha256Hex | Yes | pc:site_english_sha256 (slot uri) |
 
 Source: `linkml/schema/content_items.yaml`.
 
@@ -1803,6 +1848,32 @@ Meaning: No direct mapping recorded.
 
 Source: `linkml/schema/answers.yaml`.
 
+### JudgeOpeningAnswer
+
+The verdict on one opening: one for each of its sentences.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `sentences` | The sentences field in the Answer response. | list of JudgeOpeningSentenceVerdict | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### JudgeOpeningSentenceVerdict
+
+Whether one sentence of the opening, by its number, is supported, and why.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `number` | The number field in the SentenceVerdict response. | integer | Yes | No direct mapping recorded |
+| `supported` | The supported field in the SentenceVerdict response. | boolean | Yes | No direct mapping recorded |
+| `why` | One short sentence. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
 ### QuoteEnglishAnswer
 
 The answer about a batch of quotations: every quotation it was sent, by its number.
@@ -1959,6 +2030,31 @@ Meaning: No direct mapping recorded.
 | `kind` | The kind field in the Place response. | string; one of: ['city', 'town', 'village', 'shtetl', 'street', 'address', 'landmark', 'country', 'region', 'district'] | Yes | No direct mapping recorded |
 | `name` | Its usual English name. | string | Yes | No direct mapping recorded |
 | `printed` | As in the text. | string | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteOpeningAnswer
+
+The opening of one piece: its sentences, in order.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `sentences` | The sentences field in the Answer response. | list of WriteOpeningOpeningSentence | Yes | No direct mapping recorded |
+
+Source: `linkml/schema/answers.yaml`.
+
+### WriteOpeningOpeningSentence
+
+One sentence of the opening, with the exact words of the English it rests on.
+
+Meaning: No direct mapping recorded.
+
+| Field | What it holds | Value | Required | Standard mapping |
+| --- | --- | --- | --- | --- |
+| `quotes` | The passages of the English the sentence rests on, each copied exactly. | list of string | Yes | No direct mapping recorded |
+| `text` | The sentence, as the reader will read it. | string | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/answers.yaml`.
 

@@ -160,8 +160,12 @@ def mapping_faults(module_view):
 # --- Generated JSON Schema against the export ---------------------------------------------
 
 def _deref(node, root):
+    """The definition a $ref names. JSON Schema 2020-12 applies a $ref beside its siblings, so a
+    sibling enum (an enum intersection, as SummaryAuthorship.kind's slot_usage writes it) narrows
+    the named enum and is kept."""
     while isinstance(node, dict) and '$ref' in node:
-        node = root['$defs'][node['$ref'].rsplit('/', 1)[-1]]
+        narrowed = {key: node[key] for key in ('enum', 'const') if key in node}
+        node = {**root['$defs'][node['$ref'].rsplit('/', 1)[-1]], **narrowed}
     return node
 
 
@@ -363,8 +367,9 @@ class Mappings(unittest.TestCase):
                 counts['slot_uri'] += sum(bool(slot.slot_uri) for slot in (cls.attributes or {}).values())
         # Issue #56 adds one RiC-O language mapping and its Impresso lg correspondence. The fates
         # list adds three class URIs, two slot URIs, three close and four related mappings. The
-        # newspaper of an edition, page and piece adds three slot URIs and three Impresso fields.
-        self.assertEqual(counts, {'class_uri': 9, 'slot_uri': 19, 'exact_mappings': 9, 'close_mappings': 6,
+        # newspaper of an edition, page and piece adds three slot URIs and three Impresso fields; the
+        # content item's summary adds two slot URIs: rico:scopeAndContent and its basis's digest.
+        self.assertEqual(counts, {'class_uri': 9, 'slot_uri': 21, 'exact_mappings': 9, 'close_mappings': 6,
                                   'related_mappings': 7, 'impresso': 25})
 
 

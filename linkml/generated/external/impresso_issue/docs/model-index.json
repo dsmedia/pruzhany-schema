@@ -1,8 +1,8 @@
 {
   "contract_sha256": "3d8082b8b7f642ce1eb0e0a8d0e133f6aa4cc1e2b9c8295bba3f8355c1f4b161",
   "inputs": {
-    "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
-    "linkml/schema/content_items.yaml": "ae9047ecfc53620deefcfd5a608915cd6f33313a3ec84ef2f31843b075b40e60",
+    "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
+    "linkml/schema/content_items.yaml": "b2e332fdf8bb5f036ac1c5e29419d61ad96fd917aea174c14db9e4e56c6bdb25",
     "linkml/schema/editions.yaml": "80114ffa9810e31da37cc106361a74e1bdceb849105ab4d01b334c3a6fe011c4",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",

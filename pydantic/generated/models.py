@@ -91,6 +91,7 @@ class ContentItem(Strict):
     cross_references: list[CrossReference] = Field(default=...)
     event_id: Annotated[str, Field(pattern='\\S')] | None = Field(default=None)
     language: Annotated[str, Field(pattern='^[a-z]{2,3}$')] | None = Field(default=None)
+    summary: Summary | None = Field(default=None)
     newspaper: Annotated[str, Field(pattern='\\S')] = Field(default=...)
 
     @model_validator(mode='after')
@@ -792,6 +793,21 @@ class SourcedDate(Strict):
         return _call('sourced_entities', '_SourcedDate__validate_contract', self)
 
 
+class Summary(Strict):
+    'A short summary in English of a content item, written from its English translation, with the digest of the exact English it was written from and who wrote it.'
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    text: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    language: Literal['en'] = Field(default=...)
+    based_on: SummaryBasis = Field(default=...)
+    attribution: SummaryAuthorship = Field(default=...)
+
+
+class SummaryBasis(Strict):
+    'The exact English a summary was written from, by its digest, so that a summary of an English since changed can be told apart from a current one.'
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    english_sha256: Annotated[str, Field(pattern='^[0-9a-f]{64}$')] = Field(default=...)
+
+
 class SuppliedTitle(Strict):
     'A title supplied in English for a content item or section, with what it was made from, who made it and, where one was made, its later check.'
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
@@ -1031,6 +1047,17 @@ class TranslationCheck(EnglishCheck):
     attribution: Authorship = Field(default=...)
 
 
+class SummaryAuthorship(Authorship):
+    'Who wrote a summary, always a model, on which day, how hard it was told to think, and whether a person has checked the summary against the English.'
+    model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
+    by: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    on: Annotated[Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')], AfterValidator(partial(_typed_call, 'sourced_entities', 'valid_date', [], True))] = Field(default=...)
+    note: None | str = Field(default=None)
+    kind: Literal['model'] = Field(default=...)
+    effort: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    checked_by_person: bool = Field(default=...)
+
+
 Attribution.model_rebuild()
 Authorship.model_rebuild()
 Block.model_rebuild()
@@ -1103,10 +1130,13 @@ Source.model_rebuild()
 SourceDerivation.model_rebuild()
 SourcedDate.model_rebuild()
 SourcedRelation.model_rebuild()
+Summary.model_rebuild()
+SummaryAuthorship.model_rebuild()
+SummaryBasis.model_rebuild()
 SuppliedTitle.model_rebuild()
 TextBasis.model_rebuild()
 TitleCheck.model_rebuild()
 Translation.model_rebuild()
 TranslationCheck.model_rebuild()
 
-__all__ = ['Attribution', 'Authorship', 'Block', 'Citation', 'CitedTextBasis', 'CitedTranslation', 'ContentItem', 'ContentItemBlockRef', 'ContentItemRef', 'ContentItemsData', 'CrossReference', 'Edition', 'EditionsCatalog', 'EnglishCheck', 'ExternalReference', 'Fact', 'FactQualifiers', 'Fate', 'FatesList', 'FatesListAge', 'FatesListArchiveCount', 'FatesListCounts', 'FatesListDate', 'FatesListFateDetail', 'FatesListOutsideRecord', 'FatesListPerson', 'FatesListPiece', 'HistoricalEvent', 'Holder', 'Holiday', 'IssueLifeEvent', 'IssueLifeEventsData', 'IssueMention', 'IssueMentionsData', 'LifeEventDate', 'LifeEventMainPerson', 'Media', 'MediaConsent', 'MediaConsentScope', 'MediaDecision', 'MediaDepicted', 'MediaDerivative', 'MediaFamilyWords', 'MediaFixity', 'MediaMaster', 'MediaPortrait', 'MediaRegion', 'MediaText', 'MediaWithdrawal', 'Mention', 'Name', 'Page', 'PagesData', 'PlaceIdentifier', 'PrintedAddress', 'PrintedSection', 'PrintedTitle', 'PublicMedia', 'ReadingStatus', 'Review', 'SharedEvent', 'SharedFact', 'SharedFamily', 'SharedName', 'SharedOrganization', 'SharedPerson', 'SharedPlace', 'SharedRecord', 'SiteCitation', 'Source', 'SourceDerivation', 'SourcedDate', 'SourcedRelation', 'SuppliedTitle', 'TextBasis', 'TitleCheck', 'Translation', 'TranslationCheck']
+__all__ = ['Attribution', 'Authorship', 'Block', 'Citation', 'CitedTextBasis', 'CitedTranslation', 'ContentItem', 'ContentItemBlockRef', 'ContentItemRef', 'ContentItemsData', 'CrossReference', 'Edition', 'EditionsCatalog', 'EnglishCheck', 'ExternalReference', 'Fact', 'FactQualifiers', 'Fate', 'FatesList', 'FatesListAge', 'FatesListArchiveCount', 'FatesListCounts', 'FatesListDate', 'FatesListFateDetail', 'FatesListOutsideRecord', 'FatesListPerson', 'FatesListPiece', 'HistoricalEvent', 'Holder', 'Holiday', 'IssueLifeEvent', 'IssueLifeEventsData', 'IssueMention', 'IssueMentionsData', 'LifeEventDate', 'LifeEventMainPerson', 'Media', 'MediaConsent', 'MediaConsentScope', 'MediaDecision', 'MediaDepicted', 'MediaDerivative', 'MediaFamilyWords', 'MediaFixity', 'MediaMaster', 'MediaPortrait', 'MediaRegion', 'MediaText', 'MediaWithdrawal', 'Mention', 'Name', 'Page', 'PagesData', 'PlaceIdentifier', 'PrintedAddress', 'PrintedSection', 'PrintedTitle', 'PublicMedia', 'ReadingStatus', 'Review', 'SharedEvent', 'SharedFact', 'SharedFamily', 'SharedName', 'SharedOrganization', 'SharedPerson', 'SharedPlace', 'SharedRecord', 'SiteCitation', 'Source', 'SourceDerivation', 'SourcedDate', 'SourcedRelation', 'Summary', 'SummaryAuthorship', 'SummaryBasis', 'SuppliedTitle', 'TextBasis', 'TitleCheck', 'Translation', 'TranslationCheck']

@@ -108,8 +108,8 @@ checks:
 
   - id: content-item
     holds: >-
-      A content item's subtype fits its type, its subjects are distinct, and its block breaks
-      are ordered offsets within its text.
+      A content item's subtype fits its type, its subjects are distinct, its block breaks
+      are ordered offsets within its text, and a summary comes with its translation.
     zod:
       file: zod/content-item.schema.ts
       schema: ContentItemSchema
@@ -123,6 +123,12 @@ checks:
         class: ContentItem
         rules: 4
         planted: test_documents_checks.LinkMLRules.test_a_subtype_under_another_type_is_refused
+      - holds: >-
+          A content item with a summary has a translation, the English it was written from.
+        how: linkml_rule
+        class: ContentItem
+        rules: 1
+        planted: test_documents_checks.LinkMLRules.test_a_summary_without_its_translation_is_refused
       - holds: >-
           No subject is listed twice.
         how: rule_catalog

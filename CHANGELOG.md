@@ -11,6 +11,7 @@ yet. The vocabularies are versioned on their own; their releases are recorded in
 
 ### Added
 
+- A content item's optional summary (the website's opening): English written by a model from the item's translation, bound to that English by its SHA-256, with the model, effort, day and whether a person has checked it; mapped to `rico:scopeAndContent`, in LinkML with its Zod and Python twins and fictional cases.
 - The fates list: everyone printed in the paper whose fate the record knows, with places, dates, archive records and a child mark, in LinkML with its Zod and Python twins and fictional cases.
 - A readable vocabulary list generated from the source JSON, with definitions, standards mappings and a freshness check.
 - MIT code and CC BY 4.0 data licences, a path and upstream licence notice, and hash-locked REUSE checks locally and in CI.

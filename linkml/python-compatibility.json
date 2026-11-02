@@ -218,6 +218,8 @@
 				"cross_references",
 				"event_id",
 				"language",
+				"summary",
+
 				"newspaper"
 			],
 			"validators": [
@@ -333,6 +335,24 @@
 								}
 							},
 							"required": ["type"]
+						}
+					},
+					{
+						"if": {
+							"properties": {
+								"summary": {
+									"$ref": "#/$defs/Summary"
+								}
+							},
+							"required": ["summary"]
+						},
+						"then": {
+							"properties": {
+								"translation": {
+									"$ref": "#/$defs/Translation"
+								}
+							},
+							"required": ["translation"]
 						}
 					}
 				]
@@ -3197,6 +3217,43 @@
 			"fields": {
 				"checked_against": {
 					"exclude_none": true
+				}
+			}
+		},
+		"Summary": {
+			"module": "content_item",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["text", "language", "based_on", "attribution"]
+		},
+		"SummaryBasis": {
+			"module": "content_item",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["english_sha256"]
+		},
+		"SummaryAuthorship": {
+			"module": "content_item",
+			"config": {
+				"extra": "forbid",
+				"strict": true
+			},
+			"order": ["by", "on", "note", "kind", "effort", "checked_by_person"],
+			"parent": "Authorship",
+			"fields": {
+				"on": {
+					"type_hooks": [
+						{
+							"mode": "After",
+							"module": "sourced_entities",
+							"function": "valid_date",
+							"path": []
+						}
+					]
 				}
 			}
 		},

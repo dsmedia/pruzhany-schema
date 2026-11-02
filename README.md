@@ -94,7 +94,8 @@ or `<code>-<date>` for another paper, with the date matching `date`. Page, block
 content-item ids accept that same optional paper code immediately after their kind.
 
 The owner approved the site switch on 2026-10-24. `content-item.schema.ts` defines content
-items with printed and supplied titles, Impresso types, subtypes, subjects and printed
+items with printed and supplied titles, Impresso types, subtypes, subjects, an optional
+model-written English summary bound to the translation it was written from, and printed
 sections. `site-common.schema.ts` supplies printed addresses, authorship and translations
 pinned to their source text. `shared-record.schema.ts` reuses production sourced facts,
 names, sources, fate and standing for one shared record. `site-issue.schema.ts` adds

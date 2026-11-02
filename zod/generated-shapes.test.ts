@@ -21,7 +21,8 @@ type SchemaKey = {
 type Inferred<S> = S extends z.ZodType ? z.infer<S> : never;
 // Owner-approved site-content 1.1.0, 31 October 2026, and 1.2.0, 2 November 2026
 // (docs/vocabulary-approvals.md). Keep the migration baseline frozen; prescribe only
-// these exact version additions. 1.2.0's two subtypes are in tests/masthead-imprint-baseline.ts.
+// these exact version additions. 1.2.0's two subtypes are in tests/masthead-imprint-baseline.ts;
+// the content item's optional summary is in tests/content-item-summary-baseline.ts.
 const approvedReleaseVersions = ['0.1.0', '1.0.0', '1.1.0', '1.2.0'] as const;
 type ApprovedContentVersion<T> = {
 	[K in keyof T]: K extends 'vocabulary_version' ? (typeof approvedReleaseVersions)[number] : T[K];

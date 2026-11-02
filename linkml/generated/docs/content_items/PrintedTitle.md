@@ -139,6 +139,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     slot_uri: rico:textualValue
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
@@ -185,6 +186,7 @@ attributes:
     slot_uri: rico:textualValue
     owner: PrintedTitle
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle

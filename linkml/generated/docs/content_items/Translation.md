@@ -155,6 +155,7 @@ attributes:
     description: The English text.
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
@@ -168,6 +169,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
     - ContentItem
+    - Summary
     - SuppliedTitle
     - Translation
     required: true
@@ -177,6 +179,7 @@ attributes:
     description: The exact printed text translated, and where it is printed.
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
+    - Summary
     - SuppliedTitle
     - Translation
     range: TextBasis
@@ -187,6 +190,7 @@ attributes:
     description: Who translated it, and on which day.
     from_schema: https://pruzhany.org/ns/site_common
     domain_of:
+    - Summary
     - EnglishCheck
     - SuppliedTitle
     - Translation
@@ -227,6 +231,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: Translation
     domain_of:
+    - Summary
     - ReadingStatus
     - PrintedAddress
     - PrintedTitle
@@ -241,6 +246,7 @@ attributes:
     owner: Translation
     domain_of:
     - ContentItem
+    - Summary
     - SuppliedTitle
     - Translation
     range: string
@@ -252,6 +258,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: Translation
     domain_of:
+    - Summary
     - SuppliedTitle
     - Translation
     range: TextBasis
@@ -263,6 +270,7 @@ attributes:
     from_schema: https://pruzhany.org/ns/site_common
     owner: Translation
     domain_of:
+    - Summary
     - EnglishCheck
     - SuppliedTitle
     - Translation

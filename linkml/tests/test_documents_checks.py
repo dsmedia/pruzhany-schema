@@ -139,7 +139,7 @@ class TheAccount(unittest.TestCase):
                     tally['existing' if 'rule' in part else 'proposed'] += 1
                 else:
                     tally[part['how']] += 1
-        self.assertEqual(tally, {'linkml_rule': 4, 'existing': 40, 'proposed': 0, 'twin_only': 4})
+        self.assertEqual(tally, {'linkml_rule': 5, 'existing': 40, 'proposed': 0, 'twin_only': 4})
 
     def test_it_passes_the_house_lint(self):
         self.assertEqual(load('lint').lint(CHECKS_FILE), [])
@@ -202,6 +202,30 @@ class LinkMLRules(unittest.TestCase):
             with self.subTest(subtype='left out' if subtype is ... else 'null'):
                 self.assertEqual(refusals(schema, document), [])
 
+    def test_a_summary_without_its_translation_is_refused(self):
+        schema = generated('content_items')
+        control = self.without_rules(schema, 'ContentItem')
+        summary = {'text': 'A fictional society chose a new board.', 'language': 'en',
+                   'based_on': {'english_sha256': '0123456789abcdef' * 4},
+                   'attribution': {'by': 'fictional-model', 'on': '2026-11-02', 'kind': 'model',
+                                   'effort': 'low', 'checked_by_person': False}}
+        document = copy.deepcopy(fixture('content_items'))
+        document['content_items'][0]['summary'] = summary
+        self.assertEqual(refusals(schema, document), [])
+        del document['content_items'][0]['translation']
+        self.assertEqual(refusals(control, document), [])
+        self.assertNotEqual(refusals(schema, document), [])
+        # The typed ranges read null as the twins do: a null translation does not answer a
+        # summary, and a null summary asks for no translation.
+        null_translation = copy.deepcopy(fixture('content_items'))
+        null_translation['content_items'][0].update(summary=summary, translation=None)
+        self.assertEqual(refusals(control, null_translation), [])
+        self.assertNotEqual(refusals(schema, null_translation), [])
+        null_summary = copy.deepcopy(fixture('content_items'))
+        null_summary['content_items'][0]['summary'] = None
+        del null_summary['content_items'][0]['translation']
+        self.assertEqual(refusals(schema, null_summary), [])
+
     def test_a_printed_name_that_does_not_fit_the_grain_is_refused(self):
         schema = generated('mentions')
         control = self.without_rules(schema, 'IssueMention')
@@ -260,6 +284,8 @@ def subtype_parents():
     cls = SchemaView(str(LINKML / 'schema' / 'content_items.yaml')).get_class('ContentItem')
     parents = {}
     for rule in cls.rules:
+        if 'subtype' not in rule.preconditions.slot_conditions:
+            continue  # the summary's rule (a summary needs its translation) names no subtype
         parent = rule.postconditions.slot_conditions['type'].equals_string
         for subtype in rule.preconditions.slot_conditions['subtype'].equals_string_in:
             parents[subtype] = parent

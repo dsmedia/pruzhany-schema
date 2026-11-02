@@ -325,6 +325,9 @@ Public required field `relationship_type`: The displayed direction must be expli
 - `SharedRecord`: Outside the public shared-record export; this layer keeps its current format.
 - `SiteCitation`: Outside the public shared-record export; this layer keeps its current format.
 - `SourceDerivation`: Outside the public shared-record export; this layer keeps its current format.
+- `Summary`: Outside the public shared-record export; this layer keeps its current format.
+- `SummaryAuthorship`: Outside the public shared-record export; this layer keeps its current format.
+- `SummaryBasis`: Outside the public shared-record export; this layer keeps its current format.
 - `SuppliedTitle`: Outside the public shared-record export; this layer keeps its current format.
 - `TextBasis`: Outside the public shared-record export; this layer keeps its current format.
 - `TitleCheck`: Outside the public shared-record export; this layer keeps its current format.

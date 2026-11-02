@@ -166,6 +166,50 @@
       "title": "Group",
       "type": "object"
     },
+    "JudgeOpeningAnswer": {
+      "additionalProperties": false,
+      "description": "The verdict on one opening: one for each of its sentences.",
+      "properties": {
+        "sentences": {
+          "items": {
+            "$ref": "#/$defs/JudgeOpeningSentenceVerdict"
+          },
+          "title": "Sentences",
+          "type": "array"
+        }
+      },
+      "required": [
+        "sentences"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "JudgeOpeningSentenceVerdict": {
+      "additionalProperties": false,
+      "description": "Whether one sentence of the opening, by its number, is supported, and why.",
+      "properties": {
+        "number": {
+          "title": "Number",
+          "type": "integer"
+        },
+        "supported": {
+          "title": "Supported",
+          "type": "boolean"
+        },
+        "why": {
+          "description": "One short sentence.",
+          "title": "Why",
+          "type": "string"
+        }
+      },
+      "required": [
+        "number",
+        "supported",
+        "why"
+      ],
+      "title": "SentenceVerdict",
+      "type": "object"
+    },
     "QuoteEnglishAnswer": {
       "additionalProperties": false,
       "description": "The answer about a batch of quotations: every quotation it was sent, by its number.",
@@ -563,6 +607,49 @@
       ],
       "title": "Place",
       "type": "object"
+    },
+    "WriteOpeningAnswer": {
+      "additionalProperties": false,
+      "description": "The opening of one piece: its sentences, in order.",
+      "properties": {
+        "sentences": {
+          "items": {
+            "$ref": "#/$defs/WriteOpeningOpeningSentence"
+          },
+          "title": "Sentences",
+          "type": "array"
+        }
+      },
+      "required": [
+        "sentences"
+      ],
+      "title": "Answer",
+      "type": "object"
+    },
+    "WriteOpeningOpeningSentence": {
+      "additionalProperties": false,
+      "description": "One sentence of the opening, with the exact words of the English it rests on.",
+      "properties": {
+        "quotes": {
+          "description": "The passages of the English the sentence rests on, each copied exactly.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Quotes",
+          "type": "array"
+        },
+        "text": {
+          "description": "The sentence, as the reader will read it.",
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "quotes"
+      ],
+      "title": "OpeningSentence",
+      "type": "object"
     }
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -572,6 +659,8 @@
     "FindItemsAnswerItem": "schema/answers.yaml",
     "JoinPeopleAnswer": "schema/answers.yaml",
     "JoinPeopleGroup": "schema/answers.yaml",
+    "JudgeOpeningAnswer": "schema/answers.yaml",
+    "JudgeOpeningSentenceVerdict": "schema/answers.yaml",
     "QuoteEnglishAnswer": "schema/answers.yaml",
     "QuoteEnglishQuotedEnglish": "schema/answers.yaml",
     "ReadLatinAnswer": "schema/answers.yaml",
@@ -582,7 +671,9 @@
     "WriteEnglishLifeEvent": "schema/answers.yaml",
     "WriteEnglishOrganization": "schema/answers.yaml",
     "WriteEnglishPerson": "schema/answers.yaml",
-    "WriteEnglishPlace": "schema/answers.yaml"
+    "WriteEnglishPlace": "schema/answers.yaml",
+    "WriteOpeningAnswer": "schema/answers.yaml",
+    "WriteOpeningOpeningSentence": "schema/answers.yaml"
   },
   "external_contract": "model-answers",
   "known_looser": []

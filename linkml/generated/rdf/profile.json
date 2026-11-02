@@ -1,12 +1,12 @@
 {
   "artifacts_sha256": {
     "context.jsonld": "a212e549e680de4a71b0601b94fbf5314e640ede8fe06d46a879ade811405ade",
-    "coverage.md": "7d89dbba96de370be40edb746d0d00d7f2fa5623a2e758a6b1eb126314750fdc",
+    "coverage.md": "bd3006fb571c1816001f713cfac56f72dae9c4a8536a766d33fffe18612af332",
     "ontology.ttl": "61d32d991d656f5570a2ed2776cde0fc40551060ace7bc92154729aeb47363ec",
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
-  "contract_sha256": "2f3c343e8b01b75defe5bba9fad04487c7253ec70b0ccb1d80f9d7042fbcb4f9",
-  "index_sha256": "571fbf00abe1020b245947bc31209e58bd27be2c6dd03e377d6419bc385db615",
+  "contract_sha256": "0d01343d0afe519b29d8c96a5739a32e880758265e8b6e2d507cd134e77f0c99",
+  "index_sha256": "46c5b609535e8a98861b7b38ccf90a5c2ff7352f5fd70c0623147fc389c38f76",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -2323,16 +2323,19 @@
     "SharedRecord": "Outside the public shared-record export; this layer keeps its current format.",
     "SiteCitation": "Outside the public shared-record export; this layer keeps its current format.",
     "SourceDerivation": "Outside the public shared-record export; this layer keeps its current format.",
+    "Summary": "Outside the public shared-record export; this layer keeps its current format.",
+    "SummaryAuthorship": "Outside the public shared-record export; this layer keeps its current format.",
+    "SummaryBasis": "Outside the public shared-record export; this layer keeps its current format.",
     "SuppliedTitle": "Outside the public shared-record export; this layer keeps its current format.",
     "TextBasis": "Outside the public shared-record export; this layer keeps its current format.",
     "TitleCheck": "Outside the public shared-record export; this layer keeps its current format.",
     "Translation": "Outside the public shared-record export; this layer keeps its current format.",
     "TranslationCheck": "Outside the public shared-record export; this layer keeps its current format."
   },
-  "profile_sha256": "365ab48e8130901a7f7808553b9c01af79115a5eb4ede229b1a35edb0ddc2d7e",
+  "profile_sha256": "83de534323e4e201c8df4d8a128a3012057e1051aeae21fcf208082923a8511f",
   "source_sha256": {
-    "linkml/schema/answers.yaml": "f8cc6e79e8712921f07daa8a6457490c69acf9ad9064b8b2b68f14b8b52c5cbb",
-    "linkml/schema/content_items.yaml": "ae9047ecfc53620deefcfd5a608915cd6f33313a3ec84ef2f31843b075b40e60",
+    "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
+    "linkml/schema/content_items.yaml": "b2e332fdf8bb5f036ac1c5e29419d61ad96fd917aea174c14db9e4e56c6bdb25",
     "linkml/schema/editions.yaml": "80114ffa9810e31da37cc106361a74e1bdceb849105ab4d01b334c3a6fe011c4",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",

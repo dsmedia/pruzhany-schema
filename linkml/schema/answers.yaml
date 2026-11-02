@@ -3,7 +3,7 @@ id: https://pruzhany.org/ns/answers
 name: pruzhany_answers
 title: Current structured model answers
 description: >-
-  The four current paid answer shapes. Procedural descriptions and titles are the exact strings sent by
+  The seven current paid answer shapes. Procedural descriptions and titles are the exact strings sent by
   steps; no prompt text or answer data is included.
 prefixes:
   linkml: https://w3id.org/linkml/
@@ -574,5 +574,86 @@ classes:
         title: Quotations
         description: >-
           The quotations field in the Answer response.
+        annotations:
+          description_in_wire: false
+  WriteOpeningOpeningSentence:
+    title: OpeningSentence
+    description: >-
+      One sentence of the opening, with the exact words of the English it rests on.
+    attributes:
+      text:
+        range: string
+        required: true
+        title: Text
+        description: >-
+          The sentence, as the reader will read it.
+      quotes:
+        multivalued: true
+        range: string
+        required: true
+        title: Quotes
+        description: >-
+          The passages of the English the sentence rests on, each copied exactly.
+  WriteOpeningAnswer:
+    title: Answer
+    description: >-
+      The opening of one piece: its sentences, in order.
+    annotations:
+      asking: write_opening
+    attributes:
+      sentences:
+        multivalued: true
+        range: WriteOpeningOpeningSentence
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Sentences
+        description: >-
+          The sentences field in the Answer response.
+        annotations:
+          description_in_wire: false
+  JudgeOpeningSentenceVerdict:
+    title: SentenceVerdict
+    description: >-
+      Whether one sentence of the opening, by its number, is supported, and why.
+    attributes:
+      number:
+        range: integer
+        required: true
+        title: Number
+        description: >-
+          The number field in the SentenceVerdict response.
+        annotations:
+          description_in_wire: false
+      supported:
+        range: boolean
+        required: true
+        title: Supported
+        description: >-
+          The supported field in the SentenceVerdict response.
+        annotations:
+          description_in_wire: false
+      why:
+        range: string
+        required: true
+        title: Why
+        description: >-
+          One short sentence.
+  JudgeOpeningAnswer:
+    title: Answer
+    description: >-
+      The verdict on one opening: one for each of its sentences.
+    annotations:
+      asking: judge_opening
+    attributes:
+      sentences:
+        multivalued: true
+        range: JudgeOpeningSentenceVerdict
+        inlined: true
+        inlined_as_list: true
+        required: true
+        title: Sentences
+        description: >-
+          The sentences field in the Answer response.
         annotations:
           description_in_wire: false

@@ -131,6 +131,7 @@ attributes:
     rank: 1000
     domain_of:
     - ReadLatinLine
+    - WriteOpeningOpeningSentence
     range: string
     required: true
 
@@ -176,6 +177,7 @@ attributes:
     owner: ReadLatinLine
     domain_of:
     - ReadLatinLine
+    - WriteOpeningOpeningSentence
     range: string
     required: true
 
