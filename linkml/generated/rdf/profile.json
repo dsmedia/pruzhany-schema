@@ -5,8 +5,8 @@
     "ontology.ttl": "61d32d991d656f5570a2ed2776cde0fc40551060ace7bc92154729aeb47363ec",
     "shapes.ttl": "1a3c8a08bef7c9975beef8b41a417d6f4c7d3a82e7812e86ca4fd410945defa3"
   },
-  "contract_sha256": "645a5af74fab7709eee17d994f604a12c565074474024de92b8d355b0e9ce929",
-  "index_sha256": "eb69898b89aa8b6063be0d6389d8c6d56d3ae76c7972e185e741caae88686ea8",
+  "contract_sha256": "b80b1aed33d699ec5b4a4a52a16b70a440438cdca422286b6803b42e53df446e",
+  "index_sha256": "8381382d5850ea35600ee85ae709d7706bb4ff2cb8281e822836ea853db38118",
   "models": {
     "Attribution": {
       "description": "Who made or allowed something, on what day, with an optional note.",
@@ -2348,7 +2348,7 @@
     "linkml/schema/mentions.yaml": "94e4555e5043227f0a44fb16c94a77f26e84bd732f2b8689358794ace2999189",
     "linkml/schema/pages.yaml": "ef8c9c29f2de2b833eae078bef511ed8ff3936574784befce52a719474839292",
     "linkml/schema/physical.yaml": "9d6854aabd048edb37c3273f72300b1cb84661e1e1c2835dfe037b017423b7a3",
-    "linkml/schema/picture_source.yaml": "1a201555c434f5720f7fd0eeaea48a952079dd841af000554ec5e662f0fddd71",
+    "linkml/schema/picture_source.yaml": "f5adaa18a63c0196721541a48308edbfca60500d0baf58da585c0034ba88f4b7",
     "linkml/schema/shared.yaml": "e68e1362929fae5168da72f35490282d852fa07d490afa27c4c0d0fa1bb189b7",
     "linkml/schema/shared_record.yaml": "b747f93bdd259a8442789c21e1800cb23a36c185bb610021629c329e82cf87d6",
     "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",

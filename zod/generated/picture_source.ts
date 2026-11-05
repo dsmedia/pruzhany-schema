@@ -5,6 +5,7 @@ const pattern1 = /\S/;
 
 export const PictureSourceShape = z.strictObject({
 	holder: z.string().regex(pattern1),
+	holder_url: z.url().nullish(),
 	route: z.string().regex(pattern1).nullish(),
 	shelf_mark: z.string().regex(pattern1).nullish(),
 	url: z.url().nullish(),

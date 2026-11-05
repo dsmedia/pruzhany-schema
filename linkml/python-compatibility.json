@@ -3402,8 +3402,11 @@
 				"extra": "forbid",
 				"strict": true
 			},
-			"order": ["holder", "route", "shelf_mark", "url"],
+			"order": ["holder", "holder_url", "route", "shelf_mark", "url"],
 			"fields": {
+				"holder_url": {
+					"exclude_none": true
+				},
 				"route": {
 					"exclude_none": true
 				},
@@ -3424,6 +3427,7 @@
 			},
 			"order": [
 				"holder",
+				"holder_url",
 				"route",
 				"shelf_mark",
 				"url",
@@ -3434,6 +3438,9 @@
 				"rights_url"
 			],
 			"fields": {
+				"holder_url": {
+					"exclude_none": true
+				},
 				"route": {
 					"exclude_none": true
 				},

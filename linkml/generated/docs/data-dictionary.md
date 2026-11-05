@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `1b1f66c1b6988a471119de4c0c11565041c4be5278a356a3b555b33a4ee30264`.
+Definition fingerprint: `49a91543ebcce4057770c0c12f7f467ec01cca30779cf7fd665f7c80b83b8991`.
 
 ## What the Pruzhany issue documents share
 
@@ -232,6 +232,7 @@ Meaning: pc:PictureSource (class uri).
 | Field | What it holds | Value | Required | Standard mapping |
 | --- | --- | --- | --- | --- |
 | `holder` | The name of the institution holding the pages the pictures were made from. | NonBlankText | Yes | pc:picture_holder_name (slot uri); rico:hasOrHadHolder (close mappings) |
+| `holder_url` | The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page. | uri | No | pc:picture_holder_url (slot uri); rdfs:seeAlso (close mappings) |
 | `route` | The name of the service or collection readers reach the pages through, when it differs from the holder itself. | NonBlankText | No | pc:picture_access_route (slot uri) |
 | `shelf_mark` | The holder's shelf mark or call number for the pages. | NonBlankText | No | rico:identifier (slot uri) |
 | `url` | The pages' descriptive page at the holder or access route. | uri | No | pc:holding_object_url (slot uri); rdfs:seeAlso (close mappings) |
@@ -563,6 +564,7 @@ Meaning: ehri:RecordSet (class uri).
 | --- | --- | --- | --- | --- |
 | `code` | The paper's lowercase alphabetic code used in site keys and routes. | NonBlankText; pattern: ^[a-z]+$(?![\s\S]) | Yes | pc:newspaper_code (slot uri) |
 | `holder` | The name of the institution holding the pages the pictures were made from. | NonBlankText | Yes | pc:picture_holder_name (slot uri); rico:hasOrHadHolder (close mappings) |
+| `holder_url` | The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page. | uri | No | pc:picture_holder_url (slot uri); rdfs:seeAlso (close mappings) |
 | `id` | The paper's source-register id, the same value as Edition.newspaper. | NonBlankText | Yes | pc:site_newspaper (slot uri) |
 | `rights` | The rights statement for the pictures, as text. | NonBlankText | No | rico:conditionsOfUse (slot uri) |
 | `rights_url` | The address where the rights statement was read. | uri | No | pc:picture_rights_url (slot uri) |

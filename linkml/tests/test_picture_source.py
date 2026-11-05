@@ -19,6 +19,11 @@ class PictureSources(unittest.TestCase):
         self.assertEqual(credit.class_uri, 'pc:PictureSource')
         self.assertEqual(credit.attributes['holder'].slot_uri, 'pc:picture_holder_name')
         self.assertEqual(credit.attributes['holder'].close_mappings, ['rico:hasOrHadHolder'])
+        holder_url = credit.attributes['holder_url']
+        self.assertEqual(holder_url.range, 'uri')
+        self.assertFalse(holder_url.required)
+        self.assertEqual(holder_url.slot_uri, 'pc:picture_holder_url')
+        self.assertEqual(holder_url.close_mappings, ['rdfs:seeAlso'])
         self.assertEqual(credit.attributes['shelf_mark'].slot_uri, 'rico:identifier')
         self.assertEqual(credit.attributes['url'].slot_uri, 'pc:holding_object_url')
         self.assertEqual(credit.attributes['url'].close_mappings, ['rdfs:seeAlso'])
@@ -61,8 +66,8 @@ class PictureSources(unittest.TestCase):
                     self.assertEqual(check.is_valid(data), expected)
 
     def test_generated_python_uri_fields_keep_formats_and_exact_strings(self):
-        for name, fields in [('PictureSource', ['url']),
-                             ('Newspaper', ['url', 'rights_url']),
+        for name, fields in [('PictureSource', ['holder_url', 'url']),
+                             ('Newspaper', ['holder_url', 'url', 'rights_url']),
                              ('Edition', ['object_url'])]:
             for field in fields:
                 with self.subTest(model=name, field=field):
@@ -71,9 +76,21 @@ class PictureSources(unittest.TestCase):
                         {'type': 'string', 'format': 'uri'}, {'type': 'null'}])
         paper = models().Newspaper.model_validate_json(
             '{"id":"fictional-paper","code":"abc","title":"Fictional Gazette",'
-            '"holder":"Fictional Library","url":"https://library.example.org"}')
+            '"holder":"Fictional Library","url":"https://library.example.org",'
+            '"holder_url":"https://LIBRARY.example.org/holdings/42%2F1"}')
         self.assertEqual(paper.url, 'https://library.example.org')
+        self.assertEqual(paper.holder_url, 'https://LIBRARY.example.org/holdings/42%2F1')
+        self.assertEqual(paper.model_dump(mode='json')['holder_url'], paper.holder_url)
         self.assertTrue(issubclass(models().Newspaper, models().PictureSource))
+
+    def test_omitted_holder_url_stays_absent_when_serialized(self):
+        credit = models().PictureSource(holder='Fictional Library')
+        paper = models().Newspaper(
+            holder='Fictional Library', id='fictional-paper', code='abc',
+            title='Fictional Gazette')
+        for value in [credit, paper]:
+            with self.subTest(model=type(value).__name__):
+                self.assertNotIn('holder_url', value.model_dump(mode='json'))
 
 
 if __name__ == '__main__':

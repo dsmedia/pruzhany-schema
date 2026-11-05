@@ -152,6 +152,14 @@
                     "pattern": "\\S",
                     "type": "string"
                 },
+                "holder_url": {
+                    "description": "The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "route": {
                     "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",
                     "pattern": "\\S",

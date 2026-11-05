@@ -202,6 +202,14 @@
                     "pattern": "\\S",
                     "type": "string"
                 },
+                "holder_url": {
+                    "description": "The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "id": {
                     "description": "The paper's source-register id, the same value as Edition.newspaper.",
                     "pattern": "\\S",
@@ -270,6 +278,14 @@
                     "description": "The name of the institution holding the pages the pictures were made from.",
                     "pattern": "\\S",
                     "type": "string"
+                },
+                "holder_url": {
+                    "description": "The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "route": {
                     "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",

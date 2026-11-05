@@ -29,6 +29,7 @@ Name: pruzhany_pages
 | [dimensions](dimensions.md) | The picture's width and height, in its pixels. |
 | [edition_date](edition_date.md) | The issue's date, written YYYY-MM-DD. |
 | [holder](holder.md) | The name of the institution holding the pages the pictures were made from. |
+| [holder_url](holder_url.md) | The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page. |
 | [id](id.md) | The page's id, such as page-1938-12-16-4. |
 | [image_crop](image_crop.md) | A picture of the region alone, by its path, where one was made. |
 | [image_uri](image_uri.md) | The page's picture, by its name or address. |

@@ -146,6 +146,7 @@ class PythonGeneration(unittest.TestCase):
                         'type': 'object', 'additionalProperties': False, 'required': ['holder'],
                         'properties': {
                             'holder': {'type': 'string', 'pattern': r'\S'},
+                            'holder_url': {'anyOf': [{'type': 'string', 'format': 'uri'}, {'type': 'null'}], 'default': None},
                             **{field: {'anyOf': [{'type': 'string', 'pattern': r'\S'}, {'type': 'null'}], 'default': None}
                                for field in ('route', 'shelf_mark')},
                             'url': {'anyOf': [{'type': 'string', 'format': 'uri'}, {'type': 'null'}], 'default': None},

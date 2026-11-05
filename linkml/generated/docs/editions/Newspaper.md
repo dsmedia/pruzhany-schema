@@ -31,6 +31,8 @@ URI: [ehri:RecordSet](http://lod.ehri-project-test.eu/ontology#RecordSet)
         
       Newspaper : holder
         
+      Newspaper : holder_url
+        
       Newspaper : id
         
       Newspaper : rights
@@ -74,6 +76,7 @@ URI: [ehri:RecordSet](http://lod.ehri-project-test.eu/ontology#RecordSet)
 | [rights](rights.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The rights statement for the pictures, as text. | direct |
 | [rights_url](rights_url.md) | 0..1 <br/> [Uri](Uri.md) | The address where the rights statement was read. | direct |
 | [holder](holder.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The name of the institution holding the pages the pictures were made from. | [PictureSource](PictureSource.md) |
+| [holder_url](holder_url.md) | 0..1 <br/> [Uri](Uri.md) | The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page. | [PictureSource](PictureSource.md) |
 | [route](route.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The name of the service or collection readers reach the pages through, when it differs from the holder itself. | [PictureSource](PictureSource.md) |
 | [shelf_mark](shelf_mark.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The holder's shelf mark or call number for the pages. | [PictureSource](PictureSource.md) |
 | [url](url.md) | 0..1 <br/> [Uri](Uri.md) | The pages' descriptive page at the holder or access route. | [PictureSource](PictureSource.md) |
@@ -273,6 +276,19 @@ attributes:
     - PictureSource
     range: NonBlankText
     required: true
+  holder_url:
+    name: holder_url
+    description: 'The web address of the institution named in holder: its page for
+      the holding where the source register has one, otherwise its home page.'
+    from_schema: https://pruzhany.org/ns/picture_source
+    close_mappings:
+    - rdfs:seeAlso
+    rank: 1000
+    slot_uri: pc:picture_holder_url
+    owner: Newspaper
+    domain_of:
+    - PictureSource
+    range: uri
   route:
     name: route
     description: The name of the service or collection readers reach the pages through,

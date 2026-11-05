@@ -16,6 +16,12 @@ pc:picture_holder_name a owl:DatatypeProperty ;
   rdfs:label "Picture holding institution name"@en ;
   rdfs:comment "The literal name of the institution holding the pages photographed. RiC-O hasOrHadHolder has Agent range and EHRI's holdings profile requires an IRI; neither expresses this literal. The LinkML close mapping documents the conceptual relation without asserting an object property with a string value."@en .
 
+# Read EHRI 0.2.0, RiC-O 1.1 and its axioms, and the EHRI holdings profile in
+# standards/ on 5 November 2026 (the files named in picture_source.yaml).
+pc:picture_holder_url a owl:DatatypeProperty ;
+  rdfs:label "Picture holding institution web address"@en ;
+  rdfs:comment "The literal web address of the institution named in the picture credit: its page for the holding where the source register has one, otherwise its home page. No pinned EHRI or RiC-O property expresses this address in a flattened credit. RiC-O hasOrHadHolder relates a record resource or instantiation to an Agent, while identifier identifies its subject rather than its holder. The EHRI holdings profile's broader rdfs:seeAlso IRI is retained only as a close mapping."@en .
+
 pc:picture_access_route a owl:DatatypeProperty ;
   rdfs:label "Picture access route"@en ;
   rdfs:comment "The name of a service or collection through which readers reach the pictures, distinct from the holding institution. No pinned EHRI or RiC-O property expresses this access-service label; it does not assert custody or ownership."@en .
