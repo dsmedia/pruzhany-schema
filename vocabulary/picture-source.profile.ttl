@@ -42,6 +42,14 @@ pc:page_picture_source a owl:ObjectProperty ;
   rdfs:label "Page picture source override"@en ;
   rdfs:comment "A page's complete replacement credit when its picture source differs from its newspaper's default. The pinned EHRI and RiC-O relations do not express this site-specific default and override convention."@en .
 
+# Read standards/ehri-0.2.0.json, rico-1.1.json, rico-1.1-axioms.json and
+# ehri-holdings-1.1-1c2325f9/repositories.shex on 5 November 2026.
+# IIIF Image API 3.0 https://iiif.io/api/image/3.0/ (2.2, 5.2) and
+# Presentation 3.0 https://iiif.io/api/presentation/3.0/#service, read the same day.
+pc:image_service a owl:ObjectProperty ;
+  rdfs:label "Holder's page image service"@en ;
+  rdfs:comment "The base URI of the holder's IIIF Image API 3 service for a page's picture, without /info.json or a trailing slash. It is never a service supplied by this project, and image_uri remains the picture shown. No pinned EHRI or RiC-O property expresses this endpoint: EHRI reproductionServices carries descriptive text, and RiC-O hasOrHadDigitalInstantiation relates a record resource to an Instantiation rather than a service."@en .
+
 pc:holding_object_url a owl:ObjectProperty ;
   rdfs:label "Holding descriptive page URL"@en ;
   rdfs:comment "The descriptive page at the holder or access route for a paper's holding or a particular issue/page. No pinned EHRI or RiC-O property specifically carries this address. The EHRI holdings profile uses the broader rdfs:seeAlso IRI, retained as a close mapping rather than treating the URL as an archival identifier."@en .

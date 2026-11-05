@@ -28,6 +28,10 @@ URI: [pc:PictureSource](https://pruzhany.org/ns/sourced-entities#PictureSource)
         
       PictureSource : holder_url
         
+      PictureSource : rights
+        
+      PictureSource : rights_url
+        
       PictureSource : route
         
       PictureSource : shelf_mark
@@ -58,6 +62,8 @@ URI: [pc:PictureSource](https://pruzhany.org/ns/sourced-entities#PictureSource)
 | [route](route.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The name of the service or collection readers reach the pages through, when it differs from the holder itself. | direct |
 | [shelf_mark](shelf_mark.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The holder's shelf mark or call number for the pages. | direct |
 | [url](url.md) | 0..1 <br/> [Uri](Uri.md) | The pages' descriptive page at the holder or access route. | direct |
+| [rights](rights.md) | 0..1 <br/> [NonBlankText](NonBlankText.md) | The rights statement for the pictures, as text. | direct |
+| [rights_url](rights_url.md) | 0..1 <br/> [Uri](Uri.md) | The address where the rights statement was read. | direct |
 
 
 
@@ -176,6 +182,24 @@ attributes:
     domain_of:
     - PictureSource
     range: uri
+  rights:
+    name: rights
+    description: The rights statement for the pictures, as text.
+    from_schema: https://pruzhany.org/ns/picture_source
+    rank: 1000
+    slot_uri: rico:conditionsOfUse
+    domain_of:
+    - PictureSource
+    range: NonBlankText
+  rights_url:
+    name: rights_url
+    description: The address where the rights statement was read.
+    from_schema: https://pruzhany.org/ns/picture_source
+    rank: 1000
+    slot_uri: pc:picture_rights_url
+    domain_of:
+    - PictureSource
+    range: uri
 class_uri: pc:PictureSource
 
 ```
@@ -248,6 +272,26 @@ attributes:
     - rdfs:seeAlso
     rank: 1000
     slot_uri: pc:holding_object_url
+    owner: PictureSource
+    domain_of:
+    - PictureSource
+    range: uri
+  rights:
+    name: rights
+    description: The rights statement for the pictures, as text.
+    from_schema: https://pruzhany.org/ns/picture_source
+    rank: 1000
+    slot_uri: rico:conditionsOfUse
+    owner: PictureSource
+    domain_of:
+    - PictureSource
+    range: NonBlankText
+  rights_url:
+    name: rights_url
+    description: The address where the rights statement was read.
+    from_schema: https://pruzhany.org/ns/picture_source
+    rank: 1000
+    slot_uri: pc:picture_rights_url
     owner: PictureSource
     domain_of:
     - PictureSource

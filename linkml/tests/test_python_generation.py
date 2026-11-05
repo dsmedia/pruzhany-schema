@@ -75,6 +75,8 @@ class PythonGeneration(unittest.TestCase):
             additions.setdefault(name, {})['newspaper'] = {'type': 'string', 'pattern': r'\S'}
         additions['Page']['picture_source'] = {'anyOf': [
             {'$ref': '#/$defs/PictureSource'}, {'type': 'null'}], 'default': None}
+        additions['Page']['image_service'] = {'anyOf': [
+            {'type': 'string', 'format': 'uri'}, {'type': 'null'}], 'default': None}
         additions['Edition']['object_url'] = {'anyOf': [
             {'type': 'string', 'format': 'uri'}, {'type': 'null'}], 'default': None}
         additions['Edition']['key'] = {
@@ -150,6 +152,8 @@ class PythonGeneration(unittest.TestCase):
                             **{field: {'anyOf': [{'type': 'string', 'pattern': r'\S'}, {'type': 'null'}], 'default': None}
                                for field in ('route', 'shelf_mark')},
                             'url': {'anyOf': [{'type': 'string', 'format': 'uri'}, {'type': 'null'}], 'default': None},
+                            'rights': {'anyOf': [{'type': 'string', 'pattern': r'\S'}, {'type': 'null'}], 'default': None},
+                            'rights_url': {'anyOf': [{'type': 'string', 'format': 'uri'}, {'type': 'null'}], 'default': None},
                         },
                     }
                 model = getattr(models(), name)

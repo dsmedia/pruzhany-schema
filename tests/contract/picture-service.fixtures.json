@@ -1,0 +1,379 @@
+{
+	"description": "Fictional picture-source rights and optional holder IIIF image services; existing newspaper rights keep their constraints.",
+	"example": {
+		"edition_date": "2001-02-03",
+		"pages": [
+			{
+				"id": "page-2001-02-03-1",
+				"issue_date": "2001-02-03",
+				"page_number": 1,
+				"image_uri": "fictional-page.jpg",
+				"dimensions": [1000, 1500],
+				"blocks": [],
+				"newspaper": "fictional-paper",
+				"picture_source": {
+					"holder": "Fictional Regional Library",
+					"rights": "Fictional permission for these scans",
+					"rights_url": "https://library.example.org/rights"
+				},
+				"image_service": "https://library.example.org/iiif/3/fictional-page-1"
+			}
+		]
+	},
+	"models": {
+		"PagesData": [],
+		"Page": ["pages", 0],
+		"PictureSource": ["pages", 0, "picture_source"]
+	},
+	"cases": [
+		{
+			"name": "picture service: source rights and holder service",
+			"model": "Page",
+			"changes": [],
+			"valid": true
+		},
+		{
+			"name": "picture service: whole pages document",
+			"model": "PagesData",
+			"changes": [],
+			"valid": true
+		},
+		{
+			"name": "picture service: source rights alone",
+			"model": "PictureSource",
+			"changes": [],
+			"valid": true
+		},
+		{
+			"name": "picture service: rights remain independent and optional",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights"],
+					"remove": true
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: rights URL remains independent and optional",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights_url"],
+					"remove": true
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: old source without rights",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights"],
+					"remove": true
+				},
+				{
+					"path": ["rights_url"],
+					"remove": true
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: old page without additions",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source"],
+					"remove": true
+				},
+				{
+					"path": ["image_service"],
+					"remove": true
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: no holder service",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["image_service"],
+					"remove": true
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: null optional service",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["image_service"],
+					"value": null
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: null optional rights",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": null
+				},
+				{
+					"path": ["rights_url"],
+					"value": null
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: URI spelling preserved",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["image_service"],
+					"value": "https://LIBRARY.example.org/iiif/3/42%2F1"
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: URI range admits a non-HTTP identifier",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["image_service"],
+					"value": "urn:fictional:iiif:page:1"
+				}
+			],
+			"valid": true
+		},
+		{
+			"name": "picture service: invalid service 0",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["image_service"],
+					"value": "not a URI"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid source rights URI 0",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights_url"],
+					"value": "not a URI"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid page rights URI 0",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights_url"],
+					"value": "not a URI"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid service 1",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["image_service"],
+					"value": "/relative/path"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid source rights URI 1",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights_url"],
+					"value": "/relative/path"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid page rights URI 1",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights_url"],
+					"value": "/relative/path"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid service 2",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["image_service"],
+					"value": ""
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid source rights URI 2",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights_url"],
+					"value": ""
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid page rights URI 2",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights_url"],
+					"value": ""
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid service 3",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["image_service"],
+					"value": 42
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid source rights URI 3",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights_url"],
+					"value": 42
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid page rights URI 3",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights_url"],
+					"value": 42
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid source rights 0",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": ""
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid page rights 0",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights"],
+					"value": ""
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid source rights 1",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": " \t\n"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid page rights 1",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights"],
+					"value": " \t\n"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid source rights 2",
+			"model": "PictureSource",
+			"changes": [
+				{
+					"path": ["rights"],
+					"value": 42
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid page rights 2",
+			"model": "Page",
+			"changes": [
+				{
+					"path": ["picture_source", "rights"],
+					"value": 42
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid service within document",
+			"model": "PagesData",
+			"changes": [
+				{
+					"path": ["pages", 0, "image_service"],
+					"value": "not a URI"
+				}
+			],
+			"valid": false
+		},
+		{
+			"name": "picture service: invalid page rights within document",
+			"model": "PagesData",
+			"changes": [
+				{
+					"path": ["pages", 0, "picture_source", "rights"],
+					"value": ""
+				}
+			],
+			"valid": false
+		}
+	]
+}

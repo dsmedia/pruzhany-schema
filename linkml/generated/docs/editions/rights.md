@@ -26,6 +26,7 @@ URI: [rico:conditionsOfUse](https://www.ica.org/standards/RiC/ontology#condition
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [Newspaper](Newspaper.md) | One newspaper in the source register, with its site title, code and default picture credit. A page may supply a different credit through picture_source. |  no  |
+| [PictureSource](PictureSource.md) | The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere. |  no  |
 
 
 
@@ -39,13 +40,13 @@ URI: [rico:conditionsOfUse](https://www.ica.org/standards/RiC/ontology#condition
 | Property | Value |
 | --- | --- |
 | Range | [NonBlankText](NonBlankText.md) |
-| Domain Of | [Newspaper](Newspaper.md) |
+| Domain Of | [PictureSource](PictureSource.md) |
 | Slot URI | [rico:conditionsOfUse](https://www.ica.org/standards/RiC/ontology#conditionsOfUse) |
 ### Slot Characteristics
 
 | Property | Value |
 | --- | --- |
-| Owner | [Newspaper](Newspaper.md) |
+| Owner | [PictureSource](PictureSource.md) |
 
 
 
@@ -91,9 +92,9 @@ description: The rights statement for the pictures, as text.
 from_schema: https://pruzhany.org/ns/editions
 rank: 1000
 slot_uri: rico:conditionsOfUse
-owner: Newspaper
+owner: PictureSource
 domain_of:
-- Newspaper
+- PictureSource
 range: NonBlankText
 
 ```

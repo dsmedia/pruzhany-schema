@@ -9,4 +9,6 @@ export const PictureSourceShape = z.strictObject({
 	route: z.string().regex(pattern1).nullish(),
 	shelf_mark: z.string().regex(pattern1).nullish(),
 	url: z.url().nullish(),
+	rights: z.string().regex(pattern1).nullish(),
+	rights_url: z.url().nullish(),
 });

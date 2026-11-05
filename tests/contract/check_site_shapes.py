@@ -12,7 +12,8 @@ def fixture_cases():
                      'death-event-shapes.fixtures.json', 'sources-citations.fixtures.json',
                      'media-shapes.fixtures.json', 'identifiers.fixtures.json',
                      'words-english.fixtures.json', 'newspaper.fixtures.json',
-                     'fates-list.fixtures.json', 'catalog-keys.fixtures.json']:
+                     'fates-list.fixtures.json', 'catalog-keys.fixtures.json',
+                     'picture-service.fixtures.json']:
         yield from cases_from_file(filename)
 
 

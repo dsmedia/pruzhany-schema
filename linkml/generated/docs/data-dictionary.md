@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `49a91543ebcce4057770c0c12f7f467ec01cca30779cf7fd665f7c80b83b8991`.
+Definition fingerprint: `be5b3f64778115ac682bace919b4b2daf46b6d8c07ff34ceb071094178028791`.
 
 ## What the Pruzhany issue documents share
 
@@ -233,6 +233,8 @@ Meaning: pc:PictureSource (class uri).
 | --- | --- | --- | --- | --- |
 | `holder` | The name of the institution holding the pages the pictures were made from. | NonBlankText | Yes | pc:picture_holder_name (slot uri); rico:hasOrHadHolder (close mappings) |
 | `holder_url` | The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page. | uri | No | pc:picture_holder_url (slot uri); rdfs:seeAlso (close mappings) |
+| `rights` | The rights statement for the pictures, as text. | NonBlankText | No | rico:conditionsOfUse (slot uri) |
+| `rights_url` | The address where the rights statement was read. | uri | No | pc:picture_rights_url (slot uri) |
 | `route` | The name of the service or collection readers reach the pages through, when it differs from the holder itself. | NonBlankText | No | pc:picture_access_route (slot uri) |
 | `shelf_mark` | The holder's shelf mark or call number for the pages. | NonBlankText | No | rico:identifier (slot uri) |
 | `url` | The pages' descriptive page at the holder or access route. | uri | No | pc:holding_object_url (slot uri); rdfs:seeAlso (close mappings) |
@@ -269,11 +271,12 @@ Meaning: schema:CreativeWork (close mappings).
 | `blocks` | The regions of print on the page. | list of Block | Yes | No direct mapping recorded |
 | `dimensions` | The picture's width and height, in its pixels. | list of integer; minimum items: 2; maximum items: 2 | Yes | No direct mapping recorded |
 | `id` | The page's id, such as page-1938-12-16-4. | string; pattern: ^page-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-\d+$(?![\s\S]) | Yes | No direct mapping recorded |
+| `image_service` | The base URI of the holder's IIIF Image API 3 service for this page's picture, without /info.json or a trailing slash. It is the holder's service, never ours; image_uri remains the picture shown on the page. A manifest may attach this service to that image so viewers can request further sizes and regions. | uri | No | pc:image_service (slot uri) |
 | `image_uri` | The page's picture, by its name or address. | string | Yes | No direct mapping recorded |
 | `issue_date` | The date of the issue the page belongs to, written YYYY-MM-DD. | string | Yes | No direct mapping recorded |
 | `newspaper` | The paper this page belongs to, by its id in the source register. | NonBlankText | Yes | pc:site_newspaper (slot uri) |
 | `page_number` | The page's number within the issue, from 1. | integer | Yes | No direct mapping recorded |
-| `picture_source` | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields. | PictureSource | No | pc:page_picture_source (slot uri) |
+| `picture_source` | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark, link and rights, rather than merging individual fields. | PictureSource | No | pc:page_picture_source (slot uri) |
 
 Source: `linkml/schema/pages.yaml`.
 

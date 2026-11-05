@@ -28,7 +28,27 @@ class PictureSources(unittest.TestCase):
         self.assertEqual(credit.attributes['url'].slot_uri, 'pc:holding_object_url')
         self.assertEqual(credit.attributes['url'].close_mappings, ['rdfs:seeAlso'])
         self.assertEqual(paper.attributes['title'].slot_uri, 'rico:title')
-        self.assertEqual(paper.attributes['rights'].slot_uri, 'rico:conditionsOfUse')
+        rights = credit.attributes['rights']
+        self.assertEqual(rights.slot_uri, 'rico:conditionsOfUse')
+        self.assertEqual(rights.range, 'NonBlankText')
+        self.assertFalse(rights.required)
+        self.assertEqual(rights.description, 'The rights statement for the pictures, as text.')
+        rights_url = credit.attributes['rights_url']
+        self.assertEqual(rights_url.slot_uri, 'pc:picture_rights_url')
+        self.assertEqual(rights_url.range, 'uri')
+        self.assertFalse(rights_url.required)
+        self.assertEqual(rights_url.description, 'The address where the rights statement was read.')
+        for field in ['rights', 'rights_url']:
+            self.assertNotIn(field, paper.attributes)
+            inherited = view('editions').induced_slot(field, 'Newspaper')
+            original = credit.attributes[field]
+            for attribute in ['range', 'required', 'slot_uri', 'description',
+                              'exact_mappings', 'close_mappings', 'related_mappings']:
+                self.assertEqual(getattr(inherited, attribute), getattr(original, attribute))
+        service = view('pages').get_class('Page').attributes['image_service']
+        self.assertEqual(service.range, 'uri')
+        self.assertFalse(service.required)
+        self.assertEqual(service.slot_uri, 'pc:image_service')
 
     def test_new_fields_and_formats_at_class_and_document_boundaries(self):
         spec = importlib.util.spec_from_file_location(
@@ -65,9 +85,33 @@ class PictureSources(unittest.TestCase):
                     check.format_checker = FormatChecker()
                     self.assertEqual(check.is_valid(data), expected)
 
+    def test_page_rights_and_service_at_class_and_document_boundaries(self):
+        spec = importlib.util.spec_from_file_location(
+            'picture_service_cases', ROOT / 'tests/contract/check_site_shapes.py')
+        corpus = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(corpus)
+        schema = generated('pages')
+        for case in corpus.cases_from_file('picture-service.fixtures.json'):
+            name, value = case['model'], copy.deepcopy(case['value'])
+            cls = {'$schema': schema['$schema'], '$defs': schema['$defs'],
+                   '$ref': f'#/$defs/{name}'}
+            document = fixture('pages')
+            if name == 'PagesData':
+                document = value
+            elif name == 'Page':
+                document['pages'] = [value]
+            else:
+                document['pages'][0]['picture_source'] = value
+            with self.subTest(case=case['name']):
+                for shape, data in [(cls, value), (schema, document)]:
+                    check = validator(shape)
+                    check.format_checker = FormatChecker()
+                    self.assertEqual(check.is_valid(data), case['valid'])
+
     def test_generated_python_uri_fields_keep_formats_and_exact_strings(self):
-        for name, fields in [('PictureSource', ['holder_url', 'url']),
+        for name, fields in [('PictureSource', ['holder_url', 'url', 'rights_url']),
                              ('Newspaper', ['holder_url', 'url', 'rights_url']),
+                             ('Page', ['image_service']),
                              ('Edition', ['object_url'])]:
             for field in fields:
                 with self.subTest(model=name, field=field):
@@ -91,6 +135,12 @@ class PictureSources(unittest.TestCase):
         for value in [credit, paper]:
             with self.subTest(model=type(value).__name__):
                 self.assertNotIn('holder_url', value.model_dump(mode='json'))
+
+    def test_omitted_rights_and_service_stay_absent_when_serialized(self):
+        credit = models().PictureSource(holder='Fictional Library')
+        self.assertEqual(credit.model_dump(mode='json'), {'holder': 'Fictional Library'})
+        page = models().Page.model_validate(fixture('pages')['pages'][0])
+        self.assertNotIn('image_service', page.model_dump(mode='json'))
 
 
 if __name__ == '__main__':

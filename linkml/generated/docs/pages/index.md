@@ -32,12 +32,15 @@ Name: pruzhany_pages
 | [holder_url](holder_url.md) | The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page. |
 | [id](id.md) | The page's id, such as page-1938-12-16-4. |
 | [image_crop](image_crop.md) | A picture of the region alone, by its path, where one was made. |
+| [image_service](image_service.md) | The base URI of the holder's IIIF Image API 3 service for this page's picture, without /info.json or a trailing slash. It is the holder's service, never ours; image_uri remains the picture shown on the page. A manifest may attach this service to that image so viewers can request further sizes and regions. |
 | [image_uri](image_uri.md) | The page's picture, by its name or address. |
 | [issue_date](issue_date.md) | The date of the issue the page belongs to, written YYYY-MM-DD. |
 | [newspaper](newspaper.md) | The paper this page belongs to, by its id in the source register. |
 | [page_number](page_number.md) | The page's number within the issue, from 1. |
 | [pages](pages.md) | The issue's pages. |
-| [picture_source](picture_source.md) | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields. |
+| [picture_source](picture_source.md) | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark, link and rights, rather than merging individual fields. |
+| [rights](rights.md) | The rights statement for the pictures, as text. |
+| [rights_url](rights_url.md) | The address where the rights statement was read. |
 | [route](route.md) | The name of the service or collection readers reach the pages through, when it differs from the holder itself. |
 | [shelf_mark](shelf_mark.md) | The holder's shelf mark or call number for the pages. |
 | [transcription](transcription.md) | The words read in the region, its lines separated by line breaks. |

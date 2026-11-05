@@ -36,11 +36,11 @@ export const NewspaperShape = z.strictObject({
 	route: z.string().regex(pattern2).nullish(),
 	shelf_mark: z.string().regex(pattern2).nullish(),
 	url: z.url().nullish(),
+	rights: z.string().regex(pattern2).nullish(),
+	rights_url: z.url().nullish(),
 	id: z.string().regex(pattern2),
 	code: z.string().regex(pattern4),
 	title: z.string().regex(pattern2),
-	rights: z.string().regex(pattern2).nullish(),
-	rights_url: z.url().nullish(),
 });
 
 export const EditionsCatalogShape = z.strictObject({

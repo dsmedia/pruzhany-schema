@@ -69,3 +69,13 @@ classes:
           - rdfs:seeAlso
         description: >-
           The pages' descriptive page at the holder or access route.
+      rights:
+        range: NonBlankText
+        slot_uri: rico:conditionsOfUse
+        description: >-
+          The rights statement for the pictures, as text.
+      rights_url:
+        range: uri
+        slot_uri: pc:picture_rights_url
+        description: >-
+          The address where the rights statement was read.
