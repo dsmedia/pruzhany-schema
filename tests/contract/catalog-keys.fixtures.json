@@ -1,0 +1,207 @@
+{
+	"description": "Entirely fictional catalog keys: two invented papers, the first unprefixed and abcd the second, on one day and on days of their own.",
+	"example": {
+		"EditionsCatalog": {
+			"editions": [
+				{
+					"date": "2001-02-03",
+					"hebrewDate": "Fictional date",
+					"hebrewMonth": 1,
+					"hebrewYear": 5761,
+					"newspaper": "fictional-first-paper",
+					"key": "2001-02-03"
+				},
+				{
+					"date": "2001-02-03",
+					"hebrewDate": "Fictional date",
+					"hebrewMonth": 1,
+					"hebrewYear": 5761,
+					"newspaper": "fictional-second-paper",
+					"key": "abcd-2001-02-03"
+				},
+				{
+					"date": "2001-02-10",
+					"hebrewDate": "Fictional date",
+					"hebrewMonth": 1,
+					"hebrewYear": 5761,
+					"newspaper": "fictional-second-paper",
+					"key": "abcd-2001-02-10"
+				},
+				{
+					"date": "2001-02-17",
+					"hebrewDate": "Fictional date",
+					"hebrewMonth": 1,
+					"hebrewYear": 5761,
+					"newspaper": "fictional-first-paper",
+					"key": "2001-02-17"
+				}
+			],
+			"holidays": [],
+			"historicalEvents": [],
+			"availableDates": ["2001-02-03"],
+			"availableKeys": ["2001-02-03", "abcd-2001-02-03", "abcd-2001-02-10"],
+			"newspapers": [
+				{
+					"holder": "Fictional Library",
+					"id": "fictional-first-paper",
+					"code": "fict",
+					"title": "Fictional Gazette"
+				},
+				{
+					"holder": "Fictional Library",
+					"id": "fictional-second-paper",
+					"code": "abcd",
+					"title": "Fictional Courier"
+				}
+			]
+		}
+	},
+	"models": {
+		"EditionsCatalog": ["EditionsCatalog"]
+	},
+	"cases": [
+		{
+			"name": "catalog keys: two papers on one day, and the second paper on a day of its own",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": []
+		},
+		{
+			"name": "catalog keys: without availableKeys, as catalogs written so far",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"remove": true
+				}
+			]
+		},
+		{
+			"name": "catalog keys: the first paper alone",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["2001-02-03"]
+				}
+			]
+		},
+		{
+			"name": "catalog keys: in any order",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["abcd-2001-02-10", "2001-02-03", "abcd-2001-02-03"]
+				}
+			]
+		},
+		{
+			"name": "catalog keys: a key twice",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["2001-02-03", "abcd-2001-02-03", "abcd-2001-02-03"]
+				}
+			],
+			"error": "duplicate available key"
+		},
+		{
+			"name": "catalog keys: a key naming no edition",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["2001-02-03", "abcd-2001-02-17"]
+				}
+			],
+			"error": "available key names no edition"
+		},
+		{
+			"name": "catalog keys: a first-paper key whose date is not available",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["2001-02-03", "2001-02-17"]
+				}
+			],
+			"error": "date-only available keys must equal availableDates"
+		},
+		{
+			"name": "catalog keys: an available date without its first-paper key",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["abcd-2001-02-03"]
+				}
+			],
+			"error": "date-only available keys must equal availableDates"
+		},
+		{
+			"name": "catalog keys: another paper's key does not stand for an available date",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableDates"],
+					"value": ["2001-02-03", "2001-02-10"]
+				}
+			],
+			"error": "date-only available keys must equal availableDates"
+		},
+		{
+			"name": "catalog keys: a code after the date",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["2001-02-03-abcd"]
+				}
+			]
+		},
+		{
+			"name": "catalog keys: an uppercase code",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["2001-02-03", "ABCD-2001-02-03"]
+				}
+			]
+		},
+		{
+			"name": "catalog keys: a trailing newline",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": ["2001-02-03\n"]
+				}
+			]
+		},
+		{
+			"name": "catalog keys: a key that is not text",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["availableKeys"],
+					"value": [20010203]
+				}
+			]
+		}
+	]
+}

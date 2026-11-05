@@ -68,6 +68,36 @@ checks:
           LinkML's generated JSON Schema cannot compare values in separate lists.
           The definition records the identifier link; the twins enforce membership.
 
+  - id: catalog-available-keys
+    holds: >-
+      When a catalog lists its available keys, no key appears twice, every key names an
+      edition, and its date-only keys are exactly the available dates.
+    zod:
+      file: zod/editions.schema.ts
+      schema: EditionsCatalogSchema
+    pydantic:
+      file: pydantic/editions.py
+      validator: EditionsCatalog.available_keys
+    parts:
+      - holds: >-
+          No two available keys are the same.
+        how: twin_only
+        why: >-
+          LinkML's JSON Schema generator does not enforce unique items on a multivalued
+          slot. The twins compare the keys.
+      - holds: >-
+          Every available key is the key of an edition in editions.
+        how: twin_only
+        why: >-
+          LinkML's generated JSON Schema cannot compare values in separate lists.
+      - holds: >-
+          The date-only (first paper) available keys equal availableDates as a set.
+        how: twin_only
+        why: >-
+          LinkML's generated JSON Schema cannot compare values in separate lists.
+          availableDates holds the first paper's dates; the writer publishes another
+          paper's editions without it, so another paper's keys are not compared with it.
+
   - id: edition-key-date
     holds: >-
       The date at the end of an edition key equals the edition's date.

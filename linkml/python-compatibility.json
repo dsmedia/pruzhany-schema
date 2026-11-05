@@ -473,16 +473,32 @@
 				"strict": true,
 				"extra": "forbid"
 			},
-			"order": ["availableDates", "editions", "historicalEvents", "holidays", "newspapers"],
+			"order": [
+				"availableDates",
+				"availableKeys",
+				"editions",
+				"historicalEvents",
+				"holidays",
+				"newspapers"
+			],
 			"validators": [
 				{
 					"name": "newspaper_references",
 					"module": "editions",
 					"function": "_EditionsCatalog__newspaper_references",
 					"mode": "after"
+				},
+				{
+					"name": "available_keys",
+					"module": "editions",
+					"function": "_EditionsCatalog__available_keys",
+					"mode": "after"
 				}
 			],
 			"fields": {
+				"availableKeys": {
+					"exclude_none": true
+				},
 				"newspapers": {
 					"exclude_none": true
 				}

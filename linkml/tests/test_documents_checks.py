@@ -86,16 +86,25 @@ class TheAccount(unittest.TestCase):
         # The fates list (2 November 2026) adds two refinements, two validators and two entries;
         # one issue naming one paper adds one of each.
         # Picture sources add one catalog refinement/validator with two list checks.
-        self.assertEqual((zod, pydantic, len(entries)), (14, 16, 16))
+        # Catalog keys (5 November 2026) add one more catalog refinement/validator with three.
+        self.assertEqual((zod, pydantic, len(entries)), (15, 17, 17))
 
     def test_each_entry_names_one_refinement_or_validator_where_it_is(self):
+        # A schema may carry several refinements (the catalog has two); its span holds
+        # exactly as many as the entries that name it.
+        naming = {}
+        for entry in CHECKS['checks']:
+            if 'zod' in entry:
+                place = (entry['zod']['file'], entry['zod']['schema'])
+                naming[place] = naming.get(place, 0) + 1
         for entry in CHECKS['checks']:
             with self.subTest(check=entry['id']):
                 self.assertTrue('zod' in entry or 'pydantic' in entry)
                 if 'zod' in entry:
                     self.assertIn(entry['zod']['file'], CHECKS['twins']['zod'])
-                    span = zod_span(entry['zod']['file'], entry['zod']['schema'])
-                    self.assertEqual(len(ZOD_REFINEMENT.findall(span)), 1, span[:80])
+                    place = (entry['zod']['file'], entry['zod']['schema'])
+                    span = zod_span(*place)
+                    self.assertEqual(len(ZOD_REFINEMENT.findall(span)), naming[place], span[:80])
                 if 'pydantic' in entry:
                     self.assertIn(entry['pydantic']['file'], CHECKS['twins']['pydantic'])
                     self.assertEqual(pydantic_validators(entry['pydantic']['file'], entry['pydantic']['validator']), 1)
@@ -140,7 +149,7 @@ class TheAccount(unittest.TestCase):
                     tally['existing' if 'rule' in part else 'proposed'] += 1
                 else:
                     tally[part['how']] += 1
-        self.assertEqual(tally, {'linkml_rule': 5, 'existing': 40, 'proposed': 0, 'twin_only': 6})
+        self.assertEqual(tally, {'linkml_rule': 5, 'existing': 40, 'proposed': 0, 'twin_only': 9})
 
     def test_it_passes_the_house_lint(self):
         self.assertEqual(load('lint').lint(CHECKS_FILE), [])

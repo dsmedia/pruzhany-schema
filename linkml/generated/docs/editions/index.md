@@ -26,6 +26,7 @@ Name: pruzhany_editions
 | Slot | Description |
 | --- | --- |
 | [available_dates](available_dates.md) | The dates of the editions whose pages are on the site. |
+| [available_keys](available_keys.md) | The keys of the editions whose pages are on the site, each an Edition key: the date alone for the first paper, or the paper's code and a hyphen before it for any other. Optional for now, because a site on an older schema pin refuses unknown fields and the catalogs written so far lack it: this schema comes first, then the site's pin, then the writer writes it, and later it becomes required. When present, no key appears twice and every key names an edition in editions. The writer publishes another paper's editions without reference to availableDates, which holds the first paper's dates, so the runtime twins check only that the date-only keys equal availableDates as a set. LinkML's generated JSON Schema cannot compare values within or across these lists. |
 | [code](code.md) | The paper's lowercase alphabetic code used in site keys and routes. |
 | [date](date.md) | The edition's date, written YYYY-MM-DD. |
 | [description](description.md) | What happened, in a sentence or two. |

@@ -1633,8 +1633,8 @@
             "description": "A published piece of an edition of the paper.",
             "properties": {
                 "content_item_id": {
-                    "description": "The piece's id, such as cu-1938-12-16-i0105.",
-                    "pattern": "^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$",
+                    "description": "The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105.",
+                    "pattern": "^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])",
                     "type": "string"
                 },
                 "edition_date": {

@@ -75,7 +75,7 @@ Name: pruzhany_fates_list
 | [citations](citations.md) | The evidence: where in which sources the statement is found. |
 | [collection](collection.md) | The database's title, as the shared record's source gives it. |
 | [confidence](confidence.md) | How sure the fate is: confirmed or probable. |
-| [content_item_id](content_item_id.md) | The piece's id, such as cu-1938-12-16-i0105. |
+| [content_item_id](content_item_id.md) | The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105. |
 | [counts](counts.md) | The list's counts, so that a page never counts for itself. |
 | [date](date.md) | The date, as the record holds it structured; its printed words are never carried. |
 | [dated](dated.md) | The record's own date, apart from when it was published or consulted. |

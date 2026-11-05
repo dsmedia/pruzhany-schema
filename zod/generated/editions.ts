@@ -47,5 +47,6 @@ export const EditionsCatalogShape = z.strictObject({
 	holidays: z.array(HolidayShape),
 	historicalEvents: z.array(HistoricalEventShape),
 	availableDates: z.array(z.string().regex(pattern1)),
+	availableKeys: z.array(z.string().regex(pattern3)).nullish(),
 	newspapers: z.array(NewspaperShape).nullish(),
 });

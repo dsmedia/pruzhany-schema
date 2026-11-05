@@ -1057,6 +1057,17 @@
           },
           "type": "array"
         },
+        "availableKeys": {
+          "description": "The keys of the editions whose pages are on the site, each an Edition key: the date alone for the first paper, or the paper's code and a hyphen before it for any other. Optional for now, because a site on an older schema pin refuses unknown fields and the catalogs written so far lack it: this schema comes first, then the site's pin, then the writer writes it, and later it becomes required. When present, no key appears twice and every key names an edition in editions. The writer publishes another paper's editions without reference to availableDates, which holds the first paper's dates, so the runtime twins check only that the date-only keys equal availableDates as a set. LinkML's generated JSON Schema cannot compare values within or across these lists.",
+          "items": {
+            "pattern": "^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])",
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
         "editions": {
           "description": "Every edition of the paper, with its Hebrew date.",
           "items": {
@@ -2221,8 +2232,8 @@
       "description": "A published piece of an edition of the paper.",
       "properties": {
         "content_item_id": {
-          "description": "The piece's id, such as cu-1938-12-16-i0105.",
-          "pattern": "^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$",
+          "description": "The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105.",
+          "pattern": "^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])",
           "type": "string"
         },
         "edition_date": {

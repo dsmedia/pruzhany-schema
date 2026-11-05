@@ -162,6 +162,7 @@ class EditionsCatalog(Strict):
     'The catalog of editions: every edition, the holidays and historical events beside them, and the dates available on the site.'
     model_config = ConfigDict(**{'strict': True, 'extra': 'forbid'})
     availableDates: list[Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')]] = Field(default=...)
+    availableKeys: list[Annotated[str, Field(pattern='^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$')]] | None = Field(default=None, exclude_if=lambda value: value is None)
     editions: list[Edition] = Field(default=...)
     historicalEvents: list[HistoricalEvent] = Field(default=...)
     holidays: list[Holiday] = Field(default=...)
@@ -170,6 +171,10 @@ class EditionsCatalog(Strict):
     @model_validator(mode='after')
     def newspaper_references(self):
         return _call('editions', '_EditionsCatalog__newspaper_references', self)
+
+    @model_validator(mode='after')
+    def available_keys(self):
+        return _call('editions', '_EditionsCatalog__available_keys', self)
 
 
 class EnglishCheck(Strict):
@@ -338,7 +343,7 @@ class FatesListPiece(Strict):
     'A published piece of an edition of the paper.'
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     edition_date: Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')] = Field(default=...)
-    content_item_id: Annotated[str, Field(pattern='^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$')] = Field(default=...)
+    content_item_id: Annotated[str, Field(pattern='^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$')] = Field(default=...)
 
 
 class HistoricalEvent(Strict):

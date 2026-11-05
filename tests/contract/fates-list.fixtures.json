@@ -227,6 +227,50 @@
 			]
 		},
 		{
+			"name": "FatesListPiece: another paper's piece id",
+			"model": "FatesListPiece",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["content_item_id"],
+					"value": "cu-abcd-1938-12-16-i0100"
+				}
+			]
+		},
+		{
+			"name": "FatesListPiece: a code after the date",
+			"model": "FatesListPiece",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_item_id"],
+					"value": "cu-1938-12-16-abcd-i0100"
+				}
+			]
+		},
+		{
+			"name": "FatesListPiece: an uppercase code",
+			"model": "FatesListPiece",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_item_id"],
+					"value": "cu-ABCD-1938-12-16-i0100"
+				}
+			]
+		},
+		{
+			"name": "FatesListPiece: a trailing newline",
+			"model": "FatesListPiece",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_item_id"],
+					"value": "cu-1938-12-16-i0100\n"
+				}
+			]
+		},
+		{
 			"name": "FatesListFateDetail: a place alone",
 			"model": "FatesListFateDetail",
 			"valid": true,

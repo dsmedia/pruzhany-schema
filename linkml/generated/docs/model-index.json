@@ -1,11 +1,11 @@
 {
-  "contract_sha256": "19474726161af53501d5552d62e2bca7cb76c602db6e86a8f73f11d428ca1c73",
+  "contract_sha256": "645a5af74fab7709eee17d994f604a12c565074474024de92b8d355b0e9ce929",
   "inputs": {
     "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
     "linkml/schema/content_items.yaml": "b2e332fdf8bb5f036ac1c5e29419d61ad96fd917aea174c14db9e4e56c6bdb25",
-    "linkml/schema/editions.yaml": "e603775bdb1f5b18970c1f2a40f98213bf84626e02d407be820c0241647f1985",
+    "linkml/schema/editions.yaml": "102dab448b341ad26284b85a9bc4649f4d025043abc4cffe1db3ddd8f4f30b14",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
-    "linkml/schema/fates_list.yaml": "af6791380d346902ed99956f1138d158097a44f2cf0b6bde2301c23cac50b71b",
+    "linkml/schema/fates_list.yaml": "db78dd9a601bc176c6e872d7bf62e95688bc80e716e6b038e061c55e811d5c8e",
     "linkml/schema/impresso_contentitem.yaml": "2042ddcf9a440e33a6d685c6610782a77f5c530bcdbe6c0b2d5e9b21f663c024",
     "linkml/schema/impresso_issue.yaml": "7cb9c66bd4ba93cd6555c4f04011513ba3918bad5a9201ef53c26c8fe1eef807",
     "linkml/schema/life_events.yaml": "d74c3f1c72956a5d476eaf15206d70c4ed35358598d119a8558c45bf4edbdda0",
@@ -1572,6 +1572,27 @@
           }
         },
         {
+          "description": "The keys of the editions whose pages are on the site, each an Edition key: the date alone for the first paper, or the paper's code and a hyphen before it for any other. Optional for now, because a site on an older schema pin refuses unknown fields and the catalogs written so far lack it: this schema comes first, then the site's pin, then the writer writes it, and later it becomes required. When present, no key appears twice and every key names an edition in editions. The writer publishes another paper's editions without reference to availableDates, which holds the first paper's dates, so the runtime twins check only that the date-only keys equal availableDates as a set. LinkML's generated JSON Schema cannot compare values within or across these lists.",
+          "mappings": [],
+          "multivalued": true,
+          "name": "availableKeys",
+          "range": "string",
+          "references": [],
+          "relationship": "value",
+          "required": false,
+          "shape": {
+            "description": "The keys of the editions whose pages are on the site, each an Edition key: the date alone for the first paper, or the paper's code and a hyphen before it for any other. Optional for now, because a site on an older schema pin refuses unknown fields and the catalogs written so far lack it: this schema comes first, then the site's pin, then the writer writes it, and later it becomes required. When present, no key appears twice and every key names an edition in editions. The writer publishes another paper's editions without reference to availableDates, which holds the first paper's dates, so the runtime twins check only that the date-only keys equal availableDates as a set. LinkML's generated JSON Schema cannot compare values within or across these lists.",
+            "items": {
+              "pattern": "^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])",
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        {
           "description": "Every edition of the paper, with its Hebrew date.",
           "mappings": [],
           "multivalued": true,
@@ -1651,7 +1672,7 @@
       "mappings": [],
       "parent": null,
       "source": "linkml/schema/editions.yaml",
-      "yaml": "  EditionsCatalog:\n    tree_root: true\n    description: >-\n      The catalog of editions: every edition, the holidays and historical events beside them,\n      and the dates available on the site.\n    attributes:\n      editions:\n        range: Edition\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Every edition of the paper, with its Hebrew date.\n      holidays:\n        range: Holiday\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The Jewish holidays of the paper's years.\n      historical_events:\n        alias: historicalEvents\n        range: HistoricalEvent\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Events in the world outside the town that the calendar marks.\n      available_dates:\n        alias: availableDates\n        range: IsoDay\n        multivalued: true\n        required: true\n        description: >-\n          The dates of the editions whose pages are on the site.\n      newspapers:\n        range: Newspaper\n        multivalued: true\n        inlined_as_list: true\n        slot_uri: pc:catalog_newspapers\n        description: >-\n          The papers these editions belong to, one entry per source-register id, with\n          their default picture credits. When present, every edition's newspaper must\n          name one of these ids. The runtime twins enforce id uniqueness and membership;\n          LinkML's generated JSON Schema cannot compare values across these lists.\n"
+      "yaml": "  EditionsCatalog:\n    tree_root: true\n    description: >-\n      The catalog of editions: every edition, the holidays and historical events beside them,\n      and the dates available on the site.\n    attributes:\n      editions:\n        range: Edition\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Every edition of the paper, with its Hebrew date.\n      holidays:\n        range: Holiday\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The Jewish holidays of the paper's years.\n      historical_events:\n        alias: historicalEvents\n        range: HistoricalEvent\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          Events in the world outside the town that the calendar marks.\n      available_dates:\n        alias: availableDates\n        range: IsoDay\n        multivalued: true\n        required: true\n        description: >-\n          The dates of the editions whose pages are on the site.\n      available_keys:\n        alias: availableKeys\n        multivalued: true\n        pattern: '^(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}$(?![\\s\\S])'\n        description: >-\n          The keys of the editions whose pages are on the site, each an Edition key: the\n          date alone for the first paper, or the paper's code and a hyphen before it for any\n          other. Optional for now, because a site on an older schema pin refuses unknown\n          fields and the catalogs written so far lack it: this schema comes first, then the\n          site's pin, then the writer writes it, and later it becomes required. When present,\n          no key appears twice and every key names an edition in editions. The writer\n          publishes another paper's editions without reference to availableDates, which holds\n          the first paper's dates, so the runtime twins check only that the date-only keys\n          equal availableDates as a set. LinkML's generated JSON Schema cannot compare\n          values within or across these lists.\n      newspapers:\n        range: Newspaper\n        multivalued: true\n        inlined_as_list: true\n        slot_uri: pc:catalog_newspapers\n        description: >-\n          The papers these editions belong to, one entry per source-register id, with\n          their default picture credits. When present, every edition's newspaper must\n          name one of these ids. The runtime twins enforce id uniqueness and membership;\n          LinkML's generated JSON Schema cannot compare values across these lists.\n"
     },
     "EnglishCheck": {
       "description": "A later, separate check of one English field against one exact reading of the printed text, bound to both and to the judgement kept by their digests.",
@@ -3263,7 +3284,7 @@
       "description": "A published piece of an edition of the paper.",
       "fields": [
         {
-          "description": "The piece's id, such as cu-1938-12-16-i0105.",
+          "description": "The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105.",
           "mappings": [],
           "multivalued": false,
           "name": "content_item_id",
@@ -3272,8 +3293,8 @@
           "relationship": "value",
           "required": true,
           "shape": {
-            "description": "The piece's id, such as cu-1938-12-16-i0105.",
-            "pattern": "^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$",
+            "description": "The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105.",
+            "pattern": "^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])",
             "type": "string"
           }
         },
@@ -3296,7 +3317,7 @@
       "mappings": [],
       "parent": null,
       "source": "linkml/schema/fates_list.yaml",
-      "yaml": "  FatesListPiece:\n    description: >-\n      A published piece of an edition of the paper.\n    attributes:\n      edition_date:\n        range: IsoDay\n        required: true\n        description: >-\n          The edition's day, written YYYY-MM-DD.\n      content_item_id:\n        required: true\n        pattern: '^cu-\\d{4}-\\d{2}-\\d{2}-i\\d{4}$'\n        description: >-\n          The piece's id, such as cu-1938-12-16-i0105.\n"
+      "yaml": "  FatesListPiece:\n    description: >-\n      A published piece of an edition of the paper.\n    attributes:\n      edition_date:\n        range: IsoDay\n        required: true\n        description: >-\n          The edition's day, written YYYY-MM-DD.\n      content_item_id:\n        required: true\n        pattern: '^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$(?![\\s\\S])'\n        description: >-\n          The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code\n          after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105.\n"
     },
     "HistoricalEvent": {
       "description": "An event in the world outside the town, such as Kristallnacht, on a day or over a span of days.",

@@ -41,7 +41,7 @@ URI: [pc:FatesListPiece](https://pruzhany.org/ns/sourced-entities#FatesListPiece
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [edition_date](edition_date.md) | 1 <br/> [IsoDay](IsoDay.md) | The edition's day, written YYYY-MM-DD. | direct |
-| [content_item_id](content_item_id.md) | 1 <br/> [String](String.md) | The piece's id, such as cu-1938-12-16-i0105. | direct |
+| [content_item_id](content_item_id.md) | 1 <br/> [String](String.md) | The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105. | direct |
 
 
 
@@ -116,13 +116,14 @@ attributes:
     required: true
   content_item_id:
     name: content_item_id
-    description: The piece's id, such as cu-1938-12-16-i0105.
+    description: The piece's id, such as cu-1938-12-16-i0105, with another paper's
+      lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105.
     from_schema: https://pruzhany.org/ns/fates_list
     rank: 1000
     domain_of:
     - FatesListPiece
     required: true
-    pattern: ^cu-\d{4}-\d{2}-\d{2}-i\d{4}$
+    pattern: ^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])
 
 ```
 </details>
@@ -149,7 +150,8 @@ attributes:
     required: true
   content_item_id:
     name: content_item_id
-    description: The piece's id, such as cu-1938-12-16-i0105.
+    description: The piece's id, such as cu-1938-12-16-i0105, with another paper's
+      lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105.
     from_schema: https://pruzhany.org/ns/fates_list
     rank: 1000
     owner: FatesListPiece
@@ -157,7 +159,7 @@ attributes:
     - FatesListPiece
     range: string
     required: true
-    pattern: ^cu-\d{4}-\d{2}-\d{2}-i\d{4}$
+    pattern: ^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])
 
 ```
 </details></div>

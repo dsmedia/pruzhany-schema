@@ -11,6 +11,7 @@ yet. The vocabularies are versioned on their own; their releases are recorded in
 
 ### Added
 
+- The editions catalog's optional `availableKeys`: the keys of the editions on the site, for two papers on one day. Both twins refuse a repeated key or one naming no edition and hold the date-only keys equal to `availableDates`; optional until the site's pin and the writer carry it.
 - A content item's optional summary (the website's opening): English written by a model from the item's translation, bound to that English by its SHA-256, with the model, effort, day and whether a person has checked it; mapped to `rico:scopeAndContent`, in LinkML with its Zod and Python twins and fictional cases.
 - The fates list: everyone printed in the paper whose fate the record knows, with places, dates, archive records and a child mark, in LinkML with its Zod and Python twins and fictional cases.
 - A readable vocabulary list generated from the source JSON, with definitions, standards mappings and a freshness check.
@@ -22,6 +23,7 @@ yet. The vocabularies are versioned on their own; their releases are recorded in
 
 ### Changed
 
+- The fates list's piece id accepts another paper's code after `cu-`, as content-item ids do.
 - Generate Python and Zod fields from LinkML, retaining runtime validation rules ([#30](https://github.com/dsmedia/pruzhany-schema/pull/30), [#42](https://github.com/dsmedia/pruzhany-schema/pull/42)).
 - Require English renderings of non-English citation quotes; check public JSON-LD with an offline processor ([#55](https://github.com/dsmedia/pruzhany-schema/pull/55), [#59](https://github.com/dsmedia/pruzhany-schema/pull/59)).
 
