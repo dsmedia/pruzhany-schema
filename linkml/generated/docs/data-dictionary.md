@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `b98c3d25902588c79d7ff2f23eb85fb23fc9c3b88d620bbd0d55ee7c6840ba23`.
+Definition fingerprint: `1b1f66c1b6988a471119de4c0c11565041c4be5278a356a3b555b33a4ee30264`.
 
 ## What the Pruzhany issue documents share
 
@@ -516,6 +516,7 @@ Meaning: No direct mapping recorded.
 | Field | What it holds | Value | Required | Standard mapping |
 | --- | --- | --- | --- | --- |
 | `availableDates` | The dates of the editions whose pages are on the site. | list of IsoDay | Yes | No direct mapping recorded |
+| `availableKeys` | The keys of the editions whose pages are on the site, each an Edition key: the date alone for the first paper, or the paper's code and a hyphen before it for any other. Optional for now, because a site on an older schema pin refuses unknown fields and the catalogs written so far lack it: this schema comes first, then the site's pin, then the writer writes it, and later it becomes required. When present, no key appears twice and every key names an edition in editions. The writer publishes another paper's editions without reference to availableDates, which holds the first paper's dates, so the runtime twins check only that the date-only keys equal availableDates as a set. LinkML's generated JSON Schema cannot compare values within or across these lists. | list of string; pattern: ^(?:[a-z]+-)?\d{4}-\d{2}-\d{2}$(?![\s\S]) | No | No direct mapping recorded |
 | `editions` | Every edition of the paper, with its Hebrew date. | list of Edition | Yes | No direct mapping recorded |
 | `historicalEvents` | Events in the world outside the town that the calendar marks. | list of HistoricalEvent | Yes | No direct mapping recorded |
 | `holidays` | The Jewish holidays of the paper's years. | list of Holiday | Yes | No direct mapping recorded |
@@ -1468,7 +1469,7 @@ Meaning: No direct mapping recorded.
 
 | Field | What it holds | Value | Required | Standard mapping |
 | --- | --- | --- | --- | --- |
-| `content_item_id` | The piece's id, such as cu-1938-12-16-i0105. | string; pattern: ^cu-\d{4}-\d{2}-\d{2}-i\d{4}$ | Yes | No direct mapping recorded |
+| `content_item_id` | The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105. | string; pattern: ^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S]) | Yes | No direct mapping recorded |
 | `edition_date` | The edition's day, written YYYY-MM-DD. | IsoDay | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/fates_list.yaml`.

@@ -47,6 +47,39 @@ export const EditionsCatalogSchema = z
 		historicalEvents: z.array(HistoricalEventSchema),
 	})
 	.superRefine((v, ctx) => {
+		// availableDates holds the first paper's dates; the writer publishes every other
+		// paper's editions without it (pruzhany-steps publish/site_editions.published_keys),
+		// so only the date-only keys are compared with it.
+		if (v.availableKeys == null) return;
+		const seen = new Set<string>();
+		v.availableKeys.forEach((key, i) => {
+			if (seen.has(key))
+				ctx.addIssue({
+					code: 'custom',
+					path: ['availableKeys', i],
+					message: 'duplicate available key',
+				});
+			seen.add(key);
+		});
+		const editions = new Set(v.editions.map((edition) => edition.key));
+		v.availableKeys.forEach((key, i) => {
+			if (!editions.has(key))
+				ctx.addIssue({
+					code: 'custom',
+					path: ['availableKeys', i],
+					message: 'available key names no edition',
+				});
+		});
+		const firstPaper = new Set([...seen].filter((key) => key.length === 10));
+		const dates = new Set(v.availableDates);
+		if (firstPaper.size !== dates.size || [...dates].some((date) => !firstPaper.has(date)))
+			ctx.addIssue({
+				code: 'custom',
+				path: ['availableKeys'],
+				message: 'date-only available keys must equal availableDates',
+			});
+	})
+	.superRefine((v, ctx) => {
 		if (v.newspapers == null) return;
 		const ids = new Set<string>();
 		v.newspapers.forEach((paper, i) => {

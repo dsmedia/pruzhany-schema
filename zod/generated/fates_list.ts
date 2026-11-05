@@ -13,7 +13,7 @@ const pattern2 = /^\d{4}(-\d{2}(-\d{2})?)?$/;
 const pattern3 = /^location-[A-Za-z0-9_-]+$/;
 const pattern4 = /^https:\/\/[^\s/?#]+[^\s]*$/;
 const pattern5 = /^\d{4}-\d{2}-\d{2}$/;
-const pattern6 = /^cu-\d{4}-\d{2}-\d{2}-i\d{4}$/;
+const pattern6 = /^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])/;
 const pattern7 = /^person-[A-Za-z0-9_-]+$/;
 
 export const FatesListArchiveCountShape = z.strictObject({

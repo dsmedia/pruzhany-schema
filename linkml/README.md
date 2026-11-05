@@ -252,7 +252,16 @@ is its date; later papers prefix their code, for example `abcd-2001-02-03`.
 Both runtime twins check that the key's date equals `date`; JSON Schema holds
 the pattern but cannot compare sibling values. The register's code-to-id lookup
 remains the writer's responsibility. Site page, block and content-item ids put
-the optional lowercase paper code immediately after their kind.
+the optional lowercase paper code immediately after their kind, and so does the
+fates list's piece id.
+
+The catalog's optional `availableKeys` lists the keys of the editions whose pages
+are on the site. It stays optional until the site's pin and the writer carry it,
+and then becomes required. Both twins refuse a repeated key and a key that names
+no edition, and hold its date-only keys equal to `availableDates` as a set. Another
+paper's keys are not compared with `availableDates`: that list holds the first
+paper's dates, and the writer publishes every other paper's editions without it
+(pruzhany-steps `publish/site_editions.published_keys`, read 5 November 2026).
 
 The local `pc:site_newspaper` property is declared and explained in
 `vocabulary/site-identification.profile.ttl`. The unchanged pinned Impresso

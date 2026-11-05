@@ -204,9 +204,10 @@ classes:
           The edition's day, written YYYY-MM-DD.
       content_item_id:
         required: true
-        pattern: '^cu-\d{4}-\d{2}-\d{2}-i\d{4}$'
+        pattern: '^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])'
         description: >-
-          The piece's id, such as cu-1938-12-16-i0105.
+          The piece's id, such as cu-1938-12-16-i0105, with another paper's lowercase code
+          after cu- for any paper but the first, such as cu-abcd-1938-12-16-i0105.
 
   FatesListFateDetail:
     close_mappings:
