@@ -373,7 +373,9 @@ class Mappings(unittest.TestCase):
         # newspaper of an edition, page and piece adds three slot URIs and three Impresso fields; the
         # content item's summary adds two slot URIs: rico:scopeAndContent and its basis's digest.
         # Picture sources: two classes, twelve slots and three close mappings (holder name and URLs).
-        self.assertEqual(counts, {'class_uri': 11, 'slot_uri': 33, 'exact_mappings': 9, 'close_mappings': 9,
+        # holder_url adds one local slot URI and the holdings profile's seeAlso close mapping.
+        # Moving rights to PictureSource keeps its mappings; image_service adds one local slot URI.
+        self.assertEqual(counts, {'class_uri': 11, 'slot_uri': 35, 'exact_mappings': 9, 'close_mappings': 10,
                                   'related_mappings': 7, 'impresso': 25})
 
 

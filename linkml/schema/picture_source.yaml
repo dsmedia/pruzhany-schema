@@ -36,6 +36,21 @@ classes:
           - rico:hasOrHadHolder
         description: >-
           The name of the institution holding the pages the pictures were made from.
+      holder_url:
+        range: uri
+        slot_uri: pc:picture_holder_url
+        close_mappings:
+          - rdfs:seeAlso
+        description: >-
+          The web address of the institution named in holder: its page for the holding
+          where the source register has one, otherwise its home page.
+        # Read standards/ehri-0.2.0.json, rico-1.1.json, rico-1.1-axioms.json and
+        # ehri-holdings-1.1-1c2325f9/holdings.shex on 5 November 2026: no EHRI or
+        # RiC-O property expresses this literal holder address in a flattened credit.
+        # hasOrHadHolder takes an Agent, and identifier identifies its subject, not
+        # its holder. The holdings profile's broader seeAlso IRI is a close mapping.
+        # IIIF Presentation 3.0, provider (https://iiif.io/api/presentation/3.0/#provider),
+        # read 5 November 2026: a provider Agent requires a URI id.
       route:
         range: NonBlankText
         slot_uri: pc:picture_access_route
@@ -54,3 +69,13 @@ classes:
           - rdfs:seeAlso
         description: >-
           The pages' descriptive page at the holder or access route.
+      rights:
+        range: NonBlankText
+        slot_uri: rico:conditionsOfUse
+        description: >-
+          The rights statement for the pictures, as text.
+      rights_url:
+        range: uri
+        slot_uri: pc:picture_rights_url
+        description: >-
+          The address where the rights statement was read.

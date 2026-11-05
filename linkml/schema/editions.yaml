@@ -115,16 +115,6 @@ classes:
         slot_uri: rico:title
         description: >-
           The paper's title as the site shows it.
-      rights:
-        range: NonBlankText
-        slot_uri: rico:conditionsOfUse
-        description: >-
-          The rights statement for the pictures, as text.
-      rights_url:
-        range: uri
-        slot_uri: pc:picture_rights_url
-        description: >-
-          The address where the rights statement was read.
 
   Edition:
     description: >-

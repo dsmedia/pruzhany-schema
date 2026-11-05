@@ -38,6 +38,7 @@ Name: pruzhany_editions
 | [hebrew_year](hebrew_year.md) | The Hebrew year, such as 5699. |
 | [historical_events](historical_events.md) | Events in the world outside the town that the calendar marks. |
 | [holder](holder.md) | The name of the institution holding the pages the pictures were made from. |
+| [holder_url](holder_url.md) | The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page. |
 | [holiday](holiday.md) | The holiday the edition falls on or near, where there is one. |
 | [holidays](holidays.md) | The Jewish holidays of the paper's years. |
 | [id](id.md) | The paper's source-register id, the same value as Edition.newspaper. |

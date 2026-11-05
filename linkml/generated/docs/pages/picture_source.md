@@ -6,7 +6,7 @@ search:
 # Slot: picture_source 
 
 
-_The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields._
+_The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark, link and rights, rather than merging individual fields._
 
 
 
@@ -89,7 +89,7 @@ URI: [pc:page_picture_source](https://pruzhany.org/ns/sourced-entities#page_pict
 name: picture_source
 description: The picture's credit when it differs from the paper's catalog entry.
   Absence means to use that entry; a present credit supplies its own holder and any
-  route, shelf mark and link, rather than merging individual fields.
+  route, shelf mark, link and rights, rather than merging individual fields.
 from_schema: https://pruzhany.org/ns/pages
 rank: 1000
 slot_uri: pc:page_picture_source

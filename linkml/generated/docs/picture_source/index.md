@@ -21,6 +21,9 @@ Name: pruzhany_picture_source
 | Slot | Description |
 | --- | --- |
 | [holder](holder.md) | The name of the institution holding the pages the pictures were made from. |
+| [holder_url](holder_url.md) | The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page. |
+| [rights](rights.md) | The rights statement for the pictures, as text. |
+| [rights_url](rights_url.md) | The address where the rights statement was read. |
 | [route](route.md) | The name of the service or collection readers reach the pages through, when it differs from the holder itself. |
 | [shelf_mark](shelf_mark.md) | The holder's shelf mark or call number for the pages. |
 | [url](url.md) | The pages' descriptive page at the holder or access route. |

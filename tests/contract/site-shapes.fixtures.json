@@ -11800,6 +11800,309 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "picture source: PictureSource valid holder_url",
+			"model": "PictureSource",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"holder_url": "https://LIBRARY.example.org/holdings/42%2F1"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: PictureSource invalid holder_url",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"holder_url": "not a URI"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: PictureSource omitted holder_url",
+			"model": "PictureSource",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper valid holder_url",
+			"model": "Newspaper",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"id": "fictional-paper",
+						"code": "abc",
+						"title": "Fictional Gazette",
+						"holder_url": "https://LIBRARY.example.org/holdings/42%2F1"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper invalid holder_url",
+			"model": "Newspaper",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"id": "fictional-paper",
+						"code": "abc",
+						"title": "Fictional Gazette",
+						"holder_url": "not a URI"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Newspaper omitted holder_url",
+			"model": "Newspaper",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"id": "fictional-paper",
+						"code": "abc",
+						"title": "Fictional Gazette"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Page valid holder_url",
+			"model": "Page",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "page-2001-02-03-1",
+						"issue_date": "2001-02-03",
+						"page_number": 1,
+						"image_uri": "fictional.png",
+						"dimensions": [200, 300],
+						"blocks": [],
+						"newspaper": "fictional-paper",
+						"picture_source": {
+							"holder": "Fictional Library",
+							"holder_url": "https://LIBRARY.example.org/holdings/42%2F1"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Page invalid holder_url",
+			"model": "Page",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "page-2001-02-03-1",
+						"issue_date": "2001-02-03",
+						"page_number": 1,
+						"image_uri": "fictional.png",
+						"dimensions": [200, 300],
+						"blocks": [],
+						"newspaper": "fictional-paper",
+						"picture_source": {
+							"holder": "Fictional Library",
+							"holder_url": "not a URI"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: Page omitted holder_url",
+			"model": "Page",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"id": "page-2001-02-03-1",
+						"issue_date": "2001-02-03",
+						"page_number": 1,
+						"image_uri": "fictional.png",
+						"dimensions": [200, 300],
+						"blocks": [],
+						"newspaper": "fictional-paper",
+						"picture_source": {
+							"holder": "Fictional Library"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: EditionsCatalog valid holder_url",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"editions": [],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": [],
+						"newspapers": [
+							{
+								"holder": "Fictional Library",
+								"id": "fictional-paper",
+								"code": "abc",
+								"title": "Fictional Gazette",
+								"holder_url": "https://LIBRARY.example.org/holdings/42%2F1"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: EditionsCatalog invalid holder_url",
+			"model": "EditionsCatalog",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"editions": [],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": [],
+						"newspapers": [
+							{
+								"holder": "Fictional Library",
+								"id": "fictional-paper",
+								"code": "abc",
+								"title": "Fictional Gazette",
+								"holder_url": "not a URI"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: EditionsCatalog omitted holder_url",
+			"model": "EditionsCatalog",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"editions": [],
+						"holidays": [],
+						"historicalEvents": [],
+						"availableDates": [],
+						"newspapers": [
+							{
+								"holder": "Fictional Library",
+								"id": "fictional-paper",
+								"code": "abc",
+								"title": "Fictional Gazette"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: null holder_url",
+			"model": "PictureSource",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"holder_url": null
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: relative holder_url",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"holder_url": "/relative/path"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: numeric holder_url",
+			"model": "PictureSource",
+			"valid": false,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"holder_url": 42
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: URI holder_url",
+			"model": "PictureSource",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"holder_url": "urn:fictional:institution:42"
+					}
+				}
+			]
+		},
+		{
+			"name": "picture source: holder home page",
+			"model": "PictureSource",
+			"valid": true,
+			"changes": [
+				{
+					"path": [],
+					"value": {
+						"holder": "Fictional Library",
+						"holder_url": "https://library.example.org"
+					}
+				}
+			]
 		}
 	]
 }

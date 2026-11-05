@@ -4084,6 +4084,14 @@
           "pattern": "\\S",
           "type": "string"
         },
+        "holder_url": {
+          "description": "The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page.",
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "id": {
           "description": "The paper's source-register id, the same value as Edition.newspaper.",
           "pattern": "\\S",
@@ -4169,6 +4177,14 @@
           "pattern": "^page-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-\\d+$(?![\\s\\S])",
           "type": "string"
         },
+        "image_service": {
+          "description": "The base URI of the holder's IIIF Image API 3 service for this page's picture, without /info.json or a trailing slash. It is the holder's service, never ours; image_uri remains the picture shown on the page. A manifest may attach this service to that image so viewers can request further sizes and regions.",
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "image_uri": {
           "description": "The page's picture, by its name or address.",
           "type": "string"
@@ -4195,7 +4211,7 @@
               "type": "null"
             }
           ],
-          "description": "The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields."
+          "description": "The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark, link and rights, rather than merging individual fields."
         }
       },
       "required": [
@@ -4241,6 +4257,30 @@
           "description": "The name of the institution holding the pages the pictures were made from.",
           "pattern": "\\S",
           "type": "string"
+        },
+        "holder_url": {
+          "description": "The web address of the institution named in holder: its page for the holding where the source register has one, otherwise its home page.",
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rights": {
+          "description": "The rights statement for the pictures, as text.",
+          "pattern": "\\S",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rights_url": {
+          "description": "The address where the rights statement was read.",
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "route": {
           "description": "The name of the service or collection readers reach the pages through, when it differs from the holder itself.",

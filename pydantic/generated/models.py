@@ -601,6 +601,7 @@ class Page(BaseModel):
     blocks: list[Block] = Field(default=...)
     newspaper: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     picture_source: PictureSource | None = Field(default=None, exclude_if=lambda value: value is None)
+    image_service: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
 
 
 class PagesData(BaseModel):
@@ -614,9 +615,12 @@ class PictureSource(Strict):
     "The credit for pictures made from a holding: its holder's name, a separate access service or collection, the shelf mark and a link. Shared by a newspaper's default credit and a page whose picture comes from elsewhere."
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     holder: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    holder_url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
     route: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
     shelf_mark: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
     url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
+    rights: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
+    rights_url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
 
 
 class PlaceIdentifier(Strict):
@@ -934,14 +938,15 @@ class Newspaper(PictureSource):
     'One newspaper in the source register, with its site title, code and default picture credit. A page may supply a different credit through picture_source.'
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     holder: Annotated[str, Field(pattern='\\S')] = Field(default=...)
+    holder_url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
     route: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
     shelf_mark: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
     url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
+    rights: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
+    rights_url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
     id: Annotated[str, Field(pattern='\\S')] = Field(default=...)
     code: Annotated[str, Field(pattern='^[a-z]+$')] = Field(default=...)
     title: Annotated[str, Field(pattern='\\S')] = Field(default=...)
-    rights: Annotated[str, Field(pattern='\\S')] | None = Field(default=None, exclude_if=lambda value: value is None)
-    rights_url: Annotated[str, AfterValidator(_uri), Field(json_schema_extra={'format': 'uri'})] | None = Field(default=None, exclude_if=lambda value: value is None)
 
 
 class SharedFact(Fact):

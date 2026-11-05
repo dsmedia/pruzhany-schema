@@ -1832,10 +1832,14 @@
 				"dimensions",
 				"blocks",
 				"newspaper",
-				"picture_source"
+				"picture_source",
+				"image_service"
 			],
 			"fields": {
 				"picture_source": {
+					"exclude_none": true
+				},
+				"image_service": {
 					"exclude_none": true
 				}
 			}
@@ -3402,8 +3406,11 @@
 				"extra": "forbid",
 				"strict": true
 			},
-			"order": ["holder", "route", "shelf_mark", "url"],
+			"order": ["holder", "holder_url", "route", "shelf_mark", "url", "rights", "rights_url"],
 			"fields": {
+				"holder_url": {
+					"exclude_none": true
+				},
 				"route": {
 					"exclude_none": true
 				},
@@ -3411,6 +3418,12 @@
 					"exclude_none": true
 				},
 				"url": {
+					"exclude_none": true
+				},
+				"rights": {
+					"exclude_none": true
+				},
+				"rights_url": {
 					"exclude_none": true
 				}
 			}
@@ -3424,16 +3437,20 @@
 			},
 			"order": [
 				"holder",
+				"holder_url",
 				"route",
 				"shelf_mark",
 				"url",
+				"rights",
+				"rights_url",
 				"id",
 				"code",
-				"title",
-				"rights",
-				"rights_url"
+				"title"
 			],
 			"fields": {
+				"holder_url": {
+					"exclude_none": true
+				},
 				"route": {
 					"exclude_none": true
 				},

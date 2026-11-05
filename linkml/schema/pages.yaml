@@ -112,7 +112,24 @@ classes:
         description: >-
           The picture's credit when it differs from the paper's catalog entry. Absence
           means to use that entry; a present credit supplies its own holder and any
-          route, shelf mark and link, rather than merging individual fields.
+          route, shelf mark, link and rights, rather than merging individual fields.
+      image_service:
+        range: uri
+        slot_uri: pc:image_service
+        description: >-
+          The base URI of the holder's IIIF Image API 3 service for this page's picture,
+          without /info.json or a trailing slash. It is the holder's service, never
+          ours; image_uri remains the picture shown on the page. A manifest may attach
+          this service to that image so viewers can request further sizes and regions.
+        # Read standards/ehri-0.2.0.json, rico-1.1.json, rico-1.1-axioms.json and
+        # ehri-holdings-1.1-1c2325f9/repositories.shex on 5 November 2026:
+        # EHRI reproductionServices is descriptive text, not an image endpoint;
+        # RiC-O hasOrHadDigitalInstantiation takes an Instantiation, not a service.
+        # Neither standard has a property for this IIIF service URI, so it is local.
+        # IIIF Image API 3.0 (https://iiif.io/api/image/3.0/), sections 2.2 and 5.2,
+        # and Presentation 3.0 service (https://iiif.io/api/presentation/3.0/#service),
+        # read 5 November 2026: the service id is the base URI, without a trailing
+        # slash; info.json is the information request, and service belongs on the image.
 
   Block:
     description: >-

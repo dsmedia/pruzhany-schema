@@ -39,6 +39,8 @@ URI: [pc:Page](https://pruzhany.org/ns/sourced-entities#Page)
         
       Page : id
         
+      Page : image_service
+        
       Page : image_uri
         
       Page : issue_date
@@ -77,7 +79,8 @@ URI: [pc:Page](https://pruzhany.org/ns/sourced-entities#Page)
 | [dimensions](dimensions.md) | 1..* <br/> [Integer](Integer.md) | The picture's width and height, in its pixels. | direct |
 | [blocks](blocks.md) | 1..* <br/> [Block](Block.md) | The regions of print on the page. | direct |
 | [newspaper](newspaper.md) | 1 <br/> [NonBlankText](NonBlankText.md) | The paper this page belongs to, by its id in the source register. | direct |
-| [picture_source](picture_source.md) | 0..1 <br/> [PictureSource](PictureSource.md) | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark and link, rather than merging individual fields. | direct |
+| [picture_source](picture_source.md) | 0..1 <br/> [PictureSource](PictureSource.md) | The picture's credit when it differs from the paper's catalog entry. Absence means to use that entry; a present credit supplies its own holder and any route, shelf mark, link and rights, rather than merging individual fields. | direct |
+| [image_service](image_service.md) | 0..1 <br/> [Uri](Uri.md) | The base URI of the holder's IIIF Image API 3 service for this page's picture, without /info.json or a trailing slash. It is the holder's service, never ours; image_uri remains the picture shown on the page. A manifest may attach this service to that image so viewers can request further sizes and regions. | direct |
 
 
 
@@ -244,7 +247,7 @@ attributes:
     name: picture_source
     description: The picture's credit when it differs from the paper's catalog entry.
       Absence means to use that entry; a present credit supplies its own holder and
-      any route, shelf mark and link, rather than merging individual fields.
+      any route, shelf mark, link and rights, rather than merging individual fields.
     from_schema: https://pruzhany.org/ns/pages
     rank: 1000
     slot_uri: pc:page_picture_source
@@ -252,6 +255,18 @@ attributes:
     - Page
     range: PictureSource
     inlined: true
+  image_service:
+    name: image_service
+    description: The base URI of the holder's IIIF Image API 3 service for this page's
+      picture, without /info.json or a trailing slash. It is the holder's service,
+      never ours; image_uri remains the picture shown on the page. A manifest may
+      attach this service to that image so viewers can request further sizes and regions.
+    from_schema: https://pruzhany.org/ns/pages
+    rank: 1000
+    slot_uri: pc:image_service
+    domain_of:
+    - Page
+    range: uri
 
 ```
 </details>
@@ -373,7 +388,7 @@ attributes:
     name: picture_source
     description: The picture's credit when it differs from the paper's catalog entry.
       Absence means to use that entry; a present credit supplies its own holder and
-      any route, shelf mark and link, rather than merging individual fields.
+      any route, shelf mark, link and rights, rather than merging individual fields.
     from_schema: https://pruzhany.org/ns/pages
     rank: 1000
     slot_uri: pc:page_picture_source
@@ -382,6 +397,19 @@ attributes:
     - Page
     range: PictureSource
     inlined: true
+  image_service:
+    name: image_service
+    description: The base URI of the holder's IIIF Image API 3 service for this page's
+      picture, without /info.json or a trailing slash. It is the holder's service,
+      never ours; image_uri remains the picture shown on the page. A manifest may
+      attach this service to that image so viewers can request further sizes and regions.
+    from_schema: https://pruzhany.org/ns/pages
+    rank: 1000
+    slot_uri: pc:image_service
+    owner: Page
+    domain_of:
+    - Page
+    range: uri
 
 ```
 </details></div>

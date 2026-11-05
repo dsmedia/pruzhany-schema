@@ -24,6 +24,7 @@ export const PageShape = z.strictObject({
 	blocks: z.array(BlockShape),
 	newspaper: z.string().regex(pattern3),
 	picture_source: PictureSourceShape.nullish(),
+	image_service: z.url().nullish(),
 });
 
 export const PagesDataShape = z.strictObject({
