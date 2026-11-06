@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { MediaSchema, PublicMediaSchema, publicMedia } from './media.schema';
+import {
+	MEDIA_WIDE,
+	MEDIA_WIDTHS,
+	MediaSchema,
+	PublicMediaSchema,
+	publicMedia,
+} from './media.schema';
 
 const medium = {
 	id: 'media-fictional',
@@ -74,5 +80,13 @@ describe('private consent and public dates', () => {
 		expect(JSON.stringify(publicValue)).not.toMatch(/PRIVATE|bucket|master|checked|sha256|consent/);
 		expect(publicValue.cleared).toEqual({ role: 'owner', on: '2026-10-24' });
 		expect(publicValue.rights).toBe('http://rightsstatements.org/vocab/CNE/1.0/');
+	});
+});
+
+describe('the wide copy of a large page picture', () => {
+	it('lies beyond every listed width and is never wider than the page it is made from', () => {
+		expect(MEDIA_WIDE).toEqual({ above: 3200, width: 3200 });
+		expect(MEDIA_WIDE.width).toBeGreaterThan(Math.max(...MEDIA_WIDTHS));
+		expect(MEDIA_WIDE.width).toBeLessThanOrEqual(MEDIA_WIDE.above);
 	});
 });

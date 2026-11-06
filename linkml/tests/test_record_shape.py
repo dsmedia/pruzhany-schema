@@ -90,6 +90,11 @@ class FixedLists(unittest.TestCase):
         pattern = attribute('MediaDerivative', 'url').pattern
         self.assertIn('-w(?:' + '|'.join(map(str, widths)) + r')\.webp', pattern)
 
+    def test_the_wide_copy_rule_is_the_one_file(self):
+        wide = json.loads(text('zod/media-wide.json'))
+        self.assertEqual(set(wide), {'above', 'width'})
+        self.assertIn(f'above: {wide["above"]}, width: {wide["width"]}', text('zod/media-widths.table.ts'))
+
     def test_the_released_event_kinds_are_the_vocabulary_s(self):
         kinds = list(VIEW.get_enum('EventTypes').permissible_values)
         none_of = VIEW.get_class('SharedEvent').none_of[0].slot_conditions['proposed_type']

@@ -12,6 +12,8 @@ from .site_common import unique_ids
 
 ROOT = Path(__file__).resolve().parents[1]
 MEDIA_WIDTHS = json.loads((ROOT / 'zod/media-widths.json').read_text())
+# A page picture wider than `above` with no holder's image service also has a copy `width` wide (media design §4).
+MEDIA_WIDE = json.loads((ROOT / 'zod/media-wide.json').read_text())
 RIGHTS = json.loads((ROOT / 'standards/media-rights.json').read_text())
 MediaRights = Literal[tuple(RIGHTS['uris'])]
 Pixels = Annotated[int, Field(gt=0, le=9007199254740991)]

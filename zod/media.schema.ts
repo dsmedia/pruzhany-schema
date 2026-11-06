@@ -25,6 +25,8 @@ import { COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
 export { MEDIA_RIGHTS, COPYRIGHT_NOT_EVALUATED } from './media-rights.table';
 
 export const MEDIA_WIDTHS: readonly number[] = MEDIA_WIDTH_LIST;
+/** A page picture wider than `above`, with no holder's image service, also has a copy `width` wide (media design §4). */
+export { MEDIA_WIDE } from './media-widths.table';
 // Local RepresentationType concepts, linked by rico:hasRepresentationType.
 export const MediaKindSchema = PublicMediaShape.shape.kind;
 // Rebind children to propagate retained calendar and consent checks into parents.

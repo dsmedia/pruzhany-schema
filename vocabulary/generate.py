@@ -527,8 +527,14 @@ def generated_media_rights(root=ROOT):
 def generated_media_widths(root=ROOT):
     """A module, not a JSON import: Node's ESM loader (Playwright) refuses JSON without an attribute."""
     widths = json.loads((root / 'zod/media-widths.json').read_text(encoding='utf-8'))
-    ts = '// Generated from zod/media-widths.json by vocabulary/generate.py; do not edit.\n'
+    wide = json.loads((root / 'zod/media-wide.json').read_text(encoding='utf-8'))
+    if set(wide) != {'above', 'width'} or not all(type(v) is int and v > max(widths) for v in wide.values()):
+        raise ValueError('zod/media-wide.json needs whole "above" and "width" beyond every listed width')
+    if wide['width'] > wide['above']:
+        raise ValueError('zod/media-wide.json: a wide copy is never wider than the page it is made from')
+    ts = '// Generated from zod/media-widths.json and zod/media-wide.json by vocabulary/generate.py; do not edit.\n'
     ts += f'export const MEDIA_WIDTH_LIST = Object.freeze({json.dumps(widths)} as const);\n'
+    ts += f'export const MEDIA_WIDE = Object.freeze({{ above: {wide["above"]}, width: {wide["width"]} }} as const);\n'
     return {root / 'zod/media-widths.table.ts': format_ts(ts, 'media-widths.table.ts')}
 
 
