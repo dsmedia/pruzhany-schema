@@ -59,7 +59,8 @@ Name: pruzhany_content_items
 | [event_id](event_id.md) | The life event the content item prints, by the event's id, where it prints one. |
 | [evidence](evidence.md) | What shows the link, in words. |
 | [full_text](full_text.md) | The content item's printed text, a copy made for the site from the lines of its regions. |
-| [heading_blocks](heading_blocks.md) | The regions the heading is printed in, page by page. |
+| [heading_blocks](heading_blocks.md) | The regions the heading is printed in, page by page. When heading_item_id is set, these equal that item's page_blocks and belong to that item alone; otherwise the section owns them and their unit_id is null. |
+| [heading_item_id](heading_item_id.md) | The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. No other section may name the same heading item. It is not a member of this section's content_item_ids; the items beneath it retain their section_id. |
 | [id](id.md) | The content item's id within the issue. |
 | [image_uri](image_uri.md) | The page picture the box is on, by its name or address. |
 | [issue_date](issue_date.md) | The issue's date, written YYYY-MM-DD. |
@@ -102,7 +103,7 @@ Name: pruzhany_content_items
 | [ClaimStatus](ClaimStatus.md) | Claim status: the values of claim_status in vocabulary/sourced-entities.json, version 1.3.0. |
 | [CompatibilityEventTypes](CompatibilityEventTypes.md) | Compatibility event types: the values of compatibility_event_types in vocabulary/sourced-entities.json, version 1.3.0. |
 | [Confidence](Confidence.md) | Confidence: the values of confidence in vocabulary/sourced-entities.json, version 1.3.0. |
-| [ContentItemSubtypes](ContentItemSubtypes.md) | Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.3.0. |
+| [ContentItemSubtypes](ContentItemSubtypes.md) | Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.4.0. |
 | [ContentUnitRoles](ContentUnitRoles.md) | Content unit roles: the values of content_unit_roles in vocabulary/sourced-entities.json, version 1.3.0. |
 | [EventParts](EventParts.md) | Event parts: the values of event_parts in vocabulary/sourced-entities.json, version 1.3.0. |
 | [EventTypes](EventTypes.md) | Event types: the values of event_types in vocabulary/sourced-entities.json, version 1.3.0. |
@@ -112,7 +113,7 @@ Name: pruzhany_content_items
 | [Gender](Gender.md) | Gender: the values of gender in vocabulary/sourced-entities.json, version 1.3.0. |
 | [HolocaustFateTypes](HolocaustFateTypes.md) | Holocaust fate types: the values of holocaust_fate_types in vocabulary/sourced-entities.json, version 1.3.0. |
 | [IdentifierTypes](IdentifierTypes.md) | Identifier types approved in ADR 0001 and linked-data ticket 03. |
-| [ImpressoTypes](ImpressoTypes.md) | Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.3.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here. |
+| [ImpressoTypes](ImpressoTypes.md) | Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.4.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here. |
 | [LifeEventTypes](LifeEventTypes.md) | Life event types: the values of life_event_types in vocabulary/sourced-entities.json, version 1.3.0. |
 | [LocationTypes](LocationTypes.md) | Location types: the values of location_types in vocabulary/sourced-entities.json, version 1.3.0. |
 | [MentionRoles](MentionRoles.md) | Mention roles: the values of mention_roles in vocabulary/sourced-entities.json, version 1.3.0. |
@@ -121,8 +122,8 @@ Name: pruzhany_content_items
 | [RelationshipTypes](RelationshipTypes.md) | Relationship types: the values of relationship_types in vocabulary/sourced-entities.json, version 1.3.0. |
 | [ReviewStates](ReviewStates.md) | Review states: the values of review_states in vocabulary/sourced-entities.json, version 1.3.0. |
 | [SourceKinds](SourceKinds.md) | Source kinds: the values of source_kinds in vocabulary/sourced-entities.json, version 1.3.0. |
-| [Subjects](Subjects.md) | Subjects: the values of subjects in vocabulary/site-content.json, version 1.3.0. |
-| [TitleTypes](TitleTypes.md) | Title types: the values of title_types in vocabulary/site-content.json, version 1.3.0. |
+| [Subjects](Subjects.md) | Subjects: the values of subjects in vocabulary/site-content.json, version 1.4.0. |
+| [TitleTypes](TitleTypes.md) | Title types: the values of title_types in vocabulary/site-content.json, version 1.4.0. |
 
 
 ## Types

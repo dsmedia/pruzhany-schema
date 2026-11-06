@@ -383,12 +383,20 @@ class VocabularyTests(unittest.TestCase):
             'parent_type': 'article',
             'owner_fixed_parent': {'type': 'article', 'on': '2026-11-06'},
         })
-        self.assertEqual(self.site['compatible_versions'], ['0.1.0', '1.0.0', '1.1.0', '1.2.0'])
+        self.assertEqual(self.site['compatible_versions'], ['0.1.0', '1.0.0', '1.1.0', '1.2.0', '1.3.0'])
         # The owner's article parent cannot be changed to entertainment.
         data = copy.deepcopy(self.site)
         data['groups']['content_item_subtypes'][-1]['parent_type'] = 'entertainment'
         self.site_path.write_text(json.dumps(data), encoding='utf-8')
         self.assertTrue(any('owner decision' in e for e in self.check()))
+
+    def test_site_1_4_0_retains_every_vocabulary_value_and_mapping(self):
+        earlier = json.loads((self.root / 'vocabulary/released/site-content-1.3.0.json').read_text(encoding='utf-8'))
+        self.assertEqual(self.site['version'], '1.4.0')
+        for key in ('groups', 'bindings', 'impresso_types', 'released_groups'):
+            with self.subTest(key=key):
+                self.assertEqual(self.site[key], earlier[key])
+        self.assertEqual(self.site['compatible_versions'], earlier['compatible_versions'] + ['1.3.0'])
 
     def test_site_compatible_versions_are_explicit(self):
         for versions in [['0.1.0', '0.1.0'], [self.site_released], [''], [None], '0.1.0']:

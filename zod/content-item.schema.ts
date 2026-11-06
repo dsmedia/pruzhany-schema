@@ -63,8 +63,10 @@ export const PrintedSectionSchema = PrintedSectionShape.extend({
 	printed_title: PrintedTitleSchema,
 	supplied_title: SuppliedTitleSchema.nullish(),
 }).superRefine((v, ctx) => {
-	for (const message of uniqueIds(v.content_item_ids, 'section member'))
-		ctx.addIssue({ code: 'custom', message });
+	const errors = uniqueIds(v.content_item_ids, 'section member');
+	if (v.heading_item_id != null && v.content_item_ids.includes(v.heading_item_id))
+		errors.push('section heading item must not be a section member');
+	for (const message of errors) ctx.addIssue({ code: 'custom', message });
 });
 export type PrintedSection = z.infer<typeof PrintedSectionSchema>;
 
@@ -84,6 +86,10 @@ export const ContentItemsDataSchema = ContentItemsDataShape.extend({
 			v.sections.map((s) => s.id),
 			'section id'
 		),
+		...uniqueIds(
+			v.sections.flatMap((s) => (s.heading_item_id == null ? [] : [s.heading_item_id])),
+			'section heading item'
+		),
 	];
 	const items = new Map(v.content_items.map((i) => [i.id, i]));
 	const sections = new Map(v.sections.map((s) => [s.id, s]));
@@ -93,9 +99,21 @@ export const ContentItemsDataSchema = ContentItemsDataShape.extend({
 		if (item.cross_references.some((r) => !items.has(r.target_id)))
 			errors.push('unknown cross-reference content item');
 	}
-	for (const section of v.sections)
+	for (const section of v.sections) {
 		if (section.content_item_ids.some((id) => items.get(id)?.section_id !== section.id))
 			errors.push('section membership must agree in both directions');
+		if (section.heading_item_id != null) {
+			const heading = items.get(section.heading_item_id);
+			if (!heading) errors.push('unknown section heading item');
+			else {
+				// Parsed objects have schema field order; array order remains significant.
+				if (JSON.stringify(section.heading_blocks) !== JSON.stringify(heading.page_blocks))
+					errors.push('section heading blocks must equal heading item page_blocks');
+				if (JSON.stringify(section.printed_title) !== JSON.stringify(heading.printed_title))
+					errors.push('section printed title must equal heading item printed_title');
+			}
+		}
+	}
 	for (const message of errors) ctx.addIssue({ code: 'custom', message });
 });
 export type ContentItemsData = z.infer<typeof ContentItemsDataSchema>;

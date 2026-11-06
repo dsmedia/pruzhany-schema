@@ -5,8 +5,8 @@
 @prefix rico: <https://www.ica.org/standards/RiC/ontology#> .
 
 <https://pruzhany.org/ns/site-content> a owl:Ontology ;
-  owl:versionInfo "1.3.0 released 2026-11-06" ;
-  rdfs:comment "Site-content application profile; subtypes and subjects approved by the owner on 2026-10-25 (steps decision 164); printed and supplied title types approved on 2026-10-31 ('Approve both'); the masthead and imprint subtypes approved on 2026-11-02; the fiction subtype approved on 2026-11-06 (docs/vocabulary-approvals.md). Existing shape bindings are retained; sourced-entities is independently versioned." .
+  owl:versionInfo "1.4.0 released 2026-11-06" ;
+  rdfs:comment "Site-content application profile; subtypes and subjects approved by the owner on 2026-10-25 (steps decision 164); printed and supplied title types approved on 2026-10-31 ('Approve both'); the masthead and imprint subtypes approved on 2026-11-02; the fiction subtype approved on 2026-11-06 (docs/vocabulary-approvals.md). The optional section heading-item contract was agreed by the data and website lanes on 2026-11-06; vocabulary terms and existing shape bindings are retained; sourced-entities is independently versioned." .
 
 pc:subtype_wedding_greeting a skos:Concept, rico:DocumentaryFormType ; skos:prefLabel "Wedding greeting"@en ; skos:definition "A greeting to a couple on their wedding."@en ; rdfs:comment "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms." .
 pc:subtype_engagement_greeting a skos:Concept, rico:DocumentaryFormType ; skos:prefLabel "Engagement greeting"@en ; skos:definition "A greeting on an engagement."@en ; rdfs:comment "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms." .

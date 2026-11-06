@@ -1,8 +1,8 @@
 {
-  "contract_sha256": "cbec4903ab4301743a8381a126b2c3d5c2d0f71ab94a36f53b7f849431861585",
+  "contract_sha256": "2d57c2dff2f6f9bbcc5bc4ffd6739667c031c8225ea8bb3f987639d46bf495da",
   "inputs": {
     "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
-    "linkml/schema/content_items.yaml": "f6ffa035d68ef2223b625296ff5b8bd33cc77790ac608e0df671a04a106ce72b",
+    "linkml/schema/content_items.yaml": "2c589ec80ee23f558b6253bd1678687b47fe175f5f87a291e796a266d13ffe9b",
     "linkml/schema/editions.yaml": "1f1889f3ec328c4839fb8c4c6689c6efcd10b88098c4a314953ac691f4785697",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "db78dd9a601bc176c6e872d7bf62e95688bc80e716e6b038e061c55e811d5c8e",
@@ -19,7 +19,7 @@
     "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",
     "linkml/schema/sourced_entities.yaml": "a1ff33b46438af29d46c29f0085a0d7bb4c566b5440764de6739c9d7e82f2871",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
-    "linkml/schema/vocabulary.yaml": "379af482c73c82d78ff23b7305bdd3ddac68290ad2f7c8274f134cbf4c9bfebc"
+    "linkml/schema/vocabulary.yaml": "9af4d52ce1da28c7403827b7a1fbfffd7e1460586182e5c2123115f81c22f4d7"
   },
   "models": {
     "Attribution": {
@@ -1319,7 +1319,7 @@
           "required": true,
           "shape": {
             "description": "The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible.",
-            "pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0|1\\.2\\.0|1\\.3\\.0)$(?![\\s\\S])",
+            "pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0|1\\.2\\.0|1\\.3\\.0|1\\.4\\.0)$(?![\\s\\S])",
             "type": "string"
           }
         }
@@ -1327,7 +1327,7 @@
       "mappings": [],
       "parent": null,
       "source": "linkml/schema/content_items.yaml",
-      "yaml": "  ContentItemsData:\n    tree_root: true\n    description: >-\n      One issue's content items document: the issue's date, the vocabulary version its values\n      are from, its content items and its printed sections.\n    annotations:\n      impresso: >-\n        The content item files of one issue (paper_contentitem.schema.json), and the issue\n        file's list of its items (issue.schema.json i).\n    attributes:\n      issue_date:\n        range: IsoDay\n        required: true\n        description: >-\n          The issue's date, written YYYY-MM-DD.\n      vocabulary_version:\n        required: true\n        pattern: '^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0|1\\.2\\.0|1\\.3\\.0)$(?![\\s\\S])'\n        description: >-\n          The version of the site-content vocabulary whose values the document uses: one of\n          the versions the current vocabulary accepts as compatible.\n      content_items:\n        range: ContentItem\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The issue's content items.\n      sections:\n        range: PrintedSection\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The issue's printed sections.\n"
+      "yaml": "  ContentItemsData:\n    tree_root: true\n    description: >-\n      One issue's content items document: the issue's date, the vocabulary version its values\n      are from, its content items and its printed sections.\n    annotations:\n      impresso: >-\n        The content item files of one issue (paper_contentitem.schema.json), and the issue\n        file's list of its items (issue.schema.json i).\n    attributes:\n      issue_date:\n        range: IsoDay\n        required: true\n        description: >-\n          The issue's date, written YYYY-MM-DD.\n      vocabulary_version:\n        required: true\n        pattern: '^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0|1\\.2\\.0|1\\.3\\.0|1\\.4\\.0)$(?![\\s\\S])'\n        description: >-\n          The version of the site-content vocabulary whose values the document uses: one of\n          the versions the current vocabulary accepts as compatible.\n      content_items:\n        range: ContentItem\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The issue's content items.\n      sections:\n        range: PrintedSection\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        description: >-\n          The issue's printed sections.\n"
     },
     "CrossReference": {
       "description": "A link from one content item to another in the same issue, with how sure it is and why.",
@@ -6547,7 +6547,7 @@
           }
         },
         {
-          "description": "The regions the heading is printed in, page by page.",
+          "description": "The regions the heading is printed in, page by page. When heading_item_id is set, these equal that item's page_blocks and belong to that item alone; otherwise the section owns them and their unit_id is null.",
           "mappings": [],
           "multivalued": true,
           "name": "heading_blocks",
@@ -6556,12 +6556,31 @@
           "relationship": "contains",
           "required": true,
           "shape": {
-            "description": "The regions the heading is printed in, page by page.",
+            "description": "The regions the heading is printed in, page by page. When heading_item_id is set, these equal that item's page_blocks and belong to that item alone; otherwise the section owns them and their unit_id is null.",
             "items": {
               "$ref": "#/$defs/ContentItemBlockRef"
             },
             "minItems": 1,
             "type": "array"
+          }
+        },
+        {
+          "description": "The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. No other section may name the same heading item. It is not a member of this section's content_item_ids; the items beneath it retain their section_id.",
+          "mappings": [],
+          "multivalued": false,
+          "name": "heading_item_id",
+          "range": "string",
+          "references": [
+            "ContentItem.id"
+          ],
+          "relationship": "reference",
+          "required": false,
+          "shape": {
+            "description": "The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. No other section may name the same heading item. It is not a member of this section's content_item_ids; the items beneath it retain their section_id.",
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         {
@@ -6633,7 +6652,7 @@
       ],
       "parent": null,
       "source": "linkml/schema/content_items.yaml",
-      "yaml": "  PrintedSection:\n    description: >-\n      A printed heading and the content items that stand beneath it, such as the title\n      \"What is heard in town?\" over the town's news.\n    class_uri: ehri:RecordSet\n    annotations:\n      impresso: >-\n        A section title (section_title in the issue and content item files).\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The section's id within the issue.\n        annotations:\n          impresso: >-\n            The section's id (section_title.section_id).\n      printed_title:\n        range: PrintedTitle\n        inlined: true\n        required: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          The heading as printed.\n        annotations:\n          impresso: >-\n            The section's heading text (section_title.title_text).\n      supplied_title:\n        range: SuppliedTitle\n        inlined: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          A title in English supplied for the heading, where one was made.\n      content_item_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        minimum_cardinality: 1\n        slot_uri: rico:includesOrIncluded\n        description: >-\n          The content items beneath the heading, by their ids.\n        annotations:\n          impresso: >-\n            The content items that make up the section (section_title.composing_ci_ids).\n      heading_blocks:\n        range: ContentItemBlockRef\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        minimum_cardinality: 1\n        description: >-\n          The regions the heading is printed in, page by page.\n"
+      "yaml": "  PrintedSection:\n    description: >-\n      A printed heading and the content items that stand beneath it, such as the title\n      \"What is heard in town?\" over the town's news.\n    class_uri: ehri:RecordSet\n    annotations:\n      impresso: >-\n        A section title (section_title in the issue and content item files).\n    attributes:\n      id:\n        range: NonBlankText\n        required: true\n        description: >-\n          The section's id within the issue.\n        annotations:\n          impresso: >-\n            The section's id (section_title.section_id).\n      printed_title:\n        range: PrintedTitle\n        inlined: true\n        required: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          The heading as printed.\n        annotations:\n          impresso: >-\n            The section's heading text (section_title.title_text).\n      supplied_title:\n        range: SuppliedTitle\n        inlined: true\n        slot_uri: rico:hasOrHadTitle\n        description: >-\n          A title in English supplied for the heading, where one was made.\n      content_item_ids:\n        range: NonBlankText\n        multivalued: true\n        required: true\n        minimum_cardinality: 1\n        slot_uri: rico:includesOrIncluded\n        description: >-\n          The content items beneath the heading, by their ids.\n        annotations:\n          impresso: >-\n            The content items that make up the section (section_title.composing_ci_ids).\n      heading_blocks:\n        range: ContentItemBlockRef\n        multivalued: true\n        inlined_as_list: true\n        required: true\n        minimum_cardinality: 1\n        description: >-\n          The regions the heading is printed in, page by page. When heading_item_id is set,\n          these equal that item's page_blocks and belong to that item alone; otherwise\n          the section owns them and their unit_id is null.\n      heading_item_id:\n        range: string\n        description: >-\n          The content item that supplies this section's heading, when the heading is an item\n          of its own. It must exist in the same issue, with page_blocks and printed_title\n          equal to this section's heading_blocks and printed_title. No other section may\n          name the same heading item. It is not a member of this section's content_item_ids;\n          the items beneath it retain their section_id.\n        annotations:\n          references: ContentItem.id\n"
     },
     "PrintedTitle": {
       "description": "A title as printed in the paper: its words and where each line of them stands.",
@@ -11103,7 +11122,7 @@
       ]
     },
     "ContentItemSubtypes": {
-      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.3.0.",
+      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.4.0.",
       "mappings": [],
       "values": [
         {
@@ -12179,7 +12198,7 @@
       ]
     },
     "ImpressoTypes": {
-      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.3.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.4.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
       "mappings": [],
       "values": [
         {
@@ -13379,7 +13398,7 @@
       ]
     },
     "Subjects": {
-      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.3.0.",
+      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.4.0.",
       "mappings": [],
       "values": [
         {
@@ -13495,7 +13514,7 @@
       ]
     },
     "TitleTypes": {
-      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.3.0.",
+      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.4.0.",
       "mappings": [],
       "values": [
         {

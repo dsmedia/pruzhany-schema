@@ -289,7 +289,7 @@ Terms for classifying newspaper items by form and subject, and for distinguishin
 
 Source: [site-content.json](../vocabulary/site-content.json).
 
-Version: 1.3.0.
+Version: 1.4.0.
 
 Status: released.
 

@@ -20,7 +20,7 @@ const pattern2 = /^\d{4}-\d{2}-\d{2}$/;
 const pattern3 = /^[0-9a-f]{64}$(?![\s\S])/;
 const pattern4 = /^cu-(?:[a-z]+-)?\d{4}-\d{2}-\d{2}-i\d{4}$(?![\s\S])/;
 const pattern5 = /^[a-z]{2,3}$(?![\s\S])/;
-const pattern6 = /^(0\.1\.0|1\.0\.0|1\.1\.0|1\.2\.0|1\.3\.0)$(?![\s\S])/;
+const pattern6 = /^(0\.1\.0|1\.0\.0|1\.1\.0|1\.2\.0|1\.3\.0|1\.4\.0)$(?![\s\S])/;
 
 export const ReadingStatusShape = z.strictObject({
 	text: ReadingStatusValueEnum.nullish(),
@@ -75,6 +75,7 @@ export const PrintedSectionShape = z.strictObject({
 	supplied_title: SuppliedTitleShape.nullish(),
 	content_item_ids: z.array(z.string().regex(pattern1)).min(1),
 	heading_blocks: z.array(ContentItemBlockRefShape).min(1),
+	heading_item_id: z.string().nullish(),
 });
 
 export const ContentItemsDataShape = z.strictObject({
