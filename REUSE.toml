@@ -24,6 +24,7 @@ path = [
   "vocabulary/*.json", "vocabulary/*.ttl", "vocabulary/released/*.json",
   "vocabulary/crosswalks/*.json",
   "conformance/*.json", "tests/**/*.json", "linkml/tests/fixtures/**.json",
+  "zod/tests/heading-item.fixtures.json",
   "linkml/tests/fixtures/**.yaml",
   "linkml/generated/**", "linkml/schema/vocabulary.yaml", "linkml/trials/*.json",
   "docs/design/*.json", "docs/vocabulary.md", "standards/media-rights.json",

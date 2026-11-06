@@ -162,18 +162,45 @@ exported inferred schema type with that baseline, including all six documents, a
 site's `.pick`, `.extend`, `.shape`, `.safeExtend` and `.omit` projections. The bun-only tests compare
 each public schema's kind and verify its JSON contract against those frozen shapes,
 allowing only the measured tightenings and equivalent integer/digest spellings. The owner's
-31 October 2026 site-content 1.1.0, 2 November 2026 1.2.0 and 6 November 2026 1.3.0
+31 October 2026 site-content 1.1.0, 2 November 2026 1.2.0 and 6 November 2026 1.3.0/1.4.0
 releases add exactly their document-version literals to the three affected type and JSON
 comparisons; 1.2.0's `masthead` and `imprint` subtypes are appended to the baseline's subtype
 enum in `zod/tests/masthead-imprint-baseline.ts`, and 1.3.0 appends exactly `fiction` in
-`zod/tests/fiction-baseline.ts`. The Python comparison prescribes the same three added
-values. The frozen files stay unchanged. Negative controls
+`zod/tests/fiction-baseline.ts`. The 1.4.0 heading-item contract adds only the optional,
+nullable string `PrintedSection.heading_item_id` in `zod/tests/heading-item-baseline.ts`.
+The Python comparison prescribes the same added stamps, subtypes and field.
+The frozen files stay unchanged. Negative controls
 reject weakened types, patterns, bounds, URI formats and required keys. Round one's obsolete
 byte-identity/stripping assertions follow ticket 20's revised measure. Existing behavior tests
 continue to exercise retained refinements.
 Backend tests plant unknown constructs, drift, missing/extra
 files and cycles. `bin/verify zod` typechecks imported generated/test subfolders and checks their
 formatting recursively; `bin/verify linkml` checks generation and runs the backend tests.
+
+### Headings that are content items
+
+Site-content 1.4.0 (6 November 2026, agreed by the data and website lanes) adds the
+optional, nullable `PrintedSection.heading_item_id`. Its `references` annotation points
+to `ContentItem.id`; it is an internal document join with no new ontology mapping or
+vocabulary type. PrintedSection remains outside the public shared-record RDF view.
+
+The retained twins check that the item exists in this issue, that its ordered `page_blocks`
+equal the section's `heading_blocks`, and that its complete `printed_title` equals the
+section's title, including addresses. They exclude that item from `content_item_ids` and
+keep the members' reciprocal `section_id` check. At SiteIssue, the item alone owns its
+blocks and their `unit_id` names it. An omitted or null reference preserves section-owned
+headings and null `unit_id`. The checks are inventoried in `checks/documents.yaml` and
+tested with the same fictional corpus by Zod and Python, including round trips.
+
+Read **6 November 2026**: LinkML [Slots](https://linkml.io/linkml/schemas/slots.html),
+Zod [Defining schemas](https://zod.dev/api), and Pydantic
+[Validators](https://docs.pydantic.dev/latest/concepts/validators/).
+Generation/setup commands were rechecked against mise
+[install](https://mise.jdx.dev/cli/install.html) and
+[exec](https://mise.jdx.dev/cli/exec.html), uv
+[Commands](https://docs.astral.sh/uv/reference/cli/) (`venv`, `pip sync --require-hashes
+--build-constraints`), and Bun [install](https://bun.sh/docs/pm/cli/install)
+(`--frozen-lockfile`) on the same day; the repository's pinned versions are retained.
 
 ### Source words and English
 

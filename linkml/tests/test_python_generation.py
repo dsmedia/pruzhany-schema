@@ -63,6 +63,9 @@ class PythonGeneration(unittest.TestCase):
                 {'type': 'string', 'pattern': CONTENT_ITEM_LANGUAGE_PATTERN},
                 {'type': 'null'}], 'default': None},
                 'summary': {'anyOf': [{'$ref': '#/$defs/Summary'}, {'type': 'null'}], 'default': None}},
+            # Heading-item contract, 6 November 2026: exactly one optional nullable string.
+            'PrintedSection': {'heading_item_id': {'anyOf': [
+                {'type': 'string'}, {'type': 'null'}], 'default': None}},
             'PlaceIdentifier': {'type': {'anyOf': [
                 {'const': 'old_identifier', 'type': 'string'}, {'type': 'null'}], 'default': None}},
             **{name: {'identifiers': {'anyOf': [
@@ -98,13 +101,13 @@ class PythonGeneration(unittest.TestCase):
         for name, old in previous['models'].items():
             with self.subTest(model=name):
                 # Owner-approved site-content 1.1.0, 31 October 2026, 1.2.0, 2 November 2026,
-                # and 1.3.0, 6 November 2026; prescribe only the newly accepted stamps.
+                # and 1.3.0/1.4.0, 6 November 2026; prescribe only the newly accepted stamps.
                 content = (old['schema'] if name == 'ContentItemsData' else
                            old['schema'].get('$defs', {}).get('ContentItemsData'))
                 if content is not None:
                     version = content['properties']['vocabulary_version']
                     self.assertEqual(version['enum'], ['0.1.0', '1.0.0'])
-                    version['enum'] = ['0.1.0', '1.0.0', '1.1.0', '1.2.0', '1.3.0']
+                    version['enum'] = ['0.1.0', '1.0.0', '1.1.0', '1.2.0', '1.3.0', '1.4.0']
                 # Site-content 1.2.0 appends masthead and imprint; 1.3.0 appends only fiction.
                 item = (old['schema'] if name == 'ContentItem' else
                         old['schema'].get('$defs', {}).get('ContentItem'))

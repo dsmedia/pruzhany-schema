@@ -33,6 +33,7 @@ Thumbs.db
 
 # Local session commit handoff
 .codex-commit-message.txt
+.codex-report.md
 
 # External schema downloaded at use; upstream grants no redistribution licence.
 /standards/.cache/

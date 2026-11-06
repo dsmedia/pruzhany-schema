@@ -3,7 +3,7 @@
 For a readable account of the terms, their definitions and standards mappings, see
 the generated [vocabulary list](../docs/vocabulary.md).
 
-`site-content.json` is a separate **1.3.0, released 2026-11-06** vocabulary.
+`site-content.json` is a separate **1.4.0, released 2026-11-06** vocabulary.
 The owner approved its 21 content-item subtypes and 11 subjects as proposed
 (steps decision 164, item 1), then approved both `printed` and `supplied` title
 types on 31 October 2026: **"Approve both"**, answering **"Approve them as released
@@ -14,6 +14,10 @@ line), each under Impresso `article`, released as 1.2.0. On 6 November 2026 the
 owner chose **Approve "Fiction" (Recommended)** for `fiction`, an invented prose
 story, under `article` as Poem and Sketch are, released as 1.3.0;
 there are now 24 subtypes.
+Version 1.4.0 accompanies the optional section `heading_item_id` contract, agreed by the
+data and website lanes on 6 November 2026. It adds no vocabulary type or mapping: the
+announcement is a content item supplying a section's heading, with the greetings below
+it remaining members of the section. The item's blocks are owned once, by that item.
 See the [approval record](../docs/vocabulary-approvals.md).
 The 38 unresolved inventory values stay `other` with their `proposed_type` in the
 producer's retained records; they are not new subtype or subject identifiers.
@@ -87,8 +91,8 @@ Site-content follows the same release path, with independent snapshots named
 `released/site-content-<version>.json`. Its current released snapshot must equal
 `site-content.json`, and historical identifiers are retained. Run the generator;
 never edit snapshots or generated contracts by hand. `compatible_versions`
-explicitly retains the existing `0.1.0`, `1.0.0`, `1.1.0` and `1.2.0` content-document stamps
-alongside `1.3.0`; both twins consume the generated version set and reject other stamps. New writers
+explicitly retains the existing `0.1.0`, `1.0.0`, `1.1.0`, `1.2.0` and `1.3.0` content-document stamps
+alongside `1.4.0`; both twins consume the generated version set and reject other stamps. New writers
 use the generated current version. This lets the existing site data pass before
 the later steps refresh and site pin. See the [release record](../docs/design/2026-10-25-site-content-release.md).
 

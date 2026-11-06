@@ -6,7 +6,7 @@ search:
 # Slot: heading_blocks 
 
 
-_The regions the heading is printed in, page by page._
+_The regions the heading is printed in, page by page. When heading_item_id is set, these equal that item's page_blocks and belong to that item alone; otherwise the section owns them and their unit_id is null._
 
 
 
@@ -95,7 +95,9 @@ URI: [pc:heading_blocks](https://pruzhany.org/ns/sourced-entities#heading_blocks
 <details>
 ```yaml
 name: heading_blocks
-description: The regions the heading is printed in, page by page.
+description: The regions the heading is printed in, page by page. When heading_item_id
+  is set, these equal that item's page_blocks and belong to that item alone; otherwise
+  the section owns them and their unit_id is null.
 from_schema: https://pruzhany.org/ns/content_items
 rank: 1000
 owner: PrintedSection

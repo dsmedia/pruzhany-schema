@@ -15,10 +15,11 @@ def fixture_cases():
                      'fates-list.fixtures.json', 'catalog-keys.fixtures.json',
                      'picture-service.fixtures.json']:
         yield from cases_from_file(filename)
+    yield from cases_from_file('heading-item.fixtures.json', ROOT / 'zod/tests')
 
 
-def cases_from_file(filename):
-    data = json.loads((ROOT / 'tests/contract' / filename).read_text(encoding='utf-8'))
+def cases_from_file(filename, folder=ROOT / 'tests/contract'):
+    data = json.loads((folder / filename).read_text(encoding='utf-8'))
     for case in data['cases']:
         value = data['example']
         for part in data['models'][case['model']]:

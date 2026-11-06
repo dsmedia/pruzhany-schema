@@ -37,6 +37,8 @@ URI: [ehri:RecordSet](http://lod.ehri-project-test.eu/ontology#RecordSet)
     
 
         
+      PrintedSection : heading_item_id
+        
       PrintedSection : id
         
       PrintedSection : printed_title
@@ -84,7 +86,8 @@ URI: [ehri:RecordSet](http://lod.ehri-project-test.eu/ontology#RecordSet)
 | [printed_title](printed_title.md) | 1 <br/> [PrintedTitle](PrintedTitle.md) | The heading as printed. | direct |
 | [supplied_title](supplied_title.md) | 0..1 <br/> [SuppliedTitle](SuppliedTitle.md) | A title in English supplied for the heading, where one was made. | direct |
 | [content_item_ids](content_item_ids.md) | 1..* <br/> [NonBlankText](NonBlankText.md) | The content items beneath the heading, by their ids. | direct |
-| [heading_blocks](heading_blocks.md) | 1..* <br/> [ContentItemBlockRef](ContentItemBlockRef.md) | The regions the heading is printed in, page by page. | direct |
+| [heading_blocks](heading_blocks.md) | 1..* <br/> [ContentItemBlockRef](ContentItemBlockRef.md) | The regions the heading is printed in, page by page. When heading_item_id is set, these equal that item's page_blocks and belong to that item alone; otherwise the section owns them and their unit_id is null. | direct |
+| [heading_item_id](heading_item_id.md) | 0..1 <br/> [String](String.md) | The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. It is not a member of content_item_ids; the items beneath it retain their section_id. | direct |
 
 
 
@@ -214,7 +217,9 @@ attributes:
     minimum_cardinality: 1
   heading_blocks:
     name: heading_blocks
-    description: The regions the heading is printed in, page by page.
+    description: The regions the heading is printed in, page by page. When heading_item_id
+      is set, these equal that item's page_blocks and belong to that item alone; otherwise
+      the section owns them and their unit_id is null.
     from_schema: https://pruzhany.org/ns/content_items
     rank: 1000
     domain_of:
@@ -224,6 +229,21 @@ attributes:
     multivalued: true
     inlined_as_list: true
     minimum_cardinality: 1
+  heading_item_id:
+    name: heading_item_id
+    annotations:
+      references:
+        tag: references
+        value: ContentItem.id
+    description: The content item that supplies this section's heading, when the heading
+      is an item of its own. It must exist in the same issue, with page_blocks and
+      printed_title equal to this section's heading_blocks and printed_title. It is
+      not a member of content_item_ids; the items beneath it retain their section_id.
+    from_schema: https://pruzhany.org/ns/content_items
+    rank: 1000
+    domain_of:
+    - PrintedSection
+    range: string
 class_uri: ehri:RecordSet
 
 ```
@@ -303,7 +323,9 @@ attributes:
     minimum_cardinality: 1
   heading_blocks:
     name: heading_blocks
-    description: The regions the heading is printed in, page by page.
+    description: The regions the heading is printed in, page by page. When heading_item_id
+      is set, these equal that item's page_blocks and belong to that item alone; otherwise
+      the section owns them and their unit_id is null.
     from_schema: https://pruzhany.org/ns/content_items
     rank: 1000
     owner: PrintedSection
@@ -315,6 +337,22 @@ attributes:
     inlined: true
     inlined_as_list: true
     minimum_cardinality: 1
+  heading_item_id:
+    name: heading_item_id
+    annotations:
+      references:
+        tag: references
+        value: ContentItem.id
+    description: The content item that supplies this section's heading, when the heading
+      is an item of its own. It must exist in the same issue, with page_blocks and
+      printed_title equal to this section's heading_blocks and printed_title. It is
+      not a member of content_item_ids; the items beneath it retain their section_id.
+    from_schema: https://pruzhany.org/ns/content_items
+    rank: 1000
+    owner: PrintedSection
+    domain_of:
+    - PrintedSection
+    range: string
 class_uri: ehri:RecordSet
 
 ```

@@ -33,7 +33,10 @@ def _ContentItem__content_contract(self):
 
 
 def _PrintedSection__members(self):
-    if errors := unique_ids(self.content_item_ids, 'section member'):
+    errors = unique_ids(self.content_item_ids, 'section member')
+    if self.heading_item_id is not None and self.heading_item_id in self.content_item_ids:
+        errors.append('section heading item must not be a section member')
+    if errors:
         raise ValueError('; '.join(errors))
     return self
 
@@ -52,6 +55,15 @@ def _ContentItemsData__content_references(self):
     for section in self.sections:
         if any(id not in items or items[id].section_id != section.id for id in section.content_item_ids):
             errors.append('section membership must agree in both directions')
+        if section.heading_item_id is not None:
+            heading = items.get(section.heading_item_id)
+            if heading is None:
+                errors.append('unknown section heading item')
+            else:
+                if section.heading_blocks != heading.page_blocks:
+                    errors.append('section heading blocks must equal heading item page_blocks')
+                if section.printed_title != heading.printed_title:
+                    errors.append('section printed title must equal heading item printed_title')
     if errors:
         raise ValueError('; '.join(errors))
     return self

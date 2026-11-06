@@ -41,7 +41,7 @@ classes:
           The issue's date, written YYYY-MM-DD.
       vocabulary_version:
         required: true
-        pattern: '^(0\.1\.0|1\.0\.0|1\.1\.0|1\.2\.0|1\.3\.0)$(?![\s\S])'
+        pattern: '^(0\.1\.0|1\.0\.0|1\.1\.0|1\.2\.0|1\.3\.0|1\.4\.0)$(?![\s\S])'
         description: >-
           The version of the site-content vocabulary whose values the document uses: one of
           the versions the current vocabulary accepts as compatible.
@@ -443,4 +443,15 @@ classes:
         required: true
         minimum_cardinality: 1
         description: >-
-          The regions the heading is printed in, page by page.
+          The regions the heading is printed in, page by page. When heading_item_id is set,
+          these equal that item's page_blocks and belong to that item alone; otherwise
+          the section owns them and their unit_id is null.
+      heading_item_id:
+        range: string
+        description: >-
+          The content item that supplies this section's heading, when the heading is an item
+          of its own. It must exist in the same issue, with page_blocks and printed_title
+          equal to this section's heading_blocks and printed_title. It is not a member of
+          content_item_ids; the items beneath it retain their section_id.
+        annotations:
+          references: ContentItem.id

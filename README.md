@@ -104,6 +104,13 @@ names, sources, fate and standing for one shared record. `site-issue.schema.ts` 
 per-issue mentions and life events, plus checks of the four documents and their shared
 references. Each module has a Pydantic twin.
 
+A printed section may name an optional, nullable `heading_item_id` when its heading is a
+content item of its own, such as an announcement above greetings. Both twins require the
+item in the same issue, with `page_blocks` equal to the section's `heading_blocks` and the
+same complete `printed_title`. The item alone owns those blocks, whose `unit_id` names it;
+it is excluded from the section's `content_item_ids`. The greetings retain their `section_id`.
+Omitting the reference or setting it to null keeps the section's own heading blocks.
+
 `fates-list.schema.ts` and `pydantic/fates_list.py` shape the fates list
 (`static/data/fates-list.json`, written by pruzhany-steps' site writer): everyone printed in the
 paper whose fate is perished or survived, confirmed or probable, with where and when the
@@ -118,7 +125,8 @@ life-event, enrichment and edition-bundle persisted models and exports are retir
 the mixed `pydantic/project_output.py` module is gone. Released sourced vocabulary,
 its compatibility helpers, `llm_output.py` and `bbox_review.py` remain available.
 
-`vocabulary/site-content.json` is **1.3.0, released 2026-11-06** for the owner's
+`vocabulary/site-content.json` is **1.4.0, released 2026-11-06** for the heading-item
+contract agreed by the data and website lanes. It retains the owner's
 approved subtypes (now 24, with `fiction`), subjects and printed/supplied
 title types, separate from
 sourced-entities **1.3.0, released 2026-10-26**. The new `condolence` content-unit role records a notice of sympathy
@@ -133,6 +141,12 @@ existing mappings are retained. On 2 November 2026 the owner approved the `masth
 and the earlier [release record](docs/design/2026-10-25-site-content-release.md)
 and [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.
+
+Heading-item implementation documentation read **6 November 2026**: LinkML
+[Slots](https://linkml.io/linkml/schemas/slots.html) for optional fields; Zod
+[Defining schemas](https://zod.dev/api) for nullish fields and retained refinements;
+Pydantic [Validators](https://docs.pydantic.dev/latest/concepts/validators/) for the
+retained after-model checks. Versions remain this repository's pins.
 
 The [sources contract](docs/design/2026-10-24-sources-implementation.md) adds holders,
 source ancestry and citation fields. Both twins read the advisory per-kind rules

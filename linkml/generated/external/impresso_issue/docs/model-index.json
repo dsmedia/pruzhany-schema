@@ -2,7 +2,7 @@
   "contract_sha256": "3d8082b8b7f642ce1eb0e0a8d0e133f6aa4cc1e2b9c8295bba3f8355c1f4b161",
   "inputs": {
     "linkml/schema/answers.yaml": "73f2c83d597139f0fbbd8d391c94b5886b2445ef07d124d13149f8ecea76dafc",
-    "linkml/schema/content_items.yaml": "f6ffa035d68ef2223b625296ff5b8bd33cc77790ac608e0df671a04a106ce72b",
+    "linkml/schema/content_items.yaml": "3ef5dafaacc7b257a61c5e9e5b6c5f9ac5993a7d1a945440a37c172c95053164",
     "linkml/schema/editions.yaml": "1f1889f3ec328c4839fb8c4c6689c6efcd10b88098c4a314953ac691f4785697",
     "linkml/schema/exchanges.yaml": "e3e255fa80ab18b66652bb8ead9830350f0334fe79608c43f3606c8425779a7c",
     "linkml/schema/fates_list.yaml": "db78dd9a601bc176c6e872d7bf62e95688bc80e716e6b038e061c55e811d5c8e",
@@ -19,7 +19,7 @@
     "linkml/schema/site_common.yaml": "2d08d54d2f22f2992a80976f46439252f6e6d1baf8d4996791d1e35e78e07ce3",
     "linkml/schema/sourced_entities.yaml": "a1ff33b46438af29d46c29f0085a0d7bb4c566b5440764de6739c9d7e82f2871",
     "linkml/schema/types.yaml": "8556968f87785be2a6c97a9b88d8a7e63d59bacf25dd1955fbb5266fe1f271b9",
-    "linkml/schema/vocabulary.yaml": "379af482c73c82d78ff23b7305bdd3ddac68290ad2f7c8274f134cbf4c9bfebc"
+    "linkml/schema/vocabulary.yaml": "9af4d52ce1da28c7403827b7a1fbfffd7e1460586182e5c2123115f81c22f4d7"
   },
   "models": {
     "ImpressoIssue": {

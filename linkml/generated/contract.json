@@ -875,7 +875,7 @@
       "type": "object"
     },
     "ContentItemSubtypes": {
-      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.3.0.",
+      "description": "Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.4.0.",
       "enum": [
         "wedding_greeting",
         "engagement_greeting",
@@ -930,7 +930,7 @@
         },
         "vocabulary_version": {
           "description": "The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible.",
-          "pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0|1\\.2\\.0|1\\.3\\.0)$(?![\\s\\S])",
+          "pattern": "^(0\\.1\\.0|1\\.0\\.0|1\\.1\\.0|1\\.2\\.0|1\\.3\\.0|1\\.4\\.0)$(?![\\s\\S])",
           "type": "string"
         }
       },
@@ -2428,7 +2428,7 @@
       "type": "string"
     },
     "ImpressoTypes": {
-      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.3.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
+      "description": "Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.4.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.",
       "enum": [
         "article",
         "ad",
@@ -4423,12 +4423,19 @@
           "type": "array"
         },
         "heading_blocks": {
-          "description": "The regions the heading is printed in, page by page.",
+          "description": "The regions the heading is printed in, page by page. When heading_item_id is set, these equal that item's page_blocks and belong to that item alone; otherwise the section owns them and their unit_id is null.",
           "items": {
             "$ref": "#/$defs/ContentItemBlockRef"
           },
           "minItems": 1,
           "type": "array"
+        },
+        "heading_item_id": {
+          "description": "The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. It is not a member of content_item_ids; the items beneath it retain their section_id.",
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "id": {
           "description": "The section's id within the issue.",
@@ -7262,7 +7269,7 @@
       "type": "object"
     },
     "Subjects": {
-      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.3.0.",
+      "description": "Subjects: the values of subjects in vocabulary/site-content.json, version 1.4.0.",
       "enum": [
         "education",
         "culture",
@@ -7488,7 +7495,7 @@
       "type": "object"
     },
     "TitleTypes": {
-      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.3.0.",
+      "description": "Title types: the values of title_types in vocabulary/site-content.json, version 1.4.0.",
       "enum": [
         "printed",
         "supplied"
