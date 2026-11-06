@@ -82,7 +82,7 @@ class ContentItem(Strict):
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     id: Annotated[str, Field(pattern='^cu-(?:[a-z]+-)?\\d{4}-\\d{2}-\\d{2}-i\\d{4}$')] = Field(default=...)
     type: Literal['ad', 'article', 'chapter', 'chronicle', 'death_notice', 'discussion', 'entertainment', 'image', 'page', 'radio_broadcast_episode', 'radio_bulletin', 'table', 'weather'] = Field(default=...)
-    subtype: Literal['announcement', 'appeal', 'bar_mitzvah_greeting', 'birth_greeting', 'commercial_advertisement', 'condolence', 'death_announcement', 'departure_greeting', 'editorial', 'engagement_greeting', 'greeting', 'humour', 'imprint', 'letter', 'masthead', 'meeting_notice', 'memorial_notice', 'new_year_greeting', 'opinion', 'poem', 'sketch', 'thanks', 'wedding_greeting'] | None = Field(default=None)
+    subtype: Literal['announcement', 'appeal', 'bar_mitzvah_greeting', 'birth_greeting', 'commercial_advertisement', 'condolence', 'death_announcement', 'departure_greeting', 'editorial', 'engagement_greeting', 'fiction', 'greeting', 'humour', 'imprint', 'letter', 'masthead', 'meeting_notice', 'memorial_notice', 'new_year_greeting', 'opinion', 'poem', 'sketch', 'thanks', 'wedding_greeting'] | None = Field(default=None)
     printed_title: PrintedTitle | None = Field(default=None)
     supplied_title: SuppliedTitle = Field(default=...)
     subject_ids: list[Literal['community_affairs', 'culture', 'economy', 'education', 'health', 'international_affairs', 'jewish_world', 'literature', 'palestine', 'sport', 'zionism']] = Field(default=...)
@@ -123,7 +123,7 @@ class ContentItemsData(Strict):
     "One issue's content items document: the issue's date, the vocabulary version its values are from, its content items and its printed sections."
     model_config = ConfigDict(**{'extra': 'forbid', 'strict': True})
     issue_date: Annotated[Annotated[str, Field(pattern='^\\d{4}-\\d{2}-\\d{2}$')], AfterValidator(partial(_typed_call, 'sourced_entities', 'valid_date', [], True))] = Field(default=...)
-    vocabulary_version: Literal['0.1.0', '1.0.0', '1.1.0', '1.2.0'] = Field(default=...)
+    vocabulary_version: Literal['0.1.0', '1.0.0', '1.1.0', '1.2.0', '1.3.0'] = Field(default=...)
     content_items: list[ContentItem] = Field(default=...)
     sections: list[PrintedSection] = Field(default=...)
 

@@ -1,7 +1,7 @@
 {
-	"version": "1.2.0",
+	"version": "1.3.0",
 	"status": "released",
-	"scope": "Site content subtypes and subjects approved on 2026-10-25; printed and supplied title types approved on 2026-10-31; the masthead and imprint subtypes approved on 2026-11-02. Site shape bindings are retained. Released life-event parts, memorial and supplied names belong to sourced-entities 1.2.0.",
+	"scope": "Site content subtypes and subjects approved on 2026-10-25; printed and supplied title types approved on 2026-10-31; the masthead and imprint subtypes approved on 2026-11-02; the fiction subtype approved on 2026-11-06. Site shape bindings are retained. Released life-event parts, memorial and supplied names belong to sourced-entities 1.2.0.",
 	"impresso_types": [
 		"article",
 		"ad",
@@ -385,6 +385,22 @@
 				"owner_fixed_parent": {
 					"type": "article",
 					"on": "2026-11-02"
+				}
+			},
+			{
+				"id": "fiction",
+				"label": "Fiction",
+				"definition": "An invented story told in prose: a tale, a fable, or an instalment of a serial story.",
+				"added_in": "1.3.0",
+				"concept_class": "rico:DocumentaryFormType",
+				"mapping": {
+					"local": "pc:subtype_fiction",
+					"reason": "A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms."
+				},
+				"parent_type": "article",
+				"owner_fixed_parent": {
+					"type": "article",
+					"on": "2026-11-06"
 				}
 			}
 		],
@@ -1141,12 +1157,13 @@
 			}
 		}
 	],
-	"released_on": "2026-11-02",
-	"approved_by": "Owner, 2026-11-02: approved both proposed kinds, content_item_subtypes.masthead and content_item_subtypes.imprint, each under the Impresso type article and mapped to pc:subtype_masthead and pc:subtype_imprint via rico:hasDocumentaryFormType, in https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11; see docs/vocabulary-approvals.md. Title types retain the owner's 2026-10-31 approval ('Approve both'); the other subtypes and subjects retain the owner's 2026-10-25 approval (pruzhany-steps decision 164, item 1). The 38 unresolved values stay other with their proposed_type.",
+	"released_on": "2026-11-06",
+	"approved_by": "Owner, 2026-11-06: chose 'Approve \"Fiction\" (Recommended)', with the definition 'Fiction: an invented story told in prose: a tale, a fable, or an instalment of a serial story', for content_item_subtypes.fiction under the Impresso type article, beside Poem, Sketch and Humour, mapped to pc:subtype_fiction via rico:hasDocumentaryFormType; relayed by the coordinator session https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11; see docs/vocabulary-approvals.md. Masthead and imprint retain the owner's 2026-11-02 approval; title types retain the owner's 2026-10-31 approval ('Approve both'); the other subtypes and subjects retain the owner's 2026-10-25 approval (pruzhany-steps decision 164, item 1). The 38 unresolved values stay other with their proposed_type.",
 	"compatible_versions": [
 		"0.1.0",
 		"1.0.0",
-		"1.1.0"
+		"1.1.0",
+		"1.2.0"
 	],
 	"released_groups": [
 		"content_item_subtypes",

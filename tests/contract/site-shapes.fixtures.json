@@ -4181,6 +4181,36 @@
 			]
 		},
 		{
+			"name": "subtype fiction parent",
+			"model": "ContentItem",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "article"
+				},
+				{
+					"path": ["subtype"],
+					"value": "fiction"
+				}
+			]
+		},
+		{
+			"name": "subtype fiction wrong parent",
+			"model": "ContentItem",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["type"],
+					"value": "entertainment"
+				},
+				{
+					"path": ["subtype"],
+					"value": "fiction"
+				}
+			]
+		},
+		{
 			"name": "Impresso article",
 			"model": "ContentItem",
 			"valid": true,
@@ -9267,7 +9297,7 @@
 			]
 		},
 		{
-			"name": "ContentItemsData: previous released vocabulary stamp",
+			"name": "ContentItemsData: earlier released vocabulary stamp 1.1.0",
 			"model": "ContentItemsData",
 			"valid": true,
 			"changes": [
@@ -9278,13 +9308,24 @@
 			]
 		},
 		{
-			"name": "ContentItemsData: released vocabulary stamp",
+			"name": "ContentItemsData: previous released vocabulary stamp",
 			"model": "ContentItemsData",
 			"valid": true,
 			"changes": [
 				{
 					"path": ["vocabulary_version"],
 					"value": "1.2.0"
+				}
+			]
+		},
+		{
+			"name": "ContentItemsData: released vocabulary stamp",
+			"model": "ContentItemsData",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["vocabulary_version"],
+					"value": "1.3.0"
 				}
 			]
 		},

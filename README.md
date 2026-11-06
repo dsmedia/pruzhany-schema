@@ -118,8 +118,8 @@ life-event, enrichment and edition-bundle persisted models and exports are retir
 the mixed `pydantic/project_output.py` module is gone. Released sourced vocabulary,
 its compatibility helpers, `llm_output.py` and `bbox_review.py` remain available.
 
-`vocabulary/site-content.json` is **1.2.0, released 2026-11-02** for the owner's
-approved subtypes (now 23, with `masthead` and `imprint`), subjects and printed/supplied
+`vocabulary/site-content.json` is **1.3.0, released 2026-11-06** for the owner's
+approved subtypes (now 24, with `fiction`), subjects and printed/supplied
 title types, separate from
 sourced-entities **1.3.0, released 2026-10-26**. The new `condolence` content-unit role records a notice of sympathy
 sent to the mourners as a community response to a death. On 26 October 2026 the
@@ -128,7 +128,8 @@ Sourced-entities 1.3.0 adds only the condolence role; its local mapping and appr
 the [vocabulary approval record](docs/vocabulary-approvals.md).
 The owner approved both title types on 31 October 2026 ("Approve both"); their
 existing mappings are retained. On 2 November 2026 the owner approved the `masthead` and
-`imprint` subtypes under Impresso `article`. See the [approval record](docs/vocabulary-approvals.md)
+`imprint` subtypes under Impresso `article`; on 6 November 2026 the owner approved
+`fiction` under `article`, beside Poem, Sketch and Humour. See the [approval record](docs/vocabulary-approvals.md)
 and the earlier [release record](docs/design/2026-10-25-site-content-release.md)
 and [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.

@@ -48,6 +48,7 @@ export const ContentItemSubtypesEnum = z.enum([
 	'humour',
 	'masthead',
 	'imprint',
+	'fiction',
 ]);
 
 export const ContentUnitRolesEnum = z.enum([

@@ -289,11 +289,11 @@ Terms for classifying newspaper items by form and subject, and for distinguishin
 
 Source: [site-content.json](../vocabulary/site-content.json).
 
-Version: 1.2.0.
+Version: 1.3.0.
 
 Status: released.
 
-Release date: 2026-11-02.
+Release date: 2026-11-06.
 
 ### Impresso content types
 
@@ -340,6 +340,7 @@ Release date: 2026-11-02.
 | Humour (`humour`) | A joke or short humorous composition.<br>Impresso parent type: `entertainment`. | Local term [`pc:subtype_humour`](../vocabulary/site-content.profile.ttl). A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms. Concept type: [`rico:DocumentaryFormType`](https://www.ica.org/standards/RiC/ontology#DocumentaryFormType). |
 | Masthead (`masthead`) | The paper's own name-plate at the head of an issue or a page: its title, number, date, price, subscription and address lines.<br>Impresso parent type: `article`. | Local term [`pc:subtype_masthead`](../vocabulary/site-content.profile.ttl). A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms. Concept type: [`rico:DocumentaryFormType`](https://www.ica.org/standards/RiC/ontology#DocumentaryFormType). |
 | Imprint (`imprint`) | The printer's and publisher's line, usually at the foot of the last page: editor, publisher, composing room and press.<br>Impresso parent type: `article`. | Local term [`pc:subtype_imprint`](../vocabulary/site-content.profile.ttl). A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms. Concept type: [`rico:DocumentaryFormType`](https://www.ica.org/standards/RiC/ontology#DocumentaryFormType). |
+| Fiction (`fiction`) | An invented story told in prose: a tale, a fable, or an instalment of a serial story.<br>Impresso parent type: `article`. | Local term [`pc:subtype_fiction`](../vocabulary/site-content.profile.ttl). A local documentary form concept refines one Impresso type; the pinned ontologies do not enumerate this newspaper's forms. Concept type: [`rico:DocumentaryFormType`](https://www.ica.org/standards/RiC/ontology#DocumentaryFormType). |
 
 ### Subjects of newspaper items
 

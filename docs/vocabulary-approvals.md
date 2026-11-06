@@ -114,6 +114,27 @@ approve publication of evidence or private notes.
   changes. Document stamps `0.1.0`, `1.0.0` and `1.1.0` remain accepted. See
   [`released/site-content-1.2.0.json`](../vocabulary/released/site-content-1.2.0.json).
 
+- **6 November 2026 — site-content vocabulary 1.3.0.** The batch is one
+  content-item subtype, `content_item_subtypes.fiction`. The owner chose
+  **Approve "Fiction" (Recommended)** on 6 November 2026, with the definition
+  **"Fiction: an invented story told in prose: a tale, a fable, or an instalment of a serial story"**,
+  as relayed by [the coordinator session](https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11).
+  Its Impresso parent is `article`, fixed by the owner with the approval, beside
+  Poem, Sketch and Humour. The released definition changes only the initial
+  letter to a capital and adds a closing full stop after removing the label.
+  It maps to `pc:subtype_fiction`, a declared local SKOS concept typed
+  `rico:DocumentaryFormType` and reached through `rico:hasDocumentaryFormType`,
+  as the other subtypes are. Read **6 November 2026**: the pinned Impresso
+  `issue.schema.json` (`standards/impresso-329323c/`, `metadata.tp`) lists 13
+  types and none for fiction; the pinned EHRI 0.2.0 and RiC-O 1.1 lists enumerate
+  no documentary forms. The local reason is in
+  [`site-content.profile.ttl`](../vocabulary/site-content.profile.ttl).
+  The real examples, their English and the private proposal stay in pruzhany-steps
+  (`.scratch/vocabulary/fiction.md`); none are published here. No released
+  identifier is renamed or removed, and no existing definition or mapping changes.
+  Document stamps `0.1.0`, `1.0.0`, `1.1.0` and `1.2.0` remain accepted. See
+  [`released/site-content-1.3.0.json`](../vocabulary/released/site-content-1.3.0.json).
+
 Later proposals, including the two source kinds in the
 [sources-and-citations design](design/2026-10-24-sources-and-citations.md),
 follow the process above and need their own owner approval.

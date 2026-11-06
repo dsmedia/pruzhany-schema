@@ -97,21 +97,21 @@ class PythonGeneration(unittest.TestCase):
                 {'$ref': '#/$defs/CitedTranslation'}, {'type': 'null'}], 'default': None} for field in fields})
         for name, old in previous['models'].items():
             with self.subTest(model=name):
-                # Owner-approved site-content 1.1.0, 31 October 2026, and 1.2.0, 2 November
-                # 2026; preserve the frozen fixture and prescribe only the newly accepted stamps.
+                # Owner-approved site-content 1.1.0, 31 October 2026, 1.2.0, 2 November 2026,
+                # and 1.3.0, 6 November 2026; prescribe only the newly accepted stamps.
                 content = (old['schema'] if name == 'ContentItemsData' else
                            old['schema'].get('$defs', {}).get('ContentItemsData'))
                 if content is not None:
                     version = content['properties']['vocabulary_version']
                     self.assertEqual(version['enum'], ['0.1.0', '1.0.0'])
-                    version['enum'] = ['0.1.0', '1.0.0', '1.1.0', '1.2.0']
-                # Site-content 1.2.0 appends exactly the masthead and imprint subtypes.
+                    version['enum'] = ['0.1.0', '1.0.0', '1.1.0', '1.2.0', '1.3.0']
+                # Site-content 1.2.0 appends masthead and imprint; 1.3.0 appends only fiction.
                 item = (old['schema'] if name == 'ContentItem' else
                         old['schema'].get('$defs', {}).get('ContentItem'))
                 if item is not None:
                     subtypes = item['properties']['subtype']['anyOf'][0]['enum']
                     self.assertEqual((len(subtypes), subtypes[-1]), (21, 'humour'))
-                    subtypes.extend(['masthead', 'imprint'])
+                    subtypes.extend(['masthead', 'imprint', 'fiction'])
                 expected = copy.deepcopy(old['schema'])
                 for class_name, fields in additions.items():
                     target = expected if class_name == name else expected.get('$defs', {}).get(class_name)
