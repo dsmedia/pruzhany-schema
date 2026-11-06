@@ -34,6 +34,7 @@ class VocabularyTests(unittest.TestCase):
         # The one authored width list the generator makes a Zod module of.
         (self.root / 'zod').mkdir()
         shutil.copy(HERE.parent / 'zod/media-widths.json', self.root / 'zod/media-widths.json')
+        shutil.copy(HERE.parent / 'zod/media-wide.json', self.root / 'zod/media-wide.json')
         self.path = self.root / 'vocabulary/sourced-entities.json'
         self.data = json.loads(self.path.read_text(encoding='utf-8'))
         # The released version these tests start from, and the next one a proposal takes.
@@ -46,6 +47,16 @@ class VocabularyTests(unittest.TestCase):
         self.site_released_on = self.site['released_on']
         major, minor, _ = (int(part) for part in self.site_released.split('.'))
         self.site_following = f'{major}.{minor + 1}.0'
+
+    def test_the_wide_copy_rule_lies_beyond_every_listed_width(self):
+        generated = generator.generated_media_widths(self.root)[self.root / 'zod/media-widths.table.ts']
+        self.assertIn('export const MEDIA_WIDE = Object.freeze({ above: 3200, width: 3200 } as const);', generated)
+        wide = self.root / 'zod/media-wide.json'
+        for bad in ({'above': 3200, 'width': 1200}, {'above': 3000, 'width': 3200}, {'above': 3200}, {'above': 3200.5, 'width': 3200}):
+            with self.subTest(bad=bad):
+                wide.write_text(json.dumps(bad), encoding='utf-8')
+                with self.assertRaises(ValueError):
+                    generator.generated_media_widths(self.root)
 
     def check(self):
         self.path.write_text(json.dumps(self.data), encoding='utf-8')

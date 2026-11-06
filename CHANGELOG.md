@@ -11,6 +11,7 @@ yet. The vocabularies are versioned on their own; their releases are recorded in
 
 ### Added
 
+- The wide-copy rule for large page pictures, `zod/media-wide.json` (`{"above": 3200, "width": 3200}`): a page picture wider than `above` with no holder's image service also has a copy `width` wide. Zod exports it as `MEDIA_WIDE` through the generated width table, Python as `pydantic.media.MEDIA_WIDE`; the generator refuses a rule inside the listed widths.
 - Site-content 1.4.0: an optional section `heading_item_id` for an announcement that supplies the heading above greetings. Both twins require the same issue, matching heading blocks and printed title, a distinct heading item per section, and exclusion from the section's members; the item alone owns its blocks. Earlier document stamps remain accepted.
 - The editions catalog's optional `availableKeys`: the keys of the editions on the site, for two papers on one day. Both twins refuse a repeated key or one naming no edition and hold the date-only keys equal to `availableDates`; optional until the site's pin and the writer carry it.
 - A content item's optional summary (the website's opening): English written by a model from the item's translation, bound to that English by its SHA-256, with the model, effort, day and whether a person has checked it; mapped to `rico:scopeAndContent`, in LinkML with its Zod and Python twins and fictional cases.
