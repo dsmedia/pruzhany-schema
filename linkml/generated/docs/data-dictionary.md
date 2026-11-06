@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `be5b3f64778115ac682bace919b4b2daf46b6d8c07ff34ceb071094178028791`.
+Definition fingerprint: `d63f9853a6c15d8486fb1854fc6466c8626c1181e6b047f929b90be02c920abb`.
 
 ## What the Pruzhany issue documents share
 
@@ -336,7 +336,7 @@ Meaning: No direct mapping recorded.
 | `content_items` | The issue's content items. | list of ContentItem | Yes | No direct mapping recorded |
 | `issue_date` | The issue's date, written YYYY-MM-DD. | IsoDay | Yes | No direct mapping recorded |
 | `sections` | The issue's printed sections. | list of PrintedSection | Yes | No direct mapping recorded |
-| `vocabulary_version` | The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible. | string; pattern: ^(0\.1\.0\|1\.0\.0\|1\.1\.0\|1\.2\.0)$(?![\s\S]) | Yes | No direct mapping recorded |
+| `vocabulary_version` | The version of the site-content vocabulary whose values the document uses: one of the versions the current vocabulary accepts as compatible. | string; pattern: ^(0\.1\.0\|1\.0\.0\|1\.1\.0\|1\.2\.0\|1\.3\.0)$(?![\s\S]) | Yes | No direct mapping recorded |
 
 Source: `linkml/schema/content_items.yaml`.
 
@@ -2218,7 +2218,7 @@ Confidence: the values of confidence in vocabulary/sourced-entities.json, versio
 
 ### ContentItemSubtypes
 
-Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.2.0.
+Content item subtypes: the values of content_item_subtypes in vocabulary/site-content.json, version 1.3.0.
 
 | Value | Meaning | Standard mapping |
 | --- | --- | --- |
@@ -2245,6 +2245,7 @@ Content item subtypes: the values of content_item_subtypes in vocabulary/site-co
 | `humour` | A joke or short humorous composition. | pc:subtype_humour (meaning) |
 | `masthead` | The paper's own name-plate at the head of an issue or a page: its title, number, date, price, subscription and address lines. | pc:subtype_masthead (meaning) |
 | `imprint` | The printer's and publisher's line, usually at the foot of the last page: editor, publisher, composing room and press. | pc:subtype_imprint (meaning) |
+| `fiction` | An invented story told in prose: a tale, a fable, or an instalment of a serial story. | pc:subtype_fiction (meaning) |
 
 ### ContentUnitRoles
 
@@ -2375,7 +2376,7 @@ Identifier types approved in ADR 0001 and linked-data ticket 03.
 
 ### ImpressoTypes
 
-Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.2.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.
+Impresso types: the content-item types of Impresso as vocabulary/site-content.json, version 1.3.0, lists them in impresso_types. Impresso defines them in a JSON Schema, not an ontology, so they carry no meaning here.
 
 | Value | Meaning | Standard mapping |
 | --- | --- | --- |
@@ -2529,7 +2530,7 @@ Source kinds: the values of source_kinds in vocabulary/sourced-entities.json, ve
 
 ### Subjects
 
-Subjects: the values of subjects in vocabulary/site-content.json, version 1.2.0.
+Subjects: the values of subjects in vocabulary/site-content.json, version 1.3.0.
 
 | Value | Meaning | Standard mapping |
 | --- | --- | --- |
@@ -2547,7 +2548,7 @@ Subjects: the values of subjects in vocabulary/site-content.json, version 1.2.0.
 
 ### TitleTypes
 
-Title types: the values of title_types in vocabulary/site-content.json, version 1.2.0.
+Title types: the values of title_types in vocabulary/site-content.json, version 1.3.0.
 
 | Value | Meaning | Standard mapping |
 | --- | --- | --- |

@@ -368,6 +368,28 @@ class VocabularyTests(unittest.TestCase):
         path.write_text(json.dumps(data), encoding='utf-8')
         self.assertTrue(any('owner decision' in e for e in self.check()))
 
+    def test_site_1_3_0_adds_only_fiction_under_article(self):
+        # Owner-approved site-content 1.3.0, 6 November 2026 (docs/vocabulary-approvals.md).
+        subtypes = self.site['groups']['content_item_subtypes']
+        earlier = json.loads((self.root / 'vocabulary/released/site-content-1.2.0.json').read_text(encoding='utf-8'))
+        earlier_subtypes = earlier['groups']['content_item_subtypes']
+        self.assertEqual(len(earlier_subtypes), 23)
+        self.assertEqual(subtypes[:-1], earlier_subtypes)
+        self.assertEqual(subtypes[-1], {
+            'id': 'fiction', 'label': 'Fiction',
+            'definition': 'An invented story told in prose: a tale, a fable, or an instalment of a serial story.',
+            'added_in': '1.3.0', 'concept_class': 'rico:DocumentaryFormType',
+            'mapping': {'local': 'pc:subtype_fiction', 'reason': earlier_subtypes[-1]['mapping']['reason']},
+            'parent_type': 'article',
+            'owner_fixed_parent': {'type': 'article', 'on': '2026-11-06'},
+        })
+        self.assertEqual(self.site['compatible_versions'], ['0.1.0', '1.0.0', '1.1.0', '1.2.0'])
+        # The owner's article parent cannot be changed to entertainment.
+        data = copy.deepcopy(self.site)
+        data['groups']['content_item_subtypes'][-1]['parent_type'] = 'entertainment'
+        self.site_path.write_text(json.dumps(data), encoding='utf-8')
+        self.assertTrue(any('owner decision' in e for e in self.check()))
+
     def test_site_compatible_versions_are_explicit(self):
         for versions in [['0.1.0', '0.1.0'], [self.site_released], [''], [None], '0.1.0']:
             with self.subTest(versions=versions):

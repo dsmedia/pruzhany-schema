@@ -315,11 +315,11 @@ class ValuesFromElsewhere(unittest.TestCase):
         match = re.fullmatch(r'\^\((.+)\)\$\(\?!\[\\s\\S\]\)', slot.pattern)
         self.assertIsNotNone(match, slot.pattern)
         self.assertEqual([alternative.replace('\\.', '.') for alternative in match.group(1).split('|')], versions)
-        self.assertEqual(versions, ['0.1.0', '1.0.0', '1.1.0', '1.2.0'])
+        self.assertEqual(versions, ['0.1.0', '1.0.0', '1.1.0', '1.2.0', '1.3.0'])
         pattern = generated('content_items')['properties']['vocabulary_version']['pattern']
         for version in versions:
             self.assertRegex(version, pattern)
-        for other in ('1.3.0', '1.0.0\n', '1.1.0\n', '1.2.0\n', '1x0x0', '01.0.0', ' 1.0.0', '1.0'):
+        for other in ('1.4.0', '1.0.0\n', '1.1.0\n', '1.2.0\n', '1.3.0\n', '1x0x0', '01.0.0', ' 1.0.0', '1.0'):
             self.assertNotRegex(other, pattern)
 
 

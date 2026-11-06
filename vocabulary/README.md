@@ -3,14 +3,17 @@
 For a readable account of the terms, their definitions and standards mappings, see
 the generated [vocabulary list](../docs/vocabulary.md).
 
-`site-content.json` is a separate **1.2.0, released 2026-11-02** vocabulary.
+`site-content.json` is a separate **1.3.0, released 2026-11-06** vocabulary.
 The owner approved its 21 content-item subtypes and 11 subjects as proposed
 (steps decision 164, item 1), then approved both `printed` and `supplied` title
 types on 31 October 2026: **"Approve both"**, answering **"Approve them as released
 vocabulary?"**. `released_groups` records all three groups; both title entries
 now have `status: released`. On 2 November 2026 the owner approved two more subtypes,
 `masthead` (the paper's own name-plate) and `imprint` (the printer's and publisher's
-line), each under Impresso `article`, released as 1.2.0; there are now 23 subtypes.
+line), each under Impresso `article`, released as 1.2.0. On 6 November 2026 the
+owner chose **Approve "Fiction" (Recommended)** for `fiction`, an invented prose
+story, under `article` as Poem and Sketch are, released as 1.3.0;
+there are now 24 subtypes.
 See the [approval record](../docs/vocabulary-approvals.md).
 The 38 unresolved inventory values stay `other` with their `proposed_type` in the
 producer's retained records; they are not new subtype or subject identifiers.
@@ -23,7 +26,7 @@ these decisions from the vocabulary rather than inferring them from subtype name
 Since 2026-10-22 the owner has fixed the parent of every subtype listed (the last ten,
 announcement to humour, approved as proposed). The subtypes were released unchanged
 on 2026-10-25. The owner fixed `article` as the parent of `masthead` and `imprint` in
-approving them on 2026-11-02.
+approving them on 2026-11-02, and of `fiction` on 2026-11-06.
 The Impresso type list is copied from Impresso's published
 [`issue.schema.json`](https://github.com/impresso/impresso-schemas/blob/d55526d/json/canonical/issue.schema.json)
 at commit `d55526d`, `$defs.metadata.properties.tp.enum`, read 2026-10-22;
@@ -48,7 +51,8 @@ The private approval sheet sorts 338 category values (337 strings and null):
 and 38 an unresolved part. These route counts overlap; 95 values carry more than
 one route. It gives two or three real examples for each of the 21
 subtypes and 11 subjects released in 1.0.0; the 1.2.0 proposal for `masthead` and
-`imprint` kept its real examples in pruzhany-steps. No real examples are copied into this repository.
+`imprint` and the 1.3.0 proposal for `fiction` kept their real examples in
+pruzhany-steps. No real examples are copied into this repository.
 An English heading label is only a lead for recovering the original printed
 heading and its address; it cannot create a section by itself.
 
@@ -83,8 +87,8 @@ Site-content follows the same release path, with independent snapshots named
 `released/site-content-<version>.json`. Its current released snapshot must equal
 `site-content.json`, and historical identifiers are retained. Run the generator;
 never edit snapshots or generated contracts by hand. `compatible_versions`
-explicitly retains the existing `0.1.0`, `1.0.0` and `1.1.0` content-document stamps
-alongside `1.2.0`; both twins consume the generated version set and reject other stamps. New writers
+explicitly retains the existing `0.1.0`, `1.0.0`, `1.1.0` and `1.2.0` content-document stamps
+alongside `1.3.0`; both twins consume the generated version set and reject other stamps. New writers
 use the generated current version. This lets the existing site data pass before
 the later steps refresh and site pin. See the [release record](../docs/design/2026-10-25-site-content-release.md).
 
