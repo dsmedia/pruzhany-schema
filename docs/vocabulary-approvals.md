@@ -119,14 +119,15 @@ approve publication of evidence or private notes.
   **Approve "Fiction" (Recommended)** on 6 November 2026, with the definition
   **"Fiction: an invented story told in prose: a tale, a fable, or an instalment of a serial story"**,
   as relayed by [the coordinator session](https://claude.ai/code/session_01M8ugJSQUZUYXkNnaMuEm11).
-  Its Impresso parent is `article`, fixed by the owner with the approval, beside
-  Poem, Sketch and Humour. The released definition changes only the initial
+  Its Impresso parent is `article`, fixed by the owner with the approval, as for
+  Poem and Sketch; it stands beside them and Humour among the literary forms.
+  The released definition changes only the initial
   letter to a capital and adds a closing full stop after removing the label.
   It maps to `pc:subtype_fiction`, a declared local SKOS concept typed
   `rico:DocumentaryFormType` and reached through `rico:hasDocumentaryFormType`,
   as the other subtypes are. Read **6 November 2026**: the pinned Impresso
   `issue.schema.json` (`standards/impresso-329323c/`, `metadata.tp`) lists 13
-  types and none for fiction; the pinned EHRI 0.2.0 and RiC-O 1.1 lists enumerate
+  types and none for fiction (`chapter` is a part of a book); the pinned EHRI 0.2.0 and RiC-O 1.1 lists enumerate
   no documentary forms. The local reason is in
   [`site-content.profile.ttl`](../vocabulary/site-content.profile.ttl).
   The real examples, their English and the private proposal stay in pruzhany-steps

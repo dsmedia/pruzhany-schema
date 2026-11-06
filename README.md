@@ -129,7 +129,7 @@ the [vocabulary approval record](docs/vocabulary-approvals.md).
 The owner approved both title types on 31 October 2026 ("Approve both"); their
 existing mappings are retained. On 2 November 2026 the owner approved the `masthead` and
 `imprint` subtypes under Impresso `article`; on 6 November 2026 the owner approved
-`fiction` under `article`, beside Poem, Sketch and Humour. See the [approval record](docs/vocabulary-approvals.md)
+`fiction` under `article`, as Poem and Sketch are. See the [approval record](docs/vocabulary-approvals.md)
 and the earlier [release record](docs/design/2026-10-25-site-content-release.md)
 and [contract and preservation notes](docs/design/2026-10-22-site-files.md).
 `bin/verify contract` checks fictional valid/invalid cases in both runtimes and round trips.

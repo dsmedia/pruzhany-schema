@@ -12,7 +12,7 @@ now have `status: released`. On 2 November 2026 the owner approved two more subt
 `masthead` (the paper's own name-plate) and `imprint` (the printer's and publisher's
 line), each under Impresso `article`, released as 1.2.0. On 6 November 2026 the
 owner chose **Approve "Fiction" (Recommended)** for `fiction`, an invented prose
-story, under `article`, beside Poem, Sketch and Humour, released as 1.3.0;
+story, under `article` as Poem and Sketch are, released as 1.3.0;
 there are now 24 subtypes.
 See the [approval record](../docs/vocabulary-approvals.md).
 The 38 unresolved inventory values stay `other` with their `proposed_type` in the
