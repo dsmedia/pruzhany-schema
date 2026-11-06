@@ -6,7 +6,7 @@ search:
 # Slot: heading_item_id 
 
 
-_The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. It is not a member of content_item_ids; the items beneath it retain their section_id._
+_The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. No other section may name the same heading item. It is not a member of this section's content_item_ids; the items beneath it retain their section_id._
 
 
 
@@ -99,8 +99,9 @@ annotations:
     value: ContentItem.id
 description: The content item that supplies this section's heading, when the heading
   is an item of its own. It must exist in the same issue, with page_blocks and printed_title
-  equal to this section's heading_blocks and printed_title. It is not a member of
-  content_item_ids; the items beneath it retain their section_id.
+  equal to this section's heading_blocks and printed_title. No other section may name
+  the same heading item. It is not a member of this section's content_item_ids; the
+  items beneath it retain their section_id.
 from_schema: https://pruzhany.org/ns/content_items
 rank: 1000
 owner: PrintedSection

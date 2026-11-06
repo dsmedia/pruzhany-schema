@@ -108,7 +108,8 @@ A printed section may name an optional, nullable `heading_item_id` when its head
 content item of its own, such as an announcement above greetings. Both twins require the
 item in the same issue, with `page_blocks` equal to the section's `heading_blocks` and the
 same complete `printed_title`. The item alone owns those blocks, whose `unit_id` names it;
-it is excluded from the section's `content_item_ids`. The greetings retain their `section_id`.
+only one section may name it as its heading, and it is excluded from that section's
+`content_item_ids`. The greetings retain their `section_id`.
 Omitting the reference or setting it to null keeps the section's own heading blocks.
 
 `fates-list.schema.ts` and `pydantic/fates_list.py` shape the fates list

@@ -60,7 +60,7 @@ Name: pruzhany_content_items
 | [evidence](evidence.md) | What shows the link, in words. |
 | [full_text](full_text.md) | The content item's printed text, a copy made for the site from the lines of its regions. |
 | [heading_blocks](heading_blocks.md) | The regions the heading is printed in, page by page. When heading_item_id is set, these equal that item's page_blocks and belong to that item alone; otherwise the section owns them and their unit_id is null. |
-| [heading_item_id](heading_item_id.md) | The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. It is not a member of content_item_ids; the items beneath it retain their section_id. |
+| [heading_item_id](heading_item_id.md) | The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. No other section may name the same heading item. It is not a member of this section's content_item_ids; the items beneath it retain their section_id. |
 | [id](id.md) | The content item's id within the issue. |
 | [image_uri](image_uri.md) | The page picture the box is on, by its name or address. |
 | [issue_date](issue_date.md) | The issue's date, written YYYY-MM-DD. |

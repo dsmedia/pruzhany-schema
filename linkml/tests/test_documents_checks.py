@@ -149,7 +149,7 @@ class TheAccount(unittest.TestCase):
                     tally['existing' if 'rule' in part else 'proposed'] += 1
                 else:
                     tally[part['how']] += 1
-        self.assertEqual(tally, {'linkml_rule': 5, 'existing': 40, 'proposed': 0, 'twin_only': 11})
+        self.assertEqual(tally, {'linkml_rule': 5, 'existing': 40, 'proposed': 0, 'twin_only': 12})
 
     def test_it_passes_the_house_lint(self):
         self.assertEqual(load('lint').lint(CHECKS_FILE), [])

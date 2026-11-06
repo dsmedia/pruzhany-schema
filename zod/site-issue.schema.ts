@@ -228,7 +228,7 @@ function siteIssueErrors(v: SiteIssue): string[] {
 			);
 	}
 	for (const section of v.content_items.sections) {
-		// A linked heading was counted above as the item's; the document checks equality.
+		// A linked heading was counted above as the item's; the document checks uniqueness and equality.
 		if (section.heading_item_id == null) own(section.heading_blocks, `section:${section.id}`, null);
 		errors.push(
 			...printedAddressErrors(

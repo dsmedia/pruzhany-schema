@@ -140,14 +140,18 @@ approve publication of evidence or private notes.
   website lanes agreed that an announcement above greetings is a content item of
   its own and supplies the section's heading. This release adds optional, nullable
   `sections[].heading_item_id`; the item must exist in the same issue, with the
-  section's exact heading blocks and complete printed title. The item alone owns
-  those blocks and their `unit_id` names it. It is excluded from the members;
+  section's exact heading blocks and complete printed title. Only one section may
+  name an item as its heading. The item alone owns those blocks and their
+  `unit_id` names it. It is excluded from the members;
   the greetings retain their `section_id`. An omitted or null link preserves
   section-owned headings. This is a contract addition with no new vocabulary
   types or mappings; all previous owner approvals and identifiers are retained.
   Document stamps `0.1.0`, `1.0.0`, `1.1.0`, `1.2.0` and `1.3.0` remain accepted.
   See [`released/site-content-1.4.0.json`](../vocabulary/released/site-content-1.4.0.json).
   Fictional cases check both twins; real examples remain in pruzhany-steps.
+  Before publication, the heading-item uniqueness check was added to preserve the
+  one-owner rule. This corrects the same 1.4.0 contract; no further version or
+  vocabulary snapshot change is needed.
 
 Later proposals, including the two source kinds in the
 [sources-and-citations design](design/2026-10-24-sources-and-citations.md),

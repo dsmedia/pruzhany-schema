@@ -86,6 +86,10 @@ export const ContentItemsDataSchema = ContentItemsDataShape.extend({
 			v.sections.map((s) => s.id),
 			'section id'
 		),
+		...uniqueIds(
+			v.sections.flatMap((s) => (s.heading_item_id == null ? [] : [s.heading_item_id])),
+			'section heading item'
+		),
 	];
 	const items = new Map(v.content_items.map((i) => [i.id, i]));
 	const sections = new Map(v.sections.map((s) => [s.id, s]));

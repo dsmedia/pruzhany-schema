@@ -8,7 +8,7 @@ The four issue documents, the editions catalog and the shared record each have a
 
 “Required” in the tables means required by LinkML. Some runtime validators require a key while accepting null; those differences are listed under “Validator responsibilities”. An optional LinkML field generally also accepts null. Value ranges named in the tables are defined in “Types and vocabularies”. Mappings describe alignment with the pinned EHRI and RiC-O terms; they do not claim EHRI acceptance.
 
-Definition fingerprint: `c5edf76c0adce89c49e43c5a831406ed9694758f66aba12c8e7c6a43b4098a91`.
+Definition fingerprint: `5aff32a66d6412c64b01f3fd59fa7828b1500be2ac53892075478615b7612321`.
 
 ## What the Pruzhany issue documents share
 
@@ -350,7 +350,7 @@ Meaning: ehri:RecordSet (class uri).
 | --- | --- | --- | --- | --- |
 | `content_item_ids` | The content items beneath the heading, by their ids. | list of NonBlankText; minimum items: 1 | Yes | rico:includesOrIncluded (slot uri) |
 | `heading_blocks` | The regions the heading is printed in, page by page. When heading_item_id is set, these equal that item's page_blocks and belong to that item alone; otherwise the section owns them and their unit_id is null. | list of ContentItemBlockRef; minimum items: 1 | Yes | No direct mapping recorded |
-| `heading_item_id` | The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. It is not a member of content_item_ids; the items beneath it retain their section_id. | string | No | No direct mapping recorded |
+| `heading_item_id` | The content item that supplies this section's heading, when the heading is an item of its own. It must exist in the same issue, with page_blocks and printed_title equal to this section's heading_blocks and printed_title. No other section may name the same heading item. It is not a member of this section's content_item_ids; the items beneath it retain their section_id. | string | No | No direct mapping recorded |
 | `id` | The section's id within the issue. | NonBlankText | Yes | No direct mapping recorded |
 | `printed_title` | The heading as printed. | PrintedTitle | Yes | rico:hasOrHadTitle (slot uri) |
 | `supplied_title` | A title in English supplied for the heading, where one was made. | SuppliedTitle | No | rico:hasOrHadTitle (slot uri) |

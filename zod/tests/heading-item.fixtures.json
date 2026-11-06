@@ -1493,6 +1493,1336 @@
 				}
 			],
 			"error": "unknown section heading item"
+		},
+		{
+			"name": "heading item: ContentItemsData rejects two sections with the same heading item",
+			"model": "ContentItemsData",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items"],
+					"value": [
+						{
+							"id": "cu-2001-02-03-i0001",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "announcement",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional family announcement.\n\nA fictional celebration.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 0, 100, 10],
+											"text": "Fictional family announcement."
+										},
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 10, 100, 10],
+											"text": "A fictional celebration."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": null,
+							"full_text": "Fictional family announcement.\n\nA fictional celebration.",
+							"block_breaks": [0, 32],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0002",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 30, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 30, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r003"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0003",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 60, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 60, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-other-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r004"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						}
+					]
+				},
+				{
+					"path": ["sections"],
+					"value": [
+						{
+							"id": "fictional-greetings",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0002"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"heading_item_id": "cu-2001-02-03-i0001"
+						},
+						{
+							"id": "fictional-other-greetings",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0003"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"heading_item_id": "cu-2001-02-03-i0001"
+						}
+					]
+				}
+			],
+			"error": "duplicate section heading item"
+		},
+		{
+			"name": "heading item: SiteIssue rejects two sections with the same heading item",
+			"model": "SiteIssue",
+			"valid": false,
+			"changes": [
+				{
+					"path": ["content_items", "content_items"],
+					"value": [
+						{
+							"id": "cu-2001-02-03-i0001",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "announcement",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional family announcement.\n\nA fictional celebration.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 0, 100, 10],
+											"text": "Fictional family announcement."
+										},
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 10, 100, 10],
+											"text": "A fictional celebration."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": null,
+							"full_text": "Fictional family announcement.\n\nA fictional celebration.",
+							"block_breaks": [0, 32],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0002",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 30, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 30, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r003"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0003",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 60, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 60, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-other-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r004"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						}
+					]
+				},
+				{
+					"path": ["content_items", "sections"],
+					"value": [
+						{
+							"id": "fictional-greetings",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0002"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"heading_item_id": "cu-2001-02-03-i0001"
+						},
+						{
+							"id": "fictional-other-greetings",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0003"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"heading_item_id": "cu-2001-02-03-i0001"
+						}
+					]
+				},
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "blk-2001-02-03-p1-r001",
+							"bbox": [0, 0, 100, 10],
+							"transcription": "Fictional family announcement.",
+							"unit_id": "cu-2001-02-03-i0001"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r002",
+							"bbox": [0, 10, 100, 10],
+							"transcription": "A fictional celebration.",
+							"unit_id": "cu-2001-02-03-i0001"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r003",
+							"bbox": [0, 30, 100, 20],
+							"transcription": "Fictional greeting.",
+							"unit_id": "cu-2001-02-03-i0002"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r004",
+							"bbox": [0, 60, 100, 20],
+							"transcription": "Fictional greeting.",
+							"unit_id": "cu-2001-02-03-i0003"
+						}
+					]
+				}
+			],
+			"error": "duplicate section heading item"
+		},
+		{
+			"name": "heading item: ContentItemsData permits distinct headings and membership in another section",
+			"model": "ContentItemsData",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["content_items"],
+					"value": [
+						{
+							"id": "cu-2001-02-03-i0001",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "announcement",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional family announcement.\n\nA fictional celebration.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 0, 100, 10],
+											"text": "Fictional family announcement."
+										},
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 10, 100, 10],
+											"text": "A fictional celebration."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": null,
+							"full_text": "Fictional family announcement.\n\nA fictional celebration.",
+							"block_breaks": [0, 32],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0002",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 30, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 30, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r003"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0003",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 60, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 60, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-other-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r004"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						}
+					]
+				},
+				{
+					"path": ["sections"],
+					"value": [
+						{
+							"id": "fictional-greetings",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0002"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"heading_item_id": "cu-2001-02-03-i0001"
+						},
+						{
+							"id": "fictional-other-greetings",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 30, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0003"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r003"]
+								}
+							],
+							"heading_item_id": "cu-2001-02-03-i0002"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "heading item: SiteIssue permits distinct headings and membership in another section",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["content_items", "content_items"],
+					"value": [
+						{
+							"id": "cu-2001-02-03-i0001",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "announcement",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional family announcement.\n\nA fictional celebration.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 0, 100, 10],
+											"text": "Fictional family announcement."
+										},
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 10, 100, 10],
+											"text": "A fictional celebration."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": null,
+							"full_text": "Fictional family announcement.\n\nA fictional celebration.",
+							"block_breaks": [0, 32],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0002",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 30, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 30, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r003"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0003",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 60, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 60, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-other-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r004"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						}
+					]
+				},
+				{
+					"path": ["content_items", "sections"],
+					"value": [
+						{
+							"id": "fictional-greetings",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0002"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"heading_item_id": "cu-2001-02-03-i0001"
+						},
+						{
+							"id": "fictional-other-greetings",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 30, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0003"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r003"]
+								}
+							],
+							"heading_item_id": "cu-2001-02-03-i0002"
+						}
+					]
+				},
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "blk-2001-02-03-p1-r001",
+							"bbox": [0, 0, 100, 10],
+							"transcription": "Fictional family announcement.",
+							"unit_id": "cu-2001-02-03-i0001"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r002",
+							"bbox": [0, 10, 100, 10],
+							"transcription": "A fictional celebration.",
+							"unit_id": "cu-2001-02-03-i0001"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r003",
+							"bbox": [0, 30, 100, 20],
+							"transcription": "Fictional greeting.",
+							"unit_id": "cu-2001-02-03-i0002"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r004",
+							"bbox": [0, 60, 100, 20],
+							"transcription": "Fictional greeting.",
+							"unit_id": "cu-2001-02-03-i0003"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "heading item: SiteIssue permits two null links with independent section-owned headings",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["content_items", "content_items"],
+					"value": [
+						{
+							"id": "cu-2001-02-03-i0002",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 30, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 30, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r003"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0003",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 60, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 60, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-other-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r004"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						}
+					]
+				},
+				{
+					"path": ["content_items", "sections"],
+					"value": [
+						{
+							"id": "fictional-greetings",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0002"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							],
+							"heading_item_id": null
+						},
+						{
+							"id": "fictional-other-greetings",
+							"printed_title": {
+								"text": "Another fictional heading.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 90, 100, 10],
+										"text": "Another fictional heading."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0003"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r005"]
+								}
+							],
+							"heading_item_id": null
+						}
+					]
+				},
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "blk-2001-02-03-p1-r001",
+							"bbox": [0, 0, 100, 10],
+							"transcription": "Fictional family announcement.",
+							"unit_id": null
+						},
+						{
+							"id": "blk-2001-02-03-p1-r002",
+							"bbox": [0, 10, 100, 10],
+							"transcription": "A fictional celebration.",
+							"unit_id": null
+						},
+						{
+							"id": "blk-2001-02-03-p1-r003",
+							"bbox": [0, 30, 100, 20],
+							"transcription": "Fictional greeting.",
+							"unit_id": "cu-2001-02-03-i0002"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r004",
+							"bbox": [0, 60, 100, 20],
+							"transcription": "Fictional greeting.",
+							"unit_id": "cu-2001-02-03-i0003"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r005",
+							"bbox": [0, 90, 100, 10],
+							"transcription": "Another fictional heading.",
+							"unit_id": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "heading item: SiteIssue permits two omitted links with independent section-owned headings",
+			"model": "SiteIssue",
+			"valid": true,
+			"changes": [
+				{
+					"path": ["content_items", "content_items"],
+					"value": [
+						{
+							"id": "cu-2001-02-03-i0002",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 30, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 30, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r003"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						},
+						{
+							"id": "cu-2001-02-03-i0003",
+							"newspaper": "fictional-paper",
+							"type": "ad",
+							"subtype": "wedding_greeting",
+							"printed_title": {
+								"text": "Fictional greeting.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 60, 100, 20],
+										"text": "Fictional greeting."
+									}
+								]
+							},
+							"supplied_title": {
+								"text": "Fictional English title",
+								"language": "en",
+								"based_on": {
+									"source_text": "Fictional greeting.",
+									"addresses": [
+										{
+											"image_uri": "fictional-page.png",
+											"bbox": [0, 60, 100, 20],
+											"text": "Fictional greeting."
+										}
+									]
+								},
+								"attribution": {
+									"by": "Fictional writer",
+									"on": "2026-11-06",
+									"kind": "person"
+								}
+							},
+							"subject_ids": [],
+							"section_id": "fictional-other-greetings",
+							"full_text": "Fictional greeting.",
+							"block_breaks": [],
+							"page_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r004"]
+								}
+							],
+							"location_ids": [],
+							"organization_ids": [],
+							"cross_references": []
+						}
+					]
+				},
+				{
+					"path": ["content_items", "sections"],
+					"value": [
+						{
+							"id": "fictional-greetings",
+							"printed_title": {
+								"text": "Fictional family announcement.\nA fictional celebration.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 0, 100, 10],
+										"text": "Fictional family announcement."
+									},
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 10, 100, 10],
+										"text": "A fictional celebration."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0002"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r001", "blk-2001-02-03-p1-r002"]
+								}
+							]
+						},
+						{
+							"id": "fictional-other-greetings",
+							"printed_title": {
+								"text": "Another fictional heading.",
+								"addresses": [
+									{
+										"image_uri": "fictional-page.png",
+										"bbox": [0, 90, 100, 10],
+										"text": "Another fictional heading."
+									}
+								]
+							},
+							"content_item_ids": ["cu-2001-02-03-i0003"],
+							"heading_blocks": [
+								{
+									"page_id": "page-2001-02-03-1",
+									"block_ids": ["blk-2001-02-03-p1-r005"]
+								}
+							]
+						}
+					]
+				},
+				{
+					"path": ["pages", "pages", 0, "blocks"],
+					"value": [
+						{
+							"id": "blk-2001-02-03-p1-r001",
+							"bbox": [0, 0, 100, 10],
+							"transcription": "Fictional family announcement.",
+							"unit_id": null
+						},
+						{
+							"id": "blk-2001-02-03-p1-r002",
+							"bbox": [0, 10, 100, 10],
+							"transcription": "A fictional celebration.",
+							"unit_id": null
+						},
+						{
+							"id": "blk-2001-02-03-p1-r003",
+							"bbox": [0, 30, 100, 20],
+							"transcription": "Fictional greeting.",
+							"unit_id": "cu-2001-02-03-i0002"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r004",
+							"bbox": [0, 60, 100, 20],
+							"transcription": "Fictional greeting.",
+							"unit_id": "cu-2001-02-03-i0003"
+						},
+						{
+							"id": "blk-2001-02-03-p1-r005",
+							"bbox": [0, 90, 100, 10],
+							"transcription": "Another fictional heading.",
+							"unit_id": null
+						}
+					]
+				}
+			]
 		}
 	]
 }

@@ -139,7 +139,7 @@ def site_issue_errors(value):
         if item.translation:
             errors += printed_address_errors(item.translation.based_on.addresses, item.page_blocks, pages, 'bounds')
     for section in value.content_items.sections:
-        # A linked heading was counted above as the item's; the document checks equality.
+        # A linked heading was counted above as the item's; the document checks uniqueness and equality.
         if section.heading_item_id is None:
             own(section.heading_blocks, f'section:{section.id}', None)
         errors += printed_address_errors(section.printed_title.addresses, section.heading_blocks, pages, 'text')

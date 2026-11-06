@@ -225,7 +225,8 @@ checks:
     holds: >-
       Ids are unique within the document, sections and content items name each other both
       ways, cross-references point at content items of the document, and a heading item
-      belongs to the same issue with the section's exact heading blocks and printed title.
+      belongs to the same issue with the section's exact heading blocks and printed title
+      and supplies only one section's heading.
     zod:
       file: zod/content-item.schema.ts
       schema: ContentItemsDataSchema
@@ -264,6 +265,13 @@ checks:
           Resolving an id against a sibling collection and comparing the complete ordered
           block references and title objects stays with the twins. A heading-item reference
           is an internal document join, outside the public shared-record RDF view.
+      - holds: >-
+          No two sections name the same non-null heading_item_id.
+        how: twin_only
+        why: >-
+          Comparing heading-item references across sibling sections, ignoring absent or null
+          links, stays with the twins; LinkML's generated JSON Schema cannot express that
+          uniqueness. The internal document join must preserve one owner per printed heading.
 
   - id: issue-mention
     holds: >-

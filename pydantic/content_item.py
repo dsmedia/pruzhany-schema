@@ -44,6 +44,8 @@ def _PrintedSection__members(self):
 def _ContentItemsData__content_references(self):
     errors = unique_ids([i.id for i in self.content_items], 'content item id')
     errors += unique_ids([s.id for s in self.sections], 'section id')
+    errors += unique_ids([s.heading_item_id for s in self.sections if s.heading_item_id is not None],
+                         'section heading item')
     items = {i.id: i for i in self.content_items}
     sections = {s.id: s for s in self.sections}
     for item in self.content_items:

@@ -187,8 +187,10 @@ vocabulary type. PrintedSection remains outside the public shared-record RDF vie
 The retained twins check that the item exists in this issue, that its ordered `page_blocks`
 equal the section's `heading_blocks`, and that its complete `printed_title` equals the
 section's title, including addresses. They exclude that item from `content_item_ids` and
-keep the members' reciprocal `section_id` check. At SiteIssue, the item alone owns its
-blocks and their `unit_id` names it. An omitted or null reference preserves section-owned
+keep the members' reciprocal `section_id` check. No two sections may name the same non-null
+heading item; absent and null links do not take part in that uniqueness check.
+At SiteIssue, the item alone owns its blocks and their `unit_id` names it.
+An omitted or null reference preserves section-owned
 headings and null `unit_id`. The checks are inventoried in `checks/documents.yaml` and
 tested with the same fictional corpus by Zod and Python, including round trips.
 
